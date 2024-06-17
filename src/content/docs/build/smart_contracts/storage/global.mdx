@@ -73,6 +73,7 @@ export const fileNamePython = 'Python'
 export const fileNameTS = 'Typescript'
 export const highlights = ['file', 'CMS']
 
+Global state is associated with the app itself
 Global storage is a feature in Algorand that allows smart contracts to persistently store key-value pairs in a globally accessible state. This guide provides comprehensive information on how to allocate, read, write, and manipulate global storage within smart contracts.
 
 ## Storage Structure
@@ -121,13 +122,13 @@ Branching logic is typically used after calling the _ex opcodes to handle cases 
 
 <Tabs>
   <TabItem label="Python">
-   <Code code={getLocalStoragePython} lang="python" />
+   <Code code={getGlobalStoragePython} lang="python" />
   </TabItem>
   <TabItem label="Typescript">
-   <Code code={createLocalStateTS} lang="typescript" />
+   <Code code={createGlobalStateTS} lang="typescript" />
   </TabItem>
   <TabItem label="TEAL">
-    <Code code={getLocalStorageTEAL} lang="TEAL" />
+    <Code code={getGlobalStorageTEAL} lang="TEAL" />
   </TabItem>
 </Tabs>
 

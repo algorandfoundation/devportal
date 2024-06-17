@@ -2,3 +2,473 @@
 title: Box Storage
 description: A guide in my new Starlight docs site.
 ---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components';
+import importedCode from '/src/env.d.ts?raw';
+import { Aside } from '@astrojs/starlight/components';
+
+export const boxExamplePython = 
+`
+class UserStruct(arc4.Struct):
+    name: arc4.String
+    id: arc4.UInt64
+    asset: arc4.UInt64
+
+class KitchenSink(arc4.ARC4Contract):
+    def __init__(self) -> None:
+        self.user_map = BoxMap(arc4.UInt64, UserStruct, key_prefix="users")
+
+    @arc4.abimethod
+    def box_map_test(self) -> bool:
+        key_0 = arc4.UInt64(0)
+        key_1 = arc4.UInt64(1)
+        value = UserStruct(
+            arc4.String('testName'),
+            arc4.UInt64(70),
+            arc4.UInt64(2)
+        )
+
+        self.user_map[key_0] = value.copy()
+        assert self.user_map[key_0].bytes.length == value.bytes.length
+        assert self.user_map.length(key_0) == value.bytes.length
+        return True
+    
+    @arc4.abimethod
+    def box_map_set(self, key: arc4.UInt64, value: UserStruct) -> bool:
+        self.user_map[key]= value.copy()
+        assert self.user_map[key] == value
+        return True
+
+    @arc4.abimethod
+    def box_map_get(self, key: arc4.UInt64) -> UserStruct:
+        return self.user_map[key]
+
+    @arc4.abimethod
+    def box_map_exists(self, key: arc4.UInt64) -> bool:
+        return key in self.user_map
+`
+
+export const createBoxDataTEAL =   
+`
+// 100 byte box created with box_create
+byte "Mykey"
+int 100
+box_create
+// ... OR ...
+// create with a box_put
+byte "Mykey"
+byte "My data values"
+box_put
+`
+
+export const writeBoxDataTEAL = 
+`
+byte "MyKey"
+int 10
+byte "best"
+box_replace
+`
+
+export const readBoxDataTEAL = 
+`
+byte "MyKey"
+box_get
+assert //verify that the read occurred and we have a value
+//box contents at the top of the stack
+`
+
+export const extractBoxDataTEAL = 
+`
+byte "BoxA"
+byte "this is a test of a very very very very long string"
+box_put
+
+byte "BoxA"
+int 5
+int 9
+box_extract
+
+byte "is a test"
+==
+assert
+`
+
+export const lenBoxDataTEAL = 
+`
+byte "BoxA"
+byte "this is a test of a very very very very long string"
+box_put
+
+byte "BoxA"
+box_len
+assert
+
+int 51
+==
+assert
+`
+
+export const deleteBoxDataTEAL = 
+`
+byte "BoxA"
+byte "this is a test of a very very very very long string"
+box_put
+
+byte "BoxA"
+box_del
+bnz existed
+`
+
+
+export const createBoxDataPython = 
+` 
+import typing
+from algopy import Box, BoxMap, BoxRef, Bytes, Global, String, Txn, UInt64, arc4
+StaticInts: typing.TypeAlias = arc4.StaticArray[arc4.UInt8, typing.Literal[4]]
+
+class BoxContract(arc4.ARC4Contract):
+    def __init__(self) -> None:
+        self.box_str = Box(arc4.String, key=b"BOX_C")
+        self.box_map = BoxMap(UInt64, String, key_prefix="")
+        self.box_ref = BoxRef()
+`
+
+export const writeBoxDataPython = 
+` 
+import typing
+from algopy import Box, BoxMap, BoxRef, Bytes, Global, String, Txn, UInt64, arc4
+StaticInts: typing.TypeAlias = arc4.StaticArray[arc4.UInt8, typing.Literal[4]]
+
+class BoxContract(arc4.ARC4Contract):
+    def __init__(self) -> None:
+        self.box_str = Box(arc4.String, key=b"BOX_C")
+        self.box_map = BoxMap(UInt64, String, key_prefix="")
+        self.box_ref = BoxRef()
+
+    @arc4.abimethod
+    def set_box(self, value: arc4.String) -> None:
+        self.box_str.value = value
+
+    @arc4.abimethod
+    def set_box_map(self, key: UInt64, value: String) -> None:
+        self.box_map[key] = value
+
+    @arc4.abimethod
+    def set_box_ref(self) -> None:
+        sender_bytes = Txn.sender.bytes
+        app_address = Global.current_application_address.bytes
+        value_3 = Bytes(b"hello")
+
+        box_ref = BoxRef(key=String("blob"))
+        assert not box_ref, "no data"
+
+        # create
+        assert box_ref.create(size=32)
+        assert box_ref, "has data"
+
+        # update
+        box_ref.put(sender_bytes + app_address)
+        assert box_ref, "Blob exists"
+        assert box_ref.length == 64
+        assert get_box_ref_length(box_ref) == 64
+`
+
+export const readBoxDataPython = 
+` 
+import typing
+from algopy import Box, BoxMap, BoxRef, Bytes, Global, String, Txn, UInt64, arc4
+StaticInts: typing.TypeAlias = arc4.StaticArray[arc4.UInt8, typing.Literal[4]]
+
+class BoxContract(arc4.ARC4Contract):
+    def __init__(self) -> None:
+        self.box_string = Box(arc4.String, key=b"BOX_C")
+        self.box_map = BoxMap(UInt64, String, key_prefix="")
+
+    @arc4.abimethod
+    def get_box(self) -> arc4.String:
+        return self.box_string.value
+    
+    @arc4.abimethod
+    def get_box_map(self, key: UInt64) -> String:
+        return self.box_map[key]
+
+    @arc4.abimethod
+    def get_box_map_fn(self) -> String:
+        key = UInt64(1)
+        return self.box_map.get(key, default=String("default"))
+
+    @arc4.abimethod
+    def get_box_map(self) -> None:
+        assert box_ref.get(default=sender_bytes)
+
+    @arc4.abimethod
+    def maybe_box_map(self) -> None:
+        value, exists = self.box_map.maybe(key_1)
+        assert not exists
+        assert key_0 in self.box_map
+
+    @arc4.abimethod
+    def box_ref_maybe(self) -> None:
+        value, exists = box_ref.maybe()
+        assert not exists
+        assert value == b""  
+`
+
+export const extractBoxDataPython = 
+`
+    @arc4.abimethod
+    def box_blob_extract(self) -> None:
+        sender_bytes = Txn.sender.bytes
+        app_address = Global.current_application_address.bytes
+        value_3 = Bytes(b"hello")
+        prefix = box_ref.extract(0, 32 * 2 + value_3.length)
+        assert prefix == app_address + sender_bytes + value_3
+`
+
+export const lenBoxDataPython = 
+` 
+    @arc4.abimethod
+    def box_map_test(self) -> None:
+        key_0 = UInt64(0)
+        key_1 = UInt64(1)
+        value = String("Hmmmmm")
+        self.box_map[key_0] = value
+        assert self.box_map[key_0].bytes.length == value.bytes.length
+        assert self.box_map.length(key_0) == value.bytes.length
+
+        assert self.box_map.get(key_1, default=String("default")) == String("default")
+    
+    @arc4.abimethod
+    def get_box_ref_length(ref: BoxRef) -> UInt64:
+    return ref.length
+`
+
+export const deleteBoxDataPython = 
+` 
+    @arc4.abimethod
+    def delete_boxes(self) -> None:
+        del self.box_c.value
+        assert self.box_c.get(default=arc4.String("42")) == "42"
+        a, a_exists = self.box_a.maybe()
+        assert not a_exists
+        assert a == 0
+
+    @arc4.abimethod
+    def delete_box_map(self) -> None:
+        tmp_box_map = BoxMap(UInt64, String, key_prefix=Bytes())
+        tmp_box_map[key_1] = String("hello")
+        assert get_box_map_value_from_key_plus_1(tmp_box_map, UInt64(0)) == "hello"
+        del tmp_box_map[key_1]
+
+    @arc4.abimethod
+    def delete_box_ref(self) -> None:
+        box_blob = BoxRef(key="blob")
+        assert box_blob.create(size=8000)
+
+        box_blob.delete() 
+        assert box_ref.key == b"blob"
+        # maybe not reqd
+        assert value, exists = box_blob.maybe()
+        assert not exists
+`
+
+export const existsboxData = 
+`
+import typing
+from algopy import Box, BoxMap, BoxRef, Bytes, Global, String, Txn, UInt64, arc4
+StaticInts: typing.TypeAlias = arc4.StaticArray[arc4.UInt8, typing.Literal[4]]
+
+class BoxContract(arc4.ARC4Contract):
+    def __init__(self) -> None:
+        self.box_string = Box(arc4.String, key=b"BOX_C")
+        self.box_map = BoxMap(UInt64, String, key_prefix="")
+
+    @arc4.abimethod
+    def boxes_exist(self) -> bool:
+        return bool(self.box_string)
+
+    @arc4.abimethod
+    def box_map_exists(self, key: UInt64) -> bool:
+        return key in self.box_map
+`  
+
+Boxes are associated with the app itself. Boxes are keyed storage segments up to 32kb of data per box.
+
+## Boxes are useful in many scenarios:
+
+- Applications that need larger or unbound contract storage.
+- Applications that want to store data per user, but do not wish to require users to opt-in to the contract or need the account data to persist even after the user closes or clears out of the application.
+- Applications that have dynamic storage requirements.
+- Applications that require larger storage blocks that can not fit in the existing global state key-value pairs.
+- Applications that require storing arbitrary maps or hash tables.
+
+## Storage Structure
+Similar to state storage, keys must be unique per application. However, the key itself does not contribute to the box size and must be between 1 and 64 bytes in length. Box values can range up to 32KB (32,768 bytes). For values exceeding 1,024 bytes, additional box references are necessary, as each reference provides an operational budget of 1,024 bytes.
+
+## Box Array¶
+The box array is an array of pairs: the first element of each pair is an integer specifying the index into the foreign application array, and the second element is the key name of the box to be accessed.
+
+Each entry in the box array allows access to only 1kb of data. For example, if a box is sized to 4kb, the transaction must use four entries in this array. To claim an allotted entry a corresponding app Id and box name need to be added to the box ref array. If you need more than the 1kb associated with that specific box name, you can either specify the box ref entry more than once or, preferably, add “empty” box refs [0,””] into the array. If you specify 0 as the app Id the box ref is for the application being called.
+
+For example, suppose the contract needs to read “BoxA” which is 1.5kb, and “Box B” which is 2.5kb, this would require four entries in the box ref array and would look something like:
+
+
+```boxes=[[0, "BoxA"],[0,"BoxB"], [0,""],[0,""]]```
+The required box I/O budget is based on the sizes of the boxes accessed, not the amount of data read or written. For example, if a contract accesses “Box A” with a size of 2kb and “Box B” with a size of 10 bytes, this requires both boxes be in the box reference array and one additional reference ( ceil((2kb + 10b) / 1kb), which can be an “empty” box reference.
+
+Access budgets are summed across multiple application calls in the same transaction group. For example in a group of two smart contract calls, there is room for 16 array entries (8 per app call), allowing access to 16kb of data. If an application needs to access a 16kb box named “Box A”, it will need to be grouped with one additional application call and the box reference array for each transaction in the group should look similar to this:
+
+Transaction 0: [0,”Box A”],[0,””],[0,””],[0,””],[0,””],[0,””],[0,””],[0,””] Transaction 1: [0,””],[0,””],[0,””],[0,””],[0,””],[0,””],[0,””],[0,””]
+
+Box refs can be added to the boxes array using goal or any of the SDKs.
+
+
+## Box storage option’s properties are described below.
+### Allocation:
+App a can allocate as many boxes as it needs, when it needs them.
+App a allocates a box using the ```box_create``` opcode in its TEAL program, specifying the name and the size of the box being allocated.
+Boxes can be any size from 0 to 32K bytes.
+Box names must be at least 1 byte, at most 64 bytes, and must be unique within app a.
+The app account(the smart contract) is responsible for funding the box storage (with an increase to its minimum balance requirement, see below for details).
+A box name and app id must be referenced in the boxes array of the app call to be allocated.
+
+### Creating a Box¶
+The AVM supports two opcodes ```box_create``` and ```box_put``` that can be used to create a box. The box_create opcode takes two parameters, the name and the size in bytes for the created box. The ```box_put``` opcode takes two parameters as well. The first parameter is the name and the second is a byte array to write. Because the AVM limits any element on the stack to 4kb, ```box_put``` can only be used for boxes with length ```<= 4kb.```
+
+
+<Tabs>
+  <TabItem label="Python">
+   <Code code={createBoxDataPython} lang="python" />
+  </TabItem>
+  <TabItem label="TEAL">
+   <Code code={createBoxDataTEAL} lang="python" />
+  </TabItem>
+</Tabs>
+Refer [this](this) code snippet to get local storage value for different data types
+
+Box names must be unique within an application. If using ```box_create```, and an existing box name is passed with a different size, the creation will fail. If an existing box name is used with the existing size, the call will return a 0 without modifying the box contents. When creating a new box the call will return a 1. When using ```box_put``` with an existing key name, the put will fail if the size of the second argument (data array) is different from the original box size.
+
+Note: When creating a box, the key name to be created must be in the box ref array.
+
+
+### Reading:
+App a is the only app that can read the contents of its boxes on-chain. This on-chain privacy is unique to box storage. Recall that everything can be read by anybody from off-chain using the algod or indexer APIs.
+To read box b from app a, the app call must include b in its boxes array.
+Read budget: Each box reference in the boxes array allows an app call to access 1K bytes of box state - 1K of “box read budget”. To read a box larger than 1K, multiple box references must be put in the boxes arrays.
+The box read budget is shared across the transaction group.
+The total box read budget must be larger than the sum of the sizes of all the individual boxes referenced (it is not possible to use this read budget for a part of a box - the whole box is read in).
+Box data is unstructured. This is unique to box storage.
+A box is referenced by including its app ID and box name.
+
+The AVM provides two opcodes for reading the contents of a box, ```box_get``` and ```box_extract```. The ```box_get``` opcode takes one parameter which is the key name for the box. It reads the entire contents of a box. The box_get opcode returns two values. The top-of-stack is an integer that has the value of 1 or 0. A value of 1 means that the box was found and read. A value of 0 means that the box was not found. The next stack element contains the bytes read if the box exists, else it contains an empty byte array. box_get fails if the box length exceeds 4kb.
+
+
+<Tabs>
+  <TabItem label="Python">
+   <Code code={readBoxDataPython} lang="python" />
+  </TabItem>
+  <TabItem label="TEAL">
+   <Code code={readBoxDataTEAL} lang="python" />
+  </TabItem>
+</Tabs>
+Refer [this](this) code snippet to get local storage value for different data types
+
+Note that when using either opcode to read the contents of a box, the AVM is limited to reading no more than 4kb at a time. This is because the stack is limited to 4kb entries. For larger boxes, the ```box_extract``` opcode should be used to perform multiple reads to retrieve the entire contents.
+
+<Tabs>
+  <TabItem label="Python">
+   <Code code={extractBoxDataPython} lang="python" />
+  </TabItem>
+  <TabItem label="TEAL">
+   <Code code={extractBoxDataTEAL} lang="python" />
+  </TabItem>
+</Tabs>
+Refer [this](this) code snippet to get local storage value for different data types
+
+
+### Writing:
+App a is the only app that can write the contents of its boxes.
+As with reading, each box ref in the boxes array allows an app call to write 1kb of box state - 1kb of “box write budget”.
+
+The AVM provides two opcodes, box_put and box_replace, to write data to a box. The box_put opcode is described in the previous section. The box_replace opcode takes three parameters, the key name, the starting location and replacement bytes.
+
+
+<Tabs>
+  <TabItem label="Python">
+   <Code code={writeBoxDataPython} lang="python" />
+  </TabItem>
+  <TabItem label="TEAL">
+   <Code code={writeBoxDataTEAL} lang="python" />
+  </TabItem>
+</Tabs>
+Refer [this](this) code snippet to get local storage value for different data types
+
+
+When using ```box_replace```, the box size can not increase. This means if the replacement bytes, when added to the start byte location, exceed the upper bounds of the box, the call will fail.
+
+The following sections cover the details of manipulating boxes within a smart contract.
+
+### Getting a Box Length¶
+The AVM offers the box_len opcode to retrieve the length of a box. This opcode can also be used to verify the existence of a particular box. The opcode takes the box key name and returns two unsigned integers (uint64). The top-of-stack is either a 0 or 1, where 1 indicates the existence of the box and 0 indicates the box does not exist. The next is the length of the box if it exists, else it is 0.
+
+<Tabs>
+  <TabItem label="Python">
+   <Code code={lenBoxDataPython} lang="python" />
+  </TabItem>
+  <TabItem label="TEAL">
+   <Code code={lenBoxDataTEAL} lang="python" />
+  </TabItem>
+</Tabs>
+Refer [this](this) code snippet to get local storage value for different data types
+
+### Deleting a Box¶
+
+App a is the only app that can delete its boxes.
+If an app is deleted, its boxes are not deleted. The boxes will not be modifiable but still can be queried using the SDKs. The minimum balance will also be locked. (the correct cleanup design is to look up the boxes from off-chain and call the app to delete all its boxes before deleting the app itself).
+
+The AVM offers the ```box_del``` opcode to delete a box. This opcode takes the box key name. The opcode returns one unsigned integer (uint64) with a value of 0 or 1. A value of 1 indicates the box existed and was deleted. A value of 0 indicates the box did not exist.
+
+<Tabs>
+  <TabItem label="Python">
+   <Code code={deleteBoxDataPython} lang="python" />
+  </TabItem>
+  <TabItem label="TEAL">
+   <Code code={deleteBoxDataTEAL} lang="TEAL" />
+  </TabItem>
+</Tabs>
+
+Refer [this](this) code snippet to get local storage value for different data types
+
+Warning: You must delete all boxes before deleting a contract. If this is not done, the minimum balance for that box is not recoverable
+
+
+## Minimum Balance Requirement For Boxes¶
+Boxes are created by a smart contract and raise the minimum balance requirement (MBR) that must be in the contract's ledger balance. This means that a contract that intends to use boxes, must be funded beforehand.
+
+When a box with name ```n``` and size ```s``` is created, the MBR is raised by ```2500 + 400 * (len(n)+s)``` microAlgos. When the box is destroyed, the minimum balance requirement is decremented by the same amount.
+
+Notice that the key (name) is included as part of the MBR calculation.
+
+For example, if a box is created with the name “BoxA” (a 4 byte long key) and with a size of 1024 bytes, the MBR for the app account increases by 413,700 microAlgos:
+
+``` (2500 per box) + (400 * (box size + key size))
+(2500) + (400 * (1024+4)) = 413,700 microAlgos 
+```
+
+Note: 
+Box: Box abstracts the reading and writing of a single value to a single box. The box size will be reconfigured dynamically to fit the size of the value being assigned to it.
+
+BoxRef: BoxRef abstracts the reading and writing of boxes containing raw binary data. The size is configured manually, and can be set to values larger than what the AVM can handle in a single value.
+
+BoxMap: BoxMap abstracts the reading and writing of a set of boxes using a common key and content type. Each composite key (prefix + key) still needs to be made available to the application via the `boxes` property of the Transaction.
+
+
+## Example: Storing struct in box map
+
+<Tabs>
+  <TabItem label="Python">
+   <Code code={boxExamplePython} lang="python" />
+  </TabItem>
+</Tabs>
+Refer [this](this) code snippet to get reference to other examples
