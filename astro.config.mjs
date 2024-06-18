@@ -3,6 +3,7 @@ import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://ghdevportal.algorand.foundation',
 	integrations: [
 		starlight({
 			title: "Algorand Developer Portal",
