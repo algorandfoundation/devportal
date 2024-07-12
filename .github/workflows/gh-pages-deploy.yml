@@ -1,9 +1,9 @@
 name: Deploy to Staging
 
 on:
+  workflow_dispatch:
   push:
     branches: [staging]
-  workflow_dispatch:
 
 permissions:
   contents: read
