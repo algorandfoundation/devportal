@@ -1,0 +1,45 @@
+---
+title: On-Chain Data Storage
+description: Data storage primitives in the Algorand Virtual Machine (AVM)
+draft: true
+---
+
+Smart contract applications can store data in three different ways on the chain.
+
+````d2
+direction: left
+Application Data Storage: {
+  "Global State, 0-64x": {
+    shape: sql_table
+    key: 1-64 bytes
+    value: uint64 or 0-127 bytes
+  }
+  "Per-Account Local State, 0-16x": {
+    shape: sql_table
+    key: 1-64 bytes
+    value: uint64 or 0-127 bytes
+  }
+  Boxes, 0-∞: {
+    shape: sql_table
+    key: 1-64 bytes
+    value: 0-32,768 bytes
+  }
+}
+```
+
+Although global state and box storage is associated only with an application, local state is associated with
+both an application and a particular account.
+
+```d2
+Account Data Storage: {
+  "Per-App Local State, 0-16x": {
+    shape: sql_table
+    key: 1-64 bytes
+    value: uint64 or 0-127 bytes
+  }
+}
+````
+
+Any accout which has opted into smart contract applications may have data stored in local storage which is
+associated with an application. The cost of this storage, which is assessed as an increase in the minimum
+balance requirement on the account.

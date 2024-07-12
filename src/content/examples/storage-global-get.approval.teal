@@ -1,0 +1,30 @@
+#pragma version 10
+
+get_global_state:
+    proto 0 1
+    int 0
+    byte "global_int_full"
+    app_global_get_ex
+    int 0
+    cover 2
+    select
+    retsub
+
+maybe_global_state:
+    proto 0 2
+    int 0
+    byte "global_int_full"
+    app_global_get_ex
+    dup
+    uncover 2
+    swap
+    bnz maybe_global_state_after_if_else@2
+    int 0
+    frame_bury 1
+
+maybe_global_state_after_if_else@2:
+    frame_dig 1
+    frame_dig 0
+    uncover 3
+    uncover 3
+    retsub

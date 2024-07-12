@@ -1,0 +1,11 @@
+#pragma version 10
+
+__init__:
+    proto 0 0
+    byte "global_bytes_full"
+    byte 0x48656c6c6f
+    app_global_put
+    byte "global_bytes_simplified"
+    byte 0x48656c6c6f
+    app_global_put
+    retsub

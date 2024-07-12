@@ -1,0 +1,18 @@
+---
+title: Application Lifecycle
+description: This is a description.
+sidebar:
+  label: Life Cycle
+---
+
+This is an example of the life cycle of a simple smart contract application that you can create, deploy, and
+call with AlgoKit.
+
+```d2
+shape: sequence_diagram
+
+Creator -> Application: Application call to create method
+Application <-> Creator: Return Application ID of app
+Caller -> Application: 'Call hello(str)str method with arg "world!"'
+Application -> Caller: 'Return ABI string via log "Hello, world!"'
+```

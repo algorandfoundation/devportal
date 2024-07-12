@@ -1,0 +1,8 @@
+#pragma version 10
+
+set_global_state:
+    proto 1 0
+    byte "global_bytes_full"
+    frame_dig -1
+    app_global_put
+    retsub

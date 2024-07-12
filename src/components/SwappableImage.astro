@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  lightSrc: any;
+  darkSrc: any;
+  alt: string;
+}
+
+const { lightSrc, darkSrc, alt, ...rest } = Astro.props;
+---
+
+<style>
+  .dark-mode .dark-image {
+    display: block;
+  }
+
+  .dark-mode .light-image {
+    display: none;
+  }
+
+  .light-mode .dark-image {
+    display: none;
+  }
+
+  .light-mode .light-image {
+    display: block;
+  }
+</style>
+
+<div class="light-image">
+  <Image src={lightSrc} alt={alt} {...rest} />
+</div>
+<div class="dark-image">
+  <Image src={darkSrc} alt={alt} {...rest} />
+</div>

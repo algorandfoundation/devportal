@@ -1,0 +1,13 @@
+---
+title: Constraints
+description: A guide in my new Starlight docs site.
+---
+
+
+## Storage Constraints
+
+| Storage Structure   | Key Length   | Value Length  | Unique Key Requirement | Additional Details  |
+|-------------------|--------------------------------------|--------------------|-------------------|--------------------------|
+| Local State Storage | Up to 64 bytes   | Key + value ≤ 128 bytes | Yes  | Larger datasets require partitioning        |
+| Box Storage         |   1 to 64 bytes    | Up to 32KB (32,768 bytes)    | Yes       | Key does not contribute to box size and values > 1,024 bytes need additional references |
+|Global State Storage | Up to 64 bytes   |  Key + value ≤ 128 bytes   | Yes | Larger datasets require partitioning      |

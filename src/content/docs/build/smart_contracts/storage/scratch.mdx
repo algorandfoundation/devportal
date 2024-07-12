@@ -1,4 +1,60 @@
 ---
-title: Scratch
+title: Scratch Storage
 description: A guide in my new Starlight docs site.
 ---
+
+import { Code } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+A scratch space is a temporary storage area used to store values for later use in your program. It consists of 256 scratch slots.
+Scratch spaces may be uint64 or byte-array and are initialized as uint64(0).
+
+The AVM (Algorand Virtual Machine) enables smart contracts to use scratch space for temporarily storing values during execution. Other contracts in the same atomic transaction group can read this scratch space. However, contracts can only access scratch space from earlier transactions within the same group, not from later ones.
+
+## TEAL
+
+In TEAL, you can use the `store`/`stores` and `load`/`loads` opcodes to read and write scratch slots. Additionally, you can use `gload`/`gloads` to read scratch slots from earlier transactions in the same group.
+
+## Algorand Python
+
+In Algorand Python, you can directly use these opcodes through the `op.Scratch` class. The accessed scratch slot indices or index ranges need to be declared using the `scratch_slots` variable during contract declaration.
+
+<Tabs>
+	<TabItem label="Algorand Python" icon="seti:python">
+		```python "scratch_slots"
+        from algopy import ARC4Contract, Bytes, UInt64, arc4, op, urange
+
+
+        class HelloWorld(ARC4Contract, scratch_slots=(1, urange(3, 20))):
+            @arc4.abimethod()
+            def hello(self) -> bool:
+                op.Scratch.store(1, UInt64(5))
+                op.Scratch.store(7, Bytes(b"Hello World"))
+
+                assert op.Scratch.load_uint64(1) == UInt64(5)
+                assert op.Scratch.load_bytes(7) == b"Hello World"
+
+                return True
+        ```
+	</TabItem>
+    <TabItem label="TEAL" icon="seti:error">
+        hello:
+            int 5
+            store 1
+            
+            byte 0x48656c6c6f20576f726c64
+            store 7
+            
+            load 1
+            int 5
+            ==
+            assert
+            
+            load 7
+            byte 0x48656c6c6f20576f726c64
+            ==
+            assert
+
+            int 1
+    </TabItem>
+</Tabs>

@@ -1,0 +1,8 @@
+#pragma version 10
+
+delete_local_data:
+    proto 1 0
+    frame_dig -1
+    byte "local_account"
+    app_local_del
+    err

@@ -1,50 +1,34 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: Welcome to the Algorand Developer Portal!
+description: Resources, tools, and documentation to help you build powerful applications on Algorand.
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Get started building on Algorand!
   image:
-    file: ../../assets/houston.webp
+    file: ../../assets/images/algokit-landing.png
   actions:
-    - text: Example Guide
-      link: /build/example/
+    - text: Quick Start Guide
+      link: /build/algokit/getting-started
       icon: right-arrow
       variant: primary
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
 ---
 
-import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import LinkInfoCard from '/src/components/LinkInfoCard.astro';
+import LinkInfoCardGrid from '/src/components/LinkInfoCardGrid.astro';
 
-## Next steps
-
-<CardGrid stagger>
-	<LinkCard title="example page" icon="pencil" href="/example">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</LinkCard>
-	<LinkCard
-		title="Protocol"
-		icon="add-document"
-		href="/protocol/consensus/configurations"
-	>
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</LinkCard>
-	<LinkCard title="Node Running" icon="setting" href="/node_running/archival/">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</LinkCard>
-	<LinkCard title="Reference" icon="open-book" href="/reference/overview">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</LinkCard>
-	<LinkCard
-		title="Security Practices"
-		icon="open-book"
-		href="/security_practices"
-	>
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</LinkCard>
-	<LinkCard title="Tools" icon="open-book" href="/tools/overview">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</LinkCard>
-</CardGrid>
+<LinkInfoCardGrid stagger>
+  <LinkInfoCard title='Build' icon='build-icon' href='/build/overview'>
+    Build applications on Algorand using a comprehensive set of CLI tools, SDKs, APIs that will enable you to
+    develop on Algorand in a familiar, frictionless way.
+  </LinkInfoCard>
+  <LinkInfoCard title='Protocol' icon='protocol-icon' href='/protocol/overview'>
+    Discover Algorand’s uniquely powerful features, including Pure Proof-of-Stake consensus, unmatched scalability, and
+    robust smart contract implementation, making it one of the most efficient and secure blockchain protocols available.
+  </LinkInfoCard>
+  <LinkInfoCard title='Reference' icon='reference-icon' href='/reference/'>
+    Explore the Algorand API and SDK reference documentation.
+  </LinkInfoCard>
+  <LinkInfoCard title='Running a node' icon='node-icon' href='/node_running/overview/'>
+   Learn about the different node types and how to run an Algorand node to participate in the network.
+  </LinkInfoCard>
+</LinkInfoCardGrid>

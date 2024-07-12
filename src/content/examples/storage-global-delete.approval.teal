@@ -1,0 +1,8 @@
+#pragma version 10
+
+del_global_state:
+    proto 0 1
+    byte "global_int_full"
+    app_global_del
+    int 1
+    retsub

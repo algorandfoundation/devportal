@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+pre,
+code {
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.2rem;
+  border: 1px solid;
+}
+
+/* START heading link styles */
+.heading-link {
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+.heading-link:hover::before {
+  opacity: 1;
+}
+/* END heading link styles */

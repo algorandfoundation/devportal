@@ -3,16 +3,31 @@ title: Addresses
 description: A guide in my new Starlight docs site.
 ---
 
-import { Code } from "@astrojs/starlight/components";
-import { Tabs, TabItem } from "@astrojs/starlight/components";
-import helloTs from "/src/content/examples/hello.ts?raw";
-import helloPy from "/src/content/examples/hello.py?raw";
+```d2
+direction: right
+Generator: {shape: circle}
+Account: {
+  Public Key -- Private Key
+}
+Random Seed -> Generator
+Generator -> Account
+```
 
-<Tabs syncKey="lang">
-	<TabItem label="Python" icon="seti:python">
-		<Code code={helloPy} lang="py" frame="none" />
-	</TabItem>
-	<TabItem label="TypeScript" icon="seti:typescript">
-		<Code code={helloTs} lang="ts" frame="none" />
-	</TabItem>
-</Tabs>
+```d2
+direction: right
+Scenario - Account 1 Rekeyed to Account 2: {
+  Account 1: {
+    shape: sql_table
+    Address: RE...KEYED
+    Balance: 200,000
+    Auth-Addr: SIGNS...FOR
+  }
+  Account 2: {
+    shape: sql_table
+    Address: SIGNS...FOR
+    Balance: 100,000
+    Auth-Addr: ""
+  }
+  Account 1 -> Account 2
+}
+```

@@ -1,0 +1,41 @@
+#pragma version 10
+
+get_local_data_with_default_int:
+    proto 1 1
+    frame_dig -1
+    int 0
+    byte "local_int"
+    app_local_get_ex
+    int 0
+    cover 2
+    select
+    retsub
+
+maybe_local_data:
+    proto 1 2
+    frame_dig -1
+    int 0
+    byte "local_int"
+    app_local_get_ex
+    dup
+    uncover 2
+    swap
+    bnz maybe_local_data_after_if_else@2
+    int 0
+    frame_bury 1
+
+maybe_local_data_after_if_else@2:
+    frame_dig 1
+    frame_dig 0
+    uncover 3
+    uncover 3
+    retsub
+
+get_item_local_data:
+    proto 1 1
+    frame_dig -1
+    int 0
+    byte "local_int"
+    app_local_get_ex
+    assert
+    retsub

@@ -1,0 +1,18 @@
+direction: left
+Application Data Storage: {
+  "Global State, 0-64x": {
+    shape: sql_table
+    key: 1-64 bytes
+    value: uint64 or 0-127 bytes
+  }
+  "Per-Account Local State, 0-16x": {
+    shape: sql_table
+    key: 1-64 bytes
+    value: uint64 or 0-127 bytes
+  }
+  Boxes, 0-∞: {
+    shape: sql_table
+    key: 1-64 bytes
+    value: 0-32,768 bytes
+  }
+}

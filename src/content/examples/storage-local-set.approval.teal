@@ -1,0 +1,9 @@
+#pragma version 10
+
+set_local_int:
+    proto 2 0
+    frame_dig -2
+    byte "local_int"
+    frame_dig -1
+    app_local_put
+    retsub
