@@ -3,11 +3,11 @@ title: Authoring Guide
 description: Collection of example components to copy paste into various things
 ---
 
-import { Code } from "@astrojs/starlight/components";
-import { Tabs, TabItem } from "@astrojs/starlight/components";
-import helloTs from "/src/content/examples/hello.ts?raw";
-import helloPy from "/src/content/examples/hello.py?raw";
-import helloSh from "/src/content/examples/hello.sh?raw";
+import { Code } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import helloTs from '/src/examples/hello.ts?raw';
+import helloPy from '/src/examples/hello.py?raw';
+import helloSh from '/src/examples/hello.sh?raw';
 
 ## Dealing with code
 
@@ -16,13 +16,13 @@ import helloSh from "/src/content/examples/hello.sh?raw";
 to import code you first need to import the code component
 just paste `import { Code } from "@astrojs/starlight/components";` in the first line after the front matter section
 
-afterwards you need to import the code snippet such as like `import helloPy from "/src/content/examples/hello.py?raw";`
+afterwards you need to import the code snippet such as like `import helloPy from "/src/examples/hello.py?raw";`
 
 you can then use the code component like this `<Code code={helloPy} lang="py" title="hello.py" />`
 
 and the result is the following
 
-<Code code={helloPy} lang="py" title="hello.py" />
+<Code code={helloPy} lang='py' title='hello.py' />
 
 ### Mid level
 
@@ -34,24 +34,24 @@ the structure to give the `.mdx` in the mdx file is the following
 
 ```mdx
 <Tabs>
-	<TabItem label="Stars" icon="star">
-		import code snippet or what not
-	</TabItem>
-	<TabItem label="Moons" icon="moon">
-		wow
-	</TabItem>
+  <TabItem label='Stars' icon='star'>
+    import code snippet or what not
+  </TabItem>
+  <TabItem label='Moons' icon='moon'>
+    wow
+  </TabItem>
 </Tabs>
 ```
 
 so if we put in there the code components this happens
 
 <Tabs>
-	<TabItem label="Python" icon="seti:python">
-		<Code code={helloPy} lang="py" title="hello.py" />
-	</TabItem>
-	<TabItem label="TypeScript" icon="seti:typescript">
-		<Code code={helloTs} lang="ts" title="hello.ts" />
-	</TabItem>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={helloPy} lang='py' title='hello.py' />
+  </TabItem>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={helloTs} lang='ts' title='hello.ts' />
+  </TabItem>
 </Tabs>
 
 if your first reaction is `ewww why is there a header on the component after the tabbed bar`
@@ -60,24 +60,24 @@ the following snippet
 
 ```mdx
 <Tabs>
-	<TabItem label="Python" icon="seti:python">
-		<Code code={helloPy} lang="py" frame="none" />
-	</TabItem>
-	<TabItem label="TypeScript" icon="seti:typescript">
-		<Code code={helloTs} lang="ts" frame="none" />
-	</TabItem>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={helloPy} lang='py' frame='none' />
+  </TabItem>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={helloTs} lang='ts' frame='none' />
+  </TabItem>
 </Tabs>
 ```
 
 gives us
 
 <Tabs>
-	<TabItem label="Python" icon="seti:python">
-		<Code code={helloPy} lang="py" frame="none" />
-	</TabItem>
-	<TabItem label="TypeScript" icon="seti:typescript">
-		<Code code={helloTs} lang="ts" frame="none" />
-	</TabItem>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={helloPy} lang='py' frame='none' />
+  </TabItem>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={helloTs} lang='ts' frame='none' />
+  </TabItem>
 </Tabs>
 ### Goat level
 
@@ -86,33 +86,33 @@ As you may have noticed the tabs don't keep sync on the preferred language, luck
 so if to the top we add `syncKey="lang"` it'll check the label of each `TabItem` and keep it in sync
 
 ```mdx
-<Tabs syncKey="lang">
-	<TabItem label="Python" icon="seti:python">
-		<Code code={helloPy} lang="py" frame="none" />
-	</TabItem>
-	<TabItem label="TypeScript" icon="seti:typescript">
-		<Code code={helloTs} lang="ts" frame="none" />
-	</TabItem>
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={helloPy} lang='py' frame='none' />
+  </TabItem>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={helloTs} lang='ts' frame='none' />
+  </TabItem>
 </Tabs>
 ```
 
 the two following are synced
 
-<Tabs syncKey="lang">
-	<TabItem label="Python" icon="seti:python">
-		<Code code={helloPy} lang="py" frame="none" />
-	</TabItem>
-	<TabItem label="TypeScript" icon="seti:typescript">
-		<Code code={helloTs} lang="ts" frame="none" />
-	</TabItem>
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={helloPy} lang='py' frame='none' />
+  </TabItem>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={helloTs} lang='ts' frame='none' />
+  </TabItem>
 </Tabs>
-<Tabs syncKey="lang">
-	<TabItem label="Python" icon="seti:python">
-		<Code code={helloPy} lang="py" frame="none" />
-	</TabItem>
-	<TabItem label="TypeScript" icon="seti:typescript">
-		<Code code={helloTs} lang="ts" frame="none" />
-	</TabItem>
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={helloPy} lang='py' frame='none' />
+  </TabItem>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={helloTs} lang='ts' frame='none' />
+  </TabItem>
 </Tabs>
 
 ### Terminal commands
@@ -121,7 +121,7 @@ the two following are synced
 echo "Hello, world! "
 ```
 
-<Code code={helloSh} lang="sh" frame="none" />
+<Code code={helloSh} lang='sh' frame='none' />
 
 ### Asides
 

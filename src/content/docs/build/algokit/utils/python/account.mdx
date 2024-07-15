@@ -1,22 +1,27 @@
 ---
 title: Account Management
-prev: 
-    link: /build/algokit/utils/python/overview/
+prev:
+  link: /build/algokit/utils/python/overview/
 next:
-    link: /build/algokit/utils/python/client/
+  link: /build/algokit/utils/python/client/
 sidebar:
   order: 2
 ---
 
-import { Code } from "@astrojs/starlight/components";
-import accountFromPKExample from "/src/content/examples/algokit/algokit-utils-py-account-pk.py?raw";
-import accountFromPKAddrExample from "/src/content/examples/algokit/algokit-utils-py-account-pk-addr.py?raw";
-import getAccountExample from "/src/content/examples/algokit/algokit-utils-py-account-get_account.py?raw";
-import newAccountExample from "/src/content/examples/algokit/algokit-utils-py-account-new_account.py?raw";
-import example from "/src/content/examples/algokit/algokit-utils-py-account-example.py?raw";
-export const highlights = ['Account(private_key)', 'Account(private_key, address=account_address)', 'get_account()', 'new_account()'];
+import { Code } from '@astrojs/starlight/components';
+import accountFromPKExample from '/src/examples/algokit/algokit-utils-py-account-pk.py?raw';
+import accountFromPKAddrExample from '/src/examples/algokit/algokit-utils-py-account-pk-addr.py?raw';
+import getAccountExample from '/src/examples/algokit/algokit-utils-py-account-get_account.py?raw';
+import newAccountExample from '/src/examples/algokit/algokit-utils-py-account-new_account.py?raw';
+import example from '/src/examples/algokit/algokit-utils-py-account-example.py?raw';
+export const highlights = [
+  'Account(private_key)',
+  'Account(private_key, address=account_address)',
+  'get_account()',
+  'new_account()',
+];
 
-Account management is one of the core capabilities provided by AlgoKit Utils. It allows you to create mnemonic, idempotent KMD, and environment variable injected accounts 
+Account management is one of the core capabilities provided by AlgoKit Utils. It allows you to create mnemonic, idempotent KMD, and environment variable injected accounts
 that can be used to sign transactions as well as representing a sender address at the same time.
 
 ## Account object
@@ -24,32 +29,45 @@ that can be used to sign transactions as well as representing a sender address a
 Encapsulates a private key with convenience properties for `address`, `signer` and `public_key`.
 There are various methods of obtaining an `Account` instance:
 
-* **`get_account`**: Returns an `Account` instance with the private key loaded by convention based on the given name identifier:
-  * from an environment variable containing a mnemonic `{NAME}_MNEMONIC` OR
-  * loading the account from KMD ny name if it exists (LocalNet only) OR
-  * creating the account in KMD with associated name (LocalNet only)
+- **`get_account`**: Returns an `Account` instance with the private key loaded by convention based on the given name identifier:
 
-  <Code code={getAccountExample} lang="py" frame="none" mark={highlights} />
+  - from an environment variable containing a mnemonic `{NAME}_MNEMONIC` OR
+  - loading the account from KMD ny name if it exists (LocalNet only) OR
+  - creating the account in KMD with associated name (LocalNet only)
 
-  This allows you to have powerful code that will automatically create and fund an account by name locally and when deployed against 
+  <Code code={getAccountExample} lang='py' frame='none' mark={highlights} />
+
+  This allows you to have powerful code that will automatically create and fund an account by name locally and when deployed against
   TestNet/MainNet will automatically resolve from environment variables
- 
-- **`Account.new_account`**: Returns a new `Account` instance using `algosdk.account.generate_account()`
 
-    <Code code={newAccountExample} lang="py" frame="none" mark={highlights} />
-- **`Account(private_key)`**: Load an existing account from a private key:
+* **`Account.new_account`**: Returns a new `Account` instance using `algosdk.account.generate_account()`
 
-    <Code code={accountFromPKExample} lang="py" frame="none" mark={highlights} />
-- **`Account(private_key, address)`**: Load an existing account from a private key and address, useful for re-keyed accounts
+  {' '}
+  <Code code={newAccountExample} lang='py' frame='none' mark={highlights} />
 
-    <Code code={accountFromPKAddrExample} lang="py" frame="none" mark={highlights} />
-- **`get_account_from_mnemonic`**: Load an existing account from a mnemonic
-- **`get_dispenser_account`**: Gets a dispenser account that is funded by either:
+* **`Account(private_key)`**: Load an existing account from a private key:
+
+  {' '}
+  <Code code={accountFromPKExample} lang='py' frame='none' mark={highlights} />
+
+* **`Account(private_key, address)`**: Load an existing account from a private key and address, useful for re-keyed accounts
+
+  {' '}
+  <Code
+    code={accountFromPKAddrExample}
+    lang='py'
+    frame='none'
+    mark={highlights}
+  />
+
+* **`get_account_from_mnemonic`**: Load an existing account from a mnemonic
+* **`get_dispenser_account`**: Gets a dispenser account that is funded by either:
   - Using the LocalNet default account (LocalNet only) OR
   - Loading an account from `DISPENSER_MNEMONIC`
 
 If working with a LocalNet instance, there are some additional functions that rely on a KMD service being exposed:
-* `create_kmd_wallet_account`, `get_kmd_wallet_account` or `get_or_create_kmd_wallet_account`: These functions allow retrieving a KMD wallet account by name,
-* `get_localnet_default_account`: Gets default localnet account that is funded with algos
 
-<Code code={example} lang="py" frame="none" mark={highlights} />
+- `create_kmd_wallet_account`, `get_kmd_wallet_account` or `get_or_create_kmd_wallet_account`: These functions allow retrieving a KMD wallet account by name,
+- `get_localnet_default_account`: Gets default localnet account that is funded with algos
+
+<Code code={example} lang='py' frame='none' mark={highlights} />

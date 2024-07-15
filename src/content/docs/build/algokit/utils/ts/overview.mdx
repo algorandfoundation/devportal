@@ -3,42 +3,49 @@ title: AlgoKit Typescript Utils
 description: An overview of the AlgoKit Typescript utils library.
 prev: false
 next:
-    link: /build/algokit/utils/ts/account/
-    label: Account Management
+  link: /build/algokit/utils/ts/account/
+  label: Account Management
 sidebar:
   label: Overview
   order: 1
 ---
 
-import { Code } from "@astrojs/starlight/components";
+import { Code } from '@astrojs/starlight/components';
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';
 import { Aside } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
-import importedCodeLogger from '/src/content/examples/algokit-utils-ts-overview.ts?raw';
-
+import importedCodeLogger from '/src/examples/algokit/utils-ts/algokit-utils-ts-overview.ts?raw';
 
 # Overview
+
 A set of core Algorand utilities written in TypeScript and released via npm that make it easier to build, test and deploy solutions on the Algorand Blockchain, including APIs, console apps and dApps. This project is part of [AlgoKit](https://github.com/algorandfoundation/algokit-cli).
 
 The goal of this library is to provide intuitive, productive utility functions that make it easier, quicker and safer to build applications on Algorand. Largely these functions provide a thin wrapper over the underlying Algorand SDK, but provide a higher level interface with sensible defaults and capabilities for common tasks that make development faster and easier.
 
-:::note 
+:::note
 If you prefer Python there's an equivalent [Python utility library](/build/algokit/utils/python/overview).
 :::
 
 ## Features
 
 <CardGrid>
-  <LinkCard title="Account Management" href="/build/algokit/utils/ts/account/" />
-  <LinkCard title="Client Management" href="/build/algokit/utils/ts/client/" />
-  <LinkCard title="App Client" href="/build/algokit/utils/ts/app-client/" />
-  <LinkCard title="App Deployment" href="/build/algokit/utils/ts/app-deploy/" />
-  <LinkCard title="Algo Transfer" href="/build/algokit/utils/ts/transfer/" />
-  <LinkCard title="Testnet Dispenser Client" href="/build/algokit/utils/ts/dispenser/" />
-  <LinkCard title="Reference" href="/build/algokit/utils/ts/reference/" />
+  <LinkCard
+    title='Account Management'
+    href='/build/algokit/utils/ts/account/'
+  />
+  <LinkCard title='Client Management' href='/build/algokit/utils/ts/client/' />
+  <LinkCard title='App Client' href='/build/algokit/utils/ts/app-client/' />
+  <LinkCard title='App Deployment' href='/build/algokit/utils/ts/app-deploy/' />
+  <LinkCard title='Algo Transfer' href='/build/algokit/utils/ts/transfer/' />
+  <LinkCard
+    title='Testnet Dispenser Client'
+    href='/build/algokit/utils/ts/dispenser/'
+  />
+  <LinkCard title='Reference' href='/build/algokit/utils/ts/reference/' />
 </CardGrid>
 
 ## Core principles
+
 This library is designed with the following principles:
 
 - **Modularity** - This library is a thin wrapper of modular building blocks over the Algorand SDK; the primitives from the underlying Algorand SDK are exposed and used wherever possible so you can opt-in to which parts of this library you want to use without having to use an all or nothing approach.
@@ -46,6 +53,7 @@ This library is designed with the following principles:
 - **Productivity** - This library is built to make solution developers highly productive; it has a number of mechanisms to make common code easier and terser to write
 
 ## Installation
+
 This library can be installed from NPM using your favourite npm client:
 
 ```bash
@@ -53,13 +61,15 @@ npm install @algorandfoundation/algokit-utils
 ```
 
 ### Peer Dependencies
+
 This library requires `algosdk` as a peer dependency. Ensure you have it installed in your project.
 
 ## Usage
+
 To use this library simply include the following at the top of your file:
 
 ```typescript
-import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils'
+import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils';
 ```
 
 As well as `AlgorandClient` and `Config`, you can use intellisense to auto-complete the various types that you can import withing the {} in your favourite Integrated Development Environment (IDE), or you can refer to the [reference documentation](/build/algokit/utils/ts/reference).
@@ -72,6 +82,7 @@ As well as `AlgorandClient` and `Config`, you can use intellisense to auto-compl
     ```
 
     This version will still work, but it exposes an older, function-based interface to the functionality that is in the process of being deprecated. The recommended way to use AlgoKit Utils is via the `AlgorandClient` class mentioned below, which is easier and more convenient to use. Some functionality won't yet be migrated to the new approach and this old approach will be needed, but the documentation pages will indicate when this is the case.
+
 </Aside>
 
 The main entrypoint to the bulk of the functionality is the `AlgorandClient` class, most of the time you can get started by typing `algokit.AlgorandClient.` and choosing one of the static initialisation methods to create an [Algorand client](/build/algokit/utils/ts/algorand-client), e.g.:
@@ -80,24 +91,29 @@ The main entrypoint to the bulk of the functionality is the `AlgorandClient` cla
 // Point to the network configured through environment variables or
 //  if no environment variables it will point to the default LocalNet
 //  configuration
-const algorand = algokit.AlgorandClient.fromEnvironment()
+const algorand = algokit.AlgorandClient.fromEnvironment();
 // Point to default LocalNet configuration
-const algorand = algokit.AlgorandClient.defaultLocalNet()
+const algorand = algokit.AlgorandClient.defaultLocalNet();
 // Point to TestNet using AlgoNode free tier
-const algorand = algokit.AlgorandClient.testNet()
+const algorand = algokit.AlgorandClient.testNet();
 // Point to MainNet using AlgoNode free tier
-const algorand = algokit.AlgorandClient.mainNet()
+const algorand = algokit.AlgorandClient.mainNet();
 // Point to a pre-created algod client
-const algorand = algokit.AlgorandClient.fromClients({ algod })
+const algorand = algokit.AlgorandClient.fromClients({ algod });
 // Point to pre-created algod, indexer and kmd clients
-const algorand = algokit.AlgorandClient.fromClients({ algod, indexer, kmd })
+const algorand = algokit.AlgorandClient.fromClients({ algod, indexer, kmd });
 // Point to custom configuration for algod
-const algorand = algokit.AlgorandClient.fromConfig({ algodConfig })
+const algorand = algokit.AlgorandClient.fromConfig({ algodConfig });
 // Point to custom configuration for algod, indexer and kmd
-const algorand = algokit.AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConfig })
+const algorand = algokit.AlgorandClient.fromConfig({
+  algodConfig,
+  indexerConfig,
+  kmdConfig,
+});
 ```
 
 ## Types
+
 If you want to extend or pass around any of the types the various functions take then they are all defined in isolated modules under the `types` namespace. This is to provide a better intellisense experience without overwhelming you with hundreds of types. If you determine a type to import then you can import it like so:
 
 ```typescript
@@ -107,33 +123,35 @@ import {<type>} from '@algorandfoundation/types/<module>'
 Where `<type>` would be replaced with the type and `<module>` would be replaced with the module. You can use intellisense to discover the modules and types in your favourite IDE, or you can explore the [types modules in the reference documentation](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/README.md#modules).
 
 ## Config and logging
+
 To configure the AlgoKit Utils library you can make use of the `algokit.Config` object, which has a `configure` method that lets you configure some or all of the configuration options.
 
 ## Logging
+
 AlgoKit has an in-built logging abstraction that allows the library to issue log messages without coupling the library to a particular logging library. This means you can access the AlgoKit Utils logs within your existing logging library if you have one.
 
 To do this you need to create a logging translator that exposes the following interface ([`Logger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#logger)):
 
-<Code code={importedCodeLogger} lang="ts" title="Typescript" />
-:::note 
-this interface type is directly compatible with [Winston](https://github.com/winstonjs/winston) so you should be able to pass AlgoKit a Winston logger.
-:::
+<Code code={importedCodeLogger} lang='ts' title='Typescript' />
+:::note this interface type is directly compatible with [Winston](https://github.com/winstonjs/winston)
+so you should be able to pass AlgoKit a Winston logger. :::
 
 By default, the [`consoleLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#consolelogger) is set as the logger, which will send log messages to the various `console.*` methods for all logs apart from verbose logs. There is also a [`nullLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#nulllogger) if you want to disable logging, or various leveled console loggers: [`verboseConsoleLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#verboseconsolelogger) (also outputs verbose logs), [`infoConsoleLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#infoconsolelogger) (only outputs info, warning and error logs), [`warningConsoleLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#warningconsolelogger) (only outputs warning and error logs).
 
 If you want to override the logger you can use the following:
 
 ```typescript
-algokit.configure({ logger: myLogger })
+algokit.configure({ logger: myLogger });
 ```
 
 To retrieve the current debug state you can use [`algokit.Config.logger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/interfaces/types_config.Config.md). To get a logger that is optionally set to the null logger based on a boolean flag you can use the [`algokit.Config.getLogger(useNullLogger)`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/classes/types_config.UpdatableConfig.md#getlogger) function.
 
 ## Debug mode
+
 To turn on debug mode you can use the following:
 
 ```typescript
-algokit.configure({ debug: true })
+algokit.configure({ debug: true });
 ```
 
 To retrieve the current debug state you can use [`algokit.Config.debug`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/interfaces/types_config.Config.md).
@@ -145,26 +163,29 @@ If you want to temporarily turn it on you can use the [`withDebug`](https://gith
 ```typescript
 algokit.Config.withDebug(() => {
   // Do stuff with algokit.Config.debug set to true
-})
+});
 ```
 
 ## Testing
+
 AlgoKit Utils contains a module that helps you write automated tests against an Algorand network (usually LocalNet). These tests can run locally on a developer's machine, or on a Continuous Integration server.
 
 To use the automated testing functionality, you can import the testing module:
+
 ```typescript
-import * as algotesting from '@algorandfoundation/algokit-utils/testing'
+import * as algotesting from '@algorandfoundation/algokit-utils/testing';
 ```
 
 Or, you can generally get away with just importing the `algorandFixture` since it exposes the rest of the functionality in a manner that is easy to integrate with an underlying test framework like Jest or vitest:
 
 ```typescript
-import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
+import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
 To see how to use it consult the [testing capability page](/build/algokit/utils/ts/testing) or to see what's available look at the [reference documentation](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/testing.md).
 
 ## Features
+
 The library provides the following features:
 
 - [**AlgorandClient**](/build/algokit/utils/ts/algorand-client) - The key entrypoint to the AlgoKit Utils functionality
@@ -182,6 +203,7 @@ The library provides the following features:
   - [**Indexer lookups / searching**](/build/algokit/utils/ts/indexer) - Type-safe indexer API wrappers (no more `Record<string, any>` pain), including automatic pagination control
 
 ## Reference documentation
+
 We have [auto-generated reference documentation for the code](/build/algokit/utils/ts/reference).
 
 ## Roadmap

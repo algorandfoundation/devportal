@@ -7,14 +7,14 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
 import importedCode from '/src/env.d.ts?raw';
 import { Aside } from '@astrojs/starlight/components';
-import createLocalStatePython from '/src/content/examples/storage-local-init-py.py?raw';
-import getLocalStoragePython from '/src/content/examples/storage-local-init-py.py?raw';
-import setLocalStoragePython from '/src/content/examples/storage-local-init-py.py?raw';
-import deleteLocalStoragePython from '/src/content/examples/storage-local-init-py.py?raw'; 
+import createLocalStatePython from '/src/examples/storage-local-init-py.py?raw';
+import getLocalStoragePython from '/src/examples/storage-local-init-py.py?raw';
+import setLocalStoragePython from '/src/examples/storage-local-init-py.py?raw';
+import deleteLocalStoragePython from '/src/examples/storage-local-init-py.py?raw';
 import {
-    getLocalStorageTEAL,
-    setLocalStorageTEAL,
-    deleteLocalStorageTEAL
+  getLocalStorageTEAL,
+  setLocalStorageTEAL,
+  deleteLocalStorageTEAL,
 } from '/src/content/code-imports.js';
 
 Local state is associated with each account that opts into the application.
@@ -22,17 +22,17 @@ Algorand smart contracts offer local storage, which enables accounts to maintain
 
 ## Manipulating Local State
 
-Smart contracts can create, update, and delete values in local state. The number of values that can be written is limited by the initial configuration set during smart contract creation. 
+Smart contracts can create, update, and delete values in local state. The number of values that can be written is limited by the initial configuration set during smart contract creation.
 
-TEAL (Transaction Execution Approval Language) provides several opcodes for facilitating reading and writing to state including ```app_local_put```, ```app_local_get``` and ```app_local_get_ex```.  In addition to using TEAL, the local state values of a smart contract can be read externally using SDKs and the goal CLI. These reads are non-transactional queries that retrieve the current state of the contract.
+TEAL (Transaction Execution Approval Language) provides several opcodes for facilitating reading and writing to state including `app_local_put`, `app_local_get` and `app_local_get_ex`. In addition to using TEAL, the local state values of a smart contract can be read externally using SDKs and the goal CLI. These reads are non-transactional queries that retrieve the current state of the contract.
 
 ### Allocation
 
 Local storage is allocated when an account opts into a smart contract by submitting an opt-in transaction. Each account can have between 0 and 16 key-value pairs in local storage, with a total of 2KB memory shared among them. The amount of local storage is determined during smart contract creation and cannot be edited later. The opted-in user account is responsible for funding the local storage by increasing their minimum balance requirement.
 
-<Tabs syncKey="lang">
-  <TabItem label="Python" icon="seti:python">
-   <Code code={createLocalStatePython} lang="py" frame="none" />
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={createLocalStatePython} lang='py' frame='none' />
   </TabItem>
 </Tabs>
 
@@ -45,18 +45,18 @@ Local storage values are stored in the account's balance record. Any account tha
 These five accounts can have their storage values read for any smart contract on Algorand by specifying the application ID of the smart contract, if the additional contract is included in the transaction's applications array. This is a read-only operation and does not allow one smart contract to modify the local state of another. The additionally referenced accounts can be changed per smart contract call (transaction). The key-value pairs in local storage can be read on-chain directly or off-chain using SDKs and the goal CLI. Local storage is editable only by the smart contract itself, but it can be deleted by either the smart contract or the user account (using a ClearState call).
 
 TEAL provides opcodes to read local state values for the current smart contract.
-The ```app_local_get``` opcode retrieves values from the current contract's local storage.
-The ```app_local_get_ex``` opcode returns two values on the stack: a ```boolean``` indicating whether the value was found, and the actual ```value``` if it exists.
+The `app_local_get` opcode retrieves values from the current contract's local storage.
+The `app_local_get_ex` opcode returns two values on the stack: a `boolean` indicating whether the value was found, and the actual `value` if it exists.
 
-The _ex opcodes allow reading local states from other accounts and smart contracts, as long as the account and contract are included in the accounts and applications arrays.
-Branching logic is typically used after calling the _ex opcodes to handle cases where the value is found or not found.
+The \_ex opcodes allow reading local states from other accounts and smart contracts, as long as the account and contract are included in the accounts and applications arrays.
+Branching logic is typically used after calling the \_ex opcodes to handle cases where the value is found or not found.
 
-<Tabs syncKey="lang">
-  <TabItem label="Python" icon="seti:python">
-   <Code code={getLocalStoragePython} lang="py" frame="none" />
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={getLocalStoragePython} lang='py' frame='none' />
   </TabItem>
-  <TabItem label="TEAL" icon="algorand-icon">
-    <Code code={getLocalStorageTEAL} lang="TEAL" />
+  <TabItem label='TEAL' icon='algorand-icon'>
+    <Code code={getLocalStorageTEAL} lang='TEAL' />
   </TabItem>
 </Tabs>
 
@@ -65,13 +65,15 @@ Refer [Sinppet Source](https://github.com/Asthay97/puya/blob/feature/kitchen-sin
 The local state values of a smart contract can also be read externally using cli. The below command reads are non-transactional queries that retrieve the current state of the contract.
 
 Example command:
-```shell {1} showLineNumbers=false frame=terminal 
+
+```shell {1} showLineNumbers=false frame=terminal
 goal app read --app-id 1 --guess-format --local --from [ADDRESS]
 ```
 
-This command will return the local state for the account specified by ```--from```.
+This command will return the local state for the account specified by `--from`.
 
 Example output with 3 key-value pairs
+
 ```json title="Output.json"
 {
   "Creator": {
@@ -91,25 +93,27 @@ Example output with 3 key-value pairs
 
 Interpretation:
 
-- The keys are ```Creator```, ```MyBytesKey```, and ```MyUintKey```.
-- The ```tt``` field indicates the type of the value: 1 for byte slices (byte-array values), 2 for uint64 values.
-- When ```tt=1```, the value is stored in the ```tb``` field. The ```--guess-format``` option automatically converts the ```Creator``` value to an Algorand address with a checksum (instead of displaying the raw 32-byte public key).
-- When ```tt=2```, the value is stored in the ```ui``` field.
-
-
+- The keys are `Creator`, `MyBytesKey`, and `MyUintKey`.
+- The `tt` field indicates the type of the value: 1 for byte slices (byte-array values), 2 for uint64 values.
+- When `tt=1`, the value is stored in the `tb` field. The `--guess-format` option automatically converts the `Creator` value to an Algorand address with a checksum (instead of displaying the raw 32-byte public key).
+- When `tt=2`, the value is stored in the `ui` field.
 
 ### Writing to Local State
 
-To write to local state, use the ```app_local_put``` opcode. An additional account parameter is provided to specify which account's local storage should be modified.
+To write to local state, use the `app_local_put` opcode. An additional account parameter is provided to specify which account's local storage should be modified.
 
-<Aside> In addition to the transaction sender, a smart contract call can reference up to four additional accounts </Aside>
+<Aside>
+  {' '}
+  In addition to the transaction sender, a smart contract call can reference up to
+  four additional accounts{' '}
+</Aside>
 
-<Tabs syncKey="lang">
-  <TabItem label="Python" icon="seti:python">
-   <Code code={setLocalStoragePython} lang="py" frame="none" />
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={setLocalStoragePython} lang='py' frame='none' />
   </TabItem>
-  <TabItem label="TEAL" icon="algorand-icon">
-    <Code code={setLocalStorageTEAL} lang="TEAL" />
+  <TabItem label='TEAL' icon='algorand-icon'>
+    <Code code={setLocalStorageTEAL} lang='TEAL' />
   </TabItem>
 </Tabs>
 
@@ -121,12 +125,12 @@ Deleting a smart contract does not affect its local storage. Accounts must clear
 Every smart contract has an ApprovalProgram and a ClearStateProgram. An account holder can clear their local state for a contract at any time by executing a ClearState transaction, deleting their data and freeing up their locked minimum balance.
 An account can request to clear its local state using a closeout transaction or clear its local state for a specific contract using a clearstate transaction, which will always succeed, even after the contract is deleted.
 
-<Tabs syncKey="lang">
-  <TabItem label="Python" icon="seti:python">
-   <Code code={deleteLocalStoragePython} lang="py" frame="none" />
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={deleteLocalStoragePython} lang='py' frame='none' />
   </TabItem>
-  <TabItem label="TEAL" icon="algorand-icon">
-    <Code code={deleteLocalStorageTEAL} lang="TEAL" />
+  <TabItem label='TEAL' icon='algorand-icon'>
+    <Code code={deleteLocalStorageTEAL} lang='TEAL' />
   </TabItem>
 </Tabs>
 
@@ -138,24 +142,22 @@ For manipulating local storage data like reading, writing, deleting and checking
 
 TEAL: Different opcodes can be used
 
-| Function         | Description                                      | 
-|------------------|--------------------------------------------------|
-| app_local_get    | Get local data for the current app               |
-| app_local_get_ex | Get local data for other app                     |
-| app_local_put    | Set local data to the current app                | 
-| app_local_del    | Delete local data from the current app           |
-| app_local_get_ex | Check if local data exists for the current app   |
+| Function         | Description                                    |
+| ---------------- | ---------------------------------------------- |
+| app_local_get    | Get local data for the current app             |
+| app_local_get_ex | Get local data for other app                   |
+| app_local_put    | Set local data to the current app              |
+| app_local_del    | Delete local data from the current app         |
+| app_local_get_ex | Check if local data exists for the current app |
 | app_local_get_ex | Check if local data exists for the other app   |
 
-
 Python SDK: Different functions of LocalState class can be used. The detailed api reference can be found [here](https://algorandfoundation.github.io/puya/api-algopy.html#algopy.LocalState)
-| Function                  | Description                                               |
+| Function | Description |
 |---------------------------|-----------------------------------------------------------|
-| LocalState(type_)         | Initialize a local state with the specified data type     |
-| getitem(account)          | Get data for the given account                            |
-| get(account, default)     | Get data for the given account, or a default value if not found |
-| maybe(account)            | Get data for the given account, and a boolean indicating if it exists |
-| setitem(account, value)   | Set data for the given account                            |
-| delitem(account)          | Delete data for the given account                         |
-| contains(account)         | Check if data exists for the given account                |
-
+| LocalState(type\_) | Initialize a local state with the specified data type |
+| getitem(account) | Get data for the given account |
+| get(account, default) | Get data for the given account, or a default value if not found |
+| maybe(account) | Get data for the given account, and a boolean indicating if it exists |
+| setitem(account, value) | Set data for the given account |
+| delitem(account) | Delete data for the given account |
+| contains(account) | Check if data exists for the given account |

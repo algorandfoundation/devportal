@@ -1,0 +1,18 @@
+hello:
+    int 5
+    store 1
+    
+    byte 0x48656c6c6f20576f726c64
+    store 7
+    
+    load 1
+    int 5
+    ==
+    assert
+    
+    load 7
+    byte 0x48656c6c6f20576f726c64
+    ==
+    assert
+
+    int 1

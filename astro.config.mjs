@@ -192,7 +192,7 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    // Rehype plugin to add target="_blank" and rel="noopener noreferrer" to external links
+    // Rehype plugin that adds target="_blank" and rel="noopener noreferrer" to external links
     rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: 'noopener noreferrer' }]],
   },
 });

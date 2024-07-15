@@ -9,14 +9,8 @@ code {
   border: 1px solid;
 }
 
-/* START heading link styles */
-.heading-link {
-  text-decoration: none;
-  color: inherit;
-  position: relative;
+table.reference-table td:first-child,
+table.reference-table code {
+  @apply text-xs;
+  white-space: nowrap;
 }
-
-.heading-link:hover::before {
-  opacity: 1;
-}
-/* END heading link styles */

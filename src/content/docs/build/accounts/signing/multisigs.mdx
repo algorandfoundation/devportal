@@ -3,16 +3,16 @@ title: Multisigs
 description: A guide in my new Starlight docs site.
 ---
 
-import { Code } from "@astrojs/starlight/components";
-import { Tabs, TabItem } from "@astrojs/starlight/components";
-import helloTs from "/src/content/examples/hello.ts?raw";
-import helloPy from "/src/content/examples/hello.py?raw";
+import { Code } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import helloTs from '/src/examples/hello.ts?raw';
+import helloPy from '/src/examples/hello.py?raw';
 
-<Tabs syncKey="lang">
-	<TabItem label="Python" icon="seti:python">
-		<Code code={helloPy} lang="py" frame="none" />
-	</TabItem>
-	<TabItem label="TypeScript" icon="seti:typescript">
-		<Code code={helloTs} lang="ts" frame="none" />
-	</TabItem>
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={helloPy} lang='py' frame='none' />
+  </TabItem>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={helloTs} lang='ts' frame='none' />
+  </TabItem>
 </Tabs>

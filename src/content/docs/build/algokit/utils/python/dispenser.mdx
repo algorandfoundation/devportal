@@ -8,8 +8,8 @@ sidebar:
   order: 7
 ---
 
-import { Code, Aside } from "@astrojs/starlight/components";
-import dispenserClientExample from "/src/content/examples/algokit/algokit-utils-py-dispenser-client.py?raw"; 
+import { Code, Aside } from '@astrojs/starlight/components';
+import dispenserClientExample from '/src/examples/algokit/algokit-utils-py-dispenser-client.py?raw';
 
 The TestNet Dispenser Client is a utility for interacting with the AlgoKit TestNet Dispenser API. It provides
 methods to fund an account, register a refund for a transaction, and get the current limit for an account.
@@ -26,7 +26,8 @@ To create a Dispenser Client, you need to provide an authorization token. This c
 If both methods are used, the constructor argument takes precedence.
 
 Example usage:
-<Code code={dispenserClientExample} lang="py" frame="none" />
+
+<Code code={dispenserClientExample} lang='py' frame='none' />
 
 ## Funding an Account
 
@@ -50,10 +51,11 @@ client.refund(refund_txn_id="transaction_id")
 ```
 
 <Aside>
-  To perform a refund you need to perform a payment transaction yourself first by sending funds
-  back to TestNet Dispenser, then you can invoke this `refund` endpoint and pass the `txn_id` of your refund
-  transaction. You can obtain the dispenser address by inspecting the `sender` field of any issued `fund` transaction
-  initiated via [`fund`](#funding-an-account).
+  To perform a refund you need to perform a payment transaction yourself first
+  by sending funds back to TestNet Dispenser, then you can invoke this `refund`
+  endpoint and pass the `txn_id` of your refund transaction. You can obtain the
+  dispenser address by inspecting the `sender` field of any issued `fund`
+  transaction initiated via [`fund`](#funding-an-account).
 </Aside>
 
 ## Getting Current Limit

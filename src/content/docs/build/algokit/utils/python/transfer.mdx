@@ -9,10 +9,10 @@ sidebar:
 ---
 
 import { Code, Aside, Steps } from '@astrojs/starlight/components';
-import transferAlgosExample from "/src/content/examples/algokit/algokit-utils-py-transfer-transfer-algos.py?raw"; 
-import transferAssetsExample from "/src/content/examples/algokit/algokit-utils-py-transfer-transfer-assets.py?raw"; 
-import ensureMinAlgosExample from "/src/content/examples/algokit/algokit-utils-py-transfer-ensure-min.py?raw"; 
-import dispenserAccountExample from "/src/content/examples/algokit/algokit-utils-py-transfer-dispenser-account.py?raw"; 
+import transferAlgosExample from '/src/examples/algokit/algokit-utils-py-transfer-transfer-algos.py?raw';
+import transferAssetsExample from '/src/examples/algokit/algokit-utils-py-transfer-transfer-assets.py?raw';
+import ensureMinAlgosExample from '/src/examples/algokit/algokit-utils-py-transfer-ensure-min.py?raw';
+import dispenserAccountExample from '/src/examples/algokit/algokit-utils-py-transfer-dispenser-account.py?raw';
 
 Algo transfers is a higher-order use case capability provided by AlgoKit Utils allows you to easily initiate
 algo transfers between accounts, including dispenser management and idempotent account funding.
@@ -29,7 +29,8 @@ The following fields on `TransferParameters` are required to transfer ALGOs:
 - `micro_algos`: The amount of micro ALGOs to send
 
 Example usage:
-<Code code={transferAlgosExample} lang="py" frame="none" />
+
+<Code code={transferAlgosExample} lang='py' frame='none' />
 
 ## Ensuring Minimum Algos
 
@@ -59,19 +60,21 @@ The following fields on `EnsureBalanceParameters` are required to ensure minimum
   set it's possible the transaction could get rejected during network congestion.
 
 Example usage:
-<Code code={ensureMinAlgosExample} lang="py" frame="none" />
+
+<Code code={ensureMinAlgosExample} lang='py' frame='none' />
 
 The following occurs when making function calls Algod to find the current balance and minimum balance requirement:
+
 - Gets the difference between those two numbers and checks to see if it's more than the `min_spending_balance_micro_algos`
 - If so, it will send the difference, or the `min_funding_increment_micro_algos` if that is specified
 - If the account is on TestNet and `use_dispenser_api` is True, the [AlgoKit TestNet Dispenser API](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/dispenser.md)
-will be used to fund the account.
+  will be used to fund the account.
 
 <Aside>
-    If you are attempting to fund via Dispenser API, make sure to set the
-    `ALGOKIT_DISPENSER_ACCESS_TOKEN` environment variable prior to invoking `ensure_funded`. To generate the
-    token refer to
-    [AlgoKit CLI documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/dispenser.md#login)
+  If you are attempting to fund via Dispenser API, make sure to set the
+  `ALGOKIT_DISPENSER_ACCESS_TOKEN` environment variable prior to invoking
+  `ensure_funded`. To generate the token refer to [AlgoKit CLI
+  documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/dispenser.md#login)
 </Aside>
 
 ## Transferring Assets
@@ -87,7 +90,8 @@ The following fields on `TransferAssetParameters` are required to transfer asset
 - `amount`: The amount to send as the smallest divisible unit value
 
 Example usage:
-<Code code={transferAssetsExample} lang="py" frame="none" />
+
+<Code code={transferAssetsExample} lang='py' frame='none' />
 
 ## Dispenser
 
@@ -105,4 +109,5 @@ Please note that this does not refer to the [AlgoKit TestNet Dispenser API](./di
 separate abstraction that can be used to fund accounts on TestNet via dedicated API service.
 
 Example usage:
-<Code code={dispenserAccountExample} lang="py" frame="none" />
+
+<Code code={dispenserAccountExample} lang='py' frame='none' />
