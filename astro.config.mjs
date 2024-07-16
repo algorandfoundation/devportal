@@ -4,11 +4,15 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import d2 from 'astro-d2';
 import rehypeExternalLinks from 'rehype-external-links';
+import { resolve } from 'path';
 
 export default defineConfig({
   integrations: [
     starlight({
       title: 'Algorand Developer Portal',
+      components: {
+        ThemeProvider: './src/components/CustomThemeProvider.astro',
+      },
       logo: {
         light: '/src/assets/images/portal-logo-light-mode.svg',
         dark: '/src/assets/images/portal-logo-dark-mode.svg',
@@ -42,6 +46,10 @@ export default defineConfig({
                   collapsed: true,
                   items: [
                     {
+                      label: 'AlgoKit Utils Clients',
+                      link: 'build/algokit/utils/algokit-utils-clients',
+                    },
+                    {
                       label: 'Python',
                       autogenerate: {
                         directory: 'build/algokit/utils/python',
@@ -57,128 +65,128 @@ export default defineConfig({
                 },
               ],
             },
-            {
-              label: 'Accounts',
-              collapsed: true,
-              autogenerate: {
-                directory: 'build/accounts',
-              },
-            },
-            {
-              label: 'Assets',
-              collapsed: true,
-              autogenerate: {
-                directory: 'build/assets',
-              },
-            },
-            {
-              label: 'Transactions',
-              collapsed: true,
-              autogenerate: {
-                directory: 'build/transactions',
-              },
-            },
-            {
-              label: 'Smart Contracts',
-              collapsed: true,
-              autogenerate: {
-                directory: 'build/smart_contracts',
-              },
-            },
+            // {
+            //   label: 'Accounts',
+            //   collapsed: true,
+            //   autogenerate: {
+            //     directory: 'build/accounts',
+            //   },
+            // },
+            // {
+            //   label: 'Assets',
+            //   collapsed: true,
+            //   autogenerate: {
+            //     directory: 'build/assets',
+            //   },
+            // },
+            // {
+            //   label: 'Transactions',
+            //   collapsed: true,
+            //   autogenerate: {
+            //     directory: 'build/transactions',
+            //   },
+            // },
+            // {
+            //   label: 'Smart Contracts',
+            //   collapsed: true,
+            //   autogenerate: {
+            //     directory: 'build/smart_contracts',
+            //   },
+            // },
           ],
         },
-        {
-          label: 'Protocol',
-          collapsed: true,
-          badge: {
-            text: 'todo',
-            variant: 'danger',
-          },
-          items: [
-            {
-              label: 'Consensus',
-              badge: {
-                text: 'todo',
-                variant: 'danger',
-              },
-              autogenerate: {
-                directory: 'protocol/consensus',
-              },
-            },
-            {
-              label: 'Node',
-              badge: {
-                text: 'todo',
-                variant: 'danger',
-              },
-              autogenerate: {
-                directory: 'protocol/node',
-              },
-            },
-            {
-              label: 'APIs',
-              badge: {
-                text: 'todo',
-                variant: 'danger',
-              },
-              autogenerate: {
-                directory: 'protocol/api',
-              },
-            },
-            {
-              label: 'State Proofs',
-              badge: {
-                text: 'todo',
-                variant: 'danger',
-              },
-              autogenerate: {
-                directory: 'protocol/state-proofs',
-              },
-            },
-            {
-              label: 'Features',
-              badge: {
-                text: 'todo',
-                variant: 'danger',
-              },
-              autogenerate: {
-                directory: 'protocol/features',
-              },
-            },
-            {
-              label: 'AVM',
-              badge: {
-                text: 'todo',
-                variant: 'danger',
-              },
-              autogenerate: {
-                directory: 'protocol/avm',
-              },
-            },
-          ],
-        },
-        {
-          label: 'Reference',
-          collapsed: true,
-          badge: {
-            text: 'todo',
-            variant: 'danger',
-          },
-          autogenerate: {
-            directory: 'reference',
-          },
-        },
-        {
-          label: 'Node Running',
-          collapsed: true,
-          badge: {
-            text: 'todo',
-            variant: 'danger',
-          },
-          autogenerate: {
-            directory: 'node_running',
-          },
-        },
+        // {
+        //   label: 'Protocol',
+        //   collapsed: true,
+        //   badge: {
+        //     text: 'todo',
+        //     variant: 'danger',
+        //   },
+        //   items: [
+        //     {
+        //       label: 'Consensus',
+        //       badge: {
+        //         text: 'todo',
+        //         variant: 'danger',
+        //       },
+        //       autogenerate: {
+        //         directory: 'protocol/consensus',
+        //       },
+        //     },
+        //     {
+        //       label: 'Node',
+        //       badge: {
+        //         text: 'todo',
+        //         variant: 'danger',
+        //       },
+        //       autogenerate: {
+        //         directory: 'protocol/node',
+        //       },
+        //     },
+        //     {
+        //       label: 'APIs',
+        //       badge: {
+        //         text: 'todo',
+        //         variant: 'danger',
+        //       },
+        //       autogenerate: {
+        //         directory: 'protocol/api',
+        //       },
+        //     },
+        //     {
+        //       label: 'State Proofs',
+        //       badge: {
+        //         text: 'todo',
+        //         variant: 'danger',
+        //       },
+        //       autogenerate: {
+        //         directory: 'protocol/state-proofs',
+        //       },
+        //     },
+        //     {
+        //       label: 'Features',
+        //       badge: {
+        //         text: 'todo',
+        //         variant: 'danger',
+        //       },
+        //       autogenerate: {
+        //         directory: 'protocol/features',
+        //       },
+        //     },
+        //     {
+        //       label: 'AVM',
+        //       badge: {
+        //         text: 'todo',
+        //         variant: 'danger',
+        //       },
+        //       autogenerate: {
+        //         directory: 'protocol/avm',
+        //       },
+        //     },
+        //   ],
+        // },
+        // {
+        //   label: 'Reference',
+        //   collapsed: true,
+        //   badge: {
+        //     text: 'todo',
+        //     variant: 'danger',
+        //   },
+        //   autogenerate: {
+        //     directory: 'reference',
+        //   },
+        // },
+        // {
+        //   label: 'Node Running',
+        //   collapsed: true,
+        //   badge: {
+        //     text: 'todo',
+        //     variant: 'danger',
+        //   },
+        //   autogenerate: {
+        //     directory: 'node_running',
+        //   },
+        // },
       ],
     }),
     tailwind({
@@ -194,5 +202,13 @@ export default defineConfig({
   markdown: {
     // Rehype plugin that adds target="_blank" and rel="noopener noreferrer" to external links
     rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: 'noopener noreferrer' }]],
+  },
+  vite: {
+    resolve: {
+      alias: {
+        '@assets': resolve('./src/assets'),
+        '@images': resolve('./src/content/images'),
+      },
+    },
   },
 });

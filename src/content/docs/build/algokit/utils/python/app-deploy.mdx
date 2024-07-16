@@ -10,10 +10,7 @@ sidebar:
 
 import { Code, Aside, Steps } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
-import smartContractWorkflow from '../../../../../../assets/smart-contract-workflow.png';
-
-Idempotent (safely retryable) deployment of an app, including deploy-time immutability and permanence control
-and TEAL template substitution.
+import smartContractWorkflow from '@images/smart-contract-workflow.png';
 
 App deployment is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core
 capabilities, particularly [App Management](/build/algokit/utils/python/app-client). It allows you to
@@ -24,27 +21,28 @@ substitution.
 
 The architecture design behind app deployment is articulated in an
 [Architecture Decision Record (ADR)](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/architecture-decisions/2023-01-12_smart-contract-deployment.md).
-While the implementation will naturally evolve over time and diverge from this record, the principles and
-design goals behind the design are comprehensively explained.
+While the implementation will naturally evolve over time and diverge from this ADR, the principles and goals behind the design are comprehensively explained.
 
 Namely, it describes the concept of a smart contract development lifecycle:
 
 <Steps>
+
 1. **Development**
-   - ***Write*** smart contracts
-   - ***Transpile*** smart contracts with development-time parameters (code configuration) to TEAL Templates
-   - ***Verify*** that the TEAL Templates maintain
-      [output stability](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/articles/output_stability.md)
-      and any other static code quality checks
+
+   1. **_Write_** smart contracts
+   2. **_Transpile_** smart contracts with development-time parameters (code configuration) to TEAL Templates
+   3. **_Verify_** that the TEAL Templates maintain [output stability](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/articles/output_stability.md) and any other static code quality checks
+
 2. **Deployment**
-   - ***Substitute*** deploy-time parameters into TEAL Templates to create final TEAL code
-   - ***Compile*** the TEAL to create byte code using algod
-   - ***Deploy*** the byte code to one or more Algorand networks (e.g. LocalNet, TestNet, MainNet) to create
-      Deployed Application(s)
+
+   1. **_Substitute_** deploy-time parameters into TEAL Templates to create final TEAL code
+   2. **_Compile_** the TEAL to create byte code using algod
+   3. **_Deploy_** the byte code to one or more Algorand networks (e.g. LocalNet, TestNet, MainNet) to create Deployed Application(s)
+
 3. **Runtime**
-   - ***Validate*** the deployed app via automated testing of the smart contracts to provide confidence in
-      their correctness
-   - ***Call*** deployed smart contract with runtime parameters to utilise it
+   1. **_Validate_** the deployed app via automated testing of the smart contracts to provide confidence in their correctness
+   2. **_Call_** deployed smart contract with runtime parameters to utilise it
+
 </Steps>
 
 <Image src={smartContractWorkflow} alt='Smart Contract Workflow Diagram' />
@@ -62,8 +60,8 @@ Furthermore, the implementation contains the following characteristics per the o
   a Python smart contract with TypeScript for instance
 - There is explicit control of the immutability (updatability / upgradeability) and permanence (deletability)
   of the smart contract, which can be varied per environment to allow for easier development and testing in
-  non-MainNet environments (by replacing `TMPL_UPDATABLE` and `TMPL_DELETABLE` at deploy-time by convention,
-  if present)
+  non-MainNet environments by replacing `TMPL_UPDATABLE` and `TMPL_DELETABLE` at deploy-time by convention,
+  if present
 - Contracts are resolvable by a string "name" for a given creator to allow automated determination of whether
   that contract had been deployed previously or not, but can also be resolved by ID instead
 
@@ -147,7 +145,7 @@ the following:
   (permanent)
 
 If you are building a smart contract using the
-[beaker_production AlgoKit template](https://github.com/algorandfoundation/algokit-beaker-default-template) if
+[beaker_production AlgoKit template](https://github.com/algorandfoundation/algokit-beaker-default-template), it
 provides a reference implementation out of the box for the deploy-time immutability and permanence control.
 
 ### Return Value

@@ -9,11 +9,11 @@ sidebar:
 ---
 
 import { Code } from '@astrojs/starlight/components';
-import accountFromPKExample from '/src/examples/algokit/algokit-utils-py-account-pk.py?raw';
-import accountFromPKAddrExample from '/src/examples/algokit/algokit-utils-py-account-pk-addr.py?raw';
-import getAccountExample from '/src/examples/algokit/algokit-utils-py-account-get_account.py?raw';
-import newAccountExample from '/src/examples/algokit/algokit-utils-py-account-new_account.py?raw';
-import example from '/src/examples/algokit/algokit-utils-py-account-example.py?raw';
+import accountFromPKExample from '/src/examples/algokit/py/algokit-utils-py-account-pk.py?raw';
+import accountFromPKAddrExample from '/src/examples/algokit/py/algokit-utils-py-account-pk-addr.py?raw';
+import getAccountExample from '/src/examples/algokit/py/algokit-utils-py-account-get_account.py?raw';
+import newAccountExample from '/src/examples/algokit/py/algokit-utils-py-account-new_account.py?raw';
+import example from '/src/examples/algokit/py/algokit-utils-py-account-example.py?raw';
 export const highlights = [
   'Account(private_key)',
   'Account(private_key, address=account_address)',
@@ -43,16 +43,19 @@ There are various methods of obtaining an `Account` instance:
 * **`Account.new_account`**: Returns a new `Account` instance using `algosdk.account.generate_account()`
 
   {' '}
+
   <Code code={newAccountExample} lang='py' frame='none' mark={highlights} />
 
 * **`Account(private_key)`**: Load an existing account from a private key:
 
   {' '}
+
   <Code code={accountFromPKExample} lang='py' frame='none' mark={highlights} />
 
 * **`Account(private_key, address)`**: Load an existing account from a private key and address, useful for re-keyed accounts
 
   {' '}
+
   <Code
     code={accountFromPKAddrExample}
     lang='py'
