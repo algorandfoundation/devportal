@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-
+import mocha from '@catppuccin/vscode/themes/mocha.json'
+import latte from '@catppuccin/vscode/themes/latte.json'
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
@@ -535,7 +536,7 @@ export default defineConfig({
 				},
 			],
 			expressiveCode: {
-				themes: ["dracula", "rose-pine-dawn"],
+				themes: [mocha, latte],
 			},
 		}),
 	],
