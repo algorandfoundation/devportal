@@ -64,7 +64,10 @@ When `--output` option is not specified, the signed transaction(s) will be outpu
 
 ```json
 [
-  {transaction_id: "TRANSACTION_ID", content: "BASE64_ENCODED_SIGNED_TRANSACTION"},
+  {
+    "transaction_id": "TRANSACTION_ID",
+    "content": "BASE64_ENCODED_SIGNED_TRANSACTION"
+  }
 ]
 ```
 
@@ -88,6 +91,6 @@ Encoding simple txn object in javascript:
 
 ```ts
 Buffer.from(algosdk.encodeObj({ txn: txn.get_obj_for_encoding() })).toString(
-  "base64"
+  'base64',
 ); // Resulting string can be passed directy to algokit task sign with --transaction flag
 ```

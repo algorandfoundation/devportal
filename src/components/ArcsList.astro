@@ -8,6 +8,7 @@ const markdownFiles = import.meta.glob(
 
 // Extract frontmatter and organize data
 const arcsData = Object.values(markdownFiles).map(file => ({
+  //@ts-expect-error, meta should always be the same shape
   ...file.frontmatter,
 }));
 

@@ -133,8 +133,9 @@ AlgoKit has an in-built logging abstraction that allows the library to issue log
 To do this you need to create a logging translator that exposes the following interface ([`Logger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#logger)):
 
 <Code code={importedCodeLogger} lang='ts' title='Typescript' />
-:::note this interface type is directly compatible with [Winston](https://github.com/winstonjs/winston)
-so you should be able to pass AlgoKit a Winston logger. :::
+:::note this interface type is directly compatible with
+[Winston](https://github.com/winstonjs/winston) so you should be able to pass
+AlgoKit a Winston logger. :::
 
 By default, the [`consoleLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#consolelogger) is set as the logger, which will send log messages to the various `console.*` methods for all logs apart from verbose logs. There is also a [`nullLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#nulllogger) if you want to disable logging, or various leveled console loggers: [`verboseConsoleLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#verboseconsolelogger) (also outputs verbose logs), [`infoConsoleLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#infoconsolelogger) (only outputs info, warning and error logs), [`warningConsoleLogger`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/code/modules/types_logging.md#warningconsolelogger) (only outputs warning and error logs).
 

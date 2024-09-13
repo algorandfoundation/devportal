@@ -1,35 +1,34 @@
 ---
-import crypto from 'node:crypto'
+import crypto from 'node:crypto';
 
-import type { Props } from '@astrojs/starlight/props'
+import type { Props } from '@astrojs/starlight/props';
 
-const { labels } = Astro.props
-const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`
-
+const { labels } = Astro.props;
+const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`;
 ---
 
 <starlight-rapide-theme-select>
   <button
     aria-label='Toggle Theme'
-    aria-live="polite"
-    class="sl-flex"
+    aria-live='polite'
+    class='sl-flex'
     title='Toggle Theme'
   >
-    <svg aria-hidden="true" height="16" viewBox="0 0 24 24" width="16">
-      <mask class="moon" id={id}>
-        <rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
-        <circle cx="24" cy="10" r="6" fill="black"></circle>
+    <svg aria-hidden='true' height='16' viewBox='0 0 24 24' width='16'>
+      <mask class='moon' id={id}>
+        <rect x='0' y='0' width='100%' height='100%' fill='white'></rect>
+        <circle cx='24' cy='10' r='6' fill='black'></circle>
       </mask>
-      <circle class="sun" cx="12" cy="12" r="6" mask={`url(#${id})`}></circle>
-      <g class="sun-beams" stroke="currentColor">
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      <circle class='sun' cx='12' cy='12' r='6' mask={`url(#${id})`}></circle>
+      <g class='sun-beams' stroke='currentColor'>
+        <line x1='12' y1='1' x2='12' y2='3'></line>
+        <line x1='12' y1='21' x2='12' y2='23'></line>
+        <line x1='4.22' y1='4.22' x2='5.64' y2='5.64'></line>
+        <line x1='18.36' y1='18.36' x2='19.78' y2='19.78'></line>
+        <line x1='1' y1='12' x2='3' y2='12'></line>
+        <line x1='21' y1='12' x2='23' y2='12'></line>
+        <line x1='4.22' y1='19.78' x2='5.64' y2='18.36'></line>
+        <line x1='18.36' y1='5.64' x2='19.78' y2='4.22'></line>
       </g>
     </svg>
   </button>
@@ -99,38 +98,48 @@ const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`
 
   @media (prefers-reduced-motion: no-preference) {
     svg .sun {
-      transition: transform var(--sl-rapide-theme-select-animation-duration) var(--sl-rapide-theme-select-ease-elastic);
+      transition: transform var(--sl-rapide-theme-select-animation-duration)
+        var(--sl-rapide-theme-select-ease-elastic);
     }
 
     svg .sun-beams {
       transition:
         opacity var(--sl-rapide-theme-select-animation-duration) ease,
-        transform var(--sl-rapide-theme-select-animation-duration) var(--sl-rapide-theme-select-ease-elastic);
+        transform var(--sl-rapide-theme-select-animation-duration)
+          var(--sl-rapide-theme-select-ease-elastic);
     }
 
     svg .moon circle {
-      transition: transform calc(var(--sl-rapide-theme-select-animation-duration) / 2) ease-out;
+      transition: transform
+        calc(var(--sl-rapide-theme-select-animation-duration) / 2) ease-out;
     }
 
     @supports (cx: 1) {
       svg .moon circle {
-        transition: cx calc(var(--sl-rapide-theme-select-animation-duration) / 2) ease-out;
+        transition: cx
+          calc(var(--sl-rapide-theme-select-animation-duration) / 2) ease-out;
       }
     }
 
     :global([data-theme='dark']) svg .sun {
       transform: scale(1.75);
-      transition-duration: calc(var(--sl-rapide-theme-select-animation-duration) / 2);
+      transition-duration: calc(
+        var(--sl-rapide-theme-select-animation-duration) / 2
+      );
       transition-timing-function: ease;
     }
 
     :global([data-theme='dark']) svg .sun-beams {
       transform: rotateZ(-25deg);
-      transition-duration: calc(var(--sl-rapide-theme-select-animation-duration) / 4);
+      transition-duration: calc(
+        var(--sl-rapide-theme-select-animation-duration) / 4
+      );
     }
 
     :global([data-theme='dark']) svg .moon circle {
-      transition-delay: calc(var(--sl-rapide-theme-select-animation-duration) / 4);
+      transition-delay: calc(
+        var(--sl-rapide-theme-select-animation-duration) / 4
+      );
       transition-duration: var(--sl-rapide-theme-select-animation-duration);
     }
   }
@@ -138,63 +147,74 @@ const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`
 
 {/* Inlined to avoid FOUC. Uses global scope from `ThemeProvider.astro` */}
 <script is:inline>
-  StarlightThemeProvider.updatePickers()
+  StarlightThemeProvider.updatePickers();
 </script>
 
 <script>
-  type Theme = 'auto' | 'dark' | 'light'
+  type Theme = 'auto' | 'dark' | 'light';
 
   /** Key in `localStorage` to store color theme preference at. */
-  const storageKey = 'starlight-theme'
+  const storageKey = 'starlight-theme';
 
   /** Get a typesafe theme string from any JS value (unknown values are coerced to `'auto'`). */
   function parseTheme(theme: unknown): Theme {
-    return theme === 'auto' || theme === 'dark' || theme === 'light' ? theme : 'auto'
+    return theme === 'auto' || theme === 'dark' || theme === 'light'
+      ? theme
+      : 'auto';
   }
 
   /** Load the user’s preference from `localStorage`. */
   function loadTheme(): Theme {
-    return parseTheme(typeof localStorage !== 'undefined' && localStorage.getItem(storageKey))
+    return parseTheme(
+      typeof localStorage !== 'undefined' && localStorage.getItem(storageKey),
+    );
   }
 
   /** Store the user’s preference in `localStorage`. */
   function storeTheme(theme: Theme): void {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(storageKey, theme === 'light' || theme === 'dark' ? theme : '')
+      localStorage.setItem(
+        storageKey,
+        theme === 'light' || theme === 'dark' ? theme : '',
+      );
     }
   }
 
   /** Get the preferred system color scheme. */
   function getPreferredColorScheme(): Theme {
-    return matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+    return matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light'
+      : 'dark';
   }
 
   /** Update select menu UI, document theme, and local storage state. */
   function onThemeChange(theme: Theme): void {
-    StarlightThemeProvider.updatePickers(theme)
-    document.documentElement.dataset['theme'] = theme === 'auto' ? getPreferredColorScheme() : theme
-    storeTheme(theme)
+    StarlightThemeProvider.updatePickers(theme);
+    document.documentElement.dataset['theme'] =
+      theme === 'auto' ? getPreferredColorScheme() : theme;
+    storeTheme(theme);
   }
 
   // React to changes in system color scheme.
   matchMedia(`(prefers-color-scheme: light)`).addEventListener('change', () => {
-    if (loadTheme() === 'auto') onThemeChange('auto')
-  })
+    if (loadTheme() === 'auto') onThemeChange('auto');
+  });
 
   customElements.define(
     'starlight-rapide-theme-select',
     class StarlightRapideThemeSelect extends HTMLElement {
       constructor() {
-        super()
-        onThemeChange(loadTheme())
-        const button = this.querySelector('button')
+        super();
+        onThemeChange(loadTheme());
+        const button = this.querySelector('button');
         button?.addEventListener('click', () => {
-          const theme = parseTheme(document.documentElement.dataset['theme'])
-          const newTheme = theme === 'dark' ? 'light' : theme === 'light' ? 'dark' : 'auto'
-          onThemeChange(newTheme)
-          button?.setAttribute('aria-label', `${newTheme} theme`)
-        })
+          const theme = parseTheme(document.documentElement.dataset['theme']);
+          const newTheme =
+            theme === 'dark' ? 'light' : theme === 'light' ? 'dark' : 'auto';
+          onThemeChange(newTheme);
+          button?.setAttribute('aria-label', `${newTheme} theme`);
+        });
       }
     },
-  )
+  );
 </script>

@@ -1,46 +1,70 @@
 ---
-const { label, items } = Astro.props
-const menuBtnId = `menu-button-${label.toLowerCase().replace(" ", "-")}`
-const menuId = `menu-${label.toLowerCase().replace(" ", "-")}`
-import SidebarSublist from "@astrojs/starlight/components/SidebarSublist.astro";
+const { label, items } = Astro.props;
+const menuBtnId = `menu-button-${label.toLowerCase().replace(' ', '-')}`;
+const menuId = `menu-${label.toLowerCase().replace(' ', '-')}`;
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
 ---
 
-<div class="relative inline-block text-left">
-    <div>
-        <button id={menuBtnId} type="button" class="inline-flex w-full justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold bg-transparent"  aria-expanded="false" aria-haspopup="true">
-            {label}
-            <svg class="-mr-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-            </svg>
-        </button>
+<div class='relative inline-block text-left'>
+  <div>
+    <button
+      id={menuBtnId}
+      type='button'
+      class='inline-flex w-full justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold bg-transparent'
+      aria-expanded='false'
+      aria-haspopup='true'
+    >
+      {label}
+      <svg
+        class='-mr-1 h-5 w-5'
+        viewBox='0 0 20 20'
+        fill='currentColor'
+        aria-hidden='true'
+      >
+        <path
+          fill-rule='evenodd'
+          d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'
+          clip-rule='evenodd'></path>
+      </svg>
+    </button>
+  </div>
+  <div
+    id={menuId}
+    class='hidden absolute opacity-0 right-0 z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
+    role='menu'
+    aria-orientation='vertical'
+    aria-labelledby='menu-button'
+    tabindex='-1'
+  >
+    <div class='py-1 bg-[var(--sl-color-black)]' role='none'>
+      <SidebarSublist data-astro-prefetch='tap' sublist={items} />
     </div>
-    <div id={menuId} class="hidden absolute opacity-0 right-0 z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-        <div class="py-1 bg-[var(--sl-color-black)]" role="none">
-            <SidebarSublist data-astro-prefetch="tap" sublist={items}/>
-        </div>
-    </div>
+  </div>
 </div>
-<script define:vars={{menuBtnId, menuId}}>
-    const button = document.getElementById(menuBtnId);
-    const menu = document.getElementById(menuId);
-    if(!button || !menu) {
-        throw new Error("Menu button or menu not found");
+<script define:vars={{ menuBtnId, menuId }}>
+  const button = document.getElementById(menuBtnId);
+  const menu = document.getElementById(menuId);
+  if (!button || !menu) {
+    throw new Error('Menu button or menu not found');
+  }
+  window.addEventListener('click', function (event) {
+    // The click is outside the menu and not a menu button
+    if (!menu.contains(event.target) && event.target !== button) {
+      button.setAttribute('aria-expanded', 'false');
+      menu.classList.replace('opacity-100', 'opacity-0');
+      if (!menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+      }
     }
-    window.addEventListener('click', function(event) {
-        // The click is outside the menu and not a menu button
-        if (!menu.contains(event.target) && event.target !== button) {
-            button.setAttribute("aria-expanded", "false");
-            menu.classList.replace("opacity-100", "opacity-0");
-            if(!menu.classList.contains("hidden")){
-                menu.classList.add("hidden")
-            }
-        }
-    })
+  });
 
-    button.onclick = () => {
-        const expanded = button.getAttribute("aria-expanded") === "true";
-        button.setAttribute("aria-expanded", String(!expanded));
-        menu.classList.replace(expanded ? "opacity-100" : "opacity-0", expanded ? "opacity-0" : "opacity-100");
-        menu.classList.toggle("hidden", expanded)
-    };
+  button.onclick = () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', String(!expanded));
+    menu.classList.replace(
+      expanded ? 'opacity-100' : 'opacity-0',
+      expanded ? 'opacity-0' : 'opacity-100',
+    );
+    menu.classList.toggle('hidden', expanded);
+  };
 </script>

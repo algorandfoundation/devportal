@@ -13,16 +13,13 @@ import helloWorldTs from '/examples/smart_contracts/ts/hello-world.algo.ts?raw';
 
 import algokitLogo from '@images/algokit-blue.png';
 
-<Image
-  src={algokitLogo}
-  alt='AlgoKit logo'
-/>
+<Image src={algokitLogo} alt='AlgoKit logo' />
 
-AlgoKit is a comprehensive software development kit designed to streamline and accelerate the process of building decentralized 
-applications on the Algorand blockchain. At its core, AlgoKit features a powerful command-line interface (CLI) tool that provides 
-developers with an array of functionalities to simplify blockchain development. Along with the CLI, AlgoKit offers a suite of libraries, 
-templates, and tools that facilitate rapid prototyping and deployment of secure, scalable, and efficient applications. Whether you’re a 
-seasoned blockchain developer or new to the ecosystem, AlgoKit offers everything you need to harness the full potential of Algorand’s 
+AlgoKit is a comprehensive software development kit designed to streamline and accelerate the process of building decentralized
+applications on the Algorand blockchain. At its core, AlgoKit features a powerful command-line interface (CLI) tool that provides
+developers with an array of functionalities to simplify blockchain development. Along with the CLI, AlgoKit offers a suite of libraries,
+templates, and tools that facilitate rapid prototyping and deployment of secure, scalable, and efficient applications. Whether you’re a
+seasoned blockchain developer or new to the ecosystem, AlgoKit offers everything you need to harness the full potential of Algorand’s
 impressive tech and innovative consensus algorithm.
 
 ## AlgoKit Tools
@@ -39,10 +36,13 @@ Here is a list of developer tools within AlgoKit:
 - Testnet Dispenser
 
 ## AlgoKit CLI
+
 AlgoKit CLI is a powerful set of command line tools for Algorand developers. Its goal is to help developers build and launch secure, automated, production-ready applications rapidly.
 
 ### AlgoKit CLI commands
+
 Here is the list of commands that you can use with AlgoKit CLI.
+
 - [Bootstrap](./features/project/bootstrap/) - Bootstrap AlgoKit project dependencies
 - [Compile](./features/compile/) - Compile Algorand Python code
 - [Completions](./features/completions/) - Install shell completions for AlgoKit
@@ -58,36 +58,44 @@ Here is the list of commands that you can use with AlgoKit CLI.
 - [Tasks](./features/tasks/) - Perform a variety of useful operations like signing & sending transactions, minting ASAs, creating vanity address, and more, on the Algorand blockchain
 
 To learn more about AlgoKit CLI, refer to the following resources:
+
 - [AlgoKit CLI section](FUTURELINK)
 - [AlgoKit CLI Github repo](https://github.com/algorandfoundation/algokit-cli)
 
 ## Algorand Python
+
 If you are a Python developer, you no longer need to learn a complex smart contract language to write smart contracts.
 
-Algorand Python is a semantically and syntactically compatible, typed Python language that works with standard Python tooling and allows you to write Algorand smart contracts (apps) and logic signatures in Python. Since the code runs on the Algorand virtual machine(AVM), there are limitations and minor differences in behaviors from standard Python, but all code you write with Algorand Python is Python code.  
+Algorand Python is a semantically and syntactically compatible, typed Python language that works with standard Python tooling and allows you to write Algorand smart contracts (apps) and logic signatures in Python. Since the code runs on the Algorand virtual machine(AVM), there are limitations and minor differences in behaviors from standard Python, but all code you write with Algorand Python is Python code.
 
 Here is an example of a simple Hello World smart contract written in Algorand Python:
+
 <Code code={helloWorldPython} lang='py' frame='none' />
 
 To learn more about Algorand Python, refer to the following resources:
+
 - [Algorand Python section](FUTURELINK)
 - [Algorand Python Github repo](https://github.com/algorandfoundation/puya)
 - [Algorand Python Documentation](https://algorandfoundation.github.io/puya/)
 
 ## Algorand TypeScript
+
 If you are a TypeScript developer, you no longer need to learn a complex smart contract language to write smart contracts.
 
-Algorand TypeScript is a semantically and syntactically compatible, typed TypeScript language that works with standard TypeScript tooling and allows you to write Algorand smart contracts (apps) and logic signatures in TypeScript. Since the code runs on the Algorand virtual machine(AVM), there are limitations and minor differences in behaviors from standard TypeScript, but all code you write with Algorand TypeScript is TypeScript code.  
+Algorand TypeScript is a semantically and syntactically compatible, typed TypeScript language that works with standard TypeScript tooling and allows you to write Algorand smart contracts (apps) and logic signatures in TypeScript. Since the code runs on the Algorand virtual machine(AVM), there are limitations and minor differences in behaviors from standard TypeScript, but all code you write with Algorand TypeScript is TypeScript code.
 
 Here is an example of a simple Hello World smart contract written in Algorand TypeScript:
+
 <Code code={helloWorldTs} lang='ts' frame='none' />
 
 To learn more about Algorand TypeScript, refer to the following resources:
+
 - [Algorand TypeScript section](FUTURELINK)
 - [Algorand TypeScript Github repo](FUTURELINK)
 - [Algorand TypeScript Documentation](FUTURELINK)
 
 ## AlgoKit Utils
+
 AlgoKit Utils is a utility library recommended for you to use for all chain interactions like sending transactions, creating tokens(ASAs), calling smart contracts, and reading blockchain records. The goal of this library is to provide intuitive, productive utility functions that make it easier, quicker, and safer to build applications on Algorand. Largely, these functions wrap the underlying Algorand SDK but provide a higher-level interface with sensible defaults and capabilities for common tasks.
 
 AlgoKit Utils is available in TypeScript and Python.
@@ -113,47 +121,50 @@ The library helps you interact with and develop against the Algorand blockchain 
 To learn more about AlgoKit Utils, refer to the following resources:
 
 AlgoKit Utils TypeScript:
+
 - [AlgoKit Utils TypeScript section](FUTURELINK)
 - [AlgoKit Utils TypeScript Github repo](https://github.com/algorandfoundation/algokit-utils-ts#algokit-typescript-utilities)
 
 AlgoKit Utils Python:
+
 - [AlgoKit Utils Python section](FUTURELINK)
 - [AlgoKit Utils Python Github repo](https://github.com/algorandfoundation/algokit-utils-py#readme)
 
 ## AlgoKit LocalNet
-The AlgoKit LocalNet feature allows you to manage (start, stop, reset, manage) a locally sandboxed private Algorand network. This allows you to interact with and deploy changes against your own Algorand network without needing to worry about funding TestNet accounts, whether the information you submit is publicly visible, or whether you are connected to an active Internet connection (once the network has been started).
 
+The AlgoKit LocalNet feature allows you to manage (start, stop, reset, manage) a locally sandboxed private Algorand network. This allows you to interact with and deploy changes against your own Algorand network without needing to worry about funding TestNet accounts, whether the information you submit is publicly visible, or whether you are connected to an active Internet connection (once the network has been started).
 
 AlgoKit LocalNet uses Docker images optimized for a great developer experience. This means the Docker images are small and start fast. It also means that features suited to developers are enabled, such as KMD (so you can programmatically get faucet private keys).
 
-
 To learn more about AlgoKit Localnet, refer to the following resources:
+
 - [AlgoKit Localnet section](FUTURELINK)
 - [AlgoKit Localnet Github repository](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/localnet.md)
 
 ## AVM Debugger
+
 The AlgoKit AVM VS Code debugger extension provides a convenient way to debug any Algorand Smart Contracts written in TEAL.
 
 To learn more about the AVM debugger, refer to the following resources:
+
 - [AVM Debugger section](FUTURELINK)
 - [AVM Debugger Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algokit-avm-vscode-debugger)
 
 ## Client Generator
+
 The client generator generates a type-safe smart contract client for the Algorand Blockchain that wraps the application client in AlgoKit Utils and tailors it to a specific smart contract. It does this by reading an ARC-0032 application spec file and generating a client that exposes methods for each ABI method in the target smart contract, along with helpers to create, update, and delete the application.
 
 To learn more about the client generator, refer to the following resources:
 
-TypeScript Client Generator:
-    - [Client Generator TypeScript section](FUTURELINK)
-    - [Client Generator TypeScript Github repo](https://github.com/algorandfoundation/algokit-client-generator-ts)
+TypeScript Client Generator: - [Client Generator TypeScript section](FUTURELINK) - [Client Generator TypeScript Github repo](https://github.com/algorandfoundation/algokit-client-generator-ts)
 
-Python Client Generator:
-    - [Client Generator Python section](FUTURELINK)
-    - [Client Generator Python Github Repository](https://github.com/algorandfoundation/algokit-client-generator-py)
+Python Client Generator: - [Client Generator Python section](FUTURELINK) - [Client Generator Python Github Repository](https://github.com/algorandfoundation/algokit-client-generator-py)
 
 ## Testnet Dispenser
-The AlgoKit TestNet Dispenser API provides functionalities to interact with the Dispenser service. This service enables users to fund and refund assets. 
+
+The AlgoKit TestNet Dispenser API provides functionalities to interact with the Dispenser service. This service enables users to fund and refund assets.
 
 To learn more about the testnet dispenser, refer to the following resources:
+
 - [Testnet Dispenser section](FUTURELINK)
 - [Testnet Dispenser Github Documentation](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md)

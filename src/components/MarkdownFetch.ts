@@ -22,7 +22,7 @@ export async function fetchRemoteMarkdown(
 function extractSection(markdownContent: string, sectionName: string) {
   const lines = markdownContent.split('\n');
   let isInSection = false;
-  let extractedLines: string[] = [];
+  const extractedLines: string[] = [];
   let sectionHeadingLevel = 0;
 
   const headingRegex = /^(#+)\s+(.*?)\s*$/; // Updated regex for exact match

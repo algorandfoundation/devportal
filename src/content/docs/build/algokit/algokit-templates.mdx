@@ -10,36 +10,36 @@ import { Steps } from '@astrojs/starlight/components';
 AlgoKit offers a curated collection of production-ready and starter templates, streamlining front-end and smart contract development. These templates provide a comprehensive suite of pre-configured tools and integrations, from boilerplate React projects with Algorand wallet integration to smart contract projects for Python and TypeScript. This enables developers to prototype and deploy robust, production-ready applications rapidly. By leveraging AlgoKit templates, developers can significantly reduce setup time, ensure best practices in testing, compiling, and deploying smart contracts, and focus on building innovative blockchain solutions with confidence. This page provides an overview of the official AlgoKit templates and guidance on creating and sharing your custom templates to suit your needs better or contribute to the community.
 
 ## Official Templates
+
 AlgoKit provides several official templates to cater to different development needs. These templates will create a [standalone AlgoKit project](./project-structure#standalone-projects).
 
 - Smart Contract Templates:
-   - [Algorand Python](https://github.com/algorandfoundation/algokit-python-template)
-   - [Algorand TypeScript](https://github.com/algorand-devrel/tealscript-algokit-template)
+  - [Algorand Python](https://github.com/algorandfoundation/algokit-python-template)
+  - [Algorand TypeScript](https://github.com/algorand-devrel/tealscript-algokit-template)
 - [DApp React Frontend](https://github.com/algorandfoundation/algokit-react-frontend-template)
 - [Fullstack (Smart Contract & DApp Frontend template)](https://github.com/algorandfoundation/algokit-fullstack-template)
 
 ## How to initialize a template
 
 **To initialize using the `algokit` CLI**:
+
 <Steps>
 1. [Install AlgoKit](https://github.com/algorandfoundation/algokit-cli?tab=readme-ov-file#install) and all the prerequisites mentioned in the installation guide.
 
 2. Execute the command `algokit init`. This initiates an interactive wizard that assists in selecting the most appropriate template for your project requirements.
-    ```shell showLineNumbers=false frame=terminal
-    algokit init # This command will start an interactive wizard to select a template
-    ```
+   ```shell showLineNumbers=false frame=terminal
+   algokit init # This command will start an interactive wizard to select a template
+   ```
 
 </Steps>
-
-
 
 **To initialize within GitHub Codespaces**:
 
 <Steps>
 
- 1. Go to the [algokit-base-template](https://github.com/algorandfoundation/algokit-base-template) repository.
- 2. Initiate a new codespace by selecting the `Create codespace on main` option. You can find this by clicking the `Code` button and then navigating to the `Codespaces` tab.
- 3. Upon codespace preparation, `algokit` will automatically start `LocalNet` and present a prompt with the next steps. Executing `algokit init` will initiate the interactive wizard.
+1.  Go to the [algokit-base-template](https://github.com/algorandfoundation/algokit-base-template) repository.
+2.  Initiate a new codespace by selecting the `Create codespace on main` option. You can find this by clicking the `Code` button and then navigating to the `Codespaces` tab.
+3.  Upon codespace preparation, `algokit` will automatically start `LocalNet` and present a prompt with the next steps. Executing `algokit init` will initiate the interactive wizard.
 
 </Steps>
 
@@ -74,20 +74,21 @@ This template supports the following features:
 - Automated testing of the compiled smart contracts
 - [Output stability](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/articles/output_stability.md) tests of the TEAL output
 - CI/CD pipeline using GitHub Actions:
-   - Optionally pick deployments to Netlify or Vercel
+  - Optionally pick deployments to Netlify or Vercel
 
 ### Getting started
 
 Once the template is instantiated, you can follow the `README.md` file to see instructions on how to use the template.
+
 - [Instructions for Starter template](https://github.com/algorandfoundation/algokit-python-template/blob/main/examples/starter_python/README.md)
 - [Instructions for Production template](https://github.com/algorandfoundation/algokit-python-template/blob/main/examples/production_python/README.md)
 
-
-
 ## [Algorand TypeScript Smart Contract Template](https://github.com/algorand-devrel/tealscript-algokit-template)
+
 This template provides a baseline TealScript smart contract development environment.
 
 To use it [install AlgoKit](https://github.com/algorandfoundation/algokit-cli#readme) and then either pass in `-t tealscript` to `algokit init` or select the `TypeScript` language option interactively during `algokit init.`
+
 ```shell showLineNumbers=false frame=terminal
 algokit init -t tealscript
 
@@ -102,10 +103,10 @@ Once the template is instantiated, you can follow the [README.md](https://github
 
 ## [DApp Frontend React Template](https://github.com/algorandfoundation/algokit-react-frontend-template)
 
-
 This template provides a baseline React web app for developing and integrating with any [ARC32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) compliant Algorand smart contracts.
 
 To use it [install AlgoKit](https://github.com/algorandfoundation/algokit-cli#readme) and then either pass in `-t react` to `algokit init` or select the `react` template interactively during `algokit init`.
+
 ```shell showLineNumbers=false frame=terminal
 algokit init -t react
 
@@ -130,10 +131,12 @@ This template supports the following features:
 ### Getting started
 
 Once the template is instantiated, you can follow the `README.md` file to see instructions on how to use the template.
+
 - [Instructions for Starter template](https://github.com/algorandfoundation/algokit-react-frontend-template/blob/main/examples/starter_react/README.md)
 - [Instructions for Production template](https://github.com/algorandfoundation/algokit-react-frontend-template/blob/main/examples/production_react/README.md)
 
 ## [Fullstack (Smart Contract + Frontend) Template](https://github.com/algorandfoundation/algokit-fullstack-template)
+
 This full-stack template provides both a baseline React web app and a production-ready baseline for developing and deploying `Algorand Python` and `TypeScript` smart contracts. It’s suitable for developing and integrating with any [ARC32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) compliant Algorand smart contracts.
 
 To use this template, [install AlgoKit](https://github.com/algorandfoundation/algokit-cli#readme) and then either pass in `-t fullstack` to `algokit init` or select the relevant template interactively during `algokit init`.
@@ -170,9 +173,10 @@ Initializing a fullstack algokit project will create an AlgoKit workspace with a
 
 ## Using a Custom AlgoKit Template
 
-To initialize a community AlgoKit template, you can either provide a URL to the community template during the interactive wizard or by passing in `--template-url` to `algokit init`. For example: 
+To initialize a community AlgoKit template, you can either provide a URL to the community template during the interactive wizard or by passing in `--template-url` to `algokit init`. For example:
+
 ```shell showLineNumbers=false frame=terminal
-algokit init --template-url https://github.com/algorandfoundation/algokit-python-template 
+algokit init --template-url https://github.com/algorandfoundation/algokit-python-template
 # This is the url of the official Python template. Replace with the community template URL.
 
 # or
@@ -215,7 +219,6 @@ Please inspect the template repository, and pay particular attention to the valu
 ? Continue anyway? Yes
 ```
 
-
 ## Creating Custom AlgoKit Templates
 
 If the official templates do not serve your needs, you can create custom AlgoKit templates tailored to your project requirements or industry needs. These custom templates can be used for your future projects or contributed to the Algorand developer community, enhancing the ecosystem with specialized solutions.
@@ -228,16 +231,16 @@ We will also refer to the official [`algokit-python-template`](https://github.co
 
 - [Quick Start](#quick-start)
 - [Overview of AlgoKit Templates](#overview-of-algokit-templates)
-    - [Copier/Jinja](#copierjinja)
-    - [AlgoKit Functionality with Templates](#algokit-functionality-with-templates)
+  - [Copier/Jinja](#copierjinja)
+  - [AlgoKit Functionality with Templates](#algokit-functionality-with-templates)
 - [Key Concepts](#key-concepts)
-    - [.algokit.toml](#algokittoml)
-    - [Python Support: pyproject.toml](#python-support-pyprojecttoml)
-    - [TypeScript Support: package.json](#typescript-support-packagejson)
-    - [Bootstrap Option](#bootstrap-option)
-    - [Predefined Copier Answers](#predefined-copier-answers)
-    - [Default Behaviors](#default-behaviors)
-    - [Generators](#generators)
+  - [.algokit.toml](#algokittoml)
+  - [Python Support: pyproject.toml](#python-support-pyprojecttoml)
+  - [TypeScript Support: package.json](#typescript-support-packagejson)
+  - [Bootstrap Option](#bootstrap-option)
+  - [Predefined Copier Answers](#predefined-copier-answers)
+  - [Default Behaviors](#default-behaviors)
+  - [Generators](#generators)
 - [Recommendations](#recommendations)
 - [Conclusion](#conclusion)
 
@@ -303,17 +306,17 @@ Example snippet:
 
 ```json
 {
- "name": "{{ project_name }}",
- "version": "1.0.0",
- "description": "{{ project_description }}",
- "scripts": {
-   "build": "tsc"
- },
- "devDependencies": {
-   "typescript": "^4.2.4",
-   "tslint": "^6.1.3",
-   "tslint-config-prettier": "^1.18.0"
- }
+  "name": "{{ project_name }}",
+  "version": "1.0.0",
+  "description": "{{ project_description }}",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.4",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0"
+  }
 }
 ```
 
@@ -324,7 +327,7 @@ This example shows how Jinja syntax is used within `package.json` to allow place
 When instantiating your template via AlgoKit CLI, it will optionally prompt the user to automatically run [algokit bootstrap](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/bootstrap.md) after the project is initialized and can perform various setup tasks like installing dependencies or setting up databases.
 
 - `env`: Searches for and copies a `.env*.template` file to an equivalent `.env*` file in the current working directory, prompting for any unspecified values. This feature is integral for securely managing environment variables, preventing sensitive data from inadvertently ending up in version control.
- By default, Algokit will scan for network-prefixed `.env` variables (e.g., `.env.localnet`), which can be particularly useful when relying on the [Algokit deploy command](https://github.com/algorandfoundation/algokit-cli/blob/deploy-command/docs/features/deploy.md). If no such prefixed files are located, Algokit will then attempt to load default `.env` files. This functionality provides greater flexibility for different network configurations.
+  By default, Algokit will scan for network-prefixed `.env` variables (e.g., `.env.localnet`), which can be particularly useful when relying on the [Algokit deploy command](https://github.com/algorandfoundation/algokit-cli/blob/deploy-command/docs/features/deploy.md). If no such prefixed files are located, Algokit will then attempt to load default `.env` files. This functionality provides greater flexibility for different network configurations.
 
 - `poetry`: If your Python project uses Poetry for dependency management, the `poetry` command installs Poetry (if not present) and runs `poetry install` in the current working directory to install Python dependencies.
 - `npm`: If you're developing a JavaScript or TypeScript project, the `npm` command runs npm install in the current working directory to install Node.js dependencies.
@@ -339,9 +342,9 @@ Example:
 ```yaml
 # copier.yaml
 project_name:
- type: str
- help: What is the name of this project?
- placeholder: "algorand-app"
+  type: str
+  help: What is the name of this project?
+  placeholder: 'algorand-app'
 ```
 
 This would prompt the user for the project name, and the input can then be used in the template using the Jinja syntax `{{ project_name }}`.
@@ -366,13 +369,13 @@ This process ensures that any Python scripts included as tasks within your Copie
 It's important to note that the use of `_copier_python` is not recommended. Here's an example of specifying a Python script execution in your `copier.yaml` without needing to explicitly use `_copier_python`:
 
 ```yaml
-- "{{ python_path }} your_python_script.py"
+- '{{ python_path }} your_python_script.py'
 ```
 
 If you'd like your template to be backwards compatible with versions of `algokit-cli` older than `v1.11.3` when executing custom python scripts via `copier` tasks, you can use a conditional statement to determine the Python path:
 
 ```yaml
-- "{{ python_path if python_path else _copier_python }} your_python_script.py"
+- '{{ python_path if python_path else _copier_python }} your_python_script.py'
 # _copier_python above is used for backwards compatibility with versions < v1.11.3 of the algokit cli
 ```
 
@@ -382,9 +385,9 @@ And to define `python_path` in your Copier questions:
 # Auto determined by algokit-cli from v1.11.3 to allow execution of python script
 # in binary mode.
 python_path:
- type: str
- help: Path to the sys.executable.
- when: false
+  type: str
+  help: Path to the sys.executable.
+  when: false
 ```
 
 #### Working with Generators
@@ -402,15 +405,15 @@ Outlined below are the fundamental steps to create a generator. Although `copier
 
 ```yaml
 _task:
- - "echo '==== Successfully initialized new smart contract 🚀 ===='"
+  - "echo '==== Successfully initialized new smart contract 🚀 ===='"
 
 contract_name:
- type: str
- help: Name of your new contract.
- placeholder: "my-new-contract"
- default: "my-new-contract"
+  type: str
+  help: Name of your new contract.
+  placeholder: 'my-new-contract'
+  default: 'my-new-contract'
 
-_templates_suffix: ".j2"
+_templates_suffix: '.j2'
 ```
 
 Note that `_templates_suffix` must be different from the `_templates_suffix` defined in the root `copier.yaml` file. This is because the generator's `copier.yaml` file is processed separately from the root `copier.yaml` file.
