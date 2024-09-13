@@ -2,3 +2,56 @@
 title: ABI
 description: A guide in my new Starlight docs site.
 ---
+
+Application Binary Interface (ABI) is a low-level interface defined in ARC-4 between an application and its caller.
+
+It defines how to:
+- describe the properties of an application,
+- describe, select, and invoke a method in an application, and
+- encode the arguments and decode the return value of an application method.
+
+Any application that adheres to this standard is called an ARC-4 Application.
+The ABI standard is what allows typed client to be produced starting from an application definition.
+This applications definition is a JSON file containing the information talked about in this page.
+
+There are two ARC standards that have since extended ARC-4 in a backwards-compatible way:
+ARC-32, and ARC-56.
+
+## Methods
+Application Call Transactions always execute the same body of code
+(your approval or clear program).
+However, we often want an Application to be able to execute distinct actions
+(mutate state, move funds, etc.).
+
+We call these distinct actions methods and the ABI provides specifications for building
+an Application Call, or other higher-level abstractions, that invokes each specific Application method.
+
+A method is completely defined by its: name, arguments, and return value.
+Example: `add(uint64,uint64)uint128`.
+
+### Method selectors
+A method selector is a 4-bytes string derived from the SHA-512/256 of the method string.
+Therefore, each method is associated deterministically with a method selector.
+
+When an Application Call Transaction is built, the method selector is the first element of the Arguments Array.
+ARC-4 does not explicitly make recommendations on how to route the code execution to the selected method and in fact,
+different languages implement different (all equivalent) method routing strategies.
+
+## OnCompletion Actions
+Any Application Call Transaction specifies a field called `OnCompletion`.
+Depending on the value of this field, a successful execution of this transaction will have a specific side effect:
+- (NoOp) No side effect.
+- (DeleteApplication) self-explanatory.
+- (UpdateApplication) self-explanatory.
+- (OptIn) locks a portion of the caller's balance to allocate space on the application's local storage.
+- (CloseOut) removes the caller's local state from the Application and unlocks the same portion of balance.
+- (ClearState) same as CloseOut. It will have the same side effects, but it cannot be rejected.
+
+A method can elect to be used for all or some of these `OnCompletion` values except for Clear state.
+ClearState should be considered either a call to free an account from a faulty Application, or an adversarial call.
+
+## Data Types
+Natively, the AVM only supports uint64 and byte slices.
+The ABI defines abstract data types like: numbers, boolean, strings, tuples, arrays, and more.
+These types are built on top of native byte slices and can be combined with each other
+(example: `Tuple[uint8,string,array[uint64]]`).
