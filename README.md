@@ -15,6 +15,8 @@
 - run `pnpm install` in your terminal to install all dependencies
 - run `pnpm run dev` in your terminal to start a local developer environment
 
+See how to submit changes in the [CONTRIBUTING](./CONTRIBUTING.md) guide.
+
 ## Information Architecture
 
 All the documentation is stored under `./src/content/docs/`:

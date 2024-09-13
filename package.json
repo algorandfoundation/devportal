@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "lint": "eslint . && prettier -c ./src/** && astro check",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -29,11 +30,22 @@
     "rehype-slug": "^6.0.0",
     "sharp": "^0.32.5",
     "starlight-image-zoom": "^0.7.0",
-    "tailwindcss": "^3.4.4",
-    "typescript": "^5.4.5"
+    "tailwindcss": "^3.4.4"
   },
   "devDependencies": {
-    "pnpm": "^9.0.0"
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
+    "@eslint/js": "^9.9.1",
+    "@types/eslint__js": "^8.42.3",
+    "@typescript-eslint/parser": "^8.4.0",
+    "eslint": "^9.9.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-astro": "^1.2.3",
+    "pnpm": "^9.0.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.5.2",
+    "typescript-eslint": "^8.4.0"
   },
   "engines": {
     "node": ">=18",
