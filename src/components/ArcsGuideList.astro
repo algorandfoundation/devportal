@@ -1,0 +1,44 @@
+---
+import ArcsGuideTable from './ArcsGuideTable.astro';
+
+// Fetch all Markdown files from the arcs directory
+const markdownFiles = import.meta.glob(
+  '/src/content/docs/standards/arcs/*.md',
+  { eager: true },
+);
+
+// Extract frontmatter and markdown content
+const arcsData = Object.values(markdownFiles).map(file => ({
+  ...file.frontmatter,
+  content: file.compiledContent(), // Access the compiled markdown content
+}));
+
+// Categorize arcs based on their sub-category
+const generalArcs = arcsData.filter(arc => arc['sub-category'] === 'General');
+const asaArcs = arcsData.filter(arc => arc['sub-category'] === 'Asa');
+const applicationArcs = arcsData.filter(
+  arc => arc['sub-category'] === 'Application',
+);
+const explorerArcs = arcsData.filter(arc => arc['sub-category'] === 'Explorer');
+const walletArcs = arcsData.filter(arc => arc['sub-category'] === 'Wallet');
+
+// Export the categorized data to make it accessible in the template below
+export { generalArcs, asaArcs, applicationArcs, explorerArcs, walletArcs };
+---
+
+<article>
+  <!-- General Arcs Section -->
+  <ArcsGuideTable title='General ARC' data={generalArcs} />
+
+  <!-- Asa Arcs Section -->
+  <ArcsGuideTable title='Asa ARC' data={asaArcs} />
+
+  <!-- Application Arcs Section -->
+  <ArcsGuideTable title='Application ARC' data={applicationArcs} />
+
+  <!-- Explorer Arcs Section -->
+  <ArcsGuideTable title='Explorer ARC' data={explorerArcs} />
+
+  <!-- Wallet Arcs Section -->
+  <ArcsGuideTable title='Wallet ARC' data={walletArcs} />
+</article>

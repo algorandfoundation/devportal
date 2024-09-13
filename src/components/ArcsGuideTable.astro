@@ -1,0 +1,45 @@
+---
+// Props for the component
+interface Props {
+  title: string; // Title of the section (e.g., "General Arcs")
+  data: any[]; // Array of ARC data (including frontmatter)
+}
+
+const { title, data } = Astro.props as Props;
+
+// Helper function to extract abstract content from HTML
+function extractAbstract(content: string | undefined) {
+  if (!content) {
+    return 'No abstract available'; // Handle undefined or missing content
+  }
+
+  // Regex to extract content between <h2 id="abstract"> and the next <h2> tag
+  const abstractMatch = content.match(
+    /<h2[^>]*id="abstract"[^>]*>.*?<\/h2>([\s\S]*?)(?=<h2)/i,
+  );
+
+  const extracted = abstractMatch
+    ? abstractMatch[1].trim()
+    : 'No abstract available';
+
+  // Log the extracted abstract
+  console.log('Extracted Abstract:', extracted);
+
+  return extracted;
+}
+---
+
+<section>
+  <h2>{title}</h2>
+  {
+    data.map(arc => (
+      <div key={arc.arc} style='margin-bottom: 2em;'>
+        <h3>
+          {arc.arc} - {arc.title}
+        </h3>
+        <div set:html={extractAbstract(arc.content)} />{' '}
+        {/* Render HTML with Astro's set:html */}
+      </div>
+    ))
+  }
+</section>
