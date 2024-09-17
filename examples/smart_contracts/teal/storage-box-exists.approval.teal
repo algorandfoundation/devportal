@@ -1,0 +1,16 @@
+#pragma version 10
+
+boxes_exist:
+    proto 0 1
+    byte 0x424f585f43
+    box_len
+    bury 1
+    retsub
+
+box_map_exists:
+    proto 1 1
+    frame_dig -1
+    itob
+    box_len
+    bury 1
+    retsub

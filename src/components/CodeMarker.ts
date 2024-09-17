@@ -11,19 +11,24 @@ export async function getSelectedCode(
     return code;
   }
 
-  const pattern = `^ *(//|#) example: ${marker}$`
+  const pattern = `^ *(//|#) example: ${marker}$`;
   const regex = new RegExp(pattern, 'g');
   const codeLines = code.split('\n');
 
-  const occurrenceIndexes = codeLines.reduce<number[]>((indexes, line, index) => {
-    if (regex.test(line)) {
-      indexes.push(index);
-    }
-    return indexes;
-  }, []);
+  const occurrenceIndexes = codeLines.reduce<number[]>(
+    (indexes, line, index) => {
+      if (regex.test(line)) {
+        indexes.push(index);
+      }
+      return indexes;
+    },
+    [],
+  );
 
   if (occurrenceIndexes.length !== 2) {
-    throw new Error(`Error: Pattern "${pattern}" must occur exactly twice. Found: ${occurrenceIndexes.length}`);
+    throw new Error(
+      `Error: Pattern "${pattern}" must occur exactly twice. Found: ${occurrenceIndexes.length}`,
+    );
   }
 
   const [startIndex, endIndex] = occurrenceIndexes;

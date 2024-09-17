@@ -1,12 +1,11 @@
 ---
 title: App Deployment
-prev: 
-    link: /build/algokit/utils/ts/app-client/
+prev:
+  link: /build/algokit/utils/ts/app-client/
 next:
-    link: /build/algokit/utils/ts/transfer/
+  link: /build/algokit/utils/ts/transfer/
 sidebar:
-    order: 5
-
+  order: 5
 ---
 
 import { Code, Aside, Steps } from '@astrojs/starlight/components';
@@ -22,17 +21,18 @@ The architecture design behind app deployment is articulated in an [Architecture
 Namely, it described the concept of a smart contract development lifecycle:
 
 <Steps>
-1. **Development**
-   1. **_Write_** smart contracts
-   2. **_Transpile_** smart contracts with development-time parameters (code configuration) to TEAL Templates
-   3. **_Verify_** the TEAL Templates maintain [output stability](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/articles/output_stability.md) and any other static code quality checks
-2. **Deployment**
-   1. **_Substitute_** deploy-time parameters into TEAL Templates to create final TEAL code
-   2. **_Compile_** the TEAL to create byte code using algod
-   3. **_Deploy_** the byte code to one or more Algorand networks (e.g. LocalNet, TestNet, MainNet) to create Deployed Application(s)
-3. **Runtime**
-   1. **_Validate_** the deployed app via automated testing of the smart contracts to provide confidence in their correctness
-   2. **_Call_** deployed smart contract with runtime parameters to utilise it
+  1. **Development** 1. **_Write_** smart contracts 2. **_Transpile_** smart
+  contracts with development-time parameters (code configuration) to TEAL
+  Templates 3. **_Verify_** the TEAL Templates maintain [output
+  stability](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/articles/output_stability.md)
+  and any other static code quality checks 2. **Deployment** 1. **_Substitute_**
+  deploy-time parameters into TEAL Templates to create final TEAL code 2.
+  **_Compile_** the TEAL to create byte code using algod 3. **_Deploy_** the
+  byte code to one or more Algorand networks (e.g. LocalNet, TestNet, MainNet)
+  to create Deployed Application(s) 3. **Runtime** 1. **_Validate_** the
+  deployed app via automated testing of the smart contracts to provide
+  confidence in their correctness 2. **_Call_** deployed smart contract with
+  runtime parameters to utilise it
 </Steps>
 
 <Image src={smartContractWorkflow} alt='App deployment lifecycle' />
@@ -149,7 +149,7 @@ When compiling TEAL template code, the capabilities described in the [design abo
 
 In order for a smart contract to be able to use this functionality, it must have a TEAL Template that contains the following:
 
-- `TMPL_{key}` - Which can be replaced with a number or a string / byte array which wil be automatically hexadecimal encoded
+- `TMPL_{key}` - Which can be replaced with a number or a string / byte array which will be automatically hexadecimal encoded
 - `TMPL_UPDATABLE` - Which will be replaced with a `1` if an app should be updatable and `0` if it shouldn't (immutable)
 - `TMPL_DELETABLE` - Which will be replaced with a `1` if an app should be deletable and `0` if it shouldn't (permanent)
 

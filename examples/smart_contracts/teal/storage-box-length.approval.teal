@@ -1,0 +1,42 @@
+#pragma version 10
+
+length_box_map:
+    proto 0 0
+    int 0
+    itob
+    dup
+    box_del
+    pop
+    dup
+    byte "Value"
+    box_put
+    dup
+    box_len
+    assert
+    int 5
+    ==
+    assert
+    box_len
+    assert
+    int 5
+    ==
+    assert
+    retsub
+
+length_box_ref:
+    proto 0 0
+    byte "box_ref"
+    int 32
+    box_create
+    pop
+    byte "box_ref"
+    box_len
+    bury 1
+    assert 
+    byte "box_ref"
+    box_len
+    assert
+    int 64
+    ==
+    assert
+    retsub

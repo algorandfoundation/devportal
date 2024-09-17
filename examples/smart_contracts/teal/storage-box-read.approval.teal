@@ -1,0 +1,121 @@
+#pragma version 10
+
+get_box:
+    proto 0 1
+    byte 0x424f585f43
+    box_get
+    assert
+    retsub
+
+get_func_box:
+    proto 1 0
+    byte 0x424f585f43
+    box_del
+    pop
+    byte 0x424f585f43
+    frame_dig -1
+    box_put
+    byte 0x424f585f43
+    box_get
+    byte 0x000130
+    cover 2
+    select
+    frame_dig -1
+    ==
+    assert
+    retsub
+
+maybe_box:
+    proto 0 0
+    byte 0x424f585f43
+    box_get
+    !
+    assert
+    extract 2 0
+    byte "0"
+    ==
+    assert
+    retsub
+
+get_box_map:
+    proto 1 1
+    frame_dig -1
+    itob
+    box_get
+    assert
+    retsub
+
+get_func_box_map:
+    proto 0 1
+    int 1
+    itob
+    box_get
+    byte "default"
+    cover 2
+    select
+    retsub
+
+maybe_box_map:
+    proto 0 0
+    int 0
+    itob
+    dup
+    box_del
+    pop
+    dup
+    byte "Value"
+    box_put
+    dup
+    box_get
+    bury 1
+    !
+    assert
+    box_len
+    bury 1
+    assert
+    retsub
+
+
+get_func_box_ref:
+    proto 0 0
+    txn Sender
+    byte "box_ref"
+    box_get
+    dig 2
+    cover 2
+    select
+    ==
+    assert
+    retsub
+
+maybe_box_ref:
+    proto 0 0
+    byte "box_ref"
+    box_get
+    !
+    assert
+    byte 0x
+    ==
+    assert
+    retsub
+
+extract_box_ref:
+    proto 0 0
+    txn Sender
+    global CurrentApplicationAddress
+    byte "blob"
+    int 32
+    box_create
+    assert
+    byte "blob"
+    int 0
+    int 69
+    box_extract
+    swap
+    uncover 2
+    concat
+    byte 0x68656c6c6f
+    concat
+    ==
+    assert
+    retsub

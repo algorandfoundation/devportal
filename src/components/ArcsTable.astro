@@ -21,7 +21,7 @@ const { title, data } = Astro.props as Props;
     <tbody>
       {
         data.map(arc => (
-          <tr key={arc.arc}>
+          <tr>
             <td>
               <a
                 href={`/standards/arcs/${arc.sidebar.label}`}

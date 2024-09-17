@@ -5,31 +5,33 @@ description: Learn about the different types of AlgoKit projects and how to crea
 
 import { FileTree } from '@astrojs/starlight/components';
 
-AlgoKit streamlines configuring components for development, testing, and deploying smart contracts to the 
+AlgoKit streamlines configuring components for development, testing, and deploying smart contracts to the
 blockchain and effortlessly sets up a project with all the necessary components. In this guide, we'll explore what an AlgoKit project
 is and how you can use it to kickstart your own Algorand project.
 
 ## What is an AlgoKit Project?
-In the context of AlgoKit, a "project" refers to a structured standalone or monorepo workspace that includes 
-all the necessary components for developing, testing, and deploying Algorand applications, such as smart 
+
+In the context of AlgoKit, a "project" refers to a structured standalone or monorepo workspace that includes
+all the necessary components for developing, testing, and deploying Algorand applications, such as smart
 contracts, frontend applications, and any associated configurations.
 
 ## Two Types of AlgoKit Projects
-AlgoKit supports two main types of project structures: Workspaces and Standalone Projects. This flexibility caters 
+
+AlgoKit supports two main types of project structures: Workspaces and Standalone Projects. This flexibility caters
 to the diverse needs of developers, whether managing multiple related projects or focusing on a single application.
 
 - **Monorepo Workspace**: This workspace is ideal for complex applications comprising multiple subprojects. It facilitates the organized management of these subprojects under a single root directory, streamlining dependency management and shared configurations.
 - **Standalone Project**: This structure is suitable for simpler applications or when working on a single component. It offers straightforward project management, with each project residing in its own directory, independent of others.
 
-
 ## AlgoKit Monorepo Workspace
-Workspaces are designed to manage multiple related projects under a single root directory. This approach benefits complex applications with multiple sub-projects, such as a smart contract and a 
-corresponding frontend application. Workspaces help organize these sub-projects in a structured manner, 
+
+Workspaces are designed to manage multiple related projects under a single root directory. This approach benefits complex applications with multiple sub-projects, such as a smart contract and a
+corresponding frontend application. Workspaces help organize these sub-projects in a structured manner,
 making managing dependencies and shared configurations easier.
 
 Simply put, workspaces contain multiple AlgoKit standalone project folders within the `projects` folder and manage
 them from a single root directory:
-    
+
 <FileTree>
 - .algokit.toml
 - README.md
@@ -40,7 +42,9 @@ them from a single root directory:
 </FileTree>
 
 ### Creating an AlgoKit Monorepo Workspace
+
 To create an AlgoKit monorepo workspace, run the following command:
+
 ```bash showLineNumbers=false frame=none
 algokit init # Creates a workspace by default
 # or
@@ -52,22 +56,26 @@ The `–-workspace` flag is enabled by default, so running `algokit init` will c
 :::
 
 ### Adding a Sub-Project to an AlgoKit Workspace
+
 Once established, new projects can be added to the workspace, allowing centralized management.
 
-To add another sub-project within a workspace, run the following command at the root directory of the 
+To add another sub-project within a workspace, run the following command at the root directory of the
 related AlgoKit workspace:
+
 ```bash showLineNumbers=false frame=none
 algokit init
 ```
 
 :::note
-Please note that instantiating a workspace inside a workspace (aka 'workspace nesting') is not supported or 
-recommended. When you want to add a new project to an existing workspace, run algokit init from the 
+Please note that instantiating a workspace inside a workspace (aka 'workspace nesting') is not supported or
+recommended. When you want to add a new project to an existing workspace, run algokit init from the
 root of the workspace.
 :::
 
 ### Marking a Project as a Workspace
+
 To mark your project as a workspace, fill in the following in your `.algokit.toml` file:
+
 ```toml
 [project]
 type = 'workspace' # type specifying if the project is a workspace or standalone
@@ -75,34 +83,41 @@ projects_root_path = 'projects' # path to the root folder containing all sub-pro
 ```
 
 ### VSCode optimizations
+
 AlgoKit has a set of minor optimizations for VSCode users that are useful to be aware of:
-- Templates created with the `--workspace` flag automatically include a VSCode code-workspace file. New projects 
-added to an AlgoKit workspace are also integrated into an existing VSCode workspace.
-- Using the `--ide` flag with init triggers automatic prompts to open the project and, if available, the code 
-workspace in VSCode.
+
+- Templates created with the `--workspace` flag automatically include a VSCode code-workspace file. New projects
+  added to an AlgoKit workspace are also integrated into an existing VSCode workspace.
+- Using the `--ide` flag with init triggers automatic prompts to open the project and, if available, the code
+  workspace in VSCode.
 
 ### Handling of the .github Folder
-A key aspect of using the `--workspace` flag is how the .github folder is managed. This folder, which contains 
-GitHub-specific configurations, such as workflows and issue templates, are moved from the project directory to the 
+
+A key aspect of using the `--workspace` flag is how the .github folder is managed. This folder, which contains
+GitHub-specific configurations, such as workflows and issue templates, are moved from the project directory to the
 root of the workspace. This move is necessary because GitHub does not recognize workflows located in subdirectories.
 
 Here's a simplified overview of what happens:
+
 1. If a .github folder is found in your project, its contents are transferred to the workspace's root .github folder.
 2. Files with matching names in the destination are not overwritten; they're skipped.
 3. The original .github folder is removed if left empty after the move.
 4. A notification is displayed advising you to review the moved .github contents to ensure everything is in order.
 
-This process ensures that your GitHub configurations are appropriately recognized at the workspace level, allowing you 
+This process ensures that your GitHub configurations are appropriately recognized at the workspace level, allowing you
 to utilize GitHub Actions and other features seamlessly across your projects.
 
 ## Standalone Projects
-Standalone projects are suitable for more straightforward applications or when working on a single component. This structure 
-is straightforward, with each project residing in its directory, independent of others. Standalone projects 
-are ideal for developers who prefer simplicity or focus on a single aspect of their application and are 
+
+Standalone projects are suitable for more straightforward applications or when working on a single component. This structure
+is straightforward, with each project residing in its directory, independent of others. Standalone projects
+are ideal for developers who prefer simplicity or focus on a single aspect of their application and are
 sure they will not need to add more sub-projects in the future.
 
 ### Creating a Standalone Project
-To create a standalone project, use the `--no-workspace` flag during initialization. 
+
+To create a standalone project, use the `--no-workspace` flag during initialization.
+
 ```bash showLineNumbers=false frame=none
 algokit init -–no-workspace
 ```
@@ -110,7 +125,9 @@ algokit init -–no-workspace
 This instructs AlgoKit to bypass the workspace structure and set up the project as an isolated entity.
 
 ### Marking a Project as a Standalone Project
+
 To mark your project as a standalone project, fill in the following in your .algokit.toml file:
+
 ```toml
 [project]
 type = {'backend' | 'contract' | 'frontend'} # currently support 3 generic categories for standalone projects
@@ -118,13 +135,11 @@ name = 'my-project' # unique name for the project inside the workspace
 ```
 
 :::note
-We recommend using workspaces for most projects (hence enabled by default), as it provides a more organized 
-and scalable approach to managing multiple sub-projects. However, standalone projects are a great choice for 
-simple applications, or when you are certain you will not need to add more sub-projects in the future. For such cases, append `--no-workspace` when using the algokit init command. For more details on the init command, 
+We recommend using workspaces for most projects (hence enabled by default), as it provides a more organized
+and scalable approach to managing multiple sub-projects. However, standalone projects are a great choice for
+simple applications, or when you are certain you will not need to add more sub-projects in the future. For such cases, append `--no-workspace` when using the algokit init command. For more details on the init command,
 please refer to [init](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/init.md) command docs.
 :::
 
-Both workspaces and standalone projects are fully supported by AlgoKit's suite of tools, ensuring developers 
+Both workspaces and standalone projects are fully supported by AlgoKit's suite of tools, ensuring developers
 can choose the structure that best fits their workflow without compromising on functionality.
-
-

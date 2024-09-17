@@ -1,0 +1,47 @@
+#pragma version 10
+
+delete_boxes:
+    proto 0 0
+    byte 0x424f585f43
+    box_del
+    pop
+    byte 0x424f585f43
+    box_get
+    byte 0x00023432
+    cover 2
+    select
+    byte 0x00023432
+    ==
+    assert
+    byte 0x424f585f43
+    box_get
+    !
+    assert
+    byte 0x000130
+    ==
+    assert
+    retsub
+
+
+box_map_del:
+    proto 1 0
+    frame_dig -1
+    itob
+    box_del
+    pop
+    retsub
+
+delete_box_ref:
+    proto 0 0
+    byte "box_ref"
+    int 32
+    box_create
+    pop
+    byte "box_ref"
+    box_len
+    bury 1
+    assert
+    byte "box_ref"
+    box_del
+    pop
+    retsub

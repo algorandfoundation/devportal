@@ -1,0 +1,56 @@
+#pragma version 10
+
+set_box:
+    proto 1 0
+    byte 0x424f585f43
+    box_del
+    pop
+    byte 0x424f585f43
+    frame_dig -1
+    box_put
+    retsub
+
+
+set_box_map:
+    proto 2 0
+    frame_dig -2
+    itob
+    dup
+    box_del
+    pop
+    frame_dig -1
+    box_put
+    retsub
+
+set_box_ref:
+    proto 0 0
+    txn Sender
+    global CurrentApplicationAddress
+    byte "blob"
+    box_len
+    bury 1
+    !
+    assert
+    byte "blob"
+    int 32
+    box_create
+    assert
+    byte "blob"
+    box_len
+    bury 1
+    assert
+    concat
+    byte "blob"
+    swap
+    box_put
+    byte "blob"
+    box_len
+    bury 1
+    assert
+    byte "blob"
+    box_len
+    assert
+    int 64
+    ==
+    assert
+    retsub

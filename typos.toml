@@ -1,0 +1,2 @@
+[files]
+extend-exclude = ["src/content/docs/standards/arcs/arc-*.md"]

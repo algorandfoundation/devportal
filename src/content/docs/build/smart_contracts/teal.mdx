@@ -1,0 +1,148 @@
+---
+title: Algorand TEAL
+description: A guide in my new Starlight docs site.
+---
+
+import { Image } from 'astro:assets';
+import txnProperties from '@images/smart-contract-teal-txn-properties.png';
+import pseudoCodes from '@images/smart-contract-teal-pseudo-codes.png';
+import operators from '@images/smart-contract-teal-operators.png';
+import tealArguments from '@images/smart-contract-teal-arguments.png';
+import storingValues from '@images/smart-contract-teal-storing-values.png';
+import loadingValues from '@images/smart-contract-teal-loading-values.png';
+
+TEAL, or Transaction Execution Approval Language, is the smart contract language used in the Algorand blockchain. It is an assembly-like language processed by the Algorand Virtual Machine (AVM) and is Turing-complete, supporting both looping and subroutines. TEAL is primarily used for writing smart contracts and smart signatures, which can be authored directly in TEAL or via Python or Typescript using [Algokit](/build/algokit/what-is-algokit).
+
+## Use in Algorand Smart Contracts and Signatures
+
+TEAL scripts create conditions for transaction execution. Smart contracts written in TEAL can control Algorand’s native assets, interact with users, or enforce custom business logic. These contracts either approve or reject transactions based on predefined conditions. Smart signatures, on the other hand, enforce specific rules on transactions initiated by accounts, typically serving as a stateless contract.
+
+## Relationship to the Algorand Virtual Machine
+
+The AVM is responsible for processing TEAL programs. It interprets and executes the TEAL code, managing state changes and ensuring the contract’s logic adheres to the set rules. The AVM also evaluates the computational cost of running TEAL code to enforce time limits on contract execution.
+
+## TEAL Language Features
+
+1. Assembly-like Structure: TEAL resembles assembly language, where operations are performed in a sequential manner. Each line in a TEAL program represents a single operation.
+2. Stack-based Operations: TEAL is a stack-based language, meaning it relies heavily on a stack to manage data. Operations in TEAL typically involve pushing data onto the stack, manipulating it, and then popping the result off the stack.
+3. Data Types: TEAL supports two primary data types:
+
+- Unsigned 64-bit Integers
+- Byte Strings
+  These data types are used in various operations, including comparisons, arithmetic, and logical operations.
+
+4. Operators and Flow Control: TEAL includes a set of operators for performing arithmetic (`+`, `-`), comparisons (`==`, `<`, `>`), and logical operations (`&&`, `||`). Flow control in TEAL is managed through branching (`bnz`, `bz`) and subroutine calls (`callsub`, `retsub`).
+5. Access to Transaction Properties and Global Values: TEAL programs can access properties of transactions (e.g., sender, receiver, amount) and global values (e.g., current round, group size) using specific opcodes like `txn`, `gtxn`, and `global`.
+
+## Program Versions and Compatibility
+
+Currently, Algorand supports versions 1 through 10 of TEAL. When writing contracts with program version 2 or higher, make sure to add `#pragma version #` where # should be replaced by the specific number as the first line of the program. If this line does not exist, the protocol will treat the contract as a version 1 contract. If upgrading a contract to version 2 or higher, it is important to verify you are checking the `RekeyTo` property of all transactions that are attached to the contract.
+
+## Transaction Properties and Pseudo Opcodes
+
+The primary purpose of a TEAL program is to return either true or false. When the program completes, if there is a non-zero value on the stack, then it returns true. If there is a zero value or the stack is empty, it will return false. If the stack has more than one value, the program also returns false unless the return opcode is used. The following diagram illustrates how the stack machine processes the program.
+Program line number 1:
+
+<Image src={txnProperties} alt=' Transaction Properties' />
+Getting Transaction Properties
+
+The program uses the txn to reference the current transaction’s list of properties. Grouped transaction properties are referenced using gtxn and gtxns. The number of transactions in a grouped transaction is available in the global variable GroupSize. To get the first transaction's receiver, use gtxn 0 Receiver.
+
+## Pseudo opcodes
+
+The TEAL specification provides several pseudo opcodes for convenience. For example, the second line in the program below uses the addr pseudo opcode.
+
+<Image src={pseudoCodes} alt='Pseudo Codes' />
+Figure: Pseudo Opcodes
+
+The addr pseudo opcode converts Algorand addresses to a byte constant and pushes the result to the stack. See [TEAL Opcodes](/build/smart_contracts/teal_opcodes) for additional pseudo opcodes.
+
+## Operators and Stack Manipulation
+
+TEAL provides operators to work with data that is on the stack. For example, the == operator evaluates if the last two values on the stack are equal and pushes either a 1 or 0 depending on the result. The number of values used by an operator will depend on the operator. The [TEAL Opcodes](/build/smart_contracts/teal_opcodes) documentation explains arguments and return values.
+
+<Image src={operators} alt='Teal Operators' />
+Figure: Operators
+
+## Argument Passing
+
+TEAL supports program arguments. Smart contracts and smart signatures handle these parameters with different opcodes. Passing parameters to a smart signature is explained in the Interact with [smart signatures](/build/smart_contracts/logic_sigs) documentation.
+The diagram below shows an example of logic that is loading a parameter onto the stack within a smart signature.
+
+<Image src={tealArguments} alt='Arguments' />
+Figure: Arguments
+
+All argument parameters to a TEAL program are byte arrays. The order that parameters are passed is specific. In the diagram above, The first parameter is pushed onto the stack. The SDKs provide standard language functions that allow you to convert parameters to a byte array.
+
+<Image src={storingValues} alt='Storing Values' />
+Figure: Storing Values
+
+## Scratch space Usage
+
+TEAL provides a scratch space as a way of temporarily storing values for use later in your code. The diagram below illustrates a small TEAL program that loads 12 onto the stack and then duplicates it. These values are multiplied together and result (144) is pushed to the top of the stack. The store command stores the value in the scratch space 1 slot.Figure5: Storing Values
+
+The load command is used to retrieve a value from the scratch space as illustrated in the diagram below. Note that this operation does not clear the scratch space slot, which allows a stored value to be loaded many times if necessary.
+
+<Image src={loadingValues} alt='AlgoKit Utils Loading Values' />
+Figure: Loading Values
+
+## Looping and Subroutines
+
+TEAL contracts written in version 4 or higher can use loops and subroutines. Loops can be performed using any branching opcodes b, bz, and bnz. For example, the TEAL below loops ten times.
+
+```teal
+#pragma version 10
+
+// loop 1 - 10
+// init loop var
+int 0
+
+loop:
+	int 1
+	+
+	dup
+	// implement loop code
+	// ...
+	// check upper bound
+	int 10
+	<=
+	bnz loop
+	// once the loop exits, the last counter value will be left on stack
+```
+
+Subroutines can be implemented using labels and the callsub and retsub opcodes. The sample below illustrates a sample subroutine call.
+
+```teal
+#pragma version 10
+// jump to main loop
+b main
+
+// subroutine
+my_subroutine:
+	// implement subroutine code
+	// with the two args
+	retsub
+
+main:
+	int 1
+	int 5
+	callsub my_subroutine
+	return
+```
+
+## Dynamic Operational Cost
+
+Smart signatures are limited to 1000 bytes in size. Size encompasses the compiled program plus arguments. Smart contracts are limited to 2KB total for the compiled approval and clear programs. This size can be increased in 2KB increments, up to an 8KB limit for both programs.
+For optimal performance, smart contracts and smart signatures are also limited in opcode cost. This cost is evaluated when a smart contract runs and is representative of its computational expense. Every opcode executed by the AVM has a numeric value that represents its computational cost. Most opcodes have a computational cost of 1. Some, such as SHA256 (cost 35) or ed25519verify (cost 1900) have substantially larger computational costs. The [TEAL Opcodes](/build/smart_contracts/teal_opcodes) reference lists the opcode cost for every opcode.
+Smart signatures are limited to 20,000 for total computational cost.
+Smart contracts invoked by a single application transaction are limited to 700 for either of the programs associated with the contract. However, if the smart contract is invoked via a group of application transactions, the computational budget for approval programs is considered pooled. The total opcode budget will be 700 multiplied by the number of application transactions within the group (including inner transactions). So if the maximum transaction group size is used (i.e., 16 transactions) and the maximum number of inner transactions is used (i.e., 256 inner transactions), and all are application transactions, the computational budget would be 700x(16+256)=190,400.
+
+:::tip[Info]
+Executions of clear state programs are more stringent than approval programs in order to ensure that applications may be closed out. Still, applications also are assured a chance to clean up their internal state. At the beginning of the execution of a clear state program, the pooled budget available must be 700 or higher. If it is not, the containing transaction group fails without clearing the app's state. During the execution of the clear state program, no more than 700 costs may be drawn. If further execution is attempted, the clear state program fails, and the app's state is cleared.
+:::
+
+## Tools and Development
+
+For developers who prefer Python or Typescript, you can also write smart contracts in Python or Typescript using [Algokit](/build/algokit/what-is-algokit). Algokit abstracts many low-level details of TEAL while providing the same functionality.
+
+For debugging a smart contract in Python, refer to the [Algokit debugging page](/build/algokit/utils/python/debugging).

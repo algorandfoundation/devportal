@@ -1,4 +1,5 @@
 {
+  "plugins": ["prettier-plugin-astro"],
   "arrowParens": "avoid",
   "bracketSpacing": true,
   "htmlWhitespaceSensitivity": "css",
@@ -7,7 +8,6 @@
   "jsxSingleQuote": true,
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
-  "markdownListMarker": "-",
   "requirePragma": false,
   "useTabs": false,
   "semi": true,
@@ -52,6 +52,12 @@
       "files": "*.html",
       "options": {
         "embeddedLanguageFormatting": "off"
+      }
+    },
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
       }
     }
   ]

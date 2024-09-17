@@ -25,10 +25,10 @@ The `configure` method can be used to set these attributes.
 To enable debug mode in your project, you can configure it as follows:
 
 ```ts
-import { Config } from '@algorandfoundation/algokit-utils'
+import { Config } from '@algorandfoundation/algokit-utils';
 Config.configure({
   debug: true,
-})
+});
 ```
 
 ## Debugging Utilities
@@ -41,12 +41,12 @@ Debugging utilities can be used to simplify gathering artifacts to be used with 
 To enable debug mode with extra trace persistence for AVM VSCode Debugger, you can configure it as follows:
 
 ```ts
-import { Config } from '@algorandfoundation/algokit-utils'
+import { Config } from '@algorandfoundation/algokit-utils';
 Config.configure({
   debug: true,
   traceAll: true, // if ignored, will only trace failed atomic transactions and application client calls
   projectRoot: '/path/to/project/root', // if ignored, will try to find the project root automatically
-})
+});
 ```
 
 ### Trace filename format
@@ -54,7 +54,7 @@ Config.configure({
 The trace files are named in a specific format to provide useful information about the transactions they contain. The format is as follows:
 
 ```ts
-;`${timestamp}_lr${lastRound}_${transactionTypes}.trace.avm.json`
+`${timestamp}_lr${lastRound}_${transactionTypes}.trace.avm.json`;
 ```
 
 Where:
@@ -64,4 +64,3 @@ Where:
 - `transactionTypes`: A string representing the types and counts of transactions in the atomic group. Each transaction type is represented as `${count}#${type}`, and different transaction types are separated by underscores.
 
 For example, a trace file might be named `20220301T123456Z_lr1000_2#pay_1#axfer.trace.avm.json`, indicating that it was created at `2022-03-01T12:34:56Z`, the last round was `1000`, and the atomic group contained 2 payment transactions and 1 asset transfer transaction.
-

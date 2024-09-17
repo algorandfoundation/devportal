@@ -1,4 +1,337 @@
 ---
 title: Resource Usage
 description: A guide in my new Starlight docs site.
+draft: true
 ---
+
+import { Code } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+import accountAppEx from '/examples/smart_contracts/py/resource-avail-account-app.py?raw';
+import accountAssetEx from '/examples/smart_contracts/py/resource-avail-account-asset.py?raw';
+import accountEx from '/examples/smart_contracts/py/resource-avail-account.py?raw';
+import appEx from '/examples/smart_contracts/py/resource-avail-app.py?raw';
+import assetEx from '/examples/smart_contracts/py/resource-avail-asset.py?raw';
+import boxEx from '/examples/smart_contracts/py/resource-avail-box.py?raw';
+
+import accountUtilEx1 from '/examples/smart_contracts/utils-ts/resource-avail-account-1.ts?raw';
+import accountUtilEx2 from '/examples/smart_contracts/utils-ts/resource-avail-account-2.ts?raw';
+import accountUtilEx3 from '/examples/smart_contracts/utils-ts/resource-avail-account-3.ts?raw';
+import accountAppUtilEx1 from '/examples/smart_contracts/utils-ts/resource-avail-account-app-1.ts?raw';
+import accountAppUtilEx2 from '/examples/smart_contracts/utils-ts/resource-avail-account-app-2.ts?raw';
+import accountAppUtilEx3 from '/examples/smart_contracts/utils-ts/resource-avail-account-app-3.ts?raw';
+import accountAssetUtilEx1 from '/examples/smart_contracts/utils-ts/resource-avail-account-asset-1.ts?raw';
+import accountAssetUtilEx2 from '/examples/smart_contracts/utils-ts/resource-avail-account-asset-2.ts?raw';
+import accountAssetUtilEx3 from '/examples/smart_contracts/utils-ts/resource-avail-account-asset-3.ts?raw';
+import appUtilEx1 from '/examples/smart_contracts/utils-ts/resource-avail-app-1.ts?raw';
+import appUtilEx2 from '/examples/smart_contracts/utils-ts/resource-avail-app-2.ts?raw';
+import appUtilEx3 from '/examples/smart_contracts/utils-ts/resource-avail-app-3.ts?raw';
+import assetUtilEx1 from '/examples/smart_contracts/utils-ts/resource-avail-asset-1.ts?raw';
+import assetUtilEx2 from '/examples/smart_contracts/utils-ts/resource-avail-asset-2.ts?raw';
+import assetUtilEx3 from '/examples/smart_contracts/utils-ts/resource-avail-asset-3.ts?raw';
+import boxUtilEx1 from '/examples/smart_contracts/utils-ts/resource-avail-box-1.ts?raw';
+import boxUtilEx2 from '/examples/smart_contracts/utils-ts/resource-avail-box-2.ts?raw';
+
+Algorand smart contracts do not have default access to the entire blockchain ledger. Therefore, when a smart contract method needs to access resources such as accounts, assets (ASA), other applications (smart contracts), or box references, these must be provided through the reference (foreign) array during invocation. This page explains what reference arrays are, why they are necessary, the different ways to provide them, and includes a series of code examples.
+
+## Resource Availability
+
+When smart contracts are executed, they may require data stored within the blockchain ledger for evaluation. For this data (resource) to be accessible to the smart contract, it must be made available. When you say, 'A resource is available to the smart contract,' it means that the reference array, referencing the resource, was provided during the invocation and execution of a smart contract method that requires access to that resource.
+
+### What are Reference Arrays?
+
+There are four reference arrays:
+
+- Accounts(link to accounts page): Reference to Algorand accounts
+- assets(ASAs)(link to assets page): Reference to Algorand Standard Assets
+- applications(smart contracts)(link to app page): Reference to an external smart contract
+- Boxes(link to box page): Reference to Boxes created within the smart contract
+
+Including necessary resources in the appropriate arrays enables the smart contract to access the necessary data during execution, such as reading an account’s Algo balance or examining the immutable properties of an ASA.
+This page explains how data access is managed by a smart contract in version 9 or later of the Algorand Virtual Machine (AVM). For details on earlier AVM versions, refer to the [TEAL specification](https://github.com/algorandfoundation/specs/blob/master/dev/TEAL.md#resource-availability)
+
+By default, the reference arrays are empty, with the exception of the accounts and applications arrays. The Accounts array contains the transaction sender's address, and the Applications array contains the called smart contract ID.
+
+### Types of Resources to make available
+
+Using these four reference arrays, you can make the following six unique ledger items available during smart contract execution: account, asset, application, account+asset, account+application, and application+box.
+Accounts and Applications can contain sublists with potentially large datasets. For example, an account may opt into an extensive set of assets or applications (which store the user's local state). Additionally, smart contracts can store potentially unlimited boxes of data within the ledger. For instance, a smart contract might create a unique box of arbitrary data for each user.
+Combinations like account+asset, account+application, and application+box refer to cases accessing the sublist resources. For example:
+
+- Account+Asset: To read what the balance of an asset is for a specific account, both the asset and the account reference must be included in the respective reference arrays.
+- Account+Application: To access an account's local state of an application, both the account and the application reference must be included in the respective reference arrays.
+- Application+Box: To retrieve data from a specific box created by an application, the application and the box reference must be included in the respective reference arrays.
+
+### Inner Transaction Resource Availability
+
+Inner transactions within a contract have access to the contract’s resource availability.
+So if a smart contract has an inner transaction calling another smart contract, the inner contract automatically inherits the resource availability of the top-level smart contract. For example, if contract A sends an inner transaction to call a method in contract B that requires access to asset XYZ, providing a reference to asset XYZ when calling contract A allows contract B to share the resource availability of contract A and access asset XYZ.
+
+### Reference Array Constraints and Requirements
+
+There are certain limitations and requirements you need to consider when providing references in the reference arrays:
+
+- The four reference arrays are limited to a combined total of eight values per application transaction. (This limit excludes the default references to the transaction sender’s address and the called smart contract ID)
+- The accounts array can contain no more than four accounts.
+- The values passed into the reference arrays can change per application transaction.
+- When accessing one of the sublists of items, the application transaction must include both the top-level item and the nested list item within the same call. For example, to read an ASA balance for a specific account, the account and the asset must be present in the respective accounts and asset arrays for the given transaction.
+
+### Reason for limited access to resources
+
+To maintain a high level of performance, the AVM restricts how much of the ledger can be viewed within a single contract execution. This is implemented with reference arrays passed with each application call transaction, defining the specific ledger items available during execution. These arrays are the Account, Asset, Application, and Boxes arrays.
+
+### Resource Sharing
+
+Resources are shared across transactions within the same atomic group. This means that if there are two app calls calling different smart contracts in the same atomic group, the two smart contracts share resource availability.
+
+For example, say you have two smart contract call transactions grouped together, transaction #1 and transaction #2. Transaction #1 has asset 123456 in its assets array, and transaction #2 has asset 555555 in its assets array. Both assets are available to both smart contract calls during evaluation.
+
+When accessing a sublist resource (account+asa, account+application local state, application+box), both resources must be in the same transaction’s arrays. For example, you cannot have account A in transaction #1 and asset Z in transaction #2 and then try to get the balance of asset Z for account A. Asset Z and account A must be in the same application transaction. If asset Z and account A are in transaction #1’s arrays, A’s balance for Z is also available to transaction #2 during evaluation.
+
+Because Algorand supports grouping up to 16 transactions simultaneously, this pushes the available resources up to 8x16 or 128 items if all 16 transactions are application transactions.
+
+If an application transaction is grouped with other types of transactions, other resources will be made available to the smart contract called in the application transaction. For example, if an application transaction is grouped with a payment transaction, the payment transaction’s sender and receiver accounts are available to the smart contract.
+
+If the CloseRemainderTo field is set, that account will also be available to the smart contract. The table below summarizes what each transaction type adds to resource availability.
+
+| Transaction         | Transaction Type | Availability Notes                                                                                                                                                                  |
+| ------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Payment             | `pay`            | `txn.Sender`, `txn.Receiver`, and `txn.CloseRemainderTo` (if set)                                                                                                                   |
+| Key Registration    | `keyreg`         | `txn.Sender`                                                                                                                                                                        |
+| Asset Config/Create | `acfg`           | `txn.Sender`, `txn.ConfigAsset`, and the `txn.ConfigAsset` holding of `txn.Sender`                                                                                                  |
+| Asset Transfer      | `axfer`          | `txn.Sender`, `txn.AssetReceiver`, `txn.AssetSender` (if set), `txnAssetCloseTo` (if set), `txn.XferAsset`, and the `txn.XferAsset` holding of each of those accounts               |
+| Asset Freeze        | `afrz`           | `txn.Sender`, `txn.FreezeAccount`, `txn.FreezeAsset`, and the `txn.FreezeAsset` holding of `txn.FreezeAccount`. The `txn.FreezeAsset` holding of `txn.Sender` is not made available |
+
+:::note
+If any application or asset is created within a group of transactions, it is an available resource as long as it is created before it is accessed.
+:::
+
+## Different ways to provide references
+
+There are different ways you can provide resource references when calling smart contract methods:
+
+1. **Automatic Resource Population**: Automatically input resource references in the reference(foreign) arrays with automatic resource population using the AlgoKit Utils library ([TypeScript](https://github.com/algorandfoundation/algokit-utils-ts/blob/40be39f672be19dc244b8e8fb4f5bcbc446d4f50/docs/code/modules/index.md#populateappcallresources) and Python)
+   :::note
+   Automatic resource population first sends a dry-run transaction to the Algorand node to determine the necessary resources. Then it
+   populates the reference arrays with the required resources and sends the actual transaction. Therefore, it sends two requests to algod
+   for each transaction. Developers should consider the impact on their app if they require sending a large number of transactions.
+   :::
+
+2. **Reference Types**: Pass reference types as arguments to contract methods. (You can only do this for Accounts, Assets, and Applications and not Boxes.)
+
+3. **Manually Input**: Manually input resource references in the reference(foreign) arrays
+
+## Account reference example
+
+Here is a simple smart contract with two methods that read the balance of an account. This smart contract requires the account
+reference to be provided during invocation.
+
+<Tabs syncKey='lang'>
+  <TabItem label='Algorand Python' icon='seti:python'>
+    <Code code={accountEx} lang='py' frame='none' />
+  </TabItem>
+</Tabs>
+
+Here are three different ways you can provide the account reference when calling a contract method using the AlgoKit Utils library.
+
+### Method #1: Automatic Resource Population
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountUtilEx2} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #2: Using Reference Types
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountUtilEx3} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #3: Manually Input
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountUtilEx1} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+## Asset reference example
+
+Here is a simple smart contract with two methods that read the total supply of an asset(ASA). This smart contract requires the asset
+reference to be provided during invocation.
+
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={assetEx} lang='py' frame='none' />
+  </TabItem>
+</Tabs>
+
+Here are three different ways you can provide the asset reference when calling a contract method using the AlgoKit Utils library.
+
+### Method #1: Automatic Resource Population
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={assetUtilEx2} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #2: Using Reference Types
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={assetUtilEx3} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #3: Manually Input
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={assetUtilEx1} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+## App reference example
+
+Here is a simple smart contract named `ApplicationReference` with two methods that call the `increment` method in the `Counter` smart contract via inner transaction.
+The `ApplicationReference` smart contract requires the `Counter` application reference to be provided during invocation.
+
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={appEx} lang='py' frame='none' />
+  </TabItem>
+</Tabs>
+
+Here are three different ways you can provide the app reference when calling a contract method using the AlgoKit Utils library.
+
+### Method #1: Automatic Resource Population
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={appUtilEx2} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #2: Using Reference Types
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={appUtilEx3} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #3: Manually Input
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={appUtilEx1} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+## Account + Asset example
+
+Here is a simple smart contract with two methods that read the balance of an ASA in an account. This smart contract requires both the asset
+reference and the account reference to be provided during invocation.
+
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={accountAssetEx} lang='py' frame='none' />
+  </TabItem>
+</Tabs>
+
+Here are three different ways you can provide both the account reference and the asset reference when calling a contract method using the AlgoKit Utils library.
+
+### Method #1: Automatic Resource Population
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountAssetUtilEx2} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #2: Using Reference Types
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountAssetUtilEx3} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #3: Manually Input
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountAssetUtilEx1} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+## Account + Application example
+
+Here is a simple smart contract named `AccountAndAppReference` with two methods that read the local state `my_counter` of an account in the `Counter` smart contract.
+The `AccountAndAppReference` smart contract requires both the `Counter` application reference and the account reference to be provided during invocation.
+
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <Code code={accountAppEx} lang='py' frame='none' />
+  </TabItem>
+</Tabs>
+
+Here are three different ways you can provide both the account reference and the application reference when calling a contract method using the AlgoKit Utils library.
+
+### Method #1: Automatic Resource Population
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountAppUtilEx2} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #2: Using Reference Types
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountAppUtilEx3} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #3: Manually Input
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={accountAppUtilEx1} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+## Application + Box reference example
+
+Here is a simple smart contract with a methods that increments the counter value stored in a `BoxMap`.
+Each box uses `box_counter` + `account address` as its key and stores the counter as its value.
+This smart contract requires the box reference to be provided during invocation.
+
+<Tabs syncKey='lang'>
+  <TabItem label='Algorand Python' icon='seti:python'>
+    <Code code={boxEx} lang='py' frame='none' />
+  </TabItem>
+</Tabs>
+
+Here are two different ways you can provide the box reference when calling a contract method using the AlgoKit Utils library.
+
+### Method #1: Automatic Resource Population
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={boxUtilEx2} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>
+
+### Method #2: Manually Input
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <Code code={boxUtilEx1} lang='ts' frame='none' />
+  </TabItem>
+</Tabs>

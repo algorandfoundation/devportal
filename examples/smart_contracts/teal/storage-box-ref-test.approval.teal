@@ -1,0 +1,38 @@
+#pragma version 10
+
+test_box_ref:
+    proto 0 0
+    byte "blob"
+    int 32
+    box_create
+    assert
+    byte "blob"
+    box_len
+    bury 1
+    assert
+    global CurrentApplicationAddress
+    txn Sender
+    byte "blob"
+    int 0
+    dig 2
+    box_replace
+    byte "blob"
+    int 0
+    dup
+    dig 4
+    box_splice
+    byte "blob"
+    int 64
+    byte 0x68656c6c6f
+    box_replace
+    byte "blob"
+    int 0
+    int 69
+    box_extract
+    cover 2
+    concat
+    byte 0x68656c6c6f
+    concat
+    ==
+    assert
+    retsub
