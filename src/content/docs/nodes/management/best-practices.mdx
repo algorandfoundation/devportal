@@ -1,25 +1,120 @@
 ---
 title: Best Practices
+description: Best practices for managing an Algorand node for optimal results
 ---
 
-Preparing Your Machine
-To get ready to set up an Algorand participation node, there are a few prerequisites to get sorted. This section covers preparing your machine with the foundation on which the node will be run. Running archival and relay nodes requires additional configuration and considerations that are not covered in this guide.
-Hardware
-The first thing that is required to run a node is a computer with sufficient performance capabilities.
-Computer hardware requirements: https://developer.algorand.org/docs/run-a-node/setup/install/.
-Dedicated machine: It is strongly recommended to use a machine that is dedicated to running a node and has no other significant processes running on it that would compete for CPU, memory, or disk access performance.
-If you
-Cloud VPS - community recommendations: https://docs.google.com/spreadsheets/d/1WeOFuyfxZtlMgCfYSlYq5u_bsLMA5-HDVOqFQxfgMhQ/edit?gid=0#gid=0
-Power backup system: Power interruptions can knock a node offline and degrade your consensus performance. It is recommended to have the node, as well as any networking equipment on which its internet connection relies, to have an uninterruptible power supply (UPS) to handle transient power cuts. Longer power outages may require backup power sources.
+import { LinkCard } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
-Operating System
+## Preparing Your Machine
+
+To get ready to set up an Algorand participation node, there are a few prerequisites to get sorted. This section covers preparing your machine with the foundation on which the node will be run. Running archival and relay nodes requires additional configuration and considerations that are not covered in this guide.
+
+### Hardware
+
+#### Computer or Server
+
+The first thing that is required to run a node is a computer with sufficient performance capabilities.
+
+<LinkCard
+  title='Node Hardware Requirements'
+  href='/nodes/installation/manual#hardware-requirements'
+  description='Learn about system hardware requirements for Algorand nodes'
+/>
+
+It is strongly recommended to use a machine that is dedicated to running a node and has no other significant processes running on it that would compete for CPU, memory, or disk access performance.
+
+A collection of cloud VPS recommendations has been compiled by a community member [here](https://docs.google.com/spreadsheets/d/1WeOFuyfxZtlMgCfYSlYq5u_bsLMA5-HDVOqFQxfgMhQ/edit?gid=0#gid=0).
+
+#### Power Backup System
+
+Power interruptions can knock a node offline and degrade your consensus performance. It is recommended to have the node, as well as any networking equipment on which its internet connection relies, to have an uninterruptible power supply (UPS) to handle transient power cuts. Longer power outages may require backup power sources.
+
+### Operating System
+
 A node can be installed on a number of different operating systems, including multiple Linux distributions, MacOS, and even Windows, although it may be necessary to use third-party solutions in some cases.
 For Linux operating systems, Debian, Ubuntu, Linux Mint, Red Hat (Fedora, CentOS), and others can be a base for installing a node.
 MacOS can also be used to run a node
 For Windows, Algorand Technologies does not provide compiled binaries so it is necessary to utilize a third-party solution to install a node on such a system
-Connectivity
+
+### Connectivity
+
 Reliable internet connection: A node is run like a server in that it should be operational nearly all the time, so it is crucial to have a reliable broadband connection to the internet.
 Backup connectivity: A rented server or virtual private server situated in a commercial-grade data center may already have redundant internet connections, but home-based node runners may want to explore backup internet service. Some internet service providers offer packages that include 4G/5G wireless service as a backup if the primary wired connection goes down. It is also possible to build such a system DIY with prosumer/commercial-grade internet gateways.
+
+## Guidelines for a Healthy Network
+
+### Ensure that Online Accounts are Participating
+
+If an account registers itself online, it is important that its participation key is online. A participation key is online if there is a single fully-synchronized node on the Algorand network that has that key in its ledger directory. You should always mark an account offline if it is not actually available to participate, since the network uses the online/offline status of an account to calculate block vote thresholds. If you are marked online but you are not participating, you would be considered a dishonest user and will negatively impact the voting threshold. Furthermore, if your node experiences issues you are not able to solve promptly, it is recommended that you register the account offline as soon as possible.
+
+<Aside type='tip'>
+  If you keep your private keys in cold storage, it is recommended that you
+  generate and sign enough offline transactions to be able to take the account
+  offline in case of emergencies. These transactions will need to be prepared
+  with validity ranges in the future. guide.
+</Aside>
+
+### Renew Participation Keys Before They Expire
+
+Participation keys are valid for a specific round range. Make sure to renew participation keys or mark the account offline before the current participation key expires. Your account will not automatically be marked offline.
+
+Visit the [Renew Participation Keys](FUTURELINK) section for detailed instructions.
+
+### Ensure that Participation Nodes are Working Properly
+
+Monitor your participation node to ensure high performance and consistent access to your registered participation key. The following should be monitored:
+
+- Last committed block (goal node status or API) matches a third-party API service
+- CPU / RAM / disk use are within thresholds
+- Clock is accurate (blocks are timestamped using the clock time from the block proposer's node, so keep your node clock accurate and on time)
+- The participation node is sending votes and proposing blocks at the expected frequency.
+
+### Securely Store Participation Keys
+
+Registered participation keys that are in operation are regularly updated through the protocol so that they cannot be used to vote on earlier rounds. Essentially, the set of keys corresponding to earlier rounds are deleted after the round passes to ensure that the compromise of a participation key by a bad actor does not give the bad actor the potential to rewrite history. Because of this, it is important that there only exists a single instance of the participation key (files ending in \*.partkey) at any time in the system.
+
+<Aside type='caution'>
+  Because of this, holding backups of participation keys is highly discouraged,
+  unless appropriate procedures are setup to purge those backups on a regular
+  basis.
+</Aside>
+
+## Ongoing Maintenance
+
+Running a node that performs well over time requires periodic maintenance around participation keys and the node software.
+
+### Going Offline Gracefully
+
+Register participation keys offline, then wait 320 rounds before interrupting the node. There will be times when you may need to perform maintenance on the node or know you will unable to intervene should issues arise. It is fine to register your participation keys as offline, and this will maintain your incentives eligibility status and avoid harming the network if your keys are set to online but the node isn’t voting or proposing blocks. If you go offline gracefully this way, you can register the keys online again without having to pay the elevated fee again for incentives eligibility.
+
+### Re-Enrolling In Staking Rewards
+
+Have an Algo buffer on hand for key registration fees. If your account is eligible for staking rewards, it will be challenged by the protocol from time to time to ensure it is participating as often as expected. If your node fails a heartbeat challenge, it will lose eligibility for staking rewards and once again need to issue a key registration transaction with an elevated 2A fee to re-enroll in rewards. If you have made any account balance commitments to programs like Governance, make sure that you commit somewhat less than your total balance so that paying such a fee does not invalidate your commitment. It is good practice to keep 10A on hand to cover keyReg fees that may be needed periodically.
+
+## Optional Tooling
+
+### Telemetry
+
+The node software has the capability to publish telemetry about performance and usage, and node runners are encouraged to configure this to help provide insights into how the network is performing. Refer to the following guide for how to enable telemetry on your node:
+
+<LinkCard
+  title='Enabling Telemetry'
+  href='/nodes/installation/manual#node-telemetry'
+  description='Learn how to use telemetry on your node'
+/>
+
+A complete reference for telemetry configuration options can be found here:
+
+<LinkCard
+  title='Enabling Telemetry'
+  href='nodes/reference/telemetry-config'
+  description='Learn about node telemetry configuration options'
+/>
+
+### Monitoring
+
+It is recommended to monitor your node's performance and health to ensure it is running optimally. There are a number of tools available to help you do this by leveraging the node's built-in metrics endpoint to which a Prometheus server can be connected to retrieve metrics. The endpoint can be configured in `config.json` by setting the `NodeExporterListenAddress`.
 
 ## Things Not To Do
 
