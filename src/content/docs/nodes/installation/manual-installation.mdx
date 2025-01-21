@@ -378,7 +378,7 @@ This section outlines the basic steps to install prerequisites, create a launch 
 
    2. **Install bash**
 
-      ```shell
+      ```shell showLineNumbers=false frame=terminal
       brew install bash
       ```
 
@@ -386,7 +386,7 @@ This section outlines the basic steps to install prerequisites, create a launch 
 
       Netdata helps monitor system metrics in real time.
 
-      ```shell
+      ```shell showLineNumbers=false frame=terminal
       brew install netdata
       ```
 
@@ -394,7 +394,7 @@ This section outlines the basic steps to install prerequisites, create a launch 
 
       To prevent macOS from suspending your node, you can disable sleep targets:
 
-      ```shell
+      ```shell showLineNumbers=false frame=terminal
       sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
       ```
 
@@ -402,7 +402,7 @@ This section outlines the basic steps to install prerequisites, create a launch 
 
    Create a .plist file to automatically start and manage algod on macOS. Below is an example; adjust paths as necessary:
 
-   ```xml
+   ```xml showLineNumbers=false frame=terminal
    <?xml version="1.0" encoding="UTF-8"?>
    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "<http://www.apple.com/DTDs/PropertyList$>
    <plist version="1.0">
@@ -437,19 +437,19 @@ This section outlines the basic steps to install prerequisites, create a launch 
 
    2. **Launch the service**
 
-      ```shell
+      ```shell showLineNumbers=false frame=terminal
       sudo launchctl bootstrap system `/Library/LaunchDaemons/com.algorand.plist
       ```
 
    3. **Confirm that the service is running by doing launchctl list and grepping for the service name algorand:**
 
-      ```shell
+      ```shell showLineNumbers=false frame=terminal
       sudo launchctl list | grep algorand
       ```
 
    If you need to make changes to the plist file, first run:
 
-   ```shell
+   ```shell showLineNumbers=false frame=terminal
    sudo launchctl bootout system /Library/LaunchDaemons/com.algorand.plist
    ```
 
