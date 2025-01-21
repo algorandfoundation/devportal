@@ -310,7 +310,7 @@ export PATH="$HOME/node:$PATH"
 These settings tell Algorand tools where to find your data directory and make `goal` commands
 directly executable.
 
-### MacOS Installation
+### MacOS Installation Via Updater Script
 
 Verified on OSX v12.3.1 (Monterey).
 
@@ -363,6 +363,100 @@ Verified on OSX v12.3.1 (Monterey).
    ```
 
 </Steps>
+
+### Running the Node as a macOS Service
+
+This section outlines the basic steps to install prerequisites, create a launch service (.plist), and keep your Algorand node running automatically on macOS.
+
+<Steps>
+
+1. Initial Setup tasks
+
+   1. **Install Homebrew**
+
+      Visit [Homebrew’s official site](https://brew.sh/) for installation instructions.
+
+   2. **Install bash**
+
+      ```shell
+      brew install bash
+      ```
+
+   3. **(Optional) Install Netdata**
+
+      Netdata helps monitor system metrics in real time.
+
+      ```shell
+      brew install netdata
+      ```
+
+   4. **Disable Sleep**
+
+      To prevent macOS from suspending your node, you can disable sleep targets:
+
+      ```shell
+      sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+      ```
+
+2. **Creating the Managed Service**
+
+   Create a .plist file to automatically start and manage algod on macOS. Below is an example; adjust paths as necessary:
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "<http://www.apple.com/DTDs/PropertyList$>
+   <plist version="1.0">
+      <dict>
+         <key>Label</key>
+         <string>com.algorand</string>
+         <key>Program</key>
+         <string>/Users/USERNAME/node/algod</string>
+         <key>EnvironmentVariables</key>
+         <dict>
+               <key>ALGORAND_DATA</key>
+               <string>/Users/USERNAME/node/data</string>
+         </dict>
+         <key>RunAtLoad</key>
+         <true/>
+         <key>KeepAlive</key>
+         <dict>
+               <key>SuccessfulExit</key>
+               <false/>
+               <key>Crashed</key>
+               <true/>
+         </dict>
+         <key>ThrottleInterval</key>
+         <integer>5</integer>
+      </dict>
+   </plist>
+   ```
+
+   1. **Copy .plist to the Service Directory**
+
+      Place the file in `/Library/LaunchDaemons/com.algorand.plist` (system-wide) or in `~/Library/LaunchAgents/` (user-only). It's recommended to name the file as `com.algorand.plist`.
+
+   2. **Launch the service**
+
+      ```shell
+      sudo launchctl bootstrap system `/Library/LaunchDaemons/com.algorand.plist
+      ```
+
+   3. **Confirm that the service is running by doing launchctl list and grepping for the service name algorand:**
+
+      ```shell
+      sudo launchctl list | grep algorand
+      ```
+
+   If you need to make changes to the plist file, first run:
+
+   ```shell
+   sudo launchctl bootout system /Library/LaunchDaemons/com.algorand.plist
+   ```
+
+   Then re-load after making changes.
+
+</Steps>
+Once complete, algod will automatically start at boot and stay running in the background under the configured .plist settings.
 
 ### Linux Installation
 
