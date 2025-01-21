@@ -15,11 +15,11 @@ manager or updater script installation.
 There are two different methods for installing Algorand nodes depending on your operating system.
 Choose the approach that works for your platform and preferences.
 
-<Aside type='caution'>
+:::caution
   Choose one installation method and stick with it. Mixing methods can lead to complex
   troubleshooting issues. If the package manager method is available for your Linux system, it is
   strongly recommended over the updater script method.
-</Aside>
+:::
 
 ### Package Manager Method
 
@@ -120,15 +120,15 @@ The package manager installs Algorand node software in the standard system locat
 
 See [Node Artifacts](/nodes/reference/artifacts) for a complete list of installed files.
 
-<Aside type='note'>
+:::note
   The Key Manager Daemon (KMD) is Algorand's wallet process that manages keys and signing
   operations. It is used for wallet operations through the SDKs and REST API.
-</Aside>
+:::
 
 It is recommended to configure the environment by adding to your shell config file (`~/.bashrc` or
 `~/.zshrc`):
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 export ALGORAND_DATA=/var/lib/algorand
 ```
 
@@ -143,14 +143,14 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 
 1. First, update your system and install required packages:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    sudo apt-get update
    sudo apt-get install -y gnupg2 curl software-properties-common
    ```
 
 2. Add Algorand’s repository and security key:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    curl -o - https://releases.algorand.com/key.pub | sudo tee /etc/apt/trusted.gpg.d/algorand.asc
    sudo add-apt-repository "deb [arch=amd64] https://releases.algorand.com/deb/ stable main"
    sudo apt-get update
@@ -158,7 +158,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 
 3. Install Algorand (choose one option):
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    # Option A: Install Algorand with developer tools
    sudo apt-get install -y algorand-devtools
 
@@ -176,7 +176,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 
 1. Import Algorand’s repository key and set up the repository:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    curl -O https://releases.algorand.com/rpm/rpm_algorand.pub
    sudo rpmkeys --import rpm_algorand.pub
    sudo yum install yum-utils
@@ -185,7 +185,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 
 2. Install Algorand (choose one option):
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    # Option A: Install Algorand with developer tools
    sudo yum install algorand-devtools
 
@@ -201,7 +201,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 
 1. Import Algorand’s repository key and set up the repository:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    curl -O https://releases.algorand.com/rpm/rpm_algorand.pub
    sudo rpmkeys --import rpm_algorand.pub
    dnf install -y 'dnf-command(config-manager)'
@@ -210,7 +210,7 @@ directory, eliminating the need to specify it with the `-d` flag in every comman
 
 2. Install Algorand:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    dnf install algorand
    ```
 
@@ -230,7 +230,7 @@ is run as the user `algorand`, operations related to wallets and accounts (`goal
 `goal wallet ...`) need to be run as the user `algorand`. For example, to list participation keys,
 use:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 # If $ALGORAND_DATA is set:
 sudo -u algorand -E goal account listpartkeys
 
@@ -238,10 +238,10 @@ sudo -u algorand -E goal account listpartkeys
 sudo -u algorand -E goal account listpartkeys -d /var/lib/algorand
 ```
 
-<Aside type='caution'>
+:::caution
   Never run `goal` as root (using `sudo` directly). This can compromise file permissions in
   `/var/lib/algorand`.
-</Aside>
+:::
 
 Additional tools are available through separate packages:
 
@@ -276,19 +276,19 @@ the following commands:
 
 To start your node:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 sudo systemctl start algorand
 ```
 
 To stop your node:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 sudo systemctl stop algorand
 ```
 
 To check your node's status:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 goal node status -d /var/lib/algorand
 ```
 
@@ -302,7 +302,7 @@ The updater script installation requires two main directories:
 When updating, the script archives your existing installation before overwriting the binaries.
 Configure your environment by adding to your shell config file (`~/.bashrc` or `~/.zshrc`):
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 export ALGORAND_DATA="$HOME/node/data"
 export PATH="$HOME/node:$PATH"
 ```
@@ -318,21 +318,21 @@ Verified on OSX v12.3.1 (Monterey).
 
 1. Create and enter the installation directory:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    mkdir ~/node
    cd ~/node
    ```
 
 2. Download and prepare the updater script:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    curl https://raw.githubusercontent.com/algorand/go-algorand/rel/stable/cmd/updater/update.sh -O
    chmod 744 update.sh
    ```
 
 3. Run the installer:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    ./update.sh -i -c stable -p ~/node -d ~/node/data -n
    ```
 
@@ -347,7 +347,7 @@ Verified on OSX v12.3.1 (Monterey).
    These environment variables help you run `goal` commands without specifying the data directory
    each time.
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    export ALGORAND_DATA="$HOME/node/data"
    export PATH="$HOME/node:$PATH"
    ```
@@ -363,21 +363,21 @@ Linux distributions should work as well.
 
 1. Create and enter the installation directory:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    mkdir ~/node
    cd ~/node
    ```
 
 2. Download and prepare the updater script:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    wget https://raw.githubusercontent.com/algorand/go-algorand/rel/stable/cmd/updater/update.sh
    chmod 744 update.sh
    ```
 
 3. Run the installer:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    ./update.sh -i -c stable -p ~/node -d ~/node/data -n
    ```
 
@@ -387,7 +387,7 @@ Linux distributions should work as well.
 
 4. Configure your environment by adding to your shell config file (`~/.bashrc` or `~/.zshrc`):
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    export ALGORAND_DATA="$HOME/node/data"
    export PATH="$HOME/node:$PATH"
    ```
@@ -416,19 +416,19 @@ manually. To control the node manually, use the following commands:
 
 To start your node:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 goal node start
 ```
 
 To stop your node:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 goal node stop
 ```
 
 To verify your node is running:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 pgrep algod
 ```
 
@@ -445,7 +445,7 @@ Usage: `./systemd-setup.sh username group [bindir]`
 
 1. Create the service with root privileges:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    sudo ./systemd-setup.sh algorand algorand
    ```
 
@@ -455,7 +455,7 @@ Usage: `./systemd-setup.sh username group [bindir]`
 
 2. Specify binary location (optional):
 
-   ```ini
+   ```ini showLineNumbers=false frame=none
    [Service]
    ExecStart=@@BINDIR@@/algod -d %I
    User=@@USER@@
@@ -466,13 +466,13 @@ Usage: `./systemd-setup.sh username group [bindir]`
    the current working directory, but you can specify a different location using the `bindir`
    parameter, which must be an absolute path:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    sudo ./systemd-setup.sh algorand algorand /path/to/binary/directory
    ```
 
 3. Register the service:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    sudo systemctl daemon-reload
    ```
 
@@ -481,7 +481,7 @@ Usage: `./systemd-setup.sh username group [bindir]`
 
 4. Start the service:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    sudo systemctl start algorand@$(systemd-escape $ALGORAND_DATA)
    ```
 
@@ -490,7 +490,7 @@ Usage: `./systemd-setup.sh username group [bindir]`
 
    To configure the service to start automatically when your system boots:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    sudo systemctl enable algorand@$(systemd-escape $ALGORAND_DATA)
    ```
 
@@ -508,13 +508,13 @@ This process can take several hours or even days, depending on your hardware and
 
 To check your node's sync status:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 goal node status
 ```
 
 A fully synchronized node will show a "Sync Time" of 0.0s, like this:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 Last committed block: 125064
 Time since last block: 3.1s
 Sync Time: 0.0s
@@ -535,10 +535,10 @@ then synchronizes only the most recent blocks.
 However, keep in mind that fast catchup requires trusting the entity providing the catchpoint. For
 maximum security, either use a catchpoint from your own archival node or synchronize from genesis.
 
-<Aside type='caution'>
+:::caution
   Do not use fast catchup on archival or relay nodes. If you accidentally do so, you must reset your
   node and start from scratch.
-</Aside>
+:::
 
 #### Latest Catchpoints
 
@@ -554,26 +554,26 @@ Get the most recent catchpoint for your network:
 
 1. Start your node if it isn't running:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    goal node start
    ```
 
 2. Use the catchup command with your network's current catchpoint from from the catchpoint URL:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    goal node catchup 4420000#Q7T2RRTDIRTYESIXKAAFJYFQWG4A3WRA3JIUZVCJ3F4AQ2G2HZRA
    ```
 
 3. Check your node's sync status:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    goal node status -w 1000
    ```
 
    The `-w` flag updates the status every 1000 milliseconds (1 second). Press Ctrl/Cmd+C to stop
    monitoring. During catchup, you'll see additional status lines showing progress:
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
    Catchpoint: 4420000#Q7T2RRTDIRTYESIXKAAFJYFQWG4A3WRA3JIUZVCJ3F4AQ2G2HZRA
    Catchpoint total accounts: 1146
    Catchpoint accounts processed: 1146
@@ -602,7 +602,7 @@ If you accidentally used fast catchup on an archival node:
 
 1. Stop the node
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
      goal node stop
    ```
 
@@ -613,7 +613,7 @@ If you accidentally used fast catchup on an archival node:
 
 3. Restart the node
 
-   ```shell showLineNumbers=false frame=terminal
+   ```shell showLineNumbers=false frame=none
      goal node start
    ```
 
@@ -634,7 +634,7 @@ your node in telemetry data.
 
 To enable with a custom hostname:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 # For updater script installations:
 diagcfg telemetry name -n <hostname>
 
@@ -646,7 +646,7 @@ Replace `<hostname>` with your desired identifier (e.g., 'MainNetRelay1' or 'Tes
 
 To enable without a custom hostname:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 # For updater script installations:
 diagcfg telemetry enable
 
@@ -654,15 +654,15 @@ diagcfg telemetry enable
 sudo -u algorand -H -E diagcfg telemetry enable
 ```
 
-<Aside type='note'>
+:::note
   After enabling or disabling telemetry, restart your node for changes to take effect.
-</Aside>
+:::
 
 #### Disable Telemetry
 
 To disable telemetry:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 # For updater script installations:
 diagcfg telemetry disable
 
@@ -676,7 +676,7 @@ sudo -u algorand -H -E diagcfg telemetry disable
 
 To verify your telemetry settings:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 # For updater script installations:
 diagcfg telemetry
 
@@ -688,13 +688,13 @@ sudo -u algorand -H -E diagcfg telemetry
 
 To verify if your node is connected to the telemetry server:
 
-```shell showLineNumbers=false frame=terminal
+```shell showLineNumbers=false frame=none
 sudo netstat -an | grep :9243
 ```
 
 If telemetry is enabled and working, you'll see output like:
 
-```text
+```text showLineNumbers=false frame=none
 tcp        0      0 xxx.xxx.xxx.xxx:yyyyy        18.214.74.184:9243      ESTABLISHED
 ```
 
@@ -709,10 +709,10 @@ If telemetry is disabled or not working, this command will produce no output.
 - Never run telemetry commands as root (don't use `sudo` directly with `diagcfg`)
 - The `-H` flag ensures the correct home directory is used for the `algorand` user
 
-<Aside type='caution'>
+:::caution
   Running `diagcfg` as root will only affect nodes run as root, which is not recommended for
   security reasons.
-</Aside>
+:::
 
 ### Third-Party Telemetry Services
 
@@ -731,7 +731,8 @@ Nodely's free third-party service. Nodely provides additional features including
 For more details about Nodely's telemetry service, see their
 [telemetry documentation](https://nodely.io/docs/telemetry/quickstart/).
 
-<Aside type='note'>
+:::note
   Nodely's telemetry service is designed for MainNet nodes including validators, API nodes, and P2P
   nodes/relays. Do not use it for the Relay/Archiver Running Program.
-</Aside>
+:::
+
