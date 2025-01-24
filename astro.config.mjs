@@ -34,6 +34,19 @@ export default defineConfig({
       social: {
         github: 'https://github.com/algorandfoundation/devportal',
       },
+      head: [
+        {
+          tag: 'script',
+          attrs: {
+            async: true,
+            src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+            'data-website-id': '6e799942-b20a-4203-8103-93582a2611e1',
+            'data-project-name': 'Algorand Developer Portal',
+            'data-project-color': '#17cac6',
+            'data-project-logo': 'https://developer.algorand.co/favicon.png',
+          },
+        },
+      ],
       favicon: '/favicon.png',
       customCss: ['/src/styles/global.css'],
       sidebar: [
