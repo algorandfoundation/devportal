@@ -1,11 +1,12 @@
 ---
 title: Encoding and Decoding
+description: Essential data encodings for Algorand smart contracts, ensuring consistent on-chain and off-chain data handling
 ---
 
 import { Code } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-When working with data from an algorand REST server or preparing transactions there is often a need to encode or decode fields.
+Consistent data representation is crucial when interacting with Algorand smart contracts. This section explains the fundamental concepts of encoding and decoding information so that on-chain logic and off-chain applications remain compatible. By following these guidelines, developers can ensure reliable data handling and a seamless flow of information throughout the development lifecycle.
 
 ## Encoding Types
 
@@ -43,7 +44,7 @@ The encoding used for Addresses and Transaction Ids is [Base32](https://en.wikip
 
 In Algorand a [public key](https://developer.algorand.org/docs/get-details/accounts/#transformation-public-key-to-algorand-address) is a 32 byte array.
 
-The Address developers or users are typically shown is a 58 character long string corresponding to a base32 encoding of the byte array of the public key + a checksum.
+The Accounts or Addresses are typically shown as a 58 character long string corresponding to a base32 encoding of the byte array of the public key + a checksum.
 
 Given an address `4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4`, encoding to and from the public key format can be done as follows:
 
@@ -56,7 +57,7 @@ Given an address `4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4`, e
 
         assert addr == address
         ```
-        [Snippet Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L16-L20)
+        [Snippet Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L8-L13)
     </TabItem>
     <TabItem label="JavaScript" icon="seti:javascript">
         ```javascript
@@ -65,7 +66,7 @@ Given an address `4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4`, e
         const addr = algosdk.encodeAddress(pk.publicKey);
         console.log(address, addr);
         ```
-        [Snippet Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L8-L13)
+        [Snippet Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L16-L20)
     </TabItem>
     <TabItem label="Go" icon="seti:go">
     	```go
