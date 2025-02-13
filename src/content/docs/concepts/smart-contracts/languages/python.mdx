@@ -1,5 +1,6 @@
 ---
 title: Algorand Python
+description: Introduction to Algorand Python for writing smart contracts
 ---
 
 Algorand Python is a partial implementation of the Python programming language that runs on the Algorand Virtual Machine (AVM). It includes a statically typed framework for the development of Algorand smart contracts and logic signatures, with Pythonic interfaces to underlying AVM functionality.
@@ -58,6 +59,8 @@ Algorand Python has limitations on standard Python primitives due to the constra
 
 - `Bool`: Algorand Python has full support for `bool`.
 - `Tuple`: Python tuples are supported as arguments to subroutines, local variables, return types.
+- `typing.NamedTuple`: Python named tuples are also supported using `typing.NamedTuple`.
+- `None`: `None` is not supported as a value, but is supported as a type annotation to indicate a function or subroutine returns no value.
 
 The `int`, `str`, and `bytes` built-in types are currently only supported as module-level constants or literals. They can be passed as arguments to various Algorand Python methods that support them or when interacting with certain AVM types e.g. adding a number to a `UInt64`.
 
@@ -65,9 +68,8 @@ The `int`, `str`, and `bytes` built-in types are currently only supported as mod
 
 - `Float` is not supported.
 - Nested tuples are not supported.
-- `None`: `None` is not supported as a value, but is supported as a type annotation to indicate a function or subroutine returns no value.
 
-For instance, Python's `int` is unsigned and unbounded, while AVM's `uint64` (represented as `UInt64` in Algorand Python) is a 64-bit unsigned integer. Similarly, Python's `bytes` objects are limited only by available memory, whereas AVM's `bytes[]` (represented as `Bytes` in Algorand Python) have a maximum length of 4096 bytes.
+Keep in mind, Python's `int` is unsigned and unbounded, while AVM's `uint64` (represented as `UInt64` in Algorand Python) is a 64-bit unsigned integer. Similarly, Python's `bytes` objects are limited only by available memory, whereas AVM's `bytes[]` (represented as `Bytes` in Algorand Python) have a maximum length of 4096 bytes.
 
 ## PuyaPy Compiler
 
@@ -75,7 +77,7 @@ The PuyaPy compiler is a multi-stage, optimizing compiler that takes Algorand Py
 
 The PuyaPy compiler is based on the Puya compiler architecture, which allows for multiple frontend languages to leverage the majority of the compiler logic. This makes adding new frontend languages for execution on Algorand relatively easy.
 
-For more details, refer to [Algokit installation page](/tutorials/getting-started)
+For more details, refer to [Algokit installation page](/concepts/algokit-intro)
 
 ## Testing and Debugging
 
