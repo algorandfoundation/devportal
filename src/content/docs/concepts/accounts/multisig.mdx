@@ -1,0 +1,51 @@
+---
+title: Multisignature Accounts
+---
+
+Multisignature accounts are a logical representation of an ordered set of addresses with a threshold and version. Multisignature accounts can perform the same operations as other accounts, including sending transactions and participating in consensus. The address for a multisignature account is essentially a hash of the _ordered_ list of accounts, the threshold and version values. The threshold determines how many signatures are required to process any transaction from this multisignature account.
+
+## Quick start video - Multisignature
+
+If you prefer videos, take a look at this 4 minute guide to Learn About Multisig Algorand Account.
+
+<iframe
+  width='100%'
+  style='aspect-ratio:16/9'
+  src='https://www.youtube-nocookie.com/embed/kOugNkk4HuE'
+  title='YouTube video player'
+  frameborder='0'
+  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+  allowfullscreen
+></iframe>
+
+Multisignature accounts cannot nest other multisignature accounts.
+
+Creating a multisignature account with Address A, Address B, and Address C will not produce the same address as one with Address B, Address A, and Address C. However, signing a multisignature transaction does not require any specific order.
+
+:::tip
+You can use the fact that order matters to generate multiple addresses that can be signed by the same set of keys.
+:::
+
+[Send Algos](/concepts/accounts/funding) to the address to initialize its state on the blockchain as you would any other address.
+
+## When to use multisignature accounts
+
+Since every transaction requires a threshold of signatures you can create an extra layer of security on an account by requiring multiple signatures to authorize spending. The total accounts and threshold can be tailored to fit your security model.
+
+The keys that can sign for the multisignature account can be stored in separate locations and they can be generated with kmd, as standalone accounts, or with a mixture of both.
+
+Multisignature accounts can also be used to create cryptographically secure governance structures for an account, where keys can be owned by multiple users and spending is authorized by a subset of those users. Pair this with Algorand Smart Contract functionality for the potential to realize even more complex governance structures such as authorizing spending from an account given a _specific_ subset of signatures.
+
+## When not to use multisignature accounts
+
+Multisignature accounts trade off convenience for security. Every transaction requires multiple signatures which can be overly complex for a scenario where security or governance is not critical.
+
+## How to generate a multisignature account
+
+The following code shows how to generate a multisignature account composed of three Algorand addresses, with a signing threshold of 2.
+
+:::tip
+Since multisignature accounts are just logical representations of the data defined above, anyone can "create" the same Algorand address if they know how it is composed. This information is public and included in a signed transaction from a multisignature account.
+:::
+
+To be added: Utils code
