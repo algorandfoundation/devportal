@@ -1,0 +1,142 @@
+---
+title: Deployment
+---
+
+## Overview
+
+- Definition: Deploying a smart contract on Algorand involves uploading compiled TEAL (Transaction Execution Approval Language) code to the blockchain, enabling decentralized applications to execute predefined logic.
+- Purpose: Deployment makes the smart contract accessible on the Algorand network, allowing users and applications to interact with it.
+
+## Key Concepts in Deployment
+
+- TEAL Compilation: Smart contracts are written in high-level languages like PyTeal and then compiled into TEAL bytecode for execution on the Algorand Virtual Machine (AVM).
+
+
+## Updatable vs. Non-Updatable Contracts
+
+- Updatable Contracts:
+- Can be modified after deployment.
+- Provide flexibility to fix bugs or add features.
+- Configuration: Set the OnUpdate property to allow updates.
+- Non-Updatable Contracts:
+- Immutable once deployed.
+- Enhance security by preventing unauthorized changes.
+- Configuration: Set the OnUpdate property to disallow updates.
+
+## Deletable vs. Non-Deletable Contracts
+
+- Deletable Contracts:
+    - Can be removed from the blockchain.
+    - Useful for temporary applications or testing.
+    - Configuration: Set the OnDelete property to allow deletion.
+- Non-Deletable Contracts:
+    - Permanent on the blockchain.
+    - Ensure continuous availability.
+    - Configuration: Set the OnDelete property to disallow deletion.
+
+## Understanding Idempotent Deployment
+
+- Definition: Deploying a contract multiple times without changing the outcome.
+- Benefits:
+    - Prevents duplicate deployments.
+    - Ensures consistency across environments.
+- Implementation:
+    - Use deployment tools that check for existing contracts before deploying new instances.
+    - Maintain versioning to track contract changes.
+
+## Automating Deployment with CI/CD
+
+- Continuous Integration/Continuous Deployment (CI/CD):
+    - Automates testing and deployment processes.
+    - Ensures code quality and reduces manual errors.
+- Best Practices:
+    - Integrate deployment scripts into CI/CD pipelines.
+    - Use tools like AlgoKit's Deploy feature for seamless deployments.
+    - Implement automated tests to validate contract behavior before deployment.
+
+## Secret Management and Security Best Practices
+
+- Handling Sensitive Data:
+- Store private keys and credentials securely using environment variables or secret management tools.
+- Avoid hardcoding sensitive information in your codebase.
+- Access Control:
+- Restrict permissions to update or delete contracts to authorized accounts.
+- Regularly review and update access controls to maintain security.
+- Security Audits:
+- Conduct thorough testing to identify and fix vulnerabilities.
+- Consider third-party audits for critical contracts.
+
+# Deployment
+
+## Todo
+
+- [ ] Find home
+- [ ] Frontmatter
+- [ ] Make PR
+
+## Notes
+
+### Central Questions from ticket
+
+https://algorandfoundation.atlassian.net/browse/DVP-22
+
+1. Overview of what it means to deploy
+2. Updatable vs not
+3. Deletable vs not
+4. Understanding idempotent deployment
+5. CI/CD capabilities
+6. Secret management best practices
+
+
+### Scribble along
+
+- Rob's ADR
+    - https://developer.algorand.org/docs/get-details/algokit/architecture-decisions/2023-01-12_smart-contract-deployment/
+    - Deployment as part of lifecycle
+- Algokit Deploy
+    - https://developer.algorand.org/docs/get-details/algokit/features/deploy/
+    - Deploying Smart Contracts
+    - Differetn environments
+    - algokit deploy
+    - environment files
+        - .algokit.toml
+        - .env at root of project
+        - .env.network
+    - AlgoKit config file (.algokit.toml)
+        - deploy section
+            - command
+            - environment secrets
+    - Deploy to specific network
+    - Custom project dir
+    - cutstom deploy comamnd
+    - CI mode (skip mnemonics)
+    - Full example
+- Algokit utils py
+    - https://developer.algorand.org/docs/get-details/algokit/utils/py/capabilities/app-deploy/
+    https://developer.algorand.org/docs/get-details/algokit/utils/ts/capabilities/app-deploy/
+    - idempotent (safely retryable)
+    - deploy-time immutability
+    - permanence control
+    - TEAL template substitution
+    - deploying byte code
+    - deploy-time parameters
+    - contracts can be built by any arc-4/arc-32 compatible framework
+    - explicit control over immutability (update/upgrade) and permanance (delete)
+        - TMPL_UPDATABALE
+        - TMPL_DELETABLE
+    - id or name+deployer
+        - by creator: indexer calls
+    - deploying an app
+        - AppClient.deploy
+            - checks for existence
+            - if not: create
+            - if yes:
+                - check if logic changed, then dependeing on config
+                    - update
+                    - replace
+            - automatical template substitution
+        - Idempotentcy
+        - Params
+        
+
+                

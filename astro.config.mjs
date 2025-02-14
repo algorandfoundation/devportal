@@ -245,6 +245,10 @@ export default defineConfig({
                   label: 'Development Lifecycle',
                   link: 'concepts/smart-contracts/lifecycle',
                 },
+                {
+                  label: 'Deployment',
+                  link: 'concepts/smart-contracts/deployment',
+                },
               ],
             },
           ],
