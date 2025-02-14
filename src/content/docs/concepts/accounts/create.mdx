@@ -1,3 +1,173 @@
 ---
 title: Creating an account
 ---
+
+This section describes the primary methods to create accounts on Algorand, how to use them in the `utils`, `goal`, `algokey`, `SDK's` and `Pera` wallet, the reasons you might want to choose one method over another for your application.
+
+## Quick start videos
+
+If you prefer videos, take a look at this 10 minute guide to getting started with creating accounts, which also includes using the Pera Algo Wallet.
+
+<iframe
+  width='100%'
+  style='aspect-ratio:16/9'
+  src='https://www.youtube-nocookie.com/embed/TnpGO0P0BA0'
+  title='YouTube video player'
+  frameborder='0'
+  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+  allowfullscreen
+></iframe>
+
+The three primary ways to create accounts on Algorand are as [wallet-derived accounts](#wallet-derived) (using [kmd](/nodes/reference/artifacts#kmd)), as [standalone](#standalone), or as [multisignature accounts](/concepts/accounts/multisig) (which entails one of the prior methods).
+
+:::note
+Remember that accounts participating in transactions are required to maintain a minimum balance of 100,000 micro Algos. Prior to using a newly created account in transactions, make sure that it has a sufficient balance by transferring at least 100,000 micro Algos to it. An initial transfer of under that amount will fail due to the minimum balance constraint.
+:::
+
+:::note
+The Algorand community provides many wallets that can be used to create an Algorand account as well. See [Wallets](https://developer.algorand.org/ecosystem-projects/?tags=wallets) for more details.
+:::
+
+## Wallet-derived
+
+The Key Management Daemon is a process that runs on [Algorand nodes](/nodes/reference/artifacts#kmd), so if you are using a [third-party API service](https://developer.algorand.org/docs/archive/build-apps/setup#1-use-a-third-party-service), this process likely will not be available to you. kmd is the underlying key storage mechanism used with `goal`. The utils also connect to kmd through a REST endpoint and access token.
+
+### Reasons to use kmd
+
+Public/private key pairs are generated from a single master derivation key. You only need to remember the single mnemonic that represents this master derivation key (i.e. the wallet passphrase/mnemonic) to regenerate all of the accounts in that wallet.
+
+There is no way for someone else to determine that two addresses are generated from the same master derivation key. This provides a potential avenue for applications to implement anonymous spending for end users without requiring users to store multiple passphrases.
+
+### Reasons not to use kmd
+
+Using kmd requires running a process and storing keys on disk. If you do not have access to a node or you require a more lightweight solution, [Standalone Accounts](#standalone) may be a better suited option.
+
+### How to use kmd
+
+#### Start the kmd process
+
+To initiate the kmd process and generate the required `kmd.net` and `kmd.token` files use [`goal kmd`](https://developer.algorand.org/docs/clis/goal/kmd/kmd) or [`kmd`](https://developer.algorand.org/docs/clis/kmd) command line utilities.
+
+Start kmd with a 3600 second timeout.
+
+```shell showLineNumbers=false frame=none
+$ goal kmd start -t 3600
+Successfully started kmd
+```
+
+```shell showLineNumbers=false frame=none
+$ kmd -d data/kmd-v<version>/ -t 3600
+```
+
+Retrieve the kmd IP address and access token:
+
+```shell showLineNumbers=false frame=none
+$ echo "kmd IP address: " `cat $ALGORAND_DATA/kmd-v<version>/kmd.net
+kmd IP address:  [ip-address]:[port]
+
+$ echo "kmd token: " `cat $ALGORAND_DATA/kmd-v<version>/kmd.token
+kmd token:  [token]
+```
+
+#### Create a wallet and generate an account
+
+Create a new wallet and generate an account. In the utils, connect to kmd through a kmd client then create a new wallet. With the wallet handle, generate an account.
+
+```shell showLineNumbers=false frame=none
+$ goal wallet new testwallet
+Please choose a password for wallet 'testwallet':
+Please confirm the password:
+Creating wallet...
+Created wallet 'testwallet'
+Your new wallet has a backup phrase that can be used for recovery.
+Keeping this backup phrase safe is extremely important.
+Would you like to see it now? (Y/n): y
+Your backup phrase is printed below.
+Keep this information safe -- never share it with anyone!
+
+[25-word mnemonic]
+
+$ goal account new
+Created new account with address [address]
+```
+
+We can also use the utils to create a wallet and account with the KMD client
+Todo: Add utils code here
+
+To create an account using environment variable will load the account from a KMD wallet called name and if that wallet doesn't exist it will create it and fund the account.
+Todo: Add utils code here
+
+Other operations like importing and exporting keys can also be performed using utils.
+
+#### Recover wallet and regenerate account
+
+To recover a wallet and any previously generated accounts, use the wallet backup phrase (also called the wallet mnemonic or passphrase). The master derivation key for the wallet will always generate the same addresses in the same order. Therefore the process of recovering an account within the wallet looks exactly like generating a new account.
+
+:::note
+An offline wallet may not accurately reflect account balances, but the state for those accounts (e.g. its balance, online status) are safely stored on the blockchain. kmd will repopulate those balances when connected to a node.
+:::
+
+```shell showLineNumbers=false frame=none
+$ goal wallet new -r <recovered-wallet-name>
+Please type your recovery mnemonic below, and hit return when you are done:
+[25-word wallet mnemonic]
+Please choose a password for wallet [RECOVERED_WALLET_NAME]:
+Please confirm the password:
+Creating wallet...
+Created wallet [RECOVERED_WALLET_NAME]
+
+$ goal account new -w <recovered-wallet-name>
+Created new account with address [RECOVERED_ADDRESS]
+```
+
+:::Warning
+For compatibility with other developer tools, `goal` provides functions to import and export accounts into kmd wallets, however, keep in mind that an imported account can not be recovered/derived from the wallet-level mnemonic. You must always keep track of the account-level mnemonics that you import into kmd wallets.
+:::
+
+## Standalone
+
+A standalone account is an Algorand address and private key pair that is not stored on disk. The private key is most often in the [25-word mnemonic form](https://developer.algorand.org/docs/get-details/accounts/#transformation-private-key-to-25-word-mnemonic).
+
+### Reasons to use standalone accounts
+
+Standalone accounts have a low setup cost as you do not need to connect to a separate client that depends on separate hardware. All you need is the 25-word human-readable mnemonic of the relevant account.
+
+Since keys are not stored on disk, standalone accounts can be used in [secure offline signing procedures](https://developer.algorand.org/docs/get-details/transactions/offline_transactions) where hardware constraints may make using kmd more difficult.
+
+Standalone account mnemonics are widely used across developer tools and services within the Algorand ecosystem. However, this should not limit developers who prefer to use kmd since [import](https://developer.algorand.org/docs/get-details/accounts/create/#import-account) and [export](https://developer.algorand.org/docs/get-details/accounts/create/#export-account) functions exist with kmd to ensure compatibility.
+
+:::note
+Algorand's mobile wallet (Android, iOS) uses standalone accounts. Use the 25-word mnemonic to import accounts into the mobile wallet.
+:::
+
+### Reasons not to use standalone accounts
+
+If you prefer storing your keys encrypted on disk instead of storing human-readable 25-word mnemonics, kmd may be a better option.
+
+### How to generate a standalone account
+
+There are different ways to create a standalone account:
+
+#### Using algokey
+
+```
+$ algokey generate
+Private key mnemonic: [PASSPHRASE]
+Public key: [ADDRESS]
+```
+
+#### Using utils
+
+Todo: Add utils code here (environment variable, random account)
+
+#### Using pera wallet
+
+Refer [here](https://support.perawallet.app/en/article/create-a-new-algorand-account-on-pera-wallet-1ehbj11/) for more details on how to create a new account on Pera Wallet.
+
+## HD Wallets
+
+(coming soon)
+
+## Hashicorp Vault
+
+(coming soon)
