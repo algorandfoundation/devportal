@@ -31,7 +31,7 @@ This tutorial demonstrates the workflow using a Python-based Algorand project. W
 
 - Visual Studio Code (version 1.80.0 or higher)
 - Node.js (version 18.x or higher)
-- [algokit-cli](/build/algokit/what-is-algokit) installed
+- [algokit-cli](/concepts/algokit-intro) installed
 - [Algokit AVM VSCode Debugger](https://github.com/microsoft/vscode-mock-debug) extension installed
 - Basic understanding of [Algorand smart contracts using Python](/concepts/smart-contracts/languages/python)
 
@@ -47,7 +47,7 @@ Install the Algokit AVM VSCode Debugger extension from the VSCode Marketplace by
 
 ## Step 2: Set Up the Example Smart Contract
 
-We aim to debug smart contract code in a project generated via `algokit init`. Refer to set up [Algokit](/build/algokit/what-is-algokit). Here’s the Algorand Python code for an `tictactoe` smart contract. The bug is in the `move` method, where `games_played` is updated by `2` for guest and `1` for host (which should be updated by 1 for both guest and host).
+We aim to debug smart contract code in a project generated via `algokit init`. Refer to set up [Algokit](/concepts/algokit-intro). Here’s the Algorand Python code for an `tictactoe` smart contract. The bug is in the `move` method, where `games_played` is updated by `2` for guest and `1` for host (which should be updated by 1 for both guest and host).
 
 Remove `hello_world` folder
 Create a new tic tac toe smart contract starter via `algokit generate smart-contract -a contract_name "TicTacToe"`
