@@ -1,3 +1,56 @@
 ---
 title: Applications
+description: Explanatory section about Applications and its components in the Algorand Blockchain
 ---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+Algorand Smart Contracts, also known as Applications, are the logic component of our blockchain systems. A client can invoke these pieces of structured code to execute a specific method or logic inside the application.
+
+Smart contracts live on the blockchain. Once they are deployed, the on-chain instantiation of the contract is referred to as an application and assigned an Application ID, which can be used by any client to lookup the application or to execute methods
+
+## Storage
+
+Applications can store values on the Algorand blockchain using one of the following storage types:
+
+- [Global Storage](/concepts/smart-contracts/storage/global)
+- [Local Storage](/concepts/smart-contracts/storage/local)
+- [Boxes Storage](/concepts/smart-contracts/storage/box)
+
+The Storage Overview section provides a detailed section on on-chain storage.
+
+<LinkCard
+  title='Data Storage - Overview'
+  href='/concepts/smart-contracts/storage/overview'
+  description='Data storage primitives in the Algorand Virtual Machine (AVM)'
+/>
+
+## Components
+
+- `The Approval Program` - responsible for processing all application calls to the contract, except for the clear call (described in the next bullet). This program is responsible for implementing most of the logic of an application. Like logic signatures, this program will succeed only if one nonzero value is left on the stack upon program completion or the return opcode is called with a positive value on the top of the stack.
+- `The ClearStateProgram` - handles accounts using the clear call to remove the smart contract from their balance record. This program will pass or fail the same way the ApprovalProgram does; however, whether the logic passes or fails, the contract will be removed from the account's balance record.
+
+## Interaction
+
+For interacting in a standard way with applications, the [Application Binary Interface (ABI)](/concepts/smart-contracts/abi) should be used. This specification defines the encoding/decoding of data types and is a standard for exposing and invoking methods in a smart contract.
+
+For calling an Application, the clients must execute ApplicationCall transactions. Depending on the type, the application could show a different behavior and result:
+
+- `NoOp` - Generic application call to execute the Approval Program
+- `OptIn` - Accounts use this transaction to begin participating in a smart contract. Participation enables local storage usage.
+- `DeleteApplication` - Transaction to delete the application.
+- `UpdateApplication` - Transaction to update the logic of an application.
+- `CloseOut` - Accounts use this transaction to close out their participation in the contract. This call can fail based on the programmed logic, preventing the account from removing the contract from its balance record.
+- `ClearState` - Similar to CloseOut, the transaction will always clear a contract from the account’s balance record whether the program succeeds or fails.
+
+## Inner Transactions
+
+Every application will have an associated account, so, like any other account, they are capable of:
+
+- Sending payments
+- Holding assets
+- Creating assets
+- Calling other applications
+- Any other transaction allowed by regular accounts.
+
+These transactions, performed by the application account, are known as [Inner Transactions](/concepts/smart-contracts/inner-txn)
