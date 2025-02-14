@@ -48,8 +48,7 @@ elif repo == "utils":
             "auto_mode": True,
         },
     ]
-
-
+    
 else:
     raise ValueError(
         f"Invalid repo: {repo}. Make sure to set the SPHINX_REPO environment variable."

@@ -13,3 +13,6 @@
 [submodule "imports/repos/py-algorand-sdk"]
 	path = imports/repos/py-algorand-sdk
 	url = https://github.com/algorand/py-algorand-sdk
+[submodule "imports/repos/algokit-cli"]
+	path = imports/repos/algokit-cli
+	url = https://github.com/algorandfoundation/algokit-cli
