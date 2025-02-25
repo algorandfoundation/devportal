@@ -7,7 +7,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import { resolve } from 'path';
 import starlightImageZoom from 'starlight-image-zoom';
 import starlightLinksValidator from 'starlight-links-validator';
-import starlightOpenAPI, { openAPISidebarGroups } from 'starlight-openapi'
+import starlightOpenAPI, { openAPISidebarGroups } from 'starlight-openapi';
 
 export default defineConfig({
   output: 'static',
@@ -23,22 +23,25 @@ export default defineConfig({
         }),
         starlightOpenAPI([
           {
-           base: 'reference/rest-api/algod',
-           label: 'algod',
-           schema: 'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/master/daemon/algod/api/algod.oas3.yml',
-           collapsed: true,
+            base: 'reference/rest-api/algod',
+            label: 'algod',
+            schema:
+              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/master/daemon/algod/api/algod.oas3.yml',
+            collapsed: true,
           },
           {
-           base: 'reference/rest-api/indexer',
-           label: 'indexer',
-           schema: 'https://raw.githubusercontent.com/algorand/indexer/refs/heads/main/api/indexer.oas3.yml',
-           collapsed: true,
+            base: 'reference/rest-api/indexer',
+            label: 'indexer',
+            schema:
+              'https://raw.githubusercontent.com/algorand/indexer/refs/heads/main/api/indexer.oas3.yml',
+            collapsed: true,
           },
           {
-           base: 'reference/rest-api/kmd',
-           label: 'kmd',
-           schema: 'https://raw.githubusercontent.com/algorand/go-algorand/ad578576ab5f5bfe58a590164903617ecef379e4/daemon/kmd/api/swagger.json',
-           collapsed: true,
+            base: 'reference/rest-api/kmd',
+            label: 'kmd',
+            schema:
+              'https://raw.githubusercontent.com/algorand/go-algorand/ad578576ab5f5bfe58a590164903617ecef379e4/daemon/kmd/api/swagger.json',
+            collapsed: true,
           },
         ]),
       ],
@@ -553,8 +556,8 @@ export default defineConfig({
                   ],
                 },
                 {
-                    label: 'Algokit CLI Reference',
-                    link: 'reference/algokit-cli/cli-reference',
+                  label: 'Algokit CLI Reference',
+                  link: 'reference/algokit-cli/cli-reference',
                 },
               ],
             },
@@ -753,10 +756,7 @@ export default defineConfig({
                   label: 'Overview',
                   link: 'reference/rest-api/overview',
                 },
-                {
-                  label: 'API Endpoints',
-                  items: openAPISidebarGroups,
-                },
+                ...openAPISidebarGroups,
               ],
             },
           ],
