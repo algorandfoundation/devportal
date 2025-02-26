@@ -148,7 +148,6 @@ export default defineConfig({
             {
               label: 'Assets',
               collapsed: false,
-              badge: 'WIP',
               items: [
                 {
                   label: 'Overview',
@@ -158,7 +157,6 @@ export default defineConfig({
                 {
                   label: 'Creating Assets',
                   link: 'concepts/assets/create',
-                  badge: 'WIP',
                 },
                 {
                   label: 'Opting In & Out',
@@ -173,7 +171,6 @@ export default defineConfig({
                 {
                   label: 'Transferring Assets',
                   link: 'concepts/assets/transfer',
-                  badge: 'WIP',
                 },
                 {
                   label: 'Deleting Assets',
@@ -193,7 +190,6 @@ export default defineConfig({
                 {
                   label: 'Known Assets',
                   link: 'concepts/assets/known-assets',
-                  badge: 'WIP',
                 },
               ],
             },
