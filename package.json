@@ -23,10 +23,9 @@
     "@astrojs/markdown-remark": "^6.1.0",
     "@astrojs/starlight": "^0.32.1",
     "@astrojs/starlight-tailwind": "^3.0.0",
-    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/tailwind": "^5.1.3",
     "@catppuccin/palette": "^1.2.0",
     "@catppuccin/vscode": "^3.15.1",
-    "@expressive-code/plugin-line-numbers": "^0.35.3",
     "astro": "^5.3.1",
     "astro-d2": "^0.3.0",
     "astro-icon": "^1.1.0",
@@ -41,11 +40,11 @@
     "sharp": "^0.32.5",
     "starlight-image-zoom": "^0.11.1",
     "starlight-links-validator": "^0.12.1",
+    "starlight-openapi": "^0.13.0",
     "starlight-typedoc": "^0.17.0",
     "tailwindcss": "^3.4.4",
     "typedoc": "^0.27.3",
-    "typedoc-plugin-markdown": "^4.3.1",
-    "starlight-openapi": "^0.13.0"
+    "typedoc-plugin-markdown": "^4.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
