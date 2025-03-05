@@ -21,6 +21,15 @@ export default defineConfig({
           exclude: ['**[FUTURELINK]*', '**/reference/**'],
         }),
       ],
+      head: [
+        {
+          tag: 'script',
+          attrs: {
+            'data-domain': 'developer.algorand.co',
+            src: 'https://plausible.io/js/script.hash.outbound-links.tagged-events.js',
+          },
+        },
+      ],
       components: {
         ThemeProvider: './src/components/CustomThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',
