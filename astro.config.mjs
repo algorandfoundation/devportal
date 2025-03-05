@@ -49,7 +49,7 @@ export default defineConfig({
         {
           tag: 'script',
           attrs: {
-            'data-domain': 'developer.algorand.co',
+            'data-domain': 'staging.developer.algorand.co',
             src: 'https://plausible.io/js/script.hash.outbound-links.tagged-events.js',
           },
         },
