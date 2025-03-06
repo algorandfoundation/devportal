@@ -1,0 +1,34 @@
+---
+import IconCard from './IconCard.astro';
+
+const cards = [
+  {
+    heading: 'Start with Algokit',
+    description: 'Lorem ipsum dolor sit amet, consectetur.',
+  },
+  {
+    heading: 'Explore sample apps',
+    description: 'Lorem ipsum dolor sit amet, consectetur.',
+  },
+  {
+    heading: 'Run a node',
+    description: 'Lorem ipsum dolor sit amet, consectetur.',
+  },
+  {
+    heading: 'Connect with developers in discord',
+    description: 'Lorem ipsum dolor sit amet, consectetur.',
+  },
+];
+---
+
+<section>
+  <div
+    class='max-w-screen-2xl md:grid md:grid-cols-2 lg:grid-cols-4 gap-[35px] mx-auto my-[120px] lg:my-[150px]'
+  >
+    {
+      cards.map(card => (
+        <IconCard heading={card.heading} description={card.description} />
+      ))
+    }
+  </div>
+</section>

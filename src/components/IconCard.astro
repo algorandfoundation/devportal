@@ -1,0 +1,28 @@
+---
+interface Props {
+  heading: string;
+  description: string;
+}
+
+const { heading, description } = Astro.props;
+---
+
+<div
+  class:list={[
+    'bg-algo-lavender-300 dark:bg-algo-teal-100 text-white dark:text-algo-navy px-8 py-[34px] rounded-2xl',
+    'flex flex-col !mt-0',
+  ]}
+>
+  <div
+    class='w-[70px] h-[70px] bg-algo-lavender-200 dark:bg-algo-teal-500 rounded-[10px] mb-auto ml-auto'
+  >
+  </div>
+  <div>
+    <h3
+      class='!text-white dark:!text-algo-navy lg:text-5xl font-bold leading-none'
+    >
+      {heading}
+    </h3>
+    <p class='font-sans lg:text-2xl lg:leading-[1.3]'>{description}</p>
+  </div>
+</div>
