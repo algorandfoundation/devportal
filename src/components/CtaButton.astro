@@ -1,0 +1,26 @@
+---
+import { LinkButton } from '@astrojs/starlight/components';
+
+interface Props {
+  label: string;
+  classList?: string;
+  alt?: boolean;
+}
+
+const { label, classList, alt } = Astro.props;
+---
+
+<LinkButton
+  href={'/'}
+  icon='right-arrow'
+  class:list={[
+    alt
+      ? '!bg-algo-lavender-400 dark:!bg-white text-[20px] lg:text-[29px] py-[11px] px-[34px]'
+      : '!bg-algo-lavender-200 dark:!bg-algo-teal-300 text-[25px] py-[10px] px-[28px]',
+    'text-white dark:text-algo-navy rounded-xl font-bold leading-none !border-transparent !mx-0',
+    classList,
+  ]}
+  {...Astro.props}
+>
+  {label}
+</LinkButton>
