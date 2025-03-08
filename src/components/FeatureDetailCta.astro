@@ -1,0 +1,39 @@
+---
+import CtaButton from './CtaButton.astro';
+
+const featureDetailCtaData = {
+  highlight: 'Lorem ipsum dolor sit',
+  heading: 'Lorem ipsum dolor sit amet, consectetur adip',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur. Pellentesque sit amet sapien fringilla, mattis ligula consectetur. Pellentesque sit amet sapien fringilla, mattis ligula consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
+  ctaLabel: 'Get started',
+};
+---
+
+<section class='feature-detail-cta'>
+  <div
+    class:list={[
+      'max-w-screen-2xl lg:flex md:justify-between md:items-center text-algo-navy dark:text-white',
+      'mx-auto lg:gap-x-[80px] xl:gap-x-[135px] text-center md:text-left',
+    ]}
+  >
+    <div class='max-w-[805px]'>
+      <div class='font-bold lg:text-2xl lg:leading-none'>
+        {featureDetailCtaData.highlight}
+      </div>
+      <h2
+        class='text-algo-navy dark:text-white lg:!text-[52px] !mt-[10px] !leading-none'
+      >
+        {featureDetailCtaData.heading}
+      </h2>
+      <div class='mt-[43px]'>
+        <CtaButton label='Get started' />
+      </div>
+    </div>
+    <p
+      class='lg:max-w-[430px] xl:max-w-[700px] font-sans lg:mt-[18px] lg:text-[22px] lg:leading-[1.5]'
+    >
+      {featureDetailCtaData.description}
+    </p>
+  </div>
+</section>

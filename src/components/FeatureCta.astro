@@ -1,5 +1,13 @@
 ---
 import CtaButton from './CtaButton.astro';
+
+const featureCtaData = {
+  highlight: 'Lorem ipsum dolor sit',
+  heading: 'Lorem ipsum dolor sit amet, consectetur adip',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur.',
+  ctaLabel: 'Get started',
+};
 ---
 
 <section
@@ -8,27 +16,25 @@ import CtaButton from './CtaButton.astro';
   <div
     class:list={[
       'max-w-screen-2xl md:flex md:justify-between md:items-center text-algo-lavender-400 dark:text-algo-navy',
-      'mx-auto py-[60px] lg:py-[115px] px-4 xl:px-0 gap-x-[148px] text-center md:text-left',
+      'mx-auto py-[60px] lg:py-[115px] px-4 gap-x-[148px] text-center md:text-left',
     ]}
   >
     <div class='max-w-[805px]'>
       <div class='font-bold lg:text-2xl lg:leading-none'>
-        Lorem ipsum dolor sit
+        {featureCtaData.highlight}
       </div>
       <h2
         class='text-algo-lavender-400 dark:text-algo-navy lg:!text-[52px] !mt-[10px] !leading-none'
       >
-        Lorem ipsum dolor sit amet, consectetur adip
+        {featureCtaData.heading}
       </h2>
       <p class='font-sans lg:mt-[18px] lg:text-[22px] lg:leading-[1.5]'>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.
-        Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
-        mattis ligula consectetur.
+        {featureCtaData.description}
       </p>
     </div>
 
     <div class='flex-shrink-0'>
-      <CtaButton label='Get started' alt={true} />
+      <CtaButton label={featureCtaData.ctaLabel} alt={true} />
     </div>
   </div>
 </section>
