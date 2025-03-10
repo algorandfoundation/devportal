@@ -7,25 +7,7 @@ import { Code } from '@astrojs/starlight/components';
 
 The Algorand protocol supports the creation of on-chain assets that benefit from the same security, compatibility, speed and ease of use as the Algo. The official name for assets on Algorand is **Algorand Standard Assets (ASA)**.
 
-With Algorand Standard Assets you can represent stablecoins, loyalty points, system credits, and in-game points, just to name a few examples. You can also represent single, unique assets like a deed for a house, collectable items, unique parts on a supply chain, etc. There is also ABI_CODEC functionality to place transfer restrictions on an asset that help support securities, compliance, and certification use cases.
-
-:::note
-Assets that represent many of the same type, like a stablecoin, may be referred to as **fungible assets**. Single, unique assets are referred to as **non-fungible assets**.
-:::
-
-# Quick start videos
-
-If you prefer videos, take a look at this 7 minute guide to learn about Introduction to Assets.
-
-<iframe
-  width='100%'
-  style='aspect-ratio:16/9'
-  src='https://www.youtube-nocookie.com/embed/94XMLuTt8nM'
-  title='YouTube video player'
-  frameborder='0'
-  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-  allowfullscreen
-></iframe>
+With Algorand Standard Assets you can represent stablecoins, loyalty points, system credits, and in-game points, just to name a few examples. You can also represent single, unique assets like a deed for a house, collectable items, unique parts on a supply chain, etc.
 
 # Assets overview
 
@@ -33,12 +15,8 @@ Here are several things to be aware of before getting started with assets.
 
 - For every asset an account creates or owns, its minimum balance is increased by 0.1 Algos (100,000 microAlgos).
 - This minimum balance requirement will be placed on the original creator as long as the asset has not been destroyed. Transferring the asset does not alleviate the creator's minimum balance requirement.
-- Before a new asset can be transferred to a specific account the receiver must opt-in to receive the asset. This process is described in [Receiving an asset](/concepts/assets/opt-in-out#receiving-an-asset).
+- Before a new asset can be transferred to a specific account the receiver must opt-in to receive the asset. This process is described in [Receiving an asset](/concepts/assets/asset-operations#receiving-an-asset).
 - If any transaction is issued that would violate the minimum balance requirements, the transaction will fail.
-
-:::note
-Prior to AVM 1.1 (go-algorand 3.5.0), a single Algorand account was only permitted to create and optin to 1000 assets. These limits are now removed allowing an unlimited number of assets to be created and optin to by a single account.
-:::
 
 ## Asset parameters
 
@@ -49,23 +27,25 @@ The type of asset that is created will depend on the parameters that are passed 
 
 These eight parameters can _only_ be specified when an asset is created.
 
-- [Creator](FUTURELINK) (_required_)
-  {/* TODO ../transactions/transactions#creator */}
-- [AssetName](FUTURELINK) (_optional, but recommended_)
-  {/* TODO ../transactions/transactions#assetname */}
-- [UnitName](FUTURELINK) (_optional, but recommended_)
-  {/* TODO ../transactions/transactions#unitname */}
-- [Total](FUTURELINK) (_required_)
-  {/* TODO ../transactions/transactions#total */}
-- [Decimals](FUTURELINK) (_required_)
-  {/* TODO ../transactions/transactions#decimals */}
+# TODO use table
 
-- [DefaultFrozen](FUTURELINK) (_required_)
-  {/* TODO ../transactions/transactions#defaultfrozen */}
-- [URL](FUTURELINK) (_optional_)
-  {/* TODO ../transactions/transactions#url */}
-- [MetaDataHash](FUTURELINK) (_optional_)
-  {/* TODO ../transactions/transactions#metadatahash */}
+| ** Parameter** | Required | Description |
+| [Creator](FUTURELINK) | _YES_ | |
+| {/* TODO ../transactions/transactions#creator */}| | |
+| [AssetName](FUTURELINK) | _No, but recommended_ | |
+| {/* TODO ../transactions/transactions#assetname */}| | |
+| [UnitName](FUTURELINK) | _No, but recommended_| |
+| {/* TODO ../transactions/transactions#unitname */}| | |
+| [Total](FUTURELINK) | _YES_ | |
+| {/* TODO ../transactions/transactions#total */}| | |
+| [Decimals](FUTURELINK) | _YES_ | |
+| {/* TODO ../transactions/transactions#decimals */}| | |
+| [DefaultFrozen](FUTURELINK) _YES_ | |
+| {/* TODO ../transactions/transactions#defaultfrozen */}| | |
+| [URL](FUTURELINK) | _No_| |
+| {/* TODO ../transactions/transactions#url */}| |
+| [MetaDataHash](FUTURELINK) | (_No_)| |
+| {/* TODO ../transactions/transactions#metadatahash */}| | |
 
 ### Mutable asset parameters
 
@@ -76,55 +56,21 @@ Here are the four address types.
 [**Manager Address**](FUTURELINK)
 {/* TODO ../transactions/transactions#manageraddr */}
 
-The manager account is the only account that can authorize transactions to [re-configure](/concepts/assets/update) or [destroy](/concepts/assets/delete) an asset.
-
-:::caution
-Never set this address to empty if you want to be able to re-configure or destroy the asset.
-:::
+The manager account is the only account that can authorize transactions to [re-configure](/concepts/assets/asset-operations#updating-assets) or [destroy](/concepts/assets/asset-operations#deleting-assets) an asset.
 
 [**Reserve Address**](FUTURELINK)
 {/* TODO ../transactions/transactions#reserveaddr */}
 
 Specifying a reserve account signifies that non-minted assets will reside in that account instead of the default creator account. Assets transferred from this account are "minted" units of the asset. If you specify a new reserve address, you must make sure the new account has opted into the asset and then issue a transaction to transfer all assets to the new reserve.
 
-:::caution
-The reserve account has no functional authority in the protocol. It is purely informational.
-:::
-
 [**Freeze Address**](FUTURELINK)
 {/* TODO ../transactions/transactions#freezeaddr */}
 
 The freeze account is allowed to freeze or unfreeze the asset holdings for a specific account. When an account is frozen it cannot send or receive the frozen asset. In traditional finance, freezing assets may be performed to restrict liquidation of company stock, to investigate suspected criminal activity or to deny-list certain accounts. If the DefaultFrozen state is set to True, you can use the unfreeze action to authorize certain accounts to trade the asset (such as after passing KYC/AML checks).
-
-:::caution
-Just remember that DefaultFrozen is an [immutable parameter](#immutable-asset-parameters) and cannot be changed after creation.
-:::
-
-:::tip
-Set this address to `""` if you want to prove to asset holders that the asset can never be frozen.
-:::
 
 [**Clawback Address**](FUTURELINK)
 {/* TODO ../transactions/transactions#clawbackaddr */}
 
 The clawback address represents an account that is allowed to transfer assets from and to any asset holder (assuming they have opted-in). Use this if you need the option to revoke assets from an account (like if they breach certain contractual obligations tied to holding the asset). In traditional finance, this sort of transaction is referred to as a clawback.
 
-:::tip
-Set this address to `""` if you want to ensure to asset holders that assets can never be revoked.
-:::
-
 If any of these four addresses is set to `""` that address will be cleared and can never be reset for the life of the asset. This will also effectively disable the feature of that address. For example setting the freeze address to `""` will prevent the asset from ever being frozen.
-
-# Quick start videos
-
-If you prefer videos, take a look at this 8 minute guide to learn about Building Solutions Using ASAs.
-
-<iframe
-  width='100%'
-  style='aspect-ratio:16/9'
-  src='https://www.youtube-nocookie.com/embed/_Q37eysrRh4'
-  title='YouTube video player'
-  frameborder='0'
-  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-  allowfullscreen
-></iframe>

@@ -6,10 +6,10 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
 import RemoteCode from '/src/components/RemoteCode.astro';
 
-Retrieve an asset's configuration information from the network using the SDKs or `goal`. Additional details are also added to the accounts that own the specific asset and can be listed with standard account information calls.
+Retrieve an asset's configuration information from the network using Algokit Utils or `goal`. Additional details are also added to the accounts that own the specific asset and can be listed with standard account information calls.
 
 :::note
-The code below illustrates getting asset information without the Indexer. If you have the Indexer installed use the Indexer API to [search for asset](../../rest-apis/indexer/#search-assets) information.
+The code below illustrates getting asset information without the Indexer. If you have the Indexer installed use the Indexer API to [search for asset](FUTURELINK) information.
 :::
 
 <Tabs syncKey='lang'>
@@ -23,13 +23,15 @@ The code below illustrates getting asset information without the Indexer. If you
     />
   </TabItem>
   <TabItem label='JavaScript' icon='seti:typescript'>
-    ```typescript showLineNumbers=false frame=none
-    const assetInfo = await algodClient.getAssetByID(assetIndex).do();
-	console.log(`Asset Name: ${assetInfo.params.name}`);
-	console.log(`Asset Params: ${assetInfo.params}`);
-    ```
+    <RemoteCode
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/typescript-examples/algokit-utils-ts/assets/asset-get-information.ts'
+      snippet='GET_ASSET_INFORMATION'
+      lang='py'
+      title='Get Asset Info'
+      frame='none'
+    />
   </TabItem>
-  <TabItem label='Goal' icon='seti:laptop'>
+  <TabItem label='goal' icon='seti:laptop'>
     ```shell showLineNumbers=false frame=none
     goal asset info --creator <creator-address> --asset unitname  -d ~/node/data -w testwall
     Asset ID:         <created-asset-id>
@@ -49,4 +51,11 @@ The code below illustrates getting asset information without the Indexer. If you
   </TabItem>
 </Tabs>
 
-{/* TODO: ASASTATS link? */}
+## TODO Notes
+
+- [ ] Officila stablecoins
+- [ ] RWA
+- [ ] Check marketing materials
+- [ ] Tooling
+- [ ]Tooling for assets
+  - instructions for using Lora, links to community tools (wen.tools, ASAStats, etc.)

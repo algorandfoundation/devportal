@@ -160,7 +160,7 @@ export default defineConfig({
             },
             {
               label: 'Assets',
-              collapsed: true,
+              collapsed: false,
               badge: 'WIP',
               items: [
                 {
@@ -169,38 +169,13 @@ export default defineConfig({
                   badge: 'WIP',
                 },
                 {
-                  label: 'Creating Assets',
-                  link: 'concepts/assets/create',
+                  label: 'Asset Operations',
+                  link: 'concepts/assets/asset-operations',
                   badge: 'WIP',
                 },
                 {
-                  label: 'Opting In & Out',
-                  link: 'concepts/assets/opt-in-out',
-                  badge: 'WIP',
-                },
-                {
-                  label: 'Updating Assets',
-                  link: 'concepts/assets/update',
-                  badge: 'WIP',
-                },
-                {
-                  label: 'Transferring Assets',
-                  link: 'concepts/assets/transfer',
-                  badge: 'WIP',
-                },
-                {
-                  label: 'Deleting Assets',
-                  link: 'concepts/assets/delete',
-                  badge: 'WIP',
-                },
-                {
-                  label: 'Clawing Back Assets',
-                  link: 'concepts/assets/clawback',
-                  badge: 'WIP',
-                },
-                {
-                  label: 'Freezing Assets',
-                  link: 'concepts/assets/freeze',
+                  label: 'Assets Metadata',
+                  link: 'concepts/assets/asset-metadata',
                   badge: 'WIP',
                 },
                 {
