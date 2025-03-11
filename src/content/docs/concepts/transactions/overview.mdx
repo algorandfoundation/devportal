@@ -1,3 +1,120 @@
 ---
 title: Overview
 ---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components';
+import RemoteCode from '/src/components/RemoteCode.astro';
+import { LinkCard } from '@astrojs/starlight/components';
+
+Transactions are cryptographically signed instructions that modify the Algorand blockchain's state. The transaction lifecycle follows these steps: creation, signing with private keys, submission to the Algorand network, selection by block proposers for inclusion in blocks, and execution when the block is validated and added to the blockchain. The most basic transaction type is a payment transaction, which transfers ALGO between accounts.
+
+## Transaction Types
+
+There are [eight different transaction types](https://github.com/algorand/go-algorand/blob/master/protocol/txntype.go) in the Algorand Protocol:
+
+- Payment
+- Key Registration
+- Asset Configuration
+- Asset Freeze
+- Asset Transfer
+- Application Call
+- State Proof
+- Heartbeat
+
+These eight transaction types can be configured in specific ways to produce more distinct functional transaction types. For example, both [asset creation](/concepts/transactions/types#create-an-asset) and [asset destruction](/concepts/transactions/types#destroy-an-asset) use the same underlying `AssetConfigTx` type. Distinguishing between these two operations requires examining the specific combination of the `AssetConfigTx` fields and values that determine whether an asset is being created or destroyed.
+
+Fortunately, the [AlgoKit Utils Libraries](/algokit/algokit-intro#algokit-utils) provide intuitive methods to create these more granular transaction types without having to necessarily worry about the underlying structure. However, if you are signing a pre-made transaction, correctly interpreting the underlying structure is critical.
+
+For detailed information about each transaction type, its structure, and how to create and send them using the AlgoKit Utils Library, refer to the Transaction Types page:
+
+<LinkCard
+  title='Transaction Types'
+  href='/concepts/transactions/types'
+  description='Detailed information about transaction types'
+/>
+
+## Transaction Fees
+
+All Algorand transactions need to pay transaction fees to be included in a block and be executed.
+
+The minimum fee for each transaction on Algorand is **1000 microAlgo** or **0.001 Algo** and it is fixed to this amount when the network is not congested.
+
+For detailed information about transaction fees on Algorand, refer to the Transaction Fees page:
+
+<LinkCard
+  title='Transaction Fees'
+  href='/concepts/transactions/fees'
+  description='Detailed information about transaction fees'
+/>
+
+## Signing Transactions
+
+After constructing a transaction, it must be signed to be authorized for execution and be included in the blockchain. The transaction must be signed by the sender or the [rekey account](/concepts/accounts/rekeying) that has the signing authority. Authorization occurs through the addition of a signature to the transaction object. Specifically, a transaction object, when signed, is wrapped in a `SignedTxn` object that includes the transaction and a type of signature.
+
+There are three types of signatures:
+
+- Single Signatures
+- Multisignatures
+- Logic Signatures
+
+For detailed information about signing transactions on Algorand, refer to the Signing Transactions page:
+
+<LinkCard
+  title='Signing Transactions'
+  href='/concepts/transactions/signing'
+  description='Detailed information about signing transactions'
+/>
+
+## Atomic Transaction Groups
+
+Algorand's protocol includes a feature called Atomic Transfers, which allows you to group up to 16 transactions for simultaneous execution. These transactions either all succeed or all fail, eliminating the need for complex solutions like [hashed timelock contracts](https://bitcoinwiki.org/wiki/hashed-timelock-contracts) used on other blockchains. Any Algorand transaction type can be included in an atomic group for simultaneous execution.
+
+### Use cases
+
+Atomic transfers enable use cases such as:
+
+- Circular trades - Alice pays Bob if and only if Bob pays Claire if and only if Claire pays Alice.
+- Group payments - Everyone pays or no one pays.
+- Decentralized exchanges - Trade one asset for another without going through a centralized exchange.
+- Distributed payments - Payments to multiple recipients.
+- [Pooled transaction fees](FUTURELINK:/concepts/transactions/fees) - One transaction pays the fees of others.
+- Op Up transactions - Group multiple transactions to cover higher opcode budget
+
+For detailed information about atomic transactions, refer to the Atomic Transaction Groups page:
+
+<LinkCard
+  title='Atomic Transaction Groups'
+  href='/concepts/transactions/atomic-txn-groups'
+  description='Detailed information about atomic transaction groups'
+/>
+
+## Leases
+
+The lease field enforces mutual exclusion of transactions. If this field is nonzero in a transaction, then once the transaction is confirmed, it acquires the lease identified by the `(Sender, Lease)` pair of the transaction until the `LastValid` round passes. While this transaction possesses the lease, no other transaction specifying this lease can be executed.
+
+A lease is often used in the context of [Algorand Smart Contracts](/concepts/smart-contracts/overview) to prevent replay attacks. Leases can also be used to safeguard against unintended duplicate spending. For example, if I send a transaction to the network and later realize my fee was too low, I could send another transaction with a higher fee, but the same lease value. This would ensure that only one of those transactions ends up getting confirmed during the validity period.
+
+For detailed information about the lease field on Algorand, refer to the Lease page:
+
+<LinkCard
+  title='Lease'
+  href='/concepts/transactions/leases'
+  description='Detailed information about the lease field'
+/>
+
+## Blocks
+
+TODO
+
+## URI Scheme
+
+Algorand has a URI specification that represents a standardized way for applications and websites to send requests and information through deeplinks, QR codes, etc. It is heavily based on Bitcoin’s [BIP-0021](https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki) and should be seen as a derivative of it. The decision to base it on BIP-0021 was made to make it as easy and compatible as possible for any other applications.
+
+For detailed information about the URI scheme on Algorand, refer to the URI Scheme page
+
+<LinkCard
+  title='URI Scheme'
+  href='/concepts/transactions/uri-scheme'
+  description='Detailed information about the URI scheme'
+/>
