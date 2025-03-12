@@ -89,4 +89,4 @@ Options
 
 ## Further Reading
 
-For in-depth details, visit the [dispenser section](cli-reference#dispenser) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [dispenser section](../cli/index#dispenser) in the AlgoKit CLI reference documentation.

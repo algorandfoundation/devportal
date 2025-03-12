@@ -210,4 +210,4 @@ This example shows how to deploy smart contracts to the testnet using a custom d
 
 ## Further Reading
 
-For in-depth details, visit the [deploy](../cli-reference#deploy) section in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [deploy](/reference/algokit-cli/reference#deploy) section in the AlgoKit CLI reference documentation.

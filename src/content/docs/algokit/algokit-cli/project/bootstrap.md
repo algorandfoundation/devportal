@@ -127,4 +127,4 @@ These new flags enhance the flexibility and efficiency of the bootstrapping proc
 
 ## Further Reading
 
-To learn more about the `algokit project bootstrap` command, please refer to [bootstrap](../cli-reference#bootstrap) in the AlgoKit CLI reference documentation.
+To learn more about the `algokit project bootstrap` command, please refer to [bootstrap](/reference/algokit-cli/reference#bootstrap) in the AlgoKit CLI reference documentation.

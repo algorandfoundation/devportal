@@ -2,7 +2,7 @@
 title: AlgoKit explore
 ---
 
-AlgoKit provides a quick shortcut to [explore](cli-reference#explore) various Algorand networks using [lora](https://lora.algokit.io/) including [AlgoKit LocalNet](./localnet)!
+AlgoKit provides a quick shortcut to [explore](../cli/index#explore) various Algorand networks using [lora](https://lora.algokit.io/) including [AlgoKit LocalNet](./localnet)!
 
 ## LocalNet
 
@@ -20,4 +20,4 @@ The following three commands are all equivalent and will open lora pointing to t
 
 `algokit explore mainnet` will open lora pointing to MainNet via the <https://mainnet-api.algonode.cloud> [node](https://algonode.io/api/).
 
-To learn more about the `algokit explore` command, please refer to [explore](cli-reference#explore) in the AlgoKit CLI reference documentation.
+To learn more about the `algokit explore` command, please refer to [explore](../cli/index#explore) in the AlgoKit CLI reference documentation.

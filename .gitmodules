@@ -16,3 +16,21 @@
 [submodule "imports/repos/algokit-cli"]
 	path = imports/repos/algokit-cli
 	url = https://github.com/algorandfoundation/algokit-cli
+[submodule "imports/repos/puya-ts"]
+	path = imports/repos/puya-ts
+	url = https://github.com/algorandfoundation/puya-ts.git
+[submodule "imports/repos/algorand-typescript-testing"]
+	path = imports/repos/algorand-typescript-testing
+	url = https://github.com/algorandfoundation/algorand-typescript-testing.git
+[submodule "imports/repos/algorand-python-testing"]
+	path = imports/repos/algorand-python-testing
+	url = https://github.com/algorandfoundation/algorand-python-testing.git
+[submodule "imports/repos/algokit-subscriber-ts.git"]
+	path = imports/repos/algokit-subscriber-ts.git
+	url = https://github.com/algorandfoundation/algokit-subscriber-ts.git
+[submodule "imports/repos/algokit-subscriber-ts"]
+	path = imports/repos/algokit-subscriber-ts
+	url = https://github.com/algorandfoundation/algokit-subscriber-ts.git
+[submodule "imports/repos/algokit-subscriber-py"]
+	path = imports/repos/algokit-subscriber-py
+	url = https://github.com/algorandfoundation/algokit-subscriber-py.git

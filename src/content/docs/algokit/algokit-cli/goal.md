@@ -138,4 +138,4 @@ Would you like to see it now? (Y/n): n
 
 This is particularly useful when you know a command will require user input, such as creating new accounts, importing keys, or signing transactions.
 
-For more details about the `AlgoKit goal` command, please refer to the [AlgoKit CLI reference documentation](cli-reference#goal).
+For more details about the `AlgoKit goal` command, please refer to the [AlgoKit CLI reference documentation](../cli/index#goal).

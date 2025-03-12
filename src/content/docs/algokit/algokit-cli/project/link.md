@@ -66,4 +66,4 @@ This command will generate TypeScript clients for all contract projects and plac
 
 ## Further Reading
 
-To learn more about the `algokit project link` command, please refer to [link](../cli-reference#link) in the AlgoKit CLI reference documentation.
+To learn more about the `algokit project link` command, please refer to [link](/reference/algokit-cli/reference#link) in the AlgoKit CLI reference documentation.
