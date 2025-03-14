@@ -1,57 +1,6 @@
-@import 'tailwindcss';
-
-@plugin '@astrojs/starlight-tailwind';
-
-@theme {
-  --text-xxs: 0.625rem;
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
-  --text-5xl: 3rem;
-  --text-6xl: 3.75rem;
-  --text-7xl: 4.5rem;
-  --text-8xl: 6rem;
-  --text-9xl: 8rem;
-
-  --font-sans: Inter, sans-serif;
-  --font-mono: Source Code Pro, monospace;
-
-  --color-icon-dark: #ffffff;
-  --color-icon-light: #000000;
-
-  --color-code-light-bg: #f5f5f5;
-  --color-code-light-text: #333333;
-  --color-code-light-keyword: #c678dd;
-  --color-code-light-string: #98c379;
-
-  --color-code-dark-bg: #2d2d2d;
-  --color-code-dark-text: #ffffff;
-  --color-code-dark-keyword: #c678dd;
-  --color-code-dark-string: #98c379;
-}
-
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 pre,
 code {
@@ -67,18 +16,18 @@ table.reference-table code {
 
 :root[data-theme='dark'] {
   [data-icon] {
-    color: var(--color-icon-dark);
+    color: theme('colors.icon.dark');
   }
   article.card {
-    background-color: var(--color-gray-800);
+    background-color: theme('colors.gray.800');
   }
 }
 :root[data-theme='light'] {
   [data-icon] {
-    color: var(--color-icon-light);
+    color: theme('colors.icon.light');
   }
   article.card {
-    background-color: #edf2ff;
+    background-color: '#edf2ff';
   }
 }
 

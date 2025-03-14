@@ -16,7 +16,7 @@ This page contains a reference for all available opcodes v11.
 {opcodes.map(({ Opcode, Name, Args, Returns, Doc, Groups, Size, IntroducedVersion, DocCost, DocExtra, ImmediateNote, ArgEnum, ArgEnumTypes }) => (
 
   <details key={Opcode} className="ml-6">
-    <summary className="cursor-pointer p-2 border dark:border-gray-700 rounded-sm flex justify-between items-center bg-gray-10 dark:bg-gray-800">
+    <summary className="cursor-pointer p-2 border dark:border-gray-700 rounded flex justify-between items-center bg-gray-10 dark:bg-gray-800">
         <div className="grid grid-cols-4 w-full gap-4 items-center">
             <div className="cursor-pointer p-4 items-center font-normal">
             0x{Opcode.toString(16).padStart(2, "0")}
@@ -71,7 +71,7 @@ This page contains a reference for all available opcodes v11.
         <h6 className="text-gray-400 font-bold">Description</h6>
         <p className="mb-2">{Doc}</p>
         <h6 className="text-gray-400 font-bold">Groups</h6>
-        <p className="mb-2 inline bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-1 rounded-sm">{Groups}</p>
+        <p className="mb-2 inline bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-1 rounded">{Groups}</p>
 
         {DocExtra && (
           <>
