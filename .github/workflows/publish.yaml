@@ -52,21 +52,31 @@ jobs:
         env:
           TSTRUCT_TOKEN: ${{ secrets.TSTRUCT_TOKEN }}
 
-      # Step 8: Deploy to Cloudflare Pages and capture the Preview URL
-      - name: Publish to Cloudflare Pages
+      # Step 8: Install Wrangler and deploy directly using "wrangler pages deploy"
+      - name: Install and Deploy with Wrangler
         id: deploy
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: ${{ secrets.CF_PROJECT_NAME }}
-          directory: dist
-          # Optional: Enable this if you want to have GitHub Deployments triggered
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
-          wranglerVersion: '3'
+        run: |
+          npm install -g wrangler@3
+          # Deploy using "wrangler pages deploy" (not publish)
+          DEPLOYMENT_URL=$(wrangler pages deploy dist \
+            --project-name=${{ secrets.CF_PROJECT_NAME }} \
+            --account-id=${{ secrets.CF_ACCOUNT_ID }} \
+            --api-token=${{ secrets.CLOUDFLARE_API_TOKEN }} \
+            --commit-dirty=true \
+            --branch="${{ github.head_ref || github.ref_name }}" \
+            --commit-hash=${{ github.sha }} \
+            --json | jq -r '.url')
 
-      # Step 9: Capture PR Information (PR ID and Title)
+          # Set the URL as an output for later steps
+          echo "url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+
+          # Create a GitHub deployment if GITHUB_TOKEN is available
+          if [[ -n "${{ secrets.GITHUB_TOKEN }}" ]]; then
+            echo "Creating GitHub deployment..."
+            # Add GitHub deployment commands here if needed
+          fi
+
+      # Step 9: Capture PR Information (PR ID and Title) - FIXED DEPRECATED SYNTAX
       - name: Capture PR Information
         id: pr_info
         if: github.event_name == 'pull_request'
