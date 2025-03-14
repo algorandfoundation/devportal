@@ -52,8 +52,8 @@ jobs:
         env:
           TSTRUCT_TOKEN: ${{ secrets.TSTRUCT_TOKEN }}
 
-      # Step 8: Install Wrangler and deploy directly using "wrangler pages deploy"
-      - name: Install and Deploy with Wrangler
+      # Step 8: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare Pages
         id: deploy
         run: |
           npm install -g wrangler@3
