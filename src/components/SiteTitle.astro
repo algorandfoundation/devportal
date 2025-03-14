@@ -1,0 +1,71 @@
+---
+// @ts-expect-error unusual error
+import { logos } from 'virtual:starlight/user-images';
+import config from 'virtual:starlight/user-config';
+import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
+
+interface Props {
+  isFooter?: boolean;
+}
+
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+
+const { isFooter } = Astro.props;
+const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+---
+
+<a href={siteTitleHref} class='site-title sl-flex'>
+  {
+    config.logo && logos.dark && (
+      <>
+        <img
+          class:list={{
+            'light:sl-hidden print:hidden': !('src' in config.logo),
+            'h-full!': isFooter || isHomepage,
+          }}
+          alt={config.logo.alt}
+          src={isFooter ? AltDarkLogo.src : logos.dark.src}
+          width={logos.dark.width}
+          height={logos.dark.height}
+        />
+        {/* Show light alternate if a user configure both light and dark logos. */}
+        {!('src' in config.logo) && (
+          <img
+            class:list={[
+              'dark:sl-hidden print:block',
+              {
+                'h-full!': isFooter || isHomepage,
+              },
+            ]}
+            alt={config.logo.alt}
+            src={isFooter ? logos.dark.src : logos.light?.src}
+            width={isFooter ? logos.dark.width : logos.light?.width}
+            height={isFooter ? logos.dark.height : logos.light?.height}
+          />
+        )}
+      </>
+    )
+  }
+  <span class:list={{ 'sr-only': config.logo?.replacesTitle }} translate='no'>
+    {siteTitle}
+  </span>
+</a>
+
+<style>
+  .site-title {
+    align-items: center;
+    gap: var(--sl-nav-gap);
+    font-size: var(--sl-text-h4);
+    font-weight: 600;
+    color: var(--sl-color-text-accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  img {
+    height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: 0 50%;
+  }
+</style>

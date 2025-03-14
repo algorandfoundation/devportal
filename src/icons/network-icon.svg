@@ -1,0 +1,45 @@
+<svg
+  viewBox='0 0 70 70'
+  fill='none'
+  xmlns='http://www.w3.org/2000/svg'
+>
+  <circle
+    cx='20.181'
+    cy='20.1542'
+    r='6.71763'
+    fill='none'
+    stroke='currentColor'
+    stroke-width='5.3741'></circle>
+  <circle
+    cx='49.7387'
+    cy='30.9022'
+    r='6.71763'
+    fill='none'
+    stroke='currentColor'
+    stroke-width='5.3741'></circle>
+  <circle
+    cx='25.5551'
+    cy='49.7118'
+    r='6.71763'
+    fill='none'
+    stroke='currentColor'
+    stroke-width='5.3741'></circle>
+  <path
+    d='M27.5703 23.5132L43.0209 28.2155'
+    stroke='currentColor'
+    stroke-width='5.3741'
+    stroke-linecap='round'
+    stroke-linejoin='round'></path>
+  <path
+    d='M32.9443 47.0244L45.7078 36.948'
+    stroke='currentColor'
+    stroke-width='5.3741'
+    stroke-linecap='round'
+    stroke-linejoin='round'></path>
+  <path
+    d='M23.54 42.9941L21.5248 26.8718'
+    stroke='currentColor'
+    stroke-width='5.3741'
+    stroke-linecap='round'
+    stroke-linejoin='round'></path>
+</svg>

@@ -1,0 +1,16 @@
+---
+import HomepageHero from './homepage/HomepageHero.astro';
+import Default from '@astrojs/starlight/components/Hero.astro';
+
+const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+---
+
+{
+  isHomepage ? (
+    <HomepageHero />
+  ) : (
+    <Default>
+      <slot />
+    </Default>
+  )
+}

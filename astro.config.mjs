@@ -69,6 +69,11 @@ export default defineConfig({
         },
       ],
       components: {
+        Footer: './src/components/Footer.astro',
+        Header: './src/components/Header.astro',
+        Hero: './src/components/Hero.astro',
+        SiteTitle: './src/components/SiteTitle.astro',
+        SocialIcons: './src/components/SocialIcons.astro',
         ThemeProvider: './src/components/CustomThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',
       },
@@ -80,6 +85,8 @@ export default defineConfig({
       },
       social: {
         github: 'https://github.com/algorandfoundation/devportal',
+        'x.com': 'https://twitter.com/Algorand/',
+        youtube: 'https://www.youtube.com/algorand/',
       },
       favicon: '/favicon.png',
       customCss: ['/src/styles/global.css'],

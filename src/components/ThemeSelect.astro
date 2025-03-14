@@ -1,22 +1,42 @@
 ---
 import crypto from 'node:crypto';
 
+interface Props {
+  classList?: string;
+}
+
+const { classList } = Astro.props;
+
 const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`;
+const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
 ---
 
 <starlight-rapide-theme-select>
   <button
     aria-label='Toggle Theme'
     aria-live='polite'
-    class='sl-flex'
+    class:list={['sl-flex', classList]}
     title='Toggle Theme'
   >
-    <svg aria-hidden='true' height='16' viewBox='0 0 24 24' width='16'>
+    <svg
+      aria-hidden='true'
+      height={isHomepage ? '38' : '16'}
+      viewBox='0 0 24 24'
+      width={isHomepage ? '38' : '16'}
+    >
       <mask class='moon' id={id}>
         <rect x='0' y='0' width='100%' height='100%' fill='white'></rect>
-        <circle cx='24' cy='10' r='6' fill='black'></circle>
+        <circle cx='26' cy='10' r='6' fill='black'></circle>
       </mask>
-      <circle class='sun' cx='12' cy='12' r='6' mask={`url(#${id})`}></circle>
+      <circle
+        class='sun'
+        cx='12'
+        cy='12'
+        r='5.75'
+        stroke='currentColor'
+        stroke-width='2'
+        fill='none'
+        mask={`url(#${id})`}></circle>
       <g class='sun-beams' stroke='currentColor'>
         <line x1='12' y1='1' x2='12' y2='3'></line>
         <line x1='12' y1='21' x2='12' y2='23'></line>
@@ -57,38 +77,64 @@ const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`;
     transform-origin: center;
   }
 
-  svg :is(.moon, .sun) {
+  svg :is(.moon) {
     fill: var(--sl-color-gray-2);
   }
 
   svg .sun-beams {
-    stroke: var(--sl-color-gray-2);
+    stroke: currentColor;
     stroke-width: 2px;
   }
 
-  button:is(:hover, :focus-visible) svg :is(.moon, .sun) {
+  :global([data-theme='light'])
+    button:is(:hover, :focus-visible)
+    svg
+    :is(.sun) {
     fill: var(--sl-color-accent-high);
   }
 
-  button:is(:hover, :focus-visible) svg .sun-beams {
+  button:is(:hover, :focus-visible) svg :is(.sun-beams, .sun) {
     stroke: var(--sl-color-accent-high);
   }
 
-  :global([data-theme='dark']) svg .sun {
-    transform: scale(1.75);
+  :global([data-theme='light']) svg .sun {
+    transform: scale(1.75) rotate(-20deg);
+    stroke-width: 0;
+    fill: currentColor;
   }
 
-  :global([data-theme='dark']) svg .sun-beams {
+  :global([data-theme='light']) svg .sun-beams {
     opacity: 0;
   }
 
-  :global([data-theme='dark']) svg .moon circle {
+  :global([data-theme='light']) svg .moon circle {
     transform: translateX(-7px);
   }
 
   @supports (cx: 1) {
-    :global([data-theme='dark']) svg .moon circle {
+    :global([data-theme='light']) svg .moon circle {
       cx: 17;
+      transform: translateX(0);
+    }
+  }
+
+  :global([data-theme='dark']) svg .sun {
+    transform: none !important;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  :global([data-theme='dark']) svg .sun-beams {
+    opacity: 1;
+  }
+
+  :global([data-theme='dark']) svg .moon circle {
+    transform: translateX(0px);
+  }
+
+  @supports (cx: 1) {
+    :global([data-theme='dark']) svg .moon circle {
+      cx: 26;
       transform: translateX(0);
     }
   }
@@ -118,8 +164,30 @@ const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`;
       }
     }
 
+    :global([data-theme='light']) svg .sun {
+      transform: scale(1.75) rotate(-20deg);
+      transition-duration: calc(
+        var(--sl-rapide-theme-select-animation-duration) / 2
+      );
+      transition-timing-function: ease;
+    }
+
+    :global([data-theme='light']) svg .sun-beams {
+      transform: rotateZ(-25deg);
+      transition-duration: calc(
+        var(--sl-rapide-theme-select-animation-duration) / 4
+      );
+    }
+
+    :global([data-theme='light']) svg .moon circle {
+      transition-delay: calc(
+        var(--sl-rapide-theme-select-animation-duration) / 4
+      );
+      transition-duration: var(--sl-rapide-theme-select-animation-duration);
+    }
+
     :global([data-theme='dark']) svg .sun {
-      transform: scale(1.75);
+      transform: none !important;
       transition-duration: calc(
         var(--sl-rapide-theme-select-animation-duration) / 2
       );
@@ -127,7 +195,7 @@ const id = `moon-mask-${crypto.randomBytes(4).toString('hex')}`;
     }
 
     :global([data-theme='dark']) svg .sun-beams {
-      transform: rotateZ(-25deg);
+      transform: none !important;
       transition-duration: calc(
         var(--sl-rapide-theme-select-animation-duration) / 4
       );

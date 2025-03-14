@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 @plugin '@astrojs/starlight-tailwind';
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
   --text-xxs: 0.625rem;
@@ -33,6 +34,21 @@
   --color-code-dark-text: #ffffff;
   --color-code-dark-keyword: #c678dd;
   --color-code-dark-string: #98c379;
+
+  --color-algo-teal-100: #e7faf9;
+  --color-algo-teal-200: #d1f4f4;
+  --color-algo-teal-300: #b9efee;
+  --color-algo-teal-400: #74dfdd;
+  --color-algo-teal-500: #45d5d1;
+  --color-algo-teal-600: #17cac6;
+  --color-algo-teal-700: #5cdad7;
+
+  --color-algo-lavender-100: #e9e9fd;
+  --color-algo-lavender-200: #8080f3;
+  --color-algo-lavender-300: #4444ed;
+  --color-algo-lavender-400: #2d2df1;
+
+  --color-algo-navy: #001324;
 }
 
 /*
@@ -187,14 +203,39 @@ header.header {
   /* --sl-color-banner-text: #dfe1e5; */
 }
 
-/* :root[data-theme='light'] .sl-markdown-content a {
-  color: #17cac6 !important;
+html:has(.homepage-hero)[data-theme='light'] {
+  --sl-color-bg: #ffffff;
+  --sl-color-bg-nav: #ffffff;
 }
 
-:root[data-theme='light'] .sl-markdown-content a:hover {
-  color: #c0c2c7 !important;
-} */
+html:has(.homepage-hero)[data-theme='dark'] {
+  --sl-color-bg: #001324;
+  --sl-color-bg-nav: #001324;
+}
 
-/* :root .sl-markdown-content a {
-  color: #17cac6 !important;
-} */
+html:has(.homepage-hero) {
+  main,
+  .content-panel {
+    padding: 0 !important;
+  }
+
+  header {
+    @apply py-4! lg:py-[25px]! px-0! h-auto!;
+  }
+
+  site-search button[data-open-modal] {
+    width: unset !important;
+    max-width: unset !important;
+    border: unset !important;
+    border-radius: unset !important;
+    display: block !important;
+    background-color: transparent !important;
+    padding: unset !important;
+
+    @apply text-algo-lavender-400! dark:text-algo-teal-700! text-[20px]! h-[40px]! md:text-[34px]! md:h-[48px]!;
+
+    .sl-hidden {
+      display: none !important;
+    }
+  }
+}

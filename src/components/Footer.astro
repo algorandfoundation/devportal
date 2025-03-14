@@ -1,0 +1,57 @@
+---
+import SiteTitle from './SiteTitle.astro';
+import SocialIcons from './SocialIcons.astro';
+import Default from '@astrojs/starlight/components/Footer.astro';
+
+const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+
+const footerData = {
+  links: [
+    {
+      label: 'Privacy Policy',
+      url: '/',
+    },
+    {
+      label: 'Disclaimer',
+      url: '/',
+    },
+  ],
+  copyright:
+    '© 2024 The Algorand Foundation Ltd is Incorporated in the Republic of Singapore',
+};
+---
+
+{
+  isHomepage ? (
+    <footer class='bg-algo-lavender-300 dark:bg-algo-teal-200 text-white! dark:text-algo-navy! rounded-t-[21px] mt-10! lg:mt-[140px]!'>
+      <div class='lg:flex lg:justify-between lg:items-end gap-x-10 max-w-(--breakpoint-2xl) mx-auto pb-[92px] pt-[74px] px-4 md:px-9 text-center lg:text-left'>
+        <div class='w-full max-w-[200px] lg:max-w-[366px] mx-auto! lg:mx-0'>
+          <SiteTitle {...Astro.props} isFooter={true} />
+        </div>
+        <div class='lg:grid lg:grid-flow-col lg:gap-x-[60px] max-w-[325px] lg:max-w-[576px] mt-9! lg:mt-0! mx-auto!'>
+          <div>
+            {footerData.links.map(link => (
+              <a
+                href={link.url}
+                target='_blank'
+                class='block text-inherit! no-underline text-md lg:text-lg font-sans font-medium'
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <p class='text-md lg:text-lg font-sans font-medium leading-[1.8] mt-0!'>
+            {footerData.copyright}
+          </p>
+        </div>
+        <div class='homepage-social-icons flex gap-x-[30px] justify-center lg:justify-start mt-9! lg:mt-0! text-white! dark:text-algo-navy!'>
+          <SocialIcons {...Astro.props} size='25px' />
+        </div>
+      </div>
+    </footer>
+  ) : (
+    <Default>
+      <slot />
+    </Default>
+  )
+}

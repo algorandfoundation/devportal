@@ -1,14 +1,12 @@
 ---
 import config from 'virtual:starlight/user-config';
 
-import type { Props } from '@astrojs/starlight/props';
 import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
 import Search from '@astrojs/starlight/components/Search.astro';
-import SiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
-import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
+import SiteTitle from './SiteTitle.astro';
+import SocialIcons from './SocialIcons.astro';
 import ThemeSelect from './ThemeSelect.astro';
-import DropDown from './DropDown.astro';
-import { type Group } from '../utils/navigation.ts';
+import Default from '@astrojs/starlight/components/Header.astro';
 
 /**
  * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
@@ -16,49 +14,36 @@ import { type Group } from '../utils/navigation.ts';
 const shouldRenderSearch =
   config.pagefind ||
   config.components.Search !== '@astrojs/starlight/components/Search.astro';
+const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
 ---
 
-<div class='header sl-flex'>
-  <div class='title-wrapper sl-flex'>
-    <SiteTitle {...Astro.props} />
-  </div>
-  <div class='sl-flex'>
-    {shouldRenderSearch && <Search {...Astro.props} />}
-    <nav class='sl-hidden lg:sl-flex'>
-      <DropDown
-        label='Concepts'
-        items={(Astro.props.sidebar[0] as Group).entries}
-      />
-      <DropDown
-        label='Protocol'
-        items={(Astro.props.sidebar[1] as Group).entries}
-      />
-      <DropDown
-        label='Running a Node'
-        items={(Astro.props.sidebar[2] as Group).entries}
-      />
-      <DropDown
-        label='How-To'
-        items={(Astro.props.sidebar[3] as Group).entries}
-      />
-      <DropDown
-        label='Tutorial'
-        items={(Astro.props.sidebar[4] as Group).entries}
-      />
-      <DropDown
-        label='Reference'
-        items={(Astro.props.sidebar[5] as Group).entries}
-      />
-    </nav>
-  </div>
-  <div class='sl-hidden md:sl-flex right-group'>
-    <div class='sl-flex social-icons'>
-      <SocialIcons {...Astro.props} />
+{
+  isHomepage ? (
+    <div class='header sl-flex mx-auto px-4 md:px-9 gap-0!'>
+      <div class='title-wrapper sl-flex h-[42px] lg:h-[67px]'>
+        <SiteTitle />
+      </div>
+      <div class='sl-flex justify-end'>
+        {shouldRenderSearch && <Search {...Astro.props} />}
+      </div>
+      <div class='sl-hidden md:sl-flex right-group gap-x-9! ml-9!'>
+        <div class='sl-flex social-icons text-algo-lavender-400 dark:text-algo-teal-700'>
+          <SocialIcons
+            {...Astro.props}
+            singleDisplayedSocial='github'
+            size='34px'
+          />
+        </div>
+        <ThemeSelect classList='text-algo-lavender-200 dark:text-algo-teal-300 p-0! m-0!' />
+        <LanguageSelect {...Astro.props} />
+      </div>
     </div>
-    <ThemeSelect {...Astro.props} />
-    <LanguageSelect {...Astro.props} />
-  </div>
-</div>
+  ) : (
+    <Default>
+      <slot />
+    </Default>
+  )
+}
 
 <style>
   .header {
@@ -77,11 +62,6 @@ const shouldRenderSearch =
   .social-icons {
     gap: 1rem;
     align-items: center;
-  }
-  .social-icons::after {
-    content: '';
-    height: 2rem;
-    border-inline-end: 1px solid var(--sl-color-gray-5);
   }
 
   @media (min-width: 50rem) {

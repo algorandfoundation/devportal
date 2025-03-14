@@ -1,0 +1,47 @@
+---
+import CtaButton from './CtaButton.astro';
+
+const featureCtaData = {
+  highlight: 'Lorem ipsum dolor sit',
+  heading: 'Lorem ipsum dolor sit amet, consectetur adip',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur.',
+  cta: {
+    label: 'Get started',
+    url: '/nodes/overview/',
+  },
+};
+---
+
+<section
+  class='feature-cta bg-algo-lavender-100 dark:bg-algo-teal-500 bg-[url(/grid-lavender.png)] dark:bg-[url(/grid-white.png)] bg-repeat bg-cover bg-center rounded-[21px] my-10! lg:my-[140px]!'
+>
+  <div
+    class:list={[
+      'max-w-(--breakpoint-2xl) md:flex md:justify-between md:items-center text-algo-lavender-400 dark:text-algo-navy',
+      'mx-auto! py-[60px] lg:py-[115px] px-4 md:px-9 gap-x-[148px] text-center md:text-left',
+    ]}
+  >
+    <div class='max-w-[805px]'>
+      <div class='font-bold lg:text-2xl lg:leading-none'>
+        {featureCtaData.highlight}
+      </div>
+      <h2
+        class='text-algo-lavender-400! dark:text-algo-navy! lg:text-[52px]! mt-[10px]! leading-none!'
+      >
+        {featureCtaData.heading}
+      </h2>
+      <p class='font-sans lg:mt-[18px] lg:text-[22px] lg:leading-[1.5]'>
+        {featureCtaData.description}
+      </p>
+    </div>
+
+    <div class='shrink-0 mt-0!'>
+      <CtaButton
+        label={featureCtaData.cta.label}
+        url={featureCtaData.cta.url}
+        alt={true}
+      />
+    </div>
+  </div>
+</section>

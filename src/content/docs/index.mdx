@@ -2,6 +2,8 @@
 title: Home
 description: Algorand developer documentation, SDKs, REST APIs, CLI tools, code examples, how-tos, and tutorials for building blockchain wallets and applications.
 template: splash
+prev: false
+next: false
 hero:
   title: Algorand Developer Portal
   tagline: Everything you need to build solutions powered by the Algorand blockchain network. Currently a work in progress!
@@ -10,8 +12,16 @@ hero:
     light: /src/assets/images/algorand-logomark-blue-RGB.png
     dark: /src/assets/images/algorand-logomark-teal-RGB.png
   actions:
-    - text: Get Started
+    - text: Get started
       link: /nodes/overview
       icon: right-arrow
       variant: primary
 ---
+
+import FeatureCta from '/src/components/homepage/FeatureCta.astro';
+import IconCardGrid from '/src/components/homepage/IconCardGrid.astro';
+import FeatureDetailCta from '/src/components/homepage/FeatureDetailCta.astro';
+
+<FeatureCta />
+<IconCardGrid />
+<FeatureDetailCta />
