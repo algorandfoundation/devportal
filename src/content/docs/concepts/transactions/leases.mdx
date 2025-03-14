@@ -1,3 +1,92 @@
 ---
 title: Leases
 ---
+
+import { Code } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import RemoteCode from '/src/components/RemoteCode.astro';
+
+Leases can be used to provide security for exclusive transaction execution favoring a long time preference (such as recurring payments), to mitigate fee variability, and to enable long-running smart contracts. More technically, a confirmed transaction containing a _Lease_ value ([32]byte) will persist the `{ Sender : Lease }` pair on the validation node until its _LastValid_ round expires. This creates a “lock” preventing any future transaction from using the same `{ Sender : Lease }` pair until expiration.
+
+The typical one-time _payment_ or _asset_ “send” transaction is short-lived and may not necessarily benefit from including a _Lease_ value, but failing to define one within certain smart contract designs may leave an account vulnerable to a denial-of-service attack. Let’s take a look at why you may want to use the _Lease_ field and when you definitely should.
+
+The _Lease_ field is a powerful tool in securing your account from replay attacks and enables smart contracts for periodic recurring transactions.
+
+:::note
+A quick review of Algorand transactions and smart contract validation. Every transaction includes a _Header_ which defines the transaction _Type_ and includes both required and optional fields used during validation. Two required fields _FirstValid_ and _LastValid_ define a range in which the transaction may be validated by the network (at most 1000 rounds), else discarded. On average, this equates to a “validity window” of at most about 70 minutes on MainNet. Many smart contract scenarios include a “target” validity window calculation and also add a specific _Lease_ value within their validation logic. Combined, this enables smart contracts for periodic, recurring transactions for payments, key management and other scenarios.
+:::
+
+## Step by step
+
+Let's use a famous and simple example, having **ALICE** sending Algo to **BOB**, This is an example of a short-lived transaction, and unlikely to benefit from assigning a _Lease_ during normal network conditions.
+
+```bash
+$ goal clerk send –from $ALICE –to $BOB –amount $AMOUNT
+```
+
+Under normal network conditions, this transaction will be confirmed in the next round. Bob gets his money from Alice and there are no further concerns.
+
+However, now let’s assume the network is congested, fees are higher than normal and Alice desires to minimize her fee spend while ensuring only a single payment transaction to Bob is confirmed by the network. Alice may construct a series of transactions to Bob, each defining identical _Lease_, _FirstValid_ and _LastValid_ values but increasing _Fee_ amounts, then broadcast them to the network.
+
+```bash
+# Define transaction fields
+$ LEASE_VALUE=$(echo "Lease value (at most 32-bytes)" | xxd -p | base64)
+$ FIRST_VALID=$(goal node status | grep "Last committed block:" | awk '{ print $4 }')
+$ VALID_ROUNDS=1000
+$ LAST_VALID=$(($FIRST_VALID+$VALID_ROUNDS))
+$ FEE=1000
+
+# Create the initial signed transaction and write it out to a file
+$ goal clerk send –-from $ALICE –-to $BOB –-amount $AMOUNT \
+                  –-lease $LEASE_VALUE --firstvalid $FIRST_VALID –-lastvalid $LAST_VALID \
+                  –-fee $FEE –-out $FEE.stxn --sign
+```
+
+Above, Alice defined values to use within her transactions. The `$LEASE_VALUE` must be base64 encoded and not exceed 32-bytes (commonly populated with a hash value). The `$FIRST_VALID` value is obtained from the network and `$VALID_ROUNDS` (set to maximum here) is used to calculate `$LAST_VALID`. Initially `$FEE` is set to the minimum and will be the only value modified in subsequent transactions.
+
+Alice now broadcasts the initial transaction with `goal clerk rawsend –-filename 1000.stxn` but due to network congestion and high fees, `goal` will continue awaiting confirmation until `$LAST_VALID`. During the validation window Alice may construct additional nearly identical transactions with _only_ higher fees and broadcast each one concurrently.
+
+```bash
+# Redefine ONLY the FEE value
+$ FEE=$(($FEE+1000))
+
+# Broadcast additional signed transaction
+$ goal clerk send –-from $ALICE –-to $BOB –-amount $AMOUNT \
+                  –-lease $LEASE_VALUE --firstvalid $FIRST_VALID –-lastvalid $LAST_VALID \
+                  –-fee $FEE
+```
+
+Alice will continue to increase the `$FEE` value with each subsequent transaction. At some point, one of the transactions will be approved, likely the one with the highest fee at that time, and the “lock” is now set for `{ $ALICE : $LEASE_VALUE }` until `$LAST_VALID`. Alice is assured that none of her previously submitted pending transaction can be validated. Bob is paid just one time.
+
+## Potential Pitfalls
+
+That was a rather simple scenario and unlikely during normal network conditions. Next, let’s uncover some security concerns Alice needs to guard against. Once Alice broadcasts her initial transaction, she must ensure all subsequent transactions utilize the exact same values for _FirstValid_, _LastValid_ and _Lease_. Notice in the second transaction only the _Fee_ is incremented, ensuring the other values remain static. If Alice executes the initial code block twice, the `$FIRST_VALID` value will be updated by querying the network presently, thus extending the validation window for `$LEASE_VALUE` to be evaluated.
+
+Similarly, if the `$LEASE_VALUE` is changed within a static validation window, multiple transactions may be confirmed. Remember, the “lock” is a mutual exclusion on `{ Sender : Lease }`; changing either creates a new lock.
+
+After the validation window expires, Alice is free to reuse the `$LEASE_VALUE` in any new transaction. This is a common practice for recurring payments.
+
+## Code implementation
+
+Following you will find an example of implementing leases using Algokit Utils in Python and Typescript
+
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <RemoteCode
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/algokit_utils_py_examples/transactions/leases.py'
+      snippet='LEASES'
+      lang='py'
+      title='Leases'
+      frame='none'
+    />
+  </TabItem>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <RemoteCode
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/typescript-examples/algokit-utils-ts/transactions/leases.ts'
+      snippet='LEASE'
+      lang='ts'
+      title='Leases'
+      frame='none'
+    />
+  </TabItem>
+</Tabs>
