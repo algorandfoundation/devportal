@@ -133,7 +133,6 @@ header.header {
   --sl-color-gray-7: #f6f6f6;
   --sl-color-black: #f6f6f6;
   --sl-color-banner-bg: #2d2df1 !important;
-  /* --sl-color-banner-text: #dfe1e5; */
 }
 
 /* :root[data-theme='light'] .sl-markdown-content a {
