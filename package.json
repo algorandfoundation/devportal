@@ -8,6 +8,7 @@
     "predev": "pnpm run generate-diagrams",
     "prebuild": "pnpm run generate-diagrams",
     "build": "pnpm run import:all && astro check && astro build",
+    "lint:fix": "eslint . && prettier -c ./src/** --write && astro check",
     "lint": "eslint . && prettier -c ./src/** && astro check",
     "preview": "astro preview",
     "astro": "astro",

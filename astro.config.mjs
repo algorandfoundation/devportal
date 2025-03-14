@@ -312,6 +312,17 @@ export default defineConfig({
                   ],
                 },
                 {
+                  label: 'Cryptographic Tools',
+                  collapsed: true,
+                  items: [
+                    {
+                      label: 'Overview',
+                      link: 'concepts/smart-contracts/cryptographic-tools/overview',
+                    },
+
+                  ],
+                },
+                {
                   label: 'Development Lifecycle',
                   link: 'concepts/smart-contracts/lifecycle',
                 },

@@ -1,0 +1,96 @@
+---
+title: Overview
+description: Overview of the Cryptographic Tools section, for producing applications utilizing cryptography features in the AVM.
+---
+
+## Introduction
+
+The Algorand Virtual Machine (AVM) contains opcodes allowing for use-cases utilizing cryptography. This section aims to elucidate for the more experienced smart contract developer on how to make use of those opcodes to create powerful cryptographic protocols and applications.
+
+# Opcodes
+
+While the AVM is Turing-Complete and can compute any kind of arbitrary computation, given enough Algo to pay for fees and blocks to spread the computation over, certain commonly used operations have been added directly into the node software and are exposed for direct usage.
+
+:::note
+Opcodes flagged with "vFuture" have been implemented in the node software in draft, but have not been pushed out to production.
+:::
+
+Each transaction interacting with a stateful smart contract is allocated a budget of 700 units. Given that a group transaction can contain 16 transactions, that creates a limit of 11200 opcode budget at the first level of nesting.
+
+Stateless applications, on the other hand, have a budget of 20000, owing to not being able to access storage.
+
+While a stateless application cannot enter state, it can be called in a group that also involves a call to a stateful smart contract. Certain computation can be outsourced to the stateless application, while the stateful application verifies that it has been provided with the correct input arguments. Due to the nature of Algorand's atomic group transactions, if one of them were to fail the entire thing would fail.
+
+It is also possible to "smear" computation across blocks, storing intermediate steps in storage (Global or Box).
+
+## Hash Functions
+
+A hash function maps data of arbitrary size to fixed-size values. The following hash functions are available:
+
+- `sha256`
+- `keccak256`
+- `sha512_256`
+- `mimc`
+- `vFuture: sumhash512`
+
+Note that `sha512_256` is _not_ the same as `sha512(x) % 2^256`.
+
+MiMC is a ZK-friendly hash function enjoying popularity for ZK-SNARK applications. Note that it is not designed to be used in general applications, but rather in ZK-related applications - hence the increased cost compared to the other hash functions.
+
+MiMC will result in a minimal circuit size compared to SHA-2 or SHA-3 hash functions, making generating ZK-SNARKs cheaper. It also comes in two flavors: BN254 and BLS12_381.
+
+SumHash512 strives to strike a balance between ZK and non-ZK friendliness. It is currently seeing use in State Proofs, namely in constructing the VoterCommitment, a Merkle tree commitment committing to the top stakers.
+
+## Signature Schemes
+
+Signature schemes allow use to do and verify digital signatures, a cornerstone of cryptography. The following opcodes are available:
+
+- Ed25519 (EdDSA)
+  - `ed25519verify`
+  - `ed25519verify_bare`
+- Secp256k1/r1 (ECDSA)
+  - `ecdsa_verify`
+  - `ecdsa_pk_decompress`
+  - `ecdsa_pk_recover`
+- vFuture: `falcon_verify`
+
+`ed25519verify`requires passing in a hash of the smart contract. Algorand's account structure and consensus mechanism is based off of Ed25519, and as such it is generally dangerous to have users sign off on aribtrary data with their Algorand addresses, given that a malicious entity could slip in an actual transaction (prefixed by e.g. `MX`). The `ed25519verify` was devised to force the user of a smart contract to sign off on a payload prefixed by a concatenation of `ProgData` and the actual hash of the smart contract code.
+
+Later on the `ed25519verify_bare` opcode was introduced, removing the restriction on the payload and making it possible to verify all signatures.
+
+ECDSA comes in two flavors: Secp256k1 and Secp256r1. The former is used in some other blockchains like Bitcoin and Ethereum. The latter is also referred to as P256 or Prime256v1 and it is commonly used in passkeys.
+
+FALCON is based off of lattice-based cryptography and is notably one of the NIST approved post-quantum secure (to the best of our knowledge) signature schemes. Like SumHash512, it is also currently being used in State Proofs.
+
+## Elliptic Curve Operations
+
+Some of the underlying cryptographic primitives involved in ECC (elliptic curve cryptography) have been exposed for the BN254 and BLS12_381 curves. These two curves are notably pairing friendly.
+
+- `ec_add`
+- `ec_scalar_mul`
+- `ec_multi_scalar_mul`
+- `ec_subrgroup_check`
+- `ec_map_to`
+- `ec_pairing_check`
+
+Note that the BN254 curve is also known under `alt_bn128` or `bn256`. It is _NOT_ to be confused with `Fp254BNb`.
+
+It is defined as:
+
+```
+Y^2 = X^3 + 3
+over the field prime field
+p = 21888242871839275222246405745257275088696311157297823662689037894645226208583
+and curve order/scalar field:
+r = 21888242871839275222246405745257275088548364400416034343698204186575808495617
+```
+
+BLS12_381 is more expensive than BN254 and requires more storage to store, but it comes with a higher number of bits of security.
+
+## Verifiable Randomness
+
+VRF (Verifiable Random Function) allows someone with a private key to generate a random value against a message that can be verifiably proven using a public key. VRFs are at the core of Algorand and its consensus mechanism, Pure-Proof-of-Stake.
+
+- `vrf_verify`
+
+This VRF function is based off of the IETF Internet draft `draft-irtf-cfrg-vrf-03` and corresponds to what is currently in the node software. Note that it is not quite the same as the final version the IETF ended up adopting (RFC-9381), which was finalized after Algorand had entered production.
