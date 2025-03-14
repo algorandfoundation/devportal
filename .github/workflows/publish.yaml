@@ -71,8 +71,10 @@ jobs:
         id: pr_info
         if: github.event_name == 'pull_request'
         run: |
-          echo "::set-output name=pr_id::${{ github.event.pull_request.number }}"
-          echo "::set-output name=pr_title::${{ github.event.pull_request.title }}"
+          echo "pr_id=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          echo "pr_title<<EOF" >> $GITHUB_OUTPUT
+          echo "${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       # Step 10: Post the Preview URL, PR ID, and PR Title to Slack
       - name: Post to Slack
