@@ -1,3 +1,153 @@
 ---
 title: Signing transactions
 ---
+
+import { Code } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import RemoteCode from '/src/components/RemoteCode.astro';
+
+This section contains instructions and the procedure on how to authorize transactions in the Algorand Network.
+
+Before a transaction is sent to the network, it must first be authorized by the sender.
+
+There are different transactions signatures to be described in the following paragraphs:
+
+- [Single Signatures](#single-signatures)
+- [Multisignatures](#multisignatures)
+
+## Single Signatures
+
+A single signature corresponds to a signature from the private key of an [Algorand public/private key pair](/FUTURE_LINK).
+
+This is an example of a transaction signed by an Algorand private key displayed with `goal clerk inspect` command:
+
+```json
+{
+  "sig": "ynA5Hmq+qtMhRVx63pTO2RpDrYiY1wzF/9Rnnlms6NvEQ1ezJI/Ir9nPAT6+u+K8BQ32pplVrj5NTEMZQqy9Dw==",
+  "txn": {
+    "amt": 10000000,
+    "fee": 1000,
+    "fv": 4694301,
+    "gen": "testnet-v1.0",
+    "gh": "SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+    "lv": 4695301,
+    "rcv": "QC7XT7QU7X6IHNRJZBR67RBMKCAPH67PCSX4LYH4QKVSQ7DQZ32PG5HSVQ",
+    "snd": "EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4",
+    "type": "pay"
+  }
+}
+```
+
+This transaction sends 10 Algo from `"EW64GC..."` to `"QC7XT7..."` on TestNet. The transaction was signed with the private key that corresponds to the `"snd"` address of `"EW64GC..."`. The base64 encoded signature is shown as the value of the `"sig"` field.
+
+### How to
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <RemoteCode
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/typescript-examples/algokit-utils-ts/transactions/signing-transactions.ts'
+      snippet='SIGN_TRANSACTION'
+      lang='ts'
+      title='Signing-Transactions'
+      frame='none'
+    />
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
+    <RemoteCode
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/algokit_utils_py_examples/transactions/signing_transactions.py'
+      snippet='SIGNING_TRANSACTIONS'
+      lang='py'
+      title='Signing-Transactions'
+      frame='none'
+    />
+  </TabItem>
+</Tabs>
+
+## Multisignatures
+
+When the [sender](/concepts/transactions/transactions#sender) of a transaction is the address of a [multisignature account](./FUTURE_LINK) then authorization requires a subset of signatures, _equal to or greater than the threshold value_, from the associated private keys of the addresses that multisignature account is composed of. See [Multisignature Accounts](./FUTURE_LINK) for details on how to configure a multisignature account.
+
+:::caution
+Upon signing, either the signing agent or the transaction needs to know the composition of the multisignature account, i.e. the ordered addresses, threshold, and version.
+:::
+Here is what the same transaction above would look like if sent from a 2/3 multisig account.
+
+```json
+{
+  "msig": {
+    "subsig": [
+      {
+        "pk": "SYGHTA2DR5DYFWJE6D4T34P4AWGCG7JTNMY4VI6EDUVRMX7NG4KTA2WMDA"
+      },
+      {
+        "pk": "VBDMPQACQCH5M6SBXKQXRWQIL7QSR4FH2UI6EYI4RCJSB2T2ZYF2JDHZ2Q"
+      },
+      {
+        "pk": "W3KONPXCGFNUGXGDCOCQYVD64KZOLUMHZ7BNM2ZBK5FSSARRDEXINLYHPI"
+      }
+    ],
+    "thr": 2,
+    "v": 1
+  },
+  "txn": {
+    "amt": 10000000,
+    "fee": 1000,
+    "fv": 4694301,
+    "gen": "testnet-v1.0",
+    "gh": "SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+    "lv": 4695301,
+    "rcv": "QC7XT7QU7X6IHNRJZBR67RBMKCAPH67PCSX4LYH4QKVSQ7DQZ32PG5HSVQ",
+    "snd": "GQ3QPLJL4VKVGQCHPXT5UZTNZIJAGVJPXUHCJLRWQMFRVL4REVW7LJ3FGY",
+    "type": "pay"
+  }
+}
+```
+
+The difference between this transaction and the one above is the form of its signature component. For multisignature accounts, an [`"msig"`](/concepts/transactions/transactions#msig) struct is added which contains the 3 public addresses (`"pk"`), the threshold value (`"thr"`) and the multisig version `"v"`. This transaction is still unsigned but the addition of the correct `"msig"` struct is confirmation that the transaction is "aware" of the fact that the sender is multisig and will have no trouble accepting sub-signatures from single keys even if the signing agent does not contain information about its multisignature properties.
+
+:::note
+Adding the `"msig"` template to make the transaction "aware" of its multisig sender is highly recommended, particularly in cases where the transaction is signed by multiple parties or offline. Without it, the signing agent would need to have its own knowledge of the multisignature account. For example, `goal` can sign a multisig transaction that does not contain an `"msig"` template _if_ the multisig address was created within its wallet. On signing, it will add the `"msig"` template.
+:::
+
+Sub-signatures can be added to the transaction one at a time, cumulatively, or merged together from multiple transactions. Here is the same transaction above, fully authorized:
+
+```json
+{
+  "msig": {
+    "subsig": [
+      {
+        "pk": "SYGHTA2DR5DYFWJE6D4T34P4AWGCG7JTNMY4VI6EDUVRMX7NG4KTA2WMDA",
+        "s": "xoQkPyyqCPEhodngmOTP2930Y2GgdmhU/YRQaxQXOwh775gyVSlb1NWn70KFRZvZU96cMtq6TXW+r4sK/lXBCQ=="
+      },
+      {
+        "pk": "VBDMPQACQCH5M6SBXKQXRWQIL7QSR4FH2UI6EYI4RCJSB2T2ZYF2JDHZ2Q"
+      },
+      {
+        "pk": "W3KONPXCGFNUGXGDCOCQYVD64KZOLUMHZ7BNM2ZBK5FSSARRDEXINLYHPI",
+        "s": "p1ynP9+LZSOZCBcrFwt5JZB2F+zqw3qpLMY5vJBN83A+55cXDYp5uz/0b+vC0VKEKw+j+bL2TzKSL6aTESlDDw=="
+      }
+    ],
+    "thr": 2,
+    "v": 1
+  },
+  "txn": {
+    "amt": 10000000,
+    "fee": 1000,
+    "fv": 4694301,
+    "gen": "testnet-v1.0",
+    "gh": "SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+    "lv": 4695301,
+    "rcv": "QC7XT7QU7X6IHNRJZBR67RBMKCAPH67PCSX4LYH4QKVSQ7DQZ32PG5HSVQ",
+    "snd": "GQ3QPLJL4VKVGQCHPXT5UZTNZIJAGVJPXUHCJLRWQMFRVL4REVW7LJ3FGY",
+    "type": "pay"
+  }
+}
+```
+
+The two signatures are added underneath their respective addresses. Since 2 meets the threshold, this transaction is now fully authorized and can be sent to the network.
+
+:::note
+Adding more sub-signatures than the threshold requires is unnecessary but perfectly valid.
+:::
+
+### How-To
