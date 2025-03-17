@@ -2603,7 +2603,7 @@ export default defineConfig({
               items: [
                 {
                   label: 'Overview',
-                  link: 'reference/rest-api/overview',
+                  link: 'reference/rest-api/output',
                 },
                 ...openAPISidebarGroups,
               ],
