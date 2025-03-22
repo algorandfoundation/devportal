@@ -4,35 +4,45 @@ title: Overview
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
 
-Algorand Smart Contracts (ASC1) are small programs that serve various functions on the blockchain and operate on layer-1. Smart contracts are separated into two main categories: Applications, and logic signatures.
-The type of contract that is written will determine when and how the logic of the program is evaluated. Both types of contracts can be written in [Python](/concepts/smart-contracts/languages/python) and [Typescript](/concepts/smart-contracts/languages/typescript), and then will be compiled to [Transaction Execution Approval Language [TEAL](/concepts/smart-contracts/languages/teal), which is an assembly-like language that is interpreted by the [Algorand Virtual Machine (AVM)](/concepts/smart-contracts/avm) running within an Algorand node.
+Algorand Smart Contracts (ASC1) are programs that serve various functions on the blockchain and operate on layer-1. Smart contracts are separated into two main categories: Applications and Logic Signatures.
+The type of contract will determine when and how the logic of the program is evaluated. Smart contracts can be written in either [Typescript](/concepts/smart-contracts/languages/typescript) or [Python](/concepts/smart-contracts/languages/python). These high-level languages are then compiled to [Transaction Execution Approval Language (TEAL)](/concepts/smart-contracts/languages/teal). TEAL is an assembly-like language that is interpreted by the [Algorand Virtual Machine (AVM)](/concepts/smart-contracts/avm) running within an Algorand node.
 
 ## Applications
 
-This type of smart contracts once deployed, are remotely callable from any node in the Algorand blockchain. Once deployed, the on-chain instantiation of the contract is referred to as an Application and assigned an Application ID. These applications are triggered by a specific type of transaction called an Application Call transaction. These on-chain applications handle the primary decentralized logic of a dApp.
+When you deploy a smart contract to the Algorand blockchain, it becomes an Application with a unique Application ID. These Applications can be interacted with through special transactions called Application Calls. Applications form the foundation of decentralized applications (dApps) by handling their core on-chain logic.
 
-- Applications can **modify state** associated with the application (global state) or a per application+account (local state) basis.
+- Applications can **modify state** associated with the application as global state or as local state for specific application and account pairs.
 - Applications can **access** on-chain values, such as account balances, asset configuration parameters, or the latest block time.
-- Applications can **execute transactions** as part of the execution of the logic. One type of transaction they can perform, as of AVM 1.1, is an Application Call transaction which allows one application to call another. This ability to call other applications enables composability between applications.
-- Applications have an associated **Application Account** that can hold Algos or ASAs balances and can be used as on-chain escrow accounts.
+- Applications can **execute inner transactions** during their execution, allowing one application to call another. This enables composability between applications.
+- Each Application has an **Application Account** which can hold Algo and Algorand Standard Assets (ASAs), making it useful as an on-chain escrow.
 
 To provide a standard method for exposing an API and encoding/decoding data types from application call transactions, the [ABI](/concepts/smart-contracts/abi) should be used.
-For more information on Applications, see the [Application Page](/concepts/smart-contracts/apps). For more information the languages for building a smart contract see the Python Page, the Typescript Page or the TEAL page
 
-## Logic signatures
+<LinkCard
+  title='Learn more about Applications'
+  description='Learn how to build and deploy Algorand smart contracts'
+  href='/concepts/smart-contracts/apps'
+/>
 
-Logic signatures contain logic that is used to sign transactions, primarily for signature delegation. The logic of the Logic signature is submitted with a transaction. While the logic in the Logic signature is stored on the chain as part of resolving the transaction, the logic is not remotely callable. Any new transaction that relies on the same Logic signature would resubmit the logic. When the logic is submitted to a node the AVM evaluates the logic, where it either fails or succeeds. If a Logic signature’s logic fails when executed by the AVM, the associated transaction will not be executed.
+## Logic Signatures
 
-Logic signatures can be used in two different modes. When compiled Logic signatures produce an Algorand account that functions similar to any other account on the blockchain. These accounts can hold Algos or assets. These funds are only allowed to leave the account if a transaction occurs from the account that successfully executes the logic within the Logic signature. This is similar in functionality to a smart contract escrow, but the logic must be submitted for every transaction from the account. Logic signatures can also also be used to delegate some portion of authority to another account. In this case, an account can sign the Logic signature which can then be used at a later time to sign a transaction from the original signer’s account. This is referred to as account delegation.
+Logic Signatures are programs that validate transactions through custom rules and are primarily used for signature delegation. When submitting a transaction with a Logic Signature, the program code is included and evaluated by the Algorand Virtual Machine (AVM). The transaction only proceeds if the program successfully executes - if the program fails, the transaction is rejected.
 
-Once a transaction that is signed with a Logic signature, is submitted it is evaluated by an Algorand node using the Algorand Virtual Machine. These contracts only have access to a few global variables, some temporary scratch space, and the properties of the transaction(s) they are submitted with.
+Logic Signatures can be used in two ways. First, they can create specialized Algorand accounts that hold Algo or assets. These accounts only release funds when a transaction meets the conditions specified in the program. Second, they enable account delegation, where an account owner can define specific transaction rules that allow another account to act on their behalf.
 
-For more information on Logic signatures, see the [Logic signature documentation](/concepts/smart-contracts/logic-sigs).
+Each transaction using a Logic Signature is independently verified by an Algorand node using the AVM. These programs have limited access to global variables, temporary scratch space, and the properties of the transaction(s) they are validating.
+
+<LinkCard
+  title='Learn more about Logic Signatures'
+  description='Learn how to create and use Logic Signatures for transaction validation and account delegation'
+  href='/concepts/smart-contracts/logic-sigs'
+/>
 
 ## Writing Smart Contracts
 
-Writing smart contracts in Algorand Python or TealScript is designed to be as straightforward as possible. Using familiar Python or TealScript syntax, developers can write and deploy smart contracts efficiently without diving into the low-level assembly-like language TEAL (Transaction Execution Approval Language). Algorand Python and TealScript compile contracts for execution on the Algorand Virtual Machine (AVM) to TEAL, providing simplicity without sacrificing performance ￼.
+Algorand smart contracts are written in standard Python and TypeScript - known as Algorand Python and Algorand TypeScript in the ecosystem. These are not special variants or supersets, but rather standard code that compiles to TEAL. This means developers can use their existing knowledge, tools, and practices while building smart contracts. The direct compilation to TEAL for the Algorand Virtual Machine (AVM) provides an ideal balance of familiar development experience and blockchain performance.
 
 <Tabs syncKey='lang'>
   <TabItem label='Algorand TypeScript' icon='seti:typescript'>
@@ -65,13 +75,30 @@ Writing smart contracts in Algorand Python or TealScript is designed to be as st
   </TabItem>
 </Tabs>
 
-## Key concepts
+## Key Concepts
 
-- [Algorand Virtual Machine (AVM)](/concepts/smart-contracts/avm)
-  The runtime environment that executes TEAL code. Understanding AVM versions, opcodes, and constraints is crucial for advanced contract design.
-- [Inner Transactions](/concepts/smart-contracts/inner-txn)
-  Enable an application to submit sub-transactions on behalf of its account—creating or transferring assets, calling other applications, etc.
-- [Resource Usage / Opcodes](/concepts/smart-contracts/resource-usage)
-  Each opcode and AVM operation has a cost, tracked during execution. Exceeding cost limits leads to failure. This ensures transactions complete quickly, preventing denial-of-service.
-- [Constraints](/concepts/smart-contracts/costs-constraints)
-  Smart contract logic is limited by features like maximum TEAL program size, global/local state keys, box storage, etc. These constraints keep on-chain execution efficient and stable.
+Understanding these fundamental concepts is essential for developing effective smart contracts on Algorand.
+
+<LinkCard
+  title='Algorand Virtual Machine (AVM)'
+  description='The runtime environment that executes TEAL code. Understanding AVM versions, opcodes, and constraints is crucial for advanced contract design.'
+  href='/concepts/smart-contracts/avm'
+/>
+
+<LinkCard
+  title='Inner Transactions'
+  description='Enable an application to submit sub-transactions on behalf of its account—creating or transferring assets, calling other applications, etc.'
+  href='/concepts/smart-contracts/inner-txn'
+/>
+
+<LinkCard
+  title='Resource Usage / Opcodes'
+  description='Each opcode and AVM operation has a cost, tracked during execution. Exceeding cost limits leads to failure. This ensures transactions complete quickly, preventing denial-of-service.'
+  href='/concepts/smart-contracts/resource-usage'
+/>
+
+<LinkCard
+  title='Constraints'
+  description='Smart contract logic is limited by features like maximum TEAL program size, global/local state keys, box storage, etc. These constraints keep on-chain execution efficient and stable.'
+  href='/concepts/smart-contracts/costs-constraints'
+/>
