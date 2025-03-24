@@ -39,8 +39,9 @@ jobs:
 
       # Step 5: Install pnpm
       - name: Install pnpm
-        run: |
-          npm install -g pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.3
 
       # Step 6: Install dependencies using pnpm
       - name: Install dependencies

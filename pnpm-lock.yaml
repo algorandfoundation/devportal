@@ -112,8 +112,8 @@ importers:
         specifier: ^1.2.3
         version: 1.2.4(eslint@9.10.0(jiti@2.3.3))(typescript@5.5.2)
       pnpm:
-        specifier: ^9.0.0
-        version: 9.7.0
+        specifier: ^10.6.3
+        version: 10.6.5
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -2922,8 +2922,8 @@ packages:
   pkg-types@1.1.3:
     resolution: {integrity: sha512-+JrgthZG6m3ckicaOB74TwQ+tBWsFl3qVQg7mN8ulwSOElJ7gBhKzj2VkCPnZ4NlF6kEquYU+RIYNVAvzd54UA==}
 
-  pnpm@9.7.0:
-    resolution: {integrity: sha512-3AlDAVa0J/Xs/HmIiJnhw50taQ8AS+cOBSMLcssXPZaDlYdUXQlCm1WsPEKcgBtNw8DgAvZTgwpCD6LdTjz5zw==}
+  pnpm@10.6.5:
+    resolution: {integrity: sha512-zfko/KIIMs1Z7FOCZJK33CXcUk1DcLa0rb9lgD0y76psHIgUfArk6NV5psnuxxV1e1DU+jXuoXnYaOraTtBDrw==}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -7298,7 +7298,7 @@ snapshots:
       mlly: 1.7.1
       pathe: 1.1.2
 
-  pnpm@9.7.0: {}
+  pnpm@10.6.5: {}
 
   postcss-import@15.1.0(postcss@8.4.38):
     dependencies:

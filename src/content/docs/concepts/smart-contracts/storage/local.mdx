@@ -29,7 +29,7 @@ Local storage is allocated when an account opts into a smart contract by submitt
 <Tabs syncKey='lang'>
   <TabItem label='Python' icon='seti:python'>
     <RemoteCode
-      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-contract-examples/smart_contracts/local_storage/contract.py'
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/smart_contracts/local_storage/contract.py'
       snippet='INIT_LOCAL_STORAGE'
       lang='py'
       title='Init Local Storage'
@@ -55,7 +55,7 @@ Branching logic is typically used after calling the \_ex opcodes to handle cases
 <Tabs syncKey='lang'>
   <TabItem label='Python' icon='seti:python'>
     <RemoteCode
-      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-contract-examples/smart_contracts/local_storage/contract.py'
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/smart_contracts/local_storage/contract.py'
       snippet='READ_LOCAL_STATE'
       lang='py'
       title='Read Local State'
@@ -67,7 +67,7 @@ Branching logic is typically used after calling the \_ex opcodes to handle cases
   </TabItem>
 </Tabs>
 
-Refer [Sinppet Source](https://github.com/algorandfoundation/devportal-code-examples/blob/main/projects/python-contract-examples/smart_contracts/local_storage/contract.py#L68-L138) to get local storage value for different data types
+Refer [Sinppet Source](https://github.com/algorandfoundation/devportal-code-examples/blob/main/projects/python-examples/smart_contracts/local_storage/contract.py#L68-L138) to get local storage value for different data types
 
 The local state values of a smart contract can also be read externally using cli. The below command reads are non-transactional queries that retrieve the current state of the contract.
 
@@ -118,7 +118,7 @@ To write to local state, use the `app_local_put` opcode. An additional account p
 <Tabs syncKey='lang'>
   <TabItem label='Python' icon='seti:python'>
     <RemoteCode
-      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-contract-examples/smart_contracts/local_storage/contract.py'
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/smart_contracts/local_storage/contract.py'
       snippet='WRITE_LOCAL_STATE'
       lang='py'
       title='Write Local State'
@@ -130,7 +130,7 @@ To write to local state, use the `app_local_put` opcode. An additional account p
   </TabItem>
 </Tabs>
 
-Refer [Sinppet Source](https://github.com/algorandfoundation/devportal-code-examples/blob/main/projects/python-contract-examples/smart_contracts/local_storage/contract.py#L147-L175) to set local storage value for different data types
+Refer [Sinppet Source](https://github.com/algorandfoundation/devportal-code-examples/blob/main/projects/python-examples/smart_contracts/local_storage/contract.py#L147-L175) to set local storage value for different data types
 
 ### Deletion of Local State
 
@@ -141,7 +141,7 @@ An account can request to clear its local state using a closeout transaction or 
 <Tabs syncKey='lang'>
   <TabItem label='Python' icon='seti:python'>
     <RemoteCode
-      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-contract-examples/smart_contracts/local_storage/contract.py'
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/smart_contracts/local_storage/contract.py'
       snippet='DELETE_LOCAL_STATE'
       lang='py'
       title='Delete Local State'
@@ -153,7 +153,7 @@ An account can request to clear its local state using a closeout transaction or 
   </TabItem>
 </Tabs>
 
-Refer [Sinppet Source](https://github.com/algorandfoundation/devportal-code-examples/blob/main/projects/python-contract-examples/smart_contracts/local_storage/contract.py#L184-L195) to delete local storage value for different data types
+Refer [Sinppet Source](https://github.com/algorandfoundation/devportal-code-examples/blob/main/projects/python-examples/smart_contracts/local_storage/contract.py#L184-L195) to delete local storage value for different data types
 
 ## Summary of Local State Operations
 
