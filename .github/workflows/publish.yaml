@@ -4,10 +4,10 @@ name: Deploy to Cloudflare Pages
 on:
   push:
     branches:
-      - main
+      - main-dist
   pull_request:
     branches:
-      - main
+      - main-dist
 
 jobs:
   deploy:
