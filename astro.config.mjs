@@ -39,18 +39,29 @@ export default defineConfig({
         },
         {
           tag: 'script',
-          attrs: {
-            src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-            'data-website-id': '6e799942-b20a-4203-8103-93582a2611e1',
-            'data-project-name': 'Algorand',
-            'data-project-color': '#99A1A7',
-            'data-modal-header-bg-color': '#17cac6',
-            'data-font-family': 'Inter',
-            'data-modal-title-color': '#ffffff',
-            'data-modal-title': 'Ask AI',
-            'data-modal-body-bg-color': '#f6f6f6',
-            'data-project-logo': '/algorand-logo.png',
-          },
+          content: `(function(){
+            const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://widget.kapa.ai/kapa-widget.bundle.js';
+            const config = {
+              websiteId: '6e799942-b20a-4203-8103-93582a2611e1',
+              projectName: 'Algorand',
+              projectLogo: '/algorand-logo.png',
+              userAnalyticsFingerprintEnabled: 'true',
+            };
+            if (prefersDarkMode) {
+              config.projectColor = '#17cac6';
+              config.dataModalTitle = "Ask AI";
+            } else {
+              config.projectColor = '#2D2DF1';
+              config.dataModalTitle = "Ask AI light";
+            }
+            Object.entries(config).forEach(([key, value]) => {
+              script.dataset[key] = value;
+            });
+            document.head.appendChild(script);
+          })();`,
         },
       ],
       components: {
