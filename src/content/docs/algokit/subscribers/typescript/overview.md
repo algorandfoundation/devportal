@@ -21,37 +21,48 @@ const subscriber = new AlgorandSubscriber(
   },
   algod,
   optionalIndexer,
-);
+)
 
 // Set up subscription(s)
-subscriber.on('filter1', async transaction => {
+subscriber.on('filter1', async (transaction) => {
   // ...
-});
+})
 //...
 
 // Set up error handling
-subscriber.onError(e => {
+subscriber.onError((e) => {
   // ...
-});
+})
 
 // Either: Start the subscriber (if in long-running process)
-subscriber.start();
+subscriber.start()
 
 // OR: Poll the subscriber (if in cron job / periodic lambda)
-subscriber.pollOnce();
+subscriber.pollOnce()
 ```
 
 ## Capabilities
 
-- [Notification _and_ indexing](#notification-and-indexing)
-- [Low latency processing](#low-latency-processing)
-- [Extensive subscription filtering](#extensive-subscription-filtering)
-- [ARC-28 event subscription and reads](#arc-28-event-subscription-and-reads)
-- [First-class inner transaction support](#first-class-inner-transaction-support)
-- [State-proof support](#state-proof-support)
-- [Simple programming model](#simple-programming-model)
-- [Easy to deploy](#easy-to-deploy)
-- [Fast initial index](#fast-initial-index)
+- [Algorand transaction subscription / indexing](#algorand-transaction-subscription--indexing)
+  - [Quick start](#quick-start)
+  - [Capabilities](#capabilities)
+    - [Notification _and_ indexing](#notification-and-indexing)
+    - [Low latency processing](#low-latency-processing)
+    - [Watermarking and resilience](#watermarking-and-resilience)
+    - [Extensive subscription filtering](#extensive-subscription-filtering)
+    - [ARC-28 event subscription and reads](#arc-28-event-subscription-and-reads)
+    - [First-class inner transaction support](#first-class-inner-transaction-support)
+    - [State-proof support](#state-proof-support)
+    - [Simple programming model](#simple-programming-model)
+    - [Easy to deploy](#easy-to-deploy)
+    - [Fast initial index](#fast-initial-index)
+  - [Entry points](#entry-points)
+  - [Reference docs](#reference-docs)
+  - [Emit ARC-28 events](#emit-arc-28-events)
+    - [Algorand Python](#algorand-python)
+    - [TealScript](#tealscript)
+    - [PyTEAL](#pyteal)
+    - [TEAL](#teal)
 
 ### Notification _and_ indexing
 
@@ -75,7 +86,7 @@ The `syncBehaviour` parameter can also be set to `sync-oldest`, which is a more 
 
 ### Low latency processing
 
-You can control the polling semantics of the library when using the [`AlgorandSubscriber`](./subscriber) by either specifying the `frequencyInSeconds` parameter to control the duration between polls or you can use the `waitForBlockWhenAtTip` parameter to indicate the subscriber should [call algod to ask it to inform the subscriber when a new round is available](https://developer.algorand.org/docs/rest-apis/algod/#get-v2statuswait-for-block-afterround) so the subscriber can immediately process that round with a much lower-latency. When this mode is set, the subscriber intelligently uses this option only when it's caught up to the tip of the chain, but otherwise uses `frequencyInSeconds` while catching up to the tip of the chain.
+You can control the polling semantics of the library when using the [`AlgorandSubscriber`](./subscriber) by either specifying the `frequencyInSeconds` parameter to control the duration between polls or you can use the `waitForBlockWhenAtTip` parameter to indicate the subscriber should [call algod to ask it to inform the subscriber when a new round is available](https://dev.algorand.co/reference/rest-apis/algod/#waitforblock) so the subscriber can immediately process that round with a much lower-latency. When this mode is set, the subscriber intelligently uses this option only when it's caught up to the tip of the chain, but otherwise uses `frequencyInSeconds` while catching up to the tip of the chain.
 
 e.g.
 
@@ -91,7 +102,7 @@ If you are using [`getSubscribedTransactions`](./subscriptions) or the `pollOnce
 If you want to manually run code that waits for a given round to become available you can execute the following algosdk code:
 
 ```typescript
-await algod.statusAfterBlock(roundNumberToWaitFor).do();
+await algod.statusAfterBlock(roundNumberToWaitFor).do()
 ```
 
 It's worth noting special care has been placed in the subscriber library to properly handle abort signalling. All asynchronous operations including algod polls and polling waits have abort signal handling in place so if you call `subscriber.stop()` at any point in time it should almost immediately, cleanly, exit and if you want to wait for the stop to finish you can `await subscriber.stop()`.
@@ -99,13 +110,13 @@ It's worth noting special care has been placed in the subscriber library to prop
 If you want to hook this up to Node.js process signals you can include code like this in your service entrypoint:
 
 ```typescript
-['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal =>
+;['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((signal) =>
   process.on(signal, () => {
     // eslint-disable-next-line no-console
-    console.log(`Received ${signal}; stopping subscriber...`);
-    subscriber.stop(signal);
+    console.log(`Received ${signal}; stopping subscriber...`)
+    subscriber.stop(signal)
   }),
-);
+)
 ```
 
 ### Watermarking and resilience
@@ -181,16 +192,15 @@ Currently this allows you filter based on any combination (AND logic) of:
   - Call arguments e.g.
     ```typescript
     filter: {
-      appCallArgumentsMatch: appCallArguments =>
-        appCallArguments.length > 1 &&
-        Buffer.from(appCallArguments[1]).toString('utf-8') === 'hello_world';
+      appCallArgumentsMatch: (appCallArguments) =>
+        appCallArguments.length > 1 && Buffer.from(appCallArguments[1]).toString('utf-8') === 'hello_world'
     }
     ```
   - Emitted ARC-28 event(s) e.g.
 
     ```typescript
     filter: {
-      arc28Events: [{ groupName: 'group1', eventName: 'MyEvent' }];
+      arc28Events: [{ groupName: 'group1', eventName: 'MyEvent' }]
     }
     ```
 
@@ -244,15 +254,15 @@ The `Arc28EventGroup` type has the following definition:
 /** Specifies a group of ARC-28 event definitions along with instructions for when to attempt to process the events. */
 export interface Arc28EventGroup {
   /** The name to designate for this group of events. */
-  groupName: string;
+  groupName: string
   /** Optional list of app IDs that this event should apply to */
-  processForAppIds?: bigint[];
+  processForAppIds?: bigint[]
   /** Optional predicate to indicate if these ARC-28 events should be processed for the given transaction */
-  processTransaction?: (transaction: TransactionResult) => boolean;
+  processTransaction?: (transaction: TransactionResult) => boolean
   /** Whether or not to silently (with warning log) continue if an error is encountered processing the ARC-28 event data; default = false */
-  continueOnError?: boolean;
+  continueOnError?: boolean
   /** The list of ARC-28 event definitions */
-  events: Arc28Event[];
+  events: Arc28Event[]
 }
 
 /**
@@ -260,18 +270,18 @@ export interface Arc28EventGroup {
  */
 export interface Arc28Event {
   /** The name of the event */
-  name: string;
+  name: string
   /** Optional, user-friendly description for the event */
-  desc?: string;
+  desc?: string
   /** The arguments of the event, in order */
   args: Array<{
     /** The type of the argument */
-    type: string;
+    type: string
     /** Optional, user-friendly name for the argument */
-    name?: string;
+    name?: string
     /** Optional, user-friendly description for the argument */
-    desc?: string;
-  }>;
+    desc?: string
+  }>
 }
 ```
 
@@ -297,11 +307,11 @@ The `intra-round-offset` field in a [subscribed transaction or inner transaction
 
 ### State-proof support
 
-You can subscribe to [state proof](https://developer.algorand.org/docs/get-details/stateproofs/) transactions using this subscriber library. At the time of writing state proof transactions are not supported by algosdk v2 and custom handling has been added to ensure this valuable type of transaction can be subscribed to.
+You can subscribe to [state proof](https://dev.algorand.co/concepts/protocol/stateproofs) transactions using this subscriber library. At the time of writing state proof transactions are not supported by algosdk v2 and custom handling has been added to ensure this valuable type of transaction can be subscribed to.
 
 The field level documentation of the [returned state proof transaction](subscriptions#subscribedtransaction) is comprehensively documented via [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L277).
 
-By exposing this functionality, this library can be used to create a [light client](https://developer.algorand.org/docs/get-details/stateproofs/light_client/).
+By exposing this functionality, this library can be used to create a [light client](https://dev.algorand.co/concepts/protocol/stateproofs).
 
 ### Simple programming model
 
@@ -337,7 +347,7 @@ The indexer catchup isn't magic - if the filter you are trying to catch up with 
 
 To understand how the indexer behaviour works to know if you are likely to generate a lot of transactions it's worth understanding the architecture of the indexer catchup; indexer catchup runs in two stages:
 
-1. **Pre-filtering**: Any filters that can be translated to the [indexer search transactions endpoint](https://developer.algorand.org/docs/rest-apis/indexer/#get-v2transactions). This query is then run between the rounds that need to be synced and paginated in the max number of results (1000) at a time until all of the transactions are retrieved. This ensures we get round-based transactional consistency. This is the filter that can easily explode out though and take a long time when using indexer catchup. For avoidance of doubt, the following filters are the ones that are converted to a pre-filter:
+1. **Pre-filtering**: Any filters that can be translated to the [indexer search transactions endpoint](https://dev.algorand.co/reference/rest-apis/indexer#transaction). This query is then run between the rounds that need to be synced and paginated in the max number of results (1000) at a time until all of the transactions are retrieved. This ensures we get round-based transactional consistency. This is the filter that can easily explode out though and take a long time when using indexer catchup. For avoidance of doubt, the following filters are the ones that are converted to a pre-filter:
    - `sender` (single value)
    - `receiver` (single value)
    - `type` (single value)

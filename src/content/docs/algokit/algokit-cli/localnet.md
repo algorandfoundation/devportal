@@ -8,6 +8,8 @@ AlgoKit LocalNet uses Docker images that are optimised for a great dev experienc
 
 The philosophy we take with AlgoKit LocalNet is that you should treat it as an ephemeral network. This means assume it could be reset at any time - don't store data on there that you can't recover / recreate. We have optimised the AlgoKit LocalNet experience to minimise situations where the network will get reset to improve the experience, but it can and will still happen in a number of situations.
 
+
+
 ## Prerequisites
 
 AlgoKit LocalNet relies on Docker and Docker Compose being present and running on your system. Alternatively, you can use Podman as a replacement for Docker see [Podman support](#podman-support).
@@ -68,13 +70,13 @@ Once they have downloaded, it won't try and re-download images unless you perfor
 
 Once the LocalNet has started, the following endpoints will be available:
 
-- [algod](https://developer.algorand.org/docs/rest-apis/algod/v2/):
+- [algod](https://dev.algorand.co/reference/rest-apis/algod/):
   - address: <http://localhost:4001>
   - token: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
-- [kmd](https://developer.algorand.org/docs/rest-apis/kmd/):
+- [kmd](https://dev.algorand.co/reference/rest-apis/kmd/):
   - address: <http://localhost:4002>
   - token: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
-- [indexer](https://developer.algorand.org/docs/rest-apis/indexer/):
+- [indexer](https://dev.algorand.co/reference/rest-apis/indexer/):
   - address: <http://localhost:8980>
 - tealdbg port:
   - address: <http://localhost:9392>

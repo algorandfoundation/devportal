@@ -2,7 +2,7 @@
 title: Client management
 ---
 
-Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) [algod](https://developer.algorand.org/docs/rest-apis/algod), [indexer](https://developer.algorand.org/docs/rest-apis/indexer) and [kmd](https://developer.algorand.org/docs/rest-apis/kmd) clients against various networks resolved from environment or specified configuration.
+Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) [algod](https://dev.algorand.co/reference/rest-apis/algod), [indexer](https://dev.algorand.co/reference/rest-apis/indexer) and [kmd](https://dev.algorand.co/reference/rest-apis/kmd) clients against various networks resolved from environment or specified configuration.
 
 Any AlgoKit Utils function that needs one of these clients will take the underlying algosdk classes (`algosdk.v2client.algod.AlgodClient`, `algosdk.v2client.indexer.IndexerClient`, `algosdk.kmd.KMDClient`) so inline with the [Modularity](../index#id1) principle you can use existing logic to get instances of these clients without needing to use the Client management capability if you prefer.
 
@@ -32,12 +32,11 @@ client_manager = ClientManager(configs, algorand_client)
 
 ## Network configuration
 
-The network configuration is specified using the `AlgoClientConfig` type. This same type is used to specify the config for [algod](https://developer.algorand.org/docs/sdks/python/), [indexer](https://developer.algorand.org/docs/sdks/python/) and [kmd](https://developer.algorand.org/docs/sdks/python/) SDK clients.
+The network configuration is specified using the `AlgoClientConfig` type. This same type is used to specify the config for `algod`, `indexer`, and `kmd` [SDK clients](https://github.com/algorand/py-algorand-sdk).
 
 There are a number of ways to produce one of these configuration objects:
 
 - Manually specifying a dataclass, e.g.
-
   ```python
   from algokit_utils import AlgoClientNetworkConfig
 
@@ -46,7 +45,6 @@ There are a number of ways to produce one of these configuration objects:
       token="SECRET_TOKEN"  # optional
   )
   ```
-
 - `ClientManager.get_config_from_environment_or_localnet()` - Loads the Algod client config, the Indexer client config and the Kmd config from well-known environment variables or if not found then default LocalNet; this is useful to have code that can work across multiple blockchain environments (including LocalNet), without having to change
 - `ClientManager.get_algod_config_from_environment()` - Loads an Algod client config from well-known environment variables
 - `ClientManager.get_indexer_config_from_environment()` - Loads an Indexer client config from well-known environment variables; useful to have code that can work across multiple blockchain environments (including LocalNet), without having to change

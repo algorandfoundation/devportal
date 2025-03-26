@@ -260,7 +260,7 @@ The common model used to expose a transaction that is returned from a subscripti
 from algokit_subscriber import SubscribedTransaction
 ```
 
-This type is substantively, based on the Indexer [`TransactionResult`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L77) [model](https://developer.algorand.org/docs/rest-apis/indexer/#transaction) format. While the indexer type is used, the subscriber itself doesn't have to use indexer - any transactions it retrieves from algod are transformed to this common model type. Beyond the indexer type it has some modifications to:
+This type is substantively, based on the Indexer [`TransactionResult`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L77) [model](https://dev.algorand.co/reference/rest-apis/indexer#transaction) format. While the indexer type is used, the subscriber itself doesn't have to use indexer - any transactions it retrieves from algod are transformed to this common model type. Beyond the indexer type it has some modifications to:
 
 - Add the `parent_transaction_id` field so inner transactions have a reference to their parent
 - Override the type of `inner-txns` to be `SubscribedTransaction[]` so inner transactions (recursively) get these extra fields too

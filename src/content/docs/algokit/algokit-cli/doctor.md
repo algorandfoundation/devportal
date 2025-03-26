@@ -39,13 +39,11 @@ Please include this output, if you want to populate this message in your clipboa
 The doctor command will indicate if there is any issues to address, for example:
 
 If AlgoKit detects a newer version, this will be indicated next to the AlgoKit version
-
 ```
 AlgoKit: 1.2.3 (latest: 4.5.6)
 ```
 
 If the detected version of docker compose is unsupported, this will be shown:
-
 ```
 docker compose: 2.1.3
   Docker Compose 2.5.0 required to run `algokit localnet command`;

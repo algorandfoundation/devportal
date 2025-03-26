@@ -15,7 +15,7 @@ The `AlgoAmount` class provides a safe wrapper around an underlying `number` amo
 To import the AlgoAmount class you can access it via:
 
 ```typescript
-import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount';
+import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount'
 ```
 
 You may not need to import this type to use it though since there are also special methods that are exposed from the root AlgoKit Utils export and also others that extend the `number` protoype per below.
@@ -38,7 +38,7 @@ There are a few ways to create an `AlgoAmount`:
 Note: per above, to use any of the versions that reference `AlgoAmount` type itself you need to import it:
 
 ```typescript
-import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount';
+import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount'
 ```
 
 ### Extracting a value from `AlgoAmount`

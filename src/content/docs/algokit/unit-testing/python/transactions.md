@@ -194,8 +194,8 @@ These methods provide type validation and will raise an error if the requested t
 
 ## References
 
-- [API](../api) for more details on the test context manager and inner transactions related methods that perform implicit inner transaction type validation.
-- [Examples](../examples) for more examples of smart contracts and associated tests that interact with inner transactions.
+-   [API](../api) for more details on the test context manager and inner transactions related methods that perform implicit inner transaction type validation.
+-   [Examples](../examples) for more examples of smart contracts and associated tests that interact with inner transactions.
 
 ```{testcleanup}
 ctx_manager.__exit__(None, None, None)

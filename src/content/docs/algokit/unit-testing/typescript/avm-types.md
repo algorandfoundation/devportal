@@ -9,70 +9,70 @@ For 'primitive `algorand-typescript` types such as `Account`, `Application`, `As
 ```
 
 ```ts
-import * as algots from '@algorandfoundation/algorand-typescript';
-import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing';
+import * as algots from '@algorandfoundation/algorand-typescript'
+import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing'
 
 // Create the context manager for snippets below
-const ctx = new TestExecutionContext();
+const ctx = new TestExecutionContext()
 ```
 
 ## uint64
 
 ```ts
 // Direct instantiation
-const uint64Value = algots.Uint64(100);
+const uint64Value = algots.Uint64(100)
 
 // Generate a random UInt64 value
-const randomUint64 = ctx.any.uint64();
+const randomUint64 = ctx.any.uint64()
 
 // Specify a range
-const randomUint64InRange = ctx.any.uint64(1000, 9999);
+const randomUint64InRange = ctx.any.uint64(1000, 9999)
 ```
 
 ## bytes
 
 ```ts
 // Direct instantiation
-const bytesValue = algots.Bytes('Hello, Algorand!');
+const bytesValue = algots.Bytes('Hello, Algorand!')
 
 // Generate random byte sequences
-const randomBytes = ctx.any.bytes();
+const randomBytes = ctx.any.bytes()
 
 // Specify the length
-const randomBytesOfLength = ctx.any.bytes(32);
+const randomBytesOfLength = ctx.any.bytes(32)
 ```
 
 ## string
 
 ```ts
 // Direct instantiation
-const stringValue = 'Hello, Algorand!';
+const stringValue = 'Hello, Algorand!'
 
 // Generate random strings
-const randomString = ctx.any.string();
+const randomString = ctx.any.string()
 
 // Specify the length
-const randomStringOfLength = ctx.any.string(16);
+const randomStringOfLength = ctx.any.string(16)
 ```
 
 ## biguint
 
 ```ts
 // Direct instantiation
-const biguintValue = algots.BigUint(100);
+const biguintValue = algots.BigUint(100)
 
 // Generate a random BigUInt value
-const randomBiguint = ctx.any.biguint();
+const randomBiguint = ctx.any.biguint()
 
 // Specify the min value
-const randomBiguintOver = ctx.any.biguint(100n);
+const randomBiguintOver = ctx.any.biguint(100n)
 ```
 
 ## Asset
 
 ```ts
 // Direct instantiation
-const asset = algots.Asset(1001);
+const asset = algots.Asset(1001)
 
 // Generate a random asset
 const randomAsset = ctx.any.asset({
@@ -88,10 +88,10 @@ const randomAsset = ctx.any.asset({
   total: 1000000, // Optional: Total supply
   unitName: algots.Bytes(ctx.any.string()), // Optional: Unit name
   url: algots.Bytes(ctx.any.string()), // Optional: Asset URL
-});
+})
 
 // Get an asset by ID
-const asset = ctx.ledger.getAsset(randomAsset.id);
+const asset = ctx.ledger.getAsset(randomAsset.id)
 
 // Update an asset
 ctx.ledger.patchAssetData(randomAsset, {
@@ -107,17 +107,15 @@ ctx.ledger.patchAssetData(randomAsset, {
   total: 1000000, // Optional: New total supply
   unitName: algots.Bytes(ctx.any.string()), // Optional: Unit name
   url: algots.Bytes(ctx.any.string()), // Optional: New asset URL
-});
+})
 ```
 
 ## Account
 
 ```ts
 // Direct instantiation
-const rawAddress = algots.Bytes.fromBase32(
-  'PUYAGEGVCOEBP57LUKPNOCSMRWHZJSU4S62RGC2AONDUEIHC6P7FOPJQ4I',
-);
-const account = algots.Account(rawAddress); // zero address by default
+const rawAddress = algots.Bytes.fromBase32('PUYAGEGVCOEBP57LUKPNOCSMRWHZJSU4S62RGC2AONDUEIHC6P7FOPJQ4I')
+const account = algots.Account(rawAddress) // zero address by default
 
 // Generate a random account
 const randomAccount = ctx.any.account({
@@ -136,16 +134,16 @@ const randomAccount = ctx.any.account({
   minBalance: 0, // Optional: Specify a minimum balance
   balance: 0, // Optional: Specify an initial balance
   authAddress: algots.Account(), // Optional: Specify an auth address,
-});
+})
 
 // Generate a random account that is opted into a specific asset
-const mockAsset = ctx.any.asset();
+const mockAsset = ctx.any.asset()
 const mockAccount = ctx.any.account({
   optedAssetBalances: new Map([[mockAsset.id, 123]]),
-});
+})
 
 // Get an account by address
-const account = ctx.ledger.getAccount(mockAccount);
+const account = ctx.ledger.getAccount(mockAccount)
 
 // Update an account
 ctx.ledger.patchAccountData(mockAccount, {
@@ -159,17 +157,17 @@ ctx.ledger.patchAccountData(mockAccount, {
     totalAppsOptedIn: 0, // Optional: New total number of applications opted into
     totalExtraAppPages: 0, // Optional: New total number of extra application pages
   },
-});
+})
 
 // Check if an account is opted into a specific asset
-const optedIn = account.isOptedIn(mockAsset);
+const optedIn = account.isOptedIn(mockAsset)
 ```
 
 ## Application
 
 ```ts
 // Direct instantiation
-const application = algots.Application();
+const application = algots.Application()
 
 // Generate a random application
 const randomApp = ctx.any.application({
@@ -181,10 +179,10 @@ const randomApp = ctx.any.application({
   localNumBytes: 1, // Optional: Number of local byte values
   extraProgramPages: 1, // Optional: Number of extra program pages
   creator: ctx.defaultSender, // Optional: Specify the creator account
-});
+})
 
 // Get an application by ID
-const app = ctx.ledger.getApplication(randomApp.id);
+const app = ctx.ledger.getApplication(randomApp.id)
 
 // Update an application
 ctx.ledger.patchApplicationData(randomApp, {
@@ -198,21 +196,19 @@ ctx.ledger.patchApplicationData(randomApp, {
     extraProgramPages: 1, // Optional: New number of extra program pages
     creator: ctx.defaultSender, // Optional: New creator account
   },
-});
+})
 
 // Patch logs for an application. When accessing via transactions or inner transaction related opcodes, will return the patched logs unless new logs where added into the transaction during execution.
-const testApp = ctx.any.application({
-  appLogs: [algots.Bytes('log entry 1'), algots.Bytes('log entry 2')],
-});
+const testApp = ctx.any.application({ appLogs: [algots.Bytes('log entry 1'), algots.Bytes('log entry 2')] })
 
 // Get app associated with the active contract
 class MyContract extends algots.arc4.Contract {}
-const contract = ctx.contract.create(MyContract);
+const contract = ctx.contract.create(MyContract)
 
-const activeApp = ctx.ledger.getApplicationForContract(contract);
+const activeApp = ctx.ledger.getApplicationForContract(contract)
 ```
 
 ```ts
 // test context clean up
-ctx.reset();
+ctx.reset()
 ```

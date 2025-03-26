@@ -9,7 +9,7 @@ The `itxn` namespace exposes types for constructing inner transactions. There is
 To submit multiple transactions in a group - use the `itxn.submitGroup` function.
 
 ```ts
-import { itxn, Global, log } from '@algorandfoundation/algorand-typescript';
+import { itxn, Global, log } from '@algorandfoundation/algorand-typescript'
 
 const assetParams = itxn.assetConfig({
   total: 1000,
@@ -18,10 +18,10 @@ const assetParams = itxn.assetConfig({
   decimals: 3,
   manager: Global.currentApplicationAddress,
   reserve: Global.currentApplicationAddress,
-});
+})
 
-const asset1_txn = assetParams.submit();
-log(asset1_txn.createdAsset.id);
+const asset1_txn = assetParams.submit()
+log(asset1_txn.createdAsset.id)
 ```
 
 Both the `submitGroup` and `params.submit()` functions return a `*InnerTxn` object per input params object which allow you to read application logs or created asset/application ids. There are restrictions on accessing these properties which come from the current AVM implementation. The restrictions are detailed below.
@@ -37,10 +37,10 @@ Submitting dynamic group sizes with `submitGroup` is not supported as the AVM is
 If your contract needs to deploy other contracts then it's likely you will need access to the compiled approval and clear state programs. The `compile` method takes a contract class and returns the compiled byte code along with some basic schema information.
 
 ```ts
-import { itxn, compile } from '@algorandfoundation/algorand-typescript';
-import { encodeArc4, methodSelector } from '@algorandfoundation/algorand-typescript/arc4';
+import { itxn, compile } from '@algorandfoundation/algorand-typescript'
+import { encodeArc4, methodSelector } from '@algorandfoundation/algorand-typescript/arc4'
 
-const compiled = compile(Hello);
+const compiled = compile(Hello)
 
 const helloApp = itxn
   .applicationCall({
@@ -49,13 +49,13 @@ const helloApp = itxn
     clearStateProgram: compiled.clearStateProgram,
     globalNumBytes: compiled.globalBytes,
   })
-  .submit().createdApp;
+  .submit().createdApp
 ```
 
 If the contract you are compiling makes use of template variables - these will need to be resolved to a constant value.
 
 ```ts
-const compiled = compile(HelloTemplate, { templateVars: { GREETING: 'hey' } });
+const compiled = compile(HelloTemplate, { templateVars: { GREETING: 'hey' } })
 ```
 
 ## Strongly typed contract to contract
@@ -64,20 +64,20 @@ Assuming the contract you wish to compile extends the ARC4 `Contract` type, you 
 compile time type safety.
 
 ```ts
-import { assert, itxn } from '@algorandfoundation/algorand-typescript';
-import { compileArc4 } from '@algorandfoundation/algorand-typescript/arc4';
+import { assert, itxn } from '@algorandfoundation/algorand-typescript'
+import { compileArc4 } from '@algorandfoundation/algorand-typescript/arc4'
 
-const compiled = compileArc4(Hello);
+const compiled = compileArc4(Hello)
 
 const app = compiled.call.create({
   args: ['hello'],
-}).itxn.createdApp;
+}).itxn.createdApp
 
 const result = compiled.call.greet({
   args: ['world'],
   appId: app,
-}).returnValue;
-assert(result === 'hello world');
+}).returnValue
+assert(result === 'hello world')
 ```
 
 The proxy will automatically include approval and clear state program bytes + schema properties from the compiled contract, but these can also be overridden if required.
@@ -94,7 +94,7 @@ export abstract class HelloStubbed extends Contract {
   @abimethod()
   greet(name: string): string {
     // Stub implementations don't need method bodies, as long as the type information is correct
-    err('stub only');
+    err('stub only')
   }
 }
 ```
@@ -105,6 +105,6 @@ export abstract class HelloStubbed extends Contract {
 const result3 = abiCall(HelloStubbed.prototype.greet, {
   appId: app,
   args: ['stubbed'],
-}).returnValue;
-assert(result3 === 'hello stubbed');
+}).returnValue
+assert(result3 === 'hello stubbed')
 ```

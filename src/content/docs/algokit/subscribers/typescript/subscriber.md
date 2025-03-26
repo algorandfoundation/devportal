@@ -24,19 +24,19 @@ The key configuration is the `AlgorandSubscriberConfig` interface:
 /** Configuration for an `AlgorandSubscriber`. */
 export interface AlgorandSubscriberConfig extends CoreTransactionSubscriptionParams {
   /** The set of filters to subscribe to / emit events for, along with optional data mappers. */
-  filters: SubscriberConfigFilter<unknown>[];
+  filters: SubscriberConfigFilter<unknown>[]
   /** The frequency to poll for new blocks in seconds; defaults to 1s */
-  frequencyInSeconds?: number;
+  frequencyInSeconds?: number
   /** Whether to wait via algod `/status/wait-for-block-after` endpoint when at the tip of the chain; reduces latency of subscription */
-  waitForBlockWhenAtTip?: boolean;
+  waitForBlockWhenAtTip?: boolean
   /** Methods to retrieve and persist the current watermark so syncing is resilient and maintains
    * its position in the chain */
   watermarkPersistence: {
     /** Returns the current watermark that syncing has previously been processed to */
-    get: () => Promise<bigint>;
+    get: () => Promise<bigint>
     /** Persist the new watermark that has been processed */
-    set: (newWatermark: bigint) => Promise<void>;
-  };
+    set: (newWatermark: bigint) => Promise<void>
+  }
 }
 
 /** Common parameters to control a single subscription pull/poll for both `AlgorandSubscriber` and `getSubscribedTransactions`. */
@@ -62,9 +62,9 @@ export interface CoreTransactionSubscriptionParams {
    * ```
    *
    */
-  filters: NamedTransactionFilter[];
+  filters: NamedTransactionFilter[]
   /** Any ARC-28 event definitions to process from app call logs */
-  arc28Events?: Arc28EventGroup[];
+  arc28Events?: Arc28EventGroup[]
   /** The maximum number of rounds to sync from algod for each subscription pull/poll.
    *
    * Defaults to 500.
@@ -73,7 +73,7 @@ export interface CoreTransactionSubscriptionParams {
    * your staleness tolerance when using `skip-sync-newest` or `fail`, and
    * your catchup speed when using `sync-oldest`.
    **/
-  maxRoundsToSync?: number;
+  maxRoundsToSync?: number
   /**
    * The maximum number of rounds to sync from indexer when using `syncBehaviour: 'catchup-with-indexer'.
    *
@@ -84,7 +84,7 @@ export interface CoreTransactionSubscriptionParams {
    * Instead, this allows indexer catchup to be split into multiple polls, each with a transactionally consistent
    * boundary based on the number of rounds specified here.
    */
-  maxIndexerRoundsToSync?: number;
+  maxIndexerRoundsToSync?: number
   /** If the current tip of the configured Algorand blockchain is more than `maxRoundsToSync`
    * past `watermark` then how should that be handled:
    *  * `skip-sync-newest`: Discard old blocks/transactions and sync the newest; useful
@@ -102,12 +102,7 @@ export interface CoreTransactionSubscriptionParams {
    *    use algod from there.
    *  * `fail`: Throw an error.
    **/
-  syncBehaviour:
-    | 'skip-sync-newest'
-    | 'sync-oldest'
-    | 'sync-oldest-start-now'
-    | 'catchup-with-indexer'
-    | 'fail';
+  syncBehaviour: 'skip-sync-newest' | 'sync-oldest' | 'sync-oldest-start-now' | 'catchup-with-indexer' | 'fail'
 }
 ````
 
@@ -130,15 +125,15 @@ export interface SubscriberConfigFilter<T> extends NamedTransactionFilter {
    *
    * Note: if you provide multiple filters with the same name then only the mapper of the first matching filter will be used
    */
-  mapper?: (transaction: SubscribedTransaction[]) => Promise<T[]>;
+  mapper?: (transaction: SubscribedTransaction[]) => Promise<T[]>
 }
 
 /** Specify a named filter to apply to find transactions of interest. */
 export interface NamedTransactionFilter {
   /** The name to give the filter. */
-  name: string;
+  name: string
   /** The filter itself. */
-  filter: TransactionFilter;
+  filter: TransactionFilter
 }
 ```
 
@@ -230,7 +225,7 @@ You can do this via the `on`, `onBatch` and `onPoll` methods:
 The `TypedAsyncEventListener` type is defined as:
 
 ```typescript
-type TypedAsyncEventListener<T> = (event: T, eventName: string | symbol) => Promise<void> | void;
+type TypedAsyncEventListener<T> = (event: T, eventName: string | symbol) => Promise<void> | void
 ```
 
 This allows you to use async or sync event listeners.
@@ -242,7 +237,7 @@ If you call `onBatch` it will be called first, with the full set of transactions
 The default type that will be received is a `SubscribedTransaction`, which can be imported like so:
 
 ```typescript
-import type { SubscribedTransaction } from '@algorandfoundation/algokit-subscriber/types';
+import type { SubscribedTransaction } from '@algorandfoundation/algokit-subscriber/types'
 ```
 
 See the [detail about this type](subscriptions#subscribedtransaction).
@@ -284,13 +279,13 @@ start(inspect?: (pollResult: TransactionSubscriptionResult) => void, suppressLog
 If you use `start` then you can stop the polling by calling `stop`, which can be awaited to wait until everything is cleaned up. You may want to subscribe to Node.JS kill signals to exit cleanly:
 
 ```typescript
-['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal =>
+;['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((signal) =>
   process.on(signal, () => {
     // eslint-disable-next-line no-console
-    console.log(`Received ${signal}; stopping subscriber...`);
-    subscriber.stop(signal).then(() => console.log('Subscriber stopped'));
+    console.log(`Received ${signal}; stopping subscriber...`)
+    subscriber.stop(signal).then(() => console.log('Subscriber stopped'))
   }),
-);
+)
 ```
 
 ## Handling errors
@@ -333,7 +328,7 @@ To handle errors, you can register error handlers/listeners using the `onError` 
 The `ErrorListener` type is defined as:
 
 ```typescript
-type ErrorListener = (error: unknown) => Promise<void> | void;
+type ErrorListener = (error: unknown) => Promise<void> | void
 ```
 
 This allows you to use async or sync error listeners.

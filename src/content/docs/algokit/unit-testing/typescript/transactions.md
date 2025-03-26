@@ -5,11 +5,11 @@ title: Transactions
 The testing framework follows the Transaction definitions described in [`algorand-typescript` docs](https://github.com/algorandfoundation/puya-ts/blob/main/docs/lg-transactions). This section focuses on _value generators_ and interactions with inner transactions, it also explains how the framework identifies _active_ transaction group during contract method/subroutine/logicsig invocation.
 
 ```ts
-import * as algots from '@algorandfoundation/algorand-typescript';
-import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing';
+import * as algots from '@algorandfoundation/algorand-typescript'
+import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing'
 
 // Create the context manager for snippets below
-const ctx = new TestExecutionContext();
+const ctx = new TestExecutionContext()
 ```
 
 ## Group Transactions
@@ -22,7 +22,7 @@ const payTxn = ctx.any.txn.payment({
   sender: ctx.any.account(), // Optional: Defaults to context's default sender if not provided
   receiver: ctx.any.account(), // Required
   amount: 1000000, // Required
-});
+})
 
 // Generate a random asset transfer transaction
 const assetTransferTxn = ctx.any.txn.assetTransfer({
@@ -30,7 +30,7 @@ const assetTransferTxn = ctx.any.txn.assetTransfer({
   assetReceiver: ctx.any.account(), // Required
   xferAsset: ctx.any.asset({ assetId: 1 }), // Required
   assetAmount: 1000, // Required
-});
+})
 
 // Generate a random application call transaction
 const appCallTxn = ctx.any.txn.applicationCall({
@@ -42,7 +42,7 @@ const appCallTxn = ctx.any.txn.applicationCall({
   approvalProgramPages: [algots.Bytes('approval_code')], // Optional: Defaults to empty list if not provided
   clearStateProgramPages: [algots.Bytes('clear_code')], // Optional: Defaults to empty list if not provided
   scratchSpace: { 0: algots.Bytes('scratch') }, // Optional: Defaults to empty dict if not provided
-});
+})
 
 // Generate a random asset config transaction
 const assetConfigTxn = ctx.any.txn.assetConfig({
@@ -59,7 +59,7 @@ const assetConfigTxn = ctx.any.txn.assetConfig({
   reserve: ctx.any.account(), // Optional: Defaults to zero address if not provided
   freeze: ctx.any.account(), // Optional: Defaults to zero address if not provided
   clawback: ctx.any.account(), // Optional: Defaults to zero address if not provided
-});
+})
 
 // Generate a random key registration transaction
 const keyRegTxn = ctx.any.txn.keyRegistration({
@@ -69,7 +69,7 @@ const keyRegTxn = ctx.any.txn.keyRegistration({
   voteFirst: 1, // Optional: Defaults to 0 if not provided
   voteLast: 1000, // Optional: Defaults to 0 if not provided
   voteKeyDilution: 10000, // Optional: Defaults to 0 if not provided
-});
+})
 
 // Generate a random asset freeze transaction
 const assetFreezeTxn = ctx.any.txn.assetFreeze({
@@ -77,7 +77,7 @@ const assetFreezeTxn = ctx.any.txn.assetFreeze({
   freezeAsset: ctx.ledger.getAsset(algots.Uint64(1)), // Required
   freezeAccount: ctx.any.account(), // Required
   frozen: true, // Required
-});
+})
 ```
 
 ## Preparing for execution
@@ -87,38 +87,36 @@ When a smart contract instance (application) is interacted with on the Algorand 
 To emulate this behaviour, the `createScope` context manager is available on [`TransactionContext`](../code/subcontexts/transaction-context/classes/TransactionContext) instance that allows setting temporary transaction fields within a specific scope, passing in emulated transaction objects and identifying the active transaction index within the transaction group
 
 ```ts
-import { arc4, Txn } from '@algorandfoundation/algorand-typescript';
-import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing';
+import { arc4, Txn } from '@algorandfoundation/algorand-typescript'
+import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing'
 
 class SimpleContract extends arc4.Contract {
   @arc4.abimethod()
   checkSender(): arc4.Address {
-    return new arc4.Address(Txn.sender);
+    return new arc4.Address(Txn.sender)
   }
 }
 
-const ctx = new TestExecutionContext();
+const ctx = new TestExecutionContext()
 
 // Create a contract instance
-const contract = ctx.contract.create(SimpleContract);
+const contract = ctx.contract.create(SimpleContract)
 
 // Use active_txn_overrides to change the sender
-const testSender = ctx.any.account();
+const testSender = ctx.any.account()
 
-ctx.txn
-  .createScope([ctx.any.txn.applicationCall({ appId: contract, sender: testSender })])
-  .execute(() => {
-    // Call the contract method
-    const result = contract.checkSender();
-    expect(result).toEqual(testSender);
-  });
+ctx.txn.createScope([ctx.any.txn.applicationCall({ appId: contract, sender: testSender })]).execute(() => {
+  // Call the contract method
+  const result = contract.checkSender()
+  expect(result).toEqual(testSender)
+})
 
 // Assert that the sender is the test_sender after exiting the
 // transaction group context
-expect(ctx.txn.lastActive.sender).toEqual(testSender);
+expect(ctx.txn.lastActive.sender).toEqual(testSender)
 
 // Assert the size of last transaction group
-expect(ctx.txn.lastGroup.transactions.length).toEqual(1);
+expect(ctx.txn.lastGroup.transactions.length).toEqual(1)
 ```
 
 ## Inner Transaction
@@ -128,8 +126,8 @@ Inner transactions are AVM transactions that are signed and executed by AVM appl
 When testing smart contracts, to stay consistent with AVM, the framework \_does not allow you to submit inner transactions outside of contract/subroutine invocation, but you can interact with and manage inner transactions using the test execution context as follows:
 
 ```ts
-import { arc4, Asset, itxn, Txn, Uint64 } from '@algorandfoundation/algorand-typescript';
-import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing';
+import { arc4, Asset, itxn, Txn, Uint64 } from '@algorandfoundation/algorand-typescript'
+import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing'
 
 class MyContract extends arc4.Contract {
   @arc4.abimethod()
@@ -139,39 +137,39 @@ class MyContract extends arc4.Contract {
         receiver: Txn.sender,
         amount: 1,
       })
-      .submit();
+      .submit()
   }
 }
 
 // setup context
-const ctx = new TestExecutionContext();
+const ctx = new TestExecutionContext()
 
 // Create a contract instance
-const contract = ctx.contract.create(MyContract);
+const contract = ctx.contract.create(MyContract)
 
 // Generate a random asset
-const asset = ctx.any.asset();
+const asset = ctx.any.asset()
 
 // Execute the contract method
-contract.payViaItxn(asset);
+contract.payViaItxn(asset)
 
 // Access the last submitted inner transaction
-const paymentTxn = ctx.txn.lastGroup.lastItxnGroup().getPaymentInnerTxn();
+const paymentTxn = ctx.txn.lastGroup.lastItxnGroup().getPaymentInnerTxn()
 
 // Assert properties of the inner transaction
-expect(paymentTxn.receiver).toEqual(ctx.txn.lastActive.sender);
-expect(paymentTxn.amount).toEqual(1);
+expect(paymentTxn.receiver).toEqual(ctx.txn.lastActive.sender)
+expect(paymentTxn.amount).toEqual(1)
 
 // Access all inner transactions in the last group
-ctx.txn.lastGroup.itxnGroups.at(-1)?.itxns.forEach(itxn => {
+ctx.txn.lastGroup.itxnGroups.at(-1)?.itxns.forEach((itxn) => {
   // Perform assertions on each inner transaction
-  expect(itxn.type).toEqual(TransactionType.Payment);
-});
+  expect(itxn.type).toEqual(TransactionType.Payment)
+})
 
 // Access a specific inner transaction group
-const firstItxnGroup = ctx.txn.lastGroup.getItxnGroup(0);
-const firstPaymentTxn = firstItxnGroup.getPaymentInnerTxn(0);
-expect(firstPaymentTxn.type).toEqual(TransactionType.Payment);
+const firstItxnGroup = ctx.txn.lastGroup.getItxnGroup(0)
+const firstPaymentTxn = firstItxnGroup.getPaymentInnerTxn(0)
+expect(firstPaymentTxn.type).toEqual(TransactionType.Payment)
 ```
 
 In this example, we define a contract method `payViaItxn` that creates and submits an inner payment transaction. The test execution context automatically captures and stores the inner transactions submitted by the contract method.
@@ -193,5 +191,5 @@ These methods provide type validation and will raise an error if the requested t
 
 ```ts
 // test cleanup
-ctx.reset();
+ctx.reset()
 ```

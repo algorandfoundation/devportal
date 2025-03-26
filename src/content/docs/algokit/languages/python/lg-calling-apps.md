@@ -2,7 +2,7 @@
 title: Calling other applications
 ---
 
-The preferred way to call other smart contracts is using [`algopy.arc4.abi_call`](#algopyarc4abi_call), [`algopy.arc4.arc4_create`](#algopyarc4arc4_create) or
+The preferred way to call other smart contracts is using [`algopy.arc4.abi_call`](#algopyarc4abi_call), [`algopy.arc4.arc4_create`](#algopyarc4arc4_create) or 
 [`algopy.arc4.arc4_update`](#algopyarc4arc4_update). These methods support type checking and encoding of arguments, decoding of results, group transactions,
 and in the case of `arc4_create` and `arc4_update` automatic inclusion of approval and clear state programs.
 
@@ -22,7 +22,7 @@ If the ARC4 method does not return a result, or if the result type is not fully 
 from algopy import Application, ARC4Contract, String, arc4, subroutine
 
 class HelloWorld(ARC4Contract):
-
+    
     @arc4.abimethod()
     def greet(self, name: String) -> String:
         return "Hello " + name
@@ -30,20 +30,21 @@ class HelloWorld(ARC4Contract):
 @subroutine
 def call_existing_application(app: Application) -> None:
     greeting, greet_txn = arc4.abi_call(HelloWorld.greet, "there", app_id=app)
-
+    
     assert greeting == "Hello there"
     assert greet_txn.app_id == 1234
 ```
 
+
 ### Alternative ways to use `arc4.abi_call`
 
-#### ARC4Client method
+#### ARC4Client method 
 
 A ARC4Client client represents the ARC4 abimethods of a smart contract and can be used to call abimethods in a type safe way
 
-ARC4Client's can be produced by using `puyapy --output-client=True` when compiling a smart contract
+ARC4Client's can be produced by using `puyapy --output-client=True` when compiling a smart contract 
 (this would be useful if you wanted to publish a client for consumption by other smart contracts)
-An ARC4Client can also be be generated from an ARC-32 application.json using `puyapy-clientgen`
+An ARC4Client can also be be generated from an ARC-32 application.json using `puyapy-clientgen` 
 e.g. `puyapy-clientgen examples/hello_world_arc4/out/HelloWorldContract.arc32.json`, this would be
 the recommended approach for calling another smart contract that is not written in Algorand Python or does not provide the source
 
@@ -51,7 +52,7 @@ the recommended approach for calling another smart contract that is not written 
 from algopy import arc4, subroutine
 
 class HelloWorldClient(arc4.ARC4Client):
-
+    
     def hello(self, name: arc4.String) -> arc4.String: ...
 
 @subroutine
@@ -75,11 +76,12 @@ def call_another_contract() -> None:
     # can reference a method selector
     result, txn = arc4.abi_call[arc4.String]("hello(string)string", arc4.String("Algo"), app=...)
     assert result == "Hello, Algo"
-
+    
     # can reference a method name, the method selector is inferred from arguments and return type
     result, txn = arc4.abi_call[arc4.String]("hello", "There", app=...)
     assert result == "Hello, There"
 ```
+
 
 ## `algopy.arc4.arc4_create`
 
@@ -87,14 +89,14 @@ def call_another_contract() -> None:
 
 Like [`algopy.arc4.abi_call`](lg-transactions#arc4-application-calls) it handles ARC4 arguments and provides ARC4 return values.
 
-If the compiled programs and state allocation fields need to be customized (for example due to template variables),
+If the compiled programs and state allocation fields need to be customized (for example due to template variables), 
 this can be done by passing a `algopy.CompiledContract` via the `compiled` keyword argument.
 
 ```python
 from algopy import ARC4Contract, String, arc4, subroutine
 
 class HelloWorld(ARC4Contract):
-
+    
     @arc4.abimethod()
     def greet(self, name: String) -> String:
         return "Hello " + name
@@ -104,7 +106,7 @@ def create_new_application() -> None:
     hello_world_app = arc4.arc4_create(HelloWorld).created_app
 
     greeting, _txn = arc4.abi_call(HelloWorld.greet, "there", app_id=hello_world_app)
-
+    
     assert greeting == "Hello there"
 ```
 
@@ -114,14 +116,14 @@ def create_new_application() -> None:
 
 Like [`algopy.arc4.abi_call`](lg-transactions#arc4-application-calls) it handles ARC4 arguments and provides ARC4 return values.
 
-If the compiled programs need to be customized (for example due to (for example due to template variables),
+If the compiled programs need to be customized (for example due to (for example due to template variables), 
 this can be done by passing a `algopy.CompiledContract` via the `compiled` keyword argument.
 
 ```python
 from algopy import Application, ARC4Contract, String, arc4, subroutine
 
 class NewApp(ARC4Contract):
-
+    
     @arc4.abimethod()
     def greet(self, name: String) -> String:
         return "Hello " + name
@@ -129,9 +131,9 @@ class NewApp(ARC4Contract):
 @subroutine
 def update_existing_application(existing_app: Application) -> None:
     hello_world_app = arc4.arc4_update(NewApp, app_id=existing_app)
-
+    
     greeting, _txn = arc4.abi_call(NewApp.greet, "there", app_id=hello_world_app)
-
+    
     assert greeting == "Hello there"
 ```
 

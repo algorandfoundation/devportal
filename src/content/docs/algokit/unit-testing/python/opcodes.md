@@ -25,9 +25,9 @@ These types are fully implemented in Python and behave identically to their AVM 
 
 The following opcodes are demonstrated:
 
-- `op.sha256`
-- `op.keccak256`
-- `op.ecdsa_verify`
+-   `op.sha256`
+-   `op.keccak256`
+-   `op.ecdsa_verify`
 
 ```{testcode}
 from algopy import op
@@ -54,10 +54,10 @@ assert result
 
 The following opcodes are demonstrated:
 
-- `op.addw`
-- `op.bitlen`
-- `op.getbit`
-- `op.setbit_uint64`
+-   `op.addw`
+-   `op.bitlen`
+-   `op.getbit`
+-   `op.setbit_uint64`
 
 ```{testcode}
 from algopy import op

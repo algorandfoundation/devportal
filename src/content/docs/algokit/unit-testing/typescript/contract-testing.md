@@ -9,11 +9,11 @@ The code snippets showcasing the contract testing capabilities are using [vitest
 ```
 
 ```ts
-import { arc4 } from '@algorandfoundation/algorand-typescript';
-import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing';
+import { arc4 } from '@algorandfoundation/algorand-typescript'
+import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing'
 
 // Create the context manager for snippets below
-const ctx = new TestExecutionContext();
+const ctx = new TestExecutionContext()
 ```
 
 ## `arc4.Contract`
@@ -24,80 +24,80 @@ Within the class implementation, methods decorated with `arc4.abimethod` and `ar
 
 ```ts
 class SimpleVotingContract extends arc4.Contract {
-  topic = GlobalState({ initialValue: Bytes('default_topic'), key: 'topic' });
+  topic = GlobalState({ initialValue: Bytes('default_topic'), key: 'topic' })
   votes = GlobalState({
     initialValue: Uint64(0),
     key: 'votes',
-  });
-  voted = LocalState<uint64>({ key: 'voted' });
+  })
+  voted = LocalState<uint64>({ key: 'voted' })
 
   @arc4.abimethod({ onCreate: 'require' })
   create(initialTopic: bytes) {
-    this.topic.value = initialTopic;
-    this.votes.value = Uint64(0);
+    this.topic.value = initialTopic
+    this.votes.value = Uint64(0)
   }
 
   @arc4.abimethod()
   vote(): uint64 {
-    assert(this.voted(Txn.sender).value === 0, 'Account has already voted');
-    this.votes.value = this.votes.value + 1;
-    this.voted(Txn.sender).value = Uint64(1);
-    return this.votes.value;
+    assert(this.voted(Txn.sender).value === 0, 'Account has already voted')
+    this.votes.value = this.votes.value + 1
+    this.voted(Txn.sender).value = Uint64(1)
+    return this.votes.value
   }
 
   @arc4.abimethod({ readonly: true })
   getVotes(): uint64 {
-    return this.votes.value;
+    return this.votes.value
   }
 
   @arc4.abimethod()
   changeTopic(newTopic: bytes) {
-    assert(Txn.sender === Txn.applicationId.creator, 'Only creator can change topic');
-    this.topic.value = newTopic;
-    this.votes.value = Uint64(0);
+    assert(Txn.sender === Txn.applicationId.creator, 'Only creator can change topic')
+    this.topic.value = newTopic
+    this.votes.value = Uint64(0)
     // Reset user's vote (this is simplified per single user for the sake of example)
-    this.voted(Txn.sender).value = Uint64(0);
+    this.voted(Txn.sender).value = Uint64(0)
   }
 }
 
 // Arrange
-const initialTopic = Bytes('initial_topic');
-const contract = ctx.contract.create(SimpleVotingContract);
-contract.voted(ctx.defaultSender).value = Uint64(0);
+const initialTopic = Bytes('initial_topic')
+const contract = ctx.contract.create(SimpleVotingContract)
+contract.voted(ctx.defaultSender).value = Uint64(0)
 
 // Act - Create the topic
-contract.create(initialTopic);
+contract.create(initialTopic)
 
 // Assert - Check initial state
-expect(contract.topic.value).toEqual(initialTopic);
-expect(contract.votes.value).toEqual(Uint64(0));
+expect(contract.topic.value).toEqual(initialTopic)
+expect(contract.votes.value).toEqual(Uint64(0))
 
 // Act - Vote
 // The method `.vote()` is decorated with `algopy.arc4.abimethod`, which means it will assemble a transaction to emulate the AVM application call
-const result = contract.vote();
+const result = contract.vote()
 
 // Assert - you can access the corresponding auto generated application call transaction via test context
-expect(ctx.txn.lastGroup.transactions.length).toEqual(1);
+expect(ctx.txn.lastGroup.transactions.length).toEqual(1)
 
 // Assert - Note how local and global state are accessed via regular python instance attributes
-expect(result).toEqual(1);
-expect(contract.votes.value).toEqual(1);
-expect(contract.voted(ctx.defaultSender).value).toEqual(1);
+expect(result).toEqual(1)
+expect(contract.votes.value).toEqual(1)
+expect(contract.voted(ctx.defaultSender).value).toEqual(1)
 
 // Act - Change topic
-const newTopic = Bytes('new_topic');
-contract.changeTopic(newTopic);
+const newTopic = Bytes('new_topic')
+contract.changeTopic(newTopic)
 
 // Assert - Check topic changed and votes reset
-expect(contract.topic.value).toEqual(newTopic);
-expect(contract.votes.value).toEqual(0);
-expect(contract.voted(ctx.defaultSender).value).toEqual(0);
+expect(contract.topic.value).toEqual(newTopic)
+expect(contract.votes.value).toEqual(0)
+expect(contract.voted(ctx.defaultSender).value).toEqual(0)
 
 // Act - Get votes (should be 0 after reset)
-const votes = contract.getVotes();
+const votes = contract.getVotes()
 
 // Assert - Check votes
-expect(votes).toEqual(0);
+expect(votes).toEqual(0)
 ```
 
 For more examples of tests using `arc4.Contract`, see the [examples](../examples) section.
@@ -111,64 +111,58 @@ Unlike `arc4.Contract`, `BaseContract` requires manual setup of the transaction 
 Here's an updated example demonstrating how to test a `BaseContract` class:
 
 ```ts
-import { BaseContract, Bytes, GlobalState, Uint64 } from '@algorandfoundation/algorand-typescript';
-import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing';
-import { afterEach, expect, test } from 'vitest';
+import { BaseContract, Bytes, GlobalState, Uint64 } from '@algorandfoundation/algorand-typescript'
+import { TestExecutionContext } from '@algorandfoundation/algorand-typescript-testing'
+import { afterEach, expect, test } from 'vitest'
 
 class CounterContract extends BaseContract {
-  counter = GlobalState({ initialValue: Uint64(0) });
+  counter = GlobalState({ initialValue: Uint64(0) })
 
   increment() {
-    this.counter.value = this.counter.value + 1;
-    return Uint64(1);
+    this.counter.value = this.counter.value + 1
+    return Uint64(1)
   }
 
   approvalProgram() {
-    return this.increment();
+    return this.increment()
   }
 
   clearStateProgram() {
-    return Uint64(1);
+    return Uint64(1)
   }
 }
 
-const ctx = new TestExecutionContext();
+const ctx = new TestExecutionContext()
 afterEach(() => {
-  ctx.reset();
-});
+  ctx.reset()
+})
 
 test('increment', () => {
   // Instantiate contract
-  const contract = ctx.contract.create(CounterContract);
+  const contract = ctx.contract.create(CounterContract)
 
   // Set up the transaction context using active_txn_overrides
   ctx.txn
-    .createScope([
-      ctx.any.txn.applicationCall({
-        appId: contract,
-        sender: ctx.defaultSender,
-        appArgs: [Bytes('increment')],
-      }),
-    ])
+    .createScope([ctx.any.txn.applicationCall({ appId: contract, sender: ctx.defaultSender, appArgs: [Bytes('increment')] })])
     .execute(() => {
       // Invoke approval program
-      const result = contract.approvalProgram();
+      const result = contract.approvalProgram()
 
       // Assert approval program result
-      expect(result).toEqual(1);
+      expect(result).toEqual(1)
 
       // Assert counter value
-      expect(contract.counter.value).toEqual(1);
-    });
+      expect(contract.counter.value).toEqual(1)
+    })
   // Test clear state program
-  expect(contract.clearStateProgram()).toEqual(1);
-});
+  expect(contract.clearStateProgram()).toEqual(1)
+})
 
 test('increment with multiple txns', () => {
-  const contract = ctx.contract.create(CounterContract);
+  const contract = ctx.contract.create(CounterContract)
 
   // For scenarios with multiple transactions, you can still use gtxns
-  const extraPayment = ctx.any.txn.payment();
+  const extraPayment = ctx.any.txn.payment()
 
   ctx.txn
     .createScope(
@@ -184,13 +178,13 @@ test('increment with multiple txns', () => {
       1, // Set the application call as the active transaction
     )
     .execute(() => {
-      const result = contract.approvalProgram();
+      const result = contract.approvalProgram()
 
-      expect(result).toEqual(1);
-      expect(contract.counter.value).toEqual(1);
-    });
-  expect(ctx.txn.lastGroup.transactions.length).toEqual(2);
-});
+      expect(result).toEqual(1)
+      expect(contract.counter.value).toEqual(1)
+    })
+  expect(ctx.txn.lastGroup.transactions.length).toEqual(2)
+})
 ```
 
 In this updated example:
@@ -208,35 +202,30 @@ You can create deferred application calls for more complex testing scenarios whe
 ```ts
 class MyARC4Contract extends arc4.Contract {
   someMethod(payment: gtxn.PaymentTxn) {
-    return Uint64(1);
+    return Uint64(1)
   }
 }
 
-const ctx = new TestExecutionContext();
+const ctx = new TestExecutionContext()
 
 test('deferred call', () => {
-  const contract = ctx.contract.create(MyARC4Contract);
+  const contract = ctx.contract.create(MyARC4Contract)
 
-  const extraPayment = ctx.any.txn.payment();
-  const extraAssetTransfer = ctx.any.txn.assetTransfer();
-  const implicitPayment = ctx.any.txn.payment();
-  const deferredCall = ctx.txn.deferAppCall(
-    contract,
-    contract.someMethod,
-    'someMethod',
-    implicitPayment,
-  );
+  const extraPayment = ctx.any.txn.payment()
+  const extraAssetTransfer = ctx.any.txn.assetTransfer()
+  const implicitPayment = ctx.any.txn.payment()
+  const deferredCall = ctx.txn.deferAppCall(contract, contract.someMethod, 'someMethod', implicitPayment)
 
   ctx.txn.createScope([extraPayment, deferredCall, extraAssetTransfer]).execute(() => {
-    const result = deferredCall.submit();
-  });
-  console.log(ctx.txn.lastGroup); // [extra_payment, implicit_payment, app call, extra_asset_transfer]
-});
+    const result = deferredCall.submit()
+  })
+  console.log(ctx.txn.lastGroup) // [extra_payment, implicit_payment, app call, extra_asset_transfer]
+})
 ```
 
 A deferred application call prepares the application call transaction without immediately executing it. The call can be executed later by invoking the `.submit()` method on the deferred application call instance. As demonstrated in the example, you can also include the deferred call in a transaction group creation context manager to execute it as part of a larger transaction group. When `.submit()` is called, only the specific method passed to `defer_app_call()` will be executed.
 
 ```ts
 // test cleanup
-ctx.reset();
+ctx.reset()
 ```

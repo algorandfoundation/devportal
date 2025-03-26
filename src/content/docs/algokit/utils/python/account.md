@@ -101,7 +101,7 @@ While `TransactionSignerAccount` is the main class used to represent an account 
 
 ## Rekey account
 
-One of the unique features of Algorand is the ability to change the private key that can authorise transactions for an account. This is called [rekeying](https://developer.algorand.org/docs/get-details/accounts/rekey/).
+One of the unique features of Algorand is the ability to change the private key that can authorise transactions for an account. This is called [rekeying](https://dev.algorand.co/concepts/accounts/rekeying).
 
 > [!WARNING]
 > Rekeying should be done with caution as a rekey transaction can result in permanent loss of control of an account.

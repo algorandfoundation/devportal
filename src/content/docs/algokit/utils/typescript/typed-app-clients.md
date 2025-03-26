@@ -54,13 +54,13 @@ The approach to obtaining a client instance depends on how many app clients you 
 const appClient = algorand.client.getTypedAppClientById(MyContractClient, {
   appId: 1234n,
   // ...
-});
+})
 //or
 const appClient = new MyContractClient({
   algorand,
   appId: 1234n,
   // ...
-});
+})
 ```
 
 </td>
@@ -70,11 +70,11 @@ const appClient = new MyContractClient({
 const appClient1 = factory.getAppClientById({
   appId: 1234n,
   // ...
-});
+})
 const appClient2 = factory.getAppClientById({
   appId: 4321n,
   // ...
-});
+})
 ```
 
 </td>
@@ -85,14 +85,14 @@ const appClient = await algorand.client.getTypedAppClientByCreatorAndName(MyCont
   creatorAddress: 'CREATORADDRESS',
   appName: 'contract-name',
   // ...
-});
+})
 //or
 const appClient = await MyContractClient.fromCreatorAndName({
   algorand,
   creatorAddress: 'CREATORADDRESS',
   appName: 'contract-name',
   // ...
-});
+})
 ```
 
 </td>
@@ -103,12 +103,12 @@ const appClient1 = await factory.getAppClientByCreatorAndName({
   creatorAddress: 'CREATORADDRESS',
   appName: 'contract-name',
   // ...
-});
+})
 const appClient2 = await factory.getAppClientByCreatorAndName({
   creatorAddress: 'CREATORADDRESS',
   appName: 'contract-name-2',
   // ...
-});
+})
 ```
 
 </td>
@@ -135,12 +135,12 @@ To understand the difference between resolving by ID vs by creator and name see 
 const { appClient } = await factory.send.create.bare({
   args: [],
   // ...
-});
+})
 // or
 const { appClient } = await factory.send.create.METHODNAME({
   args: [],
   // ...
-});
+})
 ```
 
 </td>
@@ -150,7 +150,7 @@ const { appClient } = await factory.send.create.METHODNAME({
 const { appClient } = await factory.deploy({
   appName: 'contract-name',
   // ...
-});
+})
 ```
 
 </td>
@@ -163,11 +163,11 @@ const { appClient } = await factory.deploy({
 If your scenario calls for an app factory, you can create one using the below:
 
 ```typescript
-const factory = algorand.client.getTypedAppFactory(MyContractFactory);
+const factory = algorand.client.getTypedAppFactory(MyContractFactory)
 //or
 const factory = new MyContractFactory({
   algorand,
-});
+})
 ```
 
 ## Client usage
@@ -179,25 +179,25 @@ For a simple example that deploys a contract and calls a `"hello"` method, see b
 ```typescript
 // A similar working example can be seen in the AlgoKit init production smart contract templates, when using TypeScript deployment
 // In this case the generated factory is called `HelloWorldAppFactory` and is in `./artifacts/HelloWorldApp/client.ts`
-import { HelloWorldAppClient } from './artifacts/HelloWorldApp/client';
-import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+import { HelloWorldAppClient } from './artifacts/HelloWorldApp/client'
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
 
 // These require environment variables to be present, or it will retrieve from default LocalNet
-const algorand = AlgorandClient.fromEnvironment();
-const deployer = algorand.account.fromEnvironment('DEPLOYER', (1).algo());
+const algorand = AlgorandClient.fromEnvironment()
+const deployer = algorand.account.fromEnvironment('DEPLOYER', (1).algo())
 
 // Create the typed app factory
 const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory, {
   creatorAddress: deployer,
   defaultSender: deployer,
-});
+})
 
 // Create the app and get a typed app client for the created app (note: this creates a new instance of the app every time,
 //  you can use .deploy() to deploy idempotently if the app wasn't previously
 //  deployed or needs to be updated if that's allowed)
-const { appClient } = await factory.send.create();
+const { appClient } = await factory.send.create()
 
 // Make a call to an ABI method and print the result
-const response = await appClient.hello({ name: 'world' });
-console.log(response);
+const response = await appClient.hello({ name: 'world' })
+console.log(response)
 ```

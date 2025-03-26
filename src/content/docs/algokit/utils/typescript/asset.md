@@ -41,8 +41,8 @@ The base type for specifying an asset creation transaction is `AssetCreateParams
 
 ```typescript
 // Basic example
-const result = await algorand.send.assetCreate({ sender: 'CREATORADDRESS', total: 100n });
-const createdAssetId = result.assetId;
+const result = await algorand.send.assetCreate({ sender: 'CREATORADDRESS', total: 100n })
+const createdAssetId = result.assetId
 
 // Advanced example
 await algorand.send.assetCreate({
@@ -74,7 +74,7 @@ await algorand.send.assetCreate({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
 ## Reconfigure
@@ -99,11 +99,7 @@ The base type for specifying an asset creation transaction is `AssetConfigParams
 ```typescript
 // Basic example
 
-await algorand.send.assetConfig({
-  sender: 'MANAGERADDRESS',
-  assetId: 123456n,
-  manager: 'MANAGERADDRESS',
-});
+await algorand.send.assetConfig({ sender: 'MANAGERADDRESS', assetId: 123456n, manager: 'MANAGERADDRESS' })
 
 // Advanced example
 
@@ -130,7 +126,7 @@ await algorand.send.assetConfig({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
 ## Transfer
@@ -185,7 +181,7 @@ await algorand.send.assetTransfer({
 
 ## Opt-in/out
 
-Before an account can receive a specific asset, it must [`opt-in`](https://developer.algorand.org/docs/get-details/asa/#receiving-an-asset) to receive it. An opt-in transaction places an asset holding of 0 into the account and increases the [minimum balance](https://developer.algorand.org/docs/get-details/accounts/#minimum-balance) of that account by [100,000 microAlgos](https://developer.algorand.org/docs/get-details/asa/#assets-overview).
+Before an account can receive a specific asset, it must [`opt-in`](https://dev.algorand.co/concepts/assets/opt-in-out#receiving-an-asset) to receive it. An opt-in transaction places an asset holding of 0 into the account and increases the [minimum balance](https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr) of that account by [100,000 microAlgos](https://dev.algorand.co/concepts/assets/overview/).
 
 An account can opt out of an asset at any time by closing out it's asset position to another account (usually to the asset creator). This means that the account will no longer hold the asset, and the account will no longer be able to receive the asset. The account also recovers the Minimum Balance Requirement for the asset (100,000 microAlgos).
 
@@ -204,7 +200,7 @@ The base type for specifying an asset opt-in transaction is `AssetOptInParams`, 
 ```typescript
 // Basic example
 
-await algorand.send.assetOptIn({ sender: 'SENDERADDRESS', assetId: 123456n });
+await algorand.send.assetOptIn({ sender: 'SENDERADDRESS', assetId: 123456n })
 
 // Advanced example
 
@@ -227,7 +223,7 @@ await algorand.send.assetOptIn({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
 ### `assetOptOut`
@@ -249,20 +245,11 @@ If you are using the `send` variant then there is an additional parameter:
 ```typescript
 // Basic example (without creator)
 
-await algorand.send.assetOptOut({
-  sender: 'SENDERADDRESS',
-  assetId: 123456n,
-  ensureZeroBalance: true,
-});
+await algorand.send.assetOptOut({ sender: 'SENDERADDRESS', assetId: 123456n, ensureZeroBalance: true })
 
 // Basic example (with creator)
 
-await algorand.send.assetOptOut({
-  sender: 'SENDERADDRESS',
-  creator: 'CREATORADDRESS',
-  assetId: 123456n,
-  ensureZeroBalance: true,
-});
+await algorand.send.assetOptOut({ sender: 'SENDERADDRESS', creator: 'CREATORADDRESS', assetId: 123456n, ensureZeroBalance: true })
 
 // Advanced example
 
@@ -287,7 +274,7 @@ await algorand.send.assetOptOut({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
 ### `asset.bulkOptIn`
@@ -297,14 +284,14 @@ The `asset.bulkOptIn` function facilitates the opt-in process for an account to 
 ```typescript
 // Basic example
 
-algorand.asset.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n]);
+algorand.asset.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n])
 
 // Advanced example
 
 algorand.asset.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n], {
   maxFee: (1000).microAlgo(),
   suppressLog: true,
-});
+})
 ```
 
 ### `asset.bulkOptOut`
@@ -314,7 +301,7 @@ The `asset.bulkOptOut` function facilitates the opt-out process for an account f
 ```typescript
 // Basic example
 
-algorand.asset.bulkOptOut('ACCOUNTADDRESS', [12345n, 67890n]);
+algorand.asset.bulkOptOut('ACCOUNTADDRESS', [12345n, 67890n])
 
 // Advanced example
 
@@ -322,7 +309,7 @@ algorand.asset.bulkOptOut('ACCOUNTADDRESS', [12345n, 67890n], {
   ensureZeroBalance: true,
   maxFee: (1000).microAlgo(),
   suppressLog: true,
-});
+})
 ```
 
 ## Get information
@@ -332,7 +319,7 @@ algorand.asset.bulkOptOut('ACCOUNTADDRESS', [12345n, 67890n], {
 You can get the current parameters of an asset from algod by using `algorand.asset.getById(assetId)`.
 
 ```typescript
-const assetInfo = await assetManager.getById(12353n);
+const assetInfo = await assetManager.getById(12353n)
 ```
 
 ### Getting current holdings of an asset for an account
@@ -340,7 +327,7 @@ const assetInfo = await assetManager.getById(12353n);
 You can get the current holdings of an asset for a given account from algod by using `algorand.asset.getAccountInformation(accountAddress, assetId)`.
 
 ```typescript
-const address = 'XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA';
-const assetId = 123345n;
-const accountInfo = await algorand.asset.getAccountInformation(address, assetId);
+const address = 'XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA'
+const assetId = 123345n
+const accountInfo = await algorand.asset.getAccountInformation(address, assetId)
 ```

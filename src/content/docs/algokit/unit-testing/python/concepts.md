@@ -26,7 +26,6 @@ The context manager interface exposes three main properties:
 3. `any`: An instance of `AlgopyValueGenerator` for generating randomized test data.
 
 For detailed method signatures, parameters, and return types, refer to the following API sections:
-
 - [`algopy_testing.LedgerContext`](../api)
 - [`algopy_testing.TransactionContext`](../api)
 - [`algopy_testing.AVMValueGenerator`, `algopy_testing.TxnValueGenerator`, `algopy_testing.ARC4ValueGenerator`](../api)
@@ -58,7 +57,4 @@ As explained in the [introduction](index), `algorand-python-testing` _injects_ t
 3. **Mockable**: Not implemented, but can be mocked or patched. For example, `algopy.abi_call` can be mocked to return specific values or behaviors; otherwise, it raises a `NotImplementedError`. This category covers cases where native or emulated implementation in a unit test context is impractical or overly complex.
 
 For a full list of all public `algopy` types and their corresponding implementation category, refer to the [Coverage](coverage) section.
-
-```
-
 ```

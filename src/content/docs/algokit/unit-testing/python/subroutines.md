@@ -44,16 +44,16 @@ def test_calculate_value(context: algopy_testing.AlgopyTestContext):
 
 ## Benefits
 
-- Faster test execution
-- Simplified debugging
-- Focused unit testing of core logic
+-   Faster test execution
+-   Simplified debugging
+-   Focused unit testing of core logic
 
 ## Best Practices
 
-- Use subroutines for complex internal calculations
-- Prefer writing `pure` subroutines in ARC4Contract classes
-- Combine with full application tests for comprehensive coverage
-- Maintain realistic input and output types (e.g., `UInt64`, `Bytes`)
+-   Use subroutines for complex internal calculations
+-   Prefer writing `pure` subroutines in ARC4Contract classes
+-   Combine with full application tests for comprehensive coverage
+-   Maintain realistic input and output types (e.g., `UInt64`, `Bytes`)
 
 ## Example
 

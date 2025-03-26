@@ -40,11 +40,11 @@ Algorand TypeScript can be deployed to Algorand by using the PuyaTs optimising c
 Below is an example Algorand TypeScript smart contract.
 
 ```typescript
-import { Contract } from '@algorandfoundation/puya-sdk';
+import { Contract } from "@algorandfoundation/puya-sdk";
 
 class HelloWorldContract extends Contract {
   hello(name: string): string {
-    return 'Hello, ' + name;
+    return "Hello, " + name;
   }
 }
 ```
