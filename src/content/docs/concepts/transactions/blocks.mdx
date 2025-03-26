@@ -2,6 +2,10 @@
 title: Blocks
 ---
 
+import { Code } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import RemoteCode from '/src/components/RemoteCode.astro';
+
 Blocks are the fundamental data structures of the Algorand blockchain, representing a batch of transactions that transitions the ledger state from one round to the next. They include essential metadata, like round number and timestamps, and the actual transactions data. Blocks are added through Algorand's Pure Proof of Stake consensus protocol.
 
 ## Algorand Block Structure
@@ -57,6 +61,10 @@ Unlike other blockchains that require multiple confirmations or risk chain reorg
 
 ### Algorand Node Endpoints
 
+To retrieve block data programmatically, Algorand provides several REST API endpoints through its node software.
+These endpoints allow developers to fetch complete blocks, just headers, or even cryptographic hashes for specific rounds.
+They are essential for inspecting block-level data or verifying state transitions in on-chain applications.
+
 ```bash
 GET /v2/blocks/{round}: Retrieve a complete block (header + transactions).
 GET /v2/blocks/{round}/header: Fetch just the block header.
@@ -66,6 +74,32 @@ GET /v2/blocks/{round}/hash: Obtain the cryptographic hash of a given block.
 These REST endpoints typically require an API token (X-Algo-API-Token header).
 
 ### Algorand Python and Typescript
+
+Developers can also interact with blocks and transaction data using Algokit Utils in Python and TypeScript.
+
+Algokit Utils offer abstractions to retrieve block details, inspect transaction content and inspect the whole block data.
+Below are code examples demonstrating how to do this:
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:typescript'>
+    <RemoteCode
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/typescript-examples/algokit-utils-ts/transactions/blocks.ts'
+      snippet='BLOCKS'
+      lang='ts'
+      title='Blocks'
+      frame='none'
+    />
+  </TabItem>
+  <TabItem label='Python' icon='seti:python'>
+    <RemoteCode
+      src='https://raw.githubusercontent.com/algorandfoundation/devportal-code-examples/refs/heads/main/projects/python-examples/algokit_utils_py_examples/transactions/blocks.py'
+      snippet='BLOCKS'
+      lang='py'
+      title='Blocks'
+      frame='none'
+    />
+  </TabItem>
+</Tabs>
 
 ## Block Fields
 

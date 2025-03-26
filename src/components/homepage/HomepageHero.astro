@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
-import LaptopLight from '@images/laptop-light.png';
-import LaptopDark from '@images/laptop-dark.png';
+import LaptopLightClip from '@images/laptop-light-clip.webm';
+import LaptopDarkClip from '@images/laptop-dark-clip.webm';
 import CtaButton from './CtaButton.astro';
 
 const heroData = {
@@ -22,18 +22,7 @@ const heroData = {
     class='max-w-(--breakpoint-home-container) lg:flex lg:flex-row-reverse lg:items-center mx-auto! px-5 md:px-9'
   >
     <div class='lg:min-w-[64%]'>
-      <Image
-        src={LaptopLight}
-        alt='laptop drawing in lavender outline'
-        class='dark:hidden mt-0! w-full h-auto'
-      />
-      <Image
-        src={LaptopDark}
-        alt='laptop drawing in lavender outline'
-        class='hidden! dark:block! mt-0! w-full h-auto'
-      />
-      <!-- TODO: replace with video when it is available -->
-      <!-- <video muted autoplay loop class='dark:hidden mt-0! w-full h-auto'>
+      <video muted autoplay loop class='dark:hidden mt-0! w-full h-auto'>
         <source src={LaptopLightClip} type='video/mp4' />
       </video>
       <video
@@ -43,7 +32,7 @@ const heroData = {
         class='hidden! dark:block! mt-0! w-full h-auto'
       >
         <source src={LaptopDarkClip} type='video/webm' />
-      </video> -->
+      </video>
     </div>
     <div class='mt-0! max-lg:mt-4! text-center lg:text-left lg:min-w-[36%]'>
       <h1

@@ -13,6 +13,8 @@ import starlightLlmsTxt from 'starlight-llms-txt';
 
 export default defineConfig({
   site: 'https://dev.algorand.co',
+  description:
+    'The Algorand Developer Portal is the go-to resource for developers building on Algorand.',
   output: 'static',
   viewTransitions: true,
   integrations: [
@@ -50,6 +52,27 @@ export default defineConfig({
             'data-modal-title': 'Ask AI',
             'data-modal-body-bg-color': '#f6f6f6',
             'data-project-logo': '/algorand-logo.png',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image',
+            content: '/devportal-og.png',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image:width',
+            content: '1920',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image:height',
+            content: '1080',
           },
         },
       ],
