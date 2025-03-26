@@ -11,9 +11,9 @@ The `AccountManager` is a class that is used to get, create, and fund accounts a
 To get an instance of `AccountManager`, you can use either [`AlgorandClient`](./algorand-client) via `algorand.account` or instantiate it directly:
 
 ```typescript
-import { AccountManager } from '@algorandfoundation/algokit-utils/types/account-manager'
+import { AccountManager } from '@algorandfoundation/algokit-utils/types/account-manager';
 
-const accountManager = new AccountManager(clientManager)
+const accountManager = new AccountManager(clientManager);
 ```
 
 ## `TransactionSignerAccount`
@@ -33,9 +33,14 @@ algorand.account
   .setSignerFromAccount(algosdk.generateAccount())
   .setSignerFromAccount(new algosdk.LogicSigAccount(program, args))
   .setSignerFromAccount(new SigningAccount(mnemonic, sender))
-  .setSignerFromAccount(new MultisigAccount({ version: 1, threshold: 1, addrs: ['ADDRESS1...', 'ADDRESS2...'] }, [account1, account2]))
+  .setSignerFromAccount(
+    new MultisigAccount({ version: 1, threshold: 1, addrs: ['ADDRESS1...', 'ADDRESS2...'] }, [
+      account1,
+      account2,
+    ]),
+  )
   .setSignerFromAccount({ addr: 'SENDERADDRESS', signer: transactionSigner })
-  .setSigner('SENDERADDRESS', transactionSigner)
+  .setSigner('SENDERADDRESS', transactionSigner);
 ```
 
 ## Default signer
@@ -43,7 +48,7 @@ algorand.account
 If you want to have a default signer that is used to sign transactions without a registered signer (rather than throwing an exception) then you can register a default signer:
 
 ```typescript
-algorand.account.setDefaultSigner(myDefaultSigner)
+algorand.account.setDefaultSigner(myDefaultSigner);
 ```
 
 ## Get a signer
@@ -51,7 +56,7 @@ algorand.account.setDefaultSigner(myDefaultSigner)
 `AlgorandClient`](./algorand-client) will automatically retrieve a signer when signing a transaction, but if you need to get a `TransactionSigner` externally to do something more custom then you can [retrieve the signer for a given sender address:
 
 ```typescript
-const signer = algorand.account.getSigner('SENDER_ADDRESS')
+const signer = algorand.account.getSigner('SENDER_ADDRESS');
 ```
 
 If there is no signer registered for that sender address it will either return the default signer ([if registered](#default-signer)) or throw an exception.
@@ -106,11 +111,11 @@ You can also pass in `rekeyTo` as a [common transaction parameter](./algorand-cl
 ```typescript
 // Basic example (with string addresses)
 
-await algorand.account.rekeyAccount({ account: 'ACCOUNTADDRESS', rekeyTo: 'NEWADDRESS' })
+await algorand.account.rekeyAccount({ account: 'ACCOUNTADDRESS', rekeyTo: 'NEWADDRESS' });
 
 // Basic example (with signer accounts)
 
-await algorand.account.rekeyAccount({ account: account1, rekeyTo: newSignerAccount })
+await algorand.account.rekeyAccount({ account: account1, rekeyTo: newSignerAccount });
 
 // Advanced example
 
@@ -128,12 +133,12 @@ await algorand.account.rekeyAccount({
   maxFee: (3000).microAlgo(),
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 
 // Using a rekeyed account
 
 // Note: if a signing account is passed into `algorand.account.rekeyAccount` then you don't need to call `rekeyedAccount` to register the new signer
-const rekeyedAccount = algorand.account.rekeyed(account, newAccount)
+const rekeyedAccount = algorand.account.rekeyed(account, newAccount);
 // rekeyedAccount can be used to sign transactions on behalf of account...
 ```
 
@@ -149,10 +154,10 @@ The KMD SDK is fairly low level so to make use of it there is a fair bit of boil
 To get an instance of the `KmdAccountManager` class you can access it from [`AlgorandClient`](./algorand-client) via `algorand.account.kmd` or instantiate it directly (passing in a [`ClientManager`](./client)):
 
 ```typescript
-import { KmdAccountManager } from '@algorandfoundation/algokit-utils/types/kmd-account-manager'
+import { KmdAccountManager } from '@algorandfoundation/algokit-utils/types/kmd-account-manager';
 
 // Algod client only
-const kmdAccountManager = new KmdAccountManager(clientManager)
+const kmdAccountManager = new KmdAccountManager(clientManager);
 ```
 
 The methods that are available are:
@@ -165,26 +170,29 @@ The methods that are available are:
 // Get a wallet account that seeded the LocalNet network
 const defaultDispenserAccount = await kmdAccountManager.getWalletAccount(
   'unencrypted-default-wallet',
-  (a) => a.status !== 'Offline' && a.amount > 1_000_000_000,
-)
+  a => a.status !== 'Offline' && a.amount > 1_000_000_000,
+);
 // Same as above, but dedicated method call for convenience
-const localNetDispenserAccount = await kmdAccountManager.getLocalNetDispenserAccount()
+const localNetDispenserAccount = await kmdAccountManager.getLocalNetDispenserAccount();
 // Idempotently get (if exists) or create (if it doesn't exist yet) an account by name using KMD
 // if creating it then fund it with 2 ALGO from the default dispenser account
-const newAccount = await kmdAccountManager.getOrCreateWalletAccount('account1', (2).algo())
+const newAccount = await kmdAccountManager.getOrCreateWalletAccount('account1', (2).algo());
 // This will return the same account as above since the name matches
-const existingAccount = await kmdAccountManager.getOrCreateWalletAccount('account1')
+const existingAccount = await kmdAccountManager.getOrCreateWalletAccount('account1');
 ```
 
 Some of this functionality is directly exposed from [`AccountManager`](#accountmanager), which has the added benefit of registering the account as a signer so they can be automatically used to sign transactions when using via [`AlgorandClient`](./algorand-client):
 
 ```typescript
 // Get and register LocalNet dispenser
-const localNetDispenser = await algorand.account.localNetDispenser()
+const localNetDispenser = await algorand.account.localNetDispenser();
 // Get and register a dispenser by environment variable, or if not set then LocalNet dispenser via KMD
-const dispenser = await algorand.account.dispenserFromEnvironment()
+const dispenser = await algorand.account.dispenserFromEnvironment();
 // Get an account from KMD idempotently by name. In this case we'll get the default dispenser account
-const account1 = await algorand.account.fromKmd('unencrypted-default-wallet', (a) => a.status !== 'Offline' && a.amount > 1_000_000_000)
+const account1 = await algorand.account.fromKmd(
+  'unencrypted-default-wallet',
+  a => a.status !== 'Offline' && a.amount > 1_000_000_000,
+);
 // Get / create and register account from KMD idempotently by name
-const account1 = await algorand.account.kmd.getOrCreateWalletAccount('account1', (2).algo())
+const account1 = await algorand.account.kmd.getOrCreateWalletAccount('account1', (2).algo());
 ```

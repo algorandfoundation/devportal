@@ -22,7 +22,7 @@ const result = await algorand.send.payment({
   sender: 'SENDERADDRESS',
   receiver: 'RECEIVERADDRESS',
   amount: (4).algo(),
-})
+});
 
 // Advanced example
 const result2 = await algorand.send.payment({
@@ -48,7 +48,7 @@ const result2 = await algorand.send.payment({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 ## `ensureFunded`
@@ -83,33 +83,42 @@ The general structure of these calls is similar, they all take:
 // From account
 
 // Basic example
-await algorand.account.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', (1).algo())
+await algorand.account.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', (1).algo());
 // With configuration
 await algorand.account.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', (1).algo(), {
   minFundingIncrement: (2).algo(),
   fee: (1000).microAlgo(),
   suppressLog: true,
-})
+});
 
 // From environment
 
 // Basic example
-await algorand.account.ensureFundedFromEnvironment('ACCOUNTADDRESS', (1).algo())
+await algorand.account.ensureFundedFromEnvironment('ACCOUNTADDRESS', (1).algo());
 // With configuration
 await algorand.account.ensureFundedFromEnvironment('ACCOUNTADDRESS', (1).algo(), {
   minFundingIncrement: (2).algo(),
   fee: (1000).microAlgo(),
   suppressLog: true,
-})
+});
 
 // TestNet Dispenser API
 
 // Basic example
-await algorand.account.ensureFundedUsingDispenserAPI('ACCOUNTADDRESS', algorand.client.getTestNetDispenserFromEnvironment(), (1).algo())
+await algorand.account.ensureFundedUsingDispenserAPI(
+  'ACCOUNTADDRESS',
+  algorand.client.getTestNetDispenserFromEnvironment(),
+  (1).algo(),
+);
 // With configuration
-await algorand.account.ensureFundedUsingDispenserAPI('ACCOUNTADDRESS', algorand.client.getTestNetDispenserFromEnvironment(), (1).algo(), {
-  minFundingIncrement: (2).algo(),
-})
+await algorand.account.ensureFundedUsingDispenserAPI(
+  'ACCOUNTADDRESS',
+  algorand.client.getTestNetDispenserFromEnvironment(),
+  (1).algo(),
+  {
+    minFundingIncrement: (2).algo(),
+  },
+);
 ```
 
 All 3 variants return an `EnsureFundedReturnType` (and the first two also return a [single transaction result](./algorand-client#sending-a-single-transaction)) if a funding transaction was needed, or `undefined` if no transaction was required:

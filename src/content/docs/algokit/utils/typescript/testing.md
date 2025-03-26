@@ -13,7 +13,7 @@ The testing capability is not exposed from the root algokit module so there is a
 To access all of the functionality in the testing capability individually, you can import the testing module:
 
 ```typescript
-import * as algotesting from '@algorandfoundation/algokit-utils/testing'
+import * as algotesting from '@algorandfoundation/algokit-utils/testing';
 ```
 
 ## Algorand fixture
@@ -21,7 +21,7 @@ import * as algotesting from '@algorandfoundation/algokit-utils/testing'
 In general, the only entrypoint you will need to use the testing capability is just by importing the `algorandFixture` since it exposes the rest of the functionality in a manner that is easy to integrate with an underlying test framework like Jest or vitest:
 
 ```typescript
-import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
+import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
 ### Using with Jest
@@ -31,19 +31,19 @@ To integrate with [Jest](https://jestjs.io/) you need to pass the `fixture.newSc
 #### Per-test isolation
 
 ```typescript
-import { describe, test, beforeEach } from '@jest/globals'
-import { algorandFixture } from './testing'
+import { describe, test, beforeEach } from '@jest/globals';
+import { algorandFixture } from './testing';
 
 describe('MY MODULE', () => {
-  const fixture = algorandFixture()
-  beforeEach(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture();
+  beforeEach(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount /* ... */ } = fixture.context
+    const { algorand, testAccount /* ... */ } = fixture.context;
 
     // Test stuff!
-  })
-})
+  });
+});
 ```
 
 Occasionally there may be a delay when first running the fixture setup so we add a 10s timeout to avoid intermittent test failures (`10_000`).
@@ -51,19 +51,19 @@ Occasionally there may be a delay when first running the fixture setup so we add
 #### Test suite isolation
 
 ```typescript
-import { describe, test, beforeAll } from '@jest/globals'
-import { algorandFixture } from './testing'
+import { describe, test, beforeAll } from '@jest/globals';
+import { algorandFixture } from './testing';
 
 describe('MY MODULE', () => {
-  const fixture = algorandFixture()
-  beforeAll(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture();
+  beforeAll(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount /* ... */ } = fixture.context
+    const { algorand, testAccount /* ... */ } = fixture.context;
 
     // Test stuff!
-  })
-})
+  });
+});
 ```
 
 Occasionally there may be a delay when first running the fixture setup so we add a 10s timeout to avoid intermittent test failures (`10_000`).
@@ -75,19 +75,19 @@ To integrate with [vitest](https://vitest.dev/) you need to pass the `fixture.be
 #### Per-test isolation
 
 ```typescript
-import { describe, test, beforeEach } from 'vitest'
-import { algorandFixture } from './testing'
+import { describe, test, beforeEach } from 'vitest';
+import { algorandFixture } from './testing';
 
 describe('MY MODULE', () => {
-  const fixture = algorandFixture()
-  beforeEach(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture();
+  beforeEach(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount /* ... */ } = fixture.context
+    const { algorand, testAccount /* ... */ } = fixture.context;
 
     // Test stuff!
-  })
-})
+  });
+});
 ```
 
 Occasionally there may be a delay when first running the fixture setup so we add a 10s timeout to avoid intermittent test failures (`10_000`).
@@ -95,19 +95,19 @@ Occasionally there may be a delay when first running the fixture setup so we add
 #### Test suite isolation
 
 ```typescript
-import { describe, test, beforeAll } from 'vitest'
-import { algorandFixture } from './testing'
+import { describe, test, beforeAll } from 'vitest';
+import { algorandFixture } from './testing';
 
 describe('MY MODULE', () => {
-  const fixture = algorandFixture()
-  beforeAll(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture();
+  beforeAll(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount /* ... */ } = fixture.context
+    const { algorand, testAccount /* ... */ } = fixture.context;
 
     // Test stuff!
-  })
-})
+  });
+});
 ```
 
 Occasionally there may be a delay when first running the fixture setup so we add a 10s timeout to avoid intermittent test failures (`10_000`).
@@ -141,7 +141,7 @@ The `fixture.context` property is of type `AlgorandTestAutomationContext` expose
 If you want to capture log messages from AlgoKit that are issued within your test so that you can assert on them or parse them for debugging information etc. then you can use the log capture fixture.
 
 ```typescript
-import { algoKitLogCaptureFixture } from '@algorandfoundation/algokit-utils/testing'
+import { algoKitLogCaptureFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
 The log capture fixture works by setting the logger within the AlgoKit configuration to be a `TestLogger` during the test run.
@@ -151,22 +151,22 @@ The log capture fixture works by setting the logger within the AlgoKit configura
 To integrate with [Jest](https://jestjs.io/) you need to pass the `fixture.beforeEach` method into Jest's `beforeEach` method and then within each test you can access `fixture.context` to access per-test isolated fixture values.
 
 ```typescript
-import { describe, test, beforeEach, afterEach } from '@jest/globals'
-import { algoKitLogCaptureFixture } from './testing'
+import { describe, test, beforeEach, afterEach } from '@jest/globals';
+import { algoKitLogCaptureFixture } from './testing';
 
 describe('MY MODULE', () => {
-  const logs = algoKitLogCaptureFixture()
-  beforeEach(logs.beforeEach)
-  afterEach(logs.afterEach)
+  const logs = algoKitLogCaptureFixture();
+  beforeEach(logs.beforeEach);
+  afterEach(logs.afterEach);
 
   test('MY TEST', async () => {
-    const { algorand, testAccount } = fixture.context
+    const { algorand, testAccount } = fixture.context;
     // Test stuff!
 
-    const capturedLogs = logs.testLogger.capturedLogs
+    const capturedLogs = logs.testLogger.capturedLogs;
     // do stuff with the logs
-  })
-})
+  });
+});
 ```
 
 ### Using with vitest
@@ -174,22 +174,22 @@ describe('MY MODULE', () => {
 To integrate with [vitest](https://vitest.dev/) you need to pass the `fixture.beforeEach` method into vitest's `beforeEach` method and then within each test you can access `fixture.context` to access per-test isolated fixture values.
 
 ```typescript
-import { describe, test, beforeEach, afterEach } from 'vitest'
-import { algoKitLogCaptureFixture } from './testing'
+import { describe, test, beforeEach, afterEach } from 'vitest';
+import { algoKitLogCaptureFixture } from './testing';
 
 describe('MY MODULE', () => {
-  const logs = algoKitLogCaptureFixture()
-  beforeEach(logs.beforeEach)
-  afterEach(logs.afterEach)
+  const logs = algoKitLogCaptureFixture();
+  beforeEach(logs.beforeEach);
+  afterEach(logs.afterEach);
 
   test('MY TEST', async () => {
-    const { algorand, testAccount } = fixture.context
+    const { algorand, testAccount } = fixture.context;
     // Test stuff!
 
-    const capturedLogs = logs.testLogger.capturedLogs
+    const capturedLogs = logs.testLogger.capturedLogs;
     // do stuff with the logs
-  })
-})
+  });
+});
 ```
 
 ### Snapshot testing the logs
@@ -199,15 +199,17 @@ If you want to quickly pin some behaviour of what logic you have does in terms o
 This might look something like this:
 
 ```typescript
-const { algorand, testAccount } = fixture.context
-const result = await algorand.client.getTypedClientById(HelloWorldContractClient, { id: 0 }).deploy()
+const { algorand, testAccount } = fixture.context;
+const result = await algorand.client
+  .getTypedClientById(HelloWorldContractClient, { id: 0 })
+  .deploy();
 expect(
   logging.testLogger.getLogSnapshot({
     accounts: [testAccount],
     transactions: [result.transaction],
     apps: [result.appId],
   }),
-).toMatchSnapshot()
+).toMatchSnapshot();
 ```
 
 ## Waiting for indexer

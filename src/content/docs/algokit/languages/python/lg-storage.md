@@ -23,15 +23,15 @@ by key. There are [AVM limits to the amount of global storage that can be alloca
 This is represented in Algorand Python by either:
 
 1. Assigning any [Algorand Python typed](./lg-types) value to an instance variable (e.g. `self.value = UInt64(3)`).
-    - Use this approach if you just require a terse API for getting and setting a state value
+   - Use this approach if you just require a terse API for getting and setting a state value
 2. Using an instance of `GlobalState`, which gives some extra features to understand
    and control the value and the metadata of it (which propagates to the ARC-32 app spec file)
-    - Use this approach if you need to:
-        - Omit a default/initial value
-        - Delete the stored value
-        - Check if a value exists
-        - Specify the exact key bytes
-        - Include a description to be included in App Spec files (ARC32/ARC56)
+   - Use this approach if you need to:
+     - Omit a default/initial value
+     - Delete the stored value
+     - Check if a value exists
+     - Specify the exact key bytes
+     - Include a description to be included in App Spec files (ARC32/ARC56)
 
 For example:
 

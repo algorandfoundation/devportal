@@ -4,9 +4,7 @@ title: @algorandfoundation/algorand-typescript
 
 **@algorandfoundation/algorand-typescript**
 
-***
-
-
+---
 
 ## Modules
 

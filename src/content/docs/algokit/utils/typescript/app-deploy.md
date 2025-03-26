@@ -28,8 +28,6 @@ Namely, it described the concept of a smart contract development lifecycle:
    1. **Validate** the deployed app via automated testing of the smart contracts to provide confidence in their correctness
    2. **Call** deployed smart contract with runtime parameters to utilise it
 
-
-
 The App deployment capability provided by AlgoKit Utils helps implement **#2 Deployment**.
 
 Furthermore, the implementation contains the following implementation characteristics per the original architecture design:
@@ -48,9 +46,9 @@ The `AppDeployer` is a class that is used to manage app deployments and deployme
 To get an instance of `AppDeployer` you can use either [`AlgorandClient`](./algorand-client) via `algorand.appDeployer` or instantiate it directly (passing in an [`AppManager`](./app#appmanager), [`AlgorandClientTransactionSender`](./algorand-client#sending-a-single-transaction) and optionally an indexer client instance):
 
 ```typescript
-import { AppDeployer } from '@algorandfoundation/algokit-utils/types/app-deployer'
+import { AppDeployer } from '@algorandfoundation/algokit-utils/types/app-deployer';
 
-const appDeployer = new AppDeployer(appManager, transactionSender, indexer)
+const appDeployer = new AppDeployer(appManager, transactionSender, indexer);
 ```
 
 ## Deployment metadata
@@ -75,8 +73,8 @@ ALGOKIT_DEPLOYER:j{name:"MyApp",version:"1.0",updatable:true,deletable:false}
 In order to resolve what apps have been previously deployed and their metadata, AlgoKit provides a method that does a series of indexer lookups and returns a map of name to app metadata via `algorand.appDeployer.getCreatorAppsByName(creatorAddress)`.
 
 ```typescript
-const appLookup = algorand.appDeployer.getCreatorAppsByName('CREATORADDRESS')
-const app1Metadata = appLookup['app1']
+const appLookup = algorand.appDeployer.getCreatorAppsByName('CREATORADDRESS');
+const app1Metadata = appLookup['app1'];
 ```
 
 This method caches the result of the lookup, since it's a reasonably heavyweight call (N+1 indexer calls for N deployed apps by the creator). If you want to skip the cache to get a fresh version then you can pass in a second parameter `ignoreCache?: boolean`. This should only be needed if you are performing parallel deployments outside of the current `AppDeployer` instance, since it will keep its cache updated based on its own deployments.
@@ -85,10 +83,10 @@ The return type of `getCreatorAppsByName` is `AppLookup`:
 
 ```typescript
 export interface AppLookup {
-  creator: Readonly<string>
+  creator: Readonly<string>;
   apps: {
-    [name: string]: AppMetadata
-  }
+    [name: string]: AppMetadata;
+  };
 }
 ```
 
@@ -97,25 +95,25 @@ The `apps` property contains a lookup by app name that resolves to the current `
 ```typescript
 interface AppMetadata {
   /** The id of the app */
-  appId: bigint
+  appId: bigint;
   /** The Algorand address of the account associated with the app */
-  appAddress: string
+  appAddress: string;
   /** The unique name identifier of the app within the creator account */
-  name: string
+  name: string;
   /** The version of app that is / will be deployed */
-  version: string
+  version: string;
   /** Whether or not the app is deletable / permanent / unspecified */
-  deletable?: boolean
+  deletable?: boolean;
   /** Whether or not the app is updatable / immutable / unspecified */
-  updatable?: boolean
+  updatable?: boolean;
   /** The round the app was created */
-  createdRound: bigint
+  createdRound: bigint;
   /** The last round that the app was updated */
-  updatedRound: bigint
+  updatedRound: bigint;
   /** The metadata when the app was created */
-  createdMetadata: AppDeployMetadata
+  createdMetadata: AppDeployMetadata;
   /** Whether or not the app is deleted */
-  deleted: boolean
+  deleted: boolean;
 }
 ```
 
@@ -205,7 +203,7 @@ const deploymentResult = algorand.appDeployer.deploy({
   onUpdate: OnUpdate.Update,
   // Optional execution control parameters
   populateAppCallResources: true,
-})
+});
 ```
 
 This method performs an idempotent (safely retryable) deployment. It will detect if the app already exists and if it doesn't it will create it. If the app does already exist then it will:

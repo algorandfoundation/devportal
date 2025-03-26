@@ -43,8 +43,8 @@ assert result is True
 
 `execute_logicsig()` returns a boolean:
 
--   `True`: Transaction approved
--   `False`: Transaction rejected
+- `True`: Transaction approved
+- `False`: Transaction rejected
 
 ## Pass Arguments
 

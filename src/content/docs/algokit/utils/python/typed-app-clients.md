@@ -13,7 +13,7 @@ You can generate an app spec file:
 - Using [Algorand Python](https://algorandfoundation.github.io/puya/#quick-start)
 - Using [TEALScript](https://tealscript.netlify.app/tutorials/hello-world/0004-artifacts/)
 - By hand by following the specification [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258)/[ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032)
-- Using [Beaker](https://algorand-devrel.github.io/beaker/html/usage.html) (PyTEAL)  *(DEPRECATED)*
+- Using [Beaker](https://algorand-devrel.github.io/beaker/html/usage.html) (PyTEAL) _(DEPRECATED)_
 
 ## Generating a typed client
 

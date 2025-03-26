@@ -21,24 +21,24 @@ const subscriber = new AlgorandSubscriber(
   },
   algod,
   optionalIndexer,
-)
+);
 
 // Set up subscription(s)
-subscriber.on('filter1', async (transaction) => {
+subscriber.on('filter1', async transaction => {
   // ...
-})
+});
 //...
 
 // Set up error handling
-subscriber.onError((e) => {
+subscriber.onError(e => {
   // ...
-})
+});
 
 // Either: Start the subscriber (if in long-running process)
-subscriber.start()
+subscriber.start();
 
 // OR: Poll the subscriber (if in cron job / periodic lambda)
-subscriber.pollOnce()
+subscriber.pollOnce();
 ```
 
 ## Capabilities
@@ -102,7 +102,7 @@ If you are using [`getSubscribedTransactions`](./subscriptions) or the `pollOnce
 If you want to manually run code that waits for a given round to become available you can execute the following algosdk code:
 
 ```typescript
-await algod.statusAfterBlock(roundNumberToWaitFor).do()
+await algod.statusAfterBlock(roundNumberToWaitFor).do();
 ```
 
 It's worth noting special care has been placed in the subscriber library to properly handle abort signalling. All asynchronous operations including algod polls and polling waits have abort signal handling in place so if you call `subscriber.stop()` at any point in time it should almost immediately, cleanly, exit and if you want to wait for the stop to finish you can `await subscriber.stop()`.
@@ -110,13 +110,13 @@ It's worth noting special care has been placed in the subscriber library to prop
 If you want to hook this up to Node.js process signals you can include code like this in your service entrypoint:
 
 ```typescript
-;['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((signal) =>
+['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal =>
   process.on(signal, () => {
     // eslint-disable-next-line no-console
-    console.log(`Received ${signal}; stopping subscriber...`)
-    subscriber.stop(signal)
+    console.log(`Received ${signal}; stopping subscriber...`);
+    subscriber.stop(signal);
   }),
-)
+);
 ```
 
 ### Watermarking and resilience
@@ -192,15 +192,16 @@ Currently this allows you filter based on any combination (AND logic) of:
   - Call arguments e.g.
     ```typescript
     filter: {
-      appCallArgumentsMatch: (appCallArguments) =>
-        appCallArguments.length > 1 && Buffer.from(appCallArguments[1]).toString('utf-8') === 'hello_world'
+      appCallArgumentsMatch: appCallArguments =>
+        appCallArguments.length > 1 &&
+        Buffer.from(appCallArguments[1]).toString('utf-8') === 'hello_world';
     }
     ```
   - Emitted ARC-28 event(s) e.g.
 
     ```typescript
     filter: {
-      arc28Events: [{ groupName: 'group1', eventName: 'MyEvent' }]
+      arc28Events: [{ groupName: 'group1', eventName: 'MyEvent' }];
     }
     ```
 
@@ -254,15 +255,15 @@ The `Arc28EventGroup` type has the following definition:
 /** Specifies a group of ARC-28 event definitions along with instructions for when to attempt to process the events. */
 export interface Arc28EventGroup {
   /** The name to designate for this group of events. */
-  groupName: string
+  groupName: string;
   /** Optional list of app IDs that this event should apply to */
-  processForAppIds?: bigint[]
+  processForAppIds?: bigint[];
   /** Optional predicate to indicate if these ARC-28 events should be processed for the given transaction */
-  processTransaction?: (transaction: TransactionResult) => boolean
+  processTransaction?: (transaction: TransactionResult) => boolean;
   /** Whether or not to silently (with warning log) continue if an error is encountered processing the ARC-28 event data; default = false */
-  continueOnError?: boolean
+  continueOnError?: boolean;
   /** The list of ARC-28 event definitions */
-  events: Arc28Event[]
+  events: Arc28Event[];
 }
 
 /**
@@ -270,18 +271,18 @@ export interface Arc28EventGroup {
  */
 export interface Arc28Event {
   /** The name of the event */
-  name: string
+  name: string;
   /** Optional, user-friendly description for the event */
-  desc?: string
+  desc?: string;
   /** The arguments of the event, in order */
   args: Array<{
     /** The type of the argument */
-    type: string
+    type: string;
     /** Optional, user-friendly name for the argument */
-    name?: string
+    name?: string;
     /** Optional, user-friendly description for the argument */
-    desc?: string
-  }>
+    desc?: string;
+  }>;
 }
 ```
 

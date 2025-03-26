@@ -10,21 +10,21 @@ The main entrypoint to the bulk of the functionality in AlgoKit Utils is the `Al
 // Point to the network configured through environment variables or
 //  if no environment variables it will point to the default LocalNet
 //  configuration
-const algorand = AlgorandClient.fromEnvironment()
+const algorand = AlgorandClient.fromEnvironment();
 // Point to default LocalNet configuration
-const algorand = AlgorandClient.defaultLocalNet()
+const algorand = AlgorandClient.defaultLocalNet();
 // Point to TestNet using AlgoNode free tier
-const algorand = AlgorandClient.testNet()
+const algorand = AlgorandClient.testNet();
 // Point to MainNet using AlgoNode free tier
-const algorand = AlgorandClient.mainNet()
+const algorand = AlgorandClient.mainNet();
 // Point to a pre-created algod client
-const algorand = AlgorandClient.fromClients({ algod })
+const algorand = AlgorandClient.fromClients({ algod });
 // Point to pre-created algod, indexer and kmd clients
-const algorand = AlgorandClient.fromClients({ algod, indexer, kmd })
+const algorand = AlgorandClient.fromClients({ algod, indexer, kmd });
 // Point to custom configuration for algod
-const algorand = AlgorandClient.fromConfig({ algodConfig })
+const algorand = AlgorandClient.fromConfig({ algodConfig });
 // Point to custom configuration for algod, indexer and kmd
-const algorand = AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConfig })
+const algorand = AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConfig });
 ```
 
 ## Accessing SDK clients
@@ -32,11 +32,11 @@ const algorand = AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConf
 Once you have an `AlgorandClient` instance, you can access the SDK clients for the various Algorand APIs via the `algorand.client` property.
 
 ```ts
-const algorand = AlgorandClient.defaultLocalNet()
+const algorand = AlgorandClient.defaultLocalNet();
 
-const algodClient = algorand.client.algod
-const indexerClient = algorand.client.indexer
-const kmdClient = algorand.client.kmd
+const algodClient = algorand.client.algod;
+const indexerClient = algorand.client.indexer;
+const kmdClient = algorand.client.kmd;
 ```
 
 ## Accessing manager class instances
@@ -80,11 +80,11 @@ Where `BuiltTransactions` looks like this:
 ```typescript
 export interface BuiltTransactions {
   /** The built transactions */
-  transactions: algosdk.Transaction[]
+  transactions: algosdk.Transaction[];
   /** Any `ABIMethod` objects associated with any of the transactions in a map keyed by transaction index. */
-  methodCalls: Map<number, algosdk.ABIMethod>
+  methodCalls: Map<number, algosdk.ABIMethod>;
   /** Any `TransactionSigner` objects associated with any of the transactions in a map keyed by transaction index. */
-  signers: Map<number, algosdk.TransactionSigner>
+  signers: Map<number, algosdk.TransactionSigner>;
 }
 ```
 
@@ -121,7 +121,7 @@ const result = algorand
   .newGroup()
   .addPayment({ sender: 'SENDERADDRESS', receiver: 'RECEIVERADDRESS', amount: (1).microAlgo() })
   .addAssetOptIn({ sender: 'SENDERADDRESS', assetId: 12345n })
-  .send()
+  .send();
 ```
 
 `newGroup()` returns a new [`TransactionComposer`](./transaction-composer) instance, which can also return the group of transactions, simulate them and other things.

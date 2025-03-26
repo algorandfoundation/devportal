@@ -15,16 +15,20 @@ The `ClientManager` is a class that is used to manage client instances.
 To get an instance of `ClientManager` you can get it from either [`AlgorandClient`](./algorand-client) via `algorand.client` or instantiate it directly:
 
 ```typescript
-import { ClientManager } from '@algorandfoundation/algokit-utils/types/client-manager'
+import { ClientManager } from '@algorandfoundation/algokit-utils/types/client-manager';
 
 // Algod client only
-const clientManager = new ClientManager({ algod: algodClient })
+const clientManager = new ClientManager({ algod: algodClient });
 // All clients
-const clientManager = new ClientManager({ algod: algodClient, indexer: indexerClient, kmd: kmdClient })
+const clientManager = new ClientManager({
+  algod: algodClient,
+  indexer: indexerClient,
+  kmd: kmdClient,
+});
 // Algod config only
-const clientManager = new ClientManager({ algodConfig })
+const clientManager = new ClientManager({ algodConfig });
 // All client configs
-const clientManager = new ClientManager({ algodConfig, indexerConfig, kmdConfig })
+const clientManager = new ClientManager({ algodConfig, indexerConfig, kmdConfig });
 ```
 
 ## Network configuration
@@ -72,21 +76,21 @@ You can also shortcut needing to write the likes of `ClientManager.getAlgoClient
 Once you have a `ClientManager` instance, you can access the SDK clients for the various Algorand APIs from it (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](./algorand-client)):
 
 ```typescript
-const algorand = AlgorandClient.defaultLocalNet()
+const algorand = AlgorandClient.defaultLocalNet();
 
-const algodClient = algorand.client.algod
-const indexerClient = algorand.client.indexer
-const kmdClient = algorand.client.kmd
+const algodClient = algorand.client.algod;
+const indexerClient = algorand.client.indexer;
+const kmdClient = algorand.client.kmd;
 ```
 
 If the method to create the `ClientManager` doesn't configure indexer or kmd, then accessing those clients will trigger an error to be thrown:
 
 ```typescript
-const algorand = AlgorandClient.fromClients({ algod })
+const algorand = AlgorandClient.fromClients({ algod });
 
-const algodClient = algorand.client.algod // OK
-algorand.client.indexer // Throws error
-algorand.client.kmd // Throws error
+const algodClient = algorand.client.algod; // OK
+algorand.client.indexer; // Throws error
+algorand.client.kmd; // Throws error
 ```
 
 ### Creating an app client instance
@@ -106,12 +110,13 @@ When receiving an Algod or Indexer client from AlgoKit Utils, it will be a speci
 To get information about the current network you are connected to, you can use the `network()` method on `ClientManager` or the `is{Network}()` methods (which in turn call `network()`) as shown below (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](./algorand-client)):
 
 ```typescript
-const algorand = AlgorandClient.defaultLocalNet()
+const algorand = AlgorandClient.defaultLocalNet();
 
-const { isTestNet, isMainNet, isLocalNet, genesisId, genesisHash } = await algorand.client.network()
-const testNet = await algorand.client.isTestNet()
-const mainNet = await algorand.client.isMainNet()
-const localNet = await algorand.client.isLocalNet()
+const { isTestNet, isMainNet, isLocalNet, genesisId, genesisHash } =
+  await algorand.client.network();
+const testNet = await algorand.client.isTestNet();
+const mainNet = await algorand.client.isMainNet();
+const localNet = await algorand.client.isLocalNet();
 ```
 
 The first time `network()` is called it will make a HTTP call to algod to get the network parameters, but from then on it will be cached within that `ClientManager` instance for subsequent calls.

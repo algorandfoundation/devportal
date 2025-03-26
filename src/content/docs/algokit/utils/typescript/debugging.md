@@ -11,10 +11,10 @@ The `config.ts` file contains the `UpdatableConfig` class which manages and upda
 To enable debug mode in your project you can configure it as follows:
 
 ```ts
-import { Config } from '@algorandfoundation/algokit-utils'
+import { Config } from '@algorandfoundation/algokit-utils';
 Config.configure({
   debug: true,
-})
+});
 ```
 
 ## Debugging in `node` environment (recommended)
@@ -36,11 +36,11 @@ Note: `algokit-utils-ts-debug` cannot be used in browser environments. However, 
 After setting the `debug` flag to true in the [configuration](#configuration) section, subscribe to the `TxnGroupSimulated` event as follows:
 
 ```ts
-import { AVMTracesEventData, Config, EventType } from '@algorandfoundation/algokit-utils'
+import { AVMTracesEventData, Config, EventType } from '@algorandfoundation/algokit-utils';
 
 Config.events.on(EventType.TxnGroupSimulated, (eventData: AVMTracesEventData) => {
-  Config.logger.info(JSON.stringify(eventData.simulateResponse.get_obj_for_encoding(), null, 2))
-})
+  Config.logger.info(JSON.stringify(eventData.simulateResponse.get_obj_for_encoding(), null, 2));
+});
 ```
 
 This will output any simulation traces that have been emitted whilst calling your app. Place this code immediately after the `Config.configure` call to ensure it executes before any transactions are submitted for simulation.

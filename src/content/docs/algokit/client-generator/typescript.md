@@ -16,9 +16,9 @@ Once you have an instance, if you want an escape hatch to the [underlying untype
 
 ```typescript
 // Untyped `AppFactory`
-const untypedFactory = factory.appFactory
+const untypedFactory = factory.appFactory;
 // Untyped `AppClient`
-const untypedClient = client.appClient
+const untypedClient = client.appClient;
 ```
 
 ### Get a factory
@@ -29,7 +29,7 @@ If you only need a single client for a single, known app then you can skip using
 
 ```typescript
 // Via AlgorandClient
-const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory)
+const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory);
 // Or, using the options:
 const factoryWithOptionalParams = algorand.client.getTypedAppFactory(HelloWorldAppFactory, {
   defaultSender: 'DEFAULTSENDERADDRESS',
@@ -40,11 +40,11 @@ const factoryWithOptionalParams = algorand.client.getTypedAppFactory(HelloWorldA
     VALUE: '1',
   },
   version: '2.0',
-})
+});
 // Or via the constructor
 const factory = new HelloWorldAppFactory({
   algorand,
-})
+});
 // with options:
 const factory = new HelloWorldAppFactory({
   algorand,
@@ -56,7 +56,7 @@ const factory = new HelloWorldAppFactory({
     VALUE: '1',
   },
   version: '2.0',
-})
+});
 ```
 
 ### Get a client by app ID
@@ -67,38 +67,38 @@ You can get one by using a previously created app factory, from an `AlgorandClie
 
 ```typescript
 // Via factory
-const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory)
-const client = factory.getAppClientById({ appId: 123n })
+const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory);
+const client = factory.getAppClientById({ appId: 123n });
 const clientWithOptionalParams = factory.getAppClientById({
   appId: 123n,
   defaultSender: 'DEFAULTSENDERADDRESS',
   appName: 'OverriddenAppName',
   // Can also pass in `approvalSourceMap`, and `clearSourceMap`
-})
+});
 
 // Via AlgorandClient
 const client = algorand.client.getTypedAppClientById(HelloWorldAppClient, {
   appId: 123n,
-})
+});
 const clientWithOptionalParams = algorand.client.getTypedAppClientById(HelloWorldAppClient, {
   appId: 123n,
   defaultSender: 'DEFAULTSENDERADDRESS',
   appName: 'OverriddenAppName',
   // Can also pass in `approvalSourceMap`, and `clearSourceMap`
-})
+});
 
 // Via constructor
 const client = new HelloWorldAppClient({
   algorand,
   appId: 123n,
-})
+});
 const clientWithOptionalParams = new HelloWorldAppClient({
   algorand,
   appId: 123n,
   defaultSender: 'DEFAULTSENDERADDRESS',
   appName: 'OverriddenAppName',
   // Can also pass in `approvalSourceMap`, and `clearSourceMap`
-})
+});
 ```
 
 ### Get a client by creator address and name
@@ -108,14 +108,14 @@ The typed [app client](https://github.com/algorandfoundation/algokit-utils-ts/bl
 You can get one by using a previously created app factory:
 
 ```typescript
-const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory)
-const client = factory.getAppClientByCreatorAndName({ creatorAddress: 'CREATORADDRESS' })
+const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory);
+const client = factory.getAppClientByCreatorAndName({ creatorAddress: 'CREATORADDRESS' });
 const clientWithOptionalParams = factory.getAppClientByCreatorAndName({
   creatorAddress: 'CREATORADDRESS',
   defaultSender: 'DEFAULTSENDERADDRESS',
   appName: 'OverriddenAppName',
   // Can also pass in `approvalSourceMap`, and `clearSourceMap`
-})
+});
 ```
 
 Or you can get one using an `AlgorandClient` instance:
@@ -123,14 +123,17 @@ Or you can get one using an `AlgorandClient` instance:
 ```typescript
 const client = algorand.client.getTypedAppClientByCreatorAndName(HelloWorldAppClient, {
   creatorAddress: 'CREATORADDRESS',
-})
-const clientWithOptionalParams = algorand.client.getTypedAppClientByCreatorAndName(HelloWorldAppClient, {
-  creatorAddress: 'CREATORADDRESS',
-  defaultSender: 'DEFAULTSENDERADDRESS',
-  appName: 'OverriddenAppName',
-  ignoreCache: true,
-  // Can also pass in `appLookupCache`, `approvalSourceMap`, and `clearSourceMap`
-})
+});
+const clientWithOptionalParams = algorand.client.getTypedAppClientByCreatorAndName(
+  HelloWorldAppClient,
+  {
+    creatorAddress: 'CREATORADDRESS',
+    defaultSender: 'DEFAULTSENDERADDRESS',
+    appName: 'OverriddenAppName',
+    ignoreCache: true,
+    // Can also pass in `appLookupCache`, `approvalSourceMap`, and `clearSourceMap`
+  },
+);
 ```
 
 ### Get a client by network
@@ -140,24 +143,24 @@ The typed [app client](https://github.com/algorandfoundation/algokit-utils-ts/bl
 You can get one by using a static method on the app client:
 
 ```typescript
-const client = HelloWorldAppClient.fromNetwork({ algorand })
+const client = HelloWorldAppClient.fromNetwork({ algorand });
 const clientWithOptionalParams = HelloWorldAppClient.fromNetwork({
   algorand,
   defaultSender: 'DEFAULTSENDERADDRESS',
   appName: 'OverriddenAppName',
   // Can also pass in `approvalSourceMap`, and `clearSourceMap`
-})
+});
 ```
 
 Or you can get one using an `AlgorandClient` instance:
 
 ```typescript
-const client = algorand.client.getTypedAppClientByNetwork(HelloWorldAppClient)
+const client = algorand.client.getTypedAppClientByNetwork(HelloWorldAppClient);
 const clientWithOptionalParams = algorand.client.getTypedAppClientByNetwork(HelloWorldAppClient, {
   defaultSender: 'DEFAULTSENDERADDRESS',
   appName: 'OverriddenAppName',
   // Can also pass in `approvalSourceMap`, and `clearSourceMap`
-})
+});
 ```
 
 ## Deploying a smart contract (create, update, delete, deploy)
@@ -178,21 +181,21 @@ You can find more specifics of this behaviour in the [algokit-utils](https://git
 To create an app you need to use the factory. The return value will include a typed client instance for the created app.
 
 ```ts
-const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory)
+const factory = algorand.client.getTypedAppFactory(HelloWorldAppFactory);
 
 // Create the application using a bare call
-const { result, appClient: client } = factory.send.create.bare()
+const { result, appClient: client } = factory.send.create.bare();
 
 // Pass in some compilation flags
 factory.send.create.bare({
   updatable: true,
   deletable: true,
-})
+});
 
 // Create the application using a specific on completion action (ie. not a no_op)
 factory.send.create.bare({
   onComplete: OnApplicationComplete.OptIn,
-})
+});
 
 // Create the application using an ABI method (ie. not a bare call)
 factory.send.create.namedCreate({
@@ -200,7 +203,7 @@ factory.send.create.namedCreate({
     arg1: 123,
     arg2: 'foo',
   },
-})
+});
 
 // Pass compilation flags and on completion actions to an ABI create call
 factory.send.create.namedCreate({
@@ -211,7 +214,7 @@ factory.send.create.namedCreate({
   updatable: true,
   deletable: true,
   onComplete: OnApplicationComplete.OptIn,
-})
+});
 ```
 
 If you want to get a built transaction without sending it you can use `factory.createTransaction.create...` rather than `factory.send.create...`. If you want to receive transaction parameters ready to pass in as an ABI argument or to an `TransactionComposer` call then you can use `factory.params.create...`.
@@ -223,16 +226,16 @@ To create an app you need to use the client.
 ```ts
 const client = algorand.client.getTypedAppClientById(HelloWorldAppClient, {
   appId: 123n,
-})
+});
 
 // Update the application using a bare call
-client.send.update.bare()
+client.send.update.bare();
 
 // Pass in compilation flags
 client.send.update.bare({
   updatable: true,
   deletable: false,
-})
+});
 
 // Update the application using an ABI method
 client.send.update.namedUpdate({
@@ -240,7 +243,7 @@ client.send.update.namedUpdate({
     arg1: 123,
     arg2: 'foo',
   },
-})
+});
 
 // Pass compilation flags
 client.send.update.namedUpdate({
@@ -250,13 +253,13 @@ client.send.update.namedUpdate({
   },
   updatable: true,
   deletable: true,
-})
+});
 
 // Delete the application using a bare call
-client.send.delete.bare()
+client.send.delete.bare();
 
 // Delete the application using an ABI method
-client.send.delete.namedDelete()
+client.send.delete.namedDelete();
 ```
 
 If you want to get a built transaction without sending it you can use `client.createTransaction.update...` / `client.createTransaction.delete...` rather than `client.send.update...` / `client.send.delete...`. If you want to receive transaction parameters ready to pass in as an ABI argument or to an `TransactionComposer` call then you can use `client.params.update...` / `client.params.delete...`.
@@ -285,7 +288,7 @@ client.deploy({
   allowDelete: true,
   onUpdate: 'update',
   onSchemaBreak: 'replace',
-})
+});
 ```
 
 ## Opt in and close out
@@ -294,16 +297,16 @@ Methods with an `opt_in` or `close_out` `onCompletionAction` are grouped under p
 
 ```ts
 // Opt in with bare call
-client.send.optIn.bare()
+client.send.optIn.bare();
 
 // Opt in with ABI method
-client.createTransaction.optIn.namedOptIn({ args: { arg1: 123 } })
+client.createTransaction.optIn.namedOptIn({ args: { arg1: 123 } });
 
 // Close out with bare call
-client.params.closeOut.bare()
+client.params.closeOut.bare();
 
 // Close out with ABI method
-client.send.closeOut.namedCloseOut({ args: { arg1: 'foo' } })
+client.send.closeOut.namedCloseOut({ args: { arg1: 'foo' } });
 ```
 
 ## Clear state
@@ -311,9 +314,9 @@ client.send.closeOut.namedCloseOut({ args: { arg1: 'foo' } })
 All clients will have a clear state method which will call the clear state program of the smart contract.
 
 ```ts
-client.send.clearState()
-client.createTransaction.clearState()
-client.params.clearState()
+client.send.clearState();
+client.createTransaction.clearState();
+client.params.clearState();
 ```
 
 ## No-op calls
@@ -324,13 +327,13 @@ These methods will allow you to optionally pass in `onComplete` and if the metho
 
 ```ts
 // Call an ABI method which takes no args
-client.send.someMethod()
+client.send.someMethod();
 
 // Call a no-op bare call
-client.createTransaction.bare()
+client.createTransaction.bare();
 
 // Call an ABI method, passing args in as a dictionary
-client.params.someOtherMethod({ args: { arg1: 123, arg2: 'foo' } })
+client.params.someOtherMethod({ args: { arg1: 123, arg2: 'foo' } });
 ```
 
 ## Method and argument naming
@@ -349,13 +352,13 @@ Each generated method will accept ABI method call arguments in both a tuple and 
 
 ```ts
 // ABI method which takes no args
-client.send.noArgsMethod({ args: {} })
-client.send.noArgsMethod({ args: [] })
+client.send.noArgsMethod({ args: {} });
+client.send.noArgsMethod({ args: [] });
 
 // ABI method with args
-client.send.otherMethod({ args: { arg1: 123, arg2: 'foo', arg3: new Uint8Array([1, 2, 3, 4]) } })
+client.send.otherMethod({ args: { arg1: 123, arg2: 'foo', arg3: new Uint8Array([1, 2, 3, 4]) } });
 // Call an ABI method, passing args in as a tuple
-client.send.yetAnotherMethod({ args: [1, 2, 'foo'] })
+client.send.yetAnotherMethod({ args: [1, 2, 'foo'] });
 ```
 
 ## Structs
@@ -372,11 +375,11 @@ client.send.someMethod({
     arg1: 123,
   },
   /* Additional parameters go here */
-})
+});
 
 client.send.optIn.bare({
   /* Additional parameters go here */
-})
+});
 ```
 
 ## Composing transactions
@@ -394,12 +397,12 @@ const result = await client
   // Non-ABI transactions can still be added to the group
   .addTransaction(client.appClient.createTransaction.fundAppAccount({ amount: (5000).microAlgo() }))
   .methodTwo({ args: { arg1: 'foo' } })
-  .execute()
+  .execute();
 
 // Strongly typed as the return type of methodOne
-const resultOfMethodOne = result.returns[0]
+const resultOfMethodOne = result.returns[0];
 // Strongly typed as the return type of methodTwo
-const resultOfMethodTwo = result.returns[1]
+const resultOfMethodTwo = result.returns[1];
 ```
 
 ### Manually with the TransactionComposer
@@ -412,11 +415,11 @@ const result = algorand
   .addAppCallMethodCall(client.params.methodOne({ args: { arg1: 123 }, boxReferences: ['V'] }))
   .addPayment(client.appClient.params.fundAppAccount({ amount: (5000).microAlgo() }))
   .addAppCallMethodCall(client.params.methodTwo({ args: { arg1: 'foo' } }))
-  .execute()
+  .execute();
 
 // returns will contain a result object for each ABI method call in the transaction group
 for (const { returnValue } of result.returns) {
-  console.log(returnValue)
+  console.log(returnValue);
 }
 ```
 
@@ -431,23 +434,23 @@ Maps have a `value(key)` method to get a single value from the map by key and a 
 The properties will return values of the corresponding TypeScript type for the type in the app spec and any structs will be parsed as the struct object.
 
 ```typescript
-const factory = algorand.client.getTypedAppFactory(Arc56TestFactory, { defaultSender: 'SENDER' })
+const factory = algorand.client.getTypedAppFactory(Arc56TestFactory, { defaultSender: 'SENDER' });
 
 const { appClient: client } = await factory.send.create.createApplication({
   args: [],
   deployTimeParams: { someNumber: 1337n },
-})
+});
 
-expect(await client.state.global.globalKey()).toBe(1337n)
-expect(await anotherAppClient.state.global.globalKey()).toBe(1338n)
-expect(await client.state.global.globalMap.value('foo')).toEqual({ foo: 13n, bar: 37n })
+expect(await client.state.global.globalKey()).toBe(1337n);
+expect(await anotherAppClient.state.global.globalKey()).toBe(1338n);
+expect(await client.state.global.globalMap.value('foo')).toEqual({ foo: 13n, bar: 37n });
 
-await client.appClient.fundAppAccount({ amount: microAlgos(1_000_000) })
-await client.send.optIn.optInToApplication({ args: [], populateAppCallResources: true })
+await client.appClient.fundAppAccount({ amount: microAlgos(1_000_000) });
+await client.send.optIn.optInToApplication({ args: [], populateAppCallResources: true });
 
-expect(await client.state.local(defaultSender).localKey()).toBe(1337n)
-expect(await client.state.local(defaultSender).localMap.value('foo')).toBe('bar')
-expect(await client.state.box.boxKey()).toBe('baz')
+expect(await client.state.local(defaultSender).localKey()).toBe(1337n);
+expect(await client.state.local(defaultSender).localMap.value('foo')).toBe('bar');
+expect(await client.state.box.boxKey()).toBe('baz');
 expect(
   await client.state.box.boxMap.value({
     add: { a: 1n, b: 2n },
@@ -456,5 +459,5 @@ expect(
 ).toEqual({
   sum: 3n,
   difference: 1n,
-})
+});
 ```

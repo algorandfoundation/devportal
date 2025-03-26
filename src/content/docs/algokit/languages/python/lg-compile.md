@@ -2,7 +2,7 @@
 title: Compiling to AVM bytecode
 ---
 
-The PuyaPy compiler can compile Algorand Python smart contracts directly into AVM bytecode. 
+The PuyaPy compiler can compile Algorand Python smart contracts directly into AVM bytecode.
 Once compiled, this bytecode can be utilized to construct AVM Application Call transactions both on and off chain.
 
 ## Outputting AVM bytecode from CLI
@@ -13,15 +13,17 @@ The `--output-bytecode` option can be used to generate `.bin` files for smart co
 
 The `compile_contract` function takes an Algorand Python smart contract class and returns a `CompiledContract`,
 The global state, local state and program pages allocation parameters are derived from the contract by default, but can be overridden.
-This compiled contract can then be used to create an `algopy.itxn.ApplicationCall` transaction or used with the ARC4 functions.  
+This compiled contract can then be used to create an `algopy.itxn.ApplicationCall` transaction or used with the ARC4 functions.
 
 The `compile_logicsig` takes an Algorand Python logic signature and returns a `CompiledLogicSig`, which can be used to
 verify if a transaction has been signed by a particular logic signature.
 
 ## Template variables
+
 Algorand Python supports defining `algopy.TemplateVar` variables that can be substituted during compilation.
 
 For example, the following contract has `UInt64` and `Bytes` template variables.
+
 ```{code-block} python
 :caption: templated_contract.py
 from algopy import ARC4Contract, Bytes, TemplateVar, UInt64, arc4
@@ -38,7 +40,7 @@ class TemplatedContract(ARC4Contract):
         return TemplateVar[Bytes]("SOME_BYTES")
 ```
 
-When compiling to bytecode, the values for these template variables must be provided. These values can be provided via the CLI, 
+When compiling to bytecode, the values for these template variables must be provided. These values can be provided via the CLI,
 or through the `template_vars` parameter of the `compile_contract` and `compile_logicsig` functions.
 
 ### CLI

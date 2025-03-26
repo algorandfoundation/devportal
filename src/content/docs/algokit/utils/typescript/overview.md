@@ -45,7 +45,7 @@ This library uses `algosdk` as a peer dependency. Please see above to ensure you
 To use this library simply include the following at the top of your file:
 
 ```typescript
-import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils'
+import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils';
 ```
 
 As well as `AlgorandClient` and `Config`, you can use intellisense to auto-complete the various types that you can import within the `{}` in your favourite Integrated Development Environment (IDE), or you can refer to the [reference documentation](./code/modules/index).
@@ -54,7 +54,7 @@ As well as `AlgorandClient` and `Config`, you can use intellisense to auto-compl
 > Previous versions of AlgoKit Utils encouraged you to include an import that looks like this (note the subtle difference of the extra `* as algokit`):
 >
 > ```typescript
-> import * as algokit from '@algorandfoundation/algokit-utils'
+> import * as algokit from '@algorandfoundation/algokit-utils';
 > ```
 >
 > This version will still work until at least v9, but it exposes an older, function-based interface to the functionality that is deprecated. The new way to use AlgoKit Utils is via the `AlgorandClient` class, which is easier, simpler and more convenient to use and has powerful new features.
@@ -67,21 +67,21 @@ The main entrypoint to the bulk of the functionality is the `AlgorandClient` cla
 // Point to the network configured through environment variables or
 //  if no environment variables it will point to the default LocalNet
 //  configuration
-const algorand = AlgorandClient.fromEnvironment()
+const algorand = AlgorandClient.fromEnvironment();
 // Point to default LocalNet configuration
-const algorand = AlgorandClient.defaultLocalNet()
+const algorand = AlgorandClient.defaultLocalNet();
 // Point to TestNet using AlgoNode free tier
-const algorand = AlgorandClient.testNet()
+const algorand = AlgorandClient.testNet();
 // Point to MainNet using AlgoNode free tier
-const algorand = AlgorandClient.mainNet()
+const algorand = AlgorandClient.mainNet();
 // Point to a pre-created algod client
-const algorand = AlgorandClient.fromClients({ algod })
+const algorand = AlgorandClient.fromClients({ algod });
 // Point to pre-created algod, indexer and kmd clients
-const algorand = AlgorandClient.fromClients({ algod, indexer, kmd })
+const algorand = AlgorandClient.fromClients({ algod, indexer, kmd });
 // Point to custom configuration for algod
-const algorand = AlgorandClient.fromConfig({ algodConfig })
+const algorand = AlgorandClient.fromConfig({ algodConfig });
 // Point to custom configuration for algod, indexer and kmd
-const algorand = AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConfig })
+const algorand = AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConfig });
 ```
 
 ## Testing
@@ -91,13 +91,13 @@ AlgoKit Utils contains a module that helps you write automated tests against an 
 To use the automated testing functionality, you can import the testing module:
 
 ```typescript
-import * as algotesting from '@algorandfoundation/algokit-utils/testing'
+import * as algotesting from '@algorandfoundation/algokit-utils/testing';
 ```
 
 Or, you can generally get away with just importing the `algorandFixture` since it exposes the rest of the functionality in a manner that is easy to integrate with an underlying test framework like Jest or vitest:
 
 ```typescript
-import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
+import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
 To see how to use it consult the [testing capability page](/algokit/utils/typescript/testing) or to see what's available look at the [reference documentation](./code/modules/testing).
@@ -124,12 +124,12 @@ To do this you need to create a logging translator that exposes the following in
 
 ```typescript
 export type Logger = {
-  error(message: string, ...optionalParams: unknown[]): void
-  warn(message: string, ...optionalParams: unknown[]): void
-  info(message: string, ...optionalParams: unknown[]): void
-  verbose(message: string, ...optionalParams: unknown[]): void
-  debug(message: string, ...optionalParams: unknown[]): void
-}
+  error(message: string, ...optionalParams: unknown[]): void;
+  warn(message: string, ...optionalParams: unknown[]): void;
+  info(message: string, ...optionalParams: unknown[]): void;
+  verbose(message: string, ...optionalParams: unknown[]): void;
+  debug(message: string, ...optionalParams: unknown[]): void;
+};
 ```
 
 Note: this interface type is directly compatible with [Winston](https://github.com/winstonjs/winston) so you should be able to pass AlgoKit a Winston logger.
@@ -139,7 +139,7 @@ By default, the [`consoleLogger`](./code/modules/types_logging#consolelogger) is
 If you want to override the logger you can use the following:
 
 ```typescript
-Config.configure({ logger: myLogger })
+Config.configure({ logger: myLogger });
 ```
 
 To retrieve the current debug state you can use [`Config.logger`](./code/interfaces/types_config.Config). To get a logger that is optionally set to the null logger based on a boolean flag you can use the [`Config.getLogger(useNullLogger)`](./code/classes/types_config.UpdatableConfig#getlogger) function.
@@ -149,7 +149,7 @@ To retrieve the current debug state you can use [`Config.logger`](./code/interfa
 To turn on debug mode you can use the following:
 
 ```typescript
-Config.configure({ debug: true })
+Config.configure({ debug: true });
 ```
 
 To retrieve the current debug state you can use [`Config.debug`](./code/interfaces/types_config.Config).
@@ -161,7 +161,7 @@ If you want to temporarily turn it on you can use the [`withDebug`](./code/class
 ```typescript
 Config.withDebug(() => {
   // Do stuff with Config.debug set to true
-})
+});
 ```
 
 # Capabilities

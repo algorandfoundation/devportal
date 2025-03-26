@@ -47,9 +47,9 @@ For loops are used to iterate over sequences, ranges and [ARC-4 arrays](./lg-arc
 
 Algorand Python provides functions like `uenumerate` and `urange` to facilitate creating sequences and ranges; in-built Python `reversed` method works with these.
 
--   `uenumerate` is similar to Python's built-in enumerate function, but for UInt64 numbers; it allows you to loop over a sequence and have an automatic counter.
--   `urange` is a function that generates a sequence of Uint64 numbers, which you can iterate over.
--   `reversed` returns a reversed iterator of a sequence.
+- `uenumerate` is similar to Python's built-in enumerate function, but for UInt64 numbers; it allows you to loop over a sequence and have an automatic counter.
+- `urange` is a function that generates a sequence of Uint64 numbers, which you can iterate over.
+- `reversed` returns a reversed iterator of a sequence.
 
 Here is an example of how you can use these functions in a contract:
 

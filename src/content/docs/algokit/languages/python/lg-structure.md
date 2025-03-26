@@ -81,10 +81,10 @@ name, and `c` can only be passed by name.
 
 The following argument/return types are not currently supported:
 
--   Type unions
--   Variadic args like `*args`, `**kwargs`
--   Python types such as `int`
--   Default values are not supported
+- Type unions
+- Variadic args like `*args`, `**kwargs`
+- Python types such as `int`
+- Default values are not supported
 
 ## Contract classes
 
@@ -139,12 +139,12 @@ base class per the API documentation.
 
 Namely you can pass in:
 
--   `name` - Which will affect the output TEAL file name if there are multiple non-abstract contracts
-    in the same file and will also be used as the contract name in the ARC-32 application.json instead of the class name.
--   `scratch_slots` - Which allows you to mark a slot ID or range of slot IDs as "off limits" to Puya
-    so you can manually use them.
--   `state_totals` - Which allows defining what values should be used for global and local uint and bytes storage values
-    when creating a contract and will appear in ARC-32 app spec.
+- `name` - Which will affect the output TEAL file name if there are multiple non-abstract contracts
+  in the same file and will also be used as the contract name in the ARC-32 application.json instead of the class name.
+- `scratch_slots` - Which allows you to mark a slot ID or range of slot IDs as "off limits" to Puya
+  so you can manually use them.
+- `state_totals` - Which allows defining what values should be used for global and local uint and bytes storage values
+  when creating a contract and will appear in ARC-32 app spec.
 
 Full example:
 
@@ -209,10 +209,10 @@ class Counter(algopy.Contract):
 
 Some things to note:
 
--   `self.counter` will be stored in the application's [Global State](lg-storage#global-state).
--   The return type of `__init__` must be `None`, per standard typed Python.
--   Any methods other than `__init__`, `approval_program` or `clear_state_program` must be decorated
-    with `@subroutine`.
+- `self.counter` will be stored in the application's [Global State](lg-storage#global-state).
+- The return type of `__init__` must be `None`, per standard typed Python.
+- Any methods other than `__init__`, `approval_program` or `clear_state_program` must be decorated
+  with `@subroutine`.
 
 ### Example: Simplest possible `algopy.ARC4Contract` implementation
 
@@ -254,15 +254,15 @@ This functions very similarly to the [simple example](#example-simple-call-count
 
 Things to note here:
 
--   Since the `invoke` method has `create="allow"`, it can be called both as the method to create the
-    app and also to invoke it after creation. This also means that no default bare-method create will
-    be generated, so the only way to create the contract is through this method.
--   The default options for `abimethod` is to only allow `NoOp` as an on-completion-action, so we
-    don't need to check this manually.
--   The current call count is returned from the `invoke` method.
--   Every method in an `AR4Contract` except for the optional `__init__` and `clear_state_program`
-    methods must be decorated with one of `algopy.arc4.abimethod`, `alogpy.arc4.baremethod`, or
-    `algopy.subroutine`. `subroutines` won't be directly callable through the default router.
+- Since the `invoke` method has `create="allow"`, it can be called both as the method to create the
+  app and also to invoke it after creation. This also means that no default bare-method create will
+  be generated, so the only way to create the contract is through this method.
+- The default options for `abimethod` is to only allow `NoOp` as an on-completion-action, so we
+  don't need to check this manually.
+- The current call count is returned from the `invoke` method.
+- Every method in an `AR4Contract` except for the optional `__init__` and `clear_state_program`
+  methods must be decorated with one of `algopy.arc4.abimethod`, `alogpy.arc4.baremethod`, or
+  `algopy.subroutine`. `subroutines` won't be directly callable through the default router.
 
 See the [ARC-4 section](lg-arc4) of this language guide for more info on the above.
 

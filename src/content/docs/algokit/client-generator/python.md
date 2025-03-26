@@ -173,10 +173,10 @@ The app factory and client will variously include methods for creating (factory)
 
 In addition, the app factory will also include a `deploy` method which will...
 
--   create the application if it doesn't already exist
--   update or recreate the application if it does exist, but differs from the version the client is built on
--   recreate the application (and optionally delete the old version) if the deployed version is incompatible with being updated to the client version
--   do nothing in the application is already deployed and up to date.
+- create the application if it doesn't already exist
+- update or recreate the application if it does exist, but differs from the version the client is built on
+- recreate the application (and optionally delete the old version) if the deployed version is incompatible with being updated to the client version
+- do nothing in the application is already deployed and up to date.
 
 You can find more specifics of this behaviour in the [algokit-utils](https://github.com/algorandfoundation/algokit-utils-py/blob/main/docs/markdown/capabilities/app-deploy) docs.
 
@@ -277,22 +277,22 @@ These params values (`create_params`, `update_params` and `delete_params`) will 
 
 ```ts
 client.deploy({
-    createParams: {
-        onComplete: OnApplicationComplete.OptIn,
+  createParams: {
+    onComplete: OnApplicationComplete.OptIn,
+  },
+  updateParams: {
+    method: 'named_update(uint64,string)string',
+    args: {
+      arg1: 123,
+      arg2: 'foo',
     },
-    updateParams: {
-        method: "named_update(uint64,string)string",
-        args: {
-            arg1: 123,
-            arg2: "foo",
-        },
-    },
-    // Can leave this out and it will do an argumentless bare call (if that call is allowed)
-    //deleteParams: {}
-    allowUpdate: true,
-    allowDelete: true,
-    onUpdate: "update",
-    onSchemaBreak: "replace",
+  },
+  // Can leave this out and it will do an argumentless bare call (if that call is allowed)
+  //deleteParams: {}
+  allowUpdate: true,
+  allowDelete: true,
+  onUpdate: 'update',
+  onSchemaBreak: 'replace',
 });
 ```
 

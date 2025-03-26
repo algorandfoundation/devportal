@@ -6,16 +6,16 @@ Algorand Python provides a `log` method that allows you to emit debugging and ev
 
 This `log` method is a superset of the [AVM `log` method](./lg-ops) that adds extra functionality:
 
--   You can log multiple items rather than a single item
--   Items are concatenated together with an optional separator (which defaults to: `""`)
--   Items are automatically converted to bytes for you
--   Support for:
-    -   `int` literals / module variables (encoded as raw bytes, not ASCII)
-    -   `UInt64` values (encoded as raw bytes, not ASCII)
-    -   `str` literals / module variables (encoded as UTF-8)
-    -   `bytes` literals / module variables (encoded as is)
-    -   `Bytes` values (encoded as is)
-    -   `BytesBacked` values, which includes `String`, `BigUInt`, `Account` and all of the [ARC-4 types](./api-algopy.arc4) (encoded as their underlying bytes values)
+- You can log multiple items rather than a single item
+- Items are concatenated together with an optional separator (which defaults to: `""`)
+- Items are automatically converted to bytes for you
+- Support for:
+  - `int` literals / module variables (encoded as raw bytes, not ASCII)
+  - `UInt64` values (encoded as raw bytes, not ASCII)
+  - `str` literals / module variables (encoded as UTF-8)
+  - `bytes` literals / module variables (encoded as is)
+  - `Bytes` values (encoded as is)
+  - `BytesBacked` values, which includes `String`, `BigUInt`, `Account` and all of the [ARC-4 types](./api-algopy.arc4) (encoded as their underlying bytes values)
 
 Logged values are [available to the calling client](https://dev.algorand.co/reference/rest-apis/algod/#pendingtransactionresponse) and attached to the transaction record stored on the blockchain ledger.
 

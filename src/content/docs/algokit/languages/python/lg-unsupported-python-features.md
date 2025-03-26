@@ -8,7 +8,7 @@ Exception raising and exception handling constructs are not supported.
 
 Supporting user exceptions would be costly to implement in terms of op codes.
 
-Furthermore, AVM errors and exceptions are not "catch-able", they immediately terminate the 
+Furthermore, AVM errors and exceptions are not "catch-able", they immediately terminate the
 program.
 
 Therefore, there is very little to no benefit of supporting exceptions and exception handling.
@@ -22,15 +22,15 @@ Context managers are redundant without exception handling support.
 
 ## async
 
-The AVM is not just single threaded, but all operations are effectively "blocking", rendering 
-asynchronous programming effectively useless. 
+The AVM is not just single threaded, but all operations are effectively "blocking", rendering
+asynchronous programming effectively useless.
 
 ## closures & lambdas
 
 Without the support of function pointers, or other methods of invoking an arbitrary function,
-it's not possible to return a function as a closure. 
+it's not possible to return a function as a closure.
 
-Nested functions/lambdas as a means of repeating common operations within a given function may be 
+Nested functions/lambdas as a means of repeating common operations within a given function may be
 supported in the future.
 
 ## global keyword

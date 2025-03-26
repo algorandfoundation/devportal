@@ -11,9 +11,9 @@ The `AsyncEventEmitter` is a class that manages asynchronous event emission and 
 To use the `AsyncEventEmitter`, you can import it directly:
 
 ```typescript
-import { AsyncEventEmitter } from '@algorandfoundation/algokit-utils/types/async-event-emitter'
+import { AsyncEventEmitter } from '@algorandfoundation/algokit-utils/types/async-event-emitter';
 
-const emitter = new AsyncEventEmitter()
+const emitter = new AsyncEventEmitter();
 ```
 
 ## Event Types
@@ -32,7 +32,7 @@ enum EventType {
 To emit an event, use the `emitAsync` method:
 
 ```typescript
-await emitter.emitAsync(EventType.AppCompiled, compilationData)
+await emitter.emitAsync(EventType.AppCompiled, compilationData);
 ```
 
 ## Listening to Events
@@ -44,9 +44,9 @@ There are two ways to listen to events:
 The `on` method adds a listener that will be called every time the specified event is emitted:
 
 ```typescript
-emitter.on(EventType.AppCompiled, async (data) => {
-  console.log('App compiled:', data)
-})
+emitter.on(EventType.AppCompiled, async data => {
+  console.log('App compiled:', data);
+});
 ```
 
 ### Using `once`
@@ -54,9 +54,9 @@ emitter.on(EventType.AppCompiled, async (data) => {
 The `once` method adds a listener that will be called only once for the specified event:
 
 ```typescript
-emitter.once(EventType.TxnGroupSimulated, async (data) => {
-  console.log('Transaction group simulated:', data)
-})
+emitter.once(EventType.TxnGroupSimulated, async data => {
+  console.log('Transaction group simulated:', data);
+});
 ```
 
 ## Removing Listeners
@@ -64,16 +64,16 @@ emitter.once(EventType.TxnGroupSimulated, async (data) => {
 To remove a listener, use the `removeListener` or `off` method:
 
 ```typescript
-const listener = async (data) => {
-  console.log('Event received:', data)
-}
+const listener = async data => {
+  console.log('Event received:', data);
+};
 
-emitter.on(EventType.AppCompiled, listener)
+emitter.on(EventType.AppCompiled, listener);
 
 // Later, when you want to remove the listener:
-emitter.removeListener(EventType.AppCompiled, listener)
+emitter.removeListener(EventType.AppCompiled, listener);
 // or
-emitter.off(EventType.AppCompiled, listener)
+emitter.off(EventType.AppCompiled, listener);
 ```
 
 ## Custom Events
@@ -81,11 +81,11 @@ emitter.off(EventType.AppCompiled, listener)
 While the current implementation primarily focuses on debugging events, the `AsyncEventEmitter` is designed to be extensible. You can emit and listen to custom events by using string keys:
 
 ```typescript
-emitter.on('customEvent', async (data) => {
-  console.log('Custom event received:', data)
-})
+emitter.on('customEvent', async data => {
+  console.log('Custom event received:', data);
+});
 
-await emitter.emitAsync('customEvent', { foo: 'bar' })
+await emitter.emitAsync('customEvent', { foo: 'bar' });
 ```
 
 ## Integration with `algokit-utils-ts-debug`

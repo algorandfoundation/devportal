@@ -37,6 +37,7 @@ The network configuration is specified using the `AlgoClientConfig` type. This s
 There are a number of ways to produce one of these configuration objects:
 
 - Manually specifying a dataclass, e.g.
+
   ```python
   from algokit_utils import AlgoClientNetworkConfig
 
@@ -45,6 +46,7 @@ There are a number of ways to produce one of these configuration objects:
       token="SECRET_TOKEN"  # optional
   )
   ```
+
 - `ClientManager.get_config_from_environment_or_localnet()` - Loads the Algod client config, the Indexer client config and the Kmd config from well-known environment variables or if not found then default LocalNet; this is useful to have code that can work across multiple blockchain environments (including LocalNet), without having to change
 - `ClientManager.get_algod_config_from_environment()` - Loads an Algod client config from well-known environment variables
 - `ClientManager.get_indexer_config_from_environment()` - Loads an Indexer client config from well-known environment variables; useful to have code that can work across multiple blockchain environments (including LocalNet), without having to change
