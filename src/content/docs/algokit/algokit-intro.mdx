@@ -2,7 +2,7 @@
 title: Intro to AlgoKit
 ---
 
-import { Tabs, TabItem, LinkCard, CardGrid } from '@astrojs/starlight/components';
+import { Tabs, TabItem, LinkCard, CardGrid, Badge } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 
@@ -236,24 +236,24 @@ To learn more about the testnet dispenser, refer to the following resources:
 
 While AlgoKit as a _collection_ was bumped to Version 3.0 on March 26, 2025, it is important to note that the individual tools in the kit are on different package version numbers. In the future this may be changed to epoch versioning so that it is clear that all packages are part of the same epoch release.
 
-| Tool                                       | Repository                      | AlgoKit 3.0 Minimum Version |
-| ------------------------------------------ | ------------------------------- | --------------------------- |
-| Command Line Interface (CLI)               | algokit-cli                     | 2.6.0                       |
-| Utils (Python)                             | algokit-utils-py                | 4.0.0                       |
-| Utils (TypeScript)                         | algokit-utils-ts                | 9.0.0                       |
-| Client Generator (Python)                  | algokit-client-generator-py     | 2.1.0                       |
-| Client Generator (TypeScript)              | algokit-client-generator-ts     | 5.0.0                       |
-| Subscriber (Python)                        | algokit-subscriber-py           | 1.0.0                       |
-| Subscriber (TypeScript)                    | algokit-subscriber-ts           | 3.2.0                       |
-| Puya Compiler                              | puya                            | 4.5.3                       |
-| Puya Compiler, TypeScript                  | puya-ts                         | 1.0.0-beta.58               |
-| AVM Unit Testing (Python)                  | algorand-python-testing         | 0.5.0                       |
-| AVM Unit Testing (TypeScript)              | algorand-typescript-testing     | 1.0.0-beta.30               |
-| Lora the Explorer                          | algokit-lora                    | 1.2.0                       |
-| AVM VSCode Debugger                        | algokit-avm-vscode-debugger     | 1.1.5                       |
-| Utils Add-On for TypeScript Debugging      | algokit-utils-ts-debug          | 1.0.4                       |
-| Base Project Template                      | algokit-base-template           | 1.1.0                       |
-| Python Smart Contract Project Template     | algokit-python-template         | 1.6.0                       |
-| TypeScript Smart Contract Project Template | algokit-typescript-template     | 0.3.1                       |
-| React Vite Frontend Project Template       | algokit-react-frontend-template | 1.1.1                       |
-| Fullstack Project Template                 | algokit-fullstack-template      | 2.1.4                       |
+| Tool                                       | Repository                      | AlgoKit 3.0 Min Version                       |
+| ------------------------------------------ | ------------------------------- | --------------------------------------------- |
+| Command Line Interface (CLI)               | algokit-cli                     | <Badge text="2.6.0" variant="success" />      |
+| Utils (Python)                             | algokit-utils-py                | <Badge text="4.0.0" variant="success" />      |
+| Utils (TypeScript)                         | algokit-utils-ts                | <Badge text="9.0.0" variant="success" />      |
+| Client Generator (Python)                  | algokit-client-generator-py     | <Badge text="2.1.0" variant="success" />      |
+| Client Generator (TypeScript)              | algokit-client-generator-ts     | <Badge text="5.0.0" variant="success" />      |
+| Subscriber (Python)                        | algokit-subscriber-py           | <Badge text="1.0.0" variant="success" />      |
+| Subscriber (TypeScript)                    | algokit-subscriber-ts           | <Badge text="3.2.0" variant="success" />      |
+| Puya Compiler                              | puya                            | <Badge text="4.5.3" variant="success" />      |
+| Puya Compiler, TypeScript                  | puya-ts                         | <Badge text="1.0.0-beta.58" variant="note" /> |
+| AVM Unit Testing (Python)                  | algorand-python-testing         | <Badge text="0.5.0" variant="success" />      |
+| AVM Unit Testing (TypeScript)              | algorand-typescript-testing     | <Badge text="1.0.0-beta.30" variant="note" /> |
+| Lora the Explorer                          | algokit-lora                    | <Badge text="1.2.0" variant="success" />      |
+| AVM VSCode Debugger                        | algokit-avm-vscode-debugger     | <Badge text="1.1.5" variant="success" />      |
+| Utils Add-On for TypeScript Debugging      | algokit-utils-ts-debug          | <Badge text="1.0.4" variant="success" />      |
+| Base Project Template                      | algokit-base-template           | <Badge text="1.1.0" variant="success" />      |
+| Python Smart Contract Project Template     | algokit-python-template         | <Badge text="1.6.0" variant="success" />      |
+| TypeScript Smart Contract Project Template | algokit-typescript-template     | <Badge text="0.3.1" variant="success" />      |
+| React Vite Frontend Project Template       | algokit-react-frontend-template | <Badge text="1.1.1" variant="success" />      |
+| Fullstack Project Template                 | algokit-fullstack-template      | <Badge text="2.1.4" variant="success" />      |
