@@ -27,7 +27,7 @@ The recommended way of interacting with apps is via [Typed app clients](./typed-
 When calling an app there are two types of transactions:
 
 - Raw app transactions - Constructing a raw Algorand transaction to call the method; you have full control and are dealing with binary values directly
-- ABI method calls - Constructing a call to an [ABI method](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/ABI)
+- ABI method calls - Constructing a call to an [ABI method](https://dev.algorand.co/concepts/smart-contracts/abi)
 
 Calling an app involves providing some [common parameters](#common-app-parameters) and some parameters that will depend on the type of app call (create vs update vs other) per below sections.
 
@@ -382,12 +382,12 @@ To get reference information and metadata about an existing app you can use the 
 When interacting with apps (creating, updating, deleting, calling), there are some `CommonAppCallParams` that you will be able to pass in to all calls in addition to the [common transaction parameters](./algorand-client#transaction-parameters):
 
 - `appId: bigint` - ID of the application; only specified if the application is not being created.
-- `onComplete?: algosdk.OnApplicationComplete` - The [on-complete](https://developer.algorand.org/docs/get-details/dapps/avm/teal/specification/#oncomplete) action of the call (noting each call type will have restrictions that affect this value).
-- `args?: Uint8Array[]` - Any [arguments to pass to the smart contract call](https://developer.algorand.org/docs/get-details/dapps/avm/teal/#argument-passing).
-- `accountReferences?: string[]` - Any account addresses to add to the [accounts array](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#reference-arrays).
-- `appReferences?: bigint[]` - The ID of any apps to load to the [foreign apps array](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#reference-arrays).
-- `assetReferences?: bigint[]` - The ID of any assets to load to the [foreign assets array](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#reference-arrays).
-- `boxReferences?: (BoxReference | BoxIdentifier)[]` - Any [boxes](#box-references) to load to the [boxes array](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#reference-arrays)
+- `onComplete?: algosdk.OnApplicationComplete` - The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call (noting each call type will have restrictions that affect this value).
+- `args?: Uint8Array[]` - Any [arguments to pass to the smart contract call](https://dev.algorand.co/concepts/smart-contracts/languages/teal/#argument-passing).
+- `accountReferences?: string[]` - Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
+- `appReferences?: bigint[]` - The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
+- `assetReferences?: bigint[]` - The ID of any assets to load to the [foreign assets array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
+- `boxReferences?: (BoxReference | BoxIdentifier)[]` - Any [boxes](#box-references) to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays)
 
 When making an ABI call, the `args` parameter is replaced with a different type and there is also a `method` parameter per the `AppMethodCall` type:
 

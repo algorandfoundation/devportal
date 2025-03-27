@@ -2,7 +2,7 @@
 title: Algo transfers (payments)
 ---
 
-Algo transfers, or [payments](https://developer.algorand.org/docs/get-details/transactions/#payment-transaction), is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [Algo amount handling](amount) and [Transaction management](transaction). It allows you to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding.
+Algo transfers, or [payments](https://dev.algorand.co/concepts/transactions/types#payment-transaction), is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [Algo amount handling](amount) and [Transaction management](transaction). It allows you to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding.
 
 To see some usage examples check out the automated tests in the repository.
 
@@ -59,7 +59,7 @@ result2 = algorand_client.send.payment(
 
 ## `ensure_funded`
 
-The `ensure_funded` function automatically funds an account to maintain a minimum amount of [disposable Algo](https://developer.algorand.org/docs/get-details/accounts/#minimum-balance). This is particularly useful for automation and deployment scripts that get run multiple times and consume Algo when run.
+The `ensure_funded` function automatically funds an account to maintain a minimum amount of [disposable Algo](https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr). This is particularly useful for automation and deployment scripts that get run multiple times and consume Algo when run.
 
 There are 3 variants of this function:
 

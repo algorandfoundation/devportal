@@ -101,7 +101,7 @@ result = (
 ## Simulating a transaction
 
 Transactions can be simulated using the simulate endpoint in algod, which enables evaluating the transaction on the network without it actually being committed to a block.
-This is a powerful feature, which has a number of options which are detailed in the [simulate API docs](https://developer.algorand.org/docs/rest-apis/algod/#post-v2transactionssimulate).
+This is a powerful feature, which has a number of options which are detailed in the [simulate API docs](https://dev.algorand.co/reference/rest-apis/output/#simulatetransaction).
 
 The `simulate()` method accepts several optional parameters that are passed through to the algod simulate endpoint:
 

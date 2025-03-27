@@ -221,7 +221,7 @@ This is done via the following properties:
 - `appClient.send.{onComplete}(params)` - Sign and send an ABI method call
 - `appClient.send.bare.{onComplete}(params)` - Sign and send a bare call
 
-To make one of these calls `{onComplete}` needs to be swapped with the [on complete action](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#the-lifecycle-of-a-smart-contract) that should be made:
+To make one of these calls `{onComplete}` needs to be swapped with the [on complete action](https://dev.algorand.co/concepts/smart-contracts/overview#smart-contract-lifecycle) that should be made:
 
 - `update` - An update call
 - `optIn` - An opt-in call

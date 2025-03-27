@@ -2,12 +2,12 @@
 title: Storage
 ---
 
-Algorand smart contracts have [three different types of on-chain storage](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/state/)
+Algorand smart contracts have [three different types of on-chain storage](https://dev.algorand.co/concepts/smart-contracts/storage/overview/)
 they can utilise: [Global storage](#global-storage), [Local storage](#local-storage), and [Box Storage](#box-storage). They also have access to a transient form of storage in [Scratch space](#scratch-storage).
 
 ## Global storage
 
-Global or Application storage is a key/value store of `bytes` or `uint64` values stored against a smart contract application. The number of values used must be declared when the application is first created and will affect the [minimum balance requirement](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#minimum-balance-requirement-for-a-smart-contract) for the application. For ARC4 contracts this information is captured in the ARC32 and ARC56 specification files and automatically included in deployments.
+Global or Application storage is a key/value store of `bytes` or `uint64` values stored against a smart contract application. The number of values used must be declared when the application is first created and will affect the [minimum balance requirement](https://dev.algorand.co/concepts/smart-contracts/costs-constraints/#mbr) for the application. For ARC4 contracts this information is captured in the ARC32 and ARC56 specification files and automatically included in deployments.
 
 Global storage values are declared using the [GlobalState](api/index/functions/GlobalState) function to create a [GlobalState](api/index/type-aliases/GlobalState) proxy object.
 
@@ -92,7 +92,7 @@ export class LocalStateDemo extends Contract {
 
 We provide 3 different types for accessing box storage: [Box](./api/index/functions/Box), [BoxMap](./api/index/functions/BoxMap), and [BoxRef](./api/index/functions/BoxRef). We also expose raw operations via the [AVM ops](./lg-ops) module.
 
-Before using box storage, be sure to familiarise yourself with the [requirements and restrictions](https://developer.algorand.org/articles/smart-contract-storage-boxes/) of the underlying API.
+Before using box storage, be sure to familiarise yourself with the [requirements and restrictions](https://dev.algorand.co/concepts/smart-contracts/storage/box/) of the underlying API.
 
 The `Box` type provides an abstraction over storing a single value in a single box. A box can be declared as a class field (in which case the key must be a compile time constant); or as a local variable within any
 subroutine. `Box` proxy instances can be passed around like any other value.

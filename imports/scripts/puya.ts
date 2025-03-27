@@ -5,6 +5,7 @@ import {
     lowercaseInternalLinks,
     changeFromToRegExp,
     changeFromTo,
+    removeLine,
 } from './src/transformers';
 import {
     processDirectories,
@@ -33,6 +34,10 @@ await processFile([
     {
         src: scriptLocation + '/../repos/puya-ts/README.md',
         transformations: [
+            removeLine('## Documentation'),
+            removeLine(' - [Language Guide](docs/language-guide.md)'),
+            removeLine(' - [API Docs](docs/api/README.md)'),
+            removeLine(' - [CLI Docs](docs/cli.md)'),
             convertH1ToFrontmatter,
             stripLinkExtensions,
             replaceTitleColon,

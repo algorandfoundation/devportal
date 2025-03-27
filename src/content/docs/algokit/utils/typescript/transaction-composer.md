@@ -54,7 +54,7 @@ Additionally `send()` takes a number of parameters which allow you to opt-in to 
 
 ### Populating App Call Resource
 
-`populateAppCallResources` automatically updates the relevant app call transactions in the group to include the account, app, asset and box resources required for the transactions to execute successfully. It leverages the simulate endpoint to discover the accessed resources, which have not been explicitly specified. This setting only applies when you have constucted at least one app call transaction. You can read more about [resources and the reference arrays](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/?from_query=resources#reference-arrays) in the docs.
+`populateAppCallResources` automatically updates the relevant app call transactions in the group to include the account, app, asset and box resources required for the transactions to execute successfully. It leverages the simulate endpoint to discover the accessed resources, which have not been explicitly specified. This setting only applies when you have constucted at least one app call transaction. You can read more about [resources and the reference arrays](https://dev.algorand.co/concepts/smart-contracts/resource-usage/#what-are-reference-arrays) in the docs.
 
 For example:
 
@@ -194,7 +194,7 @@ Application consumers may not be immediately aware of the number of op-up inner 
 ## Simulating a transaction
 
 Transactions can be simulated using the simulate endpoint in algod, which enables evaluating the transaction on the network without it actually being commited to a block.
-This is a powerful feature, which has a number of options which are detailed in the [simulate API docs](https://developer.algorand.org/docs/rest-apis/algod/#post-v2transactionssimulate).
+This is a powerful feature, which has a number of options which are detailed in the [simulate API docs](https://dev.algorand.co/reference/rest-apis/output/#simulatetransaction).
 
 For example you can simulate a transaction group like below:
 

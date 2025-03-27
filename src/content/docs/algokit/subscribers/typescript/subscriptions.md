@@ -241,7 +241,7 @@ export interface TransactionSubscriptionResult {
   newWatermark: bigint;
   /** Any transactions that matched the given filter within
    * the synced round range. This substantively uses the [indexer transaction
-   * format](https://developer.algorand.org/docs/rest-apis/indexer/#transaction)
+   * format](hhttps://dev.algorand.co/reference/rest-apis/indexer#transaction)
    * to represent the data with some additional fields.
    */
   subscribedTransactions: SubscribedTransaction[];

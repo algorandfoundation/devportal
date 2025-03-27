@@ -185,7 +185,7 @@ await algorand.send.assetTransfer({
 
 ## Opt-in/out
 
-Before an account can receive a specific asset, it must [`opt-in`](https://developer.algorand.org/docs/get-details/asa/#receiving-an-asset) to receive it. An opt-in transaction places an asset holding of 0 into the account and increases the [minimum balance](https://developer.algorand.org/docs/get-details/accounts/#minimum-balance) of that account by [100,000 microAlgos](https://developer.algorand.org/docs/get-details/asa/#assets-overview).
+Before an account can receive a specific asset, it must [`opt-in`](https://dev.algorand.co/concepts/assets/opt-in-out#receiving-an-asset) to receive it. An opt-in transaction places an asset holding of 0 into the account and increases the [minimum balance](https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr) of that account by [100,000 microAlgos](https://dev.algorand.co/concepts/assets/overview/).
 
 An account can opt out of an asset at any time by closing out it's asset position to another account (usually to the asset creator). This means that the account will no longer hold the asset, and the account will no longer be able to receive the asset. The account also recovers the Minimum Balance Requirement for the asset (100,000 microAlgos).
 

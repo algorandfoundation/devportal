@@ -6,7 +6,7 @@ The AlgoKit Dispenser feature allows you to interact with the AlgoKit TestNet Di
 
 ## Usage
 
-```zsh frame=none
+```zsh
 $ algokit dispenser [OPTIONS] COMMAND [ARGS]...
 ```
 
@@ -29,7 +29,7 @@ All dispenser commands can work in CI mode by using a CI access token that can b
 
 ## Login
 
-```zsh frame=none
+```zsh
 $ algokit dispenser login [OPTIONS]
 ```
 
@@ -44,7 +44,7 @@ Options
 
 ## Logout
 
-```zsh frame=none
+```zsh
 $ algokit dispenser logout
 ```
 
@@ -52,7 +52,7 @@ This command logs you out of your Dispenser API account if you are logged in.
 
 ## Fund
 
-```zsh frame=none
+```zsh
 $ algokit dispenser fund [OPTIONS]
 ```
 
@@ -65,7 +65,7 @@ Options
 
 ## Refund
 
-```zsh frame=none
+```zsh
 $ algokit dispenser refund [OPTIONS]
 ```
 
@@ -78,7 +78,7 @@ Options
 
 ## Limit
 
-```zsh frame=none
+```zsh
 $ algokit dispenser limit [OPTIONS]
 ```
 

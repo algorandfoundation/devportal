@@ -2,7 +2,7 @@
 title: Storing data on-chain
 ---
 
-Algorand smart contracts have [three different types of on-chain storage](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/state/)
+Algorand smart contracts have [three different types of on-chain storage](https://devdeveloper.algorand.co/concepts/smart-contracts/storage/overview/)
 they can utilise: [Global storage](#global-storage), [Local storage](#local-storage), [Box Storage](#box-storage), and [Scratch storage](#scratch-storage).
 
 The life-cycle of a smart contract matches the semantics of Python classes when you consider
@@ -18,7 +18,7 @@ the current method via [local variables and subroutine params](./lg-structure#su
 ## Global storage
 
 Global storage is state that is stored against the contract instance and can be retrieved
-by key. There are [AVM limits to the amount of global storage that can be allocated to a contract](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/state/#global-storage).
+by key. There are [AVM limits to the amount of global storage that can be allocated to a contract](https://dev.algorand.co/concepts/smart-contracts/storage/overview/#global-storage).
 
 This is represented in Algorand Python by either:
 
@@ -56,7 +56,7 @@ any [generated typed clients](https://github.com/algorandfoundation/algokit-cli/
 ## Local storage
 
 Local storage is state that is stored against the contract instance for a specific account and can be retrieved
-by key and account address. There are [AVM limits to the amount of local storage that can be allocated to a contract](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/state/#local-storage).
+by key and account address. There are [AVM limits to the amount of local storage that can be allocated to a contract](https://dev.algorand.co/concepts/smart-contracts/storage/overview/#local-storage).
 
 This is represented in Algorand Python by using an instance of `LocalState`.
 
@@ -98,7 +98,7 @@ any [generated typed clients](https://github.com/algorandfoundation/algokit-cli/
 
 We provide 3 different types for accessing box storage: Box, BoxMap, and BoxRef. We also expose raw operations via the [AVM ops](./lg-ops) module.
 
-Before using box storage, be sure to familiarise yourself with the [requirements and restrictions](https://developer.algorand.org/articles/smart-contract-storage-boxes/) of the underlying API.
+Before using box storage, be sure to familiarise yourself with the [requirements and restrictions](https://dev.algorand.co/concepts/smart-contracts/storage/overview/#boxes) of the underlying API.
 
 The `Box` type provides an abstraction over storing a single value in a single box. A box can be declared against `self`
 in an `__init__` method (in which case the key must be a compile time constant); or as a local variable within any

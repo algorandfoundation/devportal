@@ -1,5 +1,6 @@
 import {
     convertH1ToFrontmatter,
+    removeLine,
     removeTitleBackticks,
     stripLinkExtensions,
 } from './src/transformers';
@@ -39,6 +40,7 @@ await processFile([
             convertH1ToFrontmatter,
             stripLinkExtensions,
             removeTitleBackticks,
+            removeLine('- [Algorand transaction subscription / indexing](#algorand-transaction-subscription--indexing)'),
         ],
         dest: scriptLocation + '/../../src/content/docs/algokit/subscribers/typescript/overview.md'
     },
@@ -74,6 +76,7 @@ await processFile([
             convertH1ToFrontmatter,
             stripLinkExtensions,
             removeTitleBackticks,
+            removeLine('- [Algorand transaction subscription / indexing](#algorand-transaction-subscription--indexing)'),
         ],
         dest: scriptLocation + '/../../src/content/docs/algokit/subscribers/python/overview.md'
     },

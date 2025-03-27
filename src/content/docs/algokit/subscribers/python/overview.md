@@ -55,15 +55,26 @@ Polled 0 transactions
 
 ## Capabilities
 
-- [Notification _and_ indexing](#notification-and-indexing)
-- [Low latency processing](#low-latency-processing)
-- [Extensive subscription filtering](#extensive-subscription-filtering)
-- [ARC-28 event subscription and reads](#arc-28-event-subscription-and-reads)
-- [First-class inner transaction support](#first-class-inner-transaction-support)
-- [State-proof support](#state-proof-support)
-- [Simple programming model](#simple-programming-model)
-- [Easy to deploy](#easy-to-deploy)
-- [Fast initial index](#fast-initial-index)
+- [Quick start](#quick-start)
+- [Capabilities](#capabilities)
+  - [Notification _and_ indexing](#notification-and-indexing)
+  - [Low latency processing](#low-latency-processing)
+  - [Watermarking and resilience](#watermarking-and-resilience)
+  - [Extensive subscription filtering](#extensive-subscription-filtering)
+  - [ARC-28 event subscription and reads](#arc-28-event-subscription-and-reads)
+  - [First-class inner transaction support](#first-class-inner-transaction-support)
+  - [State-proof support](#state-proof-support)
+  - [Simple programming model](#simple-programming-model)
+  - [Easy to deploy](#easy-to-deploy)
+  - [Fast initial index](#fast-initial-index)
+- [Entry points](#entry-points)
+- [Reference docs](#reference-docs)
+- [Emit ARC-28 events](#emit-arc-28-events)
+  - [Algorand Python](#algorand-python)
+  - [TealScript](#tealscript)
+  - [PyTEAL](#pyteal)
+  - [TEAL](#teal)
+- [Next steps](#next-steps)
 
 ### Notification _and_ indexing
 
@@ -87,7 +98,7 @@ The `sync_behaviour` parameter can also be set to `sync-oldest`, which is a more
 
 ### Low latency processing
 
-You can control the polling semantics of the library when using the [`AlgorandSubscriber`](./subscriber) by either specifying the `frequency_in_seconds` parameter to control the duration between polls or you can use the `wait_for_block_when_at_tip` parameter to indicate the subscriber should [call algod to ask it to inform the subscriber when a new round is available](https://developer.algorand.org/docs/rest-apis/algod/#get-v2statuswait-for-block-afterround) so the subscriber can immediately process that round with a much lower-latency. When this mode is set, the subscriber intelligently uses this option only when it's caught up to the tip of the chain, but otherwise uses `frequency_in_seconds` while catching up to the tip of the chain.
+You can control the polling semantics of the library when using the [`AlgorandSubscriber`](./subscriber) by either specifying the `frequency_in_seconds` parameter to control the duration between polls or you can use the `wait_for_block_when_at_tip` parameter to indicate the subscriber should [call algod to ask it to inform the subscriber when a new round is available](https://dev.algorand.co/reference/rest-apis/algod/#waitforblock) so the subscriber can immediately process that round with a much lower-latency. When this mode is set, the subscriber intelligently uses this option only when it's caught up to the tip of the chain, but otherwise uses `frequency_in_seconds` while catching up to the tip of the chain.
 
 e.g.
 
@@ -308,11 +319,11 @@ The `intra-round-offset` field in a [subscribed transaction or inner transaction
 
 ### State-proof support
 
-You can subscribe to [state proof](https://developer.algorand.org/docs/get-details/stateproofs/) transactions using this subscriber library. At the time of writing state proof transactions are not supported by algosdk v2 and custom handling has been added to ensure this valuable type of transaction can be subscribed to.
+You can subscribe to [state proof](https://dev.algorand.co/concepts/protocol/stateproofs) transactions using this subscriber library. At the time of writing state proof transactions are not supported by algosdk v2 and custom handling has been added to ensure this valuable type of transaction can be subscribed to.
 
 The field level documentation of the [returned state proof transaction](subscriptions#subscribedtransaction) is comprehensively documented via [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L277).
 
-By exposing this functionality, this library can be used to create a [light client](https://developer.algorand.org/docs/get-details/stateproofs/light_client/).
+By exposing this functionality, this library can be used to create a [light client](https://dev.algorand.co/concepts/protocol/stateproofs).
 
 ### Simple programming model
 
@@ -346,7 +357,7 @@ The indexer catchup isn't magic - if the filter you are trying to catch up with 
 
 To understand how the indexer behaviour works to know if you are likely to generate a lot of transactions it's worth understanding the architecture of the indexer catchup; indexer catchup runs in two stages:
 
-1. **Pre-filtering**: Any filters that can be translated to the [indexer search transactions endpoint](https://developer.algorand.org/docs/rest-apis/indexer/#get-v2transactions). This query is then run between the rounds that need to be synced and paginated in the max number of results (1000) at a time until all of the transactions are retrieved. This ensures we get round-based transactional consistency. This is the filter that can easily explode out though and take a long time when using indexer catchup. For avoidance of doubt, the following filters are the ones that are converted to a pre-filter:
+1. **Pre-filtering**: Any filters that can be translated to the [indexer search transactions endpoint](https://dev.algorand.co/reference/rest-apis/indexer/#lookuptransaction). This query is then run between the rounds that need to be synced and paginated in the max number of results (1000) at a time until all of the transactions are retrieved. This ensures we get round-based transactional consistency. This is the filter that can easily explode out though and take a long time when using indexer catchup. For avoidance of doubt, the following filters are the ones that are converted to a pre-filter:
    - `sender` (single value)
    - `receiver` (single value)
    - `type` (single value)

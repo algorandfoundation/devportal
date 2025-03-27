@@ -466,7 +466,6 @@ client.appClient.fund_app_account(
 )
 client.send.opt_in.opt_in_to_application(
     args=[],
-    send_params={"populate_app_call_resources": True},
 )
 
 assert client.state.local(defaultSender).local_key() == 1337

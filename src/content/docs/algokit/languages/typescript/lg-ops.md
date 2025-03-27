@@ -2,7 +2,7 @@
 title: AVM Operations
 ---
 
-Algorand TypeScript allows you to express [every op code the AVM has available](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/) excluding those that manipulate the stack or control execution as these would interfere with the compiler. These are all exported from the [ops module](api/op/README). It is possible to import ops individually or via the entire namespace.
+Algorand TypeScript allows you to express [every op code the AVM has available](https://dev.algorand.co/reference/algorand-teal/opcodes/) excluding those that manipulate the stack or control execution as these would interfere with the compiler. These are all exported from the [ops module](api/op/README). It is possible to import ops individually or via the entire namespace.
 
 ```ts
 // Import op from module root

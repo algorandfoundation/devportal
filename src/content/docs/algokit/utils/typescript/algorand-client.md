@@ -135,9 +135,9 @@ There are two common base interfaces that get reused:
 - `CommonTransactionParams`
   - `sender: string` - The address of the account sending the transaction.
   - `signer?: algosdk.TransactionSigner | TransactionSignerAccount` - The function used to sign transaction(s); if not specified then an attempt will be made to find a registered signer for the given `sender` or use a default signer (if configured).
-  - `rekeyTo?: string` - Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://developer.algorand.org/docs/get-details/accounts/rekey/).
+  - `rekeyTo?: string` - Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying).
   - `note?: Uint8Array | string` - Note to attach to the transaction. Max of 1000 bytes.
-  - `lease?: Uint8Array | string` - Prevent multiple transactions with the same lease being included within the validity window. A [lease](https://developer.algorand.org/articles/leased-transactions-securing-advanced-smart-contract-design/) enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+  - `lease?: Uint8Array | string` - Prevent multiple transactions with the same lease being included within the validity window. A [lease](https://dev.algorand.co/concepts/transactions/leases) enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
   - Fee management
     - `staticFee?: AlgoAmount` - The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
     - `extraFee?: AlgoAmount` - The fee to pay IN ADDITION to the suggested fee. Useful for covering inner transaction fees.
