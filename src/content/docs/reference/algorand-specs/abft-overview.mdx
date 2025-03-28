@@ -1,0 +1,960 @@
+---
+title: 'Agreement Protocol Overview'
+---
+
+import vanillaImg from '@images/Vanilla.excalidraw.png';
+import jalapenoImg from '@images/Jalapeno.excalidraw.png';
+import habaneroImg from '@images/Habanero.excalidraw.png';
+
+# Agreement Protocol Overview
+
+The following document is a non-normative overview of the Algorand Agreement Protocol. We attempt to ease understanding of the official specification and provide readers with a comprehensive view of its inner workings while maintaining technical correctness.\
+We provide pseudocode examples and diagrams for readers and potential implementers to have a clear view of how these processes may be modelled in code, and how they might interact with one another.
+For a formal specification of the Algorand Byzantine Fault Tolerance protocol, please refer to the normative [ABFT Specification](../md/abft.md).
+
+# General Concepts
+
+The Algorand Agreement Protocol, or Algorand Byzantine Fault Tolerance (ABFT), is a consensus mechanism ensuring secure, decentralized agreement on transaction ordering in the Algorand blockchain. It tolerates malicious actors as long as less than one-third of the participants are compromised. The protocol relies on cryptographic sortition to randomly and verifiably self-select a small, representative group of participants to propose and validate blocks. This randomness ensures security, scalability, and resistance to attacks. By achieving instant finality, ABFT enables Algorand to process transactions efficiently, making it suitable for large-scale, real-time applications.
+
+In each round, a block must be confirmed. For the purposes of this document, a block is treated as an opaque data packet with two mandatory fields: a _block hash_ and a _seed_. For details on the remaining fields and the structure of a block, please refer to the Ledger's [formal specification](ledger.md) and [overview](ledger-overiew.md).
+
+Functionally, an Algorand Node "plays" on behalf of every actively participating account whose [participation keys](partkey.md#votingparticipation-keys) are registered for voting. Each of these accounts can be viewed as an independent player in the protocol, identified by its unique set of keys $I$ and associated balance. However, all accounts share a unified view of the transaction pool and blockchain state, which is maintained by the node through which they participate in the protocol.
+
+Consensus is reached progressively. A _round_ is the primary unit of time in the consensus protocol. Each round aims to agree on a single block to append to the blockchain. The protocol begins a new round once the previous one has finalized a block.
+
+## A brief explainer on normative spec. protocol notation
+
+We define a structure $credentials$ for ease of use and readability. This structure will contain all necessary fields for identifying a voting party, which includes:
+
+- Address ($I$): A unique identifier for the participating account.
+  Secret key ($sk_r$): A private key associated with the account, used for cryptographic operations such as signing messages. It is round dependant because it is making use of a [two-level ephemeral key scheme](partkey.md#algorands-two-level-ephemeral-signature-scheme-for-authentication) under the hood, although for the purpose of this document this procedure is replaced by an opaque structure which produces the key needed for the round, and abstracts away both a signature and verification procedure.
+
+- VRF proof ($\pi$): A cryptographic proof generated using the [Verifiable Random Function (VRF)](crypto.md#verifiable-random-function). Since the sortition hash $VRF_{out}$ can be derived from a proof $\pi$, we assume that $VRF_{out}$ is implicitly available whenever $\pi$ is present.
+
+The sets of observed votes ($V$) and proposals ($P$) observed in a given round are utilized here with the same definition as in the [Formal Specification](abft.md). Analogous to these, we define a set of observed bundles ($B$) for a given round, that is built taking subsets of votes in $V$ according to the rules for a valid bundle specified in the [Formal Specification](abft.md#bundles).
+
+# Context Tuple: $(r,p,s)$
+
+The agreement protocol may be modelled as a state machine.\
+Analogous to execution coordinates, three integers taken together provide enough context on which stage of the protocol the state machine is currently processing.
+This triplet is referred throughout this document as the _context tuple_, as it supplies the necessary information to determine the exact phase of the Agreement Protocol being executed, or, in simpler terms, "where we are" in the broader process. For details on the formal implications of these values in the overall protocol, refer to the [Algorand Byzantine Fault Tolerance Formal Specification](abft.md#parameters).
+The components of the Context Tuple are:
+
+1. **Round ($r$)**:
+
+   - An unsigned 64-bit number representing the current size of the ledger and the round number of the committed block.
+   - Fundamentally, it serves as a monotonically increasing index into the blockchain, reflecting the progression of confirmed blocks.
+
+2. **Period ($p$)**:
+
+   - An unsigned 64-bit number indicating the current "run" of the same round.
+   - Under ideal conditions, $p = 0$ and remains so throughout the entire process from block proposal to block commitment.
+   - If $p \neq 0$, it signifies that the network is recovering from a failed attempt to commit a block within the current round. In such cases, all or some Agreement stages may be re-executed.
+   - During recovery, [specific routines](#recovery-stages) are employed to monitor the network's ability to reach consensus again. These routines may reuse information from previous failed attempts to accelerate block commitment once normal operation resumes.
+
+3. **Step ($s$)**:
+   - An unsigned 8-bit number representing an enumeration of the possible Agreement Protocol stages. See the [Formal Spec.](abft.md#parameters) for a formal definition of this enumeration.
+   - Steps are bounded (by `UINT8_MAX = 255`) and follow the protocol's predefined progression through its stages.
+
+# Seed Calculation Overview
+
+The cryptographic seed is a source of randomness for many internal operations inside the protocol, as well as an externally exposed source of randomness that may be used for several applications. A formal definition of the _seed_ can be found in the [ABFT formal spec.](abft.md#seed).\
+What follows is a more engineering and implementation-oriented way of conceptualizing the seed computation, as well as an example to ease its understanding.\
+
+> [!NOTE]
+> The following algorithm makes heavy use of _VRF_ specific functions. For more information on how these work internally, you may refer to the [Algorand Cryptographic Primitive Specification](crypto.md#verifiable-random-function).
+
+For the computation algorithm, consider the following pseudocode:
+
+\begin{algorithm}[H]
+\caption{\underline{Compute Seed And Proof}}
+\label{algo:compute-seed}
+\begin{algorithmic}[1]
+\Function{ComputeSeedAndProof}{$Address \ I$}
+\If {$p = 0$}
+\State $y := \passthrough{VRF_{prove}}(secrets(I)_{VRFkey}, L[r-\delta_s]_Q)$
+\State $\alpha := \passthrough{H}(\passthrough{VRF_{proofToHash}}(y)||I)$
+\Else
+\State $y := 0$
+\State $\alpha := \passthrough{H}(L[r-\delta_s]_Q)$
+\EndIf
+
+        \If{$r \ \texttt{mod} \ \delta_s \delta_r < \delta_s$}
+            \State $Q := \passthrough{H}(\alpha||\passthrough{H}(L[r-\delta_s\delta_r]))$
+        \Else
+            \State $Q := \passthrough{H}(\alpha)$
+        \EndIf
+
+         \State \Return $(Q, y)$
+    \EndFunction
+    \end{algorithmic}
+
+\end{algorithm}
+
+[Link to reference implementation.](https://github.com/algorand/go-algorand/blob/b6e5bcadf0ad3861d4805c51cbf3f695c38a93b7/agreement/proposal.go#L155)
+
+The function takes as input the $Address \ I$ of an _online_ player who will be computing the seed. Note that in order for the seed computation to work, the player needs to have registered participation keys in the node computing the seed, so as for the $secrets(I)$ call (in line 3 of the algorithm) to retrieve available VRF secrets generated during that registration process (for more information on this and other types of keys a player has to utilize, you may refer to the [Algorand Participation Key Specification](partkey.md#vrf-selection-keys)).
+
+The function computes the cryptographic seed that goes in a block candidate for round $r$,
+and will (if said block candidate is commited) be used as a source of randomness for sortition in a future round.
+The seed is computed according to whether the function is called in a first period, $p = 0$, or not.
+It also computes the proof $\pi_{seed}$, bundled up with the block inside a proposal structure for broadcasting,
+and used by nodes receiving the proposal as part of the proposal validation process.
+
+What follows is an example of seed computation in three adjacent blocks, chosen to show both branches of the algorithm according to the round number modulo $\delta_s*\delta_r$.
+
+Keeping in mind that: `SeedLookback`: $\delta_s$ = 2 and `SeedRefreshInterval`: $\delta_r$ = 80 we define $rerand()$ as $r\ \texttt{mod}\ (\delta_s * \delta_r)$.\
+When $rerand()$ is smaller than $\delta_s$, we say we are _re-randomizing_ the seed for the round $r$.
+
+E.g., take the process for round $r=48182880$ as $rerand()=48182880 \ \texttt{mod}\ 160 = 0$:
+
+1. Get the seed for round $r-\delta_s=(48182880 - 2)=48182878$.
+2. Construct a VRF Proof with that seed.
+3. Convert the VRF Proof to a VRF Hash.
+4. Hash the object $\{Address, VRFHash\}$ (this is the $\alpha$).
+5. Calculate the final seed hashing $\alpha$.
+
+This process will be the same for round 48182881 as the $rerand()$ is still less than $\delta_s$.
+
+For the round 48182882 the process will be:
+
+1. Get the seed for round $48182880 = 48182882 - \delta_s$.
+2. Construct a VRF Proof with that seed.
+3. Convert the VRF proof to a VRF Hash.
+4. Hash the object $\{Address, VRFHash\}$ (this is the $\alpha$)
+5. Lookup the digest of the round $48182722= 48182880 - (\delta_s * \delta_r)$. This is the $oldDigest$.
+6. Calculate the final seed hashing the object $\{\alpha, oldDigest\}$.
+
+This process will be the same for rounds 48182883 to 48183039 as $rerand()$ is still greater than $\delta_s$.
+
+If during the execution of consensus inside a round a period greater than 0 is observed, steps 2 to 4 change to hashing the seed of a round $r - \delta_s$. This is when another proposal for the same round has to be created, in order to avoid the posibility of manipulation of the seed value by a proposer, eliminating its input into the computation (as we are using a seed that is $\delta_s$ rounds in the past, outside of a potential attacker's influence).
+
+# Agreement Stages
+
+Generally speaking, the Algorand Agreement Protocol may be split into a series of stages. When referring to the formal specification, these stages are univocally associated with infinite subsets of states of the state machine model. These subsets are disjoint and together represent the whole space of possible states for the State Machine to be in.\
+The stages are, in chronological order inside of a given round: `Block Proposal`, `Soft Vote`, `Certification Vote` (which includes a final Commitment). If Commitment is not possible because of external reasons (i.e. a network partition), a `Recovery` stage ensues.
+
+By abstracting away some implementation-specific complexity, we propose a model for the State Machine that captures how and when transitions between different states happen.
+We may model the state machine's main algorithm in the following way:
+
+\begin{algorithm}[H]
+\caption{\underline{Main node algorithm}}
+\label{algo:main}
+\begin{algorithmic}[1]
+\Function{$\passthrough{EventHandler}(\passthrough{Event} \ ev)$}{}
+
+    \If{$ev$ is $\passthrough{TimeoutEvent}$}
+        \State $time := ev_{time}$
+        \If{$time = 0$}
+            \State $\passthrough{BlockProposal}()$ \Comment{Last round should have left us with s=0}
+            \If {$\text{ finished a block } \lor currentTime() = assemblyDeadline()$}
+            \State $s:=soft$
+        \EndIf
+        \ElsIf{$time = \passthrough{DynamicFilterTimeout}(p)$}
+            \State $\passthrough{SoftVote}()$
+            \State $s:=cert$
+        \ElsIf{$time = DeadlineTimeout(p)$}
+            \State $s:=next_0$
+            \State $\passthrough{Recovery}()$
+        \ElsIf{$time = DeadlineTimeout(p) + 2^{s_t-3}\lambda$ for some $4\le s_t \le 252$}
+            \State $s:=s_t $
+            \State $\passthrough{Recovery}()$
+        \ElsIf{$time = k\lambda_f + rnd$ for some $k,rnd \in \mathbb{Z}, k>0, 0\le rnd \le \lambda_f$}
+            \State $\passthrough{FastRecovery}()$
+        \EndIf
+    \Else \ \Comment{These MessageEvents could trigger a commitment and round advancement}
+        \State $msg := ev_{msg}$
+        \If{$msg_{data}$ is of type $Proposal \ pp$}
+            \State $\passthrough{HandleProposal}(pp)$
+        \ElsIf{$msg_{data}$ is of type $Vote \ v$}
+            \State $\passthrough{HandleVote}(v)$
+        \ElsIf{$msg_{data}$ is of type $Bundle \ b$}
+            \State $\passthrough{HandleBundle}(b)$
+        \EndIf
+    \EndIf
+
+    \EndFunction
+    \end{algorithmic}
+
+\end{algorithm}
+
+The first three steps
+($proposal$, $soft$ and $cert$)
+are the fundamental parts, and will be the only steps run in normal, "healthy" functioning conditions.
+The following steps are recovery procedures in case there's no observable consensus before their trigger times.\
+Note that in the case of $proposal$, if a block is not assembled and finalized in time for the $blockAssembly()$ timeout, this might trigger an advancement to the next step. For more information on this process, you may refer to the non-normative [Algorand Ledger Overview](ledger-overview.md#block-assembly).
+
+$next_{s-3}$ with $s \in [3, 252]$ are recovery steps and the last three ($late$, $redo$ and $down$)
+are special ``fast'' recovery steps.
+A period is an execution of a subset of steps, ran in order until one of them achieves
+a bundle for a specific value. A round always starts with a $proposal$ step and finishes with a $cert$
+step (when a block becomes commitable, is then certified and committed to the Ledger). However, multiple periods might
+be run inside a round until a certification bundle ($\passthrough{Bundle}(r,p,s,v) $ where $s = cert$) is observable by the network, and the corresponding proposal $Proposal(v)$ has been received and validated, and is available at the moment of commitment.
+
+Events are the only way in which the node state machine is able to both internally transition and produce output.
+
+[Link to reference implementation.](https://github.com/algorand/go-algorand/blob/c60db8dbc4b0dd164f0bb764e1464d4ebef38bb4/agreement/events.go#L82)
+
+In case an event is not identified as misconstrued or malicious in nature, it will certainly produce a state change,
+and it will almost certainly cause a receiving node to produce and then broadcast or relay an output, to be consumed
+by its peers in the network.
+There are two main kinds of events: Timeout events, which are produced once the internal clock of a node reaches a certain
+time since the start of the current period; and Message events, which is output produced by nodes in response to some stimulus
+(including the receiving node itself).
+Internally, we consider the relevant data of an event to be:
+
+- A floating point number representing time in seconds, from the start of the current period, in which the event
+  has been triggered.
+- An event type, from an enumeration (see the reference implementation link above).
+- An attached data type.
+- Attached data, plain bytes to be cast and interpreted according to the attached data type, or empty in case of a
+  timeout event.
+
+$\mathbf{Timeout \ Events}$ are events that are triggered after a certain time has elapsed after the start of a new period.
+
+- $soft$ Timeout (aka. Filtering): The filter timeout is run after a timeout of $\passthrough{DynamicFilterTimeout}(p)$ is observed
+  (where $p$ is the currently running period). Note that it only depends on the period as far as if it's the first
+  period in a round or a subsequent one.
+  In response to this, the State Machine will perform a filtering action, finding the highest priority proposal observed to produce a soft vote, as detailed
+  in the soft vote algorithm.
+
+- $next_0$ Timeout: it's the first recovery step, only executed if no consensus for a specific value was observed,
+  and no $cert$ bundle is constructible with observed votes. It plays after observing a timeout of $DeadlineTimeout(p)$.
+  In it, the node will next vote a value and attempt to reach a consensus for a $next_0$ bundle, that would in turn kickstart
+  a new period.
+
+- $next_{s}$ Timeout: this family of timeouts runs whenever the elapsed time since the start of the period reaches
+  $DeadlineTimeout(p) + 2^{s_t-3}\lambda$ for some $4\le s_t \le 252$.
+  The algorithm run is exactly the same as in the $next_0$ step.\
+  [Link to reference implementation](https://github.com/algorand/go-algorand/blob/55011f93fddb181c643f8e3f3d3391b62832e7cd/agreement/types.go#L103C15-L103C29).
+
+- Fast recovery Timeout ($late$, $redo$ and $down$ steps): On observing a timeout of $k\lambda_f + rnd$ with $rnd$ a uniform random sample in $[0, \lambda_f]$ and
+  $k$ a positive integer, the fast recovery algorithm is executed. It works in a very similar way to $next_k$ timeouts, with some subtle differences (besides trigger time).
+  For a detailed description refer to its own [subsection](#late-redo-and-down-votes).
+
+$\mathbf{Message \ Events}$ are events triggered after observing a certain message carrying data.
+We focus on 3 kinds of messages: _votes_, _proposal payloads_, and _bundles_, and each carry
+the corresponding construct (coinciding with their attached data type field).
+
+We'll now go over all stages in the protocol, providing a pseudocode implementer friendly description of each one of them, as well as detailing how specific event handlers work.
+
+## Dynamic filter timeout
+
+| Name                       | Value          | Description                                                                                                                                                                                                   |
+| -------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| $DFCredArrivalHistorySize$ | 40             | The size of the credential arrival history circular array                                                                                                                                                     |
+| $DFTimeoutLowerBound$      | 2.5 seconds    | The lowest bound for the dynamic filter timeout function. Coincides with $10\lambda_{0min}$.                                                                                                                  |
+| $DFTimeoutIdx$             | 37             | Index that specifies which entry to use in the (sorted) DFCredArrivalHistory, considering its size. Currently set to be the entry representing the 95th percentile (according to $DFCredArrivalHistorySize$). |
+| $DFTimeoutGraceInterval$   | 50 miliseconds | Additional extension to the dynamic filter time atop the one calculated based on the history of credential arrivals.                                                                                          |
+
+For computing the filter timeout (aka. the timeout to trigger a call to $softVote()$), a dynamic algorithm is in place. This allows for a kind of "shock-absorbed" optimization of the filter timeout computation.\
+[Link to reference implementation](https://github.com/algorand/go-algorand/blob/df0613a04432494d0f437433dd1efd02481db838/agreement/player.go#L318).
+
+In regular functioning, this timeout will tend to the minimum defined of $DFTimeoutLowerBound = 2.5s$. Whenever network conditions force the round advancement to stall, this will diverge towards the maximum of $2\lambda_{0max} = 3.5s$ (see the formal definition of this function's limits and the parameters mentioned here in the [ABFT Specification](abft.md#parameters)).
+
+We now define a parameter, credential round lag, $\delta_{lag} = \min \{round(2 * \frac{\lambda}{10\lambda_{0min}}), 8\}$, to be the lookback in rounds for credential arrival time history to be added into the credential history tally. With current values for $\lambda$ and $\lambda_{0min}$, $\delta_{lag} = 2$.
+
+Furthermore, we define the _minimum credential arrival_ of round $r'$ as the time (measured since the start of the round $r'$) in which the proposal vote that minimizes the priority function for 'lowest credential' was observed.
+
+The dynamic filter timeout computation then depends on keeping a _Credential Arrival History_, an array of size $DFCredArrivalHistorySize$ where the minimum credential arrival for a certain number of rounds before $r - \delta_{lag}$ is stored.
+
+Every time a round is succesfuly completed (in other words, a certification bundle is observed and a proposal is already available, or a proposal for an already present certification bundle is received, and in any case the proposal became commitable), a function to update the _Credential Arrival History_ is called.\
+[Link to reference implementation](https://github.com/algorand/go-algorand/blob/df0613a04432494d0f437433dd1efd02481db838/agreement/player.go#L293).
+
+This function looks up the time of arrival of the relevant credential for the $r - \delta_{lag}$ round, and stores it into the _Credential Arrival History_. Keep in mind that only rounds where the period $p$ remained as $p=0$ throughout the whole round. If the period is not zero, the round is skipped and the arrival history remains unchanged. Otherwise the retrieved time is pushed into the _Credential Arrival History_; and in case it is full, the oldest entry is deleted.
+
+When computing the dynamic filter timeout, if a sufficient history of credentials is available (defined as a full array of $DFCredArrivalHistorySize$ past credential arrival time entries), the array holding this history is sorted. Then the entry occupying the place given by $DFTimeoutIdx$ is selected as the chosen timeout. With current parameter values, this signifies the 95th percentile of the list of sorted past arrival times. Finally, a $DFTimeoutGraceInterval$ delta is added into the selected entry, for the final filter timeout to be output.\
+Note that this output is clamped on the minimum and maximum bounds for filter timeout defined in the [ABFT specs.](abft.md#parameters).
+
+## Block Proposal
+
+In pseudocode, an abstracted away version of the block proposal algorithm works in the following way:
+
+\begin{algorithm}
+\caption{\underline{Block Proposal}}
+\label{algo:block-proposal}
+\begin{algorithmic}[1]
+\Function{BlockProposal}{\;}
+
+            \If {$p \neq 0$}
+                \State $\passthrough{ResynchronizationAttempt}()$
+            \EndIf
+
+            \For{$a \in A$}
+                \State $cred :=  \passthrough{Sortition}(a_I, r,p, proposal)$
+                \If{$cred_j > 0$}
+                    \If{$p = 0 \lor \exists s^\prime \textfractionsolidus \passthrough{Bundle}(r, p-1, s^\prime, \bot) \subset V$}
+                        \State $(e,\pi_{seed}) := \passthrough{BlockAssembly}(a_I)$
+                        \State $prop := \passthrough{Proposal}(e, \pi_{seed}, p, a_I)$
+                        \State $v := \passthrough{Proposal_{value}}(prop)$
+                        \State $\passthrough{Broadcast}(\passthrough{Vote}(a_I, r, p, proposal, v, cred))$
+                        \State $\passthrough{Broadcast}(prop)$
+                    \Else
+                        \State $\passthrough{Broadcast}(\passthrough{Vote}(a_I, r, p, proposal, \bar{v}, cred))$
+                        \If{$\passthrough{RetrieveProposal}(\bar{v}) \neq \bot$}
+                            \State $\passthrough{Broadcast}(\passthrough{RetrieveProposal}(\bar{v}))$
+                        \EndIf
+                    \EndIf
+                \EndIf
+            \EndFor
+        \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+
+[Link to reference implementation](https://github.com/algorand/go-algorand/blob/df0613a04432494d0f437433dd1efd02481db838/agreement/pseudonode.go#L286-L322).
+
+This algorithm is the first routine called on every round and periods where a _reproposal_ is not possible.
+Starting on line 2, the node attempts a resynchronization (described in the [corresponding section](#resynchronization-attempt)), which
+only has any effect on periods $p > 0$.
+
+> [!NOTE]
+> In the reference implementation, the resynchronization attempt is done when entering into a [new period](https://github.com/algorand/go-algorand/blob/55011f93fddb181c643f8e3f3d3391b62832e7cd/agreement/player.go#L411). Functionally, the behavior is the same; resync. is performed before starting a new period save for $p=0$.
+
+The algorithm loops on all of the node's managed _online_ accounts ($a\in A$).
+This is a pattern that we'll see in every other main algorithm subroutine
+that performs any form of committee voting.
+For each participating account, the sortition algorithm (see its [dedicated section](crypto.md#cryptographic-sortition) in the [Algorand Cryptographic Primitive Specification](crypto.md)) is run to check if said account is allowed
+to participate in the proposal.
+If an account $a$ is selected by sortition (because $cred_j=Sortition(a_I, r,p,proposal)_j>0$)
+there are two options:
+
+1. If this is a proposal step ($p=0$) or if the node has observed a bundle $Bundle(r, p-1, s^\prime, \bot)$ (meaning there is no valid pinned value), then the algorithm assembles a block (see `BlockAssembly()` in the non-normative [Ledger Overview](ledger-overview.md#block-assembly) for details on this process), computes the proposal value for this block, broadcast a proposal vote by the account $a$, and broadcasts the full block in a proposal type message.
+
+2. Otherwise, a value $\bar v$ has been pinned, supported by a bundle observed in period $p-1$, and on line 13 the node gets this value, assembles a vote $Vote(a_I, r, p, proposal, \bar{v}, cred)$, broadcasts this vote, and will also broadcast the proposal for the pinned vote if it was already observed.
+   Then, for every account selected, a proposal vote for this pinned value is broadcast. Afterwards,
+   if the corresponding full proposal has been observed, then it is also broadcast.
+
+> [!NOTE]
+> The reference implementation assembles a payset and block header data that is independant of the proposer in parallel with the proposer loop. This is in order to improve timing and guarantee the tight deadline constraints for the block proposal step.
+
+## Soft Vote
+
+\begin{algorithm}[H]
+\caption{\underline{Soft Vote}}
+\label{algo:soft-vote}
+\begin{algorithmic}[1]
+\Function{$\passthrough{SoftVote}$}{\;}
+\State $lowestObservedHash := \infty$
+\State $v := \bot$
+
+    \For{$vt^\prime \in \passthrough{V} \text{ with } vt^\prime_s = proposal$}
+        \State $priorityHash := \min_{i \in [0, vt^\prime_{cred_j})} \{ \passthrough{H}(vt^\prime_{cred_{VRF_{out}}} || i)\}$
+        \If{$priorityHash < lowestObservedHash$}
+            \State $lowestObservedHash := priorityHash$
+            \State $v := vt_v$
+        \EndIf
+    \EndFor
+
+    \If {$lowestObservedHash < \infty$}
+        \For{$Account \ a \in A$}
+            \State $cred := \passthrough{Sortition}(a_I, r, p, soft)$
+            \If{$cred_j > 0$}
+                \State $\passthrough{Broadcast}(\passthrough{Vote}(r, p, soft, v, cred))$
+                \If{$\passthrough{RetrieveProposal}(v)$}
+                    \State $\passthrough{Broadcast}(\passthrough{RetrieveProposal}(v))$
+                \EndIf
+            \EndIf
+        \EndFor
+    \EndIf
+
+    \EndFunction
+    \end{algorithmic}
+
+\end{algorithm}
+
+Links to reference implementation for [filtering](https://github.com/algoradam/go-algorand/blob/master/data/committee/credential.go#L160C1-L187C2) and for [soft vote issuance](https://github.com/algorand/go-algorand/blob/df0613a04432494d0f437433dd1efd02481db838/agreement/player.go#L170-L206).
+
+Note that the priority function used to determine which proposal-value to vote for is that which minimizes the priority function
+$F(vt) = \min_{i \in [0, j)} \{ H(vt^\prime_{cred_{VRF_{out}}} || i)\}$
+where $j$ is the weight of the proposal vote.
+
+The soft vote stage (also known as ``filtering'') is run after a timeout of $DynamicFilterTimeout(p)$
+(where $p$ is the executing period of the node) is observed by the node (see the [dynamic filter timeout section](#dynamic-filter-timeout) for more details).
+
+Let $V^*$ be all proposal votes received, e.g., $V^*=\{vt^\prime\in V : vt^\prime_s = proposal\}$.
+With the aid of a priority hash function (see the [ABFT Formal Spec.](abft.md#special-values)), this stage performs a filtering action,
+keeping the lowest hashed value observed.
+
+The priority function (lines 4 to 8) should be interpreted as follows. Consider every proposal vote $vt$ in $V^*$.
+Given the sortition hash $VRF_{out}$ output by the $VRF$ for the proposer account (see the [Cryptographic Spec.](crypto.md#verifiable-random-function) for details on $VRF$s), and for each unit $i$
+in the interval from $0$ (inclusive) to the vote weight (exclusive; the $j$ output of $Sortition(.)$ inside
+the $cred$ credentials structure), the node hashes the concatenation of $VRF_{out}$ and $i$, $H(VRF_{out}||i)$
+(where $H(.)$ is the node's general cryptographic hashing function, see [here](crypto.md#hash-functions) for details).
+
+On lines 6 to 8,
+then, it keeps track of the proposal-value that minimizes this concatenation and subsequent hashing procedure.
+After running the filtering algorithm for all proposal votes observed, and assuming there was at least one vote
+in $V^*$, the broadcasting section of the filtering algorithm is executed (lines 9 to 15).
+
+For every _online_ managed account selected to be part of the $soft$ voting committee, a $soft$ vote is
+broadcast for the previously found filtered value $v$. If the full proposal has been observed and is available in $P$,
+it is also broadcast.\
+If the previous assumption of non-empty $V*$ does not hold, no broadcasting is performed and the node produces no
+output in its filtering step.
+
+## Vote Handler
+
+Note that we abstract away a series of behaviors as a single handler for ease of understanding and to provide an implementation agnostic engineering overview. In the reference implementation, vote verification and vote observation, although dependant on each other, are performed by separate processes.
+
+\begin{figure}
+\makebox[\linewidth]{%
+\begin{minipage}{\dimexpr\linewidth+5em}
+\begin{algorithm}[H]
+\caption{\underline{Handle Vote}}
+\label{algo:handle-vote}
+\begin{algorithmic}[1]
+
+\Function{$\passthrough{ValidateVote}$}{$\passthrough{Vote} \ vt$}
+
+            \If{$\mathbf{not}\; \passthrough{VerifyVote}(vt)$}
+                \State $\passthrough{DisconnectFromPeer}(\passthrough{SENDER\_PEER}(vt))$
+                \Return \Comment{ignore invalid vote}
+            \EndIf
+
+            \If{$vt_s = 0 \land (vt \in V \lor \passthrough{IsEquivocation}(vt))$}
+                \Return \ \Comment{ignore vote, equivocation not allowed in proposal votes}
+            \EndIf
+
+            \If{$vt_s > 0 \land \passthrough{IsSecondEquivocation}(vt) $}
+                \Return \ \Comment{ignore vote if it's a second equivocation}
+            \EndIf
+
+            \If{$vt_r < r $}
+                \Return \ \Comment{ignore vote of past round}
+            \EndIf
+
+            \If{$vt_r = r+1 \land (vt_p > 0 \lor vt_s \in \{next_0,\ldots, next_{249}\})$}
+                \Return \ \Comment{ignore vote of next round if non-zero period or $next_k$ step}
+            \EndIf
+
+            \If{$vt_r = r \land (vt_p \notin \{p-1,p, p+1\} \lor$ \hfill\break
+            $(vt_p = p+1 \land vt_s \in \{next_1,\ldots, next_{249}\}) \lor$ \hfill\break
+            $(vt_p = p \land vt_s \in \{next_1,\ldots, next_{249}\} \land vt_s \notin \{s-1,s, s+1\}) \lor$ \hfill\break
+            $(vt_p = p-1 \land vt_s \in \{next_1,\ldots, next_{249}\} \land vt_s \notin \{\bar{s}-1, \bar{s},\bar{s}+1\}))$}
+                \Return \ \Comment{ignore vote}
+            \EndIf
+
+\EndFunction
+\\
+\Function{$\passthrough{HandleVote}$}{$\passthrough{Vote} \ vt$} \\
+
+            \passthrough{\hspace{0.4cm} ValidateVote(vt)} \ \Comment{Check the validity of the vote}
+
+            \State $V := V \cup vt$ \ \Comment{observe vote}
+            \State $\passthrough{Relay}(vt)$
+
+            \If{$vt_s = proposal$}
+                \If{$\passthrough{RetrieveProposal}(vt_v) \neq \bot$}
+                    \State $\passthrough{Broadcast}(\passthrough{RetrieveProposal}(vt_v))$
+                \EndIf
+            \ElsIf{$vt_s = soft$}
+                %check if soft bundle has been achieved
+                \If{$\exists v | Bundle(vt_r,vt_p,soft,v) \subset V$}
+                    %Try to emit a certification vote
+                    \For{$a \in A$}
+                        \State $cred :=
+                        \passthrough{Sortition}(a_{sk}, r,p,cert)$
+                        \If{$cred_j > 0$}
+                            \State $\passthrough{Broadcast}(\passthrough{Vote}(a_I, r, p, cert, v, cred))$
+                        \EndIf
+                    \EndFor
+                \EndIf
+            \ElsIf{$vt_s = cert$}
+                %check if cert bundle has been achieved
+                \If{$\exists v | \passthrough{Bundle}(vt_r,vt_p,cert,v) \subset V$}
+                    \If{$\passthrough{RetrieveProposal}(v) = \bot$}
+                        \State $\passthrough{RequestProposal}(v)$ \Comment{waits or keeps playing without voting power}
+                        \If{$p < vt_p$}
+                            \State $p_{old} := p$
+                            \State $\passthrough{StartNewPeriod}(vt_p)$
+                            \State $\passthrough{GarbageCollect}(r, p_{old})$
+                        \EndIf
+                    \EndIf
+                    \State $\passthrough{Commit}(v)$  %ver que pasa si no se pudiera commitear
+                    \State $r_{old} := r$
+                    \State $\passthrough{StartNewRound}(vt_r+1)$
+                    \State $\passthrough{GarbageCollect}(r_{old}, p)$
+                \EndIf
+            \ElsIf{$vt_s > cert$}
+                \If{$\exists v | \passthrough{Bundle}(vt_r,vt_p,vt_s,v) \subset V$}
+                    \State $p_{old} := p$
+                    \State $\passthrough{StartNewPeriod}(vt_p + 1)$
+                    \State $\passthrough{GarbageCollect}(r, p_{old})$
+                \EndIf
+            \EndIf
+
+        \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+
+\end{minipage}}
+\end{figure}
+
+Links to reference implementation: [vote verification](https://github.com/algorand/go-algorand/blob/b6e5bcadf0ad3861d4805c51cbf3f695c38a93b7/agreement/vote.go#L97), [vote handling in the vote tracker](https://github.com/algorand/go-algorand/blob/55011f93fddb181c643f8e3f3d3391b62832e7cd/agreement/voteTracker.go#L97),
+[vote handling in the proposal manager](https://github.com/algorand/go-algorand/blob/c60db8dbc4b0dd164f0bb764e1464d4ebef38bb4/agreement/proposalManager.go#L57),
+[threshold handling](https://github.com/algorand/go-algorand/blob/b6e5bcadf0ad3861d4805c51cbf3f695c38a93b7/agreement/player.go#L355), [certification vote issuance](https://github.com/algorand/go-algorand/blob/d52e3dd8b31a17dfebac3d9158a76e8e62617462/agreement/player.go#L209), [equivocation vote verification](https://github.com/algorand/go-algorand/blob/df0613a04432494d0f437433dd1efd02481db838/agreement/vote.go#L193-L223).
+
+The vote handler is triggered when a node receives a message containing a vote for a given proposal value, round, period and step.
+It first performs a series of checks, and if the received vote passes all of them, then it is broadcast by all accounts selected
+as the appropriate committee members.
+
+First we go over the validation function.
+On line 2, it checks if the vote is valid by itself (see the vote verification link on the reference implementation above). If invalid, this is considered adversarial behavior; therefore a node may optionally disconnect
+from the sender of the vote. In that case, we use $SENDER\_PEER(msg)$ as a helper network module function,
+that retrieves the network ID of the original message sender (for more details on disconnection actions and the definition of a $Peer$ you may refer to the [Algorand Network Layer Overview](network-overview.md)).\
+Equivocation votes on a proposal step are not allowed, so a check for this condition is performed on line 5.
+Furthermore, second equivocations are never allowed (line 7).\
+Any votes for rounds prior to the current round are discarded (line 9).\
+On the special case that we received a vote for a round immediately after the current round, we observe it only if it is a first period,
+proposal, soft, cert, late, down or redo vote (discarding votes for further periods or votes for a $next_k$ step).\
+Finally, the checks on lines 13 to 16 check that, if the vote's round is the currently executing round, and one of:
+
+- vote's period is not a distance of one or less away from the node's current period,
+- vote's period is the next period, but its step is $next_{k}$ with $k \geq 1$,
+- vote's period is the current period, its step is $next_{k}$ with $k \geq 1$,
+  and its step is not within a distance of one away from the currently observed node's step, or
+- vote's period is one behind the current period, its step is $next_{k}$ with $k \geq 1$, and
+  its step is not within a distance of one away from the node's last finished step,
+
+then the vote is ignored and discarded. Note that _equivocation vote_ verification uses the same verification functions, but verifies that both constituent votes are valid separately.
+
+Once finished with the series of validation checks, the vote is observed, relayed, and then processed.
+The node will determine the desired output according to its current context and the vote's step:
+
+- If the vote's step is $proposal$, the corresponding proposal for the proposal-value $v$, $RetrieveProposal(v)$ is broadcast if it has been observed
+  (that is, the player performs a re-proposal payload broadcast).
+
+- If the vote's step is $soft$, and a $soft$ Bundle has been observed with the addition of the vote,
+  the $Sortition(.)$ sub-procedure (see [here](crypto.md#cryptographic-sortition)) is run for every account managed by the node. Afterwards, for each account selected by
+  the lottery, a $cert$ vote is cast as output.
+
+- If the vote's step is $cert$, and observing the vote causes the node to observe a $cert$ Bundle for a proposal-value $v$,
+  then it checks if the full proposal associated to the critical value has been observed. Note that simultaneous observation of a $cert$ Bundle
+  for a value $v$ and of a proposal $prop = RetrieveProposal(v)$ implies that the associated entry is committable.
+  Had the full proposal not been observed at this point, the node may stall and request the full proposal from the network.
+
+Once the desired block can be committed, the node proceeds to commit, start a new round, and garbage collect all
+transient data from the round it just finished.
+
+- Finally, if the vote is that of a recovery step, and a Bundle has been observed for a given proposal-value $v$,
+  then a new period is started and the currently executing period-specific data is garbage collected.
+
+## Proposal Handler
+
+\begin{algorithm}[H]
+\caption{\underline{Handle Proposal}}
+\label{algo:handle-proposal}
+\begin{algorithmic}[1]
+\Function{$\passthrough{HandleProposal}$}{$Proposal \ prop$}
+
+            \State $v :=  \passthrough{Proposal_{value}}(prop, prop_{p}, prop_{I})$
+
+            %relays proposal if its for a future round (but does not process it)
+            \If{$\exists \passthrough{Bundle}(r+1,0,soft,v) \in B$}
+                \State $\passthrough{Relay}(prop)$  %relay broadcasts to everyone except proposal sender
+                \State \Return \Comment{do not observe, as it's for a future round (we're behind)}
+            \EndIf
+
+            %ignores proposal if it's invalid or if it has already been observed
+            \If{$\lnot \passthrough{VerifyProposal}(prop) \lor e \in P$ }
+                \Return \Comment{ignore proposal}
+            \EndIf
+
+            %ignores proposal if its proposal value is not either
+            %the current sigma, the pinned value or the current mu
+            \If{$v \notin \{\sigma, \bar{v}, \mu\}$}
+                \Return \Comment{ignore proposal}
+            \EndIf
+
+            %we need to relay (broadcast to everybody but ourselves and o.g. sender), and observe prop
+            \State $\passthrough{Relay}(prop)$
+            \State $P := P \cup e$
+
+            %all checks passsed, produce output
+            \If{$\passthrough{IsCommitable}(v) \land s \leq cert$}
+                \For{$a \in A$}
+                    \State $cred := \passthrough{Sortition}(a_I, r,p, cert)$
+                    \If{$cred_j > 0$}
+                        \State $\passthrough{Broadcast}(\passthrough{Vote}(a_I, r, p, cert, v, cred))$
+                    \EndIf
+                \EndFor
+            \EndIf
+
+        \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+
+[Link to reference implementation](https://github.com/algorand/go-algorand/blob/c60db8dbc4b0dd164f0bb764e1464d4ebef38bb4/agreement/proposalManager.go#L57).
+
+Here the _frozen value_ $\mu$ is the highest priority observed proposal-value in the current $(r,p)$ context
+(lowest hashed according to the priority function outlined in the [formal specs.](abft.md#special-values)), or $\bot$ if no valid proposal vote has been observed by the node.
+
+The _staged value_ $\sigma$ is the sole proposal-value for which a soft bundle has been observed (again,
+in the current $(r,p)$ context; see [formal specs.](abft.md#special-values)), or $\bot$ if no valid soft bundle has been observed by the
+node.
+
+The proposal handler is triggered when a node receives a message containing a full proposal.
+It starts by performing a series of checks, after which it will either ignore the received
+proposal, discarding it and emitting no output; or relay, observe and produce an output
+according to the the current context and the characteristics of the proposal.
+
+In lines 3 to 5, it checks if the proposal is from the next first period of the round next
+to the current, in which case the node relays this proposal and then ignores it for the purpose
+of the current round.
+Whenever the node catches up (i.e., observes a round change), and only if necessary, it will request
+this proposal back from the network.
+Lines 6 and 7 check if the proposal is invalid, or if it has been observed already. Any one of those
+conditions are sufficient to discard and ignore the incoming proposal.
+Finally, on lines 8 and 9 it checks if the associated proposal value is either of the special values for the current
+round and period ($\sigma$, $\mu$, or the pinned proposal value $\bar{v}$; see [here](abft.md#special-values)).
+Any proposal whose proposal value does not match one of these is ignored.
+
+Once the checks have been passed, in lines 10 and 11, the algorithm relays and observes the proposal (by adding
+it to the observed proposals set, $P$).
+
+Next, and only if the proposal value is committable and the current step is lower than or equal
+to a certification step (i.e., it is not yet in a recovery step), the node plays for each account
+performing sortition to select committee members for the certification step.
+For each selected member, a corresponding ``certify vote'' for the current proposal value is cast.
+
+## Bundle Handler
+
+When receiving a message with a full bundle, the node runs a bundle handler.
+The following pseudocode snippet shows the functionality of this handler:
+
+\begin{algorithm}[H]
+\caption{\underline{Handle Bundle}}
+\label{algo:handle-bundle}
+\begin{algorithmic}[1]
+\Function{$\passthrough{HandleBundle}$}{$\passthrough{Bundle} \ b$}
+\If{$\neg \passthrough{VerifyBundle}(b)$}
+\State $\passthrough{DisconnectFromPeer}(\passthrough{SENDER\_PEER}(b))$
+\State \Return
+\EndIf
+
+            \If{$b_r = r \land b_p + 1 \geq p$}
+                \For{$vt \in b$}
+                    \State $\passthrough{HandleVote}(vt)$
+                \EndFor
+            \EndIf
+
+        \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+
+Links to reference implementation: [bundle verification](https://github.com/algorand/go-algorand/blob/master/agreement/bundle.go#L147),
+[bundle specific handling inside the general MessageHandler](https://github.com/algorand/go-algorand/blob/55011f93fddb181c643f8e3f3d3391b62832e7cd/agreement/player.go#L753-L770).
+
+The bundle handler is invoked whenever a bundle message is received.
+If the received bundle is invalid (line 2), it is immediately discarded. Optionally, the node may
+penalize the sending peer (for example, disconnecting from or blacklisting it).
+On line 6 a check is performed.
+If the bundle's round is the node's current round and it's at most one period behind of the node's current period,
+then the bundle is processed, which is simply calling the vote handler for each
+vote constituting it (lines 6:7). If the check on line 6 is not passed by $b$, no output is produced
+and the bundle is ignored and discarded.
+Note that handling each vote separately, if a bundle $b\prime = Bundle(b_r, b_p, b_s, v\prime)$ is observed
+(where $v\prime$ is not necessarily equal to $b_v$, consider $b$ may contain equivocation votes), then it will be relayed
+as each vote was relayed individually, and any output or state changes it produces will be made. All leftover votes
+in $b$ will be processed according to the new state the node is in, e.g. being discarded if $b_r < r$.
+
+## Commitment
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\Function{$\passthrough{Commit}$}{$Proposal_{value} \ v$}
+
+    \State $e := \passthrough{RetrieveProposal}(v)_e$
+    \State $L := \passthrough{L} || e$
+    \State $\passthrough{ApplyDeltas}(e)$
+    \State $\passthrough{UpdateTP}(e_{payset})$
+
+    \EndFunction
+    \end{algorithmic}
+    \caption{\underline{Commit}}
+
+\end{algorithm}
+
+The function commits the corresponding block for the proposal value received into the Ledger.
+The proposal value must be committable (which implies validity and availability of the full
+ledger entry and seed).
+Line 2 means the algorithm will append the block contained in the proposal $RetrieveProposal(v)$.
+Afterwards, it updates the Ledger state and trackers with all state changes called for the committed entry (see the [Ledger Formal Specification](ledger.md#state-deltas)).\
+The Transaction Pool $TP$ should be purged of all transactions present in the commited block. For more details on this process see the non-normative [Ledger Overview](ledger-overview.md#transaction-pool).
+
+[Link to reference implementation](https://github.com/algorand/go-algorand/blob/55011f93fddb181c643f8e3f3d3391b62832e7cd/agreement/player.go#L366-L374).
+
+# Recovery Stages
+
+Whenever a certification vote is not achieved by a majority of nodes in the alloted time for the current period, $DeadlineTimeout(p)$, the protocol enters in recovery mode.\
+The protocol employs a series of recovery routines to provide a quick response once normal network conditions are reestablished.
+These routines will attempt to "carry over" some information from the failed attempt at reaching a consensus (in the best case), or will in the worst case attempt to reach an "agree to disagree" majority consensus, a bundle of votes to start the next period without any assumptions and go back to the block assembly and proposal stage.
+
+## Resynchronization attempt
+
+This is an auxiliary function used throughout the recovery steps. A partial order relation is defined in the space of all observed bundles. We call this relation _freshness_. Then, a resynchronization attempt broadcasts the freshest observed bundle (if any). Priority-wise, it works in the following way:
+
+- Certification bundles are fresher than all other bundles.
+- Bundles from a later period are fresher than bundles from an older period.
+- Next-bundles are fresher than soft-bundles from the same period.
+- Next-bundles for the $\bot$ proposal-value are fresher than next-bundles for some other value.
+
+For a formal definition of this property, refer to the [Algorand Byzantine Fault Tolerance Specification](abft.md#special-values).
+
+> [!NOTE]
+> In the reference implementation, this function is called `partitionPolicy`, as it is assumed that
+> the network is in a partition state due to the temporal inability to reach consensus. In this case,
+> the function is only invoked when the current step $s \geq 3$ or when the current period $p \geq 3$ (that is, the player has gone through two full periods without being able to reach a consensus).
+
+[Link to reference implementation](https://github.com/algorand/go-algorand/blob/55011f93fddb181c643f8e3f3d3391b62832e7cd/agreement/player.go#L518).
+
+## Next Vote
+
+\begin{algorithm}[H]
+\caption{\underline{Recovery}}
+\label{algo:recovery}
+\begin{algorithmic}[1]
+\Function{$\passthrough{Recovery}$}{\;}
+
+    \State $\passthrough{ResynchronizationAttempt}()$
+
+    \For{$Account \ a \in A$}
+        \State $cred := \passthrough{\passthrough{Sortition}}(a_{I}, r,p,s)$
+        \If{$cred_j > 0$}
+            \If{$\exists v=\passthrough{Proposal_{value}}(prop, prop_p, prop_I) $ for some $prop\in \passthrough{P} | \passthrough{IsCommitable}(v)$}
+                \State $\passthrough{Broadcast}(\passthrough{Vote}(a_I, r, p, s, v, cred))$
+            \ElsIf{$\nexists s_0 > cert | \passthrough{Bundle}(r, p - 1, s_0, \bot) \subseteq \passthrough{V} \wedge$ \newline
+            ${}$ ${\hskip 2.65cm} \exists s_1 > cert | \passthrough{Bundle}(r, p - 1, s_1, \bar{v}) \subseteq \passthrough{V}$}
+                \State $\passthrough{Broadcast}(\passthrough{Vote}(a_I, r, p, s, \bar{v}, cred))$
+            \Else
+                \State $\passthrough{Broadcast}(\passthrough{Vote}(a_I, r, p, s, \bot, cred))$
+            \EndIf
+        \EndIf
+    \EndFor
+    \EndFunction
+    \end{algorithmic}
+
+\end{algorithm}
+
+[Link to reference implementation](https://github.com/algorand/go-algorand/blob/d52e3dd8b31a17dfebac3d9158a76e8e62617462/agreement/player.go#L214).
+
+The recovery algorithm that is executed periodically,
+whenever a $cert$ bundle has not been observed before $DeadlineTimeout(p)$ for a given period $p$. \
+On line 2 it starts by making a resynchronization attempt. Then on line 3 the node's step is updated.\
+Afterwards, the node plays for each managed account. For each account that is selected to be a part of the voting committee for the current
+step $next_k$, one of three different outputs is produced. \
+If there is a proposal-value $v$ that can be committed in the current context, a $next_k$ vote for $v$ is broadcast by the player. \
+If no proposal-value can be committed, no recovery step Bundle for the empty proposal-value ($\bot$) was observed in the
+previous period, and a recovery step Bundle for the pinned value was observed in the previous period (note that this implies $\bar{v} \neq \bot$),
+then a $next_k$ vote for $\bar{v}$ is broadcast by the player. \
+Finally, if none of the above conditions were met, a $next_k$ vote for $\bot$ is broadcast. A player is forbidden
+from equivocating in $next$ votes.\
+For a formal definition of this functionality, you may refer to the [ABFT Formal Specification](abft.md#recovery).
+
+## Late, Redo and Down Votes
+
+\begin{algorithm}[H]
+\caption{\underline{FastRecovery}}
+\label{algo:fast-recovery}
+\begin{algorithmic}[1]
+\Function{$\passthrough{FastRecovery}$}{\;}
+
+    \State $\passthrough{ResynchronizationAttempt}()$
+
+    \For{$Account \ a \in A$}
+        \If{$\passthrough{IsCommitable}(v)$}
+            \State $cred := \passthrough{Sortition}(a_{I}, r,p,late)$
+            \If{$cred_j > 0$}
+                \State $\passthrough{Broadcast}(\passthrough{Vote}(r, p, late, v, cred))$
+            \EndIf
+
+        \ElsIf{$\nexists s_0 > cert | \passthrough{Bundle}(r, p - 1, s_0, \bot) \subseteq V \wedge$ \newline
+            ${}$ ${\hskip 2.1cm} \exists s_1 > cert | \passthrough{Bundle}(r, p - 1, s_1, \bar{v}) \subseteq V$}
+                \State $cred :=
+                \passthrough{Sortition}(a_{I},r,p, redo)$
+                \If{$cred_j > 0$}
+                    \State $\passthrough{Broadcast}(\passthrough{Vote}(r,p,redo,\bar{v}, cred))$
+                \EndIf
+
+        \Else
+            \State $cred :=
+            \passthrough{Sortition}(a_{I}, r,p, down)$
+            \If{$cred_j > 0$}
+                \State $\passthrough{Broadcast}(\passthrough{Vote}(r,p,down,\bot, cred))$
+            \EndIf
+        \EndIf
+    \EndFor
+
+    \For{$vt \in \passthrough{V} | vt_s \geq 253$}
+        \State $\passthrough{Broadcast}(vt)$
+    \EndFor
+
+    \EndFunction
+    \end{algorithmic}
+
+\end{algorithm}
+
+[Link to reference implementation](https://github.com/algorand/go-algorand/blob/d52e3dd8b31a17dfebac3d9158a76e8e62617462/agreement/player.go#L244).
+
+The fast recovery algorithm is executed periodically every integer multiple of $\lambda_f$
+seconds (plus variance).
+Functionally, it's very close to the regular recovery algorithm (outlined in the previous section),
+performing the same checks and similar outputs. The main difference is that it emits votes
+for any of three different steps ($late$, $redo$ and $down$) according to sortition
+results for every account.
+It's also important to point out that nodes are forbidden to equivocate for $late$, $redo$ and $down$ votes.
+Finally, the algorithm broadcasts all fast recovery votes observed. That is, all votes $vt \in V$ for which
+$vt_s$ is a fast recovery step ($late$, $redo$ or $down$).\
+For a formal definition of this functionality, you may refer to the [ABFT Formal Specification](abft.md#fast-recovery).
+
+# Example runs
+
+What follows is three examples of valid protocol runs, going from simple to more complex by adding partition scenarios in order to see recovery routines in action. Note that besides being the simplest, the _Vanilla_ run is the most common case as infrastructure failure is extremely rare. However, the partition scenarios bring a light into the succesive recovery mechanisms.
+
+## Vanilla run
+
+For ease of understanding, we present a "vanilla run" of the Algorand consensus algorithm,
+the simplest scenario in which the agreement mechanism produces a valid block and appends
+it to the Ledger.
+
+The following timeline diagram illustrates the process:
+
+<Image src={vanillaImg} alt='Vanilla run execution path' />
+
+Let us assume a genesis block was generated, the blockchain has been running for a while and
+has already generated several blocks, with a set of nodes and accounts.
+We are now at round $r-1$ ($r>>2$), meaning that $r-1$ blocks have been
+generated and confirmed by the blockchain.
+Moreover, the node has received transactions which have been verified to
+be correctly signed by Algorand accounts and validated according to Ledger context,
+and has added them to its [Transaction Pool](ledger.md#transaction-pool) $TP$ and relayed them to other nodes.
+For this section, we assume that all players behave according to protocol
+and that they are in sync (e.g., the context $(r,p,s)$ for all nodes is
+the same and their internal clocks are synchronized).
+
+As the main algorithm starts a round, it is called with a `newRound` event ($time reset to 0) and
+calls the Block Proposal Algorithm.
+The $BlockProposal(.)$ algorithm runs, moving directly to a loop in which it
+iterates over all the accounts that are registered in the node.
+
+When at least one account gets selected, the node participates in the proposal voting representing
+the account and starts with block assembly.
+This procedure will traverse the transaction pool, calling the AVM and executing
+transactions one at a time, obtaining as a result a new block $e$.
+It will assemble a proposal $prop$ and a vote proposal $v$,
+set $v$ as the proposal value obtained from the block $e$,
+and make two separate broadcasts for $Vote(a_I, r,p, proposal, v, cred)$
+and for $e$.
+Then, the main algorithm enters the ``soft vote'' step setting $s:=1$.
+
+Assume that some time has passed and now $0<now()<DynamicFilterTimeout(p)$, and that
+the node received a block proposal $e^\prime$ which was broadcasted from another node.
+Then, the event handler runs the proposal handling subroutine $HandleProposal(e^\prime)$.\
+This algorithm receives the proposal $e^\prime$ and unpacks its contents,
+including the execution state $(r^\prime,p^\prime,s^\prime)$.
+By assumption, we have that $r=r^\prime$ and $p=p^\prime=0$.\
+The algorithm checks if the proposal is valid, calling $VerifyProposal(v^\prime)$
+on $v^\prime=Proposal_{value}(e^\prime)$.
+It also checks if periods differ ($p\neq p^\prime$), exiting if not. However, both checks pass by
+the vanilla run assumptions.
+
+Next, if $e^\prime\in P$, it returns; else the proposal handler re-broadcasts $e^\prime$,
+adds $e^\prime$ to the set $P$ of stored proposals, and exits.
+
+Let us say now that the node received a broadcasted vote $vt$, and assume that $0<now()<DynamicFilterTimeout(p)$ still holds.\
+The event handler for the main algorithm thus calls $HandleVote(vt)$.
+The algorithm exits on checks (which are all passed with the vanilla run assumptions).\
+It also exits if the vote received has already been recorded in the votes set $V$.
+If it is new, the player adds the vote to the votes set $V$ and broadcasts the vote
+to other players.\
+Since players are synchronized, it holds that $vt_s=0=proposal$, the algorithm checks if
+$RetrieveProposal(vt_v) \neq \bot$ and broadcasts this proposal if it is available, ignoring if it is not.
+
+Until $now()\ge DynamicFilterTimeout(p)$ the main algorithm will execute the above steps
+whenever a vote or a proposal are received.
+
+Eventually, the timer is at $now()=DynamicFilterTimeout(p)$ (that is, a timeout event for filtering is observed) and the main algorithm calls
+$SoftVote(.)$.\
+The soft vote is about selecting a priority block and voting it in. In it, the player will go through all the votes $vt^\prime\in V$ in its votes set that are in the
+proposal step ($vt^\prime_s=0$).
+Given the credentials for the vote $vt^\prime_{credential}=(VRF_{out},\pi, j)$, where $VRF_{out}$ is the sortition output hash,
+$\pi$ is the proof and $j\in\mathbb{Z}_{\geq 0}$, the algorithm computes the priority hash:
+
+$$
+priorityHash:=\min\{Hash(VRF_{out}\| i): 0\le i<j\},
+$$
+
+and keep track of the value in the set that minimizes this priority function.
+
+Next, if there was at least one vote in $V$, for every registered account $a\in A$
+it computes:
+
+$$
+(VRF_{out},\pi,j):=credential^{\prime\prime}:=Sortition(a,soft)=Sortition(a,1)
+$$
+
+and, if $j>0$ it broadcasts $Vote(r,p,soft,v,credential^{\prime\prime})$.
+Moreover, if the proposal $prop:=RetrieveProposal(v)$ is not $\bot$, it also broadcasts $prop$.
+
+When the main algorithm receives a message of type proposal
+$prop$ as above, it will
+run the handle proposal algorithm as before.
+
+When the main algorithm receives a message of type vote
+$Vote(r,p,soft,v,credential)$ as above, it relays the vote, adds it to the
+votes set (if it is new) and checks whether it can form a bundle from the
+votes in V, i.e., it checks if there is a vote $v$ such that for all the votes
+$vt\in V$ with round $vt_r=r, vt_p=0, vt_s=soft$ that have the same vote $vt_v$
+and such that the sum of its weights ($\sum_{vt\in V} vt_{cred_j}\ge CommitteeThreshold(soft)$)
+is bigger than the committee threshold.
+
+After a while, the condition is met and a bundle is able to form for the $soft$ step.
+
+When this bundle is observed, the player adds the accepted block to the Ledger, modifies the state according
+to the new block, garbage collects and sets the new round.
+That is, it will broadcast the proposal if it is not in the proposal set $P$,
+and then commit $v$, calling $Commit(v)$, set $r_{old}:=r$,
+and calls $StartNewRound(r+1)$ and $GarbageCollect(r_{old},p)$
+ending the round.
+Calling for a new round will
+reset variables as: $\bar s:=s$, $\bar{v}:=\bot$, $r:=r+1$, $p:=0$ and
+$s:=proposal=0$;
+and calling the garbage collection algorithm
+will compute
+
+$$
+\begin{array}{rl}
+V_{(r,p-1)} & :=\{vt\in V : vt_r < r \text{ or } (vt_r = r \text{ and } vt_p + 1 < p)\}\\
+P_{(r,p-1)} & :=\{pr\in PP: pr_r < r \text{ or } (pr_r = r \text{ and } pr_p + 1 < p)\}
+\end{array}
+$$
+
+And then remove these sets from the votes and proposal sets: $V:=V\setminus V_{(r,p-1)}$, $P = P\setminus P_{(r,p-1)}$
+
+## Jalapeño Run: Triggering $next$ Recovery
+
+<Image src={jalapenoImg} alt='Jalapeño run execution path' />
+
+We now assume a scenario similar to last time, but when $s=2$, before there can be any commitment, the network experiences a partition $K$ such that, for any two voting certification committee accounts, the nodes playing for them have their connected components $K_t$ and $K_l$, with $t\neq l$. In other words, voting stake is fragmented and no network clique has the voting power necessary to confirm a block.\
+Given the proposed network graph, players reach $DeadlineTimeout(0)$ without a commitable proposal (that is, no Bundle supporting any proposal-value has been observed).\
+
+The protocol enters into recovery, and several next votes and fast recovery votes happen, without any of them being able to form a Bundle for a value as the partition continues.
+
+Suppose now that after a given time, connections are restored and $K$ and for any two voting committee accounts, the nodes in which they are registered to vote are part of the same clique. In other words, this time $K_t = K_l$ for all nodes whose managed accounts are chosen by [$Sortition(.)$](crypto.md#cryptographic-sortition) to vote in a step $s=next_h, \ 3 \leq h < 248$.
+
+Then, and because when $s=1$ a $soft$-bundle was observed, a pinned value of $\bar{v}$ had been established; therefore this pinned value is voted on by all selected players and a $next_h$-bundle is observed for $\bar{v}$.
+
+The protocol moves into a period $p=1$, garbage collects old period data, and starts from $s=0$. But since there is an agreed upon value, there are no _reproposals_ and the protocol moves quickly into $soft$ and then $cert$ votes. This time the network is sufficiently connected to observe a $cert$-bundle for $\bar{v}$ and therefore, before $DeadlineTimeout(1)$, a new block is commited in the same way as in the _Vanilla_ scenario; advancing the network into the new round.
+
+## Habanero Run: Triggering $late$, $redo$ and $down$ Fast Recovery
+
+<Image src={habaneroImg} alt='Habanero run execution path' />
+
+This scenario is exactly the same as _Jalapeno_ up until the attempt at period $p=1$ to form a $cert$-bundle for the pinned value. In this scenario, a consensus-stalling partition happens again, and this time it is for a period of time greater than 5 minutes.\
+Under these conditions, a $cert$-bundle is not formed and the protocol once again enters in partition recovery mode.
+
+Now after connections are reestablished, a _fast recovery_ was about to take place; in this scenario, furthermore, a majority of players have lost the previously observed pinned value, or have since seen $soft$-bundles for different values and therefore there is no consensus possible on a bundle going into the period $p=2$.
+
+In this case, after failing to form $late$ and $redo$ bundles, a $down$-bundle is seen by a majority of players (an "agree to disagree" value). Players move into a period $p=2$, this time with no "carry over" information from the previous period's attempt at consensus.
+
+In this scenario the whole protocol is rerun (a _reproposal_ ensues). The rest of the scenario is similar to the _Vanilla_ run; save for different timeout values for $DynamicFilteringTimeout(2)$ and $DeadlineTimeout(2)$, the protocol goes over $proposal$, $soft$ and $cert$ steps in the same fashion. However in this case the partition is no longer and connections have been reestablished, so a block commitment ensues before $DeadlineTimeout(2)$.

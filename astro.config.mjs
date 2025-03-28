@@ -2872,6 +2872,13 @@ export default defineConfig({
               ],
             },
             {
+              label: 'Algorand Formal Specs',
+              collapsed: true,
+              autogenerate: {
+                directory: 'reference/algorand-specs',
+              },
+            },
+            {
               label: 'ARC Standards',
               collapsed: true,
               autogenerate: {
