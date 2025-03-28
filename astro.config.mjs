@@ -10,6 +10,7 @@ import starlightTypeDoc from 'starlight-typedoc';
 import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-links';
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
+import starlightAutoSidebar from 'starlight-auto-sidebar';
 
 export default defineConfig({
   site: 'https://dev.algorand.co',
@@ -21,6 +22,7 @@ export default defineConfig({
     starlight({
       title: 'Algorand Developer Portal',
       plugins: [
+        starlightAutoSidebar(),
         starlightImageZoom(),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
@@ -131,32 +133,7 @@ export default defineConfig({
             {
               label: 'Accounts',
               collapsed: true,
-              items: [
-                {
-                  label: 'Overview',
-                  link: 'concepts/accounts/overview',
-                },
-                {
-                  label: 'Creating Accounts',
-                  link: 'concepts/accounts/create',
-                },
-                {
-                  label: 'Funding Accounts',
-                  link: 'concepts/accounts/funding',
-                },
-                {
-                  label: 'Keys & Signing',
-                  link: 'concepts/accounts/keys-signing',
-                },
-                {
-                  label: 'Rekeying Accounts',
-                  link: 'concepts/accounts/rekeying',
-                },
-                {
-                  label: 'Multisignature Accounts',
-                  link: 'concepts/accounts/multisig',
-                },
-              ],
+              autogenerate: { directory: 'concepts/accounts' },
             },
             {
               label: 'Transactions',

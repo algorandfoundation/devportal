@@ -65,6 +65,9 @@ importers:
       sharp:
         specifier: ^0.32.5
         version: 0.32.6
+      starlight-auto-sidebar:
+        specifier: ^0.1.0
+        version: 0.1.0(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))
       starlight-image-zoom:
         specifier: ^0.11.1
         version: 0.11.1(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))
@@ -3723,6 +3726,12 @@ packages:
 
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
+
+  starlight-auto-sidebar@0.1.0:
+    resolution: {integrity: sha512-WJGwWVTPX1ip4PfkUF5DBawHen6tZcI4EtUsxMUPGihCtj6eTTo06NURyTk2thSwiHogU+0Yjz2dXH77Q1noPg==}
+    engines: {node: '>=18.17.1'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.32.0'
 
   starlight-image-zoom@0.11.1:
     resolution: {integrity: sha512-TmnAyS+MWWV6h1fjuezrMFA36REd+7QzcjDFFFyC4ws5FDMoHsjQn0MlHM0cUaHEKfQ9y1PpL9LijCvRFuGbuw==}
@@ -8760,6 +8769,10 @@ snapshots:
       through: 2.3.8
 
   sprintf-js@1.0.3: {}
+
+  starlight-auto-sidebar@0.1.0(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))):
+    dependencies:
+      '@astrojs/starlight': 0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
 
   starlight-image-zoom@0.11.1(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))):
     dependencies:
