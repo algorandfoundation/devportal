@@ -1,6 +1,6 @@
 ---
 numbersections: true
-title: "Algorand Cryptographic Primitive Specification"
+title: 'Algorand Cryptographic Primitive Specification'
 date: \today
 abstract: >
   Algorand relies on a set of cryptographic primitives to guarantee

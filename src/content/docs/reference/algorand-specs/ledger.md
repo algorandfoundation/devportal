@@ -1,6 +1,6 @@
 ---
 numbersections: true
-title: "Algorand Ledger State Machine Specification"
+title: 'Algorand Ledger State Machine Specification'
 date: \today
 abstract: >
   Algorand replicates a state and the state's history between protocol
@@ -34,6 +34,7 @@ pandoc-latex-environment:
 \newcommand{\spk}{\mathrm{spk}}
 
 \pagebreak
+
 # Algorand Ledger State Machine Specification
 
 The following document presents a formal specification of the Algorand Ledger.
@@ -49,33 +50,33 @@ What follows is a list of parameters and constants used throughout this document
 
 ## Ledger Parameters
 
-| Parameter                      | Value                 | Explanation                                                                                                                                                                                            |
-| :----------------------------------: | --------------------- | --------------------------------------------------------- |
-| $t_{\delta}$                   | 25 seconds            | Maximum difference between successive timestamps.                                                                                                                                                      |
-| $T_{\max}$                     | 1000                  | Length of the transaction tail.                                                                                                                                                                        |
-| $B_{\max}$                     | 5,242,880 bytes       | Maximum number of transaction bytes in a block.                                                                                                                                                        |
-| $b_{\min}$                     | 100,000 microAlgos    | Minimum balance for any address.                                                                                                                                                                       |
-| $f_{\min}$                     | 1000 microAlgos       | Minimum processing fee for any transaction.                                                                                                                                                            |
-| $V_{\max}$                     | 128                   | Maximum length of protocol version strings.                                                                                                                                                            |
-| $N_{\max}$                     | 1024 bytes            | Maximum length of a transaction note string.                                                                                                                                                           |
-| $G_{\max}$                     | 16                    | Maximum number of transactions allowed in a transaction group.                                                                                                                                         |
-| $\tau$                         | 9000                  | Number of votes needed to execute a protocol upgrade.                                                                                                                                                  |
-| $\delta_d$                     | 10,000 rounds         | Number of rounds over which an upgrade proposal is open.                                                                                                                                               |
-| $\delta_{x_{\min}}$            | 10,000 rounds         | Minimum number of rounds needed to prepare for an upgrade.                                                                                                                                             |
-| $\delta_{x_{\max}}$            | 250,000 rounds        | Maximum number of rounds needed to prepare for an upgrade.                                                                                                                                             |
-| $\delta_x$                     | 140,000 rounds        | Default number of rounds needed to prepare for an upgrade.                                                                                                                                             |
-| $\omega_r$                     | 500,000 rounds        | Rate at which the reward rate is refreshed.                                                                                                                                                            |
-| $A$                            | 1,000,000 microAlgos  | Size of an earning unit.                                                                                                                                                                               |
-| $MaxPartkeyValidityRounds$     | $256\times(2^{16})-1$ | The maximum size of the difference between _vote first_ and _vote last_ in a `keyreg` transaction                                                                                                      |
-| $maxAppArgs$                   | 16                    | The maximum number of distinct application arguments in an Application Call transaction.                                                                                                               |
-| $maxAppArgsSize$               | 2048 bytes            | The maximum size of the application arguments in an Application Call transaction.                                                                                                                      |
-| $maxExpiredPartAccounts$       | 32                    | The maximum size of the _expired participation accounts_ slice in a block header.                                                                                                                      |
-| $maxSuspendedPartAccounts$     | 32                    | The maximum size of the suspended participation accounts\_ slice in a block header.                                                                                                                    |
+|           Parameter            | Value                 | Explanation                                                                                                                                                                                            |
+| :----------------------------: | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|          $t_{\delta}$          | 25 seconds            | Maximum difference between successive timestamps.                                                                                                                                                      |
+|           $T_{\max}$           | 1000                  | Length of the transaction tail.                                                                                                                                                                        |
+|           $B_{\max}$           | 5,242,880 bytes       | Maximum number of transaction bytes in a block.                                                                                                                                                        |
+|           $b_{\min}$           | 100,000 microAlgos    | Minimum balance for any address.                                                                                                                                                                       |
+|           $f_{\min}$           | 1000 microAlgos       | Minimum processing fee for any transaction.                                                                                                                                                            |
+|           $V_{\max}$           | 128                   | Maximum length of protocol version strings.                                                                                                                                                            |
+|           $N_{\max}$           | 1024 bytes            | Maximum length of a transaction note string.                                                                                                                                                           |
+|           $G_{\max}$           | 16                    | Maximum number of transactions allowed in a transaction group.                                                                                                                                         |
+|             $\tau$             | 9000                  | Number of votes needed to execute a protocol upgrade.                                                                                                                                                  |
+|           $\delta_d$           | 10,000 rounds         | Number of rounds over which an upgrade proposal is open.                                                                                                                                               |
+|      $\delta_{x_{\min}}$       | 10,000 rounds         | Minimum number of rounds needed to prepare for an upgrade.                                                                                                                                             |
+|      $\delta_{x_{\max}}$       | 250,000 rounds        | Maximum number of rounds needed to prepare for an upgrade.                                                                                                                                             |
+|           $\delta_x$           | 140,000 rounds        | Default number of rounds needed to prepare for an upgrade.                                                                                                                                             |
+|           $\omega_r$           | 500,000 rounds        | Rate at which the reward rate is refreshed.                                                                                                                                                            |
+|              $A$               | 1,000,000 microAlgos  | Size of an earning unit.                                                                                                                                                                               |
+|   $MaxPartkeyValidityRounds$   | $256\times(2^{16})-1$ | The maximum size of the difference between _vote first_ and _vote last_ in a `keyreg` transaction                                                                                                      |
+|          $maxAppArgs$          | 16                    | The maximum number of distinct application arguments in an Application Call transaction.                                                                                                               |
+|        $maxAppArgsSize$        | 2048 bytes            | The maximum size of the application arguments in an Application Call transaction.                                                                                                                      |
+|    $maxExpiredPartAccounts$    | 32                    | The maximum size of the _expired participation accounts_ slice in a block header.                                                                                                                      |
+|   $maxSuspendedPartAccounts$   | 32                    | The maximum size of the suspended participation accounts\_ slice in a block header.                                                                                                                    |
 | $\delta_{c_0}$, $\delta_{c_1}$ | 400, 200              | Active challenge lookback parameters. By being subtracted from the current round, they generate the interval $[r-\delta_{c_0}, r-\delta_{c_1}]$; the range of rounds for _active challenge_ responses. |
-| $ProposalAssemblyTime$ | 0.5 seconds             | Deadline since the beginning of a round for a block to be assembled in order to propose.  |
-| $MaxAssetUnitName$             | 8                     | The maximum length (in bytes) of the asset unit name                                                                                                                                                   |
-| $MaxAssetDisplayName$          | 32                    | The maximum length (in bytes) of the asset display name                                                                                                                                                |
-| $MaxAssetUrlLength$            | 96                    | The maximum length (in bytes) of the asset URL length                                                                                                                                                  |
+|     $ProposalAssemblyTime$     | 0.5 seconds           | Deadline since the beginning of a round for a block to be assembled in order to propose.                                                                                                               |
+|       $MaxAssetUnitName$       | 8                     | The maximum length (in bytes) of the asset unit name                                                                                                                                                   |
+|     $MaxAssetDisplayName$      | 32                    | The maximum length (in bytes) of the asset display name                                                                                                                                                |
+|      $MaxAssetUrlLength$       | 96                    | The maximum length (in bytes) of the asset URL length                                                                                                                                                  |
 
 ## State Proofs Parameters
 
@@ -693,7 +694,7 @@ specific fashion:
   microAlgo holdings. Only accounts in the _online_ state are included
   in this list of participants.
 
-    > [!NOTE]
+  > [!NOTE]
   > Even tho the legacy rewards system is disabled, the primitives are still in place. Thus, the calculation is performed taking it into account. Keep this in mind when going through the rest of this section below.
 
 - To limit the worst-case size of this Vector commitment, the array of
@@ -1042,7 +1043,8 @@ and contains the following fields:
   encoded as `aca` in msgpack.
 
 > [!NOTE]
-> The following item refers to the deprecated Rewards system. 
+> The following item refers to the deprecated Rewards system.
+
 - The amount of rewards distributed to each of the accounts touched by this
   transaction. There are three fields (`rs`, `rr`, and `rc` keys in msgpack
   encoding), representing the amount of rewards distributed to the sender,
@@ -1057,6 +1059,7 @@ and contains the following fields:
   the successful execution of the corresponding application's `ApprovalProgram`
   or `ClearStateProgram`. The `EvalDelta`, encoded as msgpack field `dt`,
   contains the following fields:
+
   - A `GlobalDelta`, encoding changes to the global state of the called
     application, encoded as msgpack field `gd`. This field is a [`StateDelta`](#state-deltas).
 
@@ -1160,12 +1163,13 @@ signed transaction and [`ApplyData`](#account-state-changes-when-observing-a-tra
   standalone transactions, for efficiency:
 
   If a transaction contains a $\GenesisID$ value, then:
-  - it must match the block's $\GenesisID$, 
+
+  - it must match the block's $\GenesisID$,
   - the transaction's $\GenesisID$ value must be omitted from the transaction's msgpack encoding in the
-  block, and 
+    block, and
   - the transaction's msgpack encoding in the block must
-  indicate the $\GenesisID$ value was omitted by including a key `hgi`
-  with the boolean value `true`.
+    indicate the $\GenesisID$ value was omitted by including a key `hgi`
+    with the boolean value `true`.
 
   Since transactions must include a $\GenesisHash$ value, the
   $\GenesisHash$ value of each transaction in a block must match the
@@ -1184,7 +1188,7 @@ It can allow a verifier which does not support tne [SHA512/256](crypto.md#sha512
 In order to construct this commitment we use a [Vector Commitment](crypto.md#vector-commitment). The leaves in the Vector Commitment
 tree are hashed as $$SHA256("TL"|| txidSha256||stibSha256),$$ where:
 
-$$txidSha256 = SHA256("TX" || transaction)$$ 
+$$txidSha256 = SHA256("TX" || transaction)$$
 and
 $$stibSha256 = SHA256("STIB" || signedTxn || ApplyData).$$
 
@@ -1253,11 +1257,12 @@ If the _TxGroup hash_ of any transaction group in a block does not match the `gr
 If the sum of the fees paid by the transactions in a transaction group
 is less than $f_{\min}$ times the number of transactions in the group,
 then the block is invalid.\
-There are two exceptions to this rule: 
-- State proof transactions require no fee, and 
+There are two exceptions to this rule:
+
+- State proof transactions require no fee, and
 - Heartbeat transactions require no fee if they have a zero `group` field, and the _heartbeat address_ was challenged between 100 and 200 rounds ago, and has not proposed or
-heartbeat since that challenge. Further explanation of this rule is
-found in the [Heartbeat Transaction Semantics](#heartbeat-transaction-semantics) section, below.
+  heartbeat since that challenge. Further explanation of this rule is
+  found in the [Heartbeat Transaction Semantics](#heartbeat-transaction-semantics) section, below.
 
 If the sum of the lengths of the boxes denoted by the box references in a
 transaction group exceeds 1,024 times the total number of box
@@ -1606,7 +1611,6 @@ all following conditions hold:
 
 - $\sum_I \Stake(\rho+1, I) = \sum_I \Stake(\rho, I)$.
 
-
 # Transaction Pool
 
 The _Transaction Pool_ ($TP$) is a core Ledger structure that mantains a bounded queue of validated transaction groups slated for block proposal.
@@ -1622,7 +1626,6 @@ For the purpose of this formal specification, the $TP$ is an opaque structure wh
 The $TP$ priority function $TP_f(.)$ is not a normative requirement, and a Transaction Pool may be operated using any criteria, although they usually involve some measure of transaction fee prioritisation (especially in scenarios of congestion).
 
 For a detailed overview of its existing infrastructure and prioritisation algorithm in the reference implementation, please refer to the non-normative [Algorand Ledger Overview](ledger-overview.md#transaction-pool).
-
 
 # Multisignature
 

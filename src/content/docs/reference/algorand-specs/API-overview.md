@@ -1,6 +1,6 @@
 ---
 numbersections: true
-title: "Algorand Node API Overview"
+title: 'Algorand Node API Overview'
 date: \today
 pandoc-latex-environment:
   tcolorbox: [box]
@@ -458,5 +458,3 @@ exposing the private keys.
 
 - `GET /v1/wallets`: Lists all of the wallets that are known to _kmd_.
   The handler for this endpoint is implemented in [getWalletsHandler(.)](https://github.com/algorand/go-algorand/blob/b6e5bcadf0ad3861d4805c51cbf3f695c38a93b7/daemon/kmd/api/v1/handlers.go#L88).
-
-

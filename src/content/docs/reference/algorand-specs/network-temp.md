@@ -1,6 +1,6 @@
 ---
 numbersections: true
-title: "Algorand Network Layer Overview"
+title: 'Algorand Network Layer Overview'
 date: \today
 abstract: >
   This document specifies Algorand network formation,
@@ -122,8 +122,6 @@ An incoming message $*M$ provides the following fields
 
 - `disconnectReason`, only when the `Action` calls for a `Disconnect` as a `ForwardingPolicy`. An enumeration on the reasons to disconnect from a given $Peer$ (the sender of the message) may be found right below.
 
-
-
 A $ForwardingPolicy$ is defined as an enumeration, and it indicates what action should be taken for a given outgoing message $*M$. For clarity of
 It may take any of the following values:
 
@@ -213,12 +211,8 @@ The prototype of message validator handlers is similar to regular handlers.
 
 Each incoming message is deferred to the correct message handler given its $tag$.
 
-
-
 The message handler will then process the message
 and decide on a $ForwardingPolicy$. See the definition of this data type for further details.
-
-
 
 The handler contains the logic for handling incoming messages and managing a $readBuffer$. It provides a routine ($messageHandlerThread$) for reading incoming messages and calling handlers.
 
@@ -233,8 +227,6 @@ type msgHandler struct {
 ```
 
 [Link to reference implementation]()
-
-
 
 Multiplexer sorts incoming messages by $tag$ value and passes them to the relevant message handler for that type of message. These are the handlers defined throughout the node code and registered using the `RegisterHandler()` function.
 
@@ -314,11 +306,7 @@ performanceMonitorMutex.unlock()
 
 ## Bootstrapping and general functioning
 
-
-
 Bootstrapping mechanism.
-
-
 
 When setting up an [Algorand full node](https://github.com/algorand/go-algorand/blob/62f9082d8b5214940369d0f46ea367037ccb2833/node/node.go#L181), depending on which network configuration set is selected, it will start a new P2PNetwork, a WebSocketNetwork or an HybridNetwork.
 
@@ -369,8 +357,6 @@ graph LR
 
 Calls n.startNodes, passing binDir, the map of relay names to addresses, and redirectOutput.
 
-
-
 ### Phonebook
 
 Data structures and constants related to the phonebook needed to start connection with peers. **MakePhonebook**, the function in charge of creating a new phonebook is called when creating a [new web socket network](https://github.com/algorand/go-algorand/blob/7e562c35b02289ca95114b4b3a20a7dc2df79018/network/wsNetwork.go#L2230)
@@ -410,18 +396,10 @@ Finally, the phonebookImpl has the following parameters:
 
 libp2p relies on Peer IDs in order to correctly identify peers.
 
-
-
-
-
 Peer public keys are visible and may be transformed to multiaddresses usable
 to route messages.
 
 Peer private keys are used to sign messages and are kept as secrets by the node.
-
-
-
-
 
 `GetPrivKey` is a function that manages loading and creation of private keys. It prioritizes, in this order:
 
@@ -432,15 +410,6 @@ Peer private keys are used to sign messages and are kept as secrets by the node.
 
 Note: implementation-wise, Peer IDs are cast-able to string types and are used
 as plain strings in packages where importing libp2p packages may not be needed.
-
-
-
-
-
-
-
-
-
 
 ### Multiaddress (libp2p)
 
@@ -557,8 +526,6 @@ In the $Hybrid$ network, the tracking of peers works with the $\Identity$ Challe
 
 # Network Definitions
 
-
-
 We define the general $GossipNode$ interface, a set of functions that must be explicitly implemented by any Network Layer implementations in order for them to provide all required functionalities.
 
 - `Address() -> (string, bool)`\
@@ -577,8 +544,6 @@ We define the general $GossipNode$ interface, a set of functions that must be ex
 
 - `Disconnect(badnode Peer)`\
   Disconnects from the given $Peer$.
-
-
 
 - `RequestConnectOutgoing(replace bool, quit CancellationChannel)`\
   Asks the system to actually connect to peers.`replace` optionally drops existing connections before making new ones. `quit` allows for cancellation.
@@ -738,9 +703,6 @@ The object has access to the following fields.
 The following is a $Peer_{ws}$ data structure that holds all fields necessary by a
 Websocket Peer in order to function.
 
-
-
-
 ```go
 type wsPeer struct {
 	// lastPacketTime contains the UnixNano at the last time a successful communication was made with the peer.
@@ -867,17 +829,11 @@ type wsPeer struct {
 }
 ```
 
-
-
 ### Connection management
-
-
 
 The function called [`RejectingLimitListener`](https://github.com/algorand/go-algorand/blob/master/network/limitlistener/rejectingLimitListener.go) limits connections if there are already `n` connections happening from the provided Listener.
 
 Disconnect reasons are modeled as a finite set of strings.
-
-
 
 A Peer can legitimately choose to disconnect from any other Peers for any of the following
 reasons:
@@ -899,17 +855,13 @@ reasons:
 - disconnectDuplicateConnection = "DuplicateConnection", the peer connection is already present.
 - disconnectBadIdentityData = "BadIdentityData", the peer's address is misconstrued
 - disconnectUnexpectedTopicResp = "UnexpectedTopicResp", the peer has gossiped a non-normative
-topic.
-
+  topic.
 
 ### Connection performance monitor
 
 The connection performance monitor is responsible for keeping up to date data on all peer connections.
 
 It implements Notify(.), a function that acts as the single entrypoint of an _incoming message_.
-
-
-
 
 The data structure contains the following fields:
 
@@ -929,13 +881,9 @@ The `connectionPerformanceMonitor` struct is designed to monitor and analyze the
 
 ### The Peers Heap and Prioritization
 
-
-
 We define a special heap structure, Peersheap, as an ordered heap of peer entries.
 This structure is used in the websocket version of the network.
 The priority function defines an ordered relation between peer entries.
-
-
 
 The priority heap implements a `heap interface` with the following functions:
 
@@ -964,17 +912,10 @@ func checkPrioPeers(wn *WebsocketNetwork, wp *wsPeer) bool {
 
 ```
 
-
-
-
 ### Multiplexer
-
-
 
 A Multiplexer is employed to route messages to their respective handlers according
 to protocol tags.
-
-
 
 A Multiplexer has the following two fields
 
@@ -992,8 +933,6 @@ The interface of a multiplexer provides methods to get handlers, register them
 a special $Handle(.)$ function to route a particular incomingMessage $M*$ to its
 respective Handler and then produce an OutgoingMessage $*M$.
 
-
-
 ## P2P Network Definition
 
 > [!NOTE]
@@ -1001,11 +940,7 @@ respective Handler and then produce an OutgoingMessage $*M$.
 
 It's the implementation of the GossipNode interface to manage peer-to-peer communication. It structs has the following fields:
 
-
-
 ### P2P Peer Definition
-
-
 
 ### Capabilities
 
@@ -1020,8 +955,7 @@ For a given node, the available network capabilities are:
   providing a catchpoint for fast catchup to nodes entering the network.
 
 - Gossip capable nodes, identified with the string `gossip`, that function as
-permissionless relay nodes; able to perform network level validation of messages, and efficiently route them to peers.
-
+  permissionless relay nodes; able to perform network level validation of messages, and efficiently route them to peers.
 
 [Link to reference implementation](https://github.com/algorand/go-algorand/blob/ce9b2b0870043ef9d89be9ccf5cda0c42e3af70c/network/p2p/capabilities.go)
 
@@ -1030,22 +964,15 @@ to advertise their own capabilities, as well as keep track of peers by advertise
 capability. The provided functionalities are:
 
 - AdvertiseCapabilities(.), to periodically advertise to the network the provision of a given
-capability.
-
+  capability.
 
 - PeersForCapability(.), to get a peer.AddrInfo slice of peers providing a given capability.
 
 ### DHT
 
-
-
 A distributed hash table (DHT) is a distributed system for mapping keys to values. In IPFS, the DHT is used as the fundamental component of the content routing system and acts like a cross between a catalog and a navigation system. It maps what the user is looking for to the peer that is storing the matching content.
 
-
-
 Algorand makes use of the IpfsDHT implementation in the dht libp2p-go package.
-
-
 
 ## Hybrid Network Definition
 
@@ -1060,8 +987,3 @@ Conceptually, all functions and implementations tend to work as a switch stateme
 # Appendix A: Algorand Forked Packages Used
 
 - Gorilla for the Websocket network
-
-
-
-
-

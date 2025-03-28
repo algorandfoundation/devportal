@@ -13,7 +13,6 @@ pandoc-latex-environment:
 
 The following document provides a non-normative overview of some accesorial infrastructural aspects of the Algorand node. Most of the constructs covered in here are transversal to several layers and main systems touched on the rest of the spec., and provide ways to initialize, interoperate and configure these in order for the node to be able to operate.
 
-
 # Node initialization
 
 The node initialization is the process by which the node starts all of its underlying services, based on the provided configuration file (see [below](#node-configuration-values)).\
@@ -135,7 +134,6 @@ Creates the Transaction Pool ($TP$) for managing uncommited transactions. Handle
 
 For a detailed overview of this queue structure, you may refer to the non-normative [Algorand Ledger Overview](ledger-overview.md#transaction-pool).
 
-
 ### Services initialization
 
 Starts the node services:
@@ -215,6 +213,7 @@ The differences with a [`FullNode`](#full-node-initialization) are mainly:
 - Minimal resource pools: Only one low-priority cryptographic verification pool.
 
 - Has services limited to:
+
   - Catchup Service
   - Block Service
 
@@ -341,10 +340,8 @@ sequenceDiagram
 
 # Loopback or PseudoNode
 
-
 A `PseudoNode` (also called `Loopback` in the codebase) is an intermediate layer of sorts, which allows for proposals and votes originated from this node to be "looped back" into itself. This avoids code duplication or increased complexity, as the data constructed is received as if it was coming from an external source, and thus processed and relayed by the state machine just like any other message.\
 The following snippets is an example of its usage:
-
 
 For example, see this snippet taken from the [reference implementation](https://github.com/algorand/go-algorand/blob/df0613a04432494d0f437433dd1efd02481db838/agreement/actions.go#L387), where a proposal is being assembled:
 
@@ -360,9 +357,8 @@ For example, see this snippet taken from the [reference implementation](https://
 			s.log.Errorf("pseudonode.MakeProposals call failed %v", err)
 		}
 ```
+
 Here we see how the `loopback` handles proposal creation and then generates events as if this was an externally received proposal, which then are prioritized.
-
-
 
 # Protocol upgrade history
 
@@ -463,18 +459,17 @@ Some relevant rules for the codec:
 
 In general, [this primer](https://ugorji.net/blog/go-codec-primer) can also be used as reference to understand the _msgpack_ format.
 
-
 ## Node configuration values
 
 - `Version`: It tracks the current version of the default configuration values, allowing migration from older versions to newer ones. It is particularly important when modifying default values for existing parameters.\
-Any time a new version is introduced, this field must be updated accordingly.\
-Default value: `35`.
+  Any time a new version is introduced, this field must be updated accordingly.\
+  Default value: `35`.
 
 - `Archival`: Enable saving a full copy of the blockchain history.
-Non-archival nodes will only maintain the necessary state to validate
-blockchain messages and participate in the consensus protocol. Non-archival
-nodes use significantly less storage space.\
-Introduced in version 0 with the default value set to `false`.
+  Non-archival nodes will only maintain the necessary state to validate
+  blockchain messages and participate in the consensus protocol. Non-archival
+  nodes use significantly less storage space.\
+  Introduced in version 0 with the default value set to `false`.
 
 > [!NOTE]
 > The `Archival` field makes the node store history from the moment it is activated, so if you want
@@ -483,43 +478,44 @@ Introduced in version 0 with the default value set to `false`.
 > synchronization must be performed from scratch.
 
 - `GossipFanout`: Defines the maximum number of peers the node will establish outgoing connections with. If the available peer list is smaller than this value, the node will connect to fewer peers. The node does not create multiple outgoing connections to the same peer. See the [Network Layer Overview](network-overview.md) for further details.\
-Introduced in version 0.\
-Default value: 4.
+  Introduced in version 0.\
+  Default value: 4.
 
 - `NetAddress`: Specifies the address and/or port where the node listens for incoming connections. Leaving this field blank disables incoming connections. The value can be an _IP_ and _port_ pair or just a _port_.
-If no port is specified, the node defaults to port `4160`.\
-Setting the port to `0` allows the system to automatically assign an available port. For example, `127.0.0.1:0` binds the node to *any available port* on localhost.\
-Introduced in version 0.\
-Default value: Empty string.
+  If no port is specified, the node defaults to port `4160`.\
+  Setting the port to `0` allows the system to automatically assign an available port. For example, `127.0.0.1:0` binds the node to _any available port_ on localhost.\
+  Introduced in version 0.\
+  Default value: Empty string.
 
 - `ReconnectTime`: deprecated and unused.\
-Introduced in version 0 with the default value set to `60`, default value is set to
-`60000000000` since version 1.
+  Introduced in version 0 with the default value set to `60`, default value is set to
+  `60000000000` since version 1.
 
 - `PublicAddress`: Defines the public address that the node advertises to other nodes for incoming connections.\
-For `mainnet` relay nodes, this should include the full SRV host name and the publicly accessible port number.\
-A valid entry helps prevent self-gossip and is used for identity exchange, ensuring redundant connections are de-duplicated.\
-Introduced in version 0.\
-Default value: Empty string.
+  For `mainnet` relay nodes, this should include the full SRV host name and the publicly accessible port number.\
+  A valid entry helps prevent self-gossip and is used for identity exchange, ensuring redundant connections are de-duplicated.\
+  Introduced in version 0.\
+  Default value: Empty string.
 
 - `MaxConnectionsPerIP`: Defines the maximum number of connections allowed per IP address.\
-Introduced in version 3 with a default value of `30`.\
-Updated to `15` in version 27.\
-Current default value: `8` (since version 35).
+  Introduced in version 3 with a default value of `30`.\
+  Updated to `15` in version 27.\
+  Current default value: `8` (since version 35).
 
 - `PeerPingPeriodSeconds`: deprecated and unused.\
   Introduced in version 0 with the default value set to `0`.
 
 - `TLSCertFile`: Is the certificate file used for the [websocket network](network-overview.md#websocket-sub-network) if provided.\
-Introduced in version 0 with the default value set to an empty string.
+  Introduced in version 0 with the default value set to an empty string.
 
 - `TLSKeyFile`: Is the key file used for the [websocket network](network-overview.md#websocket-sub-network) if provided.\
-Introduced in version 0 with the default value set to an empty string.
+  Introduced in version 0 with the default value set to an empty string.
 
 - `BaseLoggerDebugLevel`: Specifies the logging level for [`algod`](API-overview.md#algorand-daemon) (node.log).\
-Introduced in version 0 with the default value set to `1`.\
-Current default value is set to `4` since version 1.\
-The levels are:
+  Introduced in version 0 with the default value set to `1`.\
+  Current default value is set to `4` since version 1.\
+  The levels are:
+
   - `0` _Panic_: highest level of severity. Logs and then calls `panic()`.
   - `1` Fatal: Logs and then calls `os.Exit(1)`. It will exit even if the
     logging level is set to _Panic_.
@@ -540,11 +536,11 @@ The levels are:
   Introduced in version 27 with the default value set to an empty string.
 
 - `HotDataDir`: Is an optional directory to store data that is frequently accessed by the node. For isolation, the node will create a subdirectory in this location, named by the [`genesisID`](ledger.md#genesis-identifier) of the network. If not specified, the node uses the default data directory provided at runtime. Individual resources may override this setting. Setting `HotDataDir` to a dedicated high performance disk allows for basic disc tuning.\
-Introduced in version 31 with the default value set to an empty string.
+  Introduced in version 31 with the default value set to an empty string.
 
 - `ColdDataDir`: Specifies an optional directory for storing infrequently accessed data. The node creates a subdirectory within this location, named after the [`genesisID`](ledger.md#genesis-identifier) of the network. If not specified, the node uses the default data directory provided at runtime. Individual resources may have their own override settings, which take precedence over this value. Using a slower disk for `ColdDataDir` can optimize storage costs and resource allocation.\
-Introduced in version 31.\
-Default value: Empty string.
+  Introduced in version 31.\
+  Default value: Empty string.
 
 - `TrackerDBDir`: Is an optional directory to store the tracker database.
   For isolation, the node will create a subdirectory in this location, named
@@ -592,27 +588,28 @@ Default value: Empty string.
   Introduced in version 34 with the default value set to `1200`.
 
 - `BroadcastConnectionsLimit`: This parameter defines the maximum number of peer connections that will receive broadcast (gossip) messages from your node.\
-It was introduced in Version 4, with a default value of `-1`.\
-For further details, please refer to the [Algorand Network Layer Overview](network.md).\
-Succintly, it works in the following way:
+  It was introduced in Version 4, with a default value of `-1`.\
+  For further details, please refer to the [Algorand Network Layer Overview](network.md).\
+  Succintly, it works in the following way:
+
   - If a node has more connections than the specified limit, it prioritizes broadcasting to peers in the following order:
-      1. Outgoing connections: Peers a node actively connects to.
-      2. Peers with higher stake: Determined by the amount of Algos held, as indicated by their [participation key](partkey.md#votingparticipation-keys).
+    1. Outgoing connections: Peers a node actively connects to.
+    2. Peers with higher stake: Determined by the amount of Algos held, as indicated by their [participation key](partkey.md#votingparticipation-keys).
   - Special values:
     - `0`: Disables all outgoing broadcast messages, including transaction broadcasts to peers.
     - `-1`: No limit on the number of connections receiving broadcasts (default setting).
 
 - `AnnounceParticipationKey`: Indicates if this node should announce its [participation key](partkey.md#votingparticipation-keys) with the largest stake to its peers. In case of a _DoS_ attack, this allows peers to prioritize connections.\
-Introduced in Version 4 with the default value set to `true`. 
+  Introduced in Version 4 with the default value set to `true`.
 
 - `PriorityPeers`: Specifies peer IP addresses that should always get outgoing
   broadcast messages from this node.\
   Introduced in version 4 with the default value set to an empty string.
 
 - `ReservedFDs`: This configuration parameter specifies the number of reserved file descriptors (FDs) that the Algorand node will allocate. These reserved FDs are set aside for operations that require temporary file descriptors, such as _DNS_ queries, _SQLite_ database interactions, and other short-lived network operations.\
-The total number of file descriptors available to the node, as specified by the node's file descriptor limit (`RLIMIT_NOFILE`), should always be greater than or equal to `IncomingConnectionsLimit` + `RestConnectionsHardLimit` + `ReservedFDs`. This parameter is typically left at its default value and should not be changed unless necessary.\
-If the node's file descriptor limit is lower than the sum of the three components, it could cause issues with node functionality.\
-Introduced in version 2 with the default value set to `256`.
+  The total number of file descriptors available to the node, as specified by the node's file descriptor limit (`RLIMIT_NOFILE`), should always be greater than or equal to `IncomingConnectionsLimit` + `RestConnectionsHardLimit` + `ReservedFDs`. This parameter is typically left at its default value and should not be changed unless necessary.\
+  If the node's file descriptor limit is lower than the sum of the three components, it could cause issues with node functionality.\
+  Introduced in version 2 with the default value set to `256`.
 
 - `EndpointAddress`: Configures the address where the node listens to for
   [REST API](API-overview.md) calls. It may hold an _IP_ address and _port_ or just a _port_.
@@ -627,10 +624,10 @@ Introduced in version 2 with the default value set to `256`.
   Introduced in version 35 with the default value set to `false`.
 
 - `RestReadTimeoutSeconds`: Defines the maximum duration (in seconds) the node's [API server](API-overview.md) will wait to read the request body from an incoming HTTP request. If the body is not fully received within this time frame, the request will be aborted.\
-Introduced in version 4 with the default value set to `15`.
+  Introduced in version 4 with the default value set to `15`.
 
 - `RestWriteTimeoutSeconds`: Defines the maximum duration (in seconds) the node's [API server](API-overview.md) will allow for writing the response body back to the client. If the response is not sent within this time frame, the connection is closed.\
-Introduced in version 4 with the default value set to `120`.
+  Introduced in version 4 with the default value set to `120`.
 
 - `DNSBootstrapID`: Specifies the names of a set of DNS SRV records that
   identify the set of nodes available to connect to.
@@ -646,6 +643,7 @@ Introduced in version 4 with the default value set to `120`.
   If the filename ends with _.gz_ or _.bz2_ it will be compressed.\
   Introduced in version 4 with the default value set to `node.archive.log`.
   Available template variables:
+
   - Time at the start of log:
     - {{.Year}}
     - {{.Month}}
@@ -674,20 +672,20 @@ Introduced in version 4 with the default value set to `120`.
   Introduced in version 0 with the default value set to `:9100`.
 
 - `EnableMetricReporting`: Determines whether the metrics collection service is enabled for the node. When enabled, the node will collect performance and usage metrics from the specific instance of [`algod`](API-overview.md#algorand-daemon). Additionally, machine-wide metrics are also collected. This enables monitoring across all instances on the same machine, helping with performance analysis and troubleshooting.\
-Introduced in version 0 with the default value set to `false`.
+  Introduced in version 0 with the default value set to `false`.
 
 - `EnableTopAccountsReporting`: this field is deprecated and unused.\
-Enables top accounts reporting flag.\
-Introduced in version 0 with the default value set to `false`.
+  Enables top accounts reporting flag.\
+  Introduced in version 0 with the default value set to `false`.
 
 - `EnableAgreementReporting`: Controls the reporting of [agreement-related events](abft.md) in the node. When enabled, it prints additional events related to the periods of agreement within the consensus process. This is useful for tracking and debugging the stages of agreement reached by the node during the consensus rounds.\
-Introduced in version 3 with the default value set to `false`.
+  Introduced in version 3 with the default value set to `false`.
 
 - `EnableAgreementTimeMetrics`: Controls whether the node collects and reports metrics related to the timing of the agreement process within the [consensus protocol](abft.md). When enabled, it provides detailed data on the time taken for agreement events during consensus rounds.\
   Introduced in version 3 with the default value set to `false`.
 
 - `NodeExporterPath`: Specifies the path to the `node_exporter` binary, which is used to expose node metrics for monitoring and integration with systems like Prometheus. The `node_exporter` collects and exposes various performance and health metrics from the node.\
-Introduced in version 0 with the default value set to `./node_exporter`.
+  Introduced in version 0 with the default value set to `./node_exporter`.
 
 - `FallbackDNSResolverAddress`: Defines the fallback DNS resolver address that
   would be used if the system resolver would fail to retrieve SRV records.\
@@ -704,48 +702,48 @@ Introduced in version 0 with the default value set to `./node_exporter`.
   Introduced in version 0 with the default value set to `3`.
 
 - `TxBacklogServiceRateWindowSeconds`: Defines the window size (in seconds) used to determine the service rate of the transaction backlog (_txBacklog_). It helps to manage how quickly the node processes and serves transactions waiting in the backlog by monitoring the rate over a specific time period.\
-Introduced in version 27 with the default value set to `10`.
+  Introduced in version 27 with the default value set to `10`.
 
 - `TxBacklogReservedCapacityPerPeer`: Determines the amount of dedicated capacity allocated to each peer for serving transactions from the transaction backlog (_txBacklog_). This ensures that each peer has a specific portion of the overall transaction processing capacity, preventing one peer from monopolizing the node’s transaction handling resources.\
-Introduced in version 27 with the default value set to `20`.
+  Introduced in version 27 with the default value set to `20`.
 
 - `TxBacklogAppTxRateLimiterMaxSize`: Defines the maximum size for the transaction rate limiter, which is used to regulate the number of transactions that an application can submit to the node within a given period. This rate limiter is designed to prevent individual applications from overwhelming the network with excessive transactions. The value may be interpreted as the maximum sum of transaction bytes per period.\
-Introduced in version 32 with the default value set to `1048576`.
+  Introduced in version 32 with the default value set to `1048576`.
 
 - `TxBacklogAppTxPerSecondRate`: Determines the target transaction rate per second for an application's transactions within the transaction rate limiter. This means that the node will aim to allow an application to submit a specific number of transactions per second. If the app tries to send more transactions than the rate limit allows, those transactions will be delayed or throttled.\
-Introduced in version 32 with the default value set to `100`.
+  Introduced in version 32 with the default value set to `100`.
 
 - `TxBacklogRateLimitingCongestionPct`: Determines the threshold percentage at which the transaction backlog rate limiter will be activated. When the backlog reaches a certain percentage, the node will start to limit the rate of transactions, either by slowing down incoming transactions or applying throttling measures. This helps prevent the backlog from growing too large and causing congestion on the network. If the backlog falls below this threshold, rate limiting is relaxed.\
-Introduced in version 32 with the default value set to `50`.
+  Introduced in version 32 with the default value set to `50`.
 
 - `EnableTxBacklogAppRateLimiting`: Determines whether an application-specific rate limiter should be applied when adding transactions to the transaction backlog. If enabled, the node enforces rate limits on how many application transactions can be enqueued, preventing excessive transaction submission from a single app.\
-Introduced in version 32 with the default value set to `true`.
+  Introduced in version 32 with the default value set to `true`.
 
 - `TxBacklogAppRateLimitingCountERLDrops`: Determines whether transaction messages dropped by the ERL (Exponential Rate Limiter) congestion manager and the transaction backlog rate limiter should also be counted by the application rate limiter.
-When enabled, all dropped transactions are included in the app rate limiter's calculations, making its rate-limiting decisions more accurate. However, this comes at the cost of additional deserialization overhead, as more transactions need to be processed even if they are ultimately dropped.\
-Introduced in version 35 with the default value set to `false`.
+  When enabled, all dropped transactions are included in the app rate limiter's calculations, making its rate-limiting decisions more accurate. However, this comes at the cost of additional deserialization overhead, as more transactions need to be processed even if they are ultimately dropped.\
+  Introduced in version 35 with the default value set to `false`.
 
 - `EnableTxBacklogRateLimiting`: Determines whether a rate limiter and congestion manager should be applied when adding transactions to the transaction backlog.
-When enabled, the total transaction backlog size increases by `MAX_PEERS`*`TxBacklogReservedCapacityPerPeer`, allowing each peer to have a dedicated portion of the backlog. This helps manage network congestion by preventing any single source from overwhelming the queue.\
-Introduced in version 27 with the default value set to `false`.\
-Current default value is set to `true` since version 30.
+  When enabled, the total transaction backlog size increases by `MAX_PEERS`\*`TxBacklogReservedCapacityPerPeer`, allowing each peer to have a dedicated portion of the backlog. This helps manage network congestion by preventing any single source from overwhelming the queue.\
+  Introduced in version 27 with the default value set to `false`.\
+  Current default value is set to `true` since version 30.
 
-- `TxBacklogSize`: Defines the queue size for storing received transactions before they are processed. The default value is `26000`, which approximates the number of transactions that fit in a single block. However, if `EnableTxBacklogRateLimiting` is enabled, the total backlog size increases by `MAX_PEERS`*`TxBacklogReservedCapacityPerPeer`, allocating additional capacity per peer.\
-Introduced in version 27 with the default value set to `26000`.
+- `TxBacklogSize`: Defines the queue size for storing received transactions before they are processed. The default value is `26000`, which approximates the number of transactions that fit in a single block. However, if `EnableTxBacklogRateLimiting` is enabled, the total backlog size increases by `MAX_PEERS`\*`TxBacklogReservedCapacityPerPeer`, allocating additional capacity per peer.\
+  Introduced in version 27 with the default value set to `26000`.
 
 - `TxPoolSize`: Defines the maximum number of transactions that can be stored in the [transaction pool buffer](ledger-overview.md#transaction-pool) before being processed or discarded.\
-It was introduced in version 0 with a default value of `50000`, later reduced to `15000` in version 5.\
-Current default value is set to `75000` since version 23.
+  It was introduced in version 0 with a default value of `50000`, later reduced to `15000` in version 5.\
+  Current default value is set to `75000` since version 23.
 
 - `TxSyncTimeoutSeconds`: Defines the maximum time a node will wait for responses after attempting to synchronize transactions by gossiping them to peers. After gossiping, the node waits for acknowledgments, such as confirmation that the transaction has been added to a peer's Transaction Pool or relayed to others. If no acknowledgment is received within the time limit set by `TxSyncTimeoutSeconds`, the node stops the synchronization attempt and moves on to other tasks. However, the node will retry synchronization in future cycles.\
-Introduced in version 0 with the default value set to `30`.
+  Introduced in version 0 with the default value set to `30`.
 
 - `TxSyncIntervalSeconds`: Defines the number of seconds between transaction
   synchronizations.\
   Introduced in version 0 with the default value set to `60`.
 
 - `IncomingMessageFilterBucketCount`: Specifies the number of hash buckets used to filter and manage incoming messages. When a [message is received](network-overview.md), the node computes its hash, which is a unique value representing the message. The hash is then assigned to one of the available buckets based on its value. Each bucket holds a set of message hashes, allowing the node to quickly check if it has already processed a message and filter out duplicates.\
-Introduced in version 0 with the default value set to `5`.
+  Introduced in version 0 with the default value set to `5`.
 
 - `IncomingMessageFilterBucketSize`: Defines the size of each incoming message
   hash bucket.\
@@ -760,19 +758,19 @@ Introduced in version 0 with the default value set to `5`.
   Introduced in version 0 with the default value set to `128`.
 
 - `EnableOutgoingNetworkMessageFiltering`: Enables the filtering of outgoing messages comparing its hashes with those in the message hash buckets.\
-Introduced in version 0 with the default value set to `true`.
+  Introduced in version 0 with the default value set to `true`.
 
 - `EnableIncomingMessageFilter`: Enables the filtering of incoming messages.\
   Introduced in version 0 with the default value set to `false`.
 
 - `DeadlockDetection`: Controls whether the node actively detects potential deadlocks in its operations. A deadlock occurs when two or more processes are stuck waiting for each other to release resources, preventing progress. When set to a positive value (`1`), deadlock detection is enabled, allowing the node to monitor and identify such situations. A value of `-1` disables deadlock detection, and a value of `0` sets the default behavior, where the system determines whether to enable deadlock detection automatically based on the environment.\
-Introduced in version 1 with the default value set to `0`.
+  Introduced in version 1 with the default value set to `0`.
 
 - `DeadlockDetectionThreshold`: Defines the time limit, in seconds, that the node waits before considering a potential deadlock situation. If a process or operation exceeds this threshold without making progress, the node will trigger deadlock detection to identify and handle the issue.\
-Introduced in version 20 with the default value set to `30`.
+  Introduced in version 20 with the default value set to `30`.
 
 - `RunHosted`: Configures whether to run the Algorand node in Hosted mode.\
-Introduced in version 3 with the default value set to `false`.
+  Introduced in version 3 with the default value set to `false`.
 
 - `CatchupParallelBlocks`: Is the maximum number of blocks that catchup will
   fetch in parallel. If less than [`Protocol.SeedLookback`](abft.md#parameters), then
@@ -794,7 +792,7 @@ Introduced in version 3 with the default value set to `false`.
   Introduced in version 3 with the default value set to `50`.
 
 - `TxSyncServeResponseSize`: Sets the maximum size, in bytes, that the synchronization server will return when serving transaction synchronization requests.\
-Introduced in version 3 with the default value set to `1000000`.
+  Introduced in version 3 with the default value set to `1000000`.
 
 - `UseXForwardedForAddressField`: Indicates whether or not the node should use
   the _X-Forwarded-For_ HTTP Header when determining the source of a connection.
@@ -834,8 +832,8 @@ Introduced in version 3 with the default value set to `1000000`.
   Introduced in version 27 with the default value set to `600`.
 
 - `EnableProfiler`: allows the node to expose Go’s _pprof_ profiling endpoints, which provide detailed performance metrics such as CPU, memory, and _goroutine_ usage. This is useful for debugging and performance analysis.\
-When enabled, the node will serve profiling data through its API, allowing developers to inspect runtime behavior in real time. However, since _pprof_ can expose sensitive performance details, it should be disabled in production or whenever the API is accessible to untrusted individuals, as an attacker could use this information to analyze and exploit the system.\
-Introduced in version 0 with the default value set to `false`.
+  When enabled, the node will serve profiling data through its API, allowing developers to inspect runtime behavior in real time. However, since _pprof_ can expose sensitive performance details, it should be disabled in production or whenever the API is accessible to untrusted individuals, as an attacker could use this information to analyze and exploit the system.\
+  Introduced in version 0 with the default value set to `false`.
 
 - `EnableRuntimeMetrics`: Exposes Go runtime metrics in `/metrics` and via
   `node_exporter`.\
@@ -853,6 +851,7 @@ Introduced in version 0 with the default value set to `false`.
   Introduced in version 6 with the default value set to `1`.\
   Current default value is set to `9` since version 34.\
   Possible flag values are:
+
   - `0` - disabled.
   - `1` - validate SRV response.
   - `2` - validate relay names to addresses resolution.
@@ -872,7 +871,7 @@ Introduced in version 0 with the default value set to `false`.
   Introduced in version 6 with the default value set to an empty string.
 
 - `CatchpointInterval`: Defines how often a catchpoint (a snapshot of the blockchain state) is generated, measured in rounds. These snapshots allow nodes to sync quickly by downloading and verifying the state at a specific round instead of replaying all transactions. Setting this to `0` disables the catchpoint files from being generated.\
-Introduced in version 7 with the default value set to `10000`.
+  Introduced in version 7 with the default value set to `10000`.
 
 - `CatchpointFileHistoryLength`: Defines how many catchpoint files to store.
   A value of `0` means don't store any, `-1` means unlimited, and a positive number suggests the
@@ -895,10 +894,10 @@ Introduced in version 7 with the default value set to `10000`.
   Introduced in version 7 with the default value set to `false`.
 
 - `EnableGossipBlockService`: determines whether the node serves blocks to peers over the gossip network. This service is essential for relays and other nodes to request and receive block data, especially during [catchup](#node-catchup). For this to work, the node must have a `NetAddress` set, allowing it to accept incoming connections.\
-Introduced in version 8 with the default value set to `true`.
+  Introduced in version 8 with the default value set to `true`.
 
 - `CatchupHTTPBlockFetchTimeoutSec`: Sets the maximum time (in seconds) that a node will wait for an HTTP response when requesting a block from a relay node during [catchup](#node-catchup). If the request takes longer than this timeout, the node abandons the request and tries another relay node.\
-Introduced in version 9 with the default value set to `4`.
+  Introduced in version 9 with the default value set to `4`.
 
 - `CatchupGossipBlockFetchTimeoutSec`: Controls how long the gossip query for
   fetching a block from a relay would take before giving up and trying another
@@ -923,18 +922,20 @@ Introduced in version 9 with the default value set to `4`.
 
 - `CatchpointTracking`: Determines if catchpoints are going to be tracked.\
   Introduced in version 11 with the default value set to `0`.\
-  The value is interpreted as follows: 
-  - `-1` means do not track catchpoints. 
-  - `1` means track catchpoints as long as `CatchpointInterval` > `0`. 
-  - `2` means track catchpoints and always generate catchpoint files as long as `CatchpointInterval` > `0`. 
-  - `0` means automatic, which is the default value. In this mode, a non-archival node would not track the catchpoints, and an archival node would track the catchpoints as long as `CatchpointInterval` > `0`. 
+  The value is interpreted as follows:
+
+  - `-1` means do not track catchpoints.
+  - `1` means track catchpoints as long as `CatchpointInterval` > `0`.
+  - `2` means track catchpoints and always generate catchpoint files as long as `CatchpointInterval` > `0`.
+  - `0` means automatic, which is the default value. In this mode, a non-archival node would not track the catchpoints, and an archival node would track the catchpoints as long as `CatchpointInterval` > `0`.
   - Any other values of this field would behave as if the default value was provided.
 
 - `LedgerSynchronousMode`: Defines the synchronous mode used by the [Ledger](ledger.md)
   database.\
   For further information see the description of [SynchronousMode](https://github.com/algorand/go-algorand/blob/b6e5bcadf0ad3861d4805c51cbf3f695c38a93b7/util/db/dbutil.go#L435).\
   Introduced in version 12 with the default value set to `2`.
-   The supported options are:
+  The supported options are:
+
   - `0` - SQLite continues without syncing as soon as it has handed data off to the operating system.
   - `1` - SQLite database engine will still sync at the most critical moments, but less often than in FULL mode.
   - `2` - SQLite database engine will use the xSync method of the VFS to ensure that all content is safely written to the disk surface prior to continuing.
@@ -990,26 +991,26 @@ Introduced in version 9 with the default value set to `4`.
   by the [catchup](#node-catchup) service. It can be used to omit certain validations to speed up
   the catchup process, or to apply extra validations which are redundant in
   normal operation.\
-  Introduced in version 16 with the default value set to `0000`.\
-  The value is a bit-field, (where `bit 0` is the least significant bit and `bit 3` is the most significant bit). The value of each bit is interpreted in the following way:
-  - `bit 0`: 
+   Introduced in version 16 with the default value set to `0000`.\
+   The value is a bit-field, (where `bit 0` is the least significant bit and `bit 3` is the most significant bit). The value of each bit is interpreted in the following way:
+
+  - `bit 0`:
     - `0`: verify the block certificate.
     - `1`: skip this validation.
-  - `bit 1`: 
-    - `0`: verify payset committed hash in [block header](ledger.md#blocks) matches payset hash. 
+  - `bit 1`:
+    - `0`: verify payset committed hash in [block header](ledger.md#blocks) matches payset hash.
     - `1`: skip this validation.
-  - `bit 2`: 
+  - `bit 2`:
     - `0`: skip verifying the transaction signatures on the block are valid.
-    - `1`: verify transaction signatures on block. 
-  - `bit 3`: 
-    - `0`: don't verify that the hash of the recomputed payset matches the hash of the payset committed in the block header.
-    - `1`: perform verification as described above.
-> [!NOTE]
-> Not all permutations of the above bitset are currently functional. In
-> particular, the ones that are functional are:
-> - `0000`: default behavior.
-> - `0011`: speed up [catchup](#node-catchup) by skipping necessary validations.
-> - `1100`: perform all validation methods (normal and additional).
+    - `1`: verify transaction signatures on block.
+  - `bit 3`: - `0`: don't verify that the hash of the recomputed payset matches the hash of the payset committed in the block header. - `1`: perform verification as described above.
+    > [!NOTE]
+    > Not all permutations of the above bitset are currently functional. In
+    > particular, the ones that are functional are:
+    >
+    > - `0000`: default behavior.
+    > - `0011`: speed up [catchup](#node-catchup) by skipping necessary validations.
+    > - `1100`: perform all validation methods (normal and additional).
 
 - `EnableAccountUpdatesStats`: Specifies whether or not to emit the
   `AccountUpdates` telemetry event.\
@@ -1106,13 +1107,14 @@ Introduced in version 9 with the default value set to `4`.
   Introduced in version 25 with the default value set to `100000`.
 
 - `TxIncomingFilteringFlags`: Instructs [`algod`](API-overview.md#algorand-daemon) filtering of incoming transaction messages.\
-Introduced in version 26 with the default value set to `1`.
-Flag values: 
-  - `0x00`: disabled. 
+  Introduced in version 26 with the default value set to `1`.
+  Flag values:
+
+  - `0x00`: disabled.
   - `0x01` (`txFilterRawMsg`): check for raw transaction message duplicates.
   - `0x02` (`txFilterCanonical`): check for canonical transaction group duplicates.
 
-- `EnableExperimentalAPI`: Enables [experimental API endpoint](API-overview.md#experimental). 
+- `EnableExperimentalAPI`: Enables [experimental API endpoint](API-overview.md#experimental).
   Note that these endpoints have noguarantees in terms of functionality or future support.\
   Introduced in version 26 with the default value set to `false`.
 
@@ -1120,7 +1122,7 @@ Flag values:
   Introduced in version 27 with the default value set to `false`.
 
 - `EnableFollowMode`: launches the node in [follower mode](#follower-node-initialization), which significantly alters its behavior in terms of participation and API accessibility. When enabled, this mode disables the [agreement service](abft.md) (meaning the node does not participate in consensus), and it disables APIs related to broadcasting transactions, effectively making the node passive in terms of network operations. Instead, [follower mode](#follower-node-initialization) enables APIs that allow the node to retrieve detailed information from the Ledger cache and access the state of the blockchain at a specific round. This can be useful for nodes that need to observe the network and the blockchain’s state without actively participating in consensus or transaction propagation.\
-Introduced in version 27 with the default value set to `false`.
+  Introduced in version 27 with the default value set to `false`.
 
 - `EnableTxnEvalTracer`: Turns on features in the `BlockEvaluator` which
   collect data on transactions, exposing them via [`algod` APIs](API-overview.md#algorand-daemon). It will store [transaction deltas](ledger.md#state-deltas) created during block evaluation, potentially consuming much larger amounts of memory.\
@@ -1128,9 +1130,10 @@ Introduced in version 27 with the default value set to `false`.
 
 - `StorageEngine`: Allows to control which type of storage to use for the
   Ledger. Available options are: \
-  - `sqlite` (default). 
+
+  - `sqlite` (default).
   - `pebbledb` (experimental, in development).\
-  Introduced in version 28 with the default value set to `sqlite`.
+    Introduced in version 28 with the default value set to `sqlite`.
 
 - `TxIncomingFilterMaxSize`: Sets the maximum size for the de-duplication cache
   used by the incoming transaction filter. Only relevant if `TxIncomingFilteringFlags` is
@@ -1156,7 +1159,7 @@ Introduced in version 27 with the default value set to `false`.
   Introduced in version 31 with the default value set to an empty string.
 
 - `EnableDHTProviders`: Enables the Distributed Hash Table (DHT). This feature allows the node to participate in a DHT-based network that advertises its available capabilities to other nodes. For further detail you may refer to the [Algorand Network Layer Overview](network-overview.md#capabilities).\
-Introduced in version 34 with the default value set to `false`.
+  Introduced in version 34 with the default value set to `false`.
 
 - `P2PPersistPeerID`: Writes the private key used for the node's PeerID to the
   `P2PPrivateKeyLocation`.This is only used when `EnableP2P` is

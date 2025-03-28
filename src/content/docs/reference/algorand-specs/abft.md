@@ -1,6 +1,6 @@
 ---
 numbersections: true
-title: "Algorand Byzantine Fault Tolerance Protocol Specification"
+title: 'Algorand Byzantine Fault Tolerance Protocol Specification'
 date: \today
 abstract: >
   The _Algorand Byzantine Fault Tolerance protocol_ is an interactive protocol which produces a sequence of common information between a set of participants.
@@ -67,8 +67,8 @@ We define $\FilterTimeout(p)$ on period $p$ as follows:
 
 - If $p \ne 0$:
   - $\FilterTimeout(p) = 4$ seconds (which coincides with $2\lambda$)
-  > [!NOTE]
-  > This value is currently hardcoded in the reference implementation, however it should be equal to $2\lambda$.
+    > [!NOTE]
+    > This value is currently hardcoded in the reference implementation, however it should be equal to $2\lambda$.
 
 We define $\DeadlineTimeout(p)$ on period $p$ as follows:
 
@@ -302,8 +302,6 @@ unambiguous) if the following conditions are true:
 - Let $v = (I_{orig}, p_{orig}, d, h)$. If $s = 0$, then $p_{orig} \le p$.
   Furthermore, if $s = 0$ and $p = p_{orig}$, then $I = I_{orig}$.
 
-
-
 - If $s \in \{\Propose, \Soft, \Cert, \Late, \Redo\}$, $v \neq \bot$.
   Conversely, if $s = \Down$, $v = \bot$.
 
@@ -380,11 +378,7 @@ if $L$ is unambiguous) if the following conditions are true:
 
 - For any two elements $a_i, a_j \in V$, $I_i \neq I_j$.
 
-
-
 - For any element $a_i \in V$, $r_i = r, p_i = p, s_i = s$.
-
-
 
 - For any element $a_i \in V$, either $a_i$ is a vote and
   $v_i = v$, or $a_i$ is an equivocation vote.
