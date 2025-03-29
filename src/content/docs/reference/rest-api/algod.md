@@ -3911,16 +3911,19 @@ func main() {
 
 `GET /v2/applications/{application-id}/boxes`
 
-*Get all box names for a given application.*
+*Get boxes for a given application.*
 
-Given an application ID, return all Box names. No particular ordering is guaranteed. Request fails when client or server-side configured limits prevent returning all Box names.
+Given an application ID, return boxes in lexographical order by name. If the results must be truncated, a next-token is supplied to continue the request.
 
 #### Parameters
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |application-id|path|integer|true|An application identifier|
-|max|query|integer|false|Max number of box names to return. If max is not set, or max == 0, returns all box-names.|
+|max|query|integer|false|Maximum number of boxes to return. Server may impose a lower limit.|
+|prefix|query|string|false|A box name prefix, in the goal app call arg form 'encoding:value'. For ints, use the form 'int:1234'. For raw bytes, use the form 'b64:A=='. For printable strings, use the form 'str:hello'. For addresses, use the form 'addr:XYZ...'.|
+|next|query|string|false|A box name, in the goal app call arg form 'encoding:value'. When provided, the returned boxes begin (lexographically) with the supplied name. Callers may implement pagination by reinvoking the endpoint with the token from a previous call's next-token.|
+|values|query|boolean|false|If true, box values will be returned.|
 
 > Example responses
 
@@ -3930,9 +3933,13 @@ Given an application ID, return all Box names. No particular ordering is guarant
 {
   "boxes": [
     {
-      "name": "string"
+      "name": "string",
+      "round": 0,
+      "value": "string"
     }
-  ]
+  ],
+  "next-token": "string",
+  "round": 0
 }
 ```
 
@@ -3940,7 +3947,7 @@ Given an application ID, return all Box names. No particular ordering is guarant
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Box names of an application|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Boxes of an application|Inline|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request|[ErrorResponse](#schemaerrorresponse)|
 |401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Invalid API Token|[ErrorResponse](#schemaerrorresponse)|
 |500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Internal Error|[ErrorResponse](#schemaerrorresponse)|
@@ -3952,8 +3959,12 @@ Status Code **200**
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|» boxes|[[BoxDescriptor](#schemaboxdescriptor)]|true|none|[Box descriptor describes a Box.]|
-|»» name|string(byte)|true|none|Base64 encoded box name|
+|» boxes|[[Box](#schemabox)]|true|none|[Box name and its content.]|
+|»» name|string(byte)|true|none|The box name, base64 encoded|
+|»» round|integer|false|none|The round for which this information is relevant|
+|»» value|string(byte)|true|none|The box value, base64 encoded.|
+|» next-token|string|false|none|Used for pagination, when making another request provide this token with the next parameter.|
+|» round|integer|true|none|The round for which this information is relevant.|
 
 <aside class="warning">
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -12855,32 +12866,9 @@ Box name and its content.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|name|string(byte)|true|none|\[name\] box name, base64 encoded|
-|round|integer|true|none|The round for which this information is relevant|
-|value|string(byte)|true|none|\[value\] box value, base64 encoded.|
-
-
-### BoxDescriptor
-<!-- backwards compatibility -->
-<a id="schemaboxdescriptor"></a>
-<a id="schema_BoxDescriptor"></a>
-<a id="tocSboxdescriptor"></a>
-<a id="tocsboxdescriptor"></a>
-
-```json
-{
-  "name": "string"
-}
-
-```
-
-Box descriptor describes a Box.
-
-#### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|name|string(byte)|true|none|Base64 encoded box name|
+|name|string(byte)|true|none|The box name, base64 encoded|
+|round|integer|false|none|The round for which this information is relevant|
+|value|string(byte)|true|none|The box value, base64 encoded.|
 
 
 ### BoxReference
@@ -13418,31 +13406,6 @@ Key-value pairs for StateDelta.
 |---|---|---|---|---|
 |key|string|true|none|none|
 |value|[EvalDelta](#schemaevaldelta)|true|none|Represents a TEAL value delta.|
-
-
-### KvDelta
-<!-- backwards compatibility -->
-<a id="schemakvdelta"></a>
-<a id="schema_KvDelta"></a>
-<a id="tocSkvdelta"></a>
-<a id="tocskvdelta"></a>
-
-```json
-{
-  "key": "string",
-  "value": "string"
-}
-
-```
-
-A single Delta containing the key, the previous value and the current value for a single round.
-
-#### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|key|string(byte)|false|none|The key, base64 encoded.|
-|value|string(byte)|false|none|The new value of the KV store entry, base64 encoded.|
 
 
 ### LedgerStateDelta

@@ -1,5 +1,7 @@
 ---
 title: Algorand Virtual Machine
+sidebar:
+  order: 20
 ---
 
 The AVM is a bytecode based stack interpreter that executes programs
