@@ -47,7 +47,7 @@ export default defineConfig({
             'data-project-name': 'Algorand',
             'data-project-color': '#99A1A7',
             'data-modal-header-bg-color': '#17cac6',
-            'data-font-family': 'Inter',
+            'data-font-family': 'Inter, sans-serif',
             'data-modal-title-color': '#ffffff',
             'data-modal-title': 'Ask AI',
             'data-modal-body-bg-color': '#f6f6f6',
@@ -330,7 +330,7 @@ export default defineConfig({
             },
             {
               label: 'Consensus Protocol',
-              collapsed: false,
+              collapsed: true,
               items: [
                 {
                   label: 'Overview',

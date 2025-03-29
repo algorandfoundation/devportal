@@ -21,7 +21,7 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
         <img
           class:list={{
             'light:sl-hidden print:hidden': !('src' in config.logo),
-            'h-full!': isFooter || isHomepage,
+            'h-full!': isHomepage,
           }}
           alt={`light theme ${config.logo.alt}`}
           src={isFooter ? AltDarkLogo.src : logos.dark.src}
@@ -34,7 +34,7 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
             class:list={[
               'dark:sl-hidden print:block',
               {
-                'h-full!': isFooter || isHomepage,
+                'h-full!': isHomepage,
               },
             ]}
             alt={`dark theme ${config.logo.alt}`}
