@@ -10,6 +10,7 @@
     "start": "pnpm run dev",
     "prebuild": "pnpm run generate-diagrams && pnpm run generate-openapi-docs",
     "build": "pnpm run import && astro check && astro build",
+    "clean": "npx rimraf node_modules dist imports/repos",
     "lint:fix": "eslint . && prettier -c ./src/** --write && astro check",
     "lint": "eslint . && prettier -c ./src/** && astro check",
     "preview": "astro preview",
@@ -21,9 +22,9 @@
     "init:poetry": "cd imports/build/python && poetry install",
     "import:nodekit": "npx tsx imports/scripts/nodekit.ts && prettier --write src/content/docs/nodes/nodekit-reference/",
     "import:utils-ts": "cd imports/repos/algokit-utils-ts && npm install",
-    "import:algorand-python": "cd imports/build/python && make puya",
-    "import:utils-py": "cd imports/build/python && make utils",
-    "import:algorand-typescript": "cd imports/repos/puya-ts && npm install",
+    "import-skip:algorand-python": "cd imports/build/python && make puya",
+    "import-skip:utils-py": "cd imports/build/python && make utils",
+    "import-skip:algorand-typescript": "cd imports/repos/puya-ts && npm install",
     "import": "pnpm run init && concurrently \"pnpm:import:*\""
   },
   "dependencies": {
@@ -72,6 +73,7 @@
     "pnpm": "^10.6.3",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
+    "rimraf": "^6.0.1",
     "tsx": "^4.19.2",
     "typescript": "^5.5.2",
     "typescript-eslint": "^8.4.0",
