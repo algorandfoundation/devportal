@@ -7,7 +7,7 @@ title: "EventDataMap"
 
 > **EventDataMap**: `object`
 
-Defined in: [src/types/lifecycle-events.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/types/lifecycle-events.ts#L8)
+Defined in: [src/types/lifecycle-events.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/types/lifecycle-events.ts#L8)
 
 ## Type declaration
 

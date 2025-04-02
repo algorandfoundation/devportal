@@ -7,7 +7,7 @@ title: "encodeLease"
 
 > **encodeLease**(`lease`?): `Uint8Array` \| `undefined`
 
-Defined in: [src/transaction/transaction.ts:74](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/transaction/transaction.ts#L74)
+Defined in: [src/transaction/transaction.ts:72](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/transaction/transaction.ts#L72)
 
 Encodes a transaction lease into a 32-byte array ready to be included in an Algorand transaction.
 

@@ -7,7 +7,7 @@ title: "signTransaction"
 
 > **signTransaction**(`transaction`, `signer`): `Promise`\<`Uint8Array`\>
 
-Defined in: [src/transaction/transaction.ts:186](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/transaction/transaction.ts#L186)
+Defined in: [src/transaction/transaction.ts:184](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/transaction/transaction.ts#L184)
 
 :::caution[Deprecated]
 Use `AlgorandClient` / `TransactionComposer` to sign transactions

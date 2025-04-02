@@ -7,7 +7,7 @@ title: "getTestNetDispenserApiClient"
 
 > **getTestNetDispenserApiClient**(`params`): `TestNetDispenserApiClient`
 
-Defined in: [src/dispenser-client.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/dispenser-client.ts#L21)
+Defined in: [src/dispenser-client.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/dispenser-client.ts#L21)
 
 :::caution[Deprecated]
 Use `clientManager.getTestNetDispenser` or `clientManager.getTestNetDispenserFromEnvironment` instead
