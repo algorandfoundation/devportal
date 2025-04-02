@@ -32,7 +32,35 @@ export default defineConfig({
           output: 'reference/algokit-utils-ts/API Reference',
           exclude: ['**[FUTURELINK]*'],
         }),
-        starlightLlmsTxt(),
+        starlightLlmsTxt({
+          customSets: [
+            {
+              label: 'Reference',
+              description: 'Algorand Developer Portal - Reference Docs',
+              paths: ['reference/**'],
+            },
+            {
+              label: 'Typescript - Reference',
+              description: 'Algorand Developer Portal - Typescript Reference Docs',
+              paths: ['reference/algorand-typescript/**'],
+            },
+            {
+              label: 'Python - Reference',
+              description: 'Algorand Developer Portal - Python Reference Docs',
+              paths: ['reference/algorand-python/**'],
+            },
+            {
+              label: 'Typescript',
+              description: 'Algorand Developer Portal - Typescript Docs',
+              paths: ['algokit/languages/typescript/**'],
+            },
+            {
+              label: 'Python',
+              description: 'Algorand Developer Portal - Python Docs',
+              paths: ['algokit/languages/python/**'],
+            },
+          ],
+        }),
       ],
       head: [
         {
