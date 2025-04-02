@@ -33,6 +33,9 @@ export default defineConfig({
           exclude: ['**[FUTURELINK]*'],
         }),
         starlightLlmsTxt({
+          minify: {
+            customSelectors: [':any-link'],
+          },
           customSets: [
             {
               label: 'Reference',
