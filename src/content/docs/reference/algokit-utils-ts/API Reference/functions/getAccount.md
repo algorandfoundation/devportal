@@ -49,7 +49,7 @@ This allows you to write code that will work seamlessly in production and local 
 
 > **getAccount**(`account`, `algod`, `kmdClient`?): `Promise`\<`Account` \| `SigningAccount`\>
 
-Defined in: [src/account/get-account.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/account/get-account.ts#L41)
+Defined in: [src/account/get-account.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/account/get-account.ts#L41)
 
 :::caution[Deprecated]
 use `algorand.account.fromEnvironment()` instead
@@ -148,7 +148,7 @@ An optional KMD client to use to create an account (when targeting LocalNet), if
 
 > **getAccount**(`account`, `algod`, `kmdClient`?): `Promise`\<`Account` \| `SigningAccount`\>
 
-Defined in: [src/account/get-account.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/account/get-account.ts#L68)
+Defined in: [src/account/get-account.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/account/get-account.ts#L68)
 
 :::caution[Deprecated]
 use `algorand.account.fromEnvironment()` instead

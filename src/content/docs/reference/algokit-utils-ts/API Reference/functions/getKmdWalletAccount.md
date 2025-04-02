@@ -7,7 +7,7 @@ title: "getKmdWalletAccount"
 
 > **getKmdWalletAccount**(`walletAccount`, `algod`, `kmdClient`?): `Promise`\<`Account` \| `undefined`\>
 
-Defined in: [src/localnet/get-kmd-wallet-account.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/localnet/get-kmd-wallet-account.ts#L27)
+Defined in: [src/localnet/get-kmd-wallet-account.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/localnet/get-kmd-wallet-account.ts#L27)
 
 :::caution[Deprecated]
 use `algorand.account.kmd.getWalletAccount(name, predicate)` or `new KMDAccountManager(clientManager).getWalletAccount(name, predicate)` instead.

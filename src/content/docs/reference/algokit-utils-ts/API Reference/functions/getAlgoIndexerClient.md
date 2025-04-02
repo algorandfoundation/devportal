@@ -7,7 +7,7 @@ title: "getAlgoIndexerClient"
 
 > **getAlgoIndexerClient**(`config`?): `Indexer`
 
-Defined in: [src/network-client.ts:121](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/network-client.ts#L121)
+Defined in: [src/network-client.ts:121](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/network-client.ts#L121)
 
 :::caution[Deprecated]
 Use `ClientManager.getIndexerClient(config, overrideIntDecoding)` or `ClientManager.getIndexerClientFromEnvironment(overrideIntDecoding)` instead.

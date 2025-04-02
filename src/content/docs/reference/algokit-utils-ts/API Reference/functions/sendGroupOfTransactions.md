@@ -7,7 +7,7 @@ title: "sendGroupOfTransactions"
 
 > **sendGroupOfTransactions**(`groupSend`, `algod`): `Promise`\<`Omit`\<`SendAtomicTransactionComposerResults`, `"returns"`\>\>
 
-Defined in: [src/transaction/transaction.ts:957](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/transaction/transaction.ts#L957)
+Defined in: [src/transaction/transaction.ts:773](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/transaction/transaction.ts#L773)
 
 :::caution[Deprecated]
 Use `TransactionComposer` (`algorand.newGroup()`) or `AtomicTransactionComposer` to construct and send group transactions instead.

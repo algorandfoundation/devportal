@@ -161,7 +161,6 @@ Re-exports [searchTransactions](/reference/algokit-utils-ts/API Reference/namesp
 - [~~performTemplateSubstitutionAndCompile~~](/reference/algokit-utils-ts/API Reference/functions/performtemplatesubstitutionandcompile/)
 - [~~persistSourceMaps~~](/reference/algokit-utils-ts/API Reference/functions/persistsourcemaps/)
 - [populateAppCallResources](/reference/algokit-utils-ts/API Reference/functions/populateappcallresources/)
-- [prepareGroupForSending](/reference/algokit-utils-ts/API Reference/functions/preparegroupforsending/)
 - [~~randomAccount~~](/reference/algokit-utils-ts/API Reference/functions/randomaccount/)
 - [~~rekeyAccount~~](/reference/algokit-utils-ts/API Reference/functions/rekeyaccount/)
 - [~~rekeyedAccount~~](/reference/algokit-utils-ts/API Reference/functions/rekeyedaccount/)

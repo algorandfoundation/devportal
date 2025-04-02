@@ -7,7 +7,7 @@ title: "getAtomicTransactionComposerTransactions"
 
 > **getAtomicTransactionComposerTransactions**(`atc`): `TransactionWithSigner`[]
 
-Defined in: [src/transaction/transaction.ts:1134](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/transaction/transaction.ts#L1134)
+Defined in: [src/transaction/transaction.ts:950](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/transaction/transaction.ts#L950)
 
 :::caution[Deprecated]
 Use `atc.clone().buildGroup()` instead.

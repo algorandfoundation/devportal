@@ -2858,7 +2858,7 @@ export default defineConfig({
               ],
             },
             {
-              label: 'Algorand Teal',
+              label: 'Algorand TEAL',
               collapsed: true,
               items: [
                 {

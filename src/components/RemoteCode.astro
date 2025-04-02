@@ -1,11 +1,25 @@
 ---
 // RemoteCode.astro is a custom component that fetches a code file from a remote URL
 // and displays it using the native Astro `Code` component.
-import { Code } from '@astrojs/starlight/components';
-import { getSelectedCode } from './RemoteCode';
+import { Code, LinkButton } from '@astrojs/starlight/components';
+import { getSelectedCode, convertRawToGitHubUrl } from './RemoteCode';
 
 const { src, snippet, lang, title, mark, frame } = Astro.props;
 const selectedCode = await getSelectedCode(src, snippet);
+const ghUrl = convertRawToGitHubUrl(src);
 ---
 
+<div class='flex justify-end'>
+  <LinkButton
+    href={ghUrl}
+    variant='minimal'
+    icon='github'
+    iconPlacement='start'
+    style='margin-block: 0px; padding:0px'
+    target='_blank'
+    rel='noopener noreferrer'
+  >
+    Source
+  </LinkButton>
+</div>
 <Code code={selectedCode} lang={lang} title={title} frame={frame} mark={mark} />
