@@ -1,14 +1,37 @@
 import fs from 'fs/promises';
 import { URL } from 'url';
 
+export interface CodeResult {
+  content: string;
+  line: number | null;
+  githubUrl: URL | string;
+}
+
 export async function getSelectedCode(
   src: string,
   snippet: string | undefined,
-): Promise<string> {
+): Promise<CodeResult> {
   const code = await getCode(src);
+  let githubUrl: URL | string;
+  let lineNumber: number | null = null;
+
+  try {
+    if (src.includes('raw.githubusercontent.com')) {
+      githubUrl = convertRawToGitHubUrl(src);
+    } else {
+      githubUrl = src;
+    }
+  } catch (error) {
+    console.warn('Error converting to GitHub URL, using original URL:', error);
+    githubUrl = src;
+  }
 
   if (!snippet) {
-    return code;
+    return {
+      content: code,
+      line: null,
+      githubUrl,
+    };
   }
 
   const pattern = `^ *(//|#) example: ${snippet}$`;
@@ -32,7 +55,14 @@ export async function getSelectedCode(
   }
 
   const [startIndex, endIndex] = occurrenceIndexes;
-  return codeLines.slice(startIndex + 1, endIndex).join('\n');
+  lineNumber = startIndex + 1; // First line after the starting comment
+  const selectedContent = codeLines.slice(startIndex + 1, endIndex).join('\n');
+
+  return {
+    content: selectedContent,
+    line: lineNumber,
+    githubUrl,
+  };
 }
 
 async function getCode(src: string): Promise<string> {
