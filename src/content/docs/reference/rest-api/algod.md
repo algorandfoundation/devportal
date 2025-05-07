@@ -2562,7 +2562,8 @@ Given a specific account public key and application ID, this call returns the ac
     "local-state-schema": {
       "num-byte-slice": 0,
       "num-uint": 0
-    }
+    },
+    "version": 0
   },
   "round": 0
 }
@@ -2603,6 +2604,7 @@ Status Code **200**
 |»» global-state|[[TealKeyValue](#schematealkeyvalue)]|false|none|Represents a key-value store for use in an application.|
 |»» global-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
 |»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»» version|integer|false|none|\[v\] the number of updates to the application programs|
 |» round|integer|true|none|The round for which this information is relevant.|
 
 <aside class="warning">
@@ -3335,7 +3337,8 @@ Given a specific account public key, this call returns the account's status, bal
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -4160,7 +4163,8 @@ Given a application ID, it returns application information including creator, ap
     "local-state-schema": {
       "num-byte-slice": 0,
       "num-uint": 0
-    }
+    },
+    "version": 0
   }
 }
 ```
@@ -5525,14 +5529,39 @@ Returns the entire genesis file in json.
 > 200 Response
 
 ```json
-"string"
+{
+  "alloc": [
+    {
+      "addr": "string",
+      "comment": "string",
+      "state": {
+        "algo": 0,
+        "onl": 0,
+        "sel": "string",
+        "stprf": "string",
+        "vote": "string",
+        "voteFst": 0,
+        "voteKD": 0,
+        "voteLst": 0
+      }
+    }
+  ],
+  "comment": "string",
+  "devmode": true,
+  "fees": "string",
+  "id": "string",
+  "network": "string",
+  "proto": "string",
+  "rwd": "string",
+  "timestamp": 0
+}
 ```
 
 #### Responses
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The genesis file in json.|string|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|The genesis file in json.|[Genesis](#schemagenesis)|
 |default|Default|Unknown Error|None|
 
 #### Response Schema
@@ -10820,7 +10849,8 @@ const inputBody = '{
             "local-state-schema": {
               "num-byte-slice": 0,
               "num-uint": 0
-            }
+            },
+            "version": 0
           }
         }
       ],
@@ -10897,7 +10927,8 @@ const inputBody = '{
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -11117,7 +11148,8 @@ Executes TEAL program(s) in context and returns debugging information about the 
             "local-state-schema": {
               "num-byte-slice": 0,
               "num-uint": 0
-            }
+            },
+            "version": 0
           }
         }
       ],
@@ -11194,7 +11226,8 @@ Executes TEAL program(s) in context and returns debugging information about the 
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -12072,7 +12105,8 @@ api_key
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -12345,7 +12379,8 @@ The logged messages from an app call along with the app ID and outer transaction
     "local-state-schema": {
       "num-byte-slice": 0,
       "num-uint": 0
-    }
+    },
+    "version": 0
   }
 }
 
@@ -12556,7 +12591,8 @@ Stores local state associated with an application.
   "local-state-schema": {
     "num-byte-slice": 0,
     "num-uint": 0
-  }
+  },
+  "version": 0
 }
 
 ```
@@ -12574,6 +12610,7 @@ Stores the global information associated with an application.
 |global-state|[TealKeyValueStore](#schematealkeyvaluestore)|false|none|Represents a key-value store for use in an application.|
 |global-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
 |local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|version|integer|false|none|\[v\] the number of updates to the application programs|
 
 
 ### ApplicationStateOperation
@@ -13025,7 +13062,8 @@ algod mutex and blocking profiling state.
             "local-state-schema": {
               "num-byte-slice": 0,
               "num-uint": 0
-            }
+            },
+            "version": 0
           }
         }
       ],
@@ -13102,7 +13140,8 @@ algod mutex and blocking profiling state.
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -13406,6 +13445,104 @@ Key-value pairs for StateDelta.
 |---|---|---|---|---|
 |key|string|true|none|none|
 |value|[EvalDelta](#schemaevaldelta)|true|none|Represents a TEAL value delta.|
+
+
+### Genesis
+<!-- backwards compatibility -->
+<a id="schemagenesis"></a>
+<a id="schema_Genesis"></a>
+<a id="tocSgenesis"></a>
+<a id="tocsgenesis"></a>
+
+```json
+{
+  "alloc": [
+    {
+      "addr": "string",
+      "comment": "string",
+      "state": {
+        "algo": 0,
+        "onl": 0,
+        "sel": "string",
+        "stprf": "string",
+        "vote": "string",
+        "voteFst": 0,
+        "voteKD": 0,
+        "voteLst": 0
+      }
+    }
+  ],
+  "comment": "string",
+  "devmode": true,
+  "fees": "string",
+  "id": "string",
+  "network": "string",
+  "proto": "string",
+  "rwd": "string",
+  "timestamp": 0
+}
+
+```
+
+Genesis File in JSON
+
+#### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|alloc|[[GenesisAllocation](#schemagenesisallocation)]|true|none|none|
+|comment|string|false|none|none|
+|devmode|boolean|false|none|none|
+|fees|string|true|none|none|
+|id|string|true|none|none|
+|network|string|true|none|none|
+|proto|string|true|none|none|
+|rwd|string|true|none|none|
+|timestamp|integer(int64)|true|none|none|
+
+
+### GenesisAllocation
+<!-- backwards compatibility -->
+<a id="schemagenesisallocation"></a>
+<a id="schema_GenesisAllocation"></a>
+<a id="tocSgenesisallocation"></a>
+<a id="tocsgenesisallocation"></a>
+
+```json
+{
+  "addr": "string",
+  "comment": "string",
+  "state": {
+    "algo": 0,
+    "onl": 0,
+    "sel": "string",
+    "stprf": "string",
+    "vote": "string",
+    "voteFst": 0,
+    "voteKD": 0,
+    "voteLst": 0
+  }
+}
+
+```
+
+Allocations for Genesis File
+
+#### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|addr|string|true|none|none|
+|comment|string|true|none|none|
+|state|object|true|none|none|
+|» algo|integer(uint64)|true|none|none|
+|» onl|integer|false|none|none|
+|» sel|string|false|none|none|
+|» stprf|string|false|none|none|
+|» vote|string|false|none|none|
+|» voteFst|integer(uint64)|false|none|none|
+|» voteKD|integer(uint64)|false|none|none|
+|» voteLst|integer(uint64)|false|none|none|
 
 
 ### LedgerStateDelta

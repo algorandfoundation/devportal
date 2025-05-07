@@ -34,17 +34,6 @@ await processDirectories([
 ]);
 await processFile([
     {
-        src: scriptLocation + '/../repos/algokit-cli/docs/cli/index.md',
-        transformations: [
-            convertH1ToFrontmatter,
-            stripLinkExtensions,
-            changeFeatureLinks,
-            changeReferenceLinks,
-            removeToc,
-        ],
-        dest: scriptLocation + '/../../src/content/docs/reference/algokit-cli/reference.md'
-    },
-    {
         src: scriptLocation + '/../repos/algokit-cli/docs/algokit.md',
         transformations: [
             convertH1ToFrontmatter,
