@@ -10,6 +10,8 @@ The AlgoKit Doctor allows you to make sure that your system has the correct depe
 
 Please run this command to if you are facing an issue running AlgoKit. It is recommended to run it before [submitting an issue to AlgoKit](https://github.com/algorandfoundation/algokit-cli/issues/new). You can copy the contents of the Doctor command message (in Markdown format) to your clipboard by providing the `-c` flag to the command as follows `algokit doctor -c`.
 
+> NOTE: You can also use the `--verbose` or `-v` flag to show additional information including package dependencies of the AlgoKit CLI: `algokit -v doctor`. This only works when `algokit` is installed as a Python package (e.g., via `pipx install algokit`).
+
 # Examples
 
 For example, running `algokit doctor` with all prerequisites installed will result in output similar to the following:
