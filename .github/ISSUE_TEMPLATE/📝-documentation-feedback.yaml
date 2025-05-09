@@ -7,13 +7,14 @@ body:
     attributes:
       value: |
         Thanks for taking the time to provide feedback on our documentation! Your input is invaluable in helping us improve.
-  - type: textarea
+  - type: input
     id: content-url
+
     attributes:
-      label: Content URLs
-      description: Please provide the URL(s) of the documentation page(s) you are providing feedback on.
+      label: Content URL
+      description: Please provide the URL of the documentation page you are providing feedback on.
     validations:
-      required: false
+      required: true
   - type: dropdown
     id: feedback-type
     attributes:
@@ -26,17 +27,6 @@ body:
         - Missing reference info
         - Code example needed
         - Other
-      default: 0
-    validations:
-      required: true
-  - type: dropdown
-    id: version
-    attributes:
-      label: Version
-      description: What version of our software are you running?
-      options:
-        - 1.0.2 (Default)
-        - 1.0.3 (Edge)
       default: 0
     validations:
       required: true
