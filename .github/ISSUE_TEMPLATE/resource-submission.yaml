@@ -1,6 +1,6 @@
 name: Resource Submission
 description: Submit a resource for inclusion in the portal
-title: '[Docs]: '
+title: '[Resource]: '
 labels: ['resource']
 body:
   - type: markdown
