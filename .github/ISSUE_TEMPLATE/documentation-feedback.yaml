@@ -1,7 +1,7 @@
 name: Documentation Feedback
 description: Provide feedback on our documentation.
 title: '[Feedback]: '
-labels: ['feedback']
+labels: ['documentation']
 body:
   - type: markdown
     attributes:
