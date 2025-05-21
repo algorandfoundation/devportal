@@ -1,0 +1,44 @@
+name: \U0001F4A1 Resource Submission
+description: Submit a resource for inclusion in the portal
+title: '[Docs]: '
+labels: ['resource']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to submit a resource for the dev portal! Your contribution is invaluable in helping us build a comprehensive and useful resource for the Algorand community.
+  - type: textarea
+    id: what
+    attributes:
+      label: Description
+      description: Please provide a brief description of the resource you are submitting.
+    validations:
+      required: true
+  - type: textarea
+    id: who
+    attributes:
+      label: Audience
+      description: Who is the intended audience for this resource?
+    validations:
+      required: false
+  - type: textarea
+    id: when
+    attributes:
+      label: Purpose
+      description: In what situatio would this resource be used by Algorand developers?
+    validations:
+      required: false
+  - type: input
+    id: where
+    attributes:
+      label: Resource URL
+      description: Please provide the URL of the resource you are submitting.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Reason for Submission
+      description: Why do you think this resource should be included in the portal?
+    validations:
+      required: true
