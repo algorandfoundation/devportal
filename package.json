@@ -33,7 +33,6 @@
     "@catppuccin/palette": "^1.2.0",
     "@catppuccin/vscode": "^3.15.1",
     "@tailwindcss/vite": "^4.0.14",
-    "@tanstack/react-table": "^8.21.3",
     "astro": "^5.3.1",
     "astro-d2": "^0.3.0",
     "astro-icon": "^1.1.0",
