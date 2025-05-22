@@ -37,7 +37,7 @@ body:
     id: screenshots
     attributes:
       label: Screenshots
-      description: Ifg applicable, please attach screenshots to help us understand the issue better.
+      description: If applicable, please attach screenshots to help us understand the issue better.
     validations:
       required: false
   - type: input
