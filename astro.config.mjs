@@ -1084,16 +1084,6 @@ export default defineConfig({
           collapsed: true,
           items: [
             {
-              label: 'AlgoKit CLI',
-              collapsed: true,
-              items: [
-                {
-                  label: 'Algokit CLI Reference',
-                  link: 'reference/algokit-cli/cli-reference',
-                },
-              ],
-            },
-            {
               label: 'Algorand Python',
               collapsed: true,
               items: [
