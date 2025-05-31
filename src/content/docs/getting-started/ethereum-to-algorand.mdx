@@ -1,0 +1,273 @@
+---
+title: From Ethereum to Algorand
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+If you're looking for the Algorand equivalent of any Ethereum concept, tool, or service—such as accounts, tokens, smart contracts, wallets, or developer frameworks—you'll find clear comparisons and links to relevant documentation throughout this page. This guide is designed to help you quickly map your existing Ethereum knowledge to the Algorand ecosystem.
+
+# Main Differences
+
+In this section, we highlight the main differences between Ethereum and Algorand.
+
+## Accounts and Smart Contracts
+
+Both Ethereum and Algorand are account-based blockchains that support smart contracts, but with a key difference: Ethereum represents smart contracts as accounts, while Algorand keeps smart contracts and accounts as separate entities.
+
+- Ethereum's **Externally-owned accounts (EOA)** are equivalent to Algorand's standard accounts. Both use an **address** as their identifier:
+  - Example of Ethereum address:
+    - User-friendly representation: `0x65e9980679DE55744f386aa1999307f1687A92f9`
+    - Raw address: 20 bytes
+  - Example of Algorand address:
+    - User-friendly representation: `QD3BO4RMWXBOZIPHTGGB3RSKSOAKOHM2HGN7QDZXH4ECBGJRIU3AHHC3JU`
+    - Raw address: 32 bytes
+- Ethereum's **contract accounts** correspond to Algorand's **application ID**. The main difference is that Algorand uses simple integers for applications and provides them with an associated account/address:
+  - Example of Ethereum contract account:
+    - User-friendly representation: `0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d`
+    - Raw: 20 bytes
+  - Example of Algorand application ID:
+    - User-friendly representation: `947957720`
+    - Raw: uint64
+
+Algorand has an additional type of account called a **delegated account**, which is controlled by a [Logic Signature](/concepts/smart-contracts/logic-sigs). Logic signatures provide functionality similar to [account abstraction](https://eips.ethereum.org/EIPS/eip-4337) on Ethereum, but are typically reserved for advanced use cases.
+
+On Algorand, smart contracts are referred to as **applications**. Each application is assigned a unique ID and has its own application account. This application account can hold and manage tokens, similar to how Ethereum smart contracts can hold assets. The application account's address is deterministically derived from the application ID. Multiple application accounts can be linked to a single application through Algorand's rekeying feature.
+
+Just as Ethereum smart contracts can initiate transactions, Algorand applications can create transactions from their application accounts. On Algorand, these are known as [inner transactions](/concepts/smart-contracts/inner-txn), and they allow applications to programmatically send tokens, create assets, or interact with other applications.
+
+<LinkCard
+  title='Algorand Accounts'
+  description='Learn more about accounts on Algorand'
+  href='/concepts/accounts/overview'
+/>
+
+<LinkCard
+  title='Algorand Smart Contracts'
+  description='Learn more about smart contracts on Algorand'
+  href='/concepts/smart-contracts/overview'
+/>
+
+## Fungible and Non-Fungible Tokens (NFTs)
+
+On Ethereum, creating custom tokens (both fungible and non-fungible) requires deploying smart contracts that implement standards like ERC-20, ERC-721, or ERC-1155. Transacting with these tokens requires different logic than transacting with the native Ether cryptocurrency.
+
+On Algorand, custom tokens are implemented as Algorand Standard Assets (ASAs) and are natively supported by the protocol - no smart contract required. Transferring ASAs works similarly to transferring the native Algo cryptocurrency, with one key difference: accounts must first opt in to receive an ASA. The opt-in process involves the receiving account making a 0-amount transfer of the ASA to itself. This requirement helps prevent spam from unwanted ASAs and affects the account's minimum balance requirement.
+
+Another key difference is how tokens are identified: Ethereum tokens are identified by their contract address (plus a token ID for ERC-1155 tokens), while Algorand ASAs are simply identified by a 64-bit unsigned integer ID.
+
+<LinkCard
+  title='Algorand Standard Assets'
+  description='Learn more about assets on Algorand'
+  href='/concepts/assets/overview'
+/>
+
+## Fees
+
+On Ethereum, transactions require "gas fees" which must be paid regardless of whether the transaction succeeds or fails.
+
+On Algorand, transaction fees work differently - they are only paid when a transaction is successfully included in a block. The fee structure is detailed in the [fees documentation](/concepts/transactions/fees). Thanks to Algorand's high transaction throughput, network congestion is rare, allowing most transactions to use the minimum fee of 0.001 Algo.
+
+The minimum fee is uniform across transaction types - whether you're calling a smart contract, transferring Algo, or sending ASA tokens, the base fee remains the same during normal network conditions. However, complex smart contracts that require additional computation may need extra "dummy" transactions to increase their [computational budget](/concepts/smart-contracts/resource-usage).
+
+<LinkCard
+  title='Transaction Fees'
+  description='Learn more about fees on Algorand'
+  href='/concepts/transactions/fees'
+/>
+
+## Minimum Balance
+
+Algorand introduces the concept of a minimum balance requirement for accounts. Think of it as a deposit that reserves space on the blockchain. When you store more data (like opting into assets or applications), the minimum balance requirement increases. When you remove data (like opting out of an asset), the requirement decreases.
+
+For example:
+
+- A basic account needs a minimum of 0.1 Algo
+- Opting into each asset adds another 0.1 Algo to this requirement
+
+Note: Even when treated as a permanent cost rather than a deposit, Algorand's combined transaction fees and minimum balance requirements are significantly lower than typical Ethereum gas fees.
+
+## Smart Contract Resource Availability
+
+Algorand is designed for high transaction throughput and low latency. However, accessing blockchain state (like account balances or application state) is time-intensive. To maintain performance, Algorand requires smart contracts to declare upfront which blockchain resources they'll need to access. This allows nodes to pre-fetch the necessary data before executing the transaction.
+
+While this might seem limiting, it's rarely an issue in practice. There are several ways to determine and provide the resources a smart contract needs, making it straightforward to declare these requirements in advance.
+
+<LinkCard
+  title='Resource Usage'
+  description='Learn more about resource usage in Algorand smart contracts'
+  href='/concepts/smart-contracts/overview'
+/>
+
+## Smart Contract Storage
+
+One important difference between Ethereum and Algorand smart contracts is storage.
+
+Ethereum smart contract storage is a massive array of 2^256 uint256 elements. The solidity language has higher-level types like dynamic arrays and mappings that are then mapped to this storage array, with dynamic types using keccak to compute the location of each item.
+
+For performance reasons, Algorand smart contracts have three different types of storage: local storage (data stored per user account), global storage (data shared across all users of the contract), and box storage (flexible key-value storage for larger or more dynamic data). While it is possible to only use boxes and essentially have a similar model as Ethereum, with the caveat that the boxes used need to be specified in the transaction, it can be more cost-effective to use local and global storage in some cases.
+
+In particular, the following common solidity pattern is often better replaced by local storage:
+
+```solidity
+mapping (address => uint) public balances;
+```
+
+However, keep in mind that local storage can be deleted at any time by the account holder through a [ClearState transaction](/concepts/transactions/types#application-clear-state-transaction). When designing your contract, make sure that allowing users to clear their local storage does not introduce any security risks.
+
+<LinkCard
+  title='Smart Contract Storage'
+  description='Learn more about storage in Algorand smart contracts'
+  href='/concepts/smart-contracts/storage/overview'
+/>
+
+# Unique Features of Algorand
+
+In this section, we highlight several features that are unique to Algorand or work differently compared to Ethereum, such as multisig accounts, atomic transfers, and rekeying.
+
+## Multisig Accounts
+
+On Ethereum, it is possible to write smart contracts to ensure that fund transfers require approval/signatures by multiple distinct users. On Algorand, multisig accounts are first-class citizens and can be created very easily.
+
+<LinkCard
+  title='Multisig Accounts'
+  description='Learn more about multisignature accounts on Algorand'
+  href='/concepts/accounts/multisig'
+/>
+
+## Atomic Transfer / Group Transaction
+
+Atomic transfers or group transactions allow the grouping of multiple transactions together so that they either all succeed or all fail. This can allow two users to securely exchange assets without the risk of one of the users failing to fulfill their side of the transaction.
+
+Group transactions are also used a lot by smart contracts. For example, to send tokens to a smart contract, it is common to group a token transaction to the application account with an application call.
+
+<LinkCard
+  title='Atomic Transaction Groups'
+  description='Learn more about atomic transfers and group transactions on Algorand'
+  href='/concepts/transactions/atomic-txn-groups'
+/>
+
+## Rekeying
+
+Rekeying is a powerful protocol feature which enables an Algorand account holder to maintain a static public address while dynamically rotating the authoritative private spending key(s).
+
+There is no direct equivalent on Ethereum although this can be simulated using a smart contract and/or account abstraction.
+
+<LinkCard
+  title='Rekeying'
+  description='Learn more about rekeying and account key rotation on Algorand'
+  href='/concepts/accounts/rekeying'
+/>
+
+## Nonces, Validity Windows, and Leases
+
+Ethereum uses nonces to prevent transaction from being replayed.
+
+Algorand does not have nonces. Instead, two identical transactions cannot be committed to the blockchain. In addition, transactions have a validity window and optional [leases](/concepts/transactions/leases). The validity window specifies between which rounds a transaction can be committed to the blockchain.
+
+If the same transaction needs to be executed twice, some field needs to be changed. One option is to add a random note field or to slightly change the validity window.
+
+Leases provide more fine-grained ways of preventing duplicated transactions from happening and are mostly used in conjunction with Logic Signatures in very advanced scenarios. Most dApp developers are unlikely to need to use leases and Logic Signatures.
+
+## Re-Entrancy
+
+Algorand is not susceptible to most re-entrancy attacks for multiple reasons:
+
+1. Application calls and payment/asset transfer transactions are different. When an application transfers tokens to another application account or to a user account, it does not trigger any code execution.
+2. An application cannot make (directly or indirectly) an application call to itself.
+
+# Design Patterns
+
+In this section, we go over common design patterns Ethereum uses and their equivalent solutions on Algorand.
+
+## Transfer Tokens to an Application
+
+On Ethereum, transferring tokens to a smart contract is done in two ways:
+
+1. For Ether, the tokens are directly sent with the call to the smart contract.
+2. For other tokens (ERC-20, ERC-721, ERC-1155), the user first needs to call a function (of the token smart contract) to approve the smart contract they want to call to spend tokens on their behalf.
+
+On Algorand, transferring tokens is similar whether the tokens are the Algo or an ASA. It is also more explicit. The user typically creates a group of two transactions: the first one transfers the token to the application account and the second one calls the application.
+
+## Proxy
+
+Proxy smart contracts are heavily used on Ethereum as Ethereum smart contracts are not updatable.
+
+Whereas on Algorand, applications can specify arbitrary rules for whether they can be updated or deleted.
+
+This is strictly more general and flexible than on Ethereum: Algorand applications can indeed prevent any update and deletion like Ethereum smart contracts.
+
+The proxy design pattern may still be useful on Algorand if you want to provide the option to the user to decide whether they only ever want to use a non-upgradable smart contracts (calling the smart contract directly) or an upgradable one (calling the proxy). A proxy can also be useful to split smart contracts that are too large.
+
+## Pull Over Push
+
+On Algorand like on Ethereum, you may want to consider the pull-over-push pattern whenever the smart contract needs to make multiple transfers in one application call.
+
+While accounts on Algorand cannot reject Algo transfers, token transfers can fail for various reasons, including (but maybe not limited to):
+
+- if the receiver account does not exist and less than 0.1 Algo are transferred to it, the transaction will fail due to the minimum balance requirement
+- if the receiver account did not opt in to the ASA being transferred, the transaction will fail.
+
+## Factory
+
+The factory pattern is possible on Algorand though it is very rare. In general using a big application is easier.
+
+# Glossary
+
+## Accounts and Applications
+
+| Ethereum                       | Algorand                          | Notes                                                                                                |
+| ------------------------------ | --------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| externally-owned account (EOA) | account                           |                                                                                                      |
+| contract account               | application / application account | Algorand applications are not accounts but have an associated application account to receive tokens. |
+| smart contract                 | smart contract / application      |                                                                                                      |
+| account abstraction            | smart signature contract account  |                                                                                                      |
+
+## Data Types
+
+| Ethereum              | Algorand                                                                           | Notes                                                                    |
+| --------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| storage               | [global storage, local storage, boxes](/concepts/smart-contracts/storage/overview) | See section above about storage                                          |
+| memory                | [scratchspace](/concepts/smart-contracts/storage/scratch)                          | Much like Ethereum, the stack can also be used to store temporary values |
+| environment variables | txn / Txn                                                                          | For data about the current transaction                                   |
+|                       | gtxn / Gtxn                                                                        | For data about other transactions in the group                           |
+|                       | global / Global                                                                    | For other data                                                           |
+
+## Functions, Methods, Subroutines
+
+| Ethereum                 | Algorand           | Notes                                            |
+| ------------------------ | ------------------ | ------------------------------------------------ |
+| internal function        | subroutine         |                                                  |
+| external function        | method             |
+| view function            | read-only method   |                                                  |
+| constructor              | create transaction |                                                  |
+| public/private functions | n/a                | No notion of derived smart contracts on Algorand |
+
+## Misc
+
+| Ethereum      | Algorand | Notes |
+| ------------- | -------- | ----- |
+| events / logs | logs     |       |
+
+## Standards / ERC / ARC
+
+The equivalent of ERC on Algorand are [ARC](https://arc.algorand.foundation).
+
+| Ethereum          | Algorand                         | Notes                                                                                                                                                                               |
+| ----------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ERC-20            | ASA / ARC-3 (+ ARC-19)           | ARC-3 is a convention for the metadata of ASA, ARC-19 can be used when the metadata is updatable                                                                                    |
+| ERC-20            | ASA / ARC-20                     | ARC-20, aka "smart ASA", defines the interface to control an ASA through a Smart Contract (the ASA is used for accounting, the Smart Contract to transfer, freeze, etc a-la ERC-20) |
+| ERC-781, ERC-1155 | ASA / ARC-3 (+ ARC-19) or ARC-69 | ARC-3 and ARC-69 are two conventions for the metadata of an ASA NFT, ARC-19 can be used when the metadata is updatable                                                              |
+
+# Tools and Services
+
+This is a non-exhaustive list of tools and services used by Ethereum developers, with some of their equivalents on Algorand (non-exhaustive, in alphabetical order).
+
+_Disclaimer_: The list below is not an endorsement of any of the tools, services, or wallets named or linked. As in all the developer documentation, this information is purely for educational purpose. In no event will Algorand or Algorand Foundation be liable for any damages of any kind (including, loss of revenue, income or profits, loss of use or data, or damages of any sort) arising out of or in any way connected to this information. You understand that you are fully responsible for the security and the availability of your keys.
+
+|                              | Ethereum               | Algorand                                                                                                                                    | Notes                                                                                                                                    |
+| ---------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| block explorer               | Etherscan              | [list of block explorers](https://algorand.co/ecosystem/directory?tags=Explorer)                                                            |
+| API service                  | Infura                 | [nodely](https://nodely.io/), [BlockDaemon](https://www.blockdaemon.com/protocols/algorand), [GetBlock.io](https://getblock.io/nodes/algo/) | Algorand also provides an official [indexer](/nodes/installation/indexer-installation/) software, that these services provide access too |
+| wallet                       | Metamask               | mobile wallets with PeraConnect/WalletConnect ([Pera](https://perawallet.app/), [DeFly](https://defly.app/)),                               |                                                                                                                                          |
+| development environment      | Truffle Suite, Hardhat | [AlgoKit](https://github.com/algorandfoundation/algokit-cli)                                                                                |
+| one-click private blockchain | Ganache                | [sandbox](https://github.com/algorand/sandbox)                                                                                              | [AlgoKit](https://github.com/algorandfoundation/algokit-cli) uses sandbox and is recommended                                             |
