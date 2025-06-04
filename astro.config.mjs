@@ -153,6 +153,10 @@ export default defineConfig({
               label: 'Why Algorand?',
               link: 'getting-started/why-algorand',
             },
+            {
+              label: 'From Ethereum to Algorand',
+              link: 'getting-started/ethereum-to-algorand',
+            },
           ],
         },
         {
