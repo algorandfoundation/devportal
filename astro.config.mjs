@@ -153,6 +153,10 @@ export default defineConfig({
               label: 'Why Algorand?',
               link: 'getting-started/why-algorand',
             },
+            {
+              label: 'From Ethereum to Algorand',
+              link: 'getting-started/ethereum-to-algorand',
+            },
           ],
         },
         {
@@ -1083,16 +1087,6 @@ export default defineConfig({
           label: 'Reference',
           collapsed: true,
           items: [
-            {
-              label: 'AlgoKit CLI',
-              collapsed: true,
-              items: [
-                {
-                  label: 'Algokit CLI Reference',
-                  link: 'reference/algokit-cli/cli-reference',
-                },
-              ],
-            },
             {
               label: 'Algorand Python',
               collapsed: true,

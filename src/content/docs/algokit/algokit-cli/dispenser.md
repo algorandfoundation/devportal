@@ -86,3 +86,7 @@ This command gets information about current fund limits on your account. The lim
 Options
 
 - `--whole-units`: Use whole units (Algos) instead of smallest divisible units (microAlgos). Disabled by default.
+
+## Further Reading
+
+For in-depth details, visit the [dispenser section](../cli/index#dispenser) in the AlgoKit CLI reference documentation.

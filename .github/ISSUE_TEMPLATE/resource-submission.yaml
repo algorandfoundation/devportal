@@ -1,6 +1,6 @@
 name: Resource Submission
 description: Submit a resource for inclusion in the portal
-title: '[Docs]: '
+title: '[Resource]: '
 labels: ['resource']
 body:
   - type: markdown
@@ -25,7 +25,7 @@ body:
     id: when
     attributes:
       label: Purpose
-      description: In what situatio would this resource be used by Algorand developers?
+      description: In what situation would this resource be used by Algorand developers?
     validations:
       required: false
   - type: input
