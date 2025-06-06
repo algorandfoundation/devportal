@@ -7,10 +7,10 @@ title: "populateAppCallResources"
 
 > **populateAppCallResources**(`atc`, `algod`): `Promise`\<`AtomicTransactionComposer`\>
 
-Defined in: [src/transaction/transaction.ts:312](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/transaction/transaction.ts#L312)
+Defined in: [src/transaction/transaction.ts:383](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/transaction/transaction.ts#L383)
 
 Take an existing Atomic Transaction Composer and return a new one with the required
- app call resources packed into it
+app call resources populated into it
 
 ## Parameters
 
@@ -30,4 +30,4 @@ The algod client to use for the simulation
 
 `Promise`\<`AtomicTransactionComposer`\>
 
-A new ATC with the resources packed into the transactions
+A new ATC with the resources populated into the transactions
