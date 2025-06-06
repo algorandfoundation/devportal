@@ -7,7 +7,7 @@ title: "getOrCreateKmdWalletAccount"
 
 > **getOrCreateKmdWalletAccount**(`walletAccount`, `algod`, `kmdClient`?): `Promise`\<`Account`\>
 
-Defined in: [src/localnet/get-or-create-kmd-wallet-account.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/localnet/get-or-create-kmd-wallet-account.ts#L28)
+Defined in: [src/localnet/get-or-create-kmd-wallet-account.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/localnet/get-or-create-kmd-wallet-account.ts#L28)
 
 :::caution[Deprecated]
 use `algorand.account.kmd.getOrCreateWalletAccount(name, fundWith)` or `new KMDAccountManager(clientManager).getOrCreateWalletAccount(name, fundWith)` instead.

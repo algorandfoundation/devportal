@@ -7,7 +7,7 @@ title: "waitForConfirmation"
 
 > **waitForConfirmation**(`transactionId`, `maxRoundsToWait`, `algod`): `Promise`\<`PendingTransactionResponse`\>
 
-Defined in: [src/transaction/transaction.ts:817](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/transaction/transaction.ts#L817)
+Defined in: [src/transaction/transaction.ts:1001](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/transaction/transaction.ts#L1001)
 
 Wait until the transaction is confirmed or rejected, or until `timeout`
 number of rounds have passed.

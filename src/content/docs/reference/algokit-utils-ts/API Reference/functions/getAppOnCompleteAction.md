@@ -7,7 +7,7 @@ title: "getAppOnCompleteAction"
 
 > **getAppOnCompleteAction**(`onCompletionAction`?): `OnApplicationComplete`
 
-Defined in: [src/app.ts:154](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/app.ts#L154)
+Defined in: [src/app.ts:154](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/app.ts#L154)
 
 :::caution[Deprecated]
 Use `algosdk.OnApplicationComplete` directly instead.
