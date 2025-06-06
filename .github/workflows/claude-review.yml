@@ -115,10 +115,17 @@ jobs:
             }
 
             // Get changed files
-            const changedFiles = '${{ steps.changed-files.outputs.all_changed_files }}'.split(' ');
+            const changedFilesString = '${{ steps.changed-files.outputs.all_changed_files }}';
+            console.log('🔍 Raw changed files string:', changedFilesString);
+            console.log('📁 Working directory:', process.cwd());
+
+            const changedFiles = changedFilesString.split(' ').filter(f => f.trim() !== '');
+            console.log('📝 All changed files:', changedFiles);
+
             const markdownFiles = changedFiles.filter(file => 
               file.endsWith('.md') || file.endsWith('.mdx')
             );
+            console.log('📄 Markdown files to review:', markdownFiles);
 
             if (markdownFiles.length === 0) {
               console.log('ℹ️ No markdown files to review');
@@ -127,22 +134,54 @@ jobs:
 
             console.log(`🔍 Reviewing ${markdownFiles.length} markdown files...`);
 
+            // Check which files exist
+            for (const file of markdownFiles) {
+              const exists = fs.existsSync(file);
+              console.log(`🔍 File check: ${file} - ${exists ? 'EXISTS' : 'NOT FOUND'}`);
+              if (exists) {
+                const stats = fs.statSync(file);
+                console.log(`📊 File size: ${stats.size} bytes`);
+              }
+            }
+
             // Review each file
             for (const file of markdownFiles) {
-              if (!fs.existsSync(file)) {
-                console.log(`⚠️ File ${file} not found, skipping...`);
-                continue;
-              }
-
               try {
-                const content = fs.readFileSync(file, 'utf8');
+                console.log(`📝 Reviewing ${file}...`);
+                
+                // Try to get file content via GitHub API first (more reliable)
+                let content;
+                try {
+                  const { data: fileData } = await github.rest.repos.getContent({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    path: file,
+                    ref: context.payload.pull_request.head.sha,
+                  });
+                  
+                  if (fileData.type === 'file' && fileData.content) {
+                    content = Buffer.from(fileData.content, 'base64').toString('utf8');
+                    console.log(`✅ Got ${file} via GitHub API (${content.length} chars)`);
+                  } else {
+                    throw new Error('Not a file or no content');
+                  }
+                } catch (apiError) {
+                  console.log(`⚠️ GitHub API failed for ${file}, trying filesystem...`);
+                  
+                  // Fallback to filesystem
+                  if (!fs.existsSync(file)) {
+                    console.log(`⚠️ File ${file} not found on filesystem, skipping...`);
+                    continue;
+                  }
+                  content = fs.readFileSync(file, 'utf8');
+                  console.log(`✅ Got ${file} via filesystem (${content.length} chars)`);
+                }
                 
                 if (content.length > MAX_FILE_SIZE) {
                   console.log(`⚠️ File ${file} is too large (${content.length} chars), skipping...`);
                   continue;
                 }
 
-                console.log(`📝 Reviewing ${file}...`);
                 const review = await reviewWithClaude(content, file);
 
                 // Post review comment
