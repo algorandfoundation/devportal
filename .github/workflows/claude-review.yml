@@ -41,20 +41,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          # Create a temporary package.json for isolated dependencies
-          cat > /tmp/package.json << 'EOF'
-          {
-            "type": "module",
-            "dependencies": {
-              "@anthropic-ai/sdk": "latest",
-              "octokit": "latest"
-            }
-          }
-          EOF
-
-          # Install dependencies in temporary location
-          cd /tmp && npm install --silent
-
-          # Run script with dependencies available
-          cd $GITHUB_WORKSPACE
-          NODE_PATH=/tmp/node_modules node .github/scripts/claude-review.js
+          npx --yes --package=@anthropic-ai/sdk --package=octokit -- node .github/scripts/claude-review.js
