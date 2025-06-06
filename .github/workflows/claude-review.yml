@@ -38,8 +38,8 @@ jobs:
             const { execSync } = require('child_process');
             const fs = require('fs');
 
-            // Install dependencies
-            execSync('npm install @anthropic-ai/sdk@latest', { stdio: 'pipe' });
+            // Install dependencies with force to bypass peer dependency conflicts
+            execSync('npm install @anthropic-ai/sdk@latest --force', { stdio: 'pipe' });
 
             const Anthropic = require('@anthropic-ai/sdk');
 
