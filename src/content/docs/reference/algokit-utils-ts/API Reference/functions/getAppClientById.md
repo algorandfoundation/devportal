@@ -7,7 +7,7 @@ title: "getAppClientById"
 
 > **getAppClientById**(`appDetails`, `algod`): `ApplicationClient`
 
-Defined in: [src/app-client.ts:66](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/app-client.ts#L66)
+Defined in: [src/app-client.ts:66](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/app-client.ts#L66)
 
 :::caution[Deprecated]
 Use `AppClient` instead e.g. via `algorand.client.getAppClientById`.

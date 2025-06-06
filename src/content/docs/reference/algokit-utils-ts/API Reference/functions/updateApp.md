@@ -7,7 +7,7 @@ title: "updateApp"
 
 > **updateApp**(`update`, `algod`): `Promise`\<`Partial`\<`AppCompilationResult`\> & `AppCallTransactionResult`\>
 
-Defined in: [src/app.ts:104](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/app.ts#L104)
+Defined in: [src/app.ts:104](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/app.ts#L104)
 
 :::caution[Deprecated]
 Use `algorand.send.appUpdate()` / `algorand.createTransaction.appUpdate()` / `algorand.send.appUpdateMethodCall()`
