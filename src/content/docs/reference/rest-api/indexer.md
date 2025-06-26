@@ -915,7 +915,8 @@ Lookup account information.
           "local-state-schema": {
             "num-byte-slice": 0,
             "num-uint": 0
-          }
+          },
+          "version": 0
         }
       }
     ],
@@ -1032,6 +1033,7 @@ Status Code **200**
 |»»»» global-state|[[TealKeyValue](#schematealkeyvalue)]|false|none|Represents a key-value store for use in an application.|
 |»»»» global-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
 |»»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»»» version|integer|false|none|the number of updates to the application programs|
 |»» created-assets|[[Asset](#schemaasset)]|false|none|parameters of assets created by this account.<br><br>Note: the raw account uses `map[int] -> Asset` for this type.|
 |»»» created-at-round|integer|false|none|Round during which this asset was created.|
 |»»» deleted|boolean|false|none|Whether or not this asset is currently deleted.|
@@ -1303,7 +1305,8 @@ Lookup an account's created application parameters, optionally for a specific ID
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -1347,6 +1350,7 @@ Status Code **200**
 |»»»» num-byte-slice|integer|true|none|number of byte slices.|
 |»»»» num-uint|integer|true|none|number of uints.|
 |»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»» version|integer|false|none|the number of updates to the application programs|
 |» current-round|integer|true|none|Round at which the results were computed.|
 |» next-token|string|false|none|Used for pagination, when making another request provide this token with the next parameter.|
 
@@ -2661,7 +2665,8 @@ Lookup application.
       "local-state-schema": {
         "num-byte-slice": 0,
         "num-uint": 0
-      }
+      },
+      "version": 0
     }
   },
   "current-round": 0
@@ -2702,6 +2707,7 @@ Status Code **200**
 |»»»» num-byte-slice|integer|true|none|number of byte slices.|
 |»»»» num-uint|integer|true|none|number of uints.|
 |»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»» version|integer|false|none|the number of updates to the application programs|
 |» current-round|integer|true|none|Round at which the results were computed.|
 
 Status Code **404**
@@ -5201,7 +5207,8 @@ This operation does not require authentication
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -5411,7 +5418,8 @@ Application state delta.
     "local-state-schema": {
       "num-byte-slice": 0,
       "num-uint": 0
-    }
+    },
+    "version": 0
   }
 }
 
@@ -5532,7 +5540,8 @@ Stores the global information associated with an application.
   "local-state-schema": {
     "num-byte-slice": 0,
     "num-uint": 0
-  }
+  },
+  "version": 0
 }
 
 ```
@@ -5550,6 +5559,7 @@ Stores the global information associated with an application.
 |global-state|[TealKeyValueStore](#schematealkeyvaluestore)|false|none|Represents a key-value store for use in an application.|
 |global-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
 |local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|version|integer|false|none|the number of updates to the application programs|
 
 
 ### ApplicationStateSchema
@@ -8259,7 +8269,8 @@ Search for accounts.
             "local-state-schema": {
               "num-byte-slice": 0,
               "num-uint": 0
-            }
+            },
+            "version": 0
           }
         }
       ],
@@ -8377,6 +8388,7 @@ Status Code **200**
 |»»»» global-state|[[TealKeyValue](#schematealkeyvalue)]|false|none|Represents a key-value store for use in an application.|
 |»»»» global-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
 |»»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»»» version|integer|false|none|the number of updates to the application programs|
 |»» created-assets|[[Asset](#schemaasset)]|false|none|parameters of assets created by this account.<br><br>Note: the raw account uses `map[int] -> Asset` for this type.|
 |»»» created-at-round|integer|false|none|Round during which this asset was created.|
 |»»» deleted|boolean|false|none|Whether or not this asset is currently deleted.|
@@ -8859,7 +8871,8 @@ Search for applications
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -8901,6 +8914,7 @@ Status Code **200**
 |»»»» num-byte-slice|integer|true|none|number of byte slices.|
 |»»»» num-uint|integer|true|none|number of uints.|
 |»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»» version|integer|false|none|the number of updates to the application programs|
 |» current-round|integer|true|none|Round at which the results were computed.|
 |» next-token|string|false|none|Used for pagination, when making another request provide this token with the next parameter.|
 

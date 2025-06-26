@@ -4,7 +4,7 @@ title: Client management
 
 Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) [algod](https://dev.algorand.co/reference/rest-apis/algod), [indexer](https://dev.algorand.co/reference/rest-apis/indexer) and [kmd](https://dev.algorand.co/reference/rest-apis/kmd) clients against various networks resolved from environment or specified configuration.
 
-Any AlgoKit Utils function that needs one of these clients will take the underlying algosdk classes (`algosdk.v2client.algod.AlgodClient`, `algosdk.v2client.indexer.IndexerClient`, `algosdk.kmd.KMDClient`) so inline with the [Modularity](../index#id1) principle you can use existing logic to get instances of these clients without needing to use the Client management capability if you prefer.
+Any AlgoKit Utils function that needs one of these clients will take the underlying algosdk classes (`algosdk.v2client.algod.AlgodClient`, `algosdk.v2client.indexer.IndexerClient`, `algosdk.kmd.KMDClient`) so inline with the [Modularity](/algokit/utils/index#id1) principle you can use existing logic to get instances of these clients without needing to use the Client management capability if you prefer.
 
 To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-py/blob/main/tests/test_network_clients.py).
 
@@ -85,7 +85,7 @@ If the method to create the `ClientManager` doesn’t configure indexer or kmd (
 
 ### Creating a TestNet dispenser API client instance
 
-You can also create a [TestNet dispenser API client instance](dispenser-client) from `ClientManager` too.
+You can also create a [TestNet dispenser API client instance](/algokit/utils/python/dispenser-client) from `ClientManager` too.
 
 ## Automatic retry
 

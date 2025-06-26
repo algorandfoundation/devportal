@@ -1,0 +1,4742 @@
+---
+title: "algokit_utils.transactions.transaction_composer"
+---
+
+<a id="module-algokit_utils.transactions.transaction_composer"></a>
+
+<a id="algokit-utils-transactions-transaction-composer"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`AppCallMethodCallParams`](#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)                           | Parameters for a regular ABI method call.                                                                                                                                                                                                                                                                                                                                                          |
+|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`AppCallParams`](#algokit_utils.transactions.transaction_composer.AppCallParams)                                               | Parameters for calling an application.                                                                                                                                                                                                                                                                                                                                                             |
+| [`AppCreateMethodCallParams`](#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)                       | Parameters for an ABI method call that creates an application.                                                                                                                                                                                                                                                                                                                                     |
+| [`AppCreateParams`](#algokit_utils.transactions.transaction_composer.AppCreateParams)                                           | Parameters for creating an application.                                                                                                                                                                                                                                                                                                                                                            |
+| [`AppCreateSchema`](#algokit_utils.transactions.transaction_composer.AppCreateSchema)                                           | dict() -\> new empty dictionary<br/>dict(mapping) -\> new dictionary initialized from a mapping object’s<br/>(key, value) pairs<br/>dict(iterable) -\> new dictionary initialized as if via:<br/>d = \{\}<br/>for k, v in iterable:<br/>d[k] = v<br/>dict(\*\*kwargs) -\> new dictionary initialized with the name=value pairs<br/>in the keyword argument list.  For example:  dict(one=1, two=2) |
+| [`AppDeleteMethodCallParams`](#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)                       | Parameters for an ABI method call that deletes an application.                                                                                                                                                                                                                                                                                                                                     |
+| [`AppDeleteParams`](#algokit_utils.transactions.transaction_composer.AppDeleteParams)                                           | Parameters for deleting an application.                                                                                                                                                                                                                                                                                                                                                            |
+| [`AppMethodCallParams`](#algokit_utils.transactions.transaction_composer.AppMethodCallParams)                                   | Parameters for calling an application method.                                                                                                                                                                                                                                                                                                                                                      |
+| [`AppUpdateMethodCallParams`](#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)                       | Parameters for an ABI method call that updates an application.                                                                                                                                                                                                                                                                                                                                     |
+| [`AppUpdateParams`](#algokit_utils.transactions.transaction_composer.AppUpdateParams)                                           | Parameters for updating an application.                                                                                                                                                                                                                                                                                                                                                            |
+| [`AssetConfigParams`](#algokit_utils.transactions.transaction_composer.AssetConfigParams)                                       | Parameters for configuring an existing asset.                                                                                                                                                                                                                                                                                                                                                      |
+| [`AssetCreateParams`](#algokit_utils.transactions.transaction_composer.AssetCreateParams)                                       | Parameters for creating a new asset.                                                                                                                                                                                                                                                                                                                                                               |
+| [`AssetDestroyParams`](#algokit_utils.transactions.transaction_composer.AssetDestroyParams)                                     | Parameters for destroying an asset.                                                                                                                                                                                                                                                                                                                                                                |
+| [`AssetFreezeParams`](#algokit_utils.transactions.transaction_composer.AssetFreezeParams)                                       | Parameters for freezing an asset.                                                                                                                                                                                                                                                                                                                                                                  |
+| [`AssetOptInParams`](#algokit_utils.transactions.transaction_composer.AssetOptInParams)                                         | Parameters for opting into an asset.                                                                                                                                                                                                                                                                                                                                                               |
+| [`AssetOptOutParams`](#algokit_utils.transactions.transaction_composer.AssetOptOutParams)                                       | Parameters for opting out of an asset.                                                                                                                                                                                                                                                                                                                                                             |
+| [`AssetTransferParams`](#algokit_utils.transactions.transaction_composer.AssetTransferParams)                                   | Parameters for transferring an asset.                                                                                                                                                                                                                                                                                                                                                              |
+| [`BuiltTransactions`](#algokit_utils.transactions.transaction_composer.BuiltTransactions)                                       | Set of transactions built by TransactionComposer.                                                                                                                                                                                                                                                                                                                                                  |
+| [`ExecutionInfo`](#algokit_utils.transactions.transaction_composer.ExecutionInfo)                                               | Information about transaction execution from simulation.                                                                                                                                                                                                                                                                                                                                           |
+| [`ExecutionInfoTxn`](#algokit_utils.transactions.transaction_composer.ExecutionInfoTxn)                                         | Execution info for a transaction.                                                                                                                                                                                                                                                                                                                                                                  |
+| [`OfflineKeyRegistrationParams`](#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)                 | Parameters for offline key registration.                                                                                                                                                                                                                                                                                                                                                           |
+| [`OnlineKeyRegistrationParams`](#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)                   | Parameters for online key registration.                                                                                                                                                                                                                                                                                                                                                            |
+| [`PaymentParams`](#algokit_utils.transactions.transaction_composer.PaymentParams)                                               | Parameters for a payment transaction.                                                                                                                                                                                                                                                                                                                                                              |
+| [`SendAtomicTransactionComposerResults`](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults) | Results from sending an AtomicTransactionComposer transaction group.                                                                                                                                                                                                                                                                                                                               |
+| [`TransactionComposer`](#algokit_utils.transactions.transaction_composer.TransactionComposer)                                   | A class for composing and managing Algorand transactions.                                                                                                                                                                                                                                                                                                                                          |
+| [`TransactionComposerBuildResult`](#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)             | Result of building transactions with TransactionComposer.                                                                                                                                                                                                                                                                                                                                          |
+| [`TransactionContext`](#algokit_utils.transactions.transaction_composer.TransactionContext)                                     | Contextual information for a transaction.                                                                                                                                                                                                                                                                                                                                                          |
+| [`TransactionWithContext`](#algokit_utils.transactions.transaction_composer.TransactionWithContext)                             | Combines Transaction with additional context.                                                                                                                                                                                                                                                                                                                                                      |
+| [`TransactionWithSignerAndContext`](#algokit_utils.transactions.transaction_composer.TransactionWithSignerAndContext)           | Combines TransactionWithSigner with additional context.                                                                                                                                                                                                                                                                                                                                            |
+| [`UnnamedResourcesAccessed`](#algokit_utils.transactions.transaction_composer.UnnamedResourcesAccessed)                         | Information about unnamed resource access.                                                                                                                                                                                                                                                                                                                                                         |
+
+<a id="functions"></a>
+
+## Functions
+
+| [`calculate_extra_program_pages`](#algokit_utils.transactions.transaction_composer.calculate_extra_program_pages)       | Calculate minimum number of extra_pages required for provided approval and clear programs                                                                                                                                                                                         |
+|-------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`populate_app_call_resources`](#algokit_utils.transactions.transaction_composer.populate_app_call_resources)           | Populate application call resources based on simulation results.                                                                                                                                                                                                                  |
+| [`prepare_group_for_sending`](#algokit_utils.transactions.transaction_composer.prepare_group_for_sending)               | Take an existing Atomic Transaction Composer and return a new one with changes applied to the transactions<br/>based on the supplied parameters to prepare it for sending.<br/>Please note, that before calling `.execute()` on the returned ATC, you must call `.build_group()`. |
+| [`send_atomic_transaction_composer`](#algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer) | Send an AtomicTransactionComposer transaction group.                                                                                                                                                                                                                              |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppCallMethodCallParams
+
+AppCallMethodCallParams
+
+Parameters for a regular ABI method call.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.app_id"></a>
+
+### app_id
+
+app_id *: int*
+
+None
+
+The ID of the application
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.args"></a>
+
+### args
+
+args *: list | None*
+
+None
+
+Arguments to the ABI method, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.method"></a>
+
+### method
+
+method *: algosdk.abi.Method*
+
+None
+
+The ABI method to call
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+
+None
+
+The OnComplete action, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.schema"></a>
+
+### schema
+
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+
+None
+
+The state schema for the app, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallMethodCallParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppCallParams
+
+AppCallParams
+
+Parameters for calling an application.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.app_id"></a>
+
+### app_id
+
+app_id *: int | None*
+
+None
+
+The ID of the application, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.approval_program"></a>
+
+### approval_program
+
+approval_program *: str | bytes | None*
+
+None
+
+The program to execute for all OnCompletes other than ClearState, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.args"></a>
+
+### args
+
+args *: list[bytes] | None*
+
+None
+
+Application arguments, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.clear_state_program"></a>
+
+### clear_state_program
+
+clear_state_program *: str | bytes | None*
+
+None
+
+The program to execute for ClearState OnComplete, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.extra_pages"></a>
+
+### extra_pages
+
+extra_pages *: int | None*
+
+None
+
+Number of extra pages required for the programs, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete)*
+
+None
+
+The OnComplete action, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.schema"></a>
+
+### schema
+
+schema *: dict[str, int] | None*
+
+None
+
+The state schema for the app, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCallParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams
+
+AppCreateMethodCallParams
+
+Parameters for an ABI method call that creates an application.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.app_id"></a>
+
+### app_id
+
+app_id *: int*
+
+None
+
+The ID of the application
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.approval_program"></a>
+
+### approval_program
+
+approval_program *: str | bytes*
+
+None
+
+The program to execute for all OnCompletes other than ClearState
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.args"></a>
+
+### args
+
+args *: list | None*
+
+None
+
+Arguments to the ABI method, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.clear_state_program"></a>
+
+### clear_state_program
+
+clear_state_program *: str | bytes*
+
+None
+
+The program to execute for ClearState OnComplete
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.extra_program_pages"></a>
+
+### extra_program_pages
+
+extra_program_pages *: int | None*
+
+None
+
+Number of extra pages required for the programs, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.method"></a>
+
+### method
+
+method *: algosdk.abi.Method*
+
+None
+
+The ABI method to call
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+
+None
+
+The OnComplete action (cannot be ClearState), defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.schema"></a>
+
+### schema
+
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+
+None
+
+The state schema for the app, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppCreateParams
+
+AppCreateParams
+
+Parameters for creating an application.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.approval_program"></a>
+
+### approval_program
+
+approval_program *: str | bytes*
+
+None
+
+The program to execute for all OnCompletes other than ClearState
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.args"></a>
+
+### args
+
+args *: list[bytes] | None*
+
+None
+
+Application arguments, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.clear_state_program"></a>
+
+### clear_state_program
+
+clear_state_program *: str | bytes*
+
+None
+
+The program to execute for ClearState OnComplete
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.extra_program_pages"></a>
+
+### extra_program_pages
+
+extra_program_pages *: int | None*
+
+None
+
+Number of extra pages required for the programs, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+
+None
+
+The OnComplete action, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.schema"></a>
+
+### schema
+
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+
+None
+
+The state schema for the app, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppCreateSchema
+
+AppCreateSchema
+
+dict() -\> new empty dictionary
+dict(mapping) -\> new dictionary initialized from a mapping object’s
+(key, value) pairs
+dict(iterable) -\> new dictionary initialized as if via:
+d = \{\}
+for k, v in iterable:
+d[k] = v
+dict(\*\*kwargs) -\> new dictionary initialized with the name=value pairs
+in the keyword argument list.  For example:  dict(one=1, two=2)
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__()
+
+True if the dictionary has the specified key, else False.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__delitem__"></a>
+
+### \_\_delitem_\_
+
+__delitem__()
+
+Delete self[key].
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__getitem__"></a>
+
+### \_\_getitem_\_
+
+__getitem__()
+
+Return self[key].
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__ior__"></a>
+
+### \_\_ior_\_
+
+__ior__()
+
+Return self|=value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Implement iter(self).
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__len__"></a>
+
+### \_\_len_\_
+
+__len__()
+
+Return len(self).
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__reversed__"></a>
+
+### \_\_reversed_\_
+
+__reversed__()
+
+Return a reverse iterator over the dict keys.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__setitem__"></a>
+
+### \_\_setitem_\_
+
+__setitem__()
+
+Set self[key] to value.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+D.**sizeof**() -\> size of D in memory, in bytes
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.clear"></a>
+
+### clear
+
+clear()
+
+D.clear() -\> None.  Remove all items from D.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.copy"></a>
+
+### copy
+
+copy()
+
+D.copy() -\> a shallow copy of D
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.get"></a>
+
+### get
+
+get()
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.global_byte_slices"></a>
+
+### global_byte_slices
+
+global_byte_slices *: int*
+
+None
+
+The number of global byte slices in the schema
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.global_ints"></a>
+
+### global_ints
+
+global_ints *: int*
+
+None
+
+The number of global ints in the schema
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.items"></a>
+
+### items
+
+items()
+
+D.items() -\> a set-like object providing a view on D’s items
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.keys"></a>
+
+### keys
+
+keys()
+
+D.keys() -\> a set-like object providing a view on D’s keys
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.local_byte_slices"></a>
+
+### local_byte_slices
+
+local_byte_slices *: int*
+
+None
+
+The number of local byte slices in the schema
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.local_ints"></a>
+
+### local_ints
+
+local_ints *: int*
+
+None
+
+The number of local ints in the schema
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.pop"></a>
+
+### pop
+
+pop()
+
+D.pop(k[,d]) -\> v, remove specified key and return the corresponding value.
+
+If the key is not found, return the default if given; otherwise,
+raise a KeyError.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.popitem"></a>
+
+### popitem
+
+popitem()
+
+Remove and return a (key, value) pair as a 2-tuple.
+
+Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.setdefault"></a>
+
+### setdefault
+
+setdefault()
+
+Insert key with a value of default if key is not in the dictionary.
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.update"></a>
+
+### update
+
+update()
+
+D.update([E, ]\*\*F) -\> None.  Update D from mapping/iterable E and F.
+If E is present and has a .keys() method, then does:  for k in E.keys(): D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]
+
+<a id="algokit_utils.transactions.transaction_composer.AppCreateSchema.values"></a>
+
+### values
+
+values()
+
+D.values() -\> an object providing a view on D’s values
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams
+
+AppDeleteMethodCallParams
+
+Parameters for an ABI method call that deletes an application.
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.app_id"></a>
+
+### app_id
+
+app_id *: int*
+
+None
+
+The ID of the application
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.args"></a>
+
+### args
+
+args *: list | None*
+
+None
+
+Arguments to the ABI method, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.method"></a>
+
+### method
+
+method *: algosdk.abi.Method*
+
+None
+
+The ABI method to call
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete)*
+
+None
+
+The OnComplete action
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.schema"></a>
+
+### schema
+
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+
+None
+
+The state schema for the app, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppDeleteParams
+
+AppDeleteParams
+
+Parameters for deleting an application.
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.app_id"></a>
+
+### app_id
+
+app_id *: int*
+
+None
+
+The ID of the application
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.args"></a>
+
+### args
+
+args *: list[bytes] | None*
+
+None
+
+Application arguments, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete)*
+
+None
+
+The OnComplete action, defaults to DeleteApplicationOC
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppDeleteParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppMethodCallParams
+
+AppMethodCallParams
+
+Parameters for calling an application method.
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.app_id"></a>
+
+### app_id
+
+app_id *: int*
+
+None
+
+The ID of the application
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.args"></a>
+
+### args
+
+args *: list[bytes] | None*
+
+None
+
+Arguments to the ABI method, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.method"></a>
+
+### method
+
+method *: algosdk.abi.Method*
+
+None
+
+The ABI method to call
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+
+None
+
+The OnComplete action, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppMethodCallParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams
+
+AppUpdateMethodCallParams
+
+Parameters for an ABI method call that updates an application.
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.app_id"></a>
+
+### app_id
+
+app_id *: int*
+
+None
+
+The ID of the application
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.approval_program"></a>
+
+### approval_program
+
+approval_program *: str | bytes*
+
+None
+
+The program to execute for all OnCompletes other than ClearState
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.args"></a>
+
+### args
+
+args *: list | None*
+
+None
+
+Arguments to the ABI method, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.clear_state_program"></a>
+
+### clear_state_program
+
+clear_state_program *: str | bytes*
+
+None
+
+The program to execute for ClearState OnComplete
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.method"></a>
+
+### method
+
+method *: algosdk.abi.Method*
+
+None
+
+The ABI method to call
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete)*
+
+None
+
+The OnComplete action
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.schema"></a>
+
+### schema
+
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+
+None
+
+The state schema for the app, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AppUpdateParams
+
+AppUpdateParams
+
+Parameters for updating an application.
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.account_references"></a>
+
+### account_references
+
+account_references *: list[str] | None*
+
+None
+
+Account references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.app_id"></a>
+
+### app_id
+
+app_id *: int*
+
+None
+
+The ID of the application
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.app_references"></a>
+
+### app_references
+
+app_references *: list[int] | None*
+
+None
+
+App references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.approval_program"></a>
+
+### approval_program
+
+approval_program *: str | bytes*
+
+None
+
+The program to execute for all OnCompletes other than ClearState
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.args"></a>
+
+### args
+
+args *: list[bytes] | None*
+
+None
+
+Application arguments, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.asset_references"></a>
+
+### asset_references
+
+asset_references *: list[int] | None*
+
+None
+
+Asset references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.box_references"></a>
+
+### box_references
+
+box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+
+None
+
+Box references, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.clear_state_program"></a>
+
+### clear_state_program
+
+clear_state_program *: str | bytes*
+
+None
+
+The program to execute for ClearState OnComplete
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.on_complete"></a>
+
+### on_complete
+
+on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+
+None
+
+The OnComplete action, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AppUpdateParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AssetConfigParams
+
+AssetConfigParams
+
+Parameters for configuring an existing asset.
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.asset_id"></a>
+
+### asset_id
+
+asset_id *: int*
+
+None
+
+The ID of the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.clawback"></a>
+
+### clawback
+
+clawback *: str | None*
+
+None
+
+The address that can clawback the asset from any account, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.freeze"></a>
+
+### freeze
+
+freeze *: str | None*
+
+None
+
+The address that can freeze the asset in any account, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.manager"></a>
+
+### manager
+
+manager *: str | None*
+
+None
+
+The address that can change the manager, reserve, clawback, and freeze addresses, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.reserve"></a>
+
+### reserve
+
+reserve *: str | None*
+
+None
+
+The address that holds the uncirculated supply, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetConfigParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AssetCreateParams
+
+AssetCreateParams
+
+Parameters for creating a new asset.
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.asset_name"></a>
+
+### asset_name
+
+asset_name *: str | None*
+
+None
+
+The full name of the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.clawback"></a>
+
+### clawback
+
+clawback *: str | None*
+
+None
+
+The address that can clawback the asset from any account
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.decimals"></a>
+
+### decimals
+
+decimals *: int | None*
+
+None
+
+The amount of decimal places the asset should have
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.default_frozen"></a>
+
+### default_frozen
+
+default_frozen *: bool | None*
+
+None
+
+Whether the asset is frozen by default in the creator address
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.freeze"></a>
+
+### freeze
+
+freeze *: str | None*
+
+None
+
+The address that can freeze the asset in any account
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.manager"></a>
+
+### manager
+
+manager *: str | None*
+
+None
+
+The address that can change the manager, reserve, clawback, and freeze addresses
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.metadata_hash"></a>
+
+### metadata_hash
+
+metadata_hash *: bytes | None*
+
+None
+
+Hash of the metadata contained in the metadata URL
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.reserve"></a>
+
+### reserve
+
+reserve *: str | None*
+
+None
+
+The address that holds the uncirculated supply
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.total"></a>
+
+### total
+
+total *: int*
+
+None
+
+The total amount of the smallest divisible unit to create
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.unit_name"></a>
+
+### unit_name
+
+unit_name *: str | None*
+
+None
+
+The short ticker name for the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.url"></a>
+
+### url
+
+url *: str | None*
+
+None
+
+The metadata URL for the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetCreateParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AssetDestroyParams
+
+AssetDestroyParams
+
+Parameters for destroying an asset.
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.asset_id"></a>
+
+### asset_id
+
+asset_id *: int*
+
+None
+
+The ID of the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetDestroyParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AssetFreezeParams
+
+AssetFreezeParams
+
+Parameters for freezing an asset.
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.account"></a>
+
+### account
+
+account *: str*
+
+None
+
+The account to freeze or unfreeze
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.asset_id"></a>
+
+### asset_id
+
+asset_id *: int*
+
+None
+
+The ID of the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.frozen"></a>
+
+### frozen
+
+frozen *: bool*
+
+None
+
+Whether the assets in the account should be frozen
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetFreezeParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AssetOptInParams
+
+AssetOptInParams
+
+Parameters for opting into an asset.
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.asset_id"></a>
+
+### asset_id
+
+asset_id *: int*
+
+None
+
+The ID of the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptInParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AssetOptOutParams
+
+AssetOptOutParams
+
+Parameters for opting out of an asset.
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.asset_id"></a>
+
+### asset_id
+
+asset_id *: int*
+
+None
+
+The ID of the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.creator"></a>
+
+### creator
+
+creator *: str*
+
+None
+
+The creator address of the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetOptOutParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.AssetTransferParams
+
+AssetTransferParams
+
+Parameters for transferring an asset.
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.amount"></a>
+
+### amount
+
+amount *: int*
+
+None
+
+The amount of the asset to transfer (smallest divisible unit)
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.asset_id"></a>
+
+### asset_id
+
+asset_id *: int*
+
+None
+
+The ID of the asset
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.clawback_target"></a>
+
+### clawback_target
+
+clawback_target *: str | None*
+
+None
+
+The account to take the asset from, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.close_asset_to"></a>
+
+### close_asset_to
+
+close_asset_to *: str | None*
+
+None
+
+The account to close the asset to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.receiver"></a>
+
+### receiver
+
+receiver *: str*
+
+None
+
+The account to send the asset to
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.AssetTransferParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.BuiltTransactions"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.BuiltTransactions
+
+BuiltTransactions
+
+Set of transactions built by TransactionComposer.
+
+<a id="algokit_utils.transactions.transaction_composer.BuiltTransactions.method_calls"></a>
+
+### method_calls
+
+method_calls *: dict[int, algosdk.abi.Method]*
+
+None
+
+Map of transaction index to ABI method
+
+<a id="algokit_utils.transactions.transaction_composer.BuiltTransactions.signers"></a>
+
+### signers
+
+signers *: dict[int, [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)]*
+
+None
+
+Map of transaction index to TransactionSigner
+
+<a id="algokit_utils.transactions.transaction_composer.BuiltTransactions.transactions"></a>
+
+### transactions
+
+transactions *: list[[algosdk.transaction.Transaction](../algosdk/algosdk.transaction.mdx#algosdk.transaction.Transaction)]*
+
+None
+
+The built transactions
+
+<a id="algokit_utils.transactions.transaction_composer.ExecutionInfo"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.ExecutionInfo
+
+ExecutionInfo
+
+Information about transaction execution from simulation.
+
+<a id="algokit_utils.transactions.transaction_composer.ExecutionInfo.group_unnamed_resources_accessed"></a>
+
+### group_unnamed_resources_accessed
+
+group_unnamed_resources_accessed *: [algokit_utils.transactions.transaction_composer.UnnamedResourcesAccessed](#algokit_utils.transactions.transaction_composer.UnnamedResourcesAccessed) | None*
+
+None
+
+The unnamed resources accessed in the group
+
+<a id="algokit_utils.transactions.transaction_composer.ExecutionInfo.txns"></a>
+
+### txns
+
+txns *: list[[algokit_utils.transactions.transaction_composer.ExecutionInfoTxn](#algokit_utils.transactions.transaction_composer.ExecutionInfoTxn)] | None*
+
+None
+
+The execution info for each transaction
+
+<a id="algokit_utils.transactions.transaction_composer.ExecutionInfoTxn"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.ExecutionInfoTxn
+
+ExecutionInfoTxn
+
+Execution info for a transaction.
+
+<a id="algokit_utils.transactions.transaction_composer.ExecutionInfoTxn.required_fee_delta"></a>
+
+### required_fee_delta
+
+required_fee_delta *: int*
+
+0
+
+The required fee delta for the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.ExecutionInfoTxn.unnamed_resources_accessed"></a>
+
+### unnamed_resources_accessed
+
+unnamed_resources_accessed *: [algokit_utils.transactions.transaction_composer.UnnamedResourcesAccessed](#algokit_utils.transactions.transaction_composer.UnnamedResourcesAccessed) | None*
+
+None
+
+The unnamed resources accessed in the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams
+
+OfflineKeyRegistrationParams
+
+Parameters for offline key registration.
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.prevent_account_from_ever_participating_again"></a>
+
+### prevent_account_from_ever_participating_again
+
+prevent_account_from_ever_participating_again *: bool*
+
+None
+
+Whether to prevent the account from ever participating again
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams
+
+OnlineKeyRegistrationParams
+
+Parameters for online key registration.
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.selection_key"></a>
+
+### selection_key
+
+selection_key *: str*
+
+None
+
+The VRF public key
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.state_proof_key"></a>
+
+### state_proof_key
+
+state_proof_key *: bytes | None*
+
+None
+
+The 64 byte state proof public key commitment, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.vote_first"></a>
+
+### vote_first
+
+vote_first *: int*
+
+None
+
+The first round that the participation key is valid
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.vote_key"></a>
+
+### vote_key
+
+vote_key *: str*
+
+None
+
+The root participation public key
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.vote_key_dilution"></a>
+
+### vote_key_dilution
+
+vote_key_dilution *: int*
+
+None
+
+The dilution for the 2-level participation key
+
+<a id="algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams.vote_last"></a>
+
+### vote_last
+
+vote_last *: int*
+
+None
+
+The last round that the participation key is valid
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.PaymentParams
+
+PaymentParams
+
+Parameters for a payment transaction.
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.amount"></a>
+
+### amount
+
+amount *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+
+None
+
+Amount to send
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.close_remainder_to"></a>
+
+### close_remainder_to
+
+close_remainder_to *: str | None*
+
+None
+
+If given, close the sender account and send the remaining balance to this address, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.extra_fee"></a>
+
+### extra_fee
+
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The extra fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.first_valid_round"></a>
+
+### first_valid_round
+
+first_valid_round *: int | None*
+
+None
+
+The first valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.last_valid_round"></a>
+
+### last_valid_round
+
+last_valid_round *: int | None*
+
+None
+
+The last valid round for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.lease"></a>
+
+### lease
+
+lease *: bytes | None*
+
+None
+
+The lease for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.max_fee"></a>
+
+### max_fee
+
+max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The maximum fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.note"></a>
+
+### note
+
+note *: bytes | None*
+
+None
+
+The note for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.receiver"></a>
+
+### receiver
+
+receiver *: str*
+
+None
+
+The account that will receive the ALGO
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.rekey_to"></a>
+
+### rekey_to
+
+rekey_to *: str | None*
+
+None
+
+The account to rekey to, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.sender"></a>
+
+### sender
+
+sender *: str*
+
+None
+
+The account that will send the transaction
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.signer"></a>
+
+### signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | None*
+
+None
+
+The signer for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.static_fee"></a>
+
+### static_fee
+
+static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+
+None
+
+The static fee for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.PaymentParams.validity_window"></a>
+
+### validity_window
+
+validity_window *: int | None*
+
+None
+
+The validity window for the transaction, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults
+
+SendAtomicTransactionComposerResults
+
+Results from sending an AtomicTransactionComposer transaction group.
+
+<a id="algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults.confirmations"></a>
+
+### confirmations
+
+confirmations *: list[algosdk.v2client.algod.AlgodResponseType]*
+
+None
+
+The confirmation info for each transaction
+
+<a id="algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults.group_id"></a>
+
+### group_id
+
+group_id *: str*
+
+None
+
+The group ID if this was a transaction group
+
+<a id="algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults.returns"></a>
+
+### returns
+
+returns *: list[[algokit_utils.applications.abi.ABIReturn](algokit_utils.applications.abi.mdx#algokit_utils.applications.abi.ABIReturn)]*
+
+None
+
+The ABI return values from any ABI method calls
+
+<a id="algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults.simulate_response"></a>
+
+### simulate_response
+
+simulate_response *: dict[str, Any] | None*
+
+None
+
+The simulation response if simulation was performed, defaults to None
+
+<a id="algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults.transactions"></a>
+
+### transactions
+
+transactions *: list[[algokit_utils.models.transaction.TransactionWrapper](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.TransactionWrapper)]*
+
+None
+
+The transactions that were sent
+
+<a id="algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults.tx_ids"></a>
+
+### tx_ids
+
+tx_ids *: list[str]*
+
+None
+
+The transaction IDs that were sent
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.TransactionComposer
+
+TransactionComposer(algod: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), get_signer: collections.abc.Callable[[str], [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)], get_suggested_params: collections.abc.Callable[[], [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams)] | None = None, default_validity_window: int | None = None, app_manager: [algokit_utils.applications.app_manager.AppManager](algokit_utils.applications.app_manager.mdx#algokit_utils.applications.app_manager.AppManager) | None = None)
+
+A class for composing and managing Algorand transactions.
+
+Provides a high-level interface for building and executing transaction groups using the Algosdk library.
+Supports various transaction types including payments, asset operations, application calls, and key registrations.
+
+:param algod: An instance of AlgodClient used to get suggested params and send transactions
+:param get_signer: A function that takes an address and returns a TransactionSigner for that address
+:param get_suggested_params: Optional function to get suggested transaction parameters,
+defaults to using algod.suggested_params()
+:param default_validity_window: Optional default validity window for transactions in rounds, defaults to 10
+:param app_manager: Optional AppManager instance for compiling TEAL programs, defaults to None
+
+## Initialization
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_app_call"></a>
+
+### add_app_call
+
+add_app_call(params: [algokit_utils.transactions.transaction_composer.AppCallParams](#algokit_utils.transactions.transaction_composer.AppCallParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an application call transaction.
+
+:example:
+\>\>\> params = AppCallParams(
+…     sender=”SENDER_ADDRESS”,
+…     on_complete=OnComplete.NoOpOC,
+…     app_id=789,
+…     approval_program=”TEAL_APPROVAL_CODE”,
+…     clear_state_program=”TEAL_CLEAR_CODE”,
+…     schema=\{‘global_ints’: 1, ‘global_byte_slices’: 1, ‘local_ints’: 1, ‘local_byte_slices’: 1\},
+…     … (see AppCallParams for more options)
+… )
+\>\>\> composer.add_app_call(params)
+
+:param params: The application call parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_app_call_method_call"></a>
+
+### add_app_call_method_call
+
+add_app_call_method_call(params: [algokit_utils.transactions.transaction_composer.AppCallMethodCallParams](#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an application call method call transaction.
+
+:param params: The application call method call parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_app_create"></a>
+
+### add_app_create
+
+add_app_create(params: [algokit_utils.transactions.transaction_composer.AppCreateParams](#algokit_utils.transactions.transaction_composer.AppCreateParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an application creation transaction.
+
+:example:
+\>\>\> params = AppCreateParams(
+…     sender=”SENDER_ADDRESS”,
+…     approval_program=”TEAL_APPROVAL_CODE”,
+…     clear_state_program=”TEAL_CLEAR_CODE”,
+…     schema=\{‘global_ints’: 1, ‘global_byte_slices’: 1, ‘local_ints’: 1, ‘local_byte_slices’: 1\},
+…     on_complete=OnComplete.NoOpOC,
+…     args=[b’arg1’],
+…     account_references=[“ACCOUNT1”],
+…     app_references=[789],
+…     asset_references=[123],
+…     box_references=[],
+…     extra_program_pages=0
+…     … (see AppCreateParams for more options)
+… )
+\>\>\> composer.add_app_create(params)
+
+:param params: The application creation parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_app_create_method_call"></a>
+
+### add_app_create_method_call
+
+add_app_create_method_call(params: [algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams](#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an application creation method call transaction.
+
+:param params: The application creation method call parameters
+:return: The transaction composer instance for chaining
+
+:example:
+\>\>\> # Basic example
+\>\>\> method = algosdk.abi.Method(
+…     name=”method”,
+…     args=[…],
+…     returns=”string”
+… )
+\>\>\> composer.add_app_create_method_call(
+…     AppCreateMethodCallParams(
+…         sender=”CREATORADDRESS”,
+…         approval_program=”TEALCODE”,
+…         clear_state_program=”TEALCODE”,
+…         method=method,
+…         args=[“arg1_value”]
+…     )
+… )
+\>\>\>
+\>\>\> # Advanced example
+\>\>\> method = ABIMethod(
+…     name=”method”,
+…     args=[\{“name”: “arg1”, “type”: “string”\}],
+…     returns=\{“type”: “string”\}
+… )
+\>\>\> composer.add_app_create_method_call(
+…     AppCreateMethodCallParams(
+…         sender=”CREATORADDRESS”,
+…         method=method,
+…         args=[“arg1_value”],
+…         approval_program=”TEALCODE”,
+…         clear_state_program=”TEALCODE”,
+…         schema=\{
+…             “global_ints”: 1,
+…             “global_byte_slices”: 2,
+…             “local_ints”: 3,
+…             “local_byte_slices”: 4
+…         \},
+…         extra_pages=1,
+…         on_complete=OnComplete.OptInOC,
+…         args=[bytes([1, 2, 3, 4])],
+…         account_references=[“ACCOUNT_1”],
+…         app_references=[123, 1234],
+…         asset_references=[12345],
+…         box_references=[“box1”, \{“app_id”: 1234, “name”: “box2”\}],
+…         lease=”lease”,
+…         note=”note”,
+…         first_valid_round=1000,
+…         validity_window=10,
+…         extra_fee=AlgoAmount.from_micro_algos(1000),
+…         static_fee=AlgoAmount.from_micro_algos(1000),
+…         max_fee=AlgoAmount.from_micro_algos(3000)
+…     )
+… )
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_app_delete"></a>
+
+### add_app_delete
+
+add_app_delete(params: [algokit_utils.transactions.transaction_composer.AppDeleteParams](#algokit_utils.transactions.transaction_composer.AppDeleteParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an application deletion transaction.
+
+:example:
+\>\>\> params = AppDeleteParams(
+…     sender=”SENDER_ADDRESS”,
+…     app_id=789,
+…     args=[b’delete_arg’],
+…     account_references=[“ACCOUNT1”],
+…     app_references=[789],
+…     asset_references=[123],
+…     box_references=[],
+…     on_complete=OnComplete.DeleteApplicationOC
+…     … (see AppDeleteParams for more options)
+\>\>\> composer.add_app_delete(params)
+
+:param params: The application deletion parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_app_delete_method_call"></a>
+
+### add_app_delete_method_call
+
+add_app_delete_method_call(params: [algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams](#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an application deletion method call transaction.
+
+:param params: The application deletion method call parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_app_update"></a>
+
+### add_app_update
+
+add_app_update(params: [algokit_utils.transactions.transaction_composer.AppUpdateParams](#algokit_utils.transactions.transaction_composer.AppUpdateParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an application update transaction.
+
+:example:
+\>\>\> params = AppUpdateParams(
+…     sender=”SENDER_ADDRESS”,
+…     app_id=789,
+…     approval_program=”TEAL_NEW_APPROVAL_CODE”,
+…     clear_state_program=”TEAL_NEW_CLEAR_CODE”,
+…     args=[b’new_arg1’],
+…     account_references=[“ACCOUNT1”],
+…     app_references=[789],
+…     asset_references=[123],
+…     box_references=[],
+…     on_complete=OnComplete.UpdateApplicationOC
+…     … (see AppUpdateParams for more options)
+\>\>\> composer.add_app_update(params)
+
+:param params: The application update parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_app_update_method_call"></a>
+
+### add_app_update_method_call
+
+add_app_update_method_call(params: [algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams](#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an application update method call transaction.
+
+:param params: The application update method call parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_asset_config"></a>
+
+### add_asset_config
+
+add_asset_config(params: [algokit_utils.transactions.transaction_composer.AssetConfigParams](#algokit_utils.transactions.transaction_composer.AssetConfigParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an asset configuration transaction.
+
+:example:
+\>\>\> params = AssetConfigParams(
+…     sender=”SENDER_ADDRESS”,
+…     asset_id=123456,
+…     manager=”NEW_MANAGER_ADDRESS”,
+…     reserve=”NEW_RESERVE_ADDRESS”,
+…     freeze=”NEW_FREEZE_ADDRESS”,
+…     clawback=”NEW_CLAWBACK_ADDRESS”
+…     … (see AssetConfigParams for more options)
+… )
+\>\>\> composer.add_asset_config(params)
+
+:param params: The asset configuration parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_asset_create"></a>
+
+### add_asset_create
+
+add_asset_create(params: [algokit_utils.transactions.transaction_composer.AssetCreateParams](#algokit_utils.transactions.transaction_composer.AssetCreateParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an asset creation transaction.
+
+:example:
+\>\>\> params = AssetCreateParams(
+…     sender=”SENDER_ADDRESS”,
+…     total=1000,
+…     asset_name=”MyAsset”,
+…     unit_name=”MA”,
+…     url=”https://example.com”,
+…     decimals=0,
+…     default_frozen=False,
+…     manager=”MANAGER_ADDRESS”,
+…     reserve=”RESERVE_ADDRESS”,
+…     freeze=”FREEZE_ADDRESS”,
+…     clawback=”CLAWBACK_ADDRESS”
+…     … (see AssetCreateParams for more options)
+\>\>\> composer.add_asset_create(params)
+
+:param params: The asset creation parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_asset_destroy"></a>
+
+### add_asset_destroy
+
+add_asset_destroy(params: [algokit_utils.transactions.transaction_composer.AssetDestroyParams](#algokit_utils.transactions.transaction_composer.AssetDestroyParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an asset destruction transaction.
+
+:example:
+\>\>\> params = AssetDestroyParams(
+…     sender=”SENDER_ADDRESS”,
+…     asset_id=123456
+…     … (see AssetDestroyParams for more options)
+\>\>\> composer.add_asset_destroy(params)
+
+:param params: The asset destruction parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_asset_freeze"></a>
+
+### add_asset_freeze
+
+add_asset_freeze(params: [algokit_utils.transactions.transaction_composer.AssetFreezeParams](#algokit_utils.transactions.transaction_composer.AssetFreezeParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an asset freeze transaction.
+
+:example:
+\>\>\> params = AssetFreezeParams(
+…     sender=”SENDER_ADDRESS”,
+…     asset_id=123456,
+…     account=”ACCOUNT_TO_FREEZE”,
+…     frozen=True
+…     … (see AssetFreezeParams for more options)
+… )
+\>\>\> composer.add_asset_freeze(params)
+
+:param params: The asset freeze parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_asset_opt_in"></a>
+
+### add_asset_opt_in
+
+add_asset_opt_in(params: [algokit_utils.transactions.transaction_composer.AssetOptInParams](#algokit_utils.transactions.transaction_composer.AssetOptInParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an asset opt-in transaction.
+
+:example:
+\>\>\> params = AssetOptInParams(
+…     sender=”SENDER_ADDRESS”,
+…     asset_id=123456
+…     … (see AssetOptInParams for more options)
+… )
+\>\>\> composer.add_asset_opt_in(params)
+
+:param params: The asset opt-in parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_asset_opt_out"></a>
+
+### add_asset_opt_out
+
+add_asset_opt_out(params: [algokit_utils.transactions.transaction_composer.AssetOptOutParams](#algokit_utils.transactions.transaction_composer.AssetOptOutParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an asset opt-out transaction.
+
+:example:
+\>\>\> params = AssetOptOutParams(
+…     sender=”SENDER_ADDRESS”,
+…     asset_id=123456,
+…     creator=”CREATOR_ADDRESS”
+…     … (see AssetOptOutParams for more options)
+\>\>\> composer.add_asset_opt_out(params)
+
+:param params: The asset opt-out parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_asset_transfer"></a>
+
+### add_asset_transfer
+
+add_asset_transfer(params: [algokit_utils.transactions.transaction_composer.AssetTransferParams](#algokit_utils.transactions.transaction_composer.AssetTransferParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an asset transfer transaction.
+
+:example:
+\>\>\> params = AssetTransferParams(
+…     sender=”SENDER_ADDRESS”,
+…     asset_id=123456,
+…     amount=10,
+…     receiver=”RECEIVER_ADDRESS”,
+…     clawback_target=”CLAWBACK_TARGET_ADDRESS”,
+…     close_asset_to=”CLOSE_ADDRESS”
+…     … (see AssetTransferParams for more options)
+\>\>\> composer.add_asset_transfer(params)
+
+:param params: The asset transfer parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_atc"></a>
+
+### add_atc
+
+add_atc(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an existing AtomicTransactionComposer’s transactions.
+
+:param atc: The AtomicTransactionComposer to add
+:return: The transaction composer instance for chaining
+
+:example:
+\>\>\> atc = AtomicTransactionComposer()
+\>\>\> atc.add_transaction(TransactionWithSigner(transaction, signer))
+\>\>\> composer.add_atc(atc)
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_offline_key_registration"></a>
+
+### add_offline_key_registration
+
+add_offline_key_registration(params: [algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams](#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an offline key registration transaction.
+
+:param params: The offline key registration parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_online_key_registration"></a>
+
+### add_online_key_registration
+
+add_online_key_registration(params: [algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams](#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add an online key registration transaction.
+
+:param params: The online key registration parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_payment"></a>
+
+### add_payment
+
+add_payment(params: [algokit_utils.transactions.transaction_composer.PaymentParams](#algokit_utils.transactions.transaction_composer.PaymentParams)) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add a payment transaction.
+
+:example:
+\>\>\> params = PaymentParams(
+…     sender=”SENDER_ADDRESS”,
+…     receiver=”RECEIVER_ADDRESS”,
+…     amount=AlgoAmount.from_algo(1),
+…     close_remainder_to=”CLOSE_ADDRESS”
+…     … (see PaymentParams for more options)
+… )
+\>\>\> composer.add_payment(params)
+
+:param params: The payment transaction parameters
+:return: The transaction composer instance for chaining
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.add_transaction"></a>
+
+### add_transaction
+
+add_transaction(transaction: [algosdk.transaction.Transaction](../algosdk/algosdk.transaction.mdx#algosdk.transaction.Transaction), signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None) → [algokit_utils.transactions.transaction_composer.TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+
+Add a raw transaction to the composer.
+
+:param transaction: The transaction to add
+:param signer: Optional transaction signer, defaults to getting signer from transaction sender
+:return: The transaction composer instance for chaining
+
+:example:
+\>\>\> composer.add_transaction(transaction)
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.arc2_note"></a>
+
+### *static* arc2_note
+
+arc2_note(note: algokit_utils.models.transaction.Arc2TransactionNote) → bytes
+
+Create an encoded transaction note that follows the ARC-2 spec.
+
+https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md
+
+:param note: The ARC-2 note to encode
+:return: The encoded note bytes
+:raises ValueError: If the dapp_name is invalid
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.build"></a>
+
+### build
+
+build() → [algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult](#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)
+
+Build the transaction group.
+
+:return: The built transaction group result
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.build_transactions"></a>
+
+### build_transactions
+
+build_transactions() → [algokit_utils.transactions.transaction_composer.BuiltTransactions](#algokit_utils.transactions.transaction_composer.BuiltTransactions)
+
+Build and return the transactions without executing them.
+
+:return: The built transactions result
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.count"></a>
+
+### count
+
+count() → int
+
+Get the total number of transactions.
+
+:return: The number of transactions
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.rebuild"></a>
+
+### rebuild
+
+rebuild() → [algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult](#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)
+
+Rebuild the transaction group from scratch.
+
+:return: The rebuilt transaction group result
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.send"></a>
+
+### send
+
+send(params: [algokit_utils.models.transaction.SendParams](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.SendParams) | None = None) → [algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+
+Send the transaction group to the network.
+
+:param params: Parameters for the send operation
+:return: The transaction send results
+:raises Exception: If the transaction fails
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposer.simulate"></a>
+
+### simulate
+
+simulate(allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None, skip_signatures: bool | None = None) → [algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+
+Simulate transaction group execution with configurable validation rules.
+
+:param allow_more_logs: Whether to allow more logs than the standard limit
+:param allow_empty_signatures: Whether to allow transactions with empty signatures
+:param allow_unnamed_resources: Whether to allow unnamed resources.
+:param extra_opcode_budget: Additional opcode budget to allocate
+:param exec_trace_config: Configuration for execution tracing
+:param simulation_round: Round number to simulate at
+:param skip_signatures: Whether to skip signature validation
+:return: The simulation results
+
+:example:
+\>\>\> result = composer.simulate(extra_opcode_budget=1000, skip_signatures=True, …)
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult
+
+TransactionComposerBuildResult
+
+Result of building transactions with TransactionComposer.
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult.atc"></a>
+
+### atc
+
+atc *: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer)*
+
+None
+
+The AtomicTransactionComposer instance
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult.method_calls"></a>
+
+### method_calls
+
+method_calls *: dict[int, algosdk.abi.Method]*
+
+None
+
+Map of transaction index to ABI method
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult.transactions"></a>
+
+### transactions
+
+transactions *: list[algosdk.atomic_transaction_composer.TransactionWithSigner]*
+
+None
+
+The list of transactions with signers
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionContext"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.TransactionContext
+
+TransactionContext
+
+Contextual information for a transaction.
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionWithContext"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.TransactionWithContext
+
+TransactionWithContext(txn: [algosdk.transaction.Transaction](../algosdk/algosdk.transaction.mdx#algosdk.transaction.Transaction), context: [algokit_utils.transactions.transaction_composer.TransactionContext](#algokit_utils.transactions.transaction_composer.TransactionContext))
+
+Combines Transaction with additional context.
+
+## Initialization
+
+<a id="algokit_utils.transactions.transaction_composer.TransactionWithSignerAndContext"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.TransactionWithSignerAndContext
+
+TransactionWithSignerAndContext(txn: [algosdk.transaction.Transaction](../algosdk/algosdk.transaction.mdx#algosdk.transaction.Transaction), signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner), context: [algokit_utils.transactions.transaction_composer.TransactionContext](#algokit_utils.transactions.transaction_composer.TransactionContext))
+
+Combines TransactionWithSigner with additional context.
+
+## Initialization
+
+<a id="algokit_utils.transactions.transaction_composer.UnnamedResourcesAccessed"></a>
+
+## *class* algokit_utils.transactions.transaction_composer.UnnamedResourcesAccessed
+
+UnnamedResourcesAccessed(resources_accessed: dict[str, Any] | None = None)
+
+Information about unnamed resource access.
+
+## Initialization
+
+<a id="algokit_utils.transactions.transaction_composer.calculate_extra_program_pages"></a>
+
+## algokit_utils.transactions.transaction_composer.calculate_extra_program_pages
+
+calculate_extra_program_pages(approval: bytes | None, clear: bytes | None) → int
+
+Calculate minimum number of extra_pages required for provided approval and clear programs
+
+<a id="algokit_utils.transactions.transaction_composer.populate_app_call_resources"></a>
+
+## algokit_utils.transactions.transaction_composer.populate_app_call_resources
+
+populate_app_call_resources(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer)
+
+Populate application call resources based on simulation results.
+
+:param atc: The AtomicTransactionComposer containing transactions
+:param algod: Algod client for simulation
+:return: Modified AtomicTransactionComposer with populated resources
+
+<a id="algokit_utils.transactions.transaction_composer.prepare_group_for_sending"></a>
+
+## algokit_utils.transactions.transaction_composer.prepare_group_for_sending
+
+prepare_group_for_sending(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: algokit_utils.transactions.transaction_composer.AdditionalAtcContext | None = None) → [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer)
+
+Take an existing Atomic Transaction Composer and return a new one with changes applied to the transactions
+based on the supplied parameters to prepare it for sending.
+Please note, that before calling `.execute()` on the returned ATC, you must call `.build_group()`.
+
+:param atc: The AtomicTransactionComposer containing transactions
+:param algod: Algod client for simulation
+:param populate_app_call_resources: Whether to populate app call resources
+:param cover_app_call_inner_transaction_fees: Whether to cover inner txn fees
+:param additional_atc_context: Additional context for the AtomicTransactionComposer
+:return: Modified AtomicTransactionComposer ready for sending
+
+<a id="algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer"></a>
+
+## algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer
+
+send_atomic_transaction_composer(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), \*, max_rounds_to_wait: int | None = 5, skip_waiting: bool = False, suppress_log: bool | None = None, populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: algokit_utils.transactions.transaction_composer.AdditionalAtcContext | None = None) → [algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+
+Send an AtomicTransactionComposer transaction group.
+
+Executes a group of transactions atomically using the AtomicTransactionComposer.
+
+:param atc: The AtomicTransactionComposer instance containing the transaction group to send
+:param algod: The Algod client to use for sending the transactions
+:param max_rounds_to_wait: Maximum number of rounds to wait for confirmation, defaults to 5
+:param skip_waiting: If True, don’t wait for transaction confirmation, defaults to False
+:param suppress_log: If True, suppress logging, defaults to None
+:param populate_app_call_resources: If True, populate app call resources, defaults to None
+:param cover_app_call_inner_transaction_fees: If True, cover app call inner transaction fees, defaults to None
+:param additional_atc_context: Additional context for the AtomicTransactionComposer
+:return: Results from sending the transaction group
+:raises Exception: If there is an error sending the transactions
+:raises error: If there is an error from the Algorand node

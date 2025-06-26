@@ -39,7 +39,7 @@ Parameters for ensuring an account has a minimum number of µALGOs
 
 ### account_to_fund
 
-account_to_fund *: [algokit_utils.models.Account](algokit_utils.models.mdx#algokit_utils.models.Account) | [algosdk.atomic_transaction_composer.AccountTransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AccountTransactionSigner) | str*
+account_to_fund *: [algokit_utils.models.Account](/reference/algokit-utils/py/API Reference/algokit_utils.models.mdx#algokit_utils.models.Account) | [algosdk.atomic_transaction_composer.AccountTransactionSigner](/reference/algokit-utils/py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AccountTransactionSigner) | str*
 
 None
 
@@ -59,7 +59,7 @@ None
 
 ### funding_source
 
-funding_source *: [algokit_utils.models.Account](algokit_utils.models.mdx#algokit_utils.models.Account) | [algosdk.atomic_transaction_composer.AccountTransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AccountTransactionSigner) | [algokit_utils.dispenser_api.TestNetDispenserApiClient](algokit_utils.dispenser_api.mdx#algokit_utils.dispenser_api.TestNetDispenserApiClient) | None*
+funding_source *: [algokit_utils.models.Account](/reference/algokit-utils/py/API Reference/algokit_utils.models.mdx#algokit_utils.models.Account) | [algosdk.atomic_transaction_composer.AccountTransactionSigner](/reference/algokit-utils/py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AccountTransactionSigner) | [algokit_utils.dispenser_api.TestNetDispenserApiClient](/reference/algokit-utils/py/API Reference/algokit_utils.dispenser_api.mdx#algokit_utils.dispenser_api.TestNetDispenserApiClient) | None*
 
 None
 
@@ -114,7 +114,7 @@ The (optional) transaction note, default: “Funding account to meet minimum req
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils/py/algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None*
 
 None
 
@@ -142,7 +142,7 @@ The amount of µALGOs that were funded
 
 ## algokit_utils._ensure_funded.ensure_funded
 
-ensure_funded(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), parameters: [algokit_utils._ensure_funded.EnsureBalanceParameters](#algokit_utils._ensure_funded.EnsureBalanceParameters)) → [algokit_utils._ensure_funded.EnsureFundedResponse](#algokit_utils._ensure_funded.EnsureFundedResponse) | None
+ensure_funded(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils/py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), parameters: [algokit_utils._ensure_funded.EnsureBalanceParameters](#algokit_utils._ensure_funded.EnsureBalanceParameters)) → [algokit_utils._ensure_funded.EnsureFundedResponse](#algokit_utils._ensure_funded.EnsureFundedResponse) | None
 
 Funds a given account using a funding source such that it has a certain amount of algos free to spend
 (accounting for ALGOs locked in minimum balance requirement)

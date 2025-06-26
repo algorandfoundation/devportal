@@ -12,11 +12,11 @@ title: "algokit_utils._debugging"
 
 ## Functions
 
-| [`cleanup_old_trace_files`](#algokit_utils._debugging.cleanup_old_trace_files)             | Cleanup old trace files if total size exceeds buffer size limit.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-|--------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`persist_sourcemaps`](#algokit_utils._debugging.persist_sourcemaps)                       | Persist the sourcemaps for the given sources as an AlgoKit AVM Debugger compliant artifacts.<br/>Args:<br/>sources (list[PersistSourceMapInput]): A list of PersistSourceMapInput objects.<br/>project_root (Path): The root directory of the project.<br/>client (AlgodClient): An AlgodClient object for interacting with the Algorand blockchain.<br/>with_sources (bool): If True, it will dump teal source files along with sourcemaps.<br/>Default is True, as needed by an AlgoKit AVM debugger. |
-| [`simulate_and_persist_response`](#algokit_utils._debugging.simulate_and_persist_response) | Simulates the atomic transactions using the provided `AtomicTransactionComposer` object and `AlgodClient` object,<br/>and persists the simulation response to an AlgoKit AVM Debugger compliant JSON file.                                                                                                                                                                                                                                                                                              |
-| [`simulate_response`](#algokit_utils._debugging.simulate_response)                         | Simulate and fetch response for the given AtomicTransactionComposer and AlgodClient.                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| [`cleanup_old_trace_files`](#algokit_utils._debugging.cleanup_old_trace_files)             | Cleanup old trace files if total size exceeds buffer size limit.                             |
+|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| [`persist_sourcemaps`](#algokit_utils._debugging.persist_sourcemaps)                       | Persist the sourcemaps for the given sources as an AlgoKit AVM Debugger compliant artifacts. |
+| [`simulate_and_persist_response`](#algokit_utils._debugging.simulate_and_persist_response) | Simulates atomic transactions and persists simulation response to a JSON file.               |
+| [`simulate_response`](#algokit_utils._debugging.simulate_response)                         | Simulate atomic transaction group execution                                                  |
 
 <a id="api"></a>
 
@@ -41,44 +41,39 @@ buffer_size_mb (float): Maximum allowed size in megabytes
 persist_sourcemaps(\*, sources: list[algokit_utils._debugging.PersistSourceMapInput], project_root: pathlib.Path, client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), with_sources: bool = True) → None
 
 Persist the sourcemaps for the given sources as an AlgoKit AVM Debugger compliant artifacts.
-Args:
-sources (list[PersistSourceMapInput]): A list of PersistSourceMapInput objects.
-project_root (Path): The root directory of the project.
-client (AlgodClient): An AlgodClient object for interacting with the Algorand blockchain.
-with_sources (bool): If True, it will dump teal source files along with sourcemaps.
-Default is True, as needed by an AlgoKit AVM debugger.
+
+:param sources: A list of PersistSourceMapInput objects.
+:param project_root: The root directory of the project.
+:param client: An AlgodClient object for interacting with the Algorand blockchain.
+:param with_sources: If True, it will dump teal source files along with sourcemaps.
 
 <a id="algokit_utils._debugging.simulate_and_persist_response"></a>
 
 ## algokit_utils._debugging.simulate_and_persist_response
 
-simulate_and_persist_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), project_root: pathlib.Path, algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), buffer_size_mb: float = 256) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
+simulate_and_persist_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), project_root: pathlib.Path, algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), buffer_size_mb: float = 256, allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
 
-Simulates the atomic transactions using the provided `AtomicTransactionComposer` object and `AlgodClient` object,
-and persists the simulation response to an AlgoKit AVM Debugger compliant JSON file.
+Simulates atomic transactions and persists simulation response to a JSON file.
 
-:param atc: An `AtomicTransactionComposer` object representing the atomic transactions to be
-simulated and persisted.
-:param project_root: A `Path` object representing the root directory of the project.
-:param algod_client: An `AlgodClient` object representing the Algorand client.
-:param buffer_size_mb: The size of the trace buffer in megabytes. Defaults to 256mb.
-:return: None
+Simulates the atomic transactions using the provided AtomicTransactionComposer and AlgodClient,
+then persists the simulation response to an AlgoKit AVM Debugger compliant JSON file.
 
-Returns:
-SimulateAtomicTransactionResponse: The simulated response after persisting it
-for AlgoKit AVM Debugger consumption.
+:param atc: AtomicTransactionComposer containing transactions to simulate and persist
+:param project_root: Root directory path of the project
+:param algod_client: Algorand client instance
+:param buffer_size_mb: Size of trace buffer in megabytes, defaults to 256
+:param allow_more_logs: Flag to allow additional logs, defaults to None
+:param allow_empty_signatures: Flag to allow empty signatures, defaults to None
+:param allow_unnamed_resources: Flag to allow unnamed resources, defaults to None
+:param extra_opcode_budget: Additional opcode budget, defaults to None
+:param exec_trace_config: Execution trace configuration, defaults to None
+:param simulation_round: Round number for simulation, defa  ults to None
+:return: Simulated response after persisting for AlgoKit AVM Debugger consumption
 
 <a id="algokit_utils._debugging.simulate_response"></a>
 
 ## algokit_utils._debugging.simulate_response
 
-simulate_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
+simulate_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
 
-Simulate and fetch response for the given AtomicTransactionComposer and AlgodClient.
-
-Args:
-atc (AtomicTransactionComposer): An AtomicTransactionComposer object.
-algod_client (AlgodClient): An AlgodClient object for interacting with the Algorand blockchain.
-
-Returns:
-SimulateAtomicTransactionResponse: The simulated response.
+Simulate atomic transaction group execution

@@ -1,0 +1,1431 @@
+---
+title: "algokit_utils.applications.app_spec.arc32"
+---
+
+<a id="module-algokit_utils.applications.app_spec.arc32"></a>
+
+<a id="algokit-utils-applications-app-spec-arc32"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`Arc32Contract`](#algokit_utils.applications.app_spec.arc32.Arc32Contract)             | ARC-0032 application specification                                                                                                                                                                                                                                                                                                                                                                 |
+|-----------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`CallConfig`](#algokit_utils.applications.app_spec.arc32.CallConfig)                   | Describes the type of calls a method can be used for based on [`algosdk.transaction.OnComplete`](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) type                                                                                                                                                                                                                           |
+| [`DefaultArgumentDict`](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict) | DefaultArgument is a container for any arguments that may<br/>be resolved prior to calling some target method                                                                                                                                                                                                                                                                                      |
+| [`MethodHints`](#algokit_utils.applications.app_spec.arc32.MethodHints)                 | MethodHints provides hints to the caller about how to call the method                                                                                                                                                                                                                                                                                                                              |
+| [`StructArgDict`](#algokit_utils.applications.app_spec.arc32.StructArgDict)             | dict() -\> new empty dictionary<br/>dict(mapping) -\> new dictionary initialized from a mapping object’s<br/>(key, value) pairs<br/>dict(iterable) -\> new dictionary initialized as if via:<br/>d = \{\}<br/>for k, v in iterable:<br/>d[k] = v<br/>dict(\*\*kwargs) -\> new dictionary initialized with the name=value pairs<br/>in the keyword argument list.  For example:  dict(one=1, two=2) |
+
+<a id="data"></a>
+
+## Data
+
+| [`AppSpecStateDict`](#algokit_utils.applications.app_spec.arc32.AppSpecStateDict)         | Type defining Application Specification state entries                                                             |
+|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| [`DefaultArgumentType`](#algokit_utils.applications.app_spec.arc32.DefaultArgumentType)   | Literal values describing the types of default argument sources                                                   |
+| [`MethodConfigDict`](#algokit_utils.applications.app_spec.arc32.MethodConfigDict)         | Dictionary of `dict[OnCompletionActionName, CallConfig]` representing allowed actions for each on completion type |
+| [`OnCompleteActionName`](#algokit_utils.applications.app_spec.arc32.OnCompleteActionName) | String literals representing on completion transaction types                                                      |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.applications.app_spec.arc32.AppSpecStateDict"></a>
+
+## algokit_utils.applications.app_spec.arc32.AppSpecStateDict
+
+AppSpecStateDict *: TypeAlias*
+
+None
+
+Type defining Application Specification state entries
+
+<a id="algokit_utils.applications.app_spec.arc32.Arc32Contract"></a>
+
+## *class* algokit_utils.applications.app_spec.arc32.Arc32Contract
+
+Arc32Contract
+
+ARC-0032 application specification
+
+See [https://github.com/algorandfoundation/ARCs/pull/150](https://github.com/algorandfoundation/ARCs/pull/150)
+
+<a id="algokit_utils.applications.app_spec.arc32.Arc32Contract.export"></a>
+
+### export
+
+export(directory: pathlib.Path | str | None = None) → None
+
+Write out the artifacts generated by the application to disk.
+
+Writes the approval program, clear program, contract specification and application specification
+to files in the specified directory.
+
+:param directory: Path to the directory where the artifacts should be written. If not specified,
+uses the current working directory
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig"></a>
+
+## *class* algokit_utils.applications.app_spec.arc32.CallConfig
+
+CallConfig
+
+Describes the type of calls a method can be used for based on [`algosdk.transaction.OnComplete`](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) type
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.ALL"></a>
+
+### ALL
+
+ALL
+
+3
+
+Handle the specified on completion type for both create and normal application calls
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.CALL"></a>
+
+### CALL
+
+CALL
+
+1
+
+Only handle the specified on completion type for application calls
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.CREATE"></a>
+
+### CREATE
+
+CREATE
+
+2
+
+Only handle the specified on completion type for application create calls
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.NEVER"></a>
+
+### NEVER
+
+NEVER
+
+0
+
+Never handle the specified on completion type
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__abs__"></a>
+
+### \_\_abs_\_
+
+__abs__()
+
+abs(self)
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__add__"></a>
+
+### \_\_add_\_
+
+__add__()
+
+Return self+value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__and__"></a>
+
+### \_\_and_\_
+
+__and__()
+
+Return self&value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__bool__"></a>
+
+### \_\_bool_\_
+
+__bool__()
+
+True if self else False
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__ceil__"></a>
+
+### \_\_ceil_\_
+
+__ceil__()
+
+Ceiling of an Integral returns itself.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__(other)
+
+Returns True if self has at least the same flags set as other.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__divmod__"></a>
+
+### \_\_divmod_\_
+
+__divmod__()
+
+Return divmod(self, value).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__float__"></a>
+
+### \_\_float_\_
+
+__float__()
+
+float(self)
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__floor__"></a>
+
+### \_\_floor_\_
+
+__floor__()
+
+Flooring an Integral returns itself.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__floordiv__"></a>
+
+### \_\_floordiv_\_
+
+__floordiv__()
+
+Return self//value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Convert to a string according to format_spec.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__hash__"></a>
+
+### \_\_hash_\_
+
+__hash__()
+
+Return hash(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__index__"></a>
+
+### \_\_index_\_
+
+__index__()
+
+Return self converted to an integer, if self is suitable for use as an index into a list.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__int__"></a>
+
+### \_\_int_\_
+
+__int__()
+
+int(self)
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__invert__"></a>
+
+### \_\_invert_\_
+
+__invert__()
+
+~self
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Returns flags in definition order.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__lshift__"></a>
+
+### \_\_lshift_\_
+
+__lshift__()
+
+Return self\<\<value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__mod__"></a>
+
+### \_\_mod_\_
+
+__mod__()
+
+Return self%value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__mul__"></a>
+
+### \_\_mul_\_
+
+__mul__()
+
+Return self\*value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__neg__"></a>
+
+### \_\_neg_\_
+
+__neg__()
+
+-self
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__pos__"></a>
+
+### \_\_pos_\_
+
+__pos__()
+
++self
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__pow__"></a>
+
+### \_\_pow_\_
+
+__pow__()
+
+Return pow(self, value, mod).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__radd__"></a>
+
+### \_\_radd_\_
+
+__radd__()
+
+Return value+self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rand__"></a>
+
+### \_\_rand_\_
+
+__rand__()
+
+Return value&self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rdivmod__"></a>
+
+### \_\_rdivmod_\_
+
+__rdivmod__()
+
+Return divmod(value, self).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rfloordiv__"></a>
+
+### \_\_rfloordiv_\_
+
+__rfloordiv__()
+
+Return value//self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rlshift__"></a>
+
+### \_\_rlshift_\_
+
+__rlshift__()
+
+Return value\<\<self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rmod__"></a>
+
+### \_\_rmod_\_
+
+__rmod__()
+
+Return value%self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rmul__"></a>
+
+### \_\_rmul_\_
+
+__rmul__()
+
+Return value\*self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__round__"></a>
+
+### \_\_round_\_
+
+__round__()
+
+Rounding an Integral returns itself.
+
+Rounding with an ndigits argument also returns an integer.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rpow__"></a>
+
+### \_\_rpow_\_
+
+__rpow__()
+
+Return pow(value, self, mod).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rrshift__"></a>
+
+### \_\_rrshift_\_
+
+__rrshift__()
+
+Return value\>\>self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rshift__"></a>
+
+### \_\_rshift_\_
+
+__rshift__()
+
+Return self\>\>value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rsub__"></a>
+
+### \_\_rsub_\_
+
+__rsub__()
+
+Return value-self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rtruediv__"></a>
+
+### \_\_rtruediv_\_
+
+__rtruediv__()
+
+Return value/self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__rxor__"></a>
+
+### \_\_rxor_\_
+
+__rxor__()
+
+Return value^self.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+Returns size in memory, in bytes.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__sub__"></a>
+
+### \_\_sub_\_
+
+__sub__()
+
+Return self-value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__truediv__"></a>
+
+### \_\_truediv_\_
+
+__truediv__()
+
+Return self/value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__trunc__"></a>
+
+### \_\_trunc_\_
+
+__trunc__()
+
+Truncating an Integral returns itself.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.__xor__"></a>
+
+### \_\_xor_\_
+
+__xor__()
+
+Return self^value.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.as_integer_ratio"></a>
+
+### as_integer_ratio
+
+as_integer_ratio()
+
+Return a pair of integers, whose ratio is equal to the original int.
+
+The ratio is in lowest terms and has a positive denominator.
+
+> > > (10).as_integer_ratio()
+> > > (10, 1)
+> > > (-10).as_integer_ratio()
+> > > (-10, 1)
+> > > (0).as_integer_ratio()
+> > > (0, 1)
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.bit_count"></a>
+
+### bit_count
+
+bit_count()
+
+Number of ones in the binary representation of the absolute value of self.
+
+Also known as the population count.
+
+> > > bin(13)
+> > > ‘0b1101’
+> > > (13).bit_count()
+> > > 3
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.bit_length"></a>
+
+### bit_length
+
+bit_length()
+
+Number of bits necessary to represent self in binary.
+
+> > > bin(37)
+> > > ‘0b100101’
+> > > (37).bit_length()
+> > > 6
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.conjugate"></a>
+
+### conjugate
+
+conjugate()
+
+Returns self, the complex conjugate of any int.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.denominator"></a>
+
+### *class* denominator
+
+denominator
+
+the denominator of a rational number in lowest terms
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.imag"></a>
+
+### *class* imag
+
+imag
+
+the imaginary part of a complex number
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.is_integer"></a>
+
+### is_integer
+
+is_integer()
+
+Returns True. Exists for duck type compatibility with float.is_integer.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.name"></a>
+
+### name
+
+name()
+
+The name of the Enum member.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.numerator"></a>
+
+### *class* numerator
+
+numerator
+
+the numerator of a rational number in lowest terms
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.real"></a>
+
+### *class* real
+
+real
+
+the real part of a complex number
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.to_bytes"></a>
+
+### to_bytes
+
+to_bytes()
+
+Return an array of bytes representing an integer.
+
+length
+Length of bytes object to use.  An OverflowError is raised if the
+integer is not representable with the given number of bytes.  Default
+is length 1.
+byteorder
+The byte order used to represent the integer.  If byteorder is ‘big’,
+the most significant byte is at the beginning of the byte array.  If
+byteorder is ‘little’, the most significant byte is at the end of the
+byte array.  To request the native byte order of the host system, use
+\`sys.byteorder’ as the byte order value.  Default is to use ‘big’.
+signed
+Determines whether two’s complement is used to represent the integer.
+If signed is False and a negative integer is given, an OverflowError
+is raised.
+
+<a id="algokit_utils.applications.app_spec.arc32.CallConfig.value"></a>
+
+### value
+
+value()
+
+The value of the Enum member.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict"></a>
+
+## *class* algokit_utils.applications.app_spec.arc32.DefaultArgumentDict
+
+DefaultArgumentDict
+
+DefaultArgument is a container for any arguments that may
+be resolved prior to calling some target method
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__()
+
+True if the dictionary has the specified key, else False.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__delitem__"></a>
+
+### \_\_delitem_\_
+
+__delitem__()
+
+Delete self[key].
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__getitem__"></a>
+
+### \_\_getitem_\_
+
+__getitem__()
+
+Return self[key].
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__ior__"></a>
+
+### \_\_ior_\_
+
+__ior__()
+
+Return self|=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Implement iter(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__len__"></a>
+
+### \_\_len_\_
+
+__len__()
+
+Return len(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__reversed__"></a>
+
+### \_\_reversed_\_
+
+__reversed__()
+
+Return a reverse iterator over the dict keys.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__setitem__"></a>
+
+### \_\_setitem_\_
+
+__setitem__()
+
+Set self[key] to value.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+D.**sizeof**() -\> size of D in memory, in bytes
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.clear"></a>
+
+### clear
+
+clear()
+
+D.clear() -\> None.  Remove all items from D.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.copy"></a>
+
+### copy
+
+copy()
+
+D.copy() -\> a shallow copy of D
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.get"></a>
+
+### get
+
+get()
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.items"></a>
+
+### items
+
+items()
+
+D.items() -\> a set-like object providing a view on D’s items
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.keys"></a>
+
+### keys
+
+keys()
+
+D.keys() -\> a set-like object providing a view on D’s keys
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.pop"></a>
+
+### pop
+
+pop()
+
+D.pop(k[,d]) -\> v, remove specified key and return the corresponding value.
+
+If the key is not found, return the default if given; otherwise,
+raise a KeyError.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.popitem"></a>
+
+### popitem
+
+popitem()
+
+Remove and return a (key, value) pair as a 2-tuple.
+
+Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.setdefault"></a>
+
+### setdefault
+
+setdefault()
+
+Insert key with a value of default if key is not in the dictionary.
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.update"></a>
+
+### update
+
+update()
+
+D.update([E, ]\*\*F) -\> None.  Update D from mapping/iterable E and F.
+If E is present and has a .keys() method, then does:  for k in E.keys(): D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentDict.values"></a>
+
+### values
+
+values()
+
+D.values() -\> an object providing a view on D’s values
+
+<a id="algokit_utils.applications.app_spec.arc32.DefaultArgumentType"></a>
+
+## algokit_utils.applications.app_spec.arc32.DefaultArgumentType
+
+DefaultArgumentType *: TypeAlias*
+
+None
+
+Literal values describing the types of default argument sources
+
+<a id="algokit_utils.applications.app_spec.arc32.MethodConfigDict"></a>
+
+## algokit_utils.applications.app_spec.arc32.MethodConfigDict
+
+MethodConfigDict *: TypeAlias*
+
+None
+
+Dictionary of `dict[OnCompletionActionName, CallConfig]` representing allowed actions for each on completion type
+
+<a id="algokit_utils.applications.app_spec.arc32.MethodHints"></a>
+
+## *class* algokit_utils.applications.app_spec.arc32.MethodHints
+
+MethodHints
+
+MethodHints provides hints to the caller about how to call the method
+
+<a id="algokit_utils.applications.app_spec.arc32.OnCompleteActionName"></a>
+
+## algokit_utils.applications.app_spec.arc32.OnCompleteActionName
+
+OnCompleteActionName *: TypeAlias*
+
+None
+
+String literals representing on completion transaction types
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict"></a>
+
+## *class* algokit_utils.applications.app_spec.arc32.StructArgDict
+
+StructArgDict
+
+dict() -\> new empty dictionary
+dict(mapping) -\> new dictionary initialized from a mapping object’s
+(key, value) pairs
+dict(iterable) -\> new dictionary initialized as if via:
+d = \{\}
+for k, v in iterable:
+d[k] = v
+dict(\*\*kwargs) -\> new dictionary initialized with the name=value pairs
+in the keyword argument list.  For example:  dict(one=1, two=2)
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__()
+
+True if the dictionary has the specified key, else False.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__delitem__"></a>
+
+### \_\_delitem_\_
+
+__delitem__()
+
+Delete self[key].
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__getitem__"></a>
+
+### \_\_getitem_\_
+
+__getitem__()
+
+Return self[key].
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__ior__"></a>
+
+### \_\_ior_\_
+
+__ior__()
+
+Return self|=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Implement iter(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__len__"></a>
+
+### \_\_len_\_
+
+__len__()
+
+Return len(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__reversed__"></a>
+
+### \_\_reversed_\_
+
+__reversed__()
+
+Return a reverse iterator over the dict keys.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__setitem__"></a>
+
+### \_\_setitem_\_
+
+__setitem__()
+
+Set self[key] to value.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+D.**sizeof**() -\> size of D in memory, in bytes
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.clear"></a>
+
+### clear
+
+clear()
+
+D.clear() -\> None.  Remove all items from D.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.copy"></a>
+
+### copy
+
+copy()
+
+D.copy() -\> a shallow copy of D
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.get"></a>
+
+### get
+
+get()
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.items"></a>
+
+### items
+
+items()
+
+D.items() -\> a set-like object providing a view on D’s items
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.keys"></a>
+
+### keys
+
+keys()
+
+D.keys() -\> a set-like object providing a view on D’s keys
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.pop"></a>
+
+### pop
+
+pop()
+
+D.pop(k[,d]) -\> v, remove specified key and return the corresponding value.
+
+If the key is not found, return the default if given; otherwise,
+raise a KeyError.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.popitem"></a>
+
+### popitem
+
+popitem()
+
+Remove and return a (key, value) pair as a 2-tuple.
+
+Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.setdefault"></a>
+
+### setdefault
+
+setdefault()
+
+Insert key with a value of default if key is not in the dictionary.
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.update"></a>
+
+### update
+
+update()
+
+D.update([E, ]\*\*F) -\> None.  Update D from mapping/iterable E and F.
+If E is present and has a .keys() method, then does:  for k in E.keys(): D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]
+
+<a id="algokit_utils.applications.app_spec.arc32.StructArgDict.values"></a>
+
+### values
+
+values()
+
+D.values() -\> an object providing a view on D’s values

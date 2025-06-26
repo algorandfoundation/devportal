@@ -1,0 +1,136 @@
+---
+title: "algokit_utils._legacy_v2.network_clients"
+---
+
+<a id="module-algokit_utils._legacy_v2.network_clients"></a>
+
+<a id="algokit-utils-legacy-v2-network-clients"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`AlgoClientConfig`](#algokit_utils._legacy_v2.network_clients.AlgoClientConfig)   | Connection details for connecting to an [`algosdk.v2client.algod.AlgodClient`](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient) or<br/>[`algosdk.v2client.indexer.IndexerClient`](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient)   |
+|------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+<a id="functions"></a>
+
+## Functions
+
+| [`get_algod_client`](#algokit_utils._legacy_v2.network_clients.get_algod_client)                                 | Returns an [`algosdk.v2client.algod.AlgodClient`](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient) from `config` or environment            |
+|------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`get_default_localnet_config`](#algokit_utils._legacy_v2.network_clients.get_default_localnet_config)           | Returns the client configuration to point to the default LocalNet                                                                                                   |
+| [`get_indexer_client`](#algokit_utils._legacy_v2.network_clients.get_indexer_client)                             | Returns an [`algosdk.v2client.indexer.IndexerClient`](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient) from `config` or environment. |
+| [`get_kmd_client`](#algokit_utils._legacy_v2.network_clients.get_kmd_client)                                     | Returns an [`algosdk.kmd.KMDClient`](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient) from `config` or environment                                                 |
+| [`get_kmd_client_from_algod_client`](#algokit_utils._legacy_v2.network_clients.get_kmd_client_from_algod_client) | Returns an [`algosdk.kmd.KMDClient`](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient) from supplied `client`                                                       |
+| [`is_localnet`](#algokit_utils._legacy_v2.network_clients.is_localnet)                                           | Returns True if client genesis is `devnet-v1` or `sandnet-v1`                                                                                                       |
+| [`is_mainnet`](#algokit_utils._legacy_v2.network_clients.is_mainnet)                                             | Returns True if client genesis is `mainnet-v1`                                                                                                                      |
+| [`is_testnet`](#algokit_utils._legacy_v2.network_clients.is_testnet)                                             | Returns True if client genesis is `testnet-v1`                                                                                                                      |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils._legacy_v2.network_clients.AlgoClientConfig"></a>
+
+## *class* algokit_utils._legacy_v2.network_clients.AlgoClientConfig
+
+AlgoClientConfig
+
+Connection details for connecting to an [`algosdk.v2client.algod.AlgodClient`](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient) or
+[`algosdk.v2client.indexer.IndexerClient`](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient)
+
+<a id="algokit_utils._legacy_v2.network_clients.AlgoClientConfig.server"></a>
+
+### server
+
+server *: str*
+
+None
+
+URL for the service e.g. `http://localhost:4001` or `https://testnet-api.algonode.cloud`
+
+<a id="algokit_utils._legacy_v2.network_clients.AlgoClientConfig.token"></a>
+
+### token
+
+token *: str*
+
+None
+
+API Token to authenticate with the service
+
+<a id="algokit_utils._legacy_v2.network_clients.get_algod_client"></a>
+
+## algokit_utils._legacy_v2.network_clients.get_algod_client
+
+get_algod_client(config: [algokit_utils._legacy_v2.network_clients.AlgoClientConfig](#algokit_utils._legacy_v2.network_clients.AlgoClientConfig) | None = None) → [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)
+
+Returns an [`algosdk.v2client.algod.AlgodClient`](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient) from `config` or environment
+
+If no configuration provided will use environment variables `ALGOD_SERVER`, `ALGOD_PORT` and `ALGOD_TOKEN`
+
+<a id="algokit_utils._legacy_v2.network_clients.get_default_localnet_config"></a>
+
+## algokit_utils._legacy_v2.network_clients.get_default_localnet_config
+
+get_default_localnet_config(config: Literal[algod, indexer, kmd]) → [algokit_utils._legacy_v2.network_clients.AlgoClientConfig](#algokit_utils._legacy_v2.network_clients.AlgoClientConfig)
+
+Returns the client configuration to point to the default LocalNet
+
+<a id="algokit_utils._legacy_v2.network_clients.get_indexer_client"></a>
+
+## algokit_utils._legacy_v2.network_clients.get_indexer_client
+
+get_indexer_client(config: [algokit_utils._legacy_v2.network_clients.AlgoClientConfig](#algokit_utils._legacy_v2.network_clients.AlgoClientConfig) | None = None) → [algosdk.v2client.indexer.IndexerClient](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient)
+
+Returns an [`algosdk.v2client.indexer.IndexerClient`](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient) from `config` or environment.
+
+If no configuration provided will use environment variables `INDEXER_SERVER`, `INDEXER_PORT` and `INDEXER_TOKEN`
+
+<a id="algokit_utils._legacy_v2.network_clients.get_kmd_client"></a>
+
+## algokit_utils._legacy_v2.network_clients.get_kmd_client
+
+get_kmd_client(config: [algokit_utils._legacy_v2.network_clients.AlgoClientConfig](#algokit_utils._legacy_v2.network_clients.AlgoClientConfig) | None = None) → [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient)
+
+Returns an [`algosdk.kmd.KMDClient`](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient) from `config` or environment
+
+If no configuration provided will use environment variables `KMD_SERVER`, `KMD_PORT` and `KMD_TOKEN`
+
+<a id="algokit_utils._legacy_v2.network_clients.get_kmd_client_from_algod_client"></a>
+
+## algokit_utils._legacy_v2.network_clients.get_kmd_client_from_algod_client
+
+get_kmd_client_from_algod_client(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient)
+
+Returns an [`algosdk.kmd.KMDClient`](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient) from supplied `client`
+
+Will use the same address as provided `client` but on port specified by `KMD_PORT` environment variable,
+or 4002 by default
+
+<a id="algokit_utils._legacy_v2.network_clients.is_localnet"></a>
+
+## algokit_utils._legacy_v2.network_clients.is_localnet
+
+is_localnet(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → bool
+
+Returns True if client genesis is `devnet-v1` or `sandnet-v1`
+
+<a id="algokit_utils._legacy_v2.network_clients.is_mainnet"></a>
+
+## algokit_utils._legacy_v2.network_clients.is_mainnet
+
+is_mainnet(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → bool
+
+Returns True if client genesis is `mainnet-v1`
+
+<a id="algokit_utils._legacy_v2.network_clients.is_testnet"></a>
+
+## algokit_utils._legacy_v2.network_clients.is_testnet
+
+is_testnet(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → bool
+
+Returns True if client genesis is `testnet-v1`

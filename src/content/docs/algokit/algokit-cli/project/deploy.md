@@ -172,7 +172,7 @@ Example:
 $ algokit project deploy testnet --custom-deploy-command="your-custom-command"
 ```
 
-> ⚠️ Please note, chaining multiple commands with `&&` is **not** currently supported. If you need to run multiple commands, you can defer to a custom script. Refer to [run](../project/run#custom-command-injection) for scenarios where multiple sub-command invocations are required.
+> ⚠️ Please note, chaining multiple commands with `&&` is **not** currently supported. If you need to run multiple commands, you can defer to a custom script. Refer to [run](/algokit/project/run#custom-command-injection) for scenarios where multiple sub-command invocations are required.
 
 ## CI Mode
 

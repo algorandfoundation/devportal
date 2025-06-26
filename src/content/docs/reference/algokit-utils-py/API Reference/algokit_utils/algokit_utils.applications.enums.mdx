@@ -1,0 +1,360 @@
+---
+title: "algokit_utils.applications.enums"
+---
+
+<a id="module-algokit_utils.applications.enums"></a>
+
+<a id="algokit-utils-applications-enums"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`OnSchemaBreak`](#algokit_utils.applications.enums.OnSchemaBreak)           | Action to take if an Application’s schema has breaking changes   |
+|------------------------------------------------------------------------------|------------------------------------------------------------------|
+| [`OnUpdate`](#algokit_utils.applications.enums.OnUpdate)                     | Action to take if an Application has been updated                |
+| [`OperationPerformed`](#algokit_utils.applications.enums.OperationPerformed) | Describes the actions taken during deployment                    |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak"></a>
+
+## *class* algokit_utils.applications.enums.OnSchemaBreak
+
+OnSchemaBreak(\*args, \*\*kwds)
+
+Action to take if an Application’s schema has breaking changes
+
+## Initialization
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.AppendApp"></a>
+
+### AppendApp
+
+AppendApp
+
+3
+
+Create a new Application
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.Fail"></a>
+
+### Fail
+
+Fail
+
+0
+
+Fail the deployment
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.ReplaceApp"></a>
+
+### ReplaceApp
+
+ReplaceApp
+
+2
+
+Create a new Application and delete the old Application in a single transaction
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Returns public methods and other interesting attributes.
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.__format__"></a>
+
+### \_\_format_\_
+
+__format__(format_spec)
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.__hash__"></a>
+
+### \_\_hash_\_
+
+__hash__()
+
+Return hash(self).
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__(proto)
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.name"></a>
+
+### name
+
+name()
+
+The name of the Enum member.
+
+<a id="algokit_utils.applications.enums.OnSchemaBreak.value"></a>
+
+### value
+
+value()
+
+The value of the Enum member.
+
+<a id="algokit_utils.applications.enums.OnUpdate"></a>
+
+## *class* algokit_utils.applications.enums.OnUpdate
+
+OnUpdate(\*args, \*\*kwds)
+
+Action to take if an Application has been updated
+
+## Initialization
+
+<a id="algokit_utils.applications.enums.OnUpdate.AppendApp"></a>
+
+### AppendApp
+
+AppendApp
+
+3
+
+Create a new application
+
+<a id="algokit_utils.applications.enums.OnUpdate.Fail"></a>
+
+### Fail
+
+Fail
+
+0
+
+Fail the deployment
+
+<a id="algokit_utils.applications.enums.OnUpdate.ReplaceApp"></a>
+
+### ReplaceApp
+
+ReplaceApp
+
+2
+
+Create a new Application and delete the old Application in a single transaction
+
+<a id="algokit_utils.applications.enums.OnUpdate.UpdateApp"></a>
+
+### UpdateApp
+
+UpdateApp
+
+1
+
+Update the Application with the new approval and clear programs
+
+<a id="algokit_utils.applications.enums.OnUpdate.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Returns public methods and other interesting attributes.
+
+<a id="algokit_utils.applications.enums.OnUpdate.__format__"></a>
+
+### \_\_format_\_
+
+__format__(format_spec)
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.applications.enums.OnUpdate.__hash__"></a>
+
+### \_\_hash_\_
+
+__hash__()
+
+Return hash(self).
+
+<a id="algokit_utils.applications.enums.OnUpdate.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__(proto)
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.enums.OnUpdate.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.applications.enums.OnUpdate.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.applications.enums.OnUpdate.name"></a>
+
+### name
+
+name()
+
+The name of the Enum member.
+
+<a id="algokit_utils.applications.enums.OnUpdate.value"></a>
+
+### value
+
+value()
+
+The value of the Enum member.
+
+<a id="algokit_utils.applications.enums.OperationPerformed"></a>
+
+## *class* algokit_utils.applications.enums.OperationPerformed
+
+OperationPerformed(\*args, \*\*kwds)
+
+Describes the actions taken during deployment
+
+## Initialization
+
+<a id="algokit_utils.applications.enums.OperationPerformed.Create"></a>
+
+### Create
+
+Create
+
+1
+
+No existing Application was found, created a new Application
+
+<a id="algokit_utils.applications.enums.OperationPerformed.Nothing"></a>
+
+### Nothing
+
+Nothing
+
+0
+
+An existing Application was found
+
+<a id="algokit_utils.applications.enums.OperationPerformed.Replace"></a>
+
+### Replace
+
+Replace
+
+3
+
+An existing Application was found, but was out of date, created a new Application and deleted the original
+
+<a id="algokit_utils.applications.enums.OperationPerformed.Update"></a>
+
+### Update
+
+Update
+
+2
+
+An existing Application was found, but was out of date, updated to latest version
+
+<a id="algokit_utils.applications.enums.OperationPerformed.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Returns public methods and other interesting attributes.
+
+<a id="algokit_utils.applications.enums.OperationPerformed.__format__"></a>
+
+### \_\_format_\_
+
+__format__(format_spec)
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.applications.enums.OperationPerformed.__hash__"></a>
+
+### \_\_hash_\_
+
+__hash__()
+
+Return hash(self).
+
+<a id="algokit_utils.applications.enums.OperationPerformed.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__(proto)
+
+Helper for pickle.
+
+<a id="algokit_utils.applications.enums.OperationPerformed.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.applications.enums.OperationPerformed.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.applications.enums.OperationPerformed.name"></a>
+
+### name
+
+name()
+
+The name of the Enum member.
+
+<a id="algokit_utils.applications.enums.OperationPerformed.value"></a>
+
+### value
+
+value()
+
+The value of the Enum member.

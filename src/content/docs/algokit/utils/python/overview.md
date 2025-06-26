@@ -96,13 +96,13 @@ If you prefer TypeScript there’s an equivalent [TypeScript utility library](ht
   - [Generating a typed client](/algokit/utils/python/typed-app-clients#generating-a-typed-client)
   - [Getting a typed client instance](/algokit/utils/python/typed-app-clients#getting-a-typed-client-instance)
   - [Client usage](/algokit/utils/python/typed-app-clients#client-usage)
-- [Migration Guide - v3](v3-migration-guide)
-  - [Migration Steps](v3-migration-guide#migration-steps)
-  - [Breaking Changes](v3-migration-guide#breaking-changes)
-  - [Best Practices](v3-migration-guide#best-practices)
-  - [Troubleshooting](v3-migration-guide#troubleshooting)
-- [API Reference](autoapi/index)
-  - [algokit_utils](autoapi/algokit_utils/index)
+- [Migration Guide - v3](/algokit/utils/python/v3-migration-guide)
+  - [Migration Steps](/algokit/utils/python/v3-migration-guide#migration-steps)
+  - [Breaking Changes](/algokit/utils/python/v3-migration-guide#breaking-changes)
+  - [Best Practices](/algokit/utils/python/v3-migration-guide#best-practices)
+  - [Troubleshooting](/algokit/utils/python/v3-migration-guide#troubleshooting)
+- [API Reference](/algokit/utils/python/autoapi/index)
+  - [algokit_utils](/algokit/utils/python/autoapi/algokit_utils/index)
 
 <a id='core-principles'></a>
 
@@ -166,21 +166,21 @@ AlgoKit Utils provides a dedicated documentation page on various useful snippets
 
 The library leverages Python’s native type hints and is fully compatible with [MyPy](https://mypy-lang.org/) for static type checking.
 
-All public abstractions and methods are organized in logical modules matching their domain functionality. You can import types either directly from the root module or from their source submodules. Refer to [API documentation](autoapi/index) for more details.
+All public abstractions and methods are organized in logical modules matching their domain functionality. You can import types either directly from the root module or from their source submodules. Refer to [API documentation](/algokit/utils/python/autoapi/index) for more details.
 
 <a id='config-logging'></a>
 
 # Config and logging
 
-To configure the AlgoKit Utils library you can make use of the [`Config`](autoapi/algokit_utils/config/index) object, which has a configure method that lets you configure some or all of the configuration options.
+To configure the AlgoKit Utils library you can make use of the [`Config`](/algokit/utils/python/autoapi/algokit_utils/config/index) object, which has a configure method that lets you configure some or all of the configuration options.
 
 ## Config singleton
 
-The AlgoKit Utils configuration singleton can be updated using `config.configure()`. Refer to the [Config API documentation](autoapi/algokit_utils/config/index) for more details.
+The AlgoKit Utils configuration singleton can be updated using `config.configure()`. Refer to the [Config API documentation](/algokit/utils/python/autoapi/algokit_utils/config/index) for more details.
 
 ## Logging
 
-AlgoKit has an in-built logging abstraction through the [`algokit_utils.config.AlgoKitLogger`](autoapi/algokit_utils/config/index#algokit_utils.config.AlgoKitLogger) class that provides standardized logging capabilities. The logger is accessible through the `config.logger` property and provides various logging levels.
+AlgoKit has an in-built logging abstraction through the [`algokit_utils.config.AlgoKitLogger`](/algokit/utils/python/autoapi/algokit_utils/config/index#algokit_utils.config.AlgoKitLogger) class that provides standardized logging capabilities. The logger is accessible through the `config.logger` property and provides various logging levels.
 
 Each method supports optional suppression of output using the `suppress_log` parameter.
 
@@ -222,4 +222,4 @@ The library helps you interact with and develop against the Algorand blockchain 
 
 # Reference documentation
 
-For detailed API documentation, see the [`algokit_utils`](autoapi/algokit_utils/index#module-algokit_utils)
+For detailed API documentation, see the [`algokit_utils`](/algokit/utils/python/autoapi/algokit_utils/index#module-algokit_utils)
