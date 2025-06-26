@@ -38,7 +38,7 @@ buffer_size_mb (float): Maximum allowed size in megabytes
 
 ## algokit_utils._debugging.persist_sourcemaps
 
-persist_sourcemaps(\*, sources: list[algokit_utils._debugging.PersistSourceMapInput], project_root: pathlib.Path, client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils/py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), with_sources: bool = True) → None
+persist_sourcemaps(\*, sources: list[algokit_utils._debugging.PersistSourceMapInput], project_root: pathlib.Path, client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), with_sources: bool = True) → None
 
 Persist the sourcemaps for the given sources as an AlgoKit AVM Debugger compliant artifacts.
 Args:
@@ -52,7 +52,7 @@ Default is True, as needed by an AlgoKit AVM debugger.
 
 ## algokit_utils._debugging.simulate_and_persist_response
 
-simulate_and_persist_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils/py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), project_root: pathlib.Path, algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils/py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), buffer_size_mb: float = 256) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
+simulate_and_persist_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), project_root: pathlib.Path, algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), buffer_size_mb: float = 256) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
 
 Simulates the atomic transactions using the provided `AtomicTransactionComposer` object and `AlgodClient` object,
 and persists the simulation response to an AlgoKit AVM Debugger compliant JSON file.
@@ -72,7 +72,7 @@ for AlgoKit AVM Debugger consumption.
 
 ## algokit_utils._debugging.simulate_response
 
-simulate_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils/py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils/py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
+simulate_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
 
 Simulate and fetch response for the given AtomicTransactionComposer and AlgodClient.
 

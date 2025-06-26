@@ -24,7 +24,7 @@ export default defineConfig({
         starlightImageZoom(),
         starlightLinksValidator({
           errorOnRelativeLinks: true,
-          exclude: ['**[FUTURELINK]*', '**/reference/**'],
+          exclude: ['**[FUTURELINK]*'],
         }),
         starlightTypeDoc({
           entryPoints: ['./imports/repos/algokit-utils-ts/src/index.ts'],
