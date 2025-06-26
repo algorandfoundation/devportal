@@ -8,7 +8,6 @@ import {
 import { processDirectories, processFile } from './src/functions';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { transformRelativeLinks } from '../../scripts/transform-links';
 
 const scriptLocation = path.dirname(fileURLToPath(import.meta.url));
 
@@ -46,12 +45,6 @@ await processFile([
   },
 ]);
 
-await transformRelativeLinks(
-  scriptLocation +
-    '/../../src/content/docs/reference/algokit-utils-ts/API Reference',
-  '/reference/algokit-utils-ts/API Reference',
-);
-
 // AlgoKit Utils - Python
 await processDirectories([
   {
@@ -82,9 +75,3 @@ await processFile([
       '/../../src/content/docs/algokit/utils/python/overview.md',
   },
 ]);
-
-await transformRelativeLinks(
-  scriptLocation +
-    '/../../src/content/docs/reference/algokit-utils-py/API Reference',
-  '/reference/algokit-utils-py/API Reference',
-);
