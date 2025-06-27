@@ -46,7 +46,7 @@ to interact with those (or other) app instances.
 
 ### *property* algorand
 
-algorand *: [algokit_utils.algorand.AlgorandClient](algokit_utils.algorand.mdx#algokit_utils.algorand.AlgorandClient)*
+algorand *: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/API Reference/algokit_utils.algorand#algokit_utils.algorand.AlgorandClient)*
 
 The algorand client
 
@@ -62,7 +62,7 @@ The name of the app
 
 ### *property* app_spec
 
-app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract)*
+app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract)*
 
 The app spec
 
@@ -70,7 +70,7 @@ The app spec
 
 ### compile
 
-compile(compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [algokit_utils.applications.app_client.AppClientCompilationResult](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientCompilationResult)
+compile(compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [algokit_utils.applications.app_client.AppClientCompilationResult](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientCompilationResult)
 
 Compile the app’s TEAL code.
 
@@ -94,7 +94,7 @@ Get the transaction creator.
 
 ### deploy
 
-deploy(\*, on_update: algokit_utils.applications.app_deployer.OnUpdate | None = None, on_schema_break: algokit_utils.applications.app_deployer.OnSchemaBreak | None = None, create_params: [algokit_utils.applications.app_client.AppClientMethodCallCreateParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientMethodCallCreateParams) | [algokit_utils.applications.app_client.AppClientBareCallCreateParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientBareCallCreateParams) | None = None, update_params: [algokit_utils.applications.app_client.AppClientMethodCallParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientMethodCallParams) | [algokit_utils.applications.app_client.AppClientBareCallParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientBareCallParams) | None = None, delete_params: [algokit_utils.applications.app_client.AppClientMethodCallParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientMethodCallParams) | [algokit_utils.applications.app_client.AppClientBareCallParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientBareCallParams) | None = None, existing_deployments: [algokit_utils.applications.app_deployer.ApplicationLookup](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, ignore_cache: bool = False, app_name: str | None = None, send_params: [algokit_utils.models.transaction.SendParams](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.SendParams) | None = None, compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → tuple[[algokit_utils.applications.app_client.AppClient](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClient), [algokit_utils.applications.app_factory.AppFactoryDeployResult](#algokit_utils.applications.app_factory.AppFactoryDeployResult)]
+deploy(\*, on_update: algokit_utils.applications.app_deployer.OnUpdate | None = None, on_schema_break: algokit_utils.applications.app_deployer.OnSchemaBreak | None = None, create_params: [algokit_utils.applications.app_client.AppClientMethodCallCreateParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientMethodCallCreateParams) | [algokit_utils.applications.app_client.AppClientBareCallCreateParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientBareCallCreateParams) | None = None, update_params: [algokit_utils.applications.app_client.AppClientMethodCallParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientMethodCallParams) | [algokit_utils.applications.app_client.AppClientBareCallParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientBareCallParams) | None = None, delete_params: [algokit_utils.applications.app_client.AppClientMethodCallParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientMethodCallParams) | [algokit_utils.applications.app_client.AppClientBareCallParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientBareCallParams) | None = None, existing_deployments: [algokit_utils.applications.app_deployer.ApplicationLookup](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, ignore_cache: bool = False, app_name: str | None = None, send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/API Reference/algokit_utils.models.transaction#algokit_utils.models.transaction.SendParams) | None = None, compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → tuple[[algokit_utils.applications.app_client.AppClient](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClient), [algokit_utils.applications.app_factory.AppFactoryDeployResult](#algokit_utils.applications.app_factory.AppFactoryDeployResult)]
 
 Idempotently deploy (create if not exists, update if changed) an app against the given name for the given
 creator account, including deploy-time TEAL template placeholder substitutions (if specified).
@@ -152,7 +152,7 @@ various return properties like `transaction`, `confirmation` and `deleteResult`.
 
 ### get_app_client_by_creator_and_name
 
-get_app_client_by_creator_and_name(creator_address: str, app_name: str, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClient)
+get_app_client_by_creator_and_name(creator_address: str, app_name: str, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClient)
 
 Returns a new `AppClient` client, resolving the app by creator address and name
 using AlgoKit app deployment semantics (i.e. looking for the app creation transaction note).
@@ -177,7 +177,7 @@ using AlgoKit app deployment semantics (i.e. looking for the app creation transa
 
 ### get_app_client_by_id
 
-get_app_client_by_id(app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClient)
+get_app_client_by_id(app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClient)
 
 Returns a new `AppClient` client for an app instance of the given ID.
 
@@ -196,7 +196,7 @@ Returns a new `AppClient` client for an app instance of the given ID.
 
 ### import_source_maps
 
-import_source_maps(source_maps: [algokit_utils.models.application.AppSourceMaps](algokit_utils.models.application.mdx#algokit_utils.models.application.AppSourceMaps)) → None
+import_source_maps(source_maps: [algokit_utils.models.application.AppSourceMaps](/reference/algokit-utils-py/API Reference/algokit_utils.models.application#algokit_utils.models.application.AppSourceMaps)) → None
 
 Import the provided source maps into the factory.
 
@@ -290,7 +290,7 @@ The group ID
 
 ### returns
 
-returns *: list[[algokit_utils.applications.abi.ABIReturn](algokit_utils.applications.abi.mdx#algokit_utils.applications.abi.ABIReturn)] | None*
+returns *: list[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/API Reference/algokit_utils.applications.abi#algokit_utils.applications.abi.ABIReturn)] | None*
 
 None
 
@@ -300,7 +300,7 @@ The ABI return value if applicable
 
 ### transaction
 
-transaction *: [algokit_utils.models.transaction.TransactionWrapper](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.TransactionWrapper)*
+transaction *: [algokit_utils.models.transaction.TransactionWrapper](/reference/algokit-utils-py/API Reference/algokit_utils.models.transaction#algokit_utils.models.transaction.TransactionWrapper)*
 
 None
 
@@ -310,7 +310,7 @@ The last transaction
 
 ### transactions
 
-transactions *: list[[algokit_utils.models.transaction.TransactionWrapper](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.TransactionWrapper)]*
+transactions *: list[[algokit_utils.models.transaction.TransactionWrapper](/reference/algokit-utils-py/API Reference/algokit_utils.models.transaction#algokit_utils.models.transaction.TransactionWrapper)]*
 
 None
 
@@ -348,7 +348,7 @@ Result from deploying an application via AppFactory
 
 ### app
 
-app *: [algokit_utils.applications.app_deployer.ApplicationMetaData](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.ApplicationMetaData)*
+app *: [algokit_utils.applications.app_deployer.ApplicationMetaData](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.ApplicationMetaData)*
 
 None
 
@@ -378,7 +378,7 @@ The delete result
 
 ### *classmethod* from_deploy_result
 
-from_deploy_result(response: [algokit_utils.applications.app_deployer.AppDeployResult](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.AppDeployResult), deploy_params: [algokit_utils.applications.app_deployer.AppDeployParams](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.AppDeployParams), app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract), app_compilation_data: [algokit_utils.applications.app_client.AppClientCompilationResult](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientCompilationResult) | None = None) → typing_extensions.Self
+from_deploy_result(response: [algokit_utils.applications.app_deployer.AppDeployResult](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.AppDeployResult), deploy_params: [algokit_utils.applications.app_deployer.AppDeployParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.AppDeployParams), app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract), app_compilation_data: [algokit_utils.applications.app_client.AppClientCompilationResult](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientCompilationResult) | None = None) → typing_extensions.Self
 
 Construct an AppFactoryDeployResult from a deployment result.
 

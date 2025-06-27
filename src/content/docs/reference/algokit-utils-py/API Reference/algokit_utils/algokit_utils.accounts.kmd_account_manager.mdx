@@ -49,7 +49,7 @@ Address for this account
 
 ### *static* new_account
 
-new_account() → [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+new_account() → [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Create a new random account.
 
@@ -79,7 +79,7 @@ The public key for this account.
 
 ### *property* signer
 
-signer *: [algosdk.atomic_transaction_composer.AccountTransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AccountTransactionSigner)*
+signer *: [algosdk.atomic_transaction_composer.AccountTransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AccountTransactionSigner)*
 
 Get an AccountTransactionSigner for this account.
 
@@ -89,7 +89,7 @@ Get an AccountTransactionSigner for this account.
 
 ## *class* algokit_utils.accounts.kmd_account_manager.KmdAccountManager
 
-KmdAccountManager(client_manager: [algokit_utils.clients.client_manager.ClientManager](algokit_utils.clients.client_manager.mdx#algokit_utils.clients.client_manager.ClientManager))
+KmdAccountManager(client_manager: [algokit_utils.clients.client_manager.ClientManager](/reference/algokit-utils-py/API Reference/algokit_utils.clients.client_manager#algokit_utils.clients.client_manager.ClientManager))
 
 Provides abstractions over KMD that makes it easier to get and manage accounts.
 
@@ -112,7 +112,7 @@ Retrieves the default funded account from LocalNet that can be used to fund othe
 
 ### get_or_create_wallet_account
 
-get_or_create_wallet_account(name: str, fund_with: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None) → [algokit_utils.accounts.kmd_account_manager.KmdAccount](#algokit_utils.accounts.kmd_account_manager.KmdAccount)
+get_or_create_wallet_account(name: str, fund_with: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None) → [algokit_utils.accounts.kmd_account_manager.KmdAccount](#algokit_utils.accounts.kmd_account_manager.KmdAccount)
 
 Gets or creates a funded account in a KMD wallet of the given name.
 
@@ -142,7 +142,7 @@ if no predicate is provided.
 
 ### kmd
 
-kmd() → [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient)
+kmd() → [algosdk.kmd.KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient)
 
 Returns the KMD client, initializing it if needed.
 

@@ -31,7 +31,7 @@ title: "algokit_utils.applications.app_manager"
 
 ## *class* algokit_utils.applications.app_manager.AppManager
 
-AppManager(algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient))
+AppManager(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient))
 
 A manager class for interacting with Algorand applications.
 
@@ -49,7 +49,7 @@ and interacting with application boxes.
 
 ### compile_teal
 
-compile_teal(teal_code: str) → [algokit_utils.models.application.CompiledTeal](algokit_utils.models.application.mdx#algokit_utils.models.application.CompiledTeal)
+compile_teal(teal_code: str) → [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/API Reference/algokit_utils.models.application#algokit_utils.models.application.CompiledTeal)
 
 Compile TEAL source code.
 
@@ -60,7 +60,7 @@ Compile TEAL source code.
 
 ### compile_teal_template
 
-compile_teal_template(teal_template_code: str, template_params: algokit_utils.models.state.TealTemplateParams | None = None, deployment_metadata: collections.abc.Mapping[str, bool | None] | None = None) → [algokit_utils.models.application.CompiledTeal](algokit_utils.models.application.mdx#algokit_utils.models.application.CompiledTeal)
+compile_teal_template(teal_template_code: str, template_params: algokit_utils.models.state.TealTemplateParams | None = None, deployment_metadata: collections.abc.Mapping[str, bool | None] | None = None) → [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/API Reference/algokit_utils.models.application#algokit_utils.models.application.CompiledTeal)
 
 Compile a TEAL template with parameters.
 
@@ -99,7 +99,7 @@ Decode application state from raw format.
 
 ### *static* get_abi_return
 
-get_abi_return(confirmation: algosdk.v2client.algod.AlgodResponseType, method: algosdk.abi.Method | None = None) → [algokit_utils.applications.abi.ABIReturn](algokit_utils.applications.abi.mdx#algokit_utils.applications.abi.ABIReturn) | None
+get_abi_return(confirmation: algosdk.v2client.algod.AlgodResponseType, method: algosdk.abi.Method | None = None) → [algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/API Reference/algokit_utils.applications.abi#algokit_utils.applications.abi.ABIReturn) | None
 
 Get the ABI return value from a transaction confirmation.
 
@@ -118,7 +118,7 @@ Get the ABI return value from a transaction confirmation.
 
 ### get_box_names
 
-get_box_names(app_id: int) → list[[algokit_utils.models.state.BoxName](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxName)]
+get_box_names(app_id: int) → list[[algokit_utils.models.state.BoxName](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxName)]
 
 Get names of all boxes for an application.
 
@@ -134,7 +134,7 @@ Get names of all boxes for an application.
 
 ### *static* get_box_reference
 
-get_box_reference(box_id: algokit_utils.models.state.BoxIdentifier | [algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference)) → tuple[int, bytes]
+get_box_reference(box_id: algokit_utils.models.state.BoxIdentifier | [algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference)) → tuple[int, bytes]
 
 Get standardized box reference from various identifier types.
 
@@ -245,7 +245,7 @@ Get information about an application by ID.
 
 ### get_compilation_result
 
-get_compilation_result(teal_code: str) → [algokit_utils.models.application.CompiledTeal](algokit_utils.models.application.mdx#algokit_utils.models.application.CompiledTeal) | None
+get_compilation_result(teal_code: str) → [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/API Reference/algokit_utils.models.application#algokit_utils.models.application.CompiledTeal) | None
 
 Get cached compilation result for TEAL code if available.
 

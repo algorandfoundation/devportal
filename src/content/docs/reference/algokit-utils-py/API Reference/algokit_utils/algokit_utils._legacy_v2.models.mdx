@@ -70,7 +70,7 @@ only the presence of given attributes, ignoring their type signatures.
 Protocol classes can be generic, they are defined as::
 
 ```none
-class GenProto[T](Protocol):
+class GenProto[T](/reference/algokit-utils-py/API Reference/Protocol):
     def meth(self) -> T:
         ...
 ```
@@ -186,7 +186,7 @@ Address for this account
 
 ### *static* new_account
 
-new_account() → [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+new_account() → [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Create a new random account.
 
@@ -216,7 +216,7 @@ The public key for this account.
 
 ### *property* signer
 
-signer *: [algosdk.atomic_transaction_composer.AccountTransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AccountTransactionSigner)*
+signer *: [algosdk.atomic_transaction_composer.AccountTransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AccountTransactionSigner)*
 
 Get an AccountTransactionSigner for this account.
 
@@ -314,7 +314,7 @@ Sender of this transaction
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -324,7 +324,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams) | None*
 
 None
 
@@ -724,7 +724,7 @@ Return the value for key if key is in the dictionary, else default.
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner)*
 
 None
 
@@ -734,7 +734,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams)*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams)*
 
 None
 
@@ -852,7 +852,7 @@ Sender of this transaction
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -862,7 +862,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams) | None*
 
 None
 
@@ -1263,7 +1263,7 @@ Return the value for key if key is in the dictionary, else default.
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner)*
 
 None
 
@@ -1273,7 +1273,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams)*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams)*
 
 None
 
@@ -1390,7 +1390,7 @@ Sender of this transaction
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -1400,7 +1400,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams) | None*
 
 None
 
@@ -1499,7 +1499,7 @@ Sender of this transaction
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -1509,7 +1509,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams) | None*
 
 None
 
@@ -1910,7 +1910,7 @@ Return the value for key if key is in the dictionary, else default.
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner)*
 
 None
 
@@ -1920,7 +1920,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams)*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams)*
 
 None
 
@@ -2037,7 +2037,7 @@ Sender of this transaction
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -2047,7 +2047,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams) | None*
 
 None
 
@@ -2145,7 +2145,7 @@ Sender of this transaction
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -2155,7 +2155,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams) | None*
 
 None
 
@@ -2555,7 +2555,7 @@ Return the value for key if key is in the dictionary, else default.
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner)*
 
 None
 
@@ -2565,7 +2565,7 @@ Signer to use when signing this transaction
 
 ### suggested_params
 
-suggested_params *: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams)*
+suggested_params *: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams)*
 
 None
 

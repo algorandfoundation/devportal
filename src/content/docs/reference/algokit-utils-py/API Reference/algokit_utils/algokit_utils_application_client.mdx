@@ -31,7 +31,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## Data
 
-| [`__all__`](#algokit_utils.application_client.__all__)   | Alias for `pyteal.ABIReturnSubroutine`, [`algosdk.abi.method.Method`](/reference/algokit-utils-py/algosdk/algosdk.abi.method.mdx#algosdk.abi.method.Method) or a `str`<br/>representing an ABI method name or signature   |
+| [`__all__`](#algokit_utils.application_client.__all__)   | Alias for `pyteal.ABIReturnSubroutine`, [`algosdk.abi.method.Method`](/reference/algokit-utils-py/algosdk/algosdk.abi.method#algosdk.abi.method.Method) or a `str`<br/>representing an ABI method name or signature   |
 |----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [`logger`](#algokit_utils.application_client.logger)     | A dictionary `dict[str, Any]` representing ABI argument names and values                                                                                                                         |
 
@@ -43,7 +43,7 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## *class* algokit_utils.application_client.ApplicationClient
 
-ApplicationClient(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), app_spec: [algokit_utils.application_specification.ApplicationSpecification](/reference/algokit-utils-py/API Reference/algokit_utils.application_specification.mdx#algokit_utils.application_specification.ApplicationSpecification) | pathlib.Path, \*, app_id: int = 0, creator: str | [algokit_utils.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.Account) | None = None, indexer_client: [IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient) | None = None, existing_deployments: [algokit_utils.deploy.AppLookup](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.AppLookup) | None = None, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.Account) | None = None, sender: str | None = None, suggested_params: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams) | None = None, template_values: algokit_utils.deploy.TemplateValueMapping | None = None, app_name: str | None = None)
+ApplicationClient(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), app_spec: [algokit_utils.application_specification.ApplicationSpecification](/reference/algokit-utils-py/API Reference/algokit_utils.application_specification#algokit_utils.application_specification.ApplicationSpecification) | pathlib.Path, \*, app_id: int = 0, creator: str | [algokit_utils.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.Account) | None = None, indexer_client: [IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer#algosdk.v2client.indexer.IndexerClient) | None = None, existing_deployments: [algokit_utils.deploy.AppLookup](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.AppLookup) | None = None, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.Account) | None = None, sender: str | None = None, suggested_params: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams) | None = None, template_values: algokit_utils.deploy.TemplateValueMapping | None = None, app_name: str | None = None)
 
 A class that wraps an ARC-0032 app spec and provides high productivity methods to deploy and call the app
 
@@ -73,7 +73,7 @@ Application Specification
 
 ### add_method_call
 
-add_method_call(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), abi_method: algokit_utils.models.ABIMethod | bool | None = None, \*, abi_args: algokit_utils.models.ABIArgsDict | None = None, app_id: int | None = None, parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, on_complete: [algosdk.transaction.OnComplete](/reference/algokit-utils-py/algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) = transaction.OnComplete.NoOpOC, local_schema: [algosdk.transaction.StateSchema](/reference/algokit-utils-py/algosdk/algosdk.transaction.mdx#algosdk.transaction.StateSchema) | None = None, global_schema: [algosdk.transaction.StateSchema](/reference/algokit-utils-py/algosdk/algosdk.transaction.mdx#algosdk.transaction.StateSchema) | None = None, approval_program: bytes | None = None, clear_program: bytes | None = None, extra_pages: int | None = None, app_args: list[bytes] | None = None, call_config: [algokit_utils.application_specification.CallConfig](/reference/algokit-utils-py/API Reference/algokit_utils.application_specification.mdx#algokit_utils.application_specification.CallConfig) = au_spec.CallConfig.CALL) → None
+add_method_call(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), abi_method: algokit_utils.models.ABIMethod | bool | None = None, \*, abi_args: algokit_utils.models.ABIArgsDict | None = None, app_id: int | None = None, parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, on_complete: [algosdk.transaction.OnComplete](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.OnComplete) = transaction.OnComplete.NoOpOC, local_schema: [algosdk.transaction.StateSchema](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.StateSchema) | None = None, global_schema: [algosdk.transaction.StateSchema](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.StateSchema) | None = None, approval_program: bytes | None = None, clear_program: bytes | None = None, extra_pages: int | None = None, app_args: list[bytes] | None = None, call_config: [algokit_utils.application_specification.CallConfig](/reference/algokit-utils-py/API Reference/algokit_utils.application_specification#algokit_utils.application_specification.CallConfig) = au_spec.CallConfig.CALL) → None
 
 Adds a transaction to the AtomicTransactionComposer passed
 
@@ -81,7 +81,7 @@ Adds a transaction to the AtomicTransactionComposer passed
 
 ### call
 
-call(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.OnCompleteCallParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.OnCompleteCallParameters) | [algokit_utils.models.OnCompleteCallParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.OnCompleteCallParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.ABITransactionResponse)
+call(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.OnCompleteCallParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.OnCompleteCallParameters) | [algokit_utils.models.OnCompleteCallParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.OnCompleteCallParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.ABITransactionResponse)
 
 Submits a signed transaction with specified parameters
 
@@ -89,7 +89,7 @@ Submits a signed transaction with specified parameters
 
 ### clear_state
 
-clear_state(transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, app_args: list[bytes] | None = None) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionResponse)
+clear_state(transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, app_args: list[bytes] | None = None) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionResponse)
 
 Submits a signed transaction with on_complete=ClearState
 
@@ -97,7 +97,7 @@ Submits a signed transaction with on_complete=ClearState
 
 ### close_out
 
-close_out(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.ABITransactionResponse)
+close_out(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.ABITransactionResponse)
 
 Submits a signed transaction with on_complete=CloseOut
 
@@ -105,7 +105,7 @@ Submits a signed transaction with on_complete=CloseOut
 
 ### compose_call
 
-compose_call(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.OnCompleteCallParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.OnCompleteCallParameters) | [algokit_utils.models.OnCompleteCallParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.OnCompleteCallParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
+compose_call(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.OnCompleteCallParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.OnCompleteCallParameters) | [algokit_utils.models.OnCompleteCallParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.OnCompleteCallParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
 
 Adds a signed transaction with specified parameters to atc
 
@@ -113,7 +113,7 @@ Adds a signed transaction with specified parameters to atc
 
 ### compose_clear_state
 
-compose_clear_state(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, app_args: list[bytes] | None = None) → None
+compose_clear_state(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, app_args: list[bytes] | None = None) → None
 
 Adds a signed transaction with on_complete=ClearState to atc
 
@@ -121,7 +121,7 @@ Adds a signed transaction with on_complete=ClearState to atc
 
 ### compose_close_out
 
-compose_close_out(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
+compose_close_out(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
 
 Adds a signed transaction with on_complete=CloseOut to ac
 
@@ -129,7 +129,7 @@ Adds a signed transaction with on_complete=CloseOut to ac
 
 ### compose_create
 
-compose_create(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.CreateCallParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.CreateCallParameters) | [algokit_utils.models.CreateCallParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.CreateCallParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
+compose_create(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.CreateCallParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.CreateCallParameters) | [algokit_utils.models.CreateCallParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.CreateCallParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
 
 Adds a signed transaction with application id == 0 and the schema and source of client’s app_spec to atc
 
@@ -137,7 +137,7 @@ Adds a signed transaction with application id == 0 and the schema and source of 
 
 ### compose_delete
 
-compose_delete(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
+compose_delete(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
 
 Adds a signed transaction with on_complete=DeleteApplication to atc
 
@@ -145,7 +145,7 @@ Adds a signed transaction with on_complete=DeleteApplication to atc
 
 ### compose_opt_in
 
-compose_opt_in(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
+compose_opt_in(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
 
 Adds a signed transaction with on_complete=OptIn to atc
 
@@ -153,7 +153,7 @@ Adds a signed transaction with on_complete=OptIn to atc
 
 ### compose_update
 
-compose_update(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
+compose_update(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), /, call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → None
 
 Adds a signed transaction with on_complete=UpdateApplication to atc
 
@@ -161,7 +161,7 @@ Adds a signed transaction with on_complete=UpdateApplication to atc
 
 ### create
 
-create(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.CreateCallParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.CreateCallParameters) | [algokit_utils.models.CreateCallParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.CreateCallParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.ABITransactionResponse)
+create(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.CreateCallParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.CreateCallParameters) | [algokit_utils.models.CreateCallParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.CreateCallParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.ABITransactionResponse)
 
 Submits a signed transaction with application id == 0 and the schema and source of client’s app_spec
 
@@ -169,7 +169,7 @@ Submits a signed transaction with application id == 0 and the schema and source 
 
 ### delete
 
-delete(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.ABITransactionResponse)
+delete(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.ABITransactionResponse)
 
 Submits a signed transaction with on_complete=DeleteApplication
 
@@ -177,7 +177,7 @@ Submits a signed transaction with on_complete=DeleteApplication
 
 ### deploy
 
-deploy(version: str | None = None, \*, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, sender: str | None = None, allow_update: bool | None = None, allow_delete: bool | None = None, on_update: [algokit_utils.deploy.OnUpdate](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.OnUpdate) = au_deploy.OnUpdate.Fail, on_schema_break: [algokit_utils.deploy.OnSchemaBreak](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.OnSchemaBreak) = au_deploy.OnSchemaBreak.Fail, template_values: algokit_utils.deploy.TemplateValueMapping | None = None, create_args: [algokit_utils.deploy.ABICreateCallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.ABICreateCallArgs) | [algokit_utils.deploy.ABICreateCallArgsDict](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.ABICreateCallArgsDict) | [algokit_utils.deploy.DeployCreateCallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.DeployCreateCallArgs) | None = None, update_args: [algokit_utils.deploy.ABICallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.ABICallArgs) | [algokit_utils.deploy.ABICallArgsDict](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.ABICallArgsDict) | [algokit_utils.deploy.DeployCallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.DeployCallArgs) | None = None, delete_args: [algokit_utils.deploy.ABICallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.ABICallArgs) | [algokit_utils.deploy.ABICallArgsDict](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.ABICallArgsDict) | [algokit_utils.deploy.DeployCallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.DeployCallArgs) | None = None) → [algokit_utils.deploy.DeployResponse](/reference/algokit-utils-py/API Reference/algokit_utils.deploy.mdx#algokit_utils.deploy.DeployResponse)
+deploy(version: str | None = None, \*, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, sender: str | None = None, allow_update: bool | None = None, allow_delete: bool | None = None, on_update: [algokit_utils.deploy.OnUpdate](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.OnUpdate) = au_deploy.OnUpdate.Fail, on_schema_break: [algokit_utils.deploy.OnSchemaBreak](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.OnSchemaBreak) = au_deploy.OnSchemaBreak.Fail, template_values: algokit_utils.deploy.TemplateValueMapping | None = None, create_args: [algokit_utils.deploy.ABICreateCallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.ABICreateCallArgs) | [algokit_utils.deploy.ABICreateCallArgsDict](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.ABICreateCallArgsDict) | [algokit_utils.deploy.DeployCreateCallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.DeployCreateCallArgs) | None = None, update_args: [algokit_utils.deploy.ABICallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.ABICallArgs) | [algokit_utils.deploy.ABICallArgsDict](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.ABICallArgsDict) | [algokit_utils.deploy.DeployCallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.DeployCallArgs) | None = None, delete_args: [algokit_utils.deploy.ABICallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.ABICallArgs) | [algokit_utils.deploy.ABICallArgsDict](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.ABICallArgsDict) | [algokit_utils.deploy.DeployCallArgs](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.DeployCallArgs) | None = None) → [algokit_utils.deploy.DeployResponse](/reference/algokit-utils-py/API Reference/algokit_utils.deploy#algokit_utils.deploy.DeployResponse)
 
 Deploy an application and update client to reference it.
 
@@ -237,7 +237,7 @@ Gets the local state info for associated app_id and account/sender
 
 ### get_signer_sender
 
-get_signer_sender(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, sender: str | None = None) → tuple[[algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None, str | None]
+get_signer_sender(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, sender: str | None = None) → tuple[[algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None, str | None]
 
 Return signer and sender, using default values on client if not specified
 
@@ -256,7 +256,7 @@ Import approval source from JSON exported by `export_source_map`
 
 ### opt_in
 
-opt_in(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.ABITransactionResponse)
+opt_in(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.ABITransactionResponse)
 
 Submits a signed transaction with on_complete=OptIn
 
@@ -264,7 +264,7 @@ Submits a signed transaction with on_complete=OptIn
 
 ### prepare
 
-prepare(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.Account) | None = None, sender: str | None = None, app_id: int | None = None, template_values: algokit_utils.deploy.TemplateValueDict | None = None) → [algokit_utils.application_client.ApplicationClient](#algokit_utils.application_client.ApplicationClient)
+prepare(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.Account) | None = None, sender: str | None = None, app_id: int | None = None, template_values: algokit_utils.deploy.TemplateValueDict | None = None) → [algokit_utils.application_client.ApplicationClient](#algokit_utils.application_client.ApplicationClient)
 
 Creates a copy of this ApplicationClient, using the new signer, sender and app_id values if provided.
 Will also substitute provided template_values into the associated app_spec in the copy
@@ -273,7 +273,7 @@ Will also substitute provided template_values into the associated app_spec in th
 
 ### resolve
 
-resolve(to_resolve: [algokit_utils.application_specification.DefaultArgumentDict](/reference/algokit-utils-py/API Reference/algokit_utils.application_specification.mdx#algokit_utils.application_specification.DefaultArgumentDict)) → int | str | bytes
+resolve(to_resolve: [algokit_utils.application_specification.DefaultArgumentDict](/reference/algokit-utils-py/API Reference/algokit_utils.application_specification#algokit_utils.application_specification.DefaultArgumentDict)) → int | str | bytes
 
 Resolves the default value for an ABI method, based on app_spec
 
@@ -281,7 +281,7 @@ Resolves the default value for an ABI method, based on app_spec
 
 ### resolve_signer_sender
 
-resolve_signer_sender(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, sender: str | None = None) → tuple[[algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner), str]
+resolve_signer_sender(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, sender: str | None = None) → tuple[[algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner), str]
 
 Return signer and sender, using default values on client if not specified
 
@@ -295,7 +295,7 @@ for variant with no exception
 
 ### update
 
-update(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models.mdx#algokit_utils.models.ABITransactionResponse)
+update(call_abi_method: algokit_utils.models.ABIMethod | bool | None = None, transaction_parameters: [algokit_utils.models.TransactionParameters](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParameters) | [algokit_utils.models.TransactionParametersDict](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionParametersDict) | None = None, \*\*abi_kwargs: algokit_utils.models.ABIArgType) → [algokit_utils.models.TransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.TransactionResponse) | [algokit_utils.models.ABITransactionResponse](/reference/algokit-utils-py/API Reference/algokit_utils.models#algokit_utils.models.ABITransactionResponse)
 
 Submits a signed transaction with on_complete=UpdateApplication
 
@@ -307,14 +307,14 @@ __all__
 
 [‘ApplicationClient’, ‘execute_atc_with_logic_error’, ‘get_next_version’, ‘get_sender_from_signer’, …
 
-Alias for `pyteal.ABIReturnSubroutine`, [`algosdk.abi.method.Method`](/reference/algokit-utils-py/algosdk/algosdk.abi.method.mdx#algosdk.abi.method.Method) or a `str`
+Alias for `pyteal.ABIReturnSubroutine`, [`algosdk.abi.method.Method`](/reference/algokit-utils-py/algosdk/algosdk.abi.method#algosdk.abi.method.Method) or a `str`
 representing an ABI method name or signature
 
 <a id="algokit_utils.application_client.execute_atc_with_logic_error"></a>
 
 ## algokit_utils.application_client.execute_atc_with_logic_error
 
-execute_atc_with_logic_error(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), approval_program: str, wait_rounds: int = 4, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | Callable[[], [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None] | None = None) → algosdk.atomic_transaction_composer.AtomicTransactionResponse
+execute_atc_with_logic_error(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), approval_program: str, wait_rounds: int = 4, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | Callable[[], [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None] | None = None) → algosdk.atomic_transaction_composer.AtomicTransactionResponse
 
 Calls `AtomicTransactionComposer.execute()` on provided `atc`, but will parse any errors
 and raise a `LogicError` if possible
@@ -348,7 +348,7 @@ some valid inputs and incremented outputs:
 
 ## algokit_utils.application_client.get_sender_from_signer
 
-get_sender_from_signer(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None) → str | None
+get_sender_from_signer(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None) → str | None
 
 Returns the associated address of a signer, return None if no address found
 
@@ -374,6 +374,6 @@ Calculate minimum number of extra_pages required for provided approval and clear
 
 ## algokit_utils.application_client.substitute_template_and_compile
 
-substitute_template_and_compile(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), app_spec: [algokit_utils.application_specification.ApplicationSpecification](/reference/algokit-utils-py/API Reference/algokit_utils.application_specification.mdx#algokit_utils.application_specification.ApplicationSpecification), template_values: algokit_utils.deploy.TemplateValueMapping) → tuple[[algokit_utils.common.Program](/reference/algokit-utils-py/API Reference/algokit_utils.common.mdx#algokit_utils.common.Program), [algokit_utils.common.Program](/reference/algokit-utils-py/API Reference/algokit_utils.common.mdx#algokit_utils.common.Program)]
+substitute_template_and_compile(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), app_spec: [algokit_utils.application_specification.ApplicationSpecification](/reference/algokit-utils-py/API Reference/algokit_utils.application_specification#algokit_utils.application_specification.ApplicationSpecification), template_values: algokit_utils.deploy.TemplateValueMapping) → tuple[[algokit_utils.common.Program](/reference/algokit-utils-py/API Reference/algokit_utils.common#algokit_utils.common.Program), [algokit_utils.common.Program](/reference/algokit-utils-py/API Reference/algokit_utils.common#algokit_utils.common.Program)]
 
 Substitutes the provided template_values into app_spec and compiles

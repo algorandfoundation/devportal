@@ -46,7 +46,7 @@ The account’s address
 
 ### amount
 
-amount *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+amount *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount)*
 
 None
 
@@ -56,7 +56,7 @@ The account’s current balance
 
 ### amount_without_pending_rewards
 
-amount_without_pending_rewards *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+amount_without_pending_rewards *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount)*
 
 None
 
@@ -196,7 +196,7 @@ Last round this account proposed a block
 
 ### min_balance
 
-min_balance *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+min_balance *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount)*
 
 None
 
@@ -216,7 +216,7 @@ Participation information for this account
 
 ### pending_rewards
 
-pending_rewards *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+pending_rewards *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount)*
 
 None
 
@@ -236,7 +236,7 @@ Base reward for this account
 
 ### rewards
 
-rewards *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+rewards *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount)*
 
 None
 
@@ -336,7 +336,7 @@ Number of assets created by this account
 
 ## *class* algokit_utils.accounts.account_manager.AccountManager
 
-AccountManager(client_manager: [algokit_utils.clients.client_manager.ClientManager](algokit_utils.clients.client_manager.mdx#algokit_utils.clients.client_manager.ClientManager))
+AccountManager(client_manager: [algokit_utils.clients.client_manager.ClientManager](/reference/algokit-utils-py/API Reference/algokit_utils.clients.client_manager#algokit_utils.clients.client_manager.ClientManager))
 
 Creates and keeps track of signing accounts that can sign transactions for a sending address.
 
@@ -354,7 +354,7 @@ mnemonic-based, rekeyed, multisig, and logic signature accounts.
 
 ### dispenser_from_environment
 
-dispenser_from_environment() → [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+dispenser_from_environment() → [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Returns an account (with private key loaded) that can act as a dispenser from environment variables.
 
@@ -369,7 +369,7 @@ If environment variables are not present, returns the default LocalNet dispenser
 
 ### ensure_funded
 
-ensure_funded(account_to_fund: str | [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount), dispenser_account: str | [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount), min_spending_balance: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount), min_funding_increment: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, send_params: [algokit_utils.models.transaction.SendParams](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.SendParams) | None = None, signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, rekey_to: str | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None) → [algokit_utils.accounts.account_manager.EnsureFundedResult](#algokit_utils.accounts.account_manager.EnsureFundedResult) | None
+ensure_funded(account_to_fund: str | [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount), dispenser_account: str | [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount), min_spending_balance: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount), min_funding_increment: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/API Reference/algokit_utils.models.transaction#algokit_utils.models.transaction.SendParams) | None = None, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, rekey_to: str | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None) → [algokit_utils.accounts.account_manager.EnsureFundedResult](#algokit_utils.accounts.account_manager.EnsureFundedResult) | None
 
 Funds a given account using a dispenser account as a funding source.
 
@@ -414,7 +414,7 @@ or None if no funds were needed
 
 ### ensure_funded_from_environment
 
-ensure_funded_from_environment(account_to_fund: str | [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount), min_spending_balance: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount), \*, min_funding_increment: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, send_params: [algokit_utils.models.transaction.SendParams](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.SendParams) | None = None, signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, rekey_to: str | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None) → [algokit_utils.accounts.account_manager.EnsureFundedResult](#algokit_utils.accounts.account_manager.EnsureFundedResult) | None
+ensure_funded_from_environment(account_to_fund: str | [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount), min_spending_balance: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount), \*, min_funding_increment: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/API Reference/algokit_utils.models.transaction#algokit_utils.models.transaction.SendParams) | None = None, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, rekey_to: str | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None) → [algokit_utils.accounts.account_manager.EnsureFundedResult](#algokit_utils.accounts.account_manager.EnsureFundedResult) | None
 
 Ensure an account is funded from a dispenser account configured in environment.
 
@@ -463,7 +463,7 @@ if it’s a rekeyed account, or against default LocalNet if no environment varia
 
 ### ensure_funded_from_testnet_dispenser_api
 
-ensure_funded_from_testnet_dispenser_api(account_to_fund: str | [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount), dispenser_client: [algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient](algokit_utils.clients.dispenser_api_client.mdx#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient), min_spending_balance: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount), \*, min_funding_increment: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None) → [algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult](#algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult) | None
+ensure_funded_from_testnet_dispenser_api(account_to_fund: str | [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount), dispenser_client: [algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient](/reference/algokit-utils-py/API Reference/algokit_utils.clients.dispenser_api_client#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient), min_spending_balance: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount), \*, min_funding_increment: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None) → [algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult](#algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult) | None
 
 Ensure an account is funded using the TestNet Dispenser API.
 
@@ -500,7 +500,7 @@ None if no funds were needed
 
 ### from_environment
 
-from_environment(name: str, fund_with: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None) → [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+from_environment(name: str, fund_with: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None) → [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Tracks and returns an Algorand account with private key loaded by convention from environment variables.
 
@@ -531,7 +531,7 @@ it will create it and fund the account for you
 
 ### from_kmd
 
-from_kmd(name: str, predicate: collections.abc.Callable[[dict[str, Any]], bool] | None = None, sender: str | None = None) → [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+from_kmd(name: str, predicate: collections.abc.Callable[[dict[str, Any]], bool] | None = None, sender: str | None = None) → [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Tracks and returns an Algorand account with private key loaded from the given KMD wallet.
 
@@ -551,7 +551,7 @@ Tracks and returns an Algorand account with private key loaded from the given KM
 
 ### from_mnemonic
 
-from_mnemonic(\*, mnemonic: str, sender: str | None = None) → [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+from_mnemonic(\*, mnemonic: str, sender: str | None = None) → [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Tracks and returns an Algorand account with secret key loaded by taking the mnemonic secret.
 
@@ -570,7 +570,7 @@ from the environment (ideally via a secret storage service) rather than the file
 
 ### get_account
 
-get_account(sender: str) → [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol)
+get_account(sender: str) → [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol)
 
 Returns the `TransactionSignerAccountProtocol` for the given sender address.
 
@@ -588,7 +588,7 @@ Returns the `TransactionSignerAccountProtocol` for the given sender address.
 
 ### get_information
 
-get_information(sender: str | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → [algokit_utils.accounts.account_manager.AccountInformation](#algokit_utils.accounts.account_manager.AccountInformation)
+get_information(sender: str | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → [algokit_utils.accounts.account_manager.AccountInformation](#algokit_utils.accounts.account_manager.AccountInformation)
 
 Returns the given sender account’s current status, balance and spendable amounts.
 
@@ -606,7 +606,7 @@ for response data schema details.
 
 ### get_signer
 
-get_signer(sender: str | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)
+get_signer(sender: str | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner)
 
 Returns the `TransactionSigner` for the given sender address.
 
@@ -623,7 +623,7 @@ If no signer has been registered for that address then the default signer is use
 
 ### *property* kmd
 
-kmd *: [algokit_utils.accounts.kmd_account_manager.KmdAccountManager](algokit_utils.accounts.kmd_account_manager.mdx#algokit_utils.accounts.kmd_account_manager.KmdAccountManager)*
+kmd *: [algokit_utils.accounts.kmd_account_manager.KmdAccountManager](/reference/algokit-utils-py/API Reference/algokit_utils.accounts.kmd_account_manager#algokit_utils.accounts.kmd_account_manager.KmdAccountManager)*
 
 KMD account manager that allows you to easily get and create accounts using KMD.
 
@@ -635,7 +635,7 @@ KMD account manager that allows you to easily get and create accounts using KMD.
 
 ### localnet_dispenser
 
-localnet_dispenser() → [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+localnet_dispenser() → [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Returns an Algorand account with private key loaded for the default LocalNet dispenser account.
 
@@ -650,7 +650,7 @@ This account can be used to fund other accounts.
 
 ### logicsig
 
-logicsig(program: bytes, args: list[bytes] | None = None) → [algokit_utils.models.account.LogicSigAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.LogicSigAccount)
+logicsig(program: bytes, args: list[bytes] | None = None) → [algokit_utils.models.account.LogicSigAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.LogicSigAccount)
 
 Tracks and returns an account that represents a logic signature.
 
@@ -665,7 +665,7 @@ Tracks and returns an account that represents a logic signature.
 
 ### multisig
 
-multisig(metadata: [algokit_utils.models.account.MultisigMetadata](algokit_utils.models.account.mdx#algokit_utils.models.account.MultisigMetadata), signing_accounts: list[[algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)]) → [algokit_utils.models.account.MultiSigAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.MultiSigAccount)
+multisig(metadata: [algokit_utils.models.account.MultisigMetadata](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.MultisigMetadata), signing_accounts: list[[algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)]) → [algokit_utils.models.account.MultiSigAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.MultiSigAccount)
 
 Tracks and returns an account that supports partial or full multisig signing.
 
@@ -685,7 +685,7 @@ Tracks and returns an account that supports partial or full multisig signing.
 
 ### random
 
-random() → [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+random() → [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Tracks and returns a new, random Algorand account.
 
@@ -698,7 +698,7 @@ Tracks and returns a new, random Algorand account.
 
 ### rekey_account
 
-rekey_account(account: str, rekey_to: str | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol), \*, signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None, suppress_log: bool | None = None) → [algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults](algokit_utils.transactions.transaction_composer.mdx#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+rekey_account(account: str, rekey_to: str | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol), \*, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None, suppress_log: bool | None = None) → [algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_composer#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
 
 Rekey an account to a new address.
 
@@ -743,7 +743,7 @@ Please be careful with this function and be sure to read the
 
 ### rekeyed
 
-rekeyed(\*, sender: str, account: [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → [algokit_utils.models.account.TransactionSignerAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.TransactionSignerAccount) | [algokit_utils.models.account.SigningAccount](algokit_utils.models.account.mdx#algokit_utils.models.account.SigningAccount)
+rekeyed(\*, sender: str, account: [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → [algokit_utils.models.account.TransactionSignerAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.TransactionSignerAccount) | [algokit_utils.models.account.SigningAccount](/reference/algokit-utils-py/API Reference/algokit_utils.models.account#algokit_utils.models.account.SigningAccount)
 
 Tracks and returns an Algorand account that is a rekeyed version of the given account to a new sender.
 
@@ -759,7 +759,7 @@ Tracks and returns an Algorand account that is a rekeyed version of the given ac
 
 ### set_default_signer
 
-set_default_signer(signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → typing_extensions.Self
+set_default_signer(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → typing_extensions.Self
 
 Sets the default signer to use if no other signer is specified.
 
@@ -777,7 +777,7 @@ then an error will be thrown from `get_signer` / `get_account`.
 
 ### set_signer
 
-set_signer(sender: str, signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)) → typing_extensions.Self
+set_signer(sender: str, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner)) → typing_extensions.Self
 
 Tracks the given `TransactionSigner` against the given sender address for later signing.
 
@@ -792,7 +792,7 @@ Tracks the given `TransactionSigner` against the given sender address for later 
 
 ### set_signer_from_account
 
-set_signer_from_account(\*args: [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol), \*\*kwargs: [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → typing_extensions.Self
+set_signer_from_account(\*args: [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol), \*\*kwargs: [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → typing_extensions.Self
 
 Tracks the given account for later signing.
 
@@ -850,7 +850,7 @@ Result from performing an ensure funded call using TestNet dispenser API.
 
 ### amount_funded
 
-amount_funded *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+amount_funded *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount)*
 
 None
 
@@ -878,7 +878,7 @@ Result from performing an ensure funded call.
 
 ### amount_funded
 
-amount_funded *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+amount_funded *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount)*
 
 None
 
@@ -918,7 +918,7 @@ The group ID
 
 ### returns
 
-returns *: list[[algokit_utils.applications.abi.ABIReturn](algokit_utils.applications.abi.mdx#algokit_utils.applications.abi.ABIReturn)] | None*
+returns *: list[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/API Reference/algokit_utils.applications.abi#algokit_utils.applications.abi.ABIReturn)] | None*
 
 None
 
@@ -928,7 +928,7 @@ The ABI return value if applicable
 
 ### transaction
 
-transaction *: [algokit_utils.models.transaction.TransactionWrapper](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.TransactionWrapper)*
+transaction *: [algokit_utils.models.transaction.TransactionWrapper](/reference/algokit-utils-py/API Reference/algokit_utils.models.transaction#algokit_utils.models.transaction.TransactionWrapper)*
 
 None
 
@@ -948,7 +948,7 @@ The transaction ID of the funded transaction
 
 ### transactions
 
-transactions *: list[[algokit_utils.models.transaction.TransactionWrapper](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.TransactionWrapper)]*
+transactions *: list[[algokit_utils.models.transaction.TransactionWrapper](/reference/algokit-utils-py/API Reference/algokit_utils.models.transaction#algokit_utils.models.transaction.TransactionWrapper)]*
 
 None
 

@@ -23,7 +23,7 @@ title: "algokit_utils.algorand"
 
 ## *class* algokit_utils.algorand.AlgorandClient
 
-AlgorandClient(config: algokit_utils.models.network.AlgoClientConfigs | [algokit_utils.clients.client_manager.AlgoSdkClients](algokit_utils.clients.client_manager.mdx#algokit_utils.clients.client_manager.AlgoSdkClients))
+AlgorandClient(config: algokit_utils.models.network.AlgoClientConfigs | [algokit_utils.clients.client_manager.AlgoSdkClients](/reference/algokit-utils-py/API Reference/algokit_utils.clients.client_manager#algokit_utils.clients.client_manager.AlgoSdkClients))
 
 A client that brokers easy access to Algorand functionality.
 
@@ -33,7 +33,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### *property* account
 
-account *: [algokit_utils.accounts.account_manager.AccountManager](algokit_utils.accounts.account_manager.mdx#algokit_utils.accounts.account_manager.AccountManager)*
+account *: [algokit_utils.accounts.account_manager.AccountManager](/reference/algokit-utils-py/API Reference/algokit_utils.accounts.account_manager#algokit_utils.accounts.account_manager.AccountManager)*
 
 Get or create accounts that can sign transactions.
 
@@ -44,7 +44,7 @@ Get or create accounts that can sign transactions.
 
 ### *property* app
 
-app *: [algokit_utils.applications.app_manager.AppManager](algokit_utils.applications.app_manager.mdx#algokit_utils.applications.app_manager.AppManager)*
+app *: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_manager#algokit_utils.applications.app_manager.AppManager)*
 
 Get or create applications.
 
@@ -55,7 +55,7 @@ Get or create applications.
 
 ### *property* app_deployer
 
-app_deployer *: [algokit_utils.applications.app_deployer.AppDeployer](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.AppDeployer)*
+app_deployer *: [algokit_utils.applications.app_deployer.AppDeployer](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.AppDeployer)*
 
 Get or create applications.
 
@@ -66,7 +66,7 @@ Get or create applications.
 
 ### *property* asset
 
-asset *: [algokit_utils.assets.asset_manager.AssetManager](algokit_utils.assets.asset_manager.mdx#algokit_utils.assets.asset_manager.AssetManager)*
+asset *: [algokit_utils.assets.asset_manager.AssetManager](/reference/algokit-utils-py/API Reference/algokit_utils.assets.asset_manager#algokit_utils.assets.asset_manager.AssetManager)*
 
 Get or create assets.
 
@@ -77,7 +77,7 @@ Get or create assets.
 
 ### *property* client
 
-client *: [algokit_utils.clients.client_manager.ClientManager](algokit_utils.clients.client_manager.mdx#algokit_utils.clients.client_manager.ClientManager)*
+client *: [algokit_utils.clients.client_manager.ClientManager](/reference/algokit-utils-py/API Reference/algokit_utils.clients.client_manager#algokit_utils.clients.client_manager.ClientManager)*
 
 Get clients, including algosdk clients and app clients.
 
@@ -88,7 +88,7 @@ Get clients, including algosdk clients and app clients.
 
 ### *property* create_transaction
 
-create_transaction *: [algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator](algokit_utils.transactions.transaction_creator.mdx#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)*
+create_transaction *: [algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_creator#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)*
 
 Methods for building transactions
 
@@ -117,7 +117,7 @@ Returns an `AlgorandClient` pointing at default LocalNet ports and API token.
 
 ### *static* from_clients
 
-from_clients(algod: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), indexer: [algosdk.v2client.indexer.IndexerClient](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient) | None = None, kmd: [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient) | None = None) → [algokit_utils.algorand.AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+from_clients(algod: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), indexer: [algosdk.v2client.indexer.IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer#algosdk.v2client.indexer.IndexerClient) | None = None, kmd: [algosdk.kmd.KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient) | None = None) → [algokit_utils.algorand.AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an `AlgorandClient` pointing to the given client(s).
 
@@ -133,7 +133,7 @@ Returns an `AlgorandClient` pointing to the given client(s).
 
 ### *static* from_config
 
-from_config(algod_config: [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig), indexer_config: [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None, kmd_config: [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None) → [algokit_utils.algorand.AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+from_config(algod_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig), indexer_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None, kmd_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None) → [algokit_utils.algorand.AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an `AlgorandClient` from the given config.
 
@@ -166,7 +166,7 @@ Expects to be called from a Python environment.
 
 ### get_suggested_params
 
-get_suggested_params() → [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams)
+get_suggested_params() → [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams)
 
 Get suggested params for a transaction (either cached or from algod if the cache is stale or empty)
 
@@ -190,7 +190,7 @@ Returns an `AlgorandClient` pointing at MainNet using AlgoNode.
 
 ### new_group
 
-new_group() → [algokit_utils.transactions.transaction_composer.TransactionComposer](algokit_utils.transactions.transaction_composer.mdx#algokit_utils.transactions.transaction_composer.TransactionComposer)
+new_group() → [algokit_utils.transactions.transaction_composer.TransactionComposer](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_composer#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Start a new `TransactionComposer` transaction group
 
@@ -202,7 +202,7 @@ Start a new `TransactionComposer` transaction group
 
 ### *property* send
 
-send *: [algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender](algokit_utils.transactions.transaction_sender.mdx#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender)*
+send *: [algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_sender#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender)*
 
 Methods for sending a transaction and waiting for confirmation
 
@@ -218,7 +218,7 @@ Methods for sending a transaction and waiting for confirmation
 
 ### set_default_signer
 
-set_default_signer(signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → typing_extensions.Self
+set_default_signer(signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → typing_extensions.Self
 
 Sets the default signer to use if no other signer is specified.
 
@@ -245,7 +245,7 @@ Sets the default validity window for transactions.
 
 ### set_signer
 
-set_signer(sender: str, signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)) → typing_extensions.Self
+set_signer(sender: str, signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner)) → typing_extensions.Self
 
 Tracks the given account for later signing.
 
@@ -260,7 +260,7 @@ Tracks the given account for later signing.
 
 ### set_signer_from_account
 
-set_signer_from_account(signer: [algokit_utils.protocols.account.TransactionSignerAccountProtocol](algokit_utils.protocols.account.mdx#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → typing_extensions.Self
+set_signer_from_account(signer: [algokit_utils.protocols.account.TransactionSignerAccountProtocol](/reference/algokit-utils-py/API Reference/algokit_utils.protocols.account#algokit_utils.protocols.account.TransactionSignerAccountProtocol)) → typing_extensions.Self
 
 Sets the default signer to use if no other signer is specified.
 
@@ -278,7 +278,7 @@ Sets the default signer to use if no other signer is specified.
 
 ### set_suggested_params_cache
 
-set_suggested_params_cache(suggested_params: [algosdk.transaction.SuggestedParams](../algosdk/algosdk.transaction.mdx#algosdk.transaction.SuggestedParams), until: float | None = None) → typing_extensions.Self
+set_suggested_params_cache(suggested_params: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.SuggestedParams), until: float | None = None) → typing_extensions.Self
 
 Sets a cache value to use for suggested params.
 

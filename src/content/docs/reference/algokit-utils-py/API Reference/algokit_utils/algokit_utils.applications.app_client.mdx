@@ -77,7 +77,7 @@ methods for calling application methods, managing state, and handling transactio
 
 ### *property* algorand
 
-algorand *: [algokit_utils.algorand.AlgorandClient](algokit_utils.algorand.mdx#algokit_utils.algorand.AlgorandClient)*
+algorand *: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/API Reference/algokit_utils.algorand#algokit_utils.algorand.AlgorandClient)*
 
 Get the Algorand client instance.
 
@@ -117,7 +117,7 @@ Get the application name.
 
 ### *property* app_spec
 
-app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract)*
+app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract)*
 
 Get the application specification.
 
@@ -127,7 +127,7 @@ Get the application specification.
 
 ### clone
 
-clone(app_name: str | None = \_MISSING, default_sender: str | None = \_MISSING, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = \_MISSING, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = \_MISSING, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = \_MISSING) → [algokit_utils.applications.app_client.AppClient](#algokit_utils.applications.app_client.AppClient)
+clone(app_name: str | None = \_MISSING, default_sender: str | None = \_MISSING, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = \_MISSING, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = \_MISSING, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = \_MISSING) → [algokit_utils.applications.app_client.AppClient](#algokit_utils.applications.app_client.AppClient)
 
 Create a cloned AppClient instance with optionally overridden parameters.
 
@@ -146,7 +146,7 @@ Create a cloned AppClient instance with optionally overridden parameters.
 
 ### *static* compile
 
-compile(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract), app_manager: [algokit_utils.applications.app_manager.AppManager](algokit_utils.applications.app_manager.mdx#algokit_utils.applications.app_manager.AppManager), compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [algokit_utils.applications.app_client.AppClientCompilationResult](#algokit_utils.applications.app_client.AppClientCompilationResult)
+compile(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract), app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_manager#algokit_utils.applications.app_manager.AppManager), compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [algokit_utils.applications.app_client.AppClientCompilationResult](#algokit_utils.applications.app_client.AppClientCompilationResult)
 
 Compile the application’s TEAL code.
 
@@ -181,7 +181,7 @@ Get the transaction creator.
 
 ### export_source_maps
 
-export_source_maps() → [algokit_utils.models.application.AppSourceMaps](algokit_utils.models.application.mdx#algokit_utils.models.application.AppSourceMaps)
+export_source_maps() → [algokit_utils.models.application.AppSourceMaps](/reference/algokit-utils-py/API Reference/algokit_utils.models.application#algokit_utils.models.application.AppSourceMaps)
 
 Export the application’s source maps.
 
@@ -192,7 +192,7 @@ Export the application’s source maps.
 
 ### *static* from_creator_and_name
 
-from_creator_and_name(creator_address: str, app_name: str, app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](algokit_utils.applications.app_spec.arc32.mdx#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str, algorand: [algokit_utils.algorand.AlgorandClient](algokit_utils.algorand.mdx#algokit_utils.algorand.AlgorandClient), default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → [algokit_utils.applications.app_client.AppClient](#algokit_utils.applications.app_client.AppClient)
+from_creator_and_name(creator_address: str, app_name: str, app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc32#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str, algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/API Reference/algokit_utils.algorand#algokit_utils.algorand.AlgorandClient), default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → [algokit_utils.applications.app_client.AppClient](#algokit_utils.applications.app_client.AppClient)
 
 Create an AppClient instance from creator address and application name.
 
@@ -221,7 +221,7 @@ Create an AppClient instance from creator address and application name.
 
 ### *static* from_network
 
-from_network(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](algokit_utils.applications.app_spec.arc32.mdx#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str, algorand: [algokit_utils.algorand.AlgorandClient](algokit_utils.algorand.mdx#algokit_utils.algorand.AlgorandClient), app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](#algokit_utils.applications.app_client.AppClient)
+from_network(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc32#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str, algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/API Reference/algokit_utils.algorand#algokit_utils.algorand.AlgorandClient), app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](#algokit_utils.applications.app_client.AppClient)
 
 Create an AppClient instance from network information.
 
@@ -257,7 +257,7 @@ Create an AppClient instance from network information.
 
 ### fund_app_account
 
-fund_app_account(params: [algokit_utils.applications.app_client.FundAppAccountParams](#algokit_utils.applications.app_client.FundAppAccountParams), send_params: [algokit_utils.models.transaction.SendParams](algokit_utils.models.transaction.mdx#algokit_utils.models.transaction.SendParams) | None = None) → [algokit_utils.transactions.transaction_sender.SendSingleTransactionResult](algokit_utils.transactions.transaction_sender.mdx#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+fund_app_account(params: [algokit_utils.applications.app_client.FundAppAccountParams](#algokit_utils.applications.app_client.FundAppAccountParams), send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/API Reference/algokit_utils.models.transaction#algokit_utils.models.transaction.SendParams) | None = None) → [algokit_utils.transactions.transaction_sender.SendSingleTransactionResult](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_sender#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Fund the application’s account.
 
@@ -272,7 +272,7 @@ Fund the application’s account.
 
 ### get_box_names
 
-get_box_names() → list[[algokit_utils.models.state.BoxName](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxName)]
+get_box_names() → list[[algokit_utils.models.state.BoxName](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxName)]
 
 Get all box names for the application.
 
@@ -314,7 +314,7 @@ Get a box value decoded according to an ABI type.
 
 ### get_box_values
 
-get_box_values(filter_func: collections.abc.Callable[[[algokit_utils.models.state.BoxName](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxName)], bool] | None = None) → list[[algokit_utils.models.state.BoxValue](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxValue)]
+get_box_values(filter_func: collections.abc.Callable[[[algokit_utils.models.state.BoxName](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxName)], bool] | None = None) → list[[algokit_utils.models.state.BoxValue](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxValue)]
 
 Get values for multiple boxes.
 
@@ -328,7 +328,7 @@ Get values for multiple boxes.
 
 ### get_box_values_from_abi_type
 
-get_box_values_from_abi_type(abi_type: algokit_utils.applications.abi.ABIType, filter_func: collections.abc.Callable[[[algokit_utils.models.state.BoxName](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxName)], bool] | None = None) → list[[algokit_utils.applications.abi.BoxABIValue](algokit_utils.applications.abi.mdx#algokit_utils.applications.abi.BoxABIValue)]
+get_box_values_from_abi_type(abi_type: algokit_utils.applications.abi.ABIType, filter_func: collections.abc.Callable[[[algokit_utils.models.state.BoxName](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxName)], bool] | None = None) → list[[algokit_utils.applications.abi.BoxABIValue](/reference/algokit-utils-py/API Reference/algokit_utils.applications.abi#algokit_utils.applications.abi.BoxABIValue)]
 
 Get multiple box values decoded according to an ABI type.
 
@@ -366,7 +366,7 @@ Get local state for an account.
 
 ### import_source_maps
 
-import_source_maps(source_maps: [algokit_utils.models.application.AppSourceMaps](algokit_utils.models.application.mdx#algokit_utils.models.application.AppSourceMaps)) → None
+import_source_maps(source_maps: [algokit_utils.models.application.AppSourceMaps](/reference/algokit-utils-py/API Reference/algokit_utils.models.application#algokit_utils.models.application.AppSourceMaps)) → None
 
 Import source maps for the application.
 
@@ -377,7 +377,7 @@ Import source maps for the application.
 
 ### *static* normalise_app_spec
 
-normalise_app_spec(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](algokit_utils.applications.app_spec.arc32.mdx#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str) → [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract)
+normalise_app_spec(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc32#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str) → [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract)
 
 Normalize an application specification to ARC-56 format.
 
@@ -474,7 +474,7 @@ List of asset IDs to reference
 
 ### box_references
 
-box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
 
 None
 
@@ -484,7 +484,7 @@ List of box references to include
 
 ### extra_fee
 
-extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -534,7 +534,7 @@ Transaction lease value
 
 ### max_fee
 
-max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -574,7 +574,7 @@ Address to rekey account to
 
 ### schema
 
-schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](algokit_utils.transactions.transaction_composer.mdx#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_composer#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
 
 None
 
@@ -594,7 +594,7 @@ Sender address override
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -604,7 +604,7 @@ Custom transaction signer
 
 ### static_fee
 
-static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -672,7 +672,7 @@ List of asset IDs to reference
 
 ### box_references
 
-box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
 
 None
 
@@ -682,7 +682,7 @@ List of box references to include
 
 ### extra_fee
 
-extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -722,7 +722,7 @@ Transaction lease value
 
 ### max_fee
 
-max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -742,7 +742,7 @@ Custom note for the transaction
 
 ### on_complete
 
-on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+on_complete *: [algosdk.transaction.OnComplete](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.OnComplete) | None*
 
 None
 
@@ -772,7 +772,7 @@ Sender address override
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -782,7 +782,7 @@ Custom transaction signer
 
 ### static_fee
 
-static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1165,7 +1165,7 @@ The compiled clear state program bytes
 
 ### compiled_approval
 
-compiled_approval *: [algokit_utils.models.application.CompiledTeal](algokit_utils.models.application.mdx#algokit_utils.models.application.CompiledTeal) | None*
+compiled_approval *: [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/API Reference/algokit_utils.models.application#algokit_utils.models.application.CompiledTeal) | None*
 
 None
 
@@ -1175,7 +1175,7 @@ Optional compilation artifacts for approval program
 
 ### compiled_clear
 
-compiled_clear *: [algokit_utils.models.application.CompiledTeal](algokit_utils.models.application.mdx#algokit_utils.models.application.CompiledTeal) | None*
+compiled_clear *: [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/API Reference/algokit_utils.models.application#algokit_utils.models.application.CompiledTeal) | None*
 
 None
 
@@ -1203,7 +1203,7 @@ Optional number of extra program pages
 
 ### schema
 
-schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](algokit_utils.transactions.transaction_composer.mdx#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_composer#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
 
 None
 
@@ -1261,7 +1261,7 @@ List of asset IDs to reference
 
 ### box_references
 
-box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
 
 None
 
@@ -1271,7 +1271,7 @@ List of box references to include
 
 ### extra_fee
 
-extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1321,7 +1321,7 @@ Transaction lease value
 
 ### max_fee
 
-max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1371,7 +1371,7 @@ Address to rekey account to
 
 ### schema
 
-schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](algokit_utils.transactions.transaction_composer.mdx#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_composer#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
 
 None
 
@@ -1391,7 +1391,7 @@ Sender address override
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -1401,7 +1401,7 @@ Custom transaction signer
 
 ### static_fee
 
-static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1469,7 +1469,7 @@ List of asset IDs to reference
 
 ### box_references
 
-box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
 
 None
 
@@ -1479,7 +1479,7 @@ List of box references to include
 
 ### extra_fee
 
-extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1519,7 +1519,7 @@ Transaction lease value
 
 ### max_fee
 
-max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1549,7 +1549,7 @@ Custom note for the transaction
 
 ### on_complete
 
-on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+on_complete *: [algosdk.transaction.OnComplete](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.OnComplete) | None*
 
 None
 
@@ -1579,7 +1579,7 @@ Sender address override
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -1589,7 +1589,7 @@ Custom transaction signer
 
 ### static_fee
 
-static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1617,7 +1617,7 @@ Full parameters for creating an app client
 
 ### algorand
 
-algorand *: [algokit_utils.algorand.AlgorandClient](algokit_utils.algorand.mdx#algokit_utils.algorand.AlgorandClient)*
+algorand *: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/API Reference/algokit_utils.algorand#algokit_utils.algorand.AlgorandClient)*
 
 None
 
@@ -1647,7 +1647,7 @@ The application name
 
 ### app_spec
 
-app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](algokit_utils.applications.app_spec.arc32.mdx#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str*
+app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc32#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str*
 
 None
 
@@ -1657,7 +1657,7 @@ The application specification
 
 ### approval_source_map
 
-approval_source_map *: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None*
+approval_source_map *: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None*
 
 None
 
@@ -1667,7 +1667,7 @@ The approval source map
 
 ### clear_source_map
 
-clear_source_map *: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None*
+clear_source_map *: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None*
 
 None
 
@@ -1687,7 +1687,7 @@ The default sender address
 
 ### default_signer
 
-default_signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+default_signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -1745,7 +1745,7 @@ List of asset IDs to reference
 
 ### box_references
 
-box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
 
 None
 
@@ -1755,7 +1755,7 @@ List of box references to include
 
 ### extra_fee
 
-extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1795,7 +1795,7 @@ Transaction lease value
 
 ### max_fee
 
-max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1825,7 +1825,7 @@ Custom note for the transaction
 
 ### on_complete
 
-on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+on_complete *: [algosdk.transaction.OnComplete](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.OnComplete) | None*
 
 None
 
@@ -1855,7 +1855,7 @@ Sender address override
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -1865,7 +1865,7 @@ Custom transaction signer
 
 ### static_fee
 
-static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1923,7 +1923,7 @@ List of asset IDs to reference
 
 ### box_references
 
-box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
 
 None
 
@@ -1933,7 +1933,7 @@ List of box references to include
 
 ### extra_fee
 
-extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -1983,7 +1983,7 @@ Transaction lease value
 
 ### max_fee
 
-max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -2023,7 +2023,7 @@ Address to rekey account to
 
 ### schema
 
-schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](algokit_utils.transactions.transaction_composer.mdx#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
+schema *: [algokit_utils.transactions.transaction_composer.AppCreateSchema](/reference/algokit-utils-py/API Reference/algokit_utils.transactions.transaction_composer#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None*
 
 None
 
@@ -2043,7 +2043,7 @@ Sender address override
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -2053,7 +2053,7 @@ Custom transaction signer
 
 ### static_fee
 
-static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -2111,7 +2111,7 @@ List of asset IDs to reference
 
 ### box_references
 
-box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
 
 None
 
@@ -2121,7 +2121,7 @@ List of box references to include
 
 ### extra_fee
 
-extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -2161,7 +2161,7 @@ Transaction lease value
 
 ### max_fee
 
-max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -2181,7 +2181,7 @@ Custom note for the transaction
 
 ### on_complete
 
-on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+on_complete *: [algosdk.transaction.OnComplete](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.OnComplete) | None*
 
 None
 
@@ -2211,7 +2211,7 @@ Sender address override
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -2221,7 +2221,7 @@ Custom transaction signer
 
 ### static_fee
 
-static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -2259,7 +2259,7 @@ List of account addresses to reference
 
 ### amount
 
-amount *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount)*
+amount *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount)*
 
 None
 
@@ -2289,7 +2289,7 @@ List of asset IDs to reference
 
 ### box_references
 
-box_references *: list[[algokit_utils.models.state.BoxReference](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
+box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None*
 
 None
 
@@ -2309,7 +2309,7 @@ Optional address to close remainder to
 
 ### extra_fee
 
-extra_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -2349,7 +2349,7 @@ Transaction lease value
 
 ### max_fee
 
-max_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 
@@ -2369,7 +2369,7 @@ Custom note for the transaction
 
 ### on_complete
 
-on_complete *: [algosdk.transaction.OnComplete](../algosdk/algosdk.transaction.mdx#algosdk.transaction.OnComplete) | None*
+on_complete *: [algosdk.transaction.OnComplete](/reference/algokit-utils-py/algosdk/algosdk.transaction#algosdk.transaction.OnComplete) | None*
 
 None
 
@@ -2399,7 +2399,7 @@ Sender address override
 
 ### signer
 
-signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None*
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None*
 
 None
 
@@ -2409,7 +2409,7 @@ Custom transaction signer
 
 ### static_fee
 
-static_fee *: [algokit_utils.models.amount.AlgoAmount](algokit_utils.models.amount.mdx#algokit_utils.models.amount.AlgoAmount) | None*
+static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/API Reference/algokit_utils.models.amount#algokit_utils.models.amount.AlgoAmount) | None*
 
 None
 

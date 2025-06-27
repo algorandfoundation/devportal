@@ -29,7 +29,7 @@ title: "algokit_utils._legacy_v2.account"
 
 ## algokit_utils._legacy_v2.account.create_kmd_wallet_account
 
-create_kmd_wallet_account(kmd_client: [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient), name: str) → [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account)
+create_kmd_wallet_account(kmd_client: [algosdk.kmd.KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient), name: str) → [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account)
 
 Creates a wallet with specified name
 
@@ -37,7 +37,7 @@ Creates a wallet with specified name
 
 ## algokit_utils._legacy_v2.account.get_account
 
-get_account(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), name: str, fund_with_algos: float = 1000, kmd_client: [KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient) | None = None) → [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account)
+get_account(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), name: str, fund_with_algos: float = 1000, kmd_client: [KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient) | None = None) → [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account)
 
 Returns an Algorand account with private key loaded by convention based on the given name identifier.
 Returns an Algorand account with private key loaded by convention based on the given name identifier.
@@ -62,7 +62,7 @@ For LocalNet environments, loads or creates an account from a KMD wallet named \
 
 ## algokit_utils._legacy_v2.account.get_account_from_mnemonic
 
-get_account_from_mnemonic(mnemonic: str) → [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account)
+get_account_from_mnemonic(mnemonic: str) → [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account)
 
 Convert a mnemonic (25 word passphrase) into an Account
 
@@ -70,7 +70,7 @@ Convert a mnemonic (25 word passphrase) into an Account
 
 ## algokit_utils._legacy_v2.account.get_dispenser_account
 
-get_dispenser_account(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account)
+get_dispenser_account(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient)) → [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account)
 
 Returns an Account based on DISPENSER_MNENOMIC environment variable or the default account on LocalNet
 
@@ -78,7 +78,7 @@ Returns an Account based on DISPENSER_MNENOMIC environment variable or the defau
 
 ## algokit_utils._legacy_v2.account.get_kmd_wallet_account
 
-get_kmd_wallet_account(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), kmd_client: [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient), name: str, predicate: Callable[[dict[str, Any]], bool] | None = None) → [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account) | None
+get_kmd_wallet_account(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), kmd_client: [algosdk.kmd.KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient), name: str, predicate: Callable[[dict[str, Any]], bool] | None = None) → [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account) | None
 
 Returns wallet matching specified name and predicate or None if not found
 
@@ -86,7 +86,7 @@ Returns wallet matching specified name and predicate or None if not found
 
 ## algokit_utils._legacy_v2.account.get_localnet_default_account
 
-get_localnet_default_account(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account)
+get_localnet_default_account(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient)) → [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account)
 
 Returns the default Account in a LocalNet instance
 
@@ -94,6 +94,6 @@ Returns the default Account in a LocalNet instance
 
 ## algokit_utils._legacy_v2.account.get_or_create_kmd_wallet_account
 
-get_or_create_kmd_wallet_account(client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), name: str, fund_with_algos: float = 1000, kmd_client: [KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient) | None = None) → [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account)
+get_or_create_kmd_wallet_account(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), name: str, fund_with_algos: float = 1000, kmd_client: [KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient) | None = None) → [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account)
 
 Returns a wallet with specified name, or creates one if not found

@@ -25,7 +25,7 @@ title: "algokit_utils.clients.client_manager"
 
 ## *class* algokit_utils.clients.client_manager.AlgoSdkClients
 
-AlgoSdkClients(algod: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), indexer: [algosdk.v2client.indexer.IndexerClient](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient) | None = None, kmd: [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient) | None = None)
+AlgoSdkClients(algod: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), indexer: [algosdk.v2client.indexer.IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer#algosdk.v2client.indexer.IndexerClient) | None = None, kmd: [algosdk.kmd.KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient) | None = None)
 
 Container for Algorand SDK client instances.
 
@@ -41,7 +41,7 @@ Holds references to Algod, Indexer and KMD clients.
 
 ## *class* algokit_utils.clients.client_manager.ClientManager
 
-ClientManager(clients_or_configs: algokit_utils.models.network.AlgoClientConfigs | [algokit_utils.clients.client_manager.AlgoSdkClients](#algokit_utils.clients.client_manager.AlgoSdkClients), algorand_client: [algokit_utils.algorand.AlgorandClient](algokit_utils.algorand.mdx#algokit_utils.algorand.AlgorandClient))
+ClientManager(clients_or_configs: algokit_utils.models.network.AlgoClientConfigs | [algokit_utils.clients.client_manager.AlgoSdkClients](#algokit_utils.clients.client_manager.AlgoSdkClients), algorand_client: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/API Reference/algokit_utils.algorand#algokit_utils.algorand.AlgorandClient))
 
 Manager for Algorand SDK clients.
 
@@ -67,7 +67,7 @@ Provides access to Algod, Indexer and KMD clients and helper methods for working
 
 ### *property* algod
 
-algod *: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)*
+algod *: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient)*
 
 Returns an algosdk Algod API client.
 
@@ -91,7 +91,7 @@ Check if a genesis ID indicates a local network.
 
 ### *static* get_algod_client
 
-get_algod_client(config: [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig)) → [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)
+get_algod_client(config: [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig)) → [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient)
 
 Get an Algod client from config or environment.
 
@@ -102,7 +102,7 @@ Get an Algod client from config or environment.
 
 ### *static* get_algod_client_from_environment
 
-get_algod_client_from_environment() → [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)
+get_algod_client_from_environment() → [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient)
 
 Get an Algod client from environment variables.
 
@@ -112,7 +112,7 @@ Get an Algod client from environment variables.
 
 ### *static* get_algod_config_from_environment
 
-get_algod_config_from_environment() → [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig)
+get_algod_config_from_environment() → [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Retrieve the algod configuration from environment variables.
 Will raise an error if ALGOD_SERVER environment variable is not set
@@ -127,7 +127,7 @@ Will raise an error if ALGOD_SERVER environment variable is not set
 
 ### *static* get_algonode_config
 
-get_algonode_config(network: Literal[testnet, mainnet], config: Literal[algod, indexer]) → [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig)
+get_algonode_config(network: Literal[testnet, mainnet], config: Literal[algod, indexer]) → [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Returns the Algorand configuration to point to the free tier of the AlgoNode service.
 
@@ -143,7 +143,7 @@ Returns the Algorand configuration to point to the free tier of the AlgoNode ser
 
 ### get_app_client_by_creator_and_name
 
-get_app_client_by_creator_and_name(creator_address: str, app_name: str, app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClient)
+get_app_client_by_creator_and_name(creator_address: str, app_name: str, app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClient)
 
 Get an application client by creator address and name.
 
@@ -162,7 +162,7 @@ Get an application client by creator address and name.
 
 ### get_app_client_by_id
 
-get_app_client_by_id(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClient)
+get_app_client_by_id(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClient)
 
 Get an application client for an existing application by ID.
 
@@ -180,7 +180,7 @@ Get an application client for an existing application by ID.
 
 ### get_app_client_by_network
 
-get_app_client_by_network(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClient)
+get_app_client_by_network(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None) → [algokit_utils.applications.app_client.AppClient](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClient)
 
 Get an application client for an existing application by network.
 
@@ -197,7 +197,7 @@ Get an application client for an existing application by network.
 
 ### get_app_factory
 
-get_app_factory(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, version: str | None = None, compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [algokit_utils.applications.app_factory.AppFactory](algokit_utils.applications.app_factory.mdx#algokit_utils.applications.app_factory.AppFactory)
+get_app_factory(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, version: str | None = None, compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [algokit_utils.applications.app_factory.AppFactory](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_factory#algokit_utils.applications.app_factory.AppFactory)
 
 Get an application factory for deploying smart contracts.
 
@@ -231,7 +231,7 @@ otherwise it will use default localnet configuration.
 
 ### *static* get_default_localnet_config
 
-get_default_localnet_config(config_or_port: Literal[algod, indexer, kmd] | int) → [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig)
+get_default_localnet_config(config_or_port: Literal[algod, indexer, kmd] | int) → [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Get default configuration for local network services.
 
@@ -246,7 +246,7 @@ Get default configuration for local network services.
 
 ### *static* get_indexer_client
 
-get_indexer_client(config: [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig)) → [algosdk.v2client.indexer.IndexerClient](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient)
+get_indexer_client(config: [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig)) → [algosdk.v2client.indexer.IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer#algosdk.v2client.indexer.IndexerClient)
 
 Get an Indexer client from config or environment.
 
@@ -257,7 +257,7 @@ Get an Indexer client from config or environment.
 
 ### *static* get_indexer_client_from_environment
 
-get_indexer_client_from_environment() → [algosdk.v2client.indexer.IndexerClient](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient)
+get_indexer_client_from_environment() → [algosdk.v2client.indexer.IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer#algosdk.v2client.indexer.IndexerClient)
 
 Get an Indexer client from environment variables.
 
@@ -267,7 +267,7 @@ Get an Indexer client from environment variables.
 
 ### *static* get_indexer_config_from_environment
 
-get_indexer_config_from_environment() → [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig)
+get_indexer_config_from_environment() → [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Retrieve the indexer configuration from environment variables.
 Will raise an error if INDEXER_SERVER environment variable is not set
@@ -282,7 +282,7 @@ Will raise an error if INDEXER_SERVER environment variable is not set
 
 ### *static* get_kmd_client
 
-get_kmd_client(config: [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig)) → [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient)
+get_kmd_client(config: [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig)) → [algosdk.kmd.KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient)
 
 Get a KMD client from config or environment.
 
@@ -293,7 +293,7 @@ Get a KMD client from config or environment.
 
 ### *static* get_kmd_client_from_environment
 
-get_kmd_client_from_environment() → [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient)
+get_kmd_client_from_environment() → [algosdk.kmd.KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient)
 
 Get a KMD client from environment variables.
 
@@ -303,7 +303,7 @@ Get a KMD client from environment variables.
 
 ### *static* get_kmd_config_from_environment
 
-get_kmd_config_from_environment() → [algokit_utils.models.network.AlgoClientNetworkConfig](algokit_utils.models.network.mdx#algokit_utils.models.network.AlgoClientNetworkConfig)
+get_kmd_config_from_environment() → [algokit_utils.models.network.AlgoClientNetworkConfig](/reference/algokit-utils-py/API Reference/algokit_utils.models.network#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Retrieve the kmd configuration from environment variables.
 
@@ -317,7 +317,7 @@ Retrieve the kmd configuration from environment variables.
 
 ### get_testnet_dispenser
 
-get_testnet_dispenser(auth_token: str | None = None, request_timeout: int | None = None) → [algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient](algokit_utils.clients.dispenser_api_client.mdx#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient)
+get_testnet_dispenser(auth_token: str | None = None, request_timeout: int | None = None) → [algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient](/reference/algokit-utils-py/API Reference/algokit_utils.clients.dispenser_api_client#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient)
 
 Get a TestNet dispenser API client.
 
@@ -329,7 +329,7 @@ Get a TestNet dispenser API client.
 
 ### get_typed_app_client_by_creator_and_name
 
-get_typed_app_client_by_creator_and_name(typed_client: type[algokit_utils.clients.client_manager.TypedAppClientT], \*, creator_address: str, app_name: str, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](algokit_utils.applications.app_deployer.mdx#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → algokit_utils.clients.client_manager.TypedAppClientT
+get_typed_app_client_by_creator_and_name(typed_client: type[algokit_utils.clients.client_manager.TypedAppClientT], \*, creator_address: str, app_name: str, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_deployer#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → algokit_utils.clients.client_manager.TypedAppClientT
 
 Get a typed application client by creator address and name.
 
@@ -355,7 +355,7 @@ Get a typed application client by creator address and name.
 
 ### get_typed_app_client_by_id
 
-get_typed_app_client_by_id(typed_client: type[algokit_utils.clients.client_manager.TypedAppClientT], \*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None) → algokit_utils.clients.client_manager.TypedAppClientT
+get_typed_app_client_by_id(typed_client: type[algokit_utils.clients.client_manager.TypedAppClientT], \*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None) → algokit_utils.clients.client_manager.TypedAppClientT
 
 Get a typed application client by ID.
 
@@ -380,7 +380,7 @@ Get a typed application client by ID.
 
 ### get_typed_app_client_by_network
 
-get_typed_app_client_by_network(typed_client: type[algokit_utils.clients.client_manager.TypedAppClientT], \*, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None) → algokit_utils.clients.client_manager.TypedAppClientT
+get_typed_app_client_by_network(typed_client: type[algokit_utils.clients.client_manager.TypedAppClientT], \*, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None) → algokit_utils.clients.client_manager.TypedAppClientT
 
 Returns a new typed client, resolves the app ID for the current network.
 
@@ -407,7 +407,7 @@ If no IDs are in the app spec or the network isn’t recognised, an error is thr
 
 ### get_typed_app_factory
 
-get_typed_app_factory(typed_factory: type[algokit_utils.clients.client_manager.TypedFactoryT], \*, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, version: str | None = None, compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](algokit_utils.applications.app_client.mdx#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → algokit_utils.clients.client_manager.TypedFactoryT
+get_typed_app_factory(typed_factory: type[algokit_utils.clients.client_manager.TypedFactoryT], \*, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, version: str | None = None, compilation_params: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_client#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → algokit_utils.clients.client_manager.TypedFactoryT
 
 Get a typed application factory.
 
@@ -431,7 +431,7 @@ Get a typed application factory.
 
 ### *property* indexer
 
-indexer *: [algosdk.v2client.indexer.IndexerClient](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient)*
+indexer *: [algosdk.v2client.indexer.IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer#algosdk.v2client.indexer.IndexerClient)*
 
 Returns an algosdk Indexer API client.
 
@@ -442,7 +442,7 @@ Returns an algosdk Indexer API client.
 
 ### *property* indexer_if_present
 
-indexer_if_present *: [algosdk.v2client.indexer.IndexerClient](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient) | None*
+indexer_if_present *: [algosdk.v2client.indexer.IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer#algosdk.v2client.indexer.IndexerClient) | None*
 
 Returns the Indexer client if configured, otherwise None.
 
@@ -482,7 +482,7 @@ Check if connected to TestNet.
 
 ### *property* kmd
 
-kmd *: [algosdk.kmd.KMDClient](../algosdk/algosdk.kmd.mdx#algosdk.kmd.KMDClient)*
+kmd *: [algosdk.kmd.KMDClient](/reference/algokit-utils-py/algosdk/algosdk.kmd#algosdk.kmd.KMDClient)*
 
 Returns an algosdk KMD API client.
 

@@ -24,7 +24,7 @@ title: "algokit_utils.protocols.typed_clients"
 
 ## *class* algokit_utils.protocols.typed_clients.TypedAppClientProtocol
 
-TypedAppClientProtocol(\*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, algorand: [algokit_utils.algorand.AlgorandClient](algokit_utils.algorand.mdx#algokit_utils.algorand.AlgorandClient), approval_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None = None)
+TypedAppClientProtocol(\*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: [algosdk.atomic_transaction_composer.TransactionSigner](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.TransactionSigner) | None = None, algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/API Reference/algokit_utils.algorand#algokit_utils.algorand.AlgorandClient), approval_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None, clear_source_map: [algosdk.source_map.SourceMap](/reference/algokit-utils-py/algosdk/algosdk.source_map#algosdk.source_map.SourceMap) | None = None)
 
 Base class for protocol classes.
 
@@ -58,7 +58,7 @@ only the presence of given attributes, ignoring their type signatures.
 Protocol classes can be generic, they are defined as::
 
 ```none
-class GenProto[T](Protocol):
+class GenProto[T](/reference/algokit-utils-py/API Reference/Protocol):
     def meth(self) -> T:
         ...
 ```
@@ -69,7 +69,7 @@ class GenProto[T](Protocol):
 
 ## *class* algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol
 
-TypedAppFactoryProtocol(algorand: [algokit_utils.algorand.AlgorandClient](algokit_utils.algorand.mdx#algokit_utils.algorand.AlgorandClient), \*\*kwargs: Any)
+TypedAppFactoryProtocol(algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/API Reference/algokit_utils.algorand#algokit_utils.algorand.AlgorandClient), \*\*kwargs: Any)
 
 Base class for protocol classes.
 
@@ -103,7 +103,7 @@ only the presence of given attributes, ignoring their type signatures.
 Protocol classes can be generic, they are defined as::
 
 ```none
-class GenProto[T](Protocol):
+class GenProto[T](/reference/algokit-utils-py/API Reference/Protocol):
     def meth(self) -> T:
         ...
 ```

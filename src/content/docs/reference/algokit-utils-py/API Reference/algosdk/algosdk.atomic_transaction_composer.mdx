@@ -50,7 +50,7 @@ private_key (str): private key of signing account
 
 ### sign_transactions
 
-sign_transactions(txn_group: List[[algosdk.transaction.Transaction](algosdk.transaction.mdx#algosdk.transaction.Transaction)], indexes: List[int]) → List[algosdk.transaction.GenericSignedTransaction]
+sign_transactions(txn_group: List[[algosdk.transaction.Transaction](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.Transaction)], indexes: List[int]) → List[algosdk.transaction.GenericSignedTransaction]
 
 Sign transactions in a transaction group given the indexes.
 
@@ -84,7 +84,7 @@ tx_ids (list[str]): list of individual transaction IDs in this atomic group
 
 ### add_method_call
 
-add_method_call(app_id: int, method: algosdk.abi.Method, sender: str, sp: [algosdk.transaction.SuggestedParams](algosdk.transaction.mdx#algosdk.transaction.SuggestedParams), signer: [algosdk.atomic_transaction_composer.TransactionSigner](#algosdk.atomic_transaction_composer.TransactionSigner), method_args: Optional[List[Union[Any, algosdk.atomic_transaction_composer.TransactionWithSigner]]] = None, on_complete: [algosdk.transaction.OnComplete](algosdk.transaction.mdx#algosdk.transaction.OnComplete) = transaction.OnComplete.NoOpOC, local_schema: Optional[[algosdk.transaction.StateSchema](algosdk.transaction.mdx#algosdk.transaction.StateSchema)] = None, global_schema: Optional[[algosdk.transaction.StateSchema](algosdk.transaction.mdx#algosdk.transaction.StateSchema)] = None, approval_program: Optional[bytes] = None, clear_program: Optional[bytes] = None, extra_pages: int = 0, accounts: Optional[List[str]] = None, foreign_apps: Optional[List[int]] = None, foreign_assets: Optional[List[int]] = None, note: Optional[bytes] = None, lease: Optional[bytes] = None, rekey_to: Optional[str] = None, boxes: Optional[List[Tuple[int, bytes]]] = None) → [algosdk.atomic_transaction_composer.AtomicTransactionComposer](#algosdk.atomic_transaction_composer.AtomicTransactionComposer)
+add_method_call(app_id: int, method: algosdk.abi.Method, sender: str, sp: [algosdk.transaction.SuggestedParams](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.SuggestedParams), signer: [algosdk.atomic_transaction_composer.TransactionSigner](#algosdk.atomic_transaction_composer.TransactionSigner), method_args: Optional[List[Union[Any, algosdk.atomic_transaction_composer.TransactionWithSigner]]] = None, on_complete: [algosdk.transaction.OnComplete](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.OnComplete) = transaction.OnComplete.NoOpOC, local_schema: Optional[[algosdk.transaction.StateSchema](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.StateSchema)] = None, global_schema: Optional[[algosdk.transaction.StateSchema](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.StateSchema)] = None, approval_program: Optional[bytes] = None, clear_program: Optional[bytes] = None, extra_pages: int = 0, accounts: Optional[List[str]] = None, foreign_apps: Optional[List[int]] = None, foreign_assets: Optional[List[int]] = None, note: Optional[bytes] = None, lease: Optional[bytes] = None, rekey_to: Optional[str] = None, boxes: Optional[List[Tuple[int, bytes]]] = None) → [algosdk.atomic_transaction_composer.AtomicTransactionComposer](#algosdk.atomic_transaction_composer.AtomicTransactionComposer)
 
 Add a smart contract method call to this atomic group.
 
@@ -164,7 +164,7 @@ may be added to it.
 
 ### execute
 
-execute(client: [algosdk.v2client.algod.AlgodClient](algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), wait_rounds: int) → algosdk.atomic_transaction_composer.AtomicTransactionResponse
+execute(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/API Reference/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), wait_rounds: int) → algosdk.atomic_transaction_composer.AtomicTransactionResponse
 
 Send the transaction group to the network and wait until it’s committed
 to a block. An error will be thrown if submission or execution fails.
@@ -220,7 +220,7 @@ Returns the number of transactions currently in this atomic group.
 
 ### simulate
 
-simulate(client: [algosdk.v2client.algod.AlgodClient](algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), request: Optional[algosdk.v2client.models.SimulateRequest] = None) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
+simulate(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/API Reference/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), request: Optional[algosdk.v2client.models.SimulateRequest] = None) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
 
 Send the transaction group to the `simulate` endpoint and wait for results.
 An error will be thrown if submission or execution fails.
@@ -243,7 +243,7 @@ will contain None for that method’s return value.
 
 ### submit
 
-submit(client: [algosdk.v2client.algod.AlgodClient](algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient)) → List[str]
+submit(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/API Reference/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient)) → List[str]
 
 Send the transaction group to the network, but don’t wait for it to be
 committed to a block. An error will be thrown if submission fails.
@@ -874,7 +874,7 @@ Represents an object which can sign transactions from an atomic transaction grou
 
 ## *class* algosdk.atomic_transaction_composer.LogicSigTransactionSigner
 
-LogicSigTransactionSigner(lsig: [algosdk.transaction.LogicSigAccount](algosdk.transaction.mdx#algosdk.transaction.LogicSigAccount))
+LogicSigTransactionSigner(lsig: [algosdk.transaction.LogicSigAccount](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.LogicSigAccount))
 
 Represents a Transaction Signer for a LogicSig that can sign transactions from an
 atomic transaction group.
@@ -888,7 +888,7 @@ lsig (LogicSigAccount): LogicSig account
 
 ### sign_transactions
 
-sign_transactions(txn_group: List[[algosdk.transaction.Transaction](algosdk.transaction.mdx#algosdk.transaction.Transaction)], indexes: List[int]) → List[algosdk.transaction.GenericSignedTransaction]
+sign_transactions(txn_group: List[[algosdk.transaction.Transaction](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.Transaction)], indexes: List[int]) → List[algosdk.transaction.GenericSignedTransaction]
 
 Sign transactions in a transaction group given the indexes.
 
@@ -904,7 +904,7 @@ indexes (list[int]): array of indexes in the atomic transaction group that shoul
 
 ## *class* algosdk.atomic_transaction_composer.MultisigTransactionSigner
 
-MultisigTransactionSigner(msig: [algosdk.transaction.Multisig](algosdk.transaction.mdx#algosdk.transaction.Multisig), sks: List[str])
+MultisigTransactionSigner(msig: [algosdk.transaction.Multisig](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.Multisig), sks: List[str])
 
 Represents a Transaction Signer for a Multisig that can sign transactions from an
 atomic transaction group.
@@ -919,7 +919,7 @@ sks (str): private keys of multisig
 
 ### sign_transactions
 
-sign_transactions(txn_group: List[[algosdk.transaction.Transaction](algosdk.transaction.mdx#algosdk.transaction.Transaction)], indexes: List[int]) → List[algosdk.transaction.GenericSignedTransaction]
+sign_transactions(txn_group: List[[algosdk.transaction.Transaction](/reference/algokit-utils-py/API Reference/algosdk.transaction#algosdk.transaction.Transaction)], indexes: List[int]) → List[algosdk.transaction.GenericSignedTransaction]
 
 Sign transactions in a transaction group given the indexes.
 

@@ -4011,7 +4011,7 @@ bytes: checksum value representing the group id
 
 ## algosdk.transaction.create_dryrun
 
-create_dryrun(client: [algosdk.v2client.algod.AlgodClient](algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), txns: List[algosdk.transaction.GenericSignedTransaction], protocol_version=None, latest_timestamp=None, round=None) → algosdk.v2client.models.DryrunRequest
+create_dryrun(client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/API Reference/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), txns: List[algosdk.transaction.GenericSignedTransaction], protocol_version=None, latest_timestamp=None, round=None) → algosdk.v2client.models.DryrunRequest
 
 Create DryrunRequest object from a client and list of signed transactions
 
@@ -4040,7 +4040,7 @@ Transaction[], SignedTransaction[], or MultisigTransaction[]:            can be 
 
 ## algosdk.transaction.wait_for_confirmation
 
-wait_for_confirmation(algod_client: [algosdk.v2client.algod.AlgodClient](algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), txid: str, wait_rounds: int = 0, \*\*kwargs)
+wait_for_confirmation(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/API Reference/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), txid: str, wait_rounds: int = 0, \*\*kwargs)
 
 Block until a pending transaction is confirmed by the network.
 

@@ -136,7 +136,7 @@ The value of the Enum member.
 
 ## algokit_utils._legacy_v2.asset.opt_in
 
-opt_in(algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), account: [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account), asset_ids: list[int]) → dict[int, str]
+opt_in(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), account: [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account), asset_ids: list[int]) → dict[int, str]
 
 Opt-in to a list of assets on the Algorand blockchain. Before an account can receive a specific asset,
 it must `opt-in` to receive it. An opt-in transaction places an asset holding of 0 into the account and increases
@@ -152,7 +152,7 @@ its minimum balance by [100,000 microAlgos](https://developer.algorand.org/docs/
 
 ## algokit_utils._legacy_v2.asset.opt_out
 
-opt_out(algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), account: [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account), asset_ids: list[int]) → dict[int, str]
+opt_out(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), account: [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account), asset_ids: list[int]) → dict[int, str]
 
 Opt out from a list of Algorand Standard Assets (ASAs) by transferring them back to their creators.
 The account also recovers the Minimum Balance Requirement for the asset (100,000 microAlgos)

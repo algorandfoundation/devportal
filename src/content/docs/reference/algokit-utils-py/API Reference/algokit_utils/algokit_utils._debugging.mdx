@@ -38,7 +38,7 @@ buffer_size_mb (float): Maximum allowed size in megabytes
 
 ## algokit_utils._debugging.persist_sourcemaps
 
-persist_sourcemaps(\*, sources: list[algokit_utils._debugging.PersistSourceMapInput], project_root: pathlib.Path, client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), with_sources: bool = True) → None
+persist_sourcemaps(\*, sources: list[algokit_utils._debugging.PersistSourceMapInput], project_root: pathlib.Path, client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), with_sources: bool = True) → None
 
 Persist the sourcemaps for the given sources as an AlgoKit AVM Debugger compliant artifacts.
 
@@ -51,7 +51,7 @@ Persist the sourcemaps for the given sources as an AlgoKit AVM Debugger complian
 
 ## algokit_utils._debugging.simulate_and_persist_response
 
-simulate_and_persist_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), project_root: pathlib.Path, algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), buffer_size_mb: float = 256, allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
+simulate_and_persist_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), project_root: pathlib.Path, algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), buffer_size_mb: float = 256, allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
 
 Simulates atomic transactions and persists simulation response to a JSON file.
 
@@ -74,6 +74,6 @@ then persists the simulation response to an AlgoKit AVM Debugger compliant JSON 
 
 ## algokit_utils._debugging.simulate_response
 
-simulate_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
+simulate_response(atc: [algosdk.atomic_transaction_composer.AtomicTransactionComposer](/reference/algokit-utils-py/algosdk/algosdk.atomic_transaction_composer#algosdk.atomic_transaction_composer.AtomicTransactionComposer), algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None) → algosdk.atomic_transaction_composer.SimulateAtomicTransactionResponse
 
 Simulate atomic transaction group execution

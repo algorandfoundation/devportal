@@ -92,27 +92,27 @@ export class RelativeLinkTransformer {
    * Convert relative URL to absolute URL or resolved path
    */
   private toAbsoluteUrl(relativeUrl: string): string {
+    let resolvedUrl: string;
+
     if (this.isAbsoluteBase) {
       // Handle absolute base URLs using URL constructor
       try {
-        const resolvedUrl = new URL(relativeUrl, this.basePath);
-        return resolvedUrl.href;
+        resolvedUrl = new URL(relativeUrl, this.basePath).href;
       } catch (error) {
         // Fallback for malformed URLs
         const baseWithSlash = this.basePath.endsWith('/')
           ? this.basePath
           : `${this.basePath}/`;
-        return (
-          baseWithSlash + relativeUrl.replace(/^\.\//, '').replace(/^\//, '')
-        );
+        resolvedUrl =
+          baseWithSlash + relativeUrl.replace(/^\.\//, '').replace(/^\//, '');
       }
     } else {
       // Handle relative base paths using path resolution
-      const resolvedPath = this.resolveRelativePath(this.basePath, relativeUrl);
-
-      // Strip markdown extensions for Starlight/Astro
-      return resolvedPath.replace(/\.(md|mdx)$/i, '');
+      resolvedUrl = this.resolveRelativePath(this.basePath, relativeUrl);
     }
+
+    // Strip markdown extensions before hash fragments or at end of string
+    return resolvedUrl.replace(/\.(md|mdx)(?=#|$)/i, '');
   }
 
   /**

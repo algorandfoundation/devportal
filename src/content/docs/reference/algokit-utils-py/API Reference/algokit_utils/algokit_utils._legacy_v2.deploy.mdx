@@ -1704,7 +1704,7 @@ Template variable name used to control if a smart contract is updatable or not a
 
 ## algokit_utils._legacy_v2.deploy.get_app_id_from_tx_id
 
-get_app_id_from_tx_id(algod_client: [algosdk.v2client.algod.AlgodClient](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient), tx_id: str) → int
+get_app_id_from_tx_id(algod_client: [algosdk.v2client.algod.AlgodClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.algod#algosdk.v2client.algod.AlgodClient), tx_id: str) → int
 
 Finds the app_id for provided transaction id
 
@@ -1712,7 +1712,7 @@ Finds the app_id for provided transaction id
 
 ## algokit_utils._legacy_v2.deploy.get_creator_apps
 
-get_creator_apps(indexer: [algosdk.v2client.indexer.IndexerClient](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient), creator_account: [algokit_utils._legacy_v2.models.Account](algokit_utils._legacy_v2.models.mdx#algokit_utils._legacy_v2.models.Account) | str) → [algokit_utils._legacy_v2.deploy.AppLookup](#algokit_utils._legacy_v2.deploy.AppLookup)
+get_creator_apps(indexer: [algosdk.v2client.indexer.IndexerClient](/reference/algokit-utils-py/algosdk/algosdk.v2client.indexer#algosdk.v2client.indexer.IndexerClient), creator_account: [algokit_utils._legacy_v2.models.Account](/reference/algokit-utils-py/API Reference/algokit_utils._legacy_v2.models#algokit_utils._legacy_v2.models.Account) | str) → [algokit_utils._legacy_v2.deploy.AppLookup](#algokit_utils._legacy_v2.deploy.AppLookup)
 
 Returns a mapping of Application names to [`AppMetaData`](#algokit_utils._legacy_v2.deploy.AppMetaData) for all Applications created by specified
 creator that have a transaction note containing [`AppDeployMetaData`](#algokit_utils._legacy_v2.deploy.AppDeployMetaData)

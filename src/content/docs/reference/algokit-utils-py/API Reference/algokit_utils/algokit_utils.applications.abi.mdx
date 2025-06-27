@@ -58,7 +58,7 @@ The exception that occurred during decoding, if any
 
 ### get_arc56_value
 
-get_arc56_value(method: [algokit_utils.applications.app_spec.arc56.Method](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Method) | [algosdk.abi.method.Method](../algosdk/algosdk.abi.method.mdx#algosdk.abi.method.Method), structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)]]) → algokit_utils.applications.abi.Arc56ReturnValueType
+get_arc56_value(method: [algokit_utils.applications.app_spec.arc56.Method](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Method) | [algosdk.abi.method.Method](/reference/algokit-utils-py/algosdk/algosdk.abi.method#algosdk.abi.method.Method), structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)]]) → algokit_utils.applications.abi.Arc56ReturnValueType
 
 Gets the ARC-56 formatted return value.
 
@@ -80,7 +80,7 @@ Returns True if the ABI call was successful (no decode error)
 
 ### method
 
-method *: [algosdk.abi.method.Method](../algosdk/algosdk.abi.method.mdx#algosdk.abi.method.Method) | None*
+method *: [algosdk.abi.method.Method](/reference/algokit-utils-py/algosdk/algosdk.abi.method#algosdk.abi.method.Method) | None*
 
 None
 
@@ -128,7 +128,7 @@ Represents an ABI value stored in a box.
 
 ### name
 
-name *: [algokit_utils.models.state.BoxName](algokit_utils.models.state.mdx#algokit_utils.models.state.BoxName)*
+name *: [algokit_utils.models.state.BoxName](/reference/algokit-utils-py/API Reference/algokit_utils.models.state#algokit_utils.models.state.BoxName)*
 
 None
 
@@ -148,7 +148,7 @@ The ABI value stored in the box
 
 ## algokit_utils.applications.abi.get_abi_decoded_value
 
-get_abi_decoded_value(value: bytes | int | str, type_str: str | algokit_utils.applications.abi.ABIArgumentType, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)]]) → algokit_utils.applications.abi.ABIValue
+get_abi_decoded_value(value: bytes | int | str, type_str: str | algokit_utils.applications.abi.ABIArgumentType, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)]]) → algokit_utils.applications.abi.ABIValue
 
 Decodes a value according to its ABI type.
 
@@ -161,7 +161,7 @@ Decodes a value according to its ABI type.
 
 ## algokit_utils.applications.abi.get_abi_encoded_value
 
-get_abi_encoded_value(value: Any, type_str: str, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)]]) → bytes
+get_abi_encoded_value(value: Any, type_str: str, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)]]) → bytes
 
 Encodes a value according to its ABI type.
 
@@ -175,7 +175,7 @@ Encodes a value according to its ABI type.
 
 ## algokit_utils.applications.abi.get_abi_struct_from_abi_tuple
 
-get_abi_struct_from_abi_tuple(decoded_tuple: Any, struct_fields: list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)], structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)]]) → dict[str, Any]
+get_abi_struct_from_abi_tuple(decoded_tuple: Any, struct_fields: list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)], structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)]]) → dict[str, Any]
 
 Converts a decoded tuple to an ABI struct.
 
@@ -188,7 +188,7 @@ Converts a decoded tuple to an ABI struct.
 
 ## algokit_utils.applications.abi.get_abi_tuple_from_abi_struct
 
-get_abi_tuple_from_abi_struct(struct_value: dict[str, Any], struct_fields: list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)], structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)]]) → list[Any]
+get_abi_tuple_from_abi_struct(struct_value: dict[str, Any], struct_fields: list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)], structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)]]) → list[Any]
 
 Converts an ABI struct to a tuple representation.
 
@@ -202,7 +202,7 @@ Converts an ABI struct to a tuple representation.
 
 ## algokit_utils.applications.abi.get_abi_tuple_type_from_abi_struct_definition
 
-get_abi_tuple_type_from_abi_struct_definition(struct_def: list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)], structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)]]) → algosdk.abi.TupleType
+get_abi_tuple_type_from_abi_struct_definition(struct_def: list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)], structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)]]) → algosdk.abi.TupleType
 
 Creates a TupleType from a struct definition.
 
@@ -215,7 +215,7 @@ Creates a TupleType from a struct definition.
 
 ## algokit_utils.applications.abi.get_arc56_value
 
-get_arc56_value(abi_return: [algokit_utils.applications.abi.ABIReturn](#algokit_utils.applications.abi.ABIReturn), method: [algokit_utils.applications.app_spec.arc56.Method](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.Method) | [algosdk.abi.method.Method](../algosdk/algosdk.abi.method.mdx#algosdk.abi.method.Method), structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](algokit_utils.applications.app_spec.arc56.mdx#algokit_utils.applications.app_spec.arc56.StructField)]]) → algokit_utils.applications.abi.Arc56ReturnValueType
+get_arc56_value(abi_return: [algokit_utils.applications.abi.ABIReturn](#algokit_utils.applications.abi.ABIReturn), method: [algokit_utils.applications.app_spec.arc56.Method](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.Method) | [algosdk.abi.method.Method](/reference/algokit-utils-py/algosdk/algosdk.abi.method#algosdk.abi.method.Method), structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/API Reference/algokit_utils.applications.app_spec.arc56#algokit_utils.applications.app_spec.arc56.StructField)]]) → algokit_utils.applications.abi.Arc56ReturnValueType
 
 Gets the ARC-56 formatted return value from an ABI return.
 
