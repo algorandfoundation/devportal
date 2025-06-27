@@ -1,7 +1,7 @@
 /src/content/docs/build/algokit/utils/python/reference.mdx
-src/content/docs/reference/algokit-utils-ts/API Reference/
-src/content/docs/reference/algorand-python/API Reference
-src/content/docs/reference/algokit-utils-py/API Reference/
+src/content/docs/reference/algokit-utils-ts/api-reference/
+src/content/docs/reference/algorand-python/api-reference/
+src/content/docs/reference/algokit-utils-py/api-reference/
 src/content/docs/reference/algokit-cli/**
 /src/content/docs/standards/**
 src/content/docs/reference/rest-api/

@@ -29,7 +29,7 @@ export default defineConfig({
         starlightTypeDoc({
           entryPoints: ['./imports/repos/algokit-utils-ts/src/index.ts'],
           tsconfig: './imports/repos/algokit-utils-ts/tsconfig.json',
-          output: 'reference/algokit-utils-ts/API Reference',
+          output: 'reference/algokit-utils-ts/api-reference',
           exclude: ['**[FUTURELINK]*'],
         }),
         starlightLlmsTxt({
@@ -2343,6 +2343,12 @@ export default defineConfig({
                     {
                       label: 'algokit_utils',
                       link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils',
+                    },
+                    {
+                      label: 'Algod',
+                      autogenerate: {
+                        directory: 'reference/algokit-utils-py/api-reference/algosdk',
+                      },
                     },
                   ],
                 },

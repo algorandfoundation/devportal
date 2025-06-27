@@ -89,6 +89,18 @@ export class RelativeLinkTransformer {
   }
 
   /**
+   * Slugify a filename to match Astro/Starlight's slug generation
+   */
+  private slugifyFilename(filename: string): string {
+    return filename
+      .toLowerCase() // Convert to lowercase
+      .replace(/[^\w\s-]/g, '') // Remove special characters except spaces and hyphens
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Replace multiple hyphens with single
+      .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+  }
+
+  /**
    * Convert relative URL to absolute URL or resolved path
    */
   private toAbsoluteUrl(relativeUrl: string): string {
@@ -112,7 +124,29 @@ export class RelativeLinkTransformer {
     }
 
     // Strip markdown extensions before hash fragments or at end of string
-    return resolvedUrl.replace(/\.(md|mdx)(?=#|$)/i, '');
+    const withoutExtension = resolvedUrl.replace(/\.(md|mdx)(?=#|$)/i, '');
+
+    // Split URL into parts to process the path portion
+    const hashIndex = withoutExtension.indexOf('#');
+    const pathPart =
+      hashIndex !== -1
+        ? withoutExtension.substring(0, hashIndex)
+        : withoutExtension;
+    const hashPart =
+      hashIndex !== -1 ? withoutExtension.substring(hashIndex) : '';
+
+    // Process the path: slugify only the filename portion
+    const pathSegments = pathPart.split('/');
+    if (pathSegments.length > 0) {
+      const lastSegment = pathSegments[pathSegments.length - 1];
+      if (lastSegment) {
+        // Slugify the filename (last segment)
+        pathSegments[pathSegments.length - 1] =
+          this.slugifyFilename(lastSegment);
+      }
+    }
+
+    return pathSegments.join('/') + hashPart;
   }
 
   /**

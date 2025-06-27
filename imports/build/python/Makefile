@@ -22,10 +22,10 @@ puya-setup:
 puya: clean puya-setup
 	export SPHINX_REPO=puya && \
 	$(FULL_SPHINX_COMMAND) && \
-	cp -r _build/starlight/apidocs/algopy/* "../../../src/content/docs/reference/algorand-python/API Reference"
+	cp -r _build/starlight/apidocs/algopy/* "../../../src/content/docs/reference/algorand-python/api-reference"
 
 utils: clean
 	export SPHINX_REPO=utils && \
 	$(FULL_SPHINX_COMMAND) && \
-	cp -r _build/starlight/apidocs/* "../../../src/content/docs/reference/algokit-utils-py/API Reference"
+	cp -r _build/starlight/apidocs/* "../../../src/content/docs/reference/algokit-utils-py/api-reference"
 	
