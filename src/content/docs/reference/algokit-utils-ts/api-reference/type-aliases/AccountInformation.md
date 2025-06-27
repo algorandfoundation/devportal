@@ -5,7 +5,7 @@ prev: false
 title: "AccountInformation"
 ---
 
-> **AccountInformation**: `Omit`\<[`NumberConverter`](/reference/algokit-utils-ts/api-reference/type-aliases/numberconverter/)\<`AccountInformationModel`\>, `"getEncodingSchema"` \| `"toEncodingData"` \| `"authAddr"`\> & `object`
+> **AccountInformation**: `Omit`\<[`NumberConverter`](/reference/algokit-utils-ts/api-reference/type-aliases/numberconverter)\<`AccountInformationModel`\>, `"getEncodingSchema"` \| `"toEncodingData"` \| `"authAddr"`\> & `object`
 
 Defined in: [src/account/account.ts:135](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/account/account.ts#L135)
 

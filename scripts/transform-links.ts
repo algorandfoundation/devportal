@@ -103,24 +103,36 @@ export class RelativeLinkTransformer {
   /**
    * Convert relative URL to absolute URL or resolved path
    */
-  private toAbsoluteUrl(relativeUrl: string): string {
+  private toAbsoluteUrl(relativeUrl: string, currentFileDir: string): string {
     let resolvedUrl: string;
 
     if (this.isAbsoluteBase) {
-      // Handle absolute base URLs using URL constructor
-      try {
-        resolvedUrl = new URL(relativeUrl, this.basePath).href;
-      } catch (error) {
-        // Fallback for malformed URLs
-        const baseWithSlash = this.basePath.endsWith('/')
-          ? this.basePath
-          : `${this.basePath}/`;
-        resolvedUrl =
-          baseWithSlash + relativeUrl.replace(/^\.\//, '').replace(/^\//, '');
-      }
+      // Handle absolute base URLs
+      // First resolve the relative path relative to the current file's directory
+      const absoluteTargetPath = path.resolve(currentFileDir, relativeUrl);
+
+      // Get the path relative to the content root
+      const contentRootPath = this.contentDir
+        ? path.resolve(this.contentDir)
+        : process.cwd();
+      const relativeToContentRoot = path.relative(
+        contentRootPath,
+        absoluteTargetPath,
+      );
+
+      // Normalize path separators and create URL
+      const normalizedPath = relativeToContentRoot.replace(/\\/g, '/');
+      const baseWithSlash = this.basePath.endsWith('/')
+        ? this.basePath
+        : `${this.basePath}/`;
+      resolvedUrl = baseWithSlash + normalizedPath;
     } else {
       // Handle relative base paths using path resolution
-      resolvedUrl = this.resolveRelativePath(this.basePath, relativeUrl);
+      resolvedUrl = this.resolveRelativePath(
+        this.basePath,
+        relativeUrl,
+        currentFileDir,
+      );
     }
 
     // Strip markdown extensions before hash fragments or at end of string
@@ -176,12 +188,15 @@ export class RelativeLinkTransformer {
       }
     };
 
+    // Get the directory of the current file for resolving relative links
+    const currentFileDir = path.dirname(filePath);
+
     // Transform standard markdown links: [text](url)
     content = content.replace(
       /\[([^\]]*)\]\(([^)]+)\)/g,
       (match, text, url) => {
         if (this.isRelativeUrl(url)) {
-          const absoluteUrl = this.toAbsoluteUrl(url);
+          const absoluteUrl = this.toAbsoluteUrl(url, currentFileDir);
           // Only count and log if the URL actually changed
           if (absoluteUrl !== url) {
             transformCount++;
@@ -201,7 +216,7 @@ export class RelativeLinkTransformer {
       /^\s*\[([^\]]+)\]:\s*(.+)$/gm,
       (match, ref, url) => {
         if (this.isRelativeUrl(url)) {
-          const absoluteUrl = this.toAbsoluteUrl(url);
+          const absoluteUrl = this.toAbsoluteUrl(url, currentFileDir);
           // Only count and log if the URL actually changed
           if (absoluteUrl !== url) {
             transformCount++;
@@ -221,7 +236,7 @@ export class RelativeLinkTransformer {
       /<a\s+([^>]*?)href\s*=\s*["']([^"']+)["']([^>]*?)>/gi,
       (match, beforeHref, url, afterHref) => {
         if (this.isRelativeUrl(url)) {
-          const absoluteUrl = this.toAbsoluteUrl(url);
+          const absoluteUrl = this.toAbsoluteUrl(url, currentFileDir);
           // Only count and log if the URL actually changed
           if (absoluteUrl !== url) {
             transformCount++;
@@ -241,7 +256,7 @@ export class RelativeLinkTransformer {
       /!\[([^\]]*)\]\(([^)]+)\)/g,
       (match, alt, src) => {
         if (this.isRelativeUrl(src)) {
-          const absoluteSrc = this.toAbsoluteUrl(src);
+          const absoluteSrc = this.toAbsoluteUrl(src, currentFileDir);
           // Only count and log if the URL actually changed
           if (absoluteSrc !== src) {
             transformCount++;
@@ -261,7 +276,7 @@ export class RelativeLinkTransformer {
       /<img\s+([^>]*?)src\s*=\s*["']([^"']+)["']([^>]*?)>/gi,
       (match, beforeSrc, src, afterSrc) => {
         if (this.isRelativeUrl(src)) {
-          const absoluteSrc = this.toAbsoluteUrl(src);
+          const absoluteSrc = this.toAbsoluteUrl(src, currentFileDir);
           // Only count and log if the URL actually changed
           if (absoluteSrc !== src) {
             transformCount++;

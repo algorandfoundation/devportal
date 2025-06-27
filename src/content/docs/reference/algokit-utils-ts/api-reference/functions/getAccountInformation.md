@@ -5,7 +5,7 @@ prev: false
 title: "getAccountInformation"
 ---
 
-> **getAccountInformation**(`sender`, `algod`): `Promise`\<[`AccountInformation`](/reference/algokit-utils-ts/api-reference/type-aliases/accountinformation/)\>
+> **getAccountInformation**(`sender`, `algod`): `Promise`\<[`AccountInformation`](/reference/algokit-utils-ts/api-reference/type-aliases/accountinformation)\>
 
 Defined in: [src/account/account.ts:156](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/account/account.ts#L156)
 
@@ -31,7 +31,7 @@ The algod instance
 
 ## Returns
 
-`Promise`\<[`AccountInformation`](/reference/algokit-utils-ts/api-reference/type-aliases/accountinformation/)\>
+`Promise`\<[`AccountInformation`](/reference/algokit-utils-ts/api-reference/type-aliases/accountinformation)\>
 
 The account information
 
