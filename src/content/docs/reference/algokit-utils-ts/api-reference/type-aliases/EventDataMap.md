@@ -17,8 +17,8 @@ Defined in: [src/types/lifecycle-events.ts:8](https://github.com/algorandfoundat
 
 ### AppCompiled
 
-> **AppCompiled**: [`TealSourcesDebugEventData`](/reference/algokit-utils-ts/api-reference/interfaces/tealsourcesdebugeventdata)
+> **AppCompiled**: [`TealSourcesDebugEventData`](/reference/algokit-utils-ts/api-reference/interfaces/tealsourcesdebugeventdata/)
 
 ### TxnGroupSimulated
 
-> **TxnGroupSimulated**: [`AVMTracesEventData`](/reference/algokit-utils-ts/api-reference/interfaces/avmtraceseventdata)
+> **TxnGroupSimulated**: [`AVMTracesEventData`](/reference/algokit-utils-ts/api-reference/interfaces/avmtraceseventdata/)
