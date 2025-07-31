@@ -10,7 +10,7 @@ import tealArguments from '@images/smart-contract-teal-arguments.png';
 import storingValues from '@images/smart-contract-teal-storing-values.png';
 import loadingValues from '@images/smart-contract-teal-loading-values.png';
 
-TEAL, or Transaction Execution Approval Language, is the smart contract language used in the Algorand blockchain. It is an assembly-like language processed by the Algorand Virtual Machine (AVM) and is Turing-complete, supporting both looping and subroutines. TEAL is primarily used for writing smart contracts and smart signatures, which can be authored directly in TEAL or via Python or Typescript using [Algokit](/algokit/algokit-intro).
+TEAL, or Transaction Execution Approval Language, is the smart contract language used in the Algorand blockchain. It is an assembly-like language processed by the Algorand Virtual Machine (AVM) and is Turing-complete, supporting both looping and subroutines. TEAL is primarily used for writing smart contracts and smart signatures, which can be authored directly in TEAL or via Python or Typescript using [AlgoKit](/algokit/algokit-intro). For a brief overview on how TEAL's opcodes work, checkout the [Opcode Overview](/concepts/smart-contracts/opcodes-overview) documentation.
 
 ## Use in Algorand Smart Contracts and Signatures
 
@@ -54,11 +54,11 @@ The TEAL specification provides several pseudo opcodes for convenience. For exam
 <Image src={pseudoCodes} alt='Pseudo Codes' />
 Figure: Pseudo Opcodes
 
-The addr pseudo opcode converts Algorand addresses to a byte constant and pushes the result to the stack. See [TEAL Opcodes](reference/algorand-teal/opcodes) for additional pseudo opcodes.
+The addr pseudo opcode converts Algorand addresses to a byte constant and pushes the result to the stack. See [TEAL Opcodes](/reference/algorand-teal/opcodes) for additional pseudo opcodes.
 
 ## Operators and Stack Manipulation
 
-TEAL provides operators to work with data that is on the stack. For example, the == operator evaluates if the last two values on the stack are equal and pushes either a 1 or 0 depending on the result. The number of values used by an operator will depend on the operator. The [TEAL Opcodes](smart-contracts/opcodes-overview) documentation explains arguments and return values.
+TEAL provides operators to work with data that is on the stack. For example, the == operator evaluates if the last two values on the stack are equal and pushes either a 1 or 0 depending on the result. The number of values used by an operator will depend on the operator. The [TEAL Opcodes](/reference/algorand-teal/opcodes) documentation explains arguments and return values.
 
 <Image src={operators} alt='Teal Operators' />
 Figure: Operators
@@ -132,7 +132,7 @@ main:
 ## Dynamic Operational Cost
 
 Smart signatures are limited to 1000 bytes in size. Size encompasses the compiled program plus arguments. Smart contracts are limited to 2KB total for the compiled approval and clear programs. This size can be increased in 2KB increments, up to an 8KB limit for both programs.
-For optimal performance, smart contracts and smart signatures are also limited in opcode cost. This cost is evaluated when a smart contract runs and is representative of its computational expense. Every opcode executed by the AVM has a numeric value that represents its computational cost. Most opcodes have a computational cost of 1. Some, such as SHA256 (cost 35) or ed25519verify (cost 1900) have substantially larger computational costs. The [TEAL Opcodes](reference/algorand-teal/opcodes) reference lists the opcode cost for every opcode.
+For optimal performance, smart contracts and smart signatures are also limited in opcode cost. This cost is evaluated when a smart contract runs and is representative of its computational expense. Every opcode executed by the AVM has a numeric value that represents its computational cost. Most opcodes have a computational cost of 1. Some, such as SHA256 (cost 35) or ed25519verify (cost 1900) have substantially larger computational costs. The [TEAL Opcodes](/reference/algorand-teal/opcodes) reference lists the opcode cost for every opcode.
 Smart signatures are limited to 20,000 for total computational cost.
 Smart contracts invoked by a single application transaction are limited to 700 for either of the programs associated with the contract. However, if the smart contract is invoked via a group of application transactions, the computational budget for approval programs is considered pooled. The total opcode budget will be 700 multiplied by the number of application transactions within the group (including inner transactions). So if the maximum transaction group size is used (i.e., 16 transactions) and the maximum number of inner transactions is used (i.e., 256 inner transactions), and all are application transactions, the computational budget would be 700x(16+256)=190,400.
 
@@ -142,6 +142,6 @@ Executions of clear state programs are more stringent than approval programs in 
 
 ## Tools and Development
 
-For developers who prefer Python or Typescript, you can also write smart contracts in Python or Typescript using [Algokit](/algokit/algokit-intro). Algokit abstracts many low-level details of TEAL while providing the same functionality.
+For developers who prefer Python or Typescript, you can also write smart contracts in Python or Typescript using [AlgoKit](/algokit/algokit-intro). AlgoKit abstracts many low-level details of TEAL while providing the same functionality.
 
-For debugging a smart contract in Python, refer to the [Algokit debugging page](/algokit/utils/python/debugging).
+For debugging a smart contract in Python, refer to the [AlgoKit debugging guide](/algokit/avm-debugger).
