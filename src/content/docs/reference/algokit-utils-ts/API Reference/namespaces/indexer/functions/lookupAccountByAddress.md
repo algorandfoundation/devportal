@@ -7,7 +7,7 @@ title: "lookupAccountByAddress"
 
 > **lookupAccountByAddress**(`accountAddress`, `indexer`): `Promise`\<`AccountResponse`\>
 
-Defined in: [src/indexer-lookup.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/e57e96ab17213653e656688e8d7251c0107554cf/src/indexer-lookup.ts#L26)
+Defined in: [src/indexer-lookup.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/45957336d0cbf88c980c0a3343335a5e5e142c93/src/indexer-lookup.ts#L26)
 
 :::caution[Deprecated]
 Use `indexer.lookupAccountByID(accountAddress).do()`.
