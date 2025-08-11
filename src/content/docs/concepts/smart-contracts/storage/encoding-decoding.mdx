@@ -99,14 +99,14 @@ _Example:_
 Given a base64 encoded byte array `SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0` it may be decoded as follows:
 
 <Tabs syncKey='lang'>
-  <TabItem label='Python' icon='seti:python'>
+  <TabItem label='Javascript' icon='seti:javascript'>
     ```python encoded_str = "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0" decoded_str =
     base64.b64decode(encoded_str).decode("utf-8") print(decoded_str) ``` [Snippet
     Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L23-L26)
   </TabItem>
-  <TabItem label='JavaScript' icon='seti:javascript'>
-    ```javascript const b64Encoded = 'SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0'; const b64Decoded =
-    Buffer.from(b64Encoded, 'base64').toString(); console.log(b64Encoded, b64Decoded); ``` [Snippet
+  <TabItem label='Python' icon='seti:python'>
+    ```javascript const encoded_str = 'SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0' const decoded_str =
+    base64.b64decode(encoded_str).decode("utf-8") printf(decoded_str) ``` [Snippet
     Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L24-L27)
   </TabItem>
   <TabItem label='Go' icon='seti:go'>
