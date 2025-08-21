@@ -89,8 +89,9 @@ Protocol parameters are constants that define the limits and requirements of the
 
 ## Box Parameters
 
-| Name                    | Value | Variable             | Note                                                             |
-| ----------------------- | ----- | -------------------- | ---------------------------------------------------------------- |
-| Max size of box         | 32768 | MaxBoxSize           | Does not include name/key length. That is capped by MaxAppKeyLen |
-| Max box references      | 8     | MaxAppBoxReferences  |                                                                  |
-| Bytes per Box reference | 1024  | BytesPerBoxReference |                                                                  |
+| Name                    | Value    | Variable             | Note                                                                          |
+| ----------------------- | -------- | -------------------- | ----------------------------------------------------------------------------- |
+| Max size of box         | 32768    | MaxBoxSize           | Does not include name/key length, which is capped at 64 bytes by MaxAppKeyLen |
+| Max box references      | 8        | MaxAppBoxReferences  |                                                                               |
+| Bytes per Box reference | 1024     | BytesPerBoxReference |                                                                               |
+| Max box key size        | 64 bytes | MaxAppKeyLen         |                                                                               |
