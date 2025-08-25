@@ -15,6 +15,7 @@
     "generate-diagrams": "npx tsx scripts/generate-diagrams.ts",
     "generate-openapi-docs": "npx tsx scripts/generate-openapi-docs.js",
     "init:submodules": "git submodule update --init",
+    "link:arc-standards": "rm -rf src/content/docs/arc-standards && mkdir -p src/content/docs && ln -sfn \"../../../imports/repos/arcs/_devportal/content\" src/content/docs/arc-standards",
     "import:nodekit": "npx tsx imports/scripts/nodekit.ts && prettier --write src/content/docs/nodes/nodekit-reference/",
     "import:poetry": "cd imports/build/python && poetry install",
     "import:utils-ts": "cd imports/repos/algokit-utils-ts && npm install",
@@ -22,7 +23,7 @@
     "import:utils-py": "cd imports/build/python && make utils",
     "import:algorand-typescript": "cd imports/repos/puya-ts && npm install",
     "import:algokit-cli": "tsx imports/scripts/algokit-cli.ts && prettier --write src/content/docs/algokit/algokit-cli",
-    "import": "pnpm run init:submodules && pnpm run import:nodekit && pnpm run import:poetry && pnpm run import:utils-ts && pnpm run import:algorand-python && pnpm run import:utils-py && pnpm run import:algorand-typescript && pnpm run import:algokit-cli"
+    "import": "pnpm run init:submodules && pnpm run import:nodekit && pnpm run import:poetry && pnpm run import:utils-ts && pnpm run import:algorand-python && pnpm run import:utils-py && pnpm run import:algorand-typescript && pnpm run import:algokit-cli && pnpm run link:arc-standards"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

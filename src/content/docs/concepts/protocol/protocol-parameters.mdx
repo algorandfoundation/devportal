@@ -1,0 +1,97 @@
+---
+title: Protocol Parameters
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+Protocol parameters are constants that define the limits and requirements of the Algorand blockchain. These parameters control various aspects of the network including transaction fees, minimum balances, smart contract constraints, and asset creation limits. Understanding these parameters is essential for developers building on Algorand, as they directly impact the cost and feasibility of different operations on the network.
+
+<LinkCard
+  title='Smart Contract Costs & Constraints'
+  description='Learn about the specific costs and constraints that affect smart contract development'
+  href='/concepts/smart-contracts/costs-constraints'
+/>
+
+## Minimum Balance Requirements
+
+| Parameter   | Value    | Variable   | Note                                  |
+| ----------- | -------- | ---------- | ------------------------------------- |
+| Default     | 0.1 Algo | MinBalance |                                       |
+| Opt-in ASA  | 0.1 Algo | MinBalance |                                       |
+| Created ASA | 0.1 Algo | MinBalance | ASA creator is automatically opted in |
+
+## Minimum Balance Requirements for Smart Contracts
+
+| Name                              | Value       | Variable                 | Note                           |
+| --------------------------------- | ----------- | ------------------------ | ------------------------------ |
+| Per page application creation fee | 0.1 Algo    | AppFlatParamsMinBalance  |                                |
+| Flat for application opt-in       | 0.1 Algo    | AppFlatOptInMinBalance   |                                |
+| Per state entry                   | 0.025 Algo  | SchemaMinBalancePerEntry |                                |
+| Addition per integer entry        | 0.0035 Algo | SchemaUintMinBalance     |                                |
+| Addition per byte slice entry     | 0.025 Algo  | SchemaBytesMinBalance    |                                |
+| Per Box created                   | 0.0025 Algo | BoxFlatMinBalance        |                                |
+| Per byte in box created           | 0.0004 Algo | BoxByteMinBalance        | Includes the length of the key |
+
+## Transaction Parameters
+
+| Name                                       | Value                   | Variable             | Note                                                                                                                |
+| ------------------------------------------ | ----------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Minimum transaction fee, in all cases      | 0.001 Algo              | MinTxnFee            |                                                                                                                     |
+| Additional minimum constraint if congested | Additional fee per byte | -                    |                                                                                                                     |
+| Max number of transactions in a group      | 16                      | MaxTxGroupSize       |                                                                                                                     |
+| Max number of inner transactions           | 256                     | MaxInnerTransactions | Each transaction allows 16 inner transactions, multiplied by MaxTxGroupSize (16) through inner transaction pooling. |
+| Maximum size of a block                    | 5000000 bytes           | MaxTxnBytesPerBlock  |                                                                                                                     |
+| Maximum size of note                       | 1024 bytes              | MaxTxnNoteBytes      |                                                                                                                     |
+| Maximum transaction life                   | 1000 rounds             | MaxTxnLife           |                                                                                                                     |
+
+## ASA Parameters
+
+| Name                                   | Value     | Variable              | Note                                       |
+| -------------------------------------- | --------- | --------------------- | ------------------------------------------ |
+| Max number of ASAs (create and opt-in) | Unlimited | MaxAssetsPerAccount   |                                            |
+| Max asset name size                    | 32 bytes  | MaxAssetNameBytes     |                                            |
+| Max unit name size                     | 8 bytes   | MaxAssetUnitNameBytes |                                            |
+| Max URL size                           | 96 bytes  | MaxAssetURLBytes      |                                            |
+| Metadata hash                          | 32 bytes  |                       | Padded with zeros if shorter than 32 bytes |
+
+## Smart Signature Parameters
+
+| Name                                                   | Value      | Variable        | Note |
+| ------------------------------------------------------ | ---------- | --------------- | ---- |
+| Max size of compiled TEAL code combined with arguments | 1000 bytes | LogicSigMaxSize |      |
+| Max cost of TEAL code                                  | 20000      | LogicSigMaxCost |      |
+
+## Smart Contract Parameters
+
+| Name                                                               | Value      | Variable                 | Note                                                              |
+| ------------------------------------------------------------------ | ---------- | ------------------------ | ----------------------------------------------------------------- |
+| Page size of compiled approval + clear TEAL code                   | 2048 bytes | MaxAppProgramLen         | by default, each application has a single page                    |
+| Max extra app pages                                                | 3          | MaxExtraAppProgramPages  | an application can "pay" for additional pages via minimum balance |
+| Max cost of approval TEAL code                                     | 700        | MaxAppProgramCost        |                                                                   |
+| Max cost of clear TEAL code                                        | 700        | MaxAppProgramCost        |                                                                   |
+| Max number of scratch variables                                    | 256        |                          |                                                                   |
+| Max depth of stack                                                 | 1000       | MaxStackDepth            |                                                                   |
+| Max number of arguments                                            | 16         | MaxAppArgs               |                                                                   |
+| Max combined size of arguments                                     | 2048 bytes | MaxAppTotalArgLen        |                                                                   |
+| Max number of global state keys                                    | 64         | MaxGlobalSchemaEntries   |                                                                   |
+| Max number of local state keys                                     | 16         | MaxLocalSchemaEntries    |                                                                   |
+| Max number of log messages                                         | 32         | MaxLogCalls              |                                                                   |
+| Max size of log messages                                           | 1024       | MaxLogSize               |                                                                   |
+| Max key size                                                       | 64 bytes   | MaxAppKeyLen             |                                                                   |
+| Max []byte value size                                              | 128 bytes  | MaxAppBytesValueLen      |                                                                   |
+| Max key + value size                                               | 128 bytes  | MaxAppSumKeyValueLens    |                                                                   |
+| Max number of foreign accounts                                     | 4          | MaxAppTxnAccounts        |                                                                   |
+| Max number of foreign ASAs                                         | 8          | MaxAppTxnForeignAssets   |                                                                   |
+| Max number of foreign applications                                 | 8          | MaxAppTxnForeignApps     |                                                                   |
+| Max number of foreign accounts + ASAs + applications + box storage | 8          | MaxAppTotalTxnReferences |                                                                   |
+| Max number of created applications                                 | Unlimited  | MaxAppsCreated           |                                                                   |
+| Max number of opt-in applications                                  | Unlimited  | MaxAppsOptedIn           |                                                                   |
+
+## Box Parameters
+
+| Name                    | Value    | Variable             | Note                                                                          |
+| ----------------------- | -------- | -------------------- | ----------------------------------------------------------------------------- |
+| Max size of box         | 32768    | MaxBoxSize           | Does not include name/key length, which is capped at 64 bytes by MaxAppKeyLen |
+| Max box references      | 8        | MaxAppBoxReferences  |                                                                               |
+| Bytes per Box reference | 1024     | BytesPerBoxReference |                                                                               |
+| Max box key size        | 64 bytes | MaxAppKeyLen         |                                                                               |

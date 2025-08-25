@@ -1,35 +1,22 @@
 ---
-title: Costs & Constraints
+title: Smart Contract Costs & Constraints
 ---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+This page covers the costs and constraints specific to smart contract development on Algorand. For a complete list of all protocol parameters including transaction fees, minimum balances, and other network-wide settings, see the main protocol parameters page.
+
+<LinkCard
+  title='Protocol Parameters'
+  description='Complete list of all Algorand protocol parameters including transaction fees, minimum balances, and network-wide constants'
+  href='/concepts/protocol/protocol-parameters'
+/>
 
 import { Image } from 'astro:assets';
 import Figure from '/src/components/Figure.astro';
 import mbr1 from '@images/smart-contract-mbr-1.png';
 import mbr2 from '@images/smart-contract-mbr-1.png';
 import mbr3 from '@images/smart-contract-mbr-1.png';
-
-## MBR
-
-The Minimum Balance Requirement (MBR) in Algorand refers to the minimum amount of Algos that an account must hold. This requirement is affected by various factors such as the creation or ownership of Algorand Standard Assets (ASAs), opting into or out of applications, and the storage of additional data.
-
-| Type            | Minimum Balance        | Description                                                                                                   |
-| --------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Basic Account   | 0.1 Algo               | If ever a transaction is sent that will result in a balance lower than the minimum; the transaction will fail |
-| Opting into ASA | +0.1 Algo              | Increases: Opting into assets or applications, storing additional data (e.g., boxes in smart contracts)       |
-| Opting out ASA  | -0.1 Algo              | Decreases: Opting out of assets or applications, removing stored data                                         |
-| Smart Contracts | 0.1 Algo upon creation | Additional Increases: Based on state schema and number of extra program pages                                 |
-
-For eg. for a basic account the minimum balance requirement is 0.1 Algo
-
-<Figure src={mbr1} alt='MBR for Basic Account #1' width='600' />
-
-Now if this account creates an asset like below:
-
-<Figure src={mbr2} alt='MBR for Basic Account #2' width='600' />
-
-The min balance of the account increases by 0.1 Algos and now the minimum balance is 0.2 Algos
-
-<Figure src={mbr3} alt='MBR for Basic Account #3' width='600' />
 
 ## Program Constraints
 
@@ -92,27 +79,6 @@ In Algorand, the access and usage of resources such as account balance/state, ap
 | ------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | Access Restrictions       | Limited access to resources like account balance and application state to ensure efficient block evaluation. |
 | Specification Requirement | Resources must be specified within the transaction for nodes to pre-fetch data.                              |
-
-### Transaction Fees
-
-| Attribute         | Details                                                       |
-| ----------------- | ------------------------------------------------------------- |
-| Minimum Fee       | 0.001 Algo per transaction, regardless of type.               |
-| Payment Condition | Fees are only paid if the transaction is included in a block. |
-
-### Smart Contract Constraints
-
-| Constraint Type        | Details                                                                                                           |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Opt-In Applications    | No limit on the number of applications an account can opt into.                                                   |
-| Size and Opcode Limits | Must adhere to program size and opcode budget constraints outlined in Program Constraints and Opcode Constraints. |
-
-### ASA Constraints
-
-| Constraint Type | Details                                                                           |
-| --------------- | --------------------------------------------------------------------------------- |
-| Quantity        | Unlimited number of Algorand Standard Assets (ASAs).                              |
-| Size Limits     | Asset Name: 32 bytes, Unit Name: 8 bytes, URL: 96 bytes, Metadata Hash: 32 bytes. |
 
 ### Access Constraints
 
