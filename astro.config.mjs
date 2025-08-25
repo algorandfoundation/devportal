@@ -372,6 +372,10 @@ export default defineConfig({
                   link: 'concepts/protocol/overview',
                 },
                 {
+                  label: 'Protocol Parameters',
+                  link: 'concepts/protocol/protocol-parameters',
+                },
+                {
                   label: 'Participation Key Management',
                   link: 'concepts/protocol/partkey-management',
                 },
