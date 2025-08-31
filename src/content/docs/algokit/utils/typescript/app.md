@@ -306,9 +306,9 @@ await algorand.send.appCallMethodCall({
 
 ### Global state
 
-To access local state you can use the following method from an [`AppManager`](#appmanager) instance:
+To access global state you can use the following method from an [`AppManager`](#appmanager) instance:
 
-- `algorand.app.getLocalState(appId, address)` - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
+- `algorand.app.getGlobalState(appId)` - Returns the current global state for the given app ID decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
 
 ```typescript
 const globalState = await algorand.app.getGlobalState(12345n);
