@@ -9,7 +9,7 @@ function htmlEscape(s = '') {
     .replace(/>/g, '&gt;');
 }
 
-Handlebars.registerHelper('cellList', arr => {
+Handlebars.registerHelper('valueList', arr => {
   if (!Array.isArray(arr) || arr.length === 0) return '-';
   const html = arr.map(v => `${htmlEscape(v)}`).join(',');
   return new Handlebars.SafeString(html);
@@ -23,11 +23,31 @@ Handlebars.registerHelper(
       .padStart(2, '0')}`,
 );
 // Join array as comma-separated text (for "Groups")
-Handlebars.registerHelper('commaList', arr => {
+Handlebars.registerHelper('groupList', arr => {
   if (!Array.isArray(arr) || arr.length === 0) return '-';
-  return arr.join(', ');
+  const escaped = arr.map(v => '`' + String(v).replace(/`/g, '\\`') + '`');
+  return escaped.join(', ');
 });
-// Safely place plain text inside <p>…</p>
+
+// Renders an ImmediateNote table (Comment, Encoding, Name).
+Handlebars.registerHelper('immediateTable', arr => {
+  if (!Array.isArray(arr) || arr.length === 0) return '';
+  const rows = arr
+    .map(it => {
+      const name = htmlEscape(it?.Name ?? '-');
+      const enc = htmlEscape(it?.Encoding ?? '-');
+      const cmt = htmlEscape(it?.Comment ?? '-');
+      return `<tr><td>${cmt}</td><td>${enc}</td><td>${name}</td></tr>`;
+    })
+    .join('');
+  const html = `<table>
+      <thead><tr><th>Note</th><th>Encoding</th><th>Name</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  return new Handlebars.SafeString(html);
+});
+
+// Safely place plain text inside <p>…</p> (escape JSX/Acorn expressions)
 Handlebars.registerHelper(
   'ptext',
   s => new Handlebars.SafeString(`${htmlEscape(s ?? '')}`),

@@ -21,8 +21,8 @@ title: AVM Opcodes
   <tbody>
     <tr>
       <td>{{bytecode Opcode}}</td>
-      <td>{{{cellList Args}}}</td>
-      <td>{{{cellList Returns}}}</td>
+      <td>{{{valueList Args}}}</td>
+      <td>{{{valueList Returns}}}</td>
       <td>{{Size}}</td>
       <td>v{{IntroducedVersion}}</td>
       <td>{{DocCost}}</td>
@@ -39,14 +39,21 @@ title: AVM Opcodes
 <p>None</p>
 {{/if}}
 
+<span class='opcode-detail-caption'>Groups</span>
+{{groupList Groups}}
+
 {{#if DocExtra}}
 
 <span class='opcode-detail-caption'>Notes</span>
 {{{ptext DocExtra}}}
 {{/if}}
 
-<span class='opcode-detail-caption'>Groups</span>
-{{commaList Groups}}
+{{#if ImmediateNote}}
+
+<span class="opcode-detail-caption">Additional Notes</span>
+{{{immediateTable ImmediateNote}}}
+
+{{/if}}
 
 :::
 
