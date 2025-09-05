@@ -37,11 +37,11 @@ Handlebars.registerHelper('immediateTable', arr => {
       const name = htmlEscape(it?.Name ?? '-');
       const enc = htmlEscape(it?.Encoding ?? '-');
       const cmt = htmlEscape(it?.Comment ?? '-');
-      return `<tr><td>${cmt}</td><td>${enc}</td><td>${name}</td></tr>`;
+      return `<tr><td>${name}</td><td>${enc}</td><td>${cmt}</td></tr>`;
     })
     .join('');
   const html = `<table>
-      <thead><tr><th>Note</th><th>Encoding</th><th>Name</th></tr></thead>
+      <thead><tr><th>Name</th><th>Encoding</th><th>Description</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
   return new Handlebars.SafeString(html);
