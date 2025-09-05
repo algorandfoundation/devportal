@@ -1,6 +1,3 @@
-/* eslint-env node */
-/* eslint no-console: "off" */
-
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import Handlebars from 'handlebars';
