@@ -1,0 +1,65 @@
+---
+title: Randomness
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Algorand Randomness Capabilities
+
+Since AVM v7 release, two new opcodes have been available: `block` and `vrf_verify`. These enable building randomness oracles and beacons on Algorand, which then provide secure sources of randomness to dApps on-chain.
+
+### Algorand Randomness Beacon
+
+Algorand’s on-chain randomness beacon offers a secure, trustless, and verifiable way to generate cryptographically secure randomness. On-chain randomness serves as a vital component for provably fair gaming, random NFT generation, lottery and raffle systems, and other situations where a fair and random number is required. Algorand has achieved this cryptographically secure randomness through [Verfiable Random Functions (VRFs)](/concepts/protocol/overview/#verifiable-random-function) and cryptographic tools with two vital characteristics: verifiability and unpredictability. The randomness beacon calls the same VRF used by the Algorand consensus protocol to generate verifiable pseudo-random values stored on-chain. Nobody can predict the number beforehand, not even the randomness beacon (forward secrecy), and anyone can confirm that the number was generated fairly and not tampered with. These random values can be used by any smart contract deployed on the Algorand blockchain.
+
+## A Brief Primer: Randomness in Computers
+
+In our daily lives, we can flip a coin to get a bit of randomness. In computers, it’s not quite that simple. One can Google “flip a coin” and our friendly neighborhood search engine will provide a coin flip. But how did Google decide the output of heads or tails?
+
+Computers are deterministic machines: you give a computer program an input, it gives you an output. If you give it the same input again, it’ll give you the same output again, every time. That is predictable, and therefore nearly antithetical to randomness.
+
+What is often provided by computers is a pseudo-random number generator (PRNG). Given a certain input seed, the PRNG will give you an output number that appears random and unrelated to the seed. It’s difficult to predict the output of a PRNG without actually running it. This works just fine for many situations, but presents an attack vector if used for sensitive use cases (use cases where there is a lot to be gained from breaking in).
+
+As an improvement over fully deterministic PRNGs, most operating systems nowadays have built-in entropy collection systems to provide better randomness. For example, they gather the user’s mouse movements and use that data as an input to their randomness generation. There is also Cloudflare’s [lava lamp wall](https://www.cloudflare.com/en-gb/learning/ssl/lava-lamp-encryption/) for a particularly creative source of entropy.
+
+Unfortunately, none of this can be used as-is on the blockchain.
+
+## Challenges to On-Chain Randomness
+
+A public blockchain presents two challenges to randomness.
+
+Firstly, blockchains are run by a consensus mechanism, which requires all consensus-participating nodes to agree on exactly what happened. Algorand smart contracts are fully deterministic to ensure that consensus can be reached. Thus, they cannot use sources of entropy in their calculations. If they could, different consensus participants would calculate different results and would therefore not reach consensus.
+
+Secondly, everything on a public blockchain is, in fact, public. Let’s say Alice implements a PRNG and publishes it in a smart contract. Everybody can see the exact code for her PRNG. When Bob calls the smart contract, he can decide what user seed to provide. Therefore, Bob can pre-run the PRNG with his seed and know ahead of time what the output will be. He predicts the output, therefore it’s not random.
+
+Off-chain PRNG’s will often use information that’s not user-provided to seed their function. Unfortunately for Alice, any information her smart contract uses is visible to everybody, because everything on the blockchain is public. Therefore, its output remains predictable and not random.
+
+## Building a Randomness Beacon or Oracle
+
+To offer randomness on-chain, Alice has to make use of more advanced cryptography tools.
+
+Alice builds an off-chain service and an on-chain smart contract. At inception, her off-chain service generates a VRF private/public key pair. The public key is shared with her smart contract.
+
+Every 8th block (this could be a different number), the off-chain service computes the result of the VRF on the block seed (see below), under its private key. The output of this process is a VRF proof.
+
+The service now calls the smart contract and sends it the VRF proof (as an app call argument). Using the public key, the smart contract then validates that the VRF proof was actually properly generated using the private key: this is a similar process to verifying a digital signature. If it is valid, this VRF verification step also outputs a value, called the VRF output, which is the pseudo random value we’re looking for. This pseudo random value is stored in the smart contract’s state and can now be accessed by dApps.
+
+dApps may want different random values from each other. When calling Alice’s smart contract, they can provide a user seed, which is hashed with the VRF output to give them their own random value.
+
+## The Block Seed
+
+The block seed is a pseudo-random number generated by each block. Its value is based on various pieces of information from the blockchain (read the [Algorand whitepaper](https://26119259.fs1.hubspotusercontent-eu1.net/hubfs/26119259/Website-2024/PDFs/Algorand%20-%20Whitepaper.pdf) if interested in the details). The block seed is used as part of the sortition algorithm to select the various committees running the Algorand blockchain.
+
+It is possible to influence the value of the block seed by running a participation node. For example, a consensus participant could choose not to propose a certain block if the resulting block seed would cause them to lose the lottery they’re playing in. Therefore, the block seed itself should NOT be used directly as a source of randomness.
+
+## Using the Randomness Beacon or Oracle
+
+Now that the beacon is built, how do dApps make use of it? A somewhat unusual paradigm has to be taken with randomness.
+
+The output of the randomness beacon is only random when the block seed is not known. Once the block seed for a certain round is known, Alice will now be able to compute the randomness beacon value for that round and be able to cheat in any smart contract using this value.
+
+Therefore, the way that Alice’s randomness beacon should be used is by first committing to using the randomness several rounds in advance, and then getting the randomness in that later round. This “commitment” can take different forms; the most straightforward approach is to hardcode the round number in a deployed smart contract.
+
+For example, Bob would like to run a lottery on-chain, so he deploys a lottery smart contract. Everyone who participates in the lottery can buy their ticket by paying the lottery contract any time before round 3000 (this round number is hard-coded in the contract). Anytime after round 3162 (also hard-coded), anyone can call the lottery contract to actually run the lottery. Bob’s lottery contract calls Alice’s randomness beacon to get its value from round 3162, and uses that value to determine who wins the lottery. The winner can now call the lottery contract to claim their winnings.
+
+Applications with low security requirements (with little money at play) can commit to rounds in the very near future, like 2 rounds ahead. Randomness oracles will likely provide specific guidance and guarantees to their users around these numbers.
