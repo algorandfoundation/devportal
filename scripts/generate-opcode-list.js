@@ -1,21 +1,17 @@
-// scripts/generate-docs.js
-// Generate a Markdown page from a Handlebars template so Starlight's TOC sees real headings.
+/* eslint-env node */
+/* eslint no-console: "off" */
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import Handlebars from 'handlebars';
 
-/* ---------------- Helpers ---------------- */
-
-// Escape minimal HTML (so < & > in descriptions don't break <p> tags)
 function htmlEscape(s = '') {
   return String(s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 }
-// Render stack inputs/outputs as <div> items inside a single table cell.
-// Returns "-" when empty.
+
 Handlebars.registerHelper('cellList', arr => {
   if (!Array.isArray(arr) || arr.length === 0) return '-';
   const html = arr.map(v => `${htmlEscape(v)}`).join(',');
@@ -43,12 +39,11 @@ Handlebars.registerHelper(
 /* ---------------- Main ---------------- */
 
 async function main() {
-  // Adjust these paths if your project layout differs.
   const templatePath = resolve('templates/opcodes.md.hbs');
   const dataPath = resolve(
     'src/content/docs/reference/algorand-teal/opcodes.json',
   );
-  const outPath = 'src/content/docs/reference/algorand-teal/opcodes.md'; // final page consumed by Starlight
+  const outPath = 'src/content/docs/reference/algorand-teal/opcodes.md';
 
   const [tplSrc, dataSrc] = await Promise.all([
     readFile(templatePath, 'utf8'),
@@ -57,7 +52,6 @@ async function main() {
 
   const template = Handlebars.compile(tplSrc, { noEscape: true });
 
-  // Expecting: [{ name, Opcode, Args, Returns, Size, IntroducedVersion, DocCost, Doc, DocExtra, Groups }, ...]
   const opcodes = JSON.parse(dataSrc);
 
   const page = template({
