@@ -395,6 +395,10 @@ export default defineConfig({
                   label: 'Networks',
                   link: 'concepts/protocol/networks',
                 },
+                {
+                  label: 'Randomness',
+                  link: 'concepts/protocol/randomness',
+                },
               ],
             },
           ],
