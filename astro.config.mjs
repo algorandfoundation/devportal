@@ -2867,7 +2867,7 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
-                  label: 'Opcodes List',
+                  label: 'AVM Opcodes',
                   link: 'reference/algorand-teal/opcodes',
                 },
               ],
