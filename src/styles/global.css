@@ -86,6 +86,24 @@ table.reference-table code {
   white-space: nowrap;
 }
 
+.opcode-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.opcode-table th,
+.opcode-table td {
+  width: 1% !important; /* Forces equal distribution */
+  min-width: 0 !important;
+  max-width: none !important;
+  text-align: center !important;
+}
+.opcode-detail-caption {
+  display: block;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
 :root[data-theme='dark'] {
   [data-icon] {
     color: var(--color-icon-dark);

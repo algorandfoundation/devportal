@@ -1,0 +1,53 @@
+---
+title: AVM Opcodes
+---
+
+{{!-- Emit a section per opcode. Use Markdown headings so Starlight's TOC works. --}}
+{{#each opcodes}}
+
+## {{Name}}
+
+<table class='opcode-table'>
+  <thead>
+    <tr>
+      <th>Bytecode</th>
+      <th>Stack Input</th>
+      <th>Stack Output</th>
+      <th>Size</th>
+      <th>Availability</th>
+      <th>Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{bytecode Opcode}}</td>
+      <td>{{{cellList Args}}}</td>
+      <td>{{{cellList Returns}}}</td>
+      <td>{{Size}}</td>
+      <td>v{{IntroducedVersion}}</td>
+      <td>{{DocCost}}</td>
+    </tr>
+  </tbody>
+</table>
+
+:::note[Details]
+
+<span class="opcode-detail-caption">Description</span>
+{{#if Doc}}
+{{{ptext Doc}}}
+{{else}}
+<p>None</p>
+{{/if}}
+
+{{#if DocExtra}}
+
+<span class='opcode-detail-caption'>Notes</span>
+{{{ptext DocExtra}}}
+{{/if}}
+
+<span class='opcode-detail-caption'>Groups</span>
+{{commaList Groups}}
+
+:::
+
+{{/each}}
