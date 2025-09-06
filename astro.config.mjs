@@ -10,6 +10,7 @@ import starlightTypeDoc from 'starlight-typedoc';
 import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-links';
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   site: 'https://dev.algorand.co',
@@ -2941,6 +2942,7 @@ export default defineConfig({
         '@assets': resolve('./src/assets'),
         '@images': resolve('./src/assets/images'),
         '@diagrams': resolve('./src/assets/diagrams/svg'),
+        '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
       },
     },
     plugins: [tailwindcss()],

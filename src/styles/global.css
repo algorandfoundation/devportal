@@ -276,3 +276,77 @@ html:has(.homepage-hero) {
 div.sl-container thead th {
   border-bottom: solid 1px var(--sl-color-accent-medium);
 }
+
+/* ——— AVM Opcode filters styling ——— */
+.op-filters {
+  display: flex;
+  gap: .75rem;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+/* Label text above controls */
+.op-filters label > span {
+  font-weight: 600;
+  margin-bottom: .25rem;
+  display: block;
+}
+
+/* Base control styles */
+.op-filters select,
+.op-filters button {
+  font: inherit;
+  color: inherit;
+  border-radius: .375rem;
+  border: 1px solid var(--sl-color-gray-4);
+  background-color: var(--sl-color-bg);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
+}
+
+/* Selects */
+.op-filters select {
+  padding: .35rem .6rem;
+  min-width: 10rem;
+}
+
+/* Button */
+.op-filters button {
+  padding: .15rem .8rem;
+  cursor: pointer;
+  background-color: var(--sl-color-accent-low);
+  border-color: var(--sl-color-accent-medium);
+  color: var(--sl-color-text-accent);
+}
+
+/* Hover */
+.op-filters select:hover {
+  border-color: var(--sl-color-accent-medium);
+}
+.op-filters button:hover {
+  background-color: var(--sl-color-accent);
+  color: var(--sl-color-black);
+}
+
+/* Focus ring */
+.op-filters select:focus,
+.op-filters button:focus {
+  outline: none;
+  border-color: var(--sl-color-accent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--sl-color-accent) 55%, transparent);
+}
+
+/* Disabled states */
+.op-filters select:disabled,
+.op-filters button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* High-contrast border on very light table header backgrounds */
+:root[data-theme='light'] .op-filters select,
+:root[data-theme='light'] .op-filters button {
+  border-color: var(--sl-color-gray-5);
+}
+
+/* Ensure controls align nicely with the baseline of headings in the page */
+.op-filters { margin: 0 0 1rem; }

@@ -1,60 +1,67 @@
 ---
 title: AVM Opcodes
+description: Generated from opcodes.json
 ---
 
-{{!-- Emit a section per opcode. Use Markdown headings so Starlight's TOC works. --}}
+import OpcodeFilters from "../../../../components/OpcodeFilters.astro";
+
+<OpcodeFilters />
+
 {{#each opcodes}}
+## {{{headingText Name}}}
 
-## {{Name}}
+<div class="opcode-section"
+     data-name="{{Name}}"
+     data-version="v{{IntroducedVersion}}"
+     data-groups="{{csv Groups}}">
 
-<table class='opcode-table'>
-  <thead>
-    <tr>
-      <th>Bytecode</th>
-      <th>Stack Input</th>
-      <th>Stack Output</th>
-      <th>Size</th>
-      <th>Availability</th>
-      <th>Cost</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{bytecode Opcode}}</td>
-      <td>{{{valueList Args}}}</td>
-      <td>{{{valueList Returns}}}</td>
-      <td>{{Size}}</td>
-      <td>v{{IntroducedVersion}}</td>
-      <td>{{DocCost}}</td>
-    </tr>
-  </tbody>
-</table>
+  <table class='opcode-table'>
+    <thead>
+      <tr>
+        <th>Bytecode</th>
+        <th>Stack Input</th>
+        <th>Stack Output</th>
+        <th>Size</th>
+        <th>Availability</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{bytecode Opcode}}</td>
+        <td>{{{valueList Args}}}</td>
+        <td>{{{valueList Returns}}}</td>
+        <td>{{Size}}</td>
+        <td>v{{IntroducedVersion}}</td>
+        <td>{{DocCost}}</td>
+      </tr>
+    </tbody>
+  </table>
 
-:::note[Details]
+  :::note[Details]
 
-<span class="opcode-detail-caption">Description</span>
-{{#if Doc}}
-{{{ptext Doc}}}
-{{else}}
-<p>None</p>
-{{/if}}
+  <span class="opcode-detail-caption">Description</span>
+  {{#if Doc}}
+  {{{mdxParagraphs Doc}}}
+  {{else}}
+  None
+  {{/if}}
 
-<span class='opcode-detail-caption'>Groups</span>
-{{groupList Groups}}
+  {{#if DocExtra}}
+  <span class="opcode-detail-caption">Notes</span>
+  {{{mdxParagraphs DocExtra}}}
+  {{/if}}
 
-{{#if DocExtra}}
+  <span class='opcode-detail-caption'>Groups</span>
+  {{groupList Groups}}
 
-<span class='opcode-detail-caption'>Notes</span>
-{{{ptext DocExtra}}}
-{{/if}}
+  {{#if ImmediateNote}}
+  <span class="opcode-detail-caption">Immediate Parameters</span>
+  {{{immediateTable ImmediateNote}}}
+  {{/if}}
 
-{{#if ImmediateNote}}
+  :::
 
-<span class="opcode-detail-caption">Immediate Parameters</span>
-{{{immediateTable ImmediateNote}}}
-
-{{/if}}
-
-:::
+</div>
 
 {{/each}}
