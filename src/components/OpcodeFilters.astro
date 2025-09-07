@@ -17,7 +17,7 @@
   <button id='f-reset' type='button'>Reset</button>
 </div>
 
-<script>
+<script is:inline>
   // Run after the DOM is ready
   document.addEventListener('DOMContentLoaded', () => {
     const $ = (s, el = document) => el.querySelector(s);
@@ -46,14 +46,16 @@
       .sort((a, b) => parseInt(a.slice(1)) - parseInt(b.slice(1)))
       .forEach(v => {
         const o = document.createElement('option');
-        o.value = o.textContent = v;
+        o.value = v;
+        o.textContent = v;
         verSel.append(o);
       });
     [...groups]
       .sort((a, b) => a.localeCompare(b))
       .forEach(g => {
         const o = document.createElement('option');
-        o.value = o.textContent = g;
+        o.value = g;
+        o.textContent = g;
         grpSel.append(o);
       });
 
