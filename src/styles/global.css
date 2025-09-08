@@ -357,3 +357,15 @@ div.sl-container thead th {
 .op-filters {
   margin: 0 0 1rem;
 }
+
+div.opcode-section p.starlight-aside__title {
+  display: none;
+}
+
+div.opcode-section aside {
+  font-size: 0.8rem !important;
+}
+
+div.opcode-section table.opcode-table {
+  font-size: 0.8rem !important;
+}

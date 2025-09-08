@@ -1,6 +1,8 @@
 ---
 title: AVM Opcodes
-description: Generated from opcodes.json
+tableOfContents:
+  minHeadingLevel: 3
+  maxHeadingLevel: 3
 ---
 
 import OpcodeFilters from "../../../../components/OpcodeFilters.astro";
@@ -8,7 +10,7 @@ import OpcodeFilters from "../../../../components/OpcodeFilters.astro";
 <OpcodeFilters />
 
 {{#each opcodes}}
-## {{{headingText Name}}}
+### {{{headingText Name}}}
 
 <div class="opcode-section"
      data-name="{{Name}}"
