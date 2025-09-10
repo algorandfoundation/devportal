@@ -98,6 +98,7 @@ async function main() {
 
   const template = Handlebars.compile(tplSrc, { noEscape: true });
   const opcodes = JSON.parse(dataSrc);
+  opcodes.sort((a, b) => a.Name.localeCompare(b.Name));
 
   const page = template({ opcodes });
 
