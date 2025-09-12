@@ -2047,7 +2047,7 @@ packages:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0
 
   astro-github-loader@file:../starlight-github-loader-fork/astro-github-loader-0.0.1.tgz:
-    resolution: {integrity: sha512-hGpSzMXX+qAk3+5txyUjCrShaPBxjTzzkJwA73amWoJ9sjQUcCGlSYfIKH3HDWPbXRTW6RsJcy8ul21Qxfu3Xw==, tarball: file:../starlight-github-loader-fork/astro-github-loader-0.0.1.tgz}
+    resolution: {integrity: sha512-I6DHZNeDooCRJzCE/FnPH9vCT/YGFhbx8Y6o4VD8b3QgmTgTZNYliZOps2UX3+5biw6+maviqtVmZLSS/0Yh8g==, tarball: file:../starlight-github-loader-fork/astro-github-loader-0.0.1.tgz}
     version: 0.0.1
     peerDependencies:
       astro: ^5.5.6

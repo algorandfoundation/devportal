@@ -2,11 +2,14 @@ import { defineCollection, z } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { Octokit } from 'octokit';
-import { githubLoader } from 'astro-github-loader';
+import { githubLoader, ImportOptions } from 'astro-github-loader';
 
-const REMOTE_CONTENT = [
+const IMPORT_REMOTE = process.env.IMPORT_GITHUB === 'true';
+const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
+
+const REMOTE_CONTENT: ImportOptions[] = [
   {
-    // ARC Standards
+    name: 'ARC Standards',
     owner: 'algorandfoundation',
     repo: 'arcs',
     ref: 'devportal',
@@ -15,29 +18,38 @@ const REMOTE_CONTENT = [
     basePath: 'src/content/docs/arc-standards',
     assetsPath: 'src/assets/imports/arcs',
     assetsBaseUrl: '~/assets/imports/arcs',
+    enabled: true,
+    clear: true,
   },
 ];
-
-const octokit = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
 
 export const collections = {
   docs: defineCollection({
     loader: {
-      name: 'combined-docs-loader',
+      name: 'docs',
       load: async context => {
-        // Load local docs collection first
         await docsLoader().load(context);
 
-        // Load remote content from GitHub
-        try {
-          await githubLoader({
-            octokit,
-            configs: REMOTE_CONTENT,
-            clear: false, // Don't clear existing content
-          }).load(context);
-        } catch (error) {
-          console.error('Error loading GitHub content:', error);
-          // Continue even if GitHub loading fails
+        if (IMPORT_REMOTE) {
+          console.log('🔄 Importing content from GitHub repositories...');
+
+          for (const config of REMOTE_CONTENT) {
+            if (!config.enabled) continue;
+
+            try {
+              console.log(
+                `📥 Loading ${config.name} (clear: ${config.clear})...`,
+              );
+              await githubLoader({
+                GITHUB_API_CLIENT,
+                configs: [config],
+                clear: config.clear,
+              }).load(context);
+              console.log(`✅ ${config.name} loaded successfully`);
+            } catch (error) {
+              console.error(`❌ Error loading ${config.name}:`, error);
+            }
+          }
         }
       },
     },
