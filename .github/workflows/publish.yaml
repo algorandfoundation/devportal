@@ -44,10 +44,13 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+        env:
+          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
 
       - name: Build the project
         run: pnpm run build
         env:
+          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
           TSTRUCT_TOKEN: ${{ secrets.TSTRUCT_TOKEN }}
           PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
 

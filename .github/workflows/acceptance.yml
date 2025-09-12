@@ -87,3 +87,4 @@ jobs:
         env:
           TSTRUCT_TOKEN: ${{ secrets.TSTRUCT_TOKEN }}
           PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
+          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
