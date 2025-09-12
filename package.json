@@ -16,7 +16,6 @@
     "generate-diagrams": "npx tsx scripts/generate-diagrams.ts",
     "generate-openapi-docs": "npx tsx scripts/generate-openapi-docs.js",
     "init:submodules": "git submodule update --init",
-    "link:arc-standards": "rm -rf src/content/docs/arc-standards && mkdir -p src/content/docs && ln -sfn \"../../../imports/repos/arcs/_devportal/content\" src/content/docs/arc-standards",
     "import:nodekit": "npx tsx imports/scripts/nodekit.ts && prettier --write src/content/docs/nodes/nodekit-reference/",
     "import:poetry": "cd imports/build/python && poetry install",
     "import:utils-ts": "cd imports/repos/algokit-utils-ts && npm install",
@@ -24,7 +23,7 @@
     "import:utils-py": "cd imports/build/python && make utils",
     "import:algorand-typescript": "cd imports/repos/puya-ts && npm install",
     "import:algokit-cli": "tsx imports/scripts/algokit-cli.ts && prettier --write src/content/docs/algokit/algokit-cli",
-    "import": "pnpm run init:submodules && pnpm run import:nodekit && pnpm run import:poetry && pnpm run import:utils-ts && pnpm run import:algorand-python && pnpm run import:utils-py && pnpm run import:algorand-typescript && pnpm run import:algokit-cli && pnpm run link:arc-standards"
+    "import": "pnpm run init:submodules && pnpm run import:nodekit && pnpm run import:poetry && pnpm run import:utils-ts && pnpm run import:algorand-python && pnpm run import:utils-py && pnpm run import:algorand-typescript && pnpm run import:algokit-cli"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -38,11 +37,13 @@
     "@tailwindcss/vite": "^4.0.14",
     "astro": "^5.3.1",
     "astro-d2": "^0.3.0",
+    "astro-github-loader": "file:/Users/larkinyoung/dev/af/starlight-github-loader-fork/astro-github-loader-0.0.1.tgz",
     "astro-icon": "^1.1.0",
     "astro-rehype-relative-markdown-links": "^0.17.3",
     "astro-remote": "^0.3.3",
     "js-yaml": "^4.1.0",
     "marked": "^13.0.1",
+    "octokit": "^5.0.3",
     "prismjs": "^1.29.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
