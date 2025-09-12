@@ -32,6 +32,9 @@ importers:
       '@catppuccin/vscode':
         specifier: ^3.15.1
         version: 3.15.1
+      '@larkiny/astro-github-loader':
+        specifier: ^1.0.0
+        version: 1.0.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
       '@tailwindcss/vite':
         specifier: ^4.0.14
         version: 4.0.14(vite@6.1.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.2)(yaml@2.7.0))
@@ -41,9 +44,6 @@ importers:
       astro-d2:
         specifier: ^0.3.0
         version: 0.3.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
-      astro-github-loader:
-        specifier: file:/Users/larkinyoung/dev/af/starlight-github-loader-fork/astro-github-loader-0.0.1.tgz
-        version: file:../starlight-github-loader-fork/astro-github-loader-0.0.1.tgz(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
       astro-icon:
         specifier: ^1.1.0
         version: 1.1.0
@@ -1130,6 +1130,11 @@ packages:
   '@jsdevtools/ono@7.1.3':
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
 
+  '@larkiny/astro-github-loader@1.0.0':
+    resolution: {integrity: sha512-ie29sbr2DUSpMHBWMlzZcRNmnuQ5uNIJSiiEVkvvvzeUts3TkJjkXmW9QgZXOWOlHQe5bia0T3TMpAm/Ojkz+g==, tarball: https://npm.pkg.github.com/download/@larkiny/astro-github-loader/1.0.0/3b9a680292726e5aad4ce7b61803bf1c20db0ffd}
+    peerDependencies:
+      astro: ^5.5.6
+
   '@mdx-js/mdx@3.1.0':
     resolution: {integrity: sha512-/QxEhPAvGwbQmy1Px8F899L5Uc2KZ6JtXwlCgJmjSTBedwOZkByYcBG4GceIGPXRDsmfxhHazuS+hlOShRLeDw==}
 
@@ -2045,12 +2050,6 @@ packages:
     resolution: {integrity: sha512-yJMQId0yXSAbW9I6yqvJ3FcjKzJ8zRL7elbJbllkv1ZJPlsI0NI83Pxn1YL1IapEM347EvOOkSW2GL+2+NO61w==}
     peerDependencies:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0
-
-  astro-github-loader@file:../starlight-github-loader-fork/astro-github-loader-0.0.1.tgz:
-    resolution: {integrity: sha512-I6DHZNeDooCRJzCE/FnPH9vCT/YGFhbx8Y6o4VD8b3QgmTgTZNYliZOps2UX3+5biw6+maviqtVmZLSS/0Yh8g==, tarball: file:../starlight-github-loader-fork/astro-github-loader-0.0.1.tgz}
-    version: 0.0.1
-    peerDependencies:
-      astro: ^5.5.6
 
   astro-icon@1.1.0:
     resolution: {integrity: sha512-Nksc09p7UuHeMcPNS9w1pKqRw3+wEmmh0A3FJW+FNXvqaeWI4RLvD1MCWErpY3Z5Cvad317rvLdik/Hg8GEk8Q==}
@@ -6179,6 +6178,11 @@ snapshots:
 
   '@jsdevtools/ono@7.1.3': {}
 
+  '@larkiny/astro-github-loader@1.0.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
+    dependencies:
+      astro: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
+      octokit: 4.1.4
+
   '@mdx-js/mdx@3.1.0(acorn@8.14.0)':
     dependencies:
       '@types/estree': 1.0.6
@@ -7178,11 +7182,6 @@ snapshots:
     dependencies:
       astro: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
       rehype-expressive-code: 0.40.2
-
-  astro-github-loader@file:../starlight-github-loader-fork/astro-github-loader-0.0.1.tgz(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)):
-    dependencies:
-      astro: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
-      octokit: 4.1.4
 
   astro-icon@1.1.0:
     dependencies:

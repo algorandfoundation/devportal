@@ -2,7 +2,10 @@ import { defineCollection, z } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { Octokit } from 'octokit';
-import { githubLoader, ImportOptions } from 'astro-github-loader';
+import {
+  githubLoader,
+  ImportOptions,
+} from '@larkiny/astro-github-loader';
 
 const IMPORT_REMOTE = process.env.IMPORT_GITHUB === 'true';
 const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
@@ -41,7 +44,7 @@ export const collections = {
                 `📥 Loading ${config.name} (clear: ${config.clear})...`,
               );
               await githubLoader({
-                GITHUB_API_CLIENT,
+                octokit: GITHUB_API_CLIENT,
                 configs: [config],
                 clear: config.clear,
               }).load(context);
