@@ -20,7 +20,7 @@ const REMOTE_CONTENT: ImportOptions[] = [
     assetsPath: 'src/assets/imports/arcs',
     assetsBaseUrl: '~/assets/imports/arcs',
     enabled: true,
-    clear: true,
+    clear: false,
   },
 ];
 
