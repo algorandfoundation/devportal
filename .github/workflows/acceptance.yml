@@ -40,6 +40,8 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install
+        env:
+          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
 
       - name: Lint Codebase
         run: pnpm run lint
@@ -81,6 +83,8 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install
+        env:
+          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
 
       - name: Run Build
         run: pnpm run build
