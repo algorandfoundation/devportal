@@ -70,7 +70,3 @@
 	path = imports/repos/algokit-client-generator-ts
 	url = https://github.com/algorandfoundation/algokit-client-generator-ts.git
 	branch = main
-[submodule "imports/repos/arcs"]
-	path = imports/repos/arcs
-	url = https://github.com/algorandfoundation/ARCs
-	branch = devportal

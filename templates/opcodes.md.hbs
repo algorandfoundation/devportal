@@ -1,8 +1,6 @@
 ---
 title: AVM Opcodes
-tableOfContents:
-  minHeadingLevel: 3
-  maxHeadingLevel: 3
+tableOfContents: false
 ---
 
 import OpcodeFilters from "../../../../components/OpcodeFilters.astro";
@@ -17,57 +15,57 @@ import OpcodeFilters from "../../../../components/OpcodeFilters.astro";
      data-version="v{{IntroducedVersion}}"
      data-groups="{{csv Groups}}">
 
-<details>
-  <summary>
-    <table class='opcode-table'>
-      <thead>
-        <tr>
-          <th>Bytecode</th>
-          <th>Stack Input</th>
-          <th>Stack Output</th>
-          <th>Size</th>
-          <th>Availability</th>
-          <th>Cost</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{bytecode Opcode}}</td>
-          <td>{{{valueList Args}}}</td>
-          <td>{{{valueList Returns}}}</td>
-          <td>{{Size}}</td>
-          <td>v{{IntroducedVersion}}</td>
-          <td>{{DocCost}}</td>
-        </tr>
-      </tbody>
-    </table>
-</summary>
+    <details>
+    <summary>
+      <table class='opcode-table'>
+        <thead>
+          <tr>
+            <th>Bytecode</th>
+            <th>Stack Input</th>
+            <th>Stack Output</th>
+            <th>Size</th>
+            <th>Availability</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{bytecode Opcode}}</td>
+            <td>{{{valueList Args}}}</td>
+            <td>{{{valueList Returns}}}</td>
+            <td>{{Size}}</td>
+            <td>v{{IntroducedVersion}}</td>
+            <td>{{DocCost}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </summary>
 
-  :::note[Details]
+    :::note[Details]
 
-  <span class="opcode-detail-caption">Description</span>
-  {{#if Doc}}
-  {{{mdxParagraphs Doc}}}
-  {{else}}
-  None
-  {{/if}}
+    <span class="opcode-detail-caption">Description</span>
+    {{#if Doc}}
+    {{{mdxParagraphs Doc}}}
+    {{else}}
+    None
+    {{/if}}
 
-  {{#if DocExtra}}
-  <span class="opcode-detail-caption">Notes</span>
-  {{{mdxParagraphs DocExtra}}}
-  {{/if}}
+    {{#if DocExtra}}
+    <span class="opcode-detail-caption">Notes</span>
+    {{{mdxParagraphs DocExtra}}}
+    {{/if}}
 
-  <span class='opcode-detail-caption'>Groups</span>
-  {{groupList Groups}}
+    <span class='opcode-detail-caption'>Groups</span>
+    {{groupList Groups}}
 
-  {{#if ImmediateNote}}
-  <span class="opcode-detail-caption">Immediate Parameters</span>
-  {{{immediateTable ImmediateNote}}}
-  {{/if}}
+    {{#if ImmediateNote}}
+    <span class="opcode-detail-caption">Immediate Parameters</span>
+    {{{immediateTable ImmediateNote}}}
+    {{/if}}
 
-  :::
+    :::
 
-</details>
+  </details>
 
 </div>
 

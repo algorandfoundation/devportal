@@ -59,9 +59,9 @@
         grpSel.append(o);
       });
 
-    function previousH2(el) {
+    function previousH3(el) {
       let n = el.previousElementSibling;
-      while (n && n.tagName !== 'H2') n = n.previousElementSibling;
+      while (n && n.tagName !== 'H3') n = n.previousElementSibling;
       return n || null;
     }
 
@@ -82,7 +82,7 @@
         sec.hidden = !show;
 
         // toggle the heading just before the container
-        const h2 = previousH2(sec);
+        const h2 = previousH3(sec);
         if (h2) h2.hidden = !show;
       }
     }
