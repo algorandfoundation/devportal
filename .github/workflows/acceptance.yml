@@ -38,10 +38,13 @@ jobs:
       - name: Setup submodules
         run: git submodule update --init && pnpm run import:utils-ts
 
+      - name: Setup .npmrc for GitHub Packages
+        run: |
+          echo "@larkiny:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.TEMP_PACKAGES_TOKEN }}" >> .npmrc
+
       - name: Install Dependencies
         run: pnpm install
-        env:
-          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
 
       - name: Lint Codebase
         run: pnpm run lint
@@ -81,10 +84,13 @@ jobs:
       - name: Setup submodules
         run: git submodule update --init && pnpm run import:utils-ts
 
+      - name: Setup .npmrc for GitHub Packages
+        run: |
+          echo "@larkiny:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.TEMP_PACKAGES_TOKEN }}" >> .npmrc
+
       - name: Install Dependencies
         run: pnpm install
-        env:
-          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
 
       - name: Run Build
         run: pnpm run build
