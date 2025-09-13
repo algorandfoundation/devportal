@@ -2,8 +2,8 @@ import { defineCollection } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { Octokit } from 'octokit';
-import {
-  githubLoader,
+import { githubLoader } from '@larkiny/astro-github-loader';
+import type {
   ImportOptions,
   LoaderContext,
 } from '@larkiny/astro-github-loader';
