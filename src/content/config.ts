@@ -2,10 +2,14 @@ import { defineCollection } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { Octokit } from 'octokit';
-import { githubLoader } from '@larkiny/astro-github-loader';
-import type { ImportOptions } from '@larkiny/astro-github-loader';
+import {
+  githubLoader,
+  ImportOptions,
+  LoaderContext,
+} from '@larkiny/astro-github-loader';
 
 const IMPORT_REMOTE = process.env.IMPORT_GITHUB === 'true';
+const IS_DRY_RUN = process.env.IMPORT_DRY_RUN === 'true';
 const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
 
 const REMOTE_CONTENT: ImportOptions[] = [
@@ -27,7 +31,7 @@ const REMOTE_CONTENT: ImportOptions[] = [
 export const collections = {
   docs: defineCollection({
     loader: {
-      name: 'docs',
+      name: 'algorand-docs',
       load: async context => {
         await docsLoader().load(context);
 
@@ -45,7 +49,8 @@ export const collections = {
                 octokit: GITHUB_API_CLIENT,
                 configs: [config],
                 clear: config.clear,
-              }).load(context);
+                dryRun: IS_DRY_RUN,
+              }).load(context as LoaderContext);
               console.log(`✅ ${config.name} loaded successfully`);
             } catch (error) {
               console.error(`❌ Error loading ${config.name}:`, error);
