@@ -33,8 +33,8 @@ importers:
         specifier: ^3.15.1
         version: 3.15.1
       '@larkiny/astro-github-loader':
-        specifier: ^1.0.0
-        version: 1.0.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
+        specifier: ^1.2.0
+        version: 1.2.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
       '@tailwindcss/vite':
         specifier: ^4.0.14
         version: 4.0.14(vite@6.1.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.2)(yaml@2.7.0))
@@ -106,7 +106,7 @@ importers:
         version: 4.4.1(typedoc@0.27.6(typescript@5.5.2))
       widdershins:
         specifier: ^4.0.1
-        version: 4.0.1(ajv@5.5.2)(mkdirp@1.0.4)
+        version: 4.0.1(ajv@8.17.1)(mkdirp@1.0.4)
     devDependencies:
       '@babel/core':
         specifier: ^7.25.2
@@ -1133,8 +1133,8 @@ packages:
   '@jsdevtools/ono@7.1.3':
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
 
-  '@larkiny/astro-github-loader@1.0.0':
-    resolution: {integrity: sha512-ie29sbr2DUSpMHBWMlzZcRNmnuQ5uNIJSiiEVkvvvzeUts3TkJjkXmW9QgZXOWOlHQe5bia0T3TMpAm/Ojkz+g==, tarball: https://npm.pkg.github.com/download/@larkiny/astro-github-loader/1.0.0/3b9a680292726e5aad4ce7b61803bf1c20db0ffd}
+  '@larkiny/astro-github-loader@1.2.0':
+    resolution: {integrity: sha512-VzsA2RVHwbhv7SIAIOVpzGc8AULGthwdbcg2JOR4l/EnoXlVEvlSBXAItlxgNi/+RL8WoYd2UxLJHDLquHhVlg==, tarball: https://npm.pkg.github.com/download/@larkiny/astro-github-loader/1.2.0/8ebced217780b093c17aff1eff5589947ff1459e}
     peerDependencies:
       astro: ^5.5.6
 
@@ -6197,10 +6197,11 @@ snapshots:
 
   '@jsdevtools/ono@7.1.3': {}
 
-  '@larkiny/astro-github-loader@1.0.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
+  '@larkiny/astro-github-loader@1.2.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
     dependencies:
       astro: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
       octokit: 4.1.4
+      picomatch: 4.0.2
 
   '@mdx-js/mdx@3.1.0(acorn@8.14.0)':
     dependencies:
@@ -7398,6 +7399,17 @@ snapshots:
       '@babel/code-frame': 7.26.2
       '@babel/runtime': 7.26.9
       ajv: 5.5.2
+      chalk: 2.4.2
+      core-js: 3.41.0
+      json-to-ast: 2.1.0
+      jsonpointer: 4.1.0
+      leven: 3.1.0
+
+  better-ajv-errors@0.6.7(ajv@8.17.1):
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      '@babel/runtime': 7.26.9
+      ajv: 8.17.1
       chalk: 2.4.2
       core-js: 3.41.0
       json-to-ast: 2.1.0
@@ -10501,9 +10513,9 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.0.1
 
-  swagger2openapi@6.2.3(ajv@5.5.2):
+  swagger2openapi@6.2.3(ajv@8.17.1):
     dependencies:
-      better-ajv-errors: 0.6.7(ajv@5.5.2)
+      better-ajv-errors: 0.6.7(ajv@8.17.1)
       call-me-maybe: 1.0.2
       node-fetch-h2: 2.3.0
       node-readfiles: 0.2.0
@@ -10968,7 +10980,7 @@ snapshots:
     dependencies:
       isexe: 2.0.0
 
-  widdershins@4.0.1(ajv@5.5.2)(mkdirp@1.0.4):
+  widdershins@4.0.1(ajv@8.17.1)(mkdirp@1.0.4):
     dependencies:
       dot: 1.1.3
       fast-safe-stringify: 2.1.1
@@ -10982,7 +10994,7 @@ snapshots:
       oas-schema-walker: 1.1.5
       openapi-sampler: 1.6.1
       reftools: 1.1.9
-      swagger2openapi: 6.2.3(ajv@5.5.2)
+      swagger2openapi: 6.2.3(ajv@8.17.1)
       urijs: 1.19.11
       yaml: 1.10.2
       yargs: 12.0.5
