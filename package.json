@@ -3,11 +3,11 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "IMPORT_GITHUB=true astro dev",
     "start": "astro dev",
     "predev": "pnpm run generate-opcode-list && pnpm run generate-diagrams && pnpm run generate-openapi-docs",
     "prebuild": "pnpm run generate-opcode-list && pnpm run generate-diagrams && pnpm run generate-openapi-docs",
-    "build": "pnpm run import && astro check && astro build",
+    "build": "IMPORT_GITHUB=true pnpm run import && astro check && astro build",
     "lint:fix": "eslint . && prettier -c ./src/** --write && astro check",
     "lint": "eslint . && prettier -c ./src/** && astro check",
     "preview": "astro preview",
@@ -17,14 +17,13 @@
     "generate-diagrams": "npx tsx scripts/generate-diagrams.ts",
     "generate-openapi-docs": "npx tsx scripts/generate-openapi-docs.js",
     "init:submodules": "git submodule update --init",
-    "import:nodekit": "npx tsx imports/scripts/nodekit.ts && prettier --write src/content/docs/nodes/nodekit-reference/",
     "import:poetry": "cd imports/build/python && poetry install",
     "import:utils-ts": "cd imports/repos/algokit-utils-ts && npm install",
     "import:algorand-python": "cd imports/build/python && make puya",
     "import:utils-py": "cd imports/build/python && make utils",
     "import:algorand-typescript": "cd imports/repos/puya-ts && npm install",
     "import:algokit-cli": "tsx imports/scripts/algokit-cli.ts && prettier --write src/content/docs/algokit/algokit-cli",
-    "import": "pnpm run init:submodules && pnpm run import:nodekit && pnpm run import:poetry && pnpm run import:utils-ts && pnpm run import:algorand-python && pnpm run import:utils-py && pnpm run import:algorand-typescript && pnpm run import:algokit-cli"
+    "import": "pnpm run init:submodules && pnpm run import:poetry && pnpm run import:utils-ts && pnpm run import:algorand-python && pnpm run import:utils-py && pnpm run import:algorand-typescript && pnpm run import:algokit-cli"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -35,7 +34,7 @@
     "@astrojs/tailwind": "^5.1.3",
     "@catppuccin/palette": "^1.2.0",
     "@catppuccin/vscode": "^3.15.1",
-    "@larkiny/astro-github-loader": "^1.2.0",
+    "@larkiny/astro-github-loader": "^1.3.3",
     "@tailwindcss/vite": "^4.0.14",
     "astro": "^5.3.1",
     "astro-d2": "^0.3.0",

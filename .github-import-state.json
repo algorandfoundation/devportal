@@ -4,9 +4,16 @@
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs/_devportal/content@devportal",
       "lastCommitSha": "0aeb46c2099ed310973ec3e5ebda917161a526a4",
-      "lastImported": "2025-09-13T09:56:09.356Z",
+      "lastImported": "2025-09-13T15:38:53.423Z",
       "ref": "devportal"
+    },
+    "algorandfoundation/nodekit/.devportal@main": {
+      "name": "NodeKit",
+      "repoId": "algorandfoundation/nodekit/.devportal@main",
+      "lastCommitSha": "abf9f756e0c7c84043630483a1c487caa37fa687",
+      "lastImported": "2025-09-13T15:38:54.044Z",
+      "ref": "main"
     }
   },
-  "lastChecked": "2025-09-13T09:45:45.628Z"
+  "lastChecked": "2025-09-13T12:03:57.123Z"
 }
