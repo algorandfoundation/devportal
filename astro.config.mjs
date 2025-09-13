@@ -656,83 +656,6 @@ export default defineConfig({
                   ],
                 },
                 {
-                  label: 'TypeScript-test',
-                  items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/utils/typescript-test/overview',
-                    },
-                    {
-                      label: 'Account Management',
-                      link: 'algokit/utils/typescript-test/account',
-                    },
-                    {
-                      label: 'Algorand Client',
-                      link: 'algokit/utils/typescript-test/algorand-client',
-                    },
-                    {
-                      label: 'Amount',
-                      link: 'algokit/utils/typescript-test/amount',
-                    },
-                    {
-                      label: 'App Client',
-                      link: 'algokit/utils/typescript-test/app-client',
-                    },
-                    {
-                      label: 'App Deployment',
-                      link: 'algokit/utils/typescript-test/app-deploy',
-                    },
-                    {
-                      label: 'Asset',
-                      link: 'algokit/utils/typescript-test/asset',
-                    },
-                    {
-                      label: 'Client',
-                      link: 'algokit/utils/typescript-test/client',
-                    },
-                    {
-                      label: 'Debugging',
-                      link: 'algokit/utils/typescript-test/debugging',
-                    },
-                    {
-                      label: 'Dispenser Client',
-                      link: 'algokit/utils/typescript-test/dispenser-client',
-                    },
-                    {
-                      label: 'Event Emitter',
-                      link: 'algokit/utils/typescript-test/event-emitter',
-                    },
-                    {
-                      label: 'Indexer',
-                      link: 'algokit/utils/typescript-test/indexer',
-                    },
-                    {
-                      label: 'Testnet Dispenser Client',
-                      link: 'algokit/utils/typescript-test/dispenser-client',
-                    },
-                    {
-                      label: 'Testing',
-                      link: 'algokit/utils/typescript-test/testing',
-                    },
-                    {
-                      label: 'Transaction Composer',
-                      link: 'algokit/utils/typescript-test/transaction-composer',
-                    },
-                    {
-                      label: 'Transaction',
-                      link: 'algokit/utils/typescript-test/transaction',
-                    },
-                    {
-                      label: 'Transfer',
-                      link: 'algokit/utils/typescript-test/transfer',
-                    },
-                    {
-                      label: 'Typed Clients',
-                      link: 'algokit/utils/typescript-test/typed-app-clients',
-                    },
-                  ],
-                },
-                {
                   label: 'Python',
                   items: [
                     {
@@ -2442,12 +2365,6 @@ export default defineConfig({
               label: 'AlgoKit Utils (Typescript)',
               collapsed: true,
               items: [
-                {
-                  label: 'API Reference (Test)',
-                  autogenerate: {
-                    directory: 'reference/algokit-utils-ts/api',
-                  },
-                },
                 {
                   label: 'API Reference',
                   collapsed: false,
