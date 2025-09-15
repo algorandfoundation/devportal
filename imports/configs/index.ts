@@ -7,7 +7,8 @@
 
 export { arcStandardsConfig } from './arc-standards.js';
 export { nodekitConfig } from './nodekit.js';
-export {
-  utilsTypescriptGuidesConfig,
-  utilsTypescriptApiConfig,
-} from './algokit-utils-ts.js';
+export { algokitCLIConfig } from './algokit-cli.js';
+// export {
+//   utilsTypescriptGuidesConfig,
+//   utilsTypescriptApiConfig,
+// } from './algokit-utils-ts.js';

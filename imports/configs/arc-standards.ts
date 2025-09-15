@@ -9,11 +9,14 @@ export const arcStandardsConfig: ImportOptions = {
   owner: 'algorandfoundation',
   repo: 'arcs',
   ref: 'devportal',
-  path: '_devportal/content',
-  replace: '_devportal/content/',
-  basePath: 'src/content/docs/arc-standards',
   assetsPath: 'src/assets/imports/arcs',
   assetsBaseUrl: '~/assets/imports/arcs',
+  includes: [
+    {
+      pattern: '_devportal/content/**/*',
+      basePath: 'src/content/docs/arc-standards',
+    },
+  ],
   enabled: true,
   clear: false,
 };

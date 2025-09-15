@@ -2,7 +2,7 @@ import type { ImportOptions } from '@larkiny/astro-github-loader';
 import { createLinkTransform } from '../transforms/links.js';
 
 /**
- * Example import configuration showing basic link transformation
+ * Example import configuration showing basic link transformation and ignores
  * This is a template for repositories that need internal link processing
  */
 export const exampleBasicLinksConfig: ImportOptions = {
@@ -13,6 +13,13 @@ export const exampleBasicLinksConfig: ImportOptions = {
   basePath: 'src/content/docs/example',
   enabled: false, // Disabled by default since this is just an example
   clear: false,
+  ignores: [
+    // Ignore specific files or folders
+    'api/**/*',           // Ignore entire API directory
+    'temp/**/*',          // Ignore temp files
+    '**/*.test.md',       // Ignore test files
+    'old-readme.md',      // Ignore specific file
+  ],
   fileRenames: [
     // Use fileRenames for actual file structure changes
     { from: 'README.md', to: 'overview.md' },

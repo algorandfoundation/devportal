@@ -11,9 +11,10 @@ import type {
 // Import external repo doc configs
 import {
   arcStandardsConfig,
-  utilsTypescriptGuidesConfig,
-  utilsTypescriptApiConfig,
   nodekitConfig,
+  algokitCLIConfig,
+  // utilsTypescriptGuidesConfig,
+  // utilsTypescriptApiConfig,
 } from '../../imports/configs/index.js';
 
 const IMPORT_REMOTE = process.env.IMPORT_GITHUB === 'true';
@@ -24,8 +25,9 @@ const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
 const REMOTE_CONTENT: ImportOptions[] = [
   arcStandardsConfig,
   nodekitConfig,
-  utilsTypescriptGuidesConfig,
-  utilsTypescriptApiConfig,
+  algokitCLIConfig,
+  // utilsTypescriptGuidesConfig, //disabled for now
+  // utilsTypescriptApiConfig, //disabled for now
 ];
 
 export const collections = {

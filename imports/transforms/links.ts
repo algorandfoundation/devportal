@@ -1,6 +1,25 @@
 import type { TransformFunction } from '@larkiny/astro-github-loader';
 
 /**
+ * Utility function to extract anchor fragment and clean path
+ * Returns both the path without anchor and the anchor fragment
+ */
+function extractAnchor(path: string): { path: string; anchor: string } {
+  const anchorMatch = path.match(/#.*$/);
+  const anchor = anchorMatch ? anchorMatch[0] : '';
+  const cleanPath = path.replace(/#.*$/, '');
+  return { path: cleanPath, anchor };
+}
+
+/**
+ * Utility function to remove markdown extensions while preserving anchors
+ */
+function removeMarkdownExtension(path: string): string {
+  const { path: cleanPath, anchor } = extractAnchor(path);
+  return cleanPath.replace(/\.(md|mdx)$/i, '') + anchor;
+}
+
+/**
  * Configuration options for link transformation
  */
 export interface LinkTransformOptions {
@@ -96,8 +115,8 @@ export function createLinkTransform(options: LinkTransformOptions): TransformFun
         }
         
         // Remove file extension unless preserveExtensions is true
-        if (!preserveExtensions && /\.(md|mdx)$/i.test(transformedPath)) {
-          transformedPath = transformedPath.replace(/\.(md|mdx)$/i, '');
+        if (!preserveExtensions && /\.(md|mdx)/i.test(transformedPath)) {
+          transformedPath = removeMarkdownExtension(transformedPath);
         }
         
         // Ensure the path starts with baseUrl
@@ -129,3 +148,8 @@ export function createMappedLinkTransform(
 ): TransformFunction {
   return createLinkTransform({ baseUrl, pathMapping });
 }
+
+/**
+ * Utility functions for handling markdown links in custom path transforms
+ */
+export { extractAnchor, removeMarkdownExtension };

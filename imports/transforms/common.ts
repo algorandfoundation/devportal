@@ -243,3 +243,16 @@ export const migrationGuideTransform: TransformFunction = composeFrontmatterTran
     mode: 'merge'
   })
 );
+
+/**
+ * Removes the first H1 heading from content without extracting it to frontmatter
+ * Useful when you want to set the title manually via frontmatter
+ */
+export const removeH1: TransformFunction = (content, context) => {
+  const parsed = parseFrontmatter(content);
+  
+  // Remove the first H1 from content
+  const cleanedContent = parsed.content.replace(/^#\s+.+$/m, '').trim();
+  
+  return combineFrontmatterAndContent(parsed.data, cleanedContent);
+};

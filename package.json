@@ -22,8 +22,7 @@
     "import:algorand-python": "cd imports/build/python && make puya",
     "import:utils-py": "cd imports/build/python && make utils",
     "import:algorand-typescript": "cd imports/repos/puya-ts && npm install",
-    "import:algokit-cli": "tsx imports/scripts/algokit-cli.ts && prettier --write src/content/docs/algokit/algokit-cli",
-    "import": "pnpm run init:submodules && pnpm run import:poetry && pnpm run import:utils-ts && pnpm run import:algorand-python && pnpm run import:utils-py && pnpm run import:algorand-typescript && pnpm run import:algokit-cli"
+    "import": "pnpm run init:submodules && pnpm run import:poetry && pnpm run import:utils-ts && pnpm run import:algorand-python && pnpm run import:utils-py && pnpm run import:algorand-typescript"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -34,7 +33,7 @@
     "@astrojs/tailwind": "^5.1.3",
     "@catppuccin/palette": "^1.2.0",
     "@catppuccin/vscode": "^3.15.1",
-    "@larkiny/astro-github-loader": "^1.3.3",
+    "@larkiny/astro-github-loader": "^1.0.0",
     "@tailwindcss/vite": "^4.0.14",
     "astro": "^5.3.1",
     "astro-d2": "^0.3.0",
