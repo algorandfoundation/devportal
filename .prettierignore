@@ -2,6 +2,8 @@
 src/content/docs/reference/algokit-utils-ts/API Reference/
 src/content/docs/reference/algorand-python/API Reference
 src/content/docs/reference/algokit-utils-py/API Reference/
-src/content/docs/reference/algokit-cli/**
-/src/content/docs/arc-standards/**
+src/content/docs/algokit/cli/**
+src/content/docs/nodes/nodekit-reference/**
+src/content/docs/arc-standards/**
 src/content/docs/reference/rest-api/
+src/content/docs/reference/algorand-teal/**

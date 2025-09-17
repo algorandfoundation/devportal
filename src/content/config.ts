@@ -8,24 +8,26 @@ import type {
   LoaderContext,
 } from '@larkiny/astro-github-loader';
 
+// Import external repo doc configs
+import {
+  arcStandardsConfig,
+  nodekitConfig,
+  algokitCLIConfig,
+  // utilsTypescriptGuidesConfig,
+  // utilsTypescriptApiConfig,
+} from '../../imports/configs/index.js';
+
 const IMPORT_REMOTE = process.env.IMPORT_GITHUB === 'true';
 const IS_DRY_RUN = process.env.IMPORT_DRY_RUN === 'true';
 const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
 
+// List of remote content configs to import
 const REMOTE_CONTENT: ImportOptions[] = [
-  {
-    name: 'ARC Standards',
-    owner: 'algorandfoundation',
-    repo: 'arcs',
-    ref: 'devportal',
-    path: '_devportal/content',
-    replace: '_devportal/content/',
-    basePath: 'src/content/docs/arc-standards',
-    assetsPath: 'src/assets/imports/arcs',
-    assetsBaseUrl: '~/assets/imports/arcs',
-    enabled: true,
-    clear: false,
-  },
+  arcStandardsConfig,
+  nodekitConfig,
+  algokitCLIConfig,
+  // utilsTypescriptGuidesConfig, //disabled for now
+  // utilsTypescriptApiConfig, //disabled for now
 ];
 
 export const collections = {

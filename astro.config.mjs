@@ -25,7 +25,18 @@ export default defineConfig({
         starlightImageZoom(),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
-          exclude: ['**[FUTURELINK]*', '**/reference/**'],
+          exclude: [
+            '**[FUTURELINK]*',
+            '**/algokit/cli/**', // Exclude CLI docs as they are imported and link validation raises a false positive for some anchor links
+            '**/reference/algokit-utils-py/**',
+            '**/reference/algokit-utils-ts/API Reference/**',
+            '**/reference/algorand-python/**',
+            '**/reference/algorand-teal/**',
+            '**/reference/algorand-typescript/**',
+            '**/reference/rest-api/**',
+            '**/reference/sdk/**',
+            '**/reference/**',
+          ],
         }),
         starlightTypeDoc({
           entryPoints: ['./imports/repos/algokit-utils-ts/src/index.ts'],
@@ -418,47 +429,47 @@ export default defineConfig({
               items: [
                 {
                   label: 'Overview',
-                  link: 'algokit/algokit-cli/overview',
+                  link: 'algokit/cli/overview',
                 },
                 {
                   label: 'Compile',
-                  link: 'algokit/algokit-cli/compile',
+                  link: 'algokit/cli/compile',
                 },
                 {
                   label: 'Completions',
-                  link: 'algokit/algokit-cli/completions',
+                  link: 'algokit/cli/completions',
                 },
                 {
                   label: 'Config',
-                  link: 'algokit/algokit-cli/config',
+                  link: 'algokit/cli/config',
                 },
                 {
                   label: 'TestNet Dispenser',
-                  link: 'algokit/algokit-cli/dispenser',
+                  link: 'algokit/cli/dispenser',
                 },
                 {
                   label: 'Doctor',
-                  link: 'algokit/algokit-cli/doctor',
+                  link: 'algokit/cli/doctor',
                 },
                 {
                   label: 'Explore',
-                  link: 'algokit/algokit-cli/explore',
+                  link: 'algokit/cli/explore',
                 },
                 {
                   label: 'Generate',
-                  link: 'algokit/algokit-cli/generate',
+                  link: 'algokit/cli/generate',
                 },
                 {
                   label: 'Goal',
-                  link: 'algokit/algokit-cli/goal',
+                  link: 'algokit/cli/goal',
                 },
                 {
                   label: 'Init',
-                  link: 'algokit/algokit-cli/init',
+                  link: 'algokit/cli/init',
                 },
                 {
                   label: 'Localnet',
-                  link: 'algokit/algokit-cli/localnet',
+                  link: 'algokit/cli/localnet',
                 },
                 {
                   label: 'Project',
@@ -466,27 +477,27 @@ export default defineConfig({
                   items: [
                     {
                       label: 'Overview',
-                      link: 'algokit/algokit-cli/project',
+                      link: 'algokit/cli/project',
                     },
                     {
                       label: 'Bootstrap',
-                      link: 'algokit/algokit-cli/project/bootstrap',
+                      link: 'algokit/cli/project/bootstrap',
                     },
                     {
                       label: 'Deploy',
-                      link: 'algokit/algokit-cli/project/deploy',
+                      link: 'algokit/cli/project/deploy',
                     },
                     {
                       label: 'Link',
-                      link: 'algokit/algokit-cli/project/link',
+                      link: 'algokit/cli/project/link',
                     },
                     {
                       label: 'List',
-                      link: 'algokit/algokit-cli/project/list',
+                      link: 'algokit/cli/project/list',
                     },
                     {
                       label: 'Run',
-                      link: 'algokit/algokit-cli/project/run',
+                      link: 'algokit/cli/project/run',
                     },
                   ],
                 },
@@ -496,49 +507,53 @@ export default defineConfig({
                   items: [
                     {
                       label: 'Overview',
-                      link: 'algokit/algokit-cli/tasks',
+                      link: 'algokit/cli/tasks',
                     },
                     {
                       label: 'Analyze',
-                      link: 'algokit/algokit-cli/tasks/analyze',
+                      link: 'algokit/cli/tasks/analyze',
                     },
                     {
                       label: 'IPFS',
-                      link: 'algokit/algokit-cli/tasks/ipfs',
+                      link: 'algokit/cli/tasks/ipfs',
                     },
                     {
                       label: 'Mint',
-                      link: 'algokit/algokit-cli/tasks/mint',
+                      link: 'algokit/cli/tasks/mint',
                     },
                     {
                       label: 'NFD Lookup',
-                      link: 'algokit/algokit-cli/tasks/nfd',
+                      link: 'algokit/cli/tasks/nfd',
                     },
                     {
                       label: 'Asset opt-(in|out)',
-                      link: 'algokit/algokit-cli/tasks/opt',
+                      link: 'algokit/cli/tasks/opt',
                     },
                     {
                       label: 'Send',
-                      link: 'algokit/algokit-cli/tasks/send',
+                      link: 'algokit/cli/tasks/send',
                     },
                     {
                       label: 'Sign',
-                      link: 'algokit/algokit-cli/tasks/sign',
+                      link: 'algokit/cli/tasks/sign',
                     },
                     {
                       label: 'Transfer',
-                      link: 'algokit/algokit-cli/tasks/transfer',
+                      link: 'algokit/cli/tasks/transfer',
                     },
                     {
                       label: 'Vanity Address',
-                      link: 'algokit/algokit-cli/tasks/vanity_address',
+                      link: 'algokit/cli/tasks/vanity_address',
                     },
                     {
                       label: 'Wallet',
-                      link: 'algokit/algokit-cli/tasks/wallet',
+                      link: 'algokit/cli/tasks/wallet',
                     },
                   ],
+                },
+                {
+                  label: 'Command Reference',
+                  link: 'algokit/cli/commands',
                 },
               ],
             },
@@ -652,6 +667,83 @@ export default defineConfig({
                     {
                       label: 'Typed Clients',
                       link: 'algokit/utils/typescript/typed-app-clients',
+                    },
+                  ],
+                },
+                {
+                  label: 'TypeScript-test',
+                  items: [
+                    {
+                      label: 'Overview',
+                      link: 'algokit/utils/typescript-test/overview',
+                    },
+                    {
+                      label: 'Account Management',
+                      link: 'algokit/utils/typescript-test/account',
+                    },
+                    {
+                      label: 'Algorand Client',
+                      link: 'algokit/utils/typescript-test/algorand-client',
+                    },
+                    {
+                      label: 'Amount',
+                      link: 'algokit/utils/typescript-test/amount',
+                    },
+                    {
+                      label: 'App Client',
+                      link: 'algokit/utils/typescript-test/app-client',
+                    },
+                    {
+                      label: 'App Deployment',
+                      link: 'algokit/utils/typescript-test/app-deploy',
+                    },
+                    {
+                      label: 'Asset',
+                      link: 'algokit/utils/typescript-test/asset',
+                    },
+                    {
+                      label: 'Client',
+                      link: 'algokit/utils/typescript-test/client',
+                    },
+                    {
+                      label: 'Debugging',
+                      link: 'algokit/utils/typescript-test/debugging',
+                    },
+                    {
+                      label: 'Dispenser Client',
+                      link: 'algokit/utils/typescript-test/dispenser-client',
+                    },
+                    {
+                      label: 'Event Emitter',
+                      link: 'algokit/utils/typescript-test/event-emitter',
+                    },
+                    {
+                      label: 'Indexer',
+                      link: 'algokit/utils/typescript-test/indexer',
+                    },
+                    {
+                      label: 'Testnet Dispenser Client',
+                      link: 'algokit/utils/typescript-test/dispenser-client',
+                    },
+                    {
+                      label: 'Testing',
+                      link: 'algokit/utils/typescript-test/testing',
+                    },
+                    {
+                      label: 'Transaction Composer',
+                      link: 'algokit/utils/typescript-test/transaction-composer',
+                    },
+                    {
+                      label: 'Transaction',
+                      link: 'algokit/utils/typescript-test/transaction',
+                    },
+                    {
+                      label: 'Transfer',
+                      link: 'algokit/utils/typescript-test/transfer',
+                    },
+                    {
+                      label: 'Typed Clients',
+                      link: 'algokit/utils/typescript-test/typed-app-clients',
                     },
                   ],
                 },
@@ -2365,6 +2457,12 @@ export default defineConfig({
               label: 'AlgoKit Utils (Typescript)',
               collapsed: true,
               items: [
+                {
+                  label: 'API Reference (Test)',
+                  autogenerate: {
+                    directory: 'reference/algokit-utils-ts/api',
+                  },
+                },
                 {
                   label: 'API Reference',
                   collapsed: false,
