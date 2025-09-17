@@ -33,8 +33,8 @@ importers:
         specifier: ^3.15.1
         version: 3.15.1
       '@larkiny/astro-github-loader':
-        specifier: file:../starlight-github-loader-fork/packages/astro-github-loader
-        version: file:../starlight-github-loader-fork/packages/astro-github-loader(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
+        specifier: ^1.0.3
+        version: 1.0.3(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
       '@tailwindcss/vite':
         specifier: ^4.0.14
         version: 4.0.14(vite@6.1.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.2)(yaml@2.7.0))
@@ -1133,8 +1133,8 @@ packages:
   '@jsdevtools/ono@7.1.3':
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
 
-  '@larkiny/astro-github-loader@file:../starlight-github-loader-fork/packages/astro-github-loader':
-    resolution: {directory: ../starlight-github-loader-fork/packages/astro-github-loader, type: directory}
+  '@larkiny/astro-github-loader@1.0.3':
+    resolution: {integrity: sha512-nWifh9RJiYV1RajbxVkPU6+F60F87ZMXnXmuUu4obTW2OS1okObnHZ3rxjEDTbU1QjyjQE0aqGSzVRtQ+/N3ag==, tarball: https://npm.pkg.github.com/download/@larkiny/astro-github-loader/1.0.3/74e8a5d3026a7706733d186f6465e763e7430e6c}
     peerDependencies:
       astro: ^5.5.6
 
@@ -6197,7 +6197,7 @@ snapshots:
 
   '@jsdevtools/ono@7.1.3': {}
 
-  '@larkiny/astro-github-loader@file:../starlight-github-loader-fork/packages/astro-github-loader(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
+  '@larkiny/astro-github-loader@1.0.3(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
     dependencies:
       astro: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
       octokit: 4.1.4
