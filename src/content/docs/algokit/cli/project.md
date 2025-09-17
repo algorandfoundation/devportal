@@ -1,7 +1,7 @@
 ---
 title: AlgoKit Project
 ---
-`algokit project` is a collection of commands and command groups useful for managing algokit compliant [project workspaces](/algokit/cli/init#workspaces).
+`algokit project` is a collection of commands and command groups useful for managing algokit compliant [project workspaces](./init.md#workspaces).
 
 ## Overview
 
@@ -83,14 +83,14 @@ type = {'backend' | 'contract' | 'frontend'} # currently support 3 generic categ
 name = 'my-project' # unique name for the project inside workspace
 ```
 
-> We recommend using workspaces for most projects (hence enabled by default), as it provides a more organized and scalable approach to managing multiple sub-projects. However, standalone projects are a great choice for simple applications or when you are certain that you will not need to add more sub-projects in the future, for such cases simply append `--no-workspace` when using `algokit init` command. For more details on init command please refer to [init](/algokit/cli/init) command docs.
+> We recommend using workspaces for most projects (hence enabled by default), as it provides a more organized and scalable approach to managing multiple sub-projects. However, standalone projects are a great choice for simple applications or when you are certain that you will not need to add more sub-projects in the future, for such cases simply append `--no-workspace` when using `algokit init` command. For more details on init command please refer to [init](./init.md) command docs.
 
 ## Features
 
 Dive into the features of the `algokit project` command group:
 
-- [bootstrap](/algokit/cli/project/bootstrap) - Bootstrap your project with AlgoKit.
-- [deploy](/algokit/cli/project/deploy) - Deploy your smart contracts effortlessly to various networks.
-- [link](/algokit/cli/project/link) - Powerful feature designed to streamline the integration between `frontend` and `contract` projects
-- [list](/algokit/cli/project/list) - Enumerate all projects within an AlgoKit workspace.
-- [run](/algokit/cli/project/run) - Define custom commands and manage their execution via `algokit` cli.
+- [bootstrap](./project/bootstrap.md) - Bootstrap your project with AlgoKit.
+- [deploy](./project/deploy.md) - Deploy your smart contracts effortlessly to various networks.
+- [link](./project/link.md) - Powerful feature designed to streamline the integration between `frontend` and `contract` projects
+- [list](./project/list.md) - Enumerate all projects within an AlgoKit workspace.
+- [run](./project/run.md) - Define custom commands and manage their execution via `algokit` cli.

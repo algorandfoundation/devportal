@@ -23,7 +23,7 @@ You can either specify a path to an ARC-0032 JSON file, an ARC-0056 JSON file or
 The output path is interpreted as relative to the current working directory, however an absolute path may also be specified e.g.
 `algokit generate client application.json --output /absolute/path/to/client.py`
 
-There are two tokens available for use with the `-o`, `--output` [option](/algokit/cli/commands#-o---output-):
+There are two tokens available for use with the `-o`, `--output` [option](/algokit/cli/commands#-o---output-output_path_pattern):
 
 - `{contract_name}`: This will resolve to a name based on the ARC-0032/ARC-0056 contract name, formatted appropriately for the target language.
 - `{app_spec_dir}`: This will resolve to the parent directory of the `application.json`, `*.arc32.json`, `*.arc56.json` file which can be useful to output a client relative to its source file.
@@ -105,7 +105,7 @@ Custom generate commands are defined in the `.algokit.toml` file within the proj
 
 ### Understanding `Generators`
 
-A `generator` is essentially a compact, self-sufficient `copier` template. This template can optionally be defined within the primary `algokit templates` to offer supplementary functionality after a project is initialized from the template. For instance, the official [`algokit-python-template`](https://github.com/algorandfoundation/algokit-python-template/tree/main/template_content) provides a generator within the `.algokit/generators` directory. This generator can be employed for executing extra tasks on AlgoKit projects that have been initiated from this template, such as adding new smart contracts to an existing project. For a comprehensive explanation, please refer to the [`architecture decision record`](/algokit/cli/../architecture-decisions/2023-07-19_advanced_generate_command).
+A `generator` is essentially a compact, self-sufficient `copier` template. This template can optionally be defined within the primary `algokit templates` to offer supplementary functionality after a project is initialized from the template. For instance, the official [`algokit-python-template`](https://github.com/algorandfoundation/algokit-python-template/tree/main/template_content) provides a generator within the `.algokit/generators` directory. This generator can be employed for executing extra tasks on AlgoKit projects that have been initiated from this template, such as adding new smart contracts to an existing project. For a comprehensive explanation, please refer to the [`architecture decision record`](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/architecture-decisions/2023-07-19_advanced_generate_command.md).
 
 ### Requirements
 

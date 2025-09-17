@@ -1,7 +1,7 @@
 ---
 title: AlgoKit Init
 ---
-The `algokit init` [command](/algokit/cli/commands#init) is used to quickly initialize new projects using official Algorand Templates or community provided templates. It supports a fully guided command line wizard experience, as well as fully scriptable / non-interactive functionality via command options.
+The `algokit init` [command](../cli/index.md#init) is used to quickly initialize new projects using official Algorand Templates or community provided templates. It supports a fully guided command line wizard experience, as well as fully scriptable / non-interactive functionality via command options.
 
 ## Quick start
 
@@ -9,7 +9,7 @@ For a quick start template with all of the defaults you can run: `algokit init` 
 
 ## Prerequisites
 
-Git is a prerequisite for the init command as it is used to clone templates and initialize git repos. Please consult the [README](/algokit/cli/../../README#prerequisites) for installation instructions.
+Git is a prerequisite for the init command as it is used to clone templates and initialize git repos. Please consult the [README](../../README.md#prerequisites) for installation instructions.
 
 ## Functionality
 
@@ -33,11 +33,11 @@ To initialize a project within a workspace, use the `--workspace` flag. If a wor
 
 To create a standalone project, use the `--no-workspace` flag during initialization. This instructs AlgoKit to bypass the workspace structure and set up the project as an isolated entity.
 
-For more details on workspaces and standalone projects, refer to the [AlgoKit Project documentation](/algokit/cli/project/overview#workspaces-vs-standalone-projects).
+For more details on workspaces and standalone projects, refer to the [AlgoKit Project documentation](./project.md#workspaces-vs-standalone-projects).
 
 ## Bootstrapping
 
-You will also be prompted if you wish to run the [bootstrap](/algokit/cli/commands#bootstrap) command, this is useful if you plan to immediately begin developing in the new project. If you passed in `--defaults` or `--bootstrap` then it will automatically run bootstrapping unless you passed in `--no-bootstrap`.
+You will also be prompted if you wish to run the [bootstrap](../cli/index.md#bootstrap) command, this is useful if you plan to immediately begin developing in the new project. If you passed in `--defaults` or `--bootstrap` then it will automatically run bootstrapping unless you passed in `--no-bootstrap`.
 
 ```
 
@@ -74,7 +74,7 @@ After bootstrapping you are also given the opportunity to initialize a git repo,
 
 ## Options
 
-There are a number of options that can be used to provide answers to the template prompts. Some of the options requiring further explanation are detailed below, but consult the CLI reference for all available [options](/algokit/cli/commands#init).
+There are a number of options that can be used to provide answers to the template prompts. Some of the options requiring further explanation are detailed below, but consult the CLI reference for all available [options](../cli/index.md#init).
 
 ## Community Templates
 
@@ -158,4 +158,4 @@ To explore what examples are available before initializing, you can run the inte
 
 After initializing an example, AlgoKit automatically attempts to open the project in your default IDE to help you quickly start exploring and modifying the code.
 
-For more details about the `AlgoKit init` command, please refer to the [AlgoKit CLI reference documentation](/algokit/cli/commands#init).
+For more details about the `AlgoKit init` command, please refer to the [AlgoKit CLI reference documentation](../cli/index.md#init).

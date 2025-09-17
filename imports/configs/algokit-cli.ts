@@ -36,6 +36,14 @@ export const algokitCLIConfig: ImportOptions = {
           pathTransform: (path, context) => {
             const { path: cleanPath, anchor } = extractAnchor(path);
 
+            // Handle links from algokit.md to cli/index.md
+            if (
+              cleanPath === 'cli/index.md' ||
+              cleanPath === './cli/index.md'
+            ) {
+              return `/algokit/cli/commands${anchor}`;
+            }
+
             // Handle links from algokit.md to features
             if (
               cleanPath.startsWith('features/') ||
@@ -57,6 +65,37 @@ export const algokitCLIConfig: ImportOptions = {
       pattern: 'docs/cli/index.md',
       basePath: 'src/content/docs/algokit/cli',
       transforms: [
+        // Remove TOC as we don't need it in Starlight
+        (content: string) => {
+          const startPattern = /^#\s+AlgoKit CLI Reference Documentation\s*$/m;
+          const endPattern = /^#\s+algokit\s*$/m;
+
+          const startMatch = content.match(startPattern);
+          const endMatch = content.match(endPattern);
+
+          if (
+            startMatch &&
+            endMatch &&
+            startMatch.index !== undefined &&
+            endMatch.index !== undefined
+          ) {
+            const startPos = startMatch.index;
+            const endPos = endMatch.index + endMatch[0].length;
+
+            const remaining =
+              content.slice(0, startPos) + content.slice(endPos);
+            return remaining.replace(/^\s*\n*/, '');
+          }
+
+          return content;
+        },
+        // Replace old quick start tutorial link with new devportal quick start link
+        (content: string) => {
+          return content.replace(
+            /quick start tutorial: \[https:\/\/bit\.ly\/algokit-intro-tutorial\]\(https:\/\/bit\.ly\/algokit-intro-tutorial\)\./g,
+            '[quick start tutorial](/getting-started/introduction/).',
+          );
+        },
         createFrontmatterTransform({
           frontmatter: {
             title: 'AlgoKit CLI Reference',
@@ -103,6 +142,31 @@ export const algokitCLIConfig: ImportOptions = {
             // Handle any links to cli/index.md (now commands)
             if (/(?:^|\/)?(?:\.\.\/)*(?:cli\/)?index\.md$/.test(cleanPath)) {
               return `/algokit/cli/commands${anchor}`;
+            }
+
+            // Handle links to architecture-decisions (external GitHub links)
+            if (
+              /(?:^|\/)?(?:\.\.\/)*architecture-decisions\/.*\.md$/.test(
+                cleanPath,
+              )
+            ) {
+              // Extract just the filename from the relative path
+              const filename = cleanPath.replace(/.*\/([^\/]+\.md)$/, '$1');
+              return `https://github.com/algorandfoundation/algokit-cli/blob/main/docs/architecture-decisions/${filename}${anchor}`;
+            }
+
+            // Special handling for files within projects or tasks subdirectories
+            // Check if the current file is within projects or tasks subdirectories
+            const isInProjects = context.from.includes(
+              'docs/features/projects',
+            );
+            const isInTasks = context.from.includes('docs/features/tasks');
+            if (isInProjects || isInTasks) {
+              // Convert any relative parent links (../) to /algokit/cli/
+              if (cleanPath.startsWith('../')) {
+                const relativePath = cleanPath.replace(/^(?:\.\.\/)+/, '');
+                return `/algokit/cli/${removeMarkdownExtension(relativePath)}`;
+              }
             }
 
             // Handle internal links within features

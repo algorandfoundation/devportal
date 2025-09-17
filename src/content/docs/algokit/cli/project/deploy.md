@@ -84,7 +84,7 @@ Here's an example of what the `.algokit.toml` file might look like. When deployi
 
 ```toml
 [algokit]
-min_version = "v{lastest_version}"
+min_version = "v{latest_version}"
 
 [project]
 
@@ -171,7 +171,7 @@ Example:
 $ algokit project deploy testnet --custom-deploy-command="your-custom-command"
 ```
 
-> ⚠️ Please note, chaining multiple commands with `&&` is **not** currently supported. If you need to run multiple commands, you can defer to a custom script. Refer to [run](/algokit/cli/../project/run#custom-command-injection) for scenarios where multiple sub-command invocations are required.
+> ⚠️ Please note, chaining multiple commands with `&&` is **not** currently supported. If you need to run multiple commands, you can defer to a custom script. Refer to [run](../project/run.md#custom-command-injection) for scenarios where multiple sub-command invocations are required.
 
 ## CI Mode
 
@@ -209,4 +209,4 @@ This example shows how to deploy smart contracts to the testnet using a custom d
 
 ## Further Reading
 
-For in-depth details, visit the [deploy](/algokit/cli/commands#deploy) section in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [deploy](../../cli/index.md#deploy) section in the AlgoKit CLI reference documentation.
