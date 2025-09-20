@@ -10,7 +10,7 @@ export const nodekitConfig: ImportOptions = {
   owner: 'algorandfoundation',
   repo: 'nodekit',
   assetsPath: 'src/assets/imports/nodekit',
-  assetsBaseUrl: '~/assets/imports/nodekit',
+  assetsBaseUrl: '@assets/imports/nodekit',
   includes: [
     {
       pattern: '.devportal/**/*',

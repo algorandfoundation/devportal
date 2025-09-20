@@ -29,7 +29,7 @@ To keep the `algokit-utils-ts` package lean and isomporphic, the debugging utili
 
 ## Debugging in `browser` environment
 
-Note: `algokit-utils-ts-debug` cannot be used in browser environments. However, you can still obtain and persist simulation traces from the browser's `Console` tab when submitting transactions using the algokit-utils-ts package. To enable this functionality, activate debug mode in the algokit-utils-ts config as described in the [getting started](./docs/code/getting-started) guide.
+Note: `algokit-utils-ts-debug` cannot be used in browser environments. However, you can still obtain and persist simulation traces from the browser's `Console` tab when submitting transactions using the algokit-utils-ts package.
 
 ### Subscribe to the `simulate` response event
 

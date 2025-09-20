@@ -10,7 +10,7 @@ export const arcStandardsConfig: ImportOptions = {
   repo: 'arcs',
   ref: 'devportal',
   assetsPath: 'src/assets/imports/arcs',
-  assetsBaseUrl: '~/assets/imports/arcs',
+  assetsBaseUrl: '@assets/imports/arcs',
   includes: [
     {
       pattern: '_devportal/content/**/*',
