@@ -2,9 +2,8 @@
 title: SendTransactionResults
 slug: reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/) / SendTransactionResults
-
-
 
 [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/).SendTransactionResults
 
@@ -40,7 +39,7 @@ the index of the confirmation will match the index of the underlying transaction
 
 [src/types/transaction.ts:67](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L67)
 
-___
+---
 
 ### transactions
 

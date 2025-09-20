@@ -1,16 +1,17 @@
 ---
 title: BaseAppClientMethodCallParams
 ---
-#### *class* algokit_utils.applications.app_client.BaseAppClientMethodCallParams
+
+#### _class_ algokit_utils.applications.app_client.BaseAppClientMethodCallParams
 
 Bases: `Generic`[`ArgsT`, `MethodT`], `CommonAppCallParams`
 
 Base parameters for application method calls.
 
-#### method *: MethodT*
+#### method _: MethodT_
 
 Method to call
 
-#### args *: ArgsT | None* *= None*
+#### args _: ArgsT | None_ _= None_
 
 Arguments to pass to the application method call

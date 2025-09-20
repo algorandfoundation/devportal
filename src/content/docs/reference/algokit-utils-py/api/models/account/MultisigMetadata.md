@@ -1,14 +1,15 @@
 ---
 title: MultisigMetadata
 ---
-#### *class* algokit_utils.models.account.MultisigMetadata
+
+#### _class_ algokit_utils.models.account.MultisigMetadata
 
 Metadata for a multisig account.
 
 Contains the version, threshold and addresses for a multisig account.
 
-#### version *: int*
+#### version _: int_
 
-#### threshold *: int*
+#### threshold _: int_
 
-#### addresses *: list[str]*
+#### addresses _: list[str]_

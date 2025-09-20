@@ -1,13 +1,14 @@
 ---
 title: LogicError
 ---
-#### *exception* algokit_utils.errors.logic_error.LogicError(\*, logic_error_str: str, program: str, source_map: AlgoSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[[algokit_utils.models.simulate.SimulationTrace](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/simulate/simulationtrace/#algokit_utils.models.simulate.SimulationTrace)] | None = None, get_line_for_pc: collections.abc.Callable[[int], int | None] | None = None)
+
+#### _exception_ algokit_utils.errors.logic_error.LogicError(\*, logic_error_str: str, program: str, source_map: AlgoSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[[algokit_utils.models.simulate.SimulationTrace](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/simulate/simulationtrace/#algokit_utils.models.simulate.SimulationTrace)] | None = None, get_line_for_pc: collections.abc.Callable[[int], int | None] | None = None)
 
 Bases: `Exception`
 
 Common base class for all non-exit exceptions.
 
-#### logic_error *= None*
+#### logic*error *= None\_
 
 #### logic_error_str
 
@@ -21,7 +22,7 @@ Common base class for all non-exit exceptions.
 
 #### pc
 
-#### traces *= None*
+#### traces _= None_
 
 #### line_no
 

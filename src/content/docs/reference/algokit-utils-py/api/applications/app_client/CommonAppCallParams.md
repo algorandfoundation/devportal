@@ -1,70 +1,71 @@
 ---
 title: CommonAppCallParams
 ---
-#### *class* algokit_utils.applications.app_client.CommonAppCallParams
+
+#### _class_ algokit_utils.applications.app_client.CommonAppCallParams
 
 Common configuration for app call transaction parameters
 
-#### account_references *: list[str] | None* *= None*
+#### account*references *: list[str] | None\_ _= None_
 
 List of account addresses to reference
 
-#### app_references *: list[int] | None* *= None*
+#### app*references *: list[int] | None\_ _= None_
 
 List of app IDs to reference
 
-#### asset_references *: list[int] | None* *= None*
+#### asset*references *: list[int] | None\_ _= None_
 
 List of asset IDs to reference
 
-#### box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None* *= None*
+#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
 
 List of box references to include
 
-#### extra_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### extra*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
 
 Additional fee to add to transaction
 
-#### lease *: bytes | None* *= None*
+#### lease _: bytes | None_ _= None_
 
 Transaction lease value
 
-#### max_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### max*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
 
 Maximum fee allowed for transaction
 
-#### note *: bytes | None* *= None*
+#### note _: bytes | None_ _= None_
 
 Custom note for the transaction
 
-#### rekey_to *: str | None* *= None*
+#### rekey*to *: str | None\_ _= None_
 
 Address to rekey account to
 
-#### sender *: str | None* *= None*
+#### sender _: str | None_ _= None_
 
 Sender address override
 
-#### signer *: algosdk.atomic_transaction_composer.TransactionSigner | None* *= None*
+#### signer _: algosdk.atomic_transaction_composer.TransactionSigner | None_ _= None_
 
 Custom transaction signer
 
-#### static_fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### static*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
 
 Fixed fee for transaction
 
-#### validity_window *: int | None* *= None*
+#### validity*window *: int | None\_ _= None_
 
 Number of rounds valid
 
-#### first_valid_round *: int | None* *= None*
+#### first*valid_round *: int | None\_ _= None_
 
 First valid round number
 
-#### last_valid_round *: int | None* *= None*
+#### last*valid_round *: int | None\_ _= None_
 
 Last valid round number
 
-#### on_complete *: algosdk.transaction.OnComplete | None* *= None*
+#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
 
 Optional on complete action

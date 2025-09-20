@@ -1,12 +1,13 @@
 ---
 title: DataTypeFlag
 ---
-#### *class* algokit_utils.models.state.DataTypeFlag
+
+#### _class_ algokit_utils.models.state.DataTypeFlag
 
 Bases: `enum.IntEnum`
 
 Enum where members are also (and must be) ints
 
-#### BYTES *= 1*
+#### BYTES _= 1_
 
-#### UINT *= 2*
+#### UINT _= 2_

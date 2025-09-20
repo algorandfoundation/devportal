@@ -2,9 +2,8 @@
 title: TypedAppFactory\<TClient\>
 slug: reference/algokit-utils-ts/api/interfaces/types_client_managertypedappfactory
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/client-manager](/reference/algokit-utils-ts/api/modules/types_client_manager/) / TypedAppFactory
-
-
 
 [types/client-manager](/reference/algokit-utils-ts/api/modules/types_client_manager/).TypedAppFactory
 
@@ -12,8 +11,8 @@ Interface to identify a typed factory that can be used to create and deploy an a
 
 ## Type parameters
 
-| Name |
-| :------ |
+| Name      |
+| :-------- |
 | `TClient` |
 
 ## Table of contents
@@ -30,9 +29,9 @@ Interface to identify a typed factory that can be used to create and deploy an a
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | `Omit`\<[`AppFactoryParams`](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/), ``"appSpec"``\> |
+| Name     | Type                                                                                                                       |
+| :------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `params` | `Omit`\<[`AppFactoryParams`](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/), `"appSpec"`\> |
 
 #### Returns
 

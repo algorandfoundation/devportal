@@ -1,24 +1,25 @@
 ---
 title: AppState
 ---
-#### *class* algokit_utils.models.application.AppState
 
-#### key_raw *: bytes*
+#### _class_ algokit_utils.models.application.AppState
+
+#### key*raw *: bytes\_
 
 The key of the state as raw bytes
 
-#### key_base64 *: str*
+#### key*base64 *: str\_
 
 The key of the state
 
-#### value_raw *: bytes | None*
+#### value*raw *: bytes | None\_
 
 The value of the state as raw bytes
 
-#### value_base64 *: str | None*
+#### value*base64 *: str | None\_
 
 The value of the state as base64 encoded string
 
-#### value *: str | int*
+#### value _: str | int_
 
 The value of the state as a string or integer

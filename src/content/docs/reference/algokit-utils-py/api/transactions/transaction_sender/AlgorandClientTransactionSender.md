@@ -1,7 +1,8 @@
 ---
 title: AlgorandClientTransactionSender
 ---
-#### *class* algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender(new_group: collections.abc.Callable[[], [algokit_utils.transactions.transaction_composer.TransactionComposer](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_composer/transactioncomposer/#algokit_utils.transactions.transaction_composer.TransactionComposer)], asset_manager: [algokit_utils.assets.asset_manager.AssetManager](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/assets/asset_manager/assetmanager/#algokit_utils.assets.asset_manager.AssetManager), app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), algod_client: algosdk.v2client.algod.AlgodClient)
+
+#### _class_ algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender(new_group: collections.abc.Callable[[], [algokit_utils.transactions.transaction_composer.TransactionComposer](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_composer/transactioncomposer/#algokit_utils.transactions.transaction_composer.TransactionComposer)], asset_manager: [algokit_utils.assets.asset_manager.AssetManager](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/assets/asset_manager/assetmanager/#algokit_utils.assets.asset_manager.AssetManager), app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), algod_client: algosdk.v2client.algod.AlgodClient)
 
 Orchestrates sending transactions for AlgorandClient.
 
@@ -12,9 +13,9 @@ asset operations, and application calls.
 
 Create a new transaction group.
 
-* **Returns:**
+- **Returns:**
   A new TransactionComposer instance
-* **Example:**
+- **Example:**
   ```pycon
   >>> sender = AlgorandClientTransactionSender(new_group, asset_manager, app_manager, algod_client)
   >>> composer = sender.new_group()
@@ -26,12 +27,13 @@ Create a new transaction group.
 
 Send a payment transaction to transfer Algo between accounts.
 
-* **Parameters:**
-  * **params** – Payment transaction parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Payment transaction parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the payment transaction
-* **Example:**
+- **Example:**
+
   ```pycon
   >>> result = algorand.send.payment(PaymentParams(
   >>>  sender="SENDERADDRESS",
@@ -66,12 +68,13 @@ Send a payment transaction to transfer Algo between accounts.
 
 Create a new Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset creation parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset creation parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the new asset ID
-* **Example:**
+- **Example:**
+
   ```pycon
   >>> result = algorand.send.asset_create(AssetCreateParams(
   >>>  sender="SENDERADDRESS",
@@ -120,12 +123,12 @@ Create a new Algorand Standard Asset.
 
 Configure an existing Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset configuration parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset configuration parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the configuration transaction
-* **Example:**
+- **Example:**
   ```pycon
   >>> result = algorand.send.asset_config(AssetConfigParams(
   >>>  sender="MANAGERADDRESS",
@@ -158,12 +161,13 @@ Configure an existing Algorand Standard Asset.
 
 Freeze or unfreeze an Algorand Standard Asset for an account.
 
-* **Parameters:**
-  * **params** – Asset freeze parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset freeze parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the freeze transaction
-* **Example:**
+- **Example:**
+
   ```pycon
   >>> result = algorand.send.asset_freeze(AssetFreezeParams(
   >>>  sender="MANAGERADDRESS",
@@ -204,12 +208,13 @@ Freeze or unfreeze an Algorand Standard Asset for an account.
 
 Destroys an Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset destruction parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset destruction parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the destroy transaction
-* **Example:**
+- **Example:**
+
   ```pycon
   >>> result = algorand.send.asset_destroy(AssetDestroyParams(
   >>>  sender="MANAGERADDRESS",
@@ -246,12 +251,13 @@ Destroys an Algorand Standard Asset.
 
 Transfer an Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset transfer parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset transfer parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the transfer transaction
-* **Example:**
+- **Example:**
+
   ```pycon
   >>> result = algorand.send.asset_transfer(AssetTransferParams(
   >>>  sender="HOLDERADDRESS",
@@ -295,12 +301,13 @@ Transfer an Algorand Standard Asset.
 
 Opt an account into an Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset opt-in parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset opt-in parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the opt-in transaction
-* **Example:**
+- **Example:**
+
   ```pycon
   >>> result = algorand.send.asset_opt_in(AssetOptInParams(
   >>>  sender="SENDERADDRESS",
@@ -337,15 +344,16 @@ Opt an account into an Algorand Standard Asset.
 
 Opt an account out of an Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset opt-out parameters
-  * **send_params** – Send parameters
-  * **ensure_zero_balance** – Check if account has zero balance before opt-out, defaults to True
-* **Raises:**
+- **Parameters:**
+  - **params** – Asset opt-out parameters
+  - **send_params** – Send parameters
+  - **ensure_zero_balance** – Check if account has zero balance before opt-out, defaults to True
+- **Raises:**
   **ValueError** – If account has non-zero balance or is not opted in
-* **Returns:**
+- **Returns:**
   Result of the opt-out transaction
-* **Example:**
+- **Example:**
+
   ```pycon
   >>> result = algorand.send.asset_opt_out(AssetOptOutParams(
   >>>  sender="SENDERADDRESS",
@@ -386,12 +394,13 @@ Opt an account out of an Algorand Standard Asset.
 
 Create a new application.
 
-* **Parameters:**
-  * **params** – Application creation parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Application creation parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the new application ID and address
-* **Example:**
+- **Example:**
+
   ```pycon
   >>> result = algorand.send.app_create(AppCreateParams(
   >>>  sender="CREATORADDRESS",
@@ -448,12 +457,12 @@ Create a new application.
 
 Update an application.
 
-* **Parameters:**
-  * **params** – Application update parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Application update parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the compiled programs
-* **Example:**
+- **Example:**
   ```pycon
   >>> # Basic example
   >>> algorand.send.app_update(AppUpdateParams(
@@ -496,12 +505,12 @@ Update an application.
 
 Delete an application.
 
-* **Parameters:**
-  * **params** – Application deletion parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Application deletion parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the deletion transaction
-* **Example:**
+- **Example:**
   ```pycon
   >>> # Basic example
   >>> algorand.send.app_delete(AppDeleteParams(
@@ -541,12 +550,12 @@ Delete an application.
 
 Call an application.
 
-* **Parameters:**
-  * **params** – Application call parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Application call parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing any ABI return value
-* **Example:**
+- **Example:**
   ```pycon
   >>> # Basic example
   >>> algorand.send.app_call(AppCallParams(
@@ -586,12 +595,12 @@ Call an application.
 
 Call an application’s create method.
 
-* **Parameters:**
-  * **params** – Method call parameters for application creation
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Method call parameters for application creation
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the new application ID and address
-* **Example:**
+- **Example:**
   ```pycon
   >>> # Note: you may prefer to use `algorand.client` to get an app client for more advanced functionality.
   >>> #
@@ -658,191 +667,206 @@ Call an application’s create method.
 
 Call an application’s update method.
 
-* **Parameters:**
-  * **params** – Method call parameters for application update
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Method call parameters for application update
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the compiled programs
-* **Example:**
+- **Example:**
+
   # Basic example:
-  >>> method = algorand.abi.Method(
-  …     name=”updateMethod”,
-  …     args=[{“type”: “string”, “name”: “arg1”}],
-  …     returns=”string”
-  … )
-  >>> params = AppUpdateMethodCallParams(
-  …     sender=”CREATORADDRESS”,
-  …     app_id=123,
-  …     method=method,
-  …     args=[“new_value”],
-  …     approval_program=”TEALCODE”,
-  …     clear_state_program=”TEALCODE”
-  … )
-  >>> result = algorand.send.app_update_method_call(params)
-  >>> print(result.compiled_approval, result.compiled_clear)
+
+  > > > method = algorand.abi.Method(
+  > > > … name=”updateMethod”,
+  > > > … args=[{“type”: “string”, “name”: “arg1”}],
+  > > > … returns=”string”
+  > > > … )
+  > > > params = AppUpdateMethodCallParams(
+  > > > … sender=”CREATORADDRESS”,
+  > > > … app_id=123,
+  > > > … method=method,
+  > > > … args=[“new_value”],
+  > > > … approval_program=”TEALCODE”,
+  > > > … clear_state_program=”TEALCODE”
+  > > > … )
+  > > > result = algorand.send.app_update_method_call(params)
+  > > > print(result.compiled_approval, result.compiled_clear)
 
   # Advanced example:
-  >>> method = algorand.abi.Method(
-  …     name=”updateMethod”,
-  …     args=[{“type”: “string”, “name”: “arg1”}, {“type”: “uint64”, “name”: “arg2”}],
-  …     returns=”string”
-  … )
-  >>> params = AppUpdateMethodCallParams(
-  …     sender=”CREATORADDRESS”,
-  …     app_id=456,
-  …     method=method,
-  …     args=[“new_value”, 42],
-  …     approval_program=”TEALCODE_ADVANCED”,
-  …     clear_state_program=”TEALCLEAR_ADVANCED”,
-  …     account_references=[“ACCOUNT1”, “ACCOUNT2”],
-  …     app_references=[789],
-  …     asset_references=[101112]
-  … )
-  >>> result = algorand.send.app_update_method_call(params)
-  >>> print(result.compiled_approval, result.compiled_clear)
+
+  > > > method = algorand.abi.Method(
+  > > > … name=”updateMethod”,
+  > > > … args=[{“type”: “string”, “name”: “arg1”}, {“type”: “uint64”, “name”: “arg2”}],
+  > > > … returns=”string”
+  > > > … )
+  > > > params = AppUpdateMethodCallParams(
+  > > > … sender=”CREATORADDRESS”,
+  > > > … app_id=456,
+  > > > … method=method,
+  > > > … args=[“new_value”, 42],
+  > > > … approval_program=”TEALCODE_ADVANCED”,
+  > > > … clear_state_program=”TEALCLEAR_ADVANCED”,
+  > > > … account_references=[“ACCOUNT1”, “ACCOUNT2”],
+  > > > … app_references=[789],
+  > > > … asset_references=[101112]
+  > > > … )
+  > > > result = algorand.send.app_update_method_call(params)
+  > > > print(result.compiled_approval, result.compiled_clear)
 
 #### app_delete_method_call(params: [algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_composer/appdeletemethodcallparams/#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams), send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/transaction/sendparams/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/sendapptransactionresult/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/abireturn/#algokit_utils.applications.abi.ABIReturn)]
 
 Call an application’s delete method.
 
-* **Parameters:**
-  * **params** – Method call parameters for application deletion
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Method call parameters for application deletion
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the deletion transaction
-* **Example:**
+- **Example:**
+
   # Basic example:
-  >>> method = algorand.abi.Method(
-  …     name=”deleteMethod”,
-  …     args=[],
-  …     returns=”void”
-  … )
-  >>> params = AppDeleteMethodCallParams(
-  …     sender=”CREATORADDRESS”,
-  …     app_id=123,
-  …     method=method
-  … )
-  >>> result = algorand.send.app_delete_method_call(params)
-  >>> print(result.tx_id)
+
+  > > > method = algorand.abi.Method(
+  > > > … name=”deleteMethod”,
+  > > > … args=[],
+  > > > … returns=”void”
+  > > > … )
+  > > > params = AppDeleteMethodCallParams(
+  > > > … sender=”CREATORADDRESS”,
+  > > > … app_id=123,
+  > > > … method=method
+  > > > … )
+  > > > result = algorand.send.app_delete_method_call(params)
+  > > > print(result.tx_id)
 
   # Advanced example:
-  >>> method = algorand.abi.Method(
-  …     name=”deleteMethod”,
-  …     args=[{“type”: “uint64”, “name”: “confirmation”}],
-  …     returns=”void”
-  … )
-  >>> params = AppDeleteMethodCallParams(
-  …     sender=”CREATORADDRESS”,
-  …     app_id=123,
-  …     method=method,
-  …     args=[1],
-  …     account_references=[“ACCOUNT1”],
-  …     app_references=[456]
-  … )
-  >>> result = algorand.send.app_delete_method_call(params)
-  >>> print(result.tx_id)
+
+  > > > method = algorand.abi.Method(
+  > > > … name=”deleteMethod”,
+  > > > … args=[{“type”: “uint64”, “name”: “confirmation”}],
+  > > > … returns=”void”
+  > > > … )
+  > > > params = AppDeleteMethodCallParams(
+  > > > … sender=”CREATORADDRESS”,
+  > > > … app_id=123,
+  > > > … method=method,
+  > > > … args=[1],
+  > > > … account_references=[“ACCOUNT1”],
+  > > > … app_references=[456]
+  > > > … )
+  > > > result = algorand.send.app_delete_method_call(params)
+  > > > print(result.tx_id)
 
 #### app_call_method_call(params: [algokit_utils.transactions.transaction_composer.AppCallMethodCallParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_composer/appcallmethodcallparams/#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams), send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/transaction/sendparams/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/sendapptransactionresult/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/abireturn/#algokit_utils.applications.abi.ABIReturn)]
 
 Call an application’s call method.
 
-* **Parameters:**
-  * **params** – Method call parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Method call parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing any ABI return value
-* **Example:**
+- **Example:**
+
   # Basic example:
-  >>> method = algorand.abi.Method(
-  …     name=”callMethod”,
-  …     args=[{“type”: “uint64”, “name”: “arg1”}],
-  …     returns=”uint64”
-  … )
-  >>> params = AppCallMethodCallParams(
-  …     sender=”CALLERADDRESS”,
-  …     app_id=123,
-  …     method=method,
-  …     args=[12345]
-  … )
-  >>> result = algorand.send.app_call_method_call(params)
-  >>> print(result.abi_return)
+
+  > > > method = algorand.abi.Method(
+  > > > … name=”callMethod”,
+  > > > … args=[{“type”: “uint64”, “name”: “arg1”}],
+  > > > … returns=”uint64”
+  > > > … )
+  > > > params = AppCallMethodCallParams(
+  > > > … sender=”CALLERADDRESS”,
+  > > > … app_id=123,
+  > > > … method=method,
+  > > > … args=[12345]
+  > > > … )
+  > > > result = algorand.send.app_call_method_call(params)
+  > > > print(result.abi_return)
 
   # Advanced example:
-  >>> method = algorand.abi.Method(
-  …     name=”callMethod”,
-  …     args=[{“type”: “uint64”, “name”: “arg1”}, {“type”: “string”, “name”: “arg2”}],
-  …     returns=”uint64”
-  … )
-  >>> params = AppCallMethodCallParams(
-  …     sender=”CALLERADDRESS”,
-  …     app_id=123,
-  …     method=method,
-  …     args=[12345, “extra”],
-  …     account_references=[“ACCOUNT1”],
-  …     asset_references=[101112],
-  …     app_references=[789]
-  … )
-  >>> result = algorand.send.app_call_method_call(params)
-  >>> print(result.abi_return)
+
+  > > > method = algorand.abi.Method(
+  > > > … name=”callMethod”,
+  > > > … args=[{“type”: “uint64”, “name”: “arg1”}, {“type”: “string”, “name”: “arg2”}],
+  > > > … returns=”uint64”
+  > > > … )
+  > > > params = AppCallMethodCallParams(
+  > > > … sender=”CALLERADDRESS”,
+  > > > … app_id=123,
+  > > > … method=method,
+  > > > … args=[12345, “extra”],
+  > > > … account_references=[“ACCOUNT1”],
+  > > > … asset_references=[101112],
+  > > > … app_references=[789]
+  > > > … )
+  > > > result = algorand.send.app_call_method_call(params)
+  > > > print(result.abi_return)
 
 #### online_key_registration(params: [algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_composer/onlinekeyregistrationparams/#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams), send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/transaction/sendparams/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/sendsingletransactionresult/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Register an online key.
 
-* **Parameters:**
-  * **params** – Key registration parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Key registration parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the registration transaction
-* **Example:**
+- **Example:**
+
   # Basic example:
-  >>> params = OnlineKeyRegistrationParams(
-  …     sender=”ACCOUNTADDRESS”,
-  …     vote_key=”VOTEKEY”,
-  …     selection_key=”SELECTIONKEY”,
-  …     vote_first=1000,
-  …     vote_last=2000,
-  …     vote_key_dilution=10
-  … )
-  >>> result = algorand.send.online_key_registration(params)
-  >>> print(result.tx_id)
+
+  > > > params = OnlineKeyRegistrationParams(
+  > > > … sender=”ACCOUNTADDRESS”,
+  > > > … vote_key=”VOTEKEY”,
+  > > > … selection_key=”SELECTIONKEY”,
+  > > > … vote_first=1000,
+  > > > … vote_last=2000,
+  > > > … vote_key_dilution=10
+  > > > … )
+  > > > result = algorand.send.online_key_registration(params)
+  > > > print(result.tx_id)
 
   # Advanced example:
-  >>> params = OnlineKeyRegistrationParams(
-  …     sender=”ACCOUNTADDRESS”,
-  …     vote_key=”VOTEKEY”,
-  …     selection_key=”SELECTIONKEY”,
-  …     vote_first=1000,
-  …     vote_last=2100,
-  …     vote_key_dilution=10,
-  …     state_proof_key=b’’ \* 64
-  … )
-  >>> result = algorand.send.online_key_registration(params)
-  >>> print(result.tx_id)
+
+  > > > params = OnlineKeyRegistrationParams(
+  > > > … sender=”ACCOUNTADDRESS”,
+  > > > … vote_key=”VOTEKEY”,
+  > > > … selection_key=”SELECTIONKEY”,
+  > > > … vote_first=1000,
+  > > > … vote_last=2100,
+  > > > … vote_key_dilution=10,
+  > > > … state_proof_key=b’’ \* 64
+  > > > … )
+  > > > result = algorand.send.online_key_registration(params)
+  > > > print(result.tx_id)
 
 #### offline_key_registration(params: [algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_composer/offlinekeyregistrationparams/#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams), send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/transaction/sendparams/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/sendsingletransactionresult/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Register an offline key.
 
-* **Parameters:**
-  * **params** – Key registration parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Key registration parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the registration transaction
-* **Example:**
+- **Example:**
+
   # Basic example:
-  >>> params = OfflineKeyRegistrationParams(
-  …     sender=”ACCOUNTADDRESS”,
-  …     prevent_account_from_ever_participating_again=True
-  … )
-  >>> result = algorand.send.offline_key_registration(params)
-  >>> print(result.tx_id)
+
+  > > > params = OfflineKeyRegistrationParams(
+  > > > … sender=”ACCOUNTADDRESS”,
+  > > > … prevent_account_from_ever_participating_again=True
+  > > > … )
+  > > > result = algorand.send.offline_key_registration(params)
+  > > > print(result.tx_id)
 
   # Advanced example:
-  >>> params = OfflineKeyRegistrationParams(
-  …     sender=”ACCOUNTADDRESS”,
-  …     prevent_account_from_ever_participating_again=True,
-  …     note=b’Offline registration’
-  … )
-  >>> result = algorand.send.offline_key_registration(params)
-  >>> print(result.tx_id)
+
+  > > > params = OfflineKeyRegistrationParams(
+  > > > … sender=”ACCOUNTADDRESS”,
+  > > > … prevent_account_from_ever_participating_again=True,
+  > > > … note=b’Offline registration’
+  > > > … )
+  > > > result = algorand.send.offline_key_registration(params)
+  > > > print(result.tx_id)

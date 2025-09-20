@@ -2,9 +2,8 @@
 title: TestNetDispenserApiClientParams
 slug: reference/algokit-utils-ts/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/dispenser-client](/reference/algokit-utils-ts/api/modules/types_dispenser_client/) / TestNetDispenserApiClientParams
-
-
 
 [types/dispenser-client](/reference/algokit-utils-ts/api/modules/types_dispenser_client/).TestNetDispenserApiClientParams
 
@@ -29,7 +28,7 @@ The API auth token
 
 [src/types/dispenser-client.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/dispenser-client.ts#L41)
 
-___
+---
 
 ### requestTimeout
 

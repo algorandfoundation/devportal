@@ -1,16 +1,17 @@
 ---
 title: StructField
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.StructField
+
+#### _class_ algokit_utils.applications.app_spec.arc56.StructField
 
 Represents a field in a struct type.
 
-#### name *: str*
+#### name _: str_
 
 The name of the struct field
 
-#### type *: list[[StructField](#algokit_utils.applications.app_spec.arc56.StructField)] | str*
+#### type _: list[[StructField](#algokit_utils.applications.app_spec.arc56.StructField)] | str_
 
 The type of the struct field, either a string or list of StructFields
 
-#### *static* from_dict(data: dict[str, Any]) → [StructField](#algokit_utils.applications.app_spec.arc56.StructField)
+#### _static_ from_dict(data: dict[str, Any]) → [StructField](#algokit_utils.applications.app_spec.arc56.StructField)

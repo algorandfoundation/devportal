@@ -1,15 +1,16 @@
 ---
 title: AppDeployer
 ---
-#### *class* algokit_utils.applications.app_deployer.AppDeployer(app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), transaction_sender: [algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/algorandclienttransactionsender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender), indexer: algosdk.v2client.indexer.IndexerClient | None = None)
+
+#### _class_ algokit_utils.applications.app_deployer.AppDeployer(app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), transaction_sender: [algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/algorandclienttransactionsender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender), indexer: algosdk.v2client.indexer.IndexerClient | None = None)
 
 Manages deployment and deployment metadata of applications
 
-* **Parameters:**
-  * **app_manager** – The app manager to use
-  * **transaction_sender** – The transaction sender to use
-  * **indexer** – The indexer to use
-* **Example:**
+- **Parameters:**
+  - **app_manager** – The app manager to use
+  - **transaction_sender** – The transaction sender to use
+  - **indexer** – The indexer to use
+- **Example:**
   ```pycon
   >>> deployer = AppDeployer(app_manager, transaction_sender, indexer)
   ```
@@ -31,13 +32,13 @@ return properties like transaction, confirmation and delete_result.
 **Note:** if there is an update (different TEAL code) to an existing app (and on_update is set to ‘replace’)
 the existing app will be deleted and re-created.
 
-* **Parameters:**
+- **Parameters:**
   **deployment** – The arguments to control the app deployment
-* **Returns:**
+- **Returns:**
   The result of the deployment
-* **Raises:**
+- **Raises:**
   **ValueError** – If the app spec format is invalid
-* **Example:**
+- **Example:**
   ```pycon
   >>> deployer.deploy(AppDeployParams(
   ...     create_params=AppCreateParams(
@@ -80,14 +81,14 @@ lookup.
 
 If the AppManager instance wasn’t created with an indexer client, this function will throw an error.
 
-* **Parameters:**
-  * **creator_address** – The address of the account that is the creator of the apps you want to search for
-  * **ignore_cache** – Whether or not to ignore the cache and force a lookup, default: use the cache
-* **Returns:**
+- **Parameters:**
+  - **creator_address** – The address of the account that is the creator of the apps you want to search for
+  - **ignore_cache** – Whether or not to ignore the cache and force a lookup, default: use the cache
+- **Returns:**
   A name-based lookup of the app metadata
-* **Raises:**
+- **Raises:**
   **ValueError** – If the app spec format is invalid
-* **Example:**
+- **Example:**
   ```pycon
   >>> result = await deployer.get_creator_apps_by_name(creator)
   ```

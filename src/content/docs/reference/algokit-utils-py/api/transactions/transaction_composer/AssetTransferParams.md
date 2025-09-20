@@ -1,28 +1,29 @@
 ---
 title: AssetTransferParams
 ---
-#### *class* algokit_utils.transactions.transaction_composer.AssetTransferParams
+
+#### _class_ algokit_utils.transactions.transaction_composer.AssetTransferParams
 
 Bases: `_CommonTxnParams`
 
 Parameters for transferring an asset.
 
-#### asset_id *: int*
+#### asset*id *: int\_
 
 The ID of the asset
 
-#### amount *: int*
+#### amount _: int_
 
 The amount of the asset to transfer (smallest divisible unit)
 
-#### receiver *: str*
+#### receiver _: str_
 
 The account to send the asset to
 
-#### clawback_target *: str | None* *= None*
+#### clawback*target *: str | None\_ _= None_
 
 The account to take the asset from, defaults to None
 
-#### close_asset_to *: str | None* *= None*
+#### close*asset_to *: str | None\_ _= None_
 
 The account to close the asset to, defaults to None

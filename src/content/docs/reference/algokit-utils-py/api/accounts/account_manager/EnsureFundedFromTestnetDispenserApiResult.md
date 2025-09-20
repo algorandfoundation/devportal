@@ -1,7 +1,8 @@
 ---
 title: EnsureFundedFromTestnetDispenserApiResult
 ---
-#### *class* algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult
+
+#### _class_ algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult
 
 Bases: `_CommonEnsureFundedParams`
 

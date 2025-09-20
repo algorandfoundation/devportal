@@ -2,9 +2,8 @@
 title: TestNetDispenserApiClient
 slug: reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/dispenser-client](/reference/algokit-utils-ts/api/modules/types_dispenser_client/) / TestNetDispenserApiClient
-
-
 
 [types/dispenser-client](/reference/algokit-utils-ts/api/modules/types_dispenser_client/).TestNetDispenserApiClient
 
@@ -72,8 +71,8 @@ If neither the environment variable 'ALGOKIT_DISPENSER_ACCESS_TOKEN' nor the aut
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                                                                                                                                   |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------------------- |
 | `params?` | [`TestNetDispenserApiClientParams`](/reference/algokit-utils-ts/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/) |
 
 #### Returns
@@ -94,7 +93,7 @@ If neither the environment variable 'ALGOKIT_DISPENSER_ACCESS_TOKEN' nor the aut
 
 [src/types/dispenser-client.ts:73](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/dispenser-client.ts#L73)
 
-___
+---
 
 ### \_requestTimeout
 
@@ -120,7 +119,7 @@ The authentication token used for API requests.
 
 [src/types/dispenser-client.ts:92](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/dispenser-client.ts#L92)
 
-___
+---
 
 ### requestTimeout
 
@@ -146,10 +145,10 @@ Sends a funding request to the dispenser API to fund the specified address with 
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `address` | `string` \| `Address` | The address to fund. |
-| `amount` | `number` \| `bigint` | The amount of µAlgo to fund. |
+| Name      | Type                  | Description                  |
+| :-------- | :-------------------- | :--------------------------- |
+| `address` | `string` \| `Address` | The address to fund.         |
+| `amount`  | `number` \| `bigint`  | The amount of µAlgo to fund. |
 
 #### Returns
 
@@ -161,7 +160,7 @@ DispenserFundResponse: An object containing the transaction ID and funded amount
 
 [src/types/dispenser-client.ts:158](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/dispenser-client.ts#L158)
 
-___
+---
 
 ### getLimit
 
@@ -179,7 +178,7 @@ DispenserLimitResponse: An object containing the funding limit amount.
 
 [src/types/dispenser-client.ts:188](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/dispenser-client.ts#L188)
 
-___
+---
 
 ### processDispenserRequest
 
@@ -189,12 +188,12 @@ Processes a dispenser API request.
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `authToken` | `string` | `undefined` | The authentication token. |
-| `urlSuffix` | `string` | `undefined` | The URL suffix for the API request. |
-| `body` | ``null`` \| `Record`\<`string`, `string` \| `number`\> | `null` | The request body. |
-| `method` | `string` | `'POST'` | The HTTP method. |
+| Name        | Type                                                 | Default value | Description                         |
+| :---------- | :--------------------------------------------------- | :------------ | :---------------------------------- |
+| `authToken` | `string`                                             | `undefined`   | The authentication token.           |
+| `urlSuffix` | `string`                                             | `undefined`   | The URL suffix for the API request. |
+| `body`      | `null` \| `Record`\<`string`, `string` \| `number`\> | `null`        | The request body.                   |
+| `method`    | `string`                                             | `'POST'`      | The HTTP method.                    |
 
 #### Returns
 
@@ -206,7 +205,7 @@ The API response.
 
 [src/types/dispenser-client.ts:110](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/dispenser-client.ts#L110)
 
-___
+---
 
 ### refund
 
@@ -216,8 +215,8 @@ Sends a refund request to the dispenser API for the specified refundTxnId.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name          | Type     | Description                   |
+| :------------ | :------- | :---------------------------- |
 | `refundTxnId` | `string` | The transaction ID to refund. |
 
 #### Returns

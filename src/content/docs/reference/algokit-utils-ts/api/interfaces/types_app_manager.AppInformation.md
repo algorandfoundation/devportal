@@ -2,9 +2,8 @@
 title: AppInformation
 slug: reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app-manager](/reference/algokit-utils-ts/api/modules/types_app_manager/) / AppInformation
-
-
 
 [types/app-manager](/reference/algokit-utils-ts/api/modules/types_app_manager/).AppInformation
 
@@ -38,7 +37,7 @@ The escrow address that the app operates with.
 
 [src/types/app-manager.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L20)
 
-___
+---
 
 ### appId
 
@@ -50,7 +49,7 @@ The ID of the app.
 
 [src/types/app-manager.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L18)
 
-___
+---
 
 ### approvalProgram
 
@@ -62,7 +61,7 @@ Approval program.
 
 [src/types/app-manager.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L24)
 
-___
+---
 
 ### clearStateProgram
 
@@ -74,7 +73,7 @@ Clear state program.
 
 [src/types/app-manager.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L28)
 
-___
+---
 
 ### creator
 
@@ -87,7 +86,7 @@ parameters and global state for this application can be found.
 
 [src/types/app-manager.ts:33](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L33)
 
-___
+---
 
 ### extraProgramPages
 
@@ -99,7 +98,7 @@ Any extra pages that are needed for the smart contract.
 
 [src/types/app-manager.ts:47](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L47)
 
-___
+---
 
 ### globalByteSlices
 
@@ -111,7 +110,7 @@ The number of allocated byte slices in global state.
 
 [src/types/app-manager.ts:45](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L45)
 
-___
+---
 
 ### globalInts
 
@@ -123,7 +122,7 @@ The number of allocated ints in global state.
 
 [src/types/app-manager.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L43)
 
-___
+---
 
 ### globalState
 
@@ -135,7 +134,7 @@ Current global state values.
 
 [src/types/app-manager.ts:37](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L37)
 
-___
+---
 
 ### localByteSlices
 
@@ -147,7 +146,7 @@ The number of allocated byte slices in per-user local state.
 
 [src/types/app-manager.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L41)
 
-___
+---
 
 ### localInts
 

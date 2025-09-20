@@ -2,9 +2,8 @@
 title: AlgoRekeyParams
 slug: reference/algokit-utils-ts/api/interfaces/types_transferalgorekeyparams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/transfer](/reference/algokit-utils-ts/api/modules/types_transfer/) / AlgoRekeyParams
-
-
 
 [types/transfer](/reference/algokit-utils-ts/api/modules/types_transfer/).AlgoRekeyParams
 
@@ -52,7 +51,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 [src/types/transaction.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L36)
 
-___
+---
 
 ### fee
 
@@ -68,7 +67,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 [src/types/transaction.ts:40](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L40)
 
-___
+---
 
 ### from
 
@@ -80,7 +79,7 @@ The account that will be rekeyed
 
 [src/types/transfer.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L26)
 
-___
+---
 
 ### lease
 
@@ -92,7 +91,7 @@ An (optional) [transaction lease](https://dev.algorand.co/concepts/transactions/
 
 [src/types/transfer.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L34)
 
-___
+---
 
 ### maxFee
 
@@ -108,7 +107,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 [src/types/transaction.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L42)
 
-___
+---
 
 ### maxRoundsToWaitForConfirmation
 
@@ -124,7 +123,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 [src/types/transaction.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L44)
 
-___
+---
 
 ### note
 
@@ -136,7 +135,7 @@ The (optional) transaction note
 
 [src/types/transfer.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L32)
 
-___
+---
 
 ### populateAppCallResources
 
@@ -152,7 +151,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 [src/types/transaction.ts:46](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L46)
 
-___
+---
 
 ### rekeyTo
 
@@ -164,7 +163,7 @@ The account / account address that will have the private key that is authorised 
 
 [src/types/transfer.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L28)
 
-___
+---
 
 ### skipSending
 
@@ -181,7 +180,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 [src/types/transaction.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L32)
 
-___
+---
 
 ### skipWaiting
 
@@ -197,7 +196,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 [src/types/transaction.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L34)
 
-___
+---
 
 ### suppressLog
 
@@ -213,7 +212,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 [src/types/transaction.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L38)
 
-___
+---
 
 ### transactionParams
 

@@ -2,9 +2,8 @@
 title: Struct
 slug: reference/algokit-utils-ts/api/interfaces/types_app_specstruct
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app-spec](/reference/algokit-utils-ts/api/modules/types_app_spec/) / Struct
-
-
 
 [types/app-spec](/reference/algokit-utils-ts/api/modules/types_app_spec/).Struct
 
@@ -29,7 +28,7 @@ The elements (in order) that make up the struct/tuple
 
 [src/types/app-spec.ts:222](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L222)
 
-___
+---
 
 ### name
 

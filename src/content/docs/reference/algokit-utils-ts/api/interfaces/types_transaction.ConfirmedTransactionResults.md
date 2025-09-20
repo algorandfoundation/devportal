@@ -2,9 +2,8 @@
 title: ConfirmedTransactionResults
 slug: reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/) / ConfirmedTransactionResults
-
-
 
 [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/).ConfirmedTransactionResults
 
@@ -43,7 +42,7 @@ The response from sending and waiting for the primary transaction
 
 [src/types/transaction.ts:93](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L93)
 
-___
+---
 
 ### confirmations
 
@@ -59,7 +58,7 @@ The response from sending and waiting for the transactions
 
 [src/types/transaction.ts:95](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L95)
 
-___
+---
 
 ### transaction
 
@@ -75,7 +74,7 @@ The transaction
 
 [src/types/transaction.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L55)
 
-___
+---
 
 ### transactions
 

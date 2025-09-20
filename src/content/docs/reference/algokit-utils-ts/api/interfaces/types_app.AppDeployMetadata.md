@@ -2,9 +2,8 @@
 title: AppDeployMetadata
 slug: reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / AppDeployMetadata
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).AppDeployMetadata
 
@@ -39,7 +38,7 @@ Whether or not the app is deletable / permanent / unspecified
 
 [src/types/app.ts:253](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L253)
 
-___
+---
 
 ### name
 
@@ -51,7 +50,7 @@ The unique name identifier of the app within the creator account
 
 [src/types/app.ts:249](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L249)
 
-___
+---
 
 ### updatable
 
@@ -63,7 +62,7 @@ Whether or not the app is updatable / immutable / unspecified
 
 [src/types/app.ts:255](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L255)
 
-___
+---
 
 ### version
 

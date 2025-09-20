@@ -2,9 +2,8 @@
 title: TransactionToSign
 slug: reference/algokit-utils-ts/api/interfaces/types_transactiontransactiontosign
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/) / TransactionToSign
-
-
 
 [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/).TransactionToSign
 
@@ -29,7 +28,7 @@ The account to use to sign the transaction, either an account (with private key 
 
 [src/types/transaction.ts:115](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L115)
 
-___
+---
 
 ### transaction
 

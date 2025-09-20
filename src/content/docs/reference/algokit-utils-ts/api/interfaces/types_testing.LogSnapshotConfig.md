@@ -2,15 +2,14 @@
 title: LogSnapshotConfig
 slug: reference/algokit-utils-ts/api/interfaces/types_testinglogsnapshotconfig
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/) / LogSnapshotConfig
-
-
 
 [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/).LogSnapshotConfig
 
 Configuration for preparing a captured log snapshot.
 This helps ensure that the provided configuration items won't appear
- with random values in the log snapshot, but rather will get substituted with predictable ids.
+with random values in the log snapshot, but rather will get substituted with predictable ids.
 
 ## Table of contents
 
@@ -33,7 +32,7 @@ Any accounts/addresses to replace the address for predictably
 
 [src/types/testing.ts:141](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L141)
 
-___
+---
 
 ### apps
 
@@ -45,7 +44,7 @@ Any app IDs to replace predictably
 
 [src/types/testing.ts:143](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L143)
 
-___
+---
 
 ### filterPredicate
 
@@ -59,8 +58,8 @@ Optional filter predicate to filter out logs
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type     |
+| :---- | :------- |
 | `log` | `string` |
 
 ##### Returns
@@ -71,7 +70,7 @@ Optional filter predicate to filter out logs
 
 [src/types/testing.ts:145](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L145)
 
-___
+---
 
 ### transactions
 

@@ -2,9 +2,8 @@
 title: types/dispenser-client
 slug: reference/algokit-utils-ts/api/modules/types_dispenser_client
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/dispenser-client
-
-
 
 ## Table of contents
 

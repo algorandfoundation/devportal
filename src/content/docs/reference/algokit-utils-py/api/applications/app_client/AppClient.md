@@ -1,16 +1,17 @@
 ---
 title: AppClient
 ---
-#### *class* algokit_utils.applications.app_client.AppClient(params: [AppClientParams](/reference/algokit-utils-py/api/applications/app_client/appclientparams/#algokit_utils.applications.app_client.AppClientParams))
+
+#### _class_ algokit_utils.applications.app_client.AppClient(params: [AppClientParams](/reference/algokit-utils-py/api/applications/app_client/appclientparams/#algokit_utils.applications.app_client.AppClientParams))
 
 A client for interacting with an Algorand smart contract application.
 
 Provides a high-level interface for interacting with Algorand smart contracts, including
 methods for calling application methods, managing state, and handling transactions.
 
-* **Parameters:**
+- **Parameters:**
   **params** – Parameters for creating the app client
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AppClientParams(
   ...     app_spec=Arc56Contract.from_json(app_spec_json),
@@ -32,55 +33,55 @@ methods for calling application methods, managing state, and handling transactio
   >>> client = AppClient(params)
   ```
 
-#### *property* algorand *: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient)*
+#### _property_ algorand _: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient)_
 
 Get the Algorand client instance.
 
-* **Returns:**
+- **Returns:**
   The Algorand client used by this app client
 
-#### *property* app_id *: int*
+#### _property_ app*id *: int\_
 
 Get the application ID.
 
-* **Returns:**
+- **Returns:**
   The ID of the Algorand application
 
-#### *property* app_address *: str*
+#### _property_ app*address *: str\_
 
 Get the application’s Algorand address.
 
-* **Returns:**
+- **Returns:**
   The Algorand address associated with this application
 
-#### *property* app_name *: str*
+#### _property_ app*name *: str\_
 
 Get the application name.
 
-* **Returns:**
+- **Returns:**
   The name of the application
 
-#### *property* app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract)*
+#### _property_ app*spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract)\_
 
 Get the application specification.
 
-* **Returns:**
+- **Returns:**
   The ARC-56 contract specification for this application
 
-#### *property* state *: \_StateAccessor*
+#### _property_ state _: \_StateAccessor_
 
 Get the state accessor.
 
-* **Returns:**
+- **Returns:**
   The state accessor for this application
 
-#### *property* params *: \_MethodParamsBuilder*
+#### _property_ params _: \_MethodParamsBuilder_
 
 Get the method parameters builder.
 
-* **Returns:**
+- **Returns:**
   The method parameters builder for this application
-* **Example:**
+- **Example:**
   ```pycon
   >>> # Create a transaction in the future using Algorand Client
   >>> my_method_call = app_client.params.call(AppClientMethodCallParams(
@@ -95,53 +96,53 @@ Get the method parameters builder.
   >>> app_client.send.call(AppClientMethodCallParams(method='my_method2', args=[my_method_call]))
   ```
 
-#### *property* send *: \_TransactionSender*
+#### _property_ send _: \_TransactionSender_
 
 Get the transaction sender.
 
-* **Returns:**
+- **Returns:**
   The transaction sender for this application
 
-#### *property* create_transaction *: \_TransactionCreator*
+#### _property_ create*transaction *: \_TransactionCreator\_
 
 Get the transaction creator.
 
-* **Returns:**
+- **Returns:**
   The transaction creator for this application
 
-#### *static* normalise_app_spec(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc32/arc32contract/#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str) → [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract)
+#### _static_ normalise_app_spec(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc32/arc32contract/#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str) → [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract)
 
 Normalize an application specification to ARC-56 format.
 
-* **Parameters:**
+- **Parameters:**
   **app_spec** – The application specification to normalize. Can be raw arc32 or arc56 json,
   or an Arc32Contract or Arc56Contract instance
-* **Returns:**
+- **Returns:**
   The normalized ARC-56 contract specification
-* **Raises:**
+- **Raises:**
   **ValueError** – If the app spec format is invalid
-* **Example:**
+- **Example:**
   ```pycon
   >>> spec = AppClient.normalise_app_spec(app_spec_json)
   ```
 
-#### *static* from_network(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc32/arc32contract/#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str, algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient), app_name: str | None = None, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None) → [AppClient](#algokit_utils.applications.app_client.AppClient)
+#### _static_ from_network(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc32/arc32contract/#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str, algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient), app_name: str | None = None, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None) → [AppClient](#algokit_utils.applications.app_client.AppClient)
 
 Create an AppClient instance from network information.
 
-* **Parameters:**
-  * **app_spec** – The application specification
-  * **algorand** – The Algorand client instance
-  * **app_name** – Optional application name
-  * **default_sender** – Optional default sender address
-  * **default_signer** – Optional default transaction signer
-  * **approval_source_map** – Optional approval program source map
-  * **clear_source_map** – Optional clear program source map
-* **Returns:**
+- **Parameters:**
+  - **app_spec** – The application specification
+  - **algorand** – The Algorand client instance
+  - **app_name** – Optional application name
+  - **default_sender** – Optional default sender address
+  - **default_signer** – Optional default transaction signer
+  - **approval_source_map** – Optional approval program source map
+  - **clear_source_map** – Optional clear program source map
+- **Returns:**
   A new AppClient instance
-* **Raises:**
+- **Raises:**
   **Exception** – If no app ID is found for the network
-* **Example:**
+- **Example:**
   ```pycon
   >>> client = AppClient.from_network(
   ...     app_spec=Arc56Contract.from_json(app_spec_json),
@@ -161,26 +162,26 @@ Create an AppClient instance from network information.
   ... )
   ```
 
-#### *static* from_creator_and_name(creator_address: str, app_name: str, app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc32/arc32contract/#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str, algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient), default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_deployer/applicationlookup/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → [AppClient](#algokit_utils.applications.app_client.AppClient)
+#### _static_ from_creator_and_name(creator_address: str, app_name: str, app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc32/arc32contract/#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str, algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient), default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_deployer/applicationlookup/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → [AppClient](#algokit_utils.applications.app_client.AppClient)
 
 Create an AppClient instance from creator address and application name.
 
-* **Parameters:**
-  * **creator_address** – The address of the application creator
-  * **app_name** – The name of the application
-  * **app_spec** – The application specification
-  * **algorand** – The Algorand client instance
-  * **default_sender** – Optional default sender address
-  * **default_signer** – Optional default transaction signer
-  * **approval_source_map** – Optional approval program source map
-  * **clear_source_map** – Optional clear program source map
-  * **ignore_cache** – Optional flag to ignore cache
-  * **app_lookup_cache** – Optional app lookup cache
-* **Returns:**
+- **Parameters:**
+  - **creator_address** – The address of the application creator
+  - **app_name** – The name of the application
+  - **app_spec** – The application specification
+  - **algorand** – The Algorand client instance
+  - **default_sender** – Optional default sender address
+  - **default_signer** – Optional default transaction signer
+  - **approval_source_map** – Optional approval program source map
+  - **clear_source_map** – Optional clear program source map
+  - **ignore_cache** – Optional flag to ignore cache
+  - **app_lookup_cache** – Optional app lookup cache
+- **Returns:**
   A new AppClient instance
-* **Raises:**
+- **Raises:**
   **ValueError** – If the app is not found for the creator and name
-* **Example:**
+- **Example:**
   ```pycon
   >>> client = AppClient.from_creator_and_name(
   ...     creator_address="CREATORADDRESS",
@@ -190,41 +191,41 @@ Create an AppClient instance from creator address and application name.
   ... )
   ```
 
-#### *static* compile(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract), app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), compilation_params: [AppClientCompilationParams](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationparams/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationresult/#algokit_utils.applications.app_client.AppClientCompilationResult)
+#### _static_ compile(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract), app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), compilation_params: [AppClientCompilationParams](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationparams/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationresult/#algokit_utils.applications.app_client.AppClientCompilationResult)
 
 Compile the application’s TEAL code.
 
-* **Parameters:**
-  * **app_spec** – The application specification
-  * **app_manager** – The application manager instance
-  * **compilation_params** – Optional compilation parameters
-* **Returns:**
+- **Parameters:**
+  - **app_spec** – The application specification
+  - **app_manager** – The application manager instance
+  - **compilation_params** – Optional compilation parameters
+- **Returns:**
   The compilation result
-* **Raises:**
+- **Raises:**
   **ValueError** – If attempting to compile without source or byte code
 
 #### compile_app(compilation_params: [AppClientCompilationParams](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationparams/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationresult/#algokit_utils.applications.app_client.AppClientCompilationResult)
 
 Compile the application’s TEAL code.
 
-* **Parameters:**
+- **Parameters:**
   **compilation_params** – Optional compilation parameters
-* **Returns:**
+- **Returns:**
   The compilation result
 
 #### clone(app_name: str | None = \_MISSING, default_sender: str | None = \_MISSING, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = \_MISSING, approval_source_map: algosdk.source_map.SourceMap | None = \_MISSING, clear_source_map: algosdk.source_map.SourceMap | None = \_MISSING) → [AppClient](#algokit_utils.applications.app_client.AppClient)
 
 Create a cloned AppClient instance with optionally overridden parameters.
 
-* **Parameters:**
-  * **app_name** – Optional new application name
-  * **default_sender** – Optional new default sender
-  * **default_signer** – Optional new default signer
-  * **approval_source_map** – Optional new approval source map
-  * **clear_source_map** – Optional new clear source map
-* **Returns:**
+- **Parameters:**
+  - **app_name** – Optional new application name
+  - **default_sender** – Optional new default sender
+  - **default_signer** – Optional new default signer
+  - **approval_source_map** – Optional new approval source map
+  - **clear_source_map** – Optional new clear source map
+- **Returns:**
   A new AppClient instance
-* **Example:**
+- **Example:**
   ```pycon
   >>> client = AppClient(params)
   >>> cloned_client = client.clone(app_name="Cloned App", default_sender="NEW_SENDER")
@@ -234,36 +235,36 @@ Create a cloned AppClient instance with optionally overridden parameters.
 
 Export the application’s source maps.
 
-* **Returns:**
+- **Returns:**
   The application’s source maps
-* **Raises:**
+- **Raises:**
   **ValueError** – If source maps haven’t been loaded
 
 #### import_source_maps(source_maps: [algokit_utils.models.application.AppSourceMaps](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/application/appsourcemaps/#algokit_utils.models.application.AppSourceMaps)) → None
 
 Import source maps for the application.
 
-* **Parameters:**
+- **Parameters:**
   **source_maps** – The source maps to import
-* **Raises:**
+- **Raises:**
   **ValueError** – If source maps are invalid or missing
 
 #### get_local_state(address: str) → dict[str, [algokit_utils.models.application.AppState](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/application/appstate/#algokit_utils.models.application.AppState)]
 
 Get local state for an account.
 
-* **Parameters:**
+- **Parameters:**
   **address** – The account address
-* **Returns:**
+- **Returns:**
   The account’s local state for this application
 
 #### get_global_state() → dict[str, [algokit_utils.models.application.AppState](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/application/appstate/#algokit_utils.models.application.AppState)]
 
 Get the application’s global state.
 
-* **Returns:**
+- **Returns:**
   The application’s global state
-* **Example:**
+- **Example:**
   ```pycon
   >>> global_state = client.get_global_state()
   ```
@@ -272,9 +273,9 @@ Get the application’s global state.
 
 Get all box names for the application.
 
-* **Returns:**
+- **Returns:**
   List of box names
-* **Example:**
+- **Example:**
   ```pycon
   >>> box_names = client.get_box_names()
   ```
@@ -283,11 +284,11 @@ Get all box names for the application.
 
 Get the value of a box.
 
-* **Parameters:**
+- **Parameters:**
   **name** – The box identifier
-* **Returns:**
+- **Returns:**
   The box value as bytes
-* **Example:**
+- **Example:**
   ```pycon
   >>> box_value = client.get_box_value(box_name)
   ```
@@ -296,12 +297,12 @@ Get the value of a box.
 
 Get a box value decoded according to an ABI type.
 
-* **Parameters:**
-  * **name** – The box identifier
-  * **abi_type** – The ABI type to decode as
-* **Returns:**
+- **Parameters:**
+  - **name** – The box identifier
+  - **abi_type** – The ABI type to decode as
+- **Returns:**
   The decoded box value
-* **Example:**
+- **Example:**
   ```pycon
   >>> box_value = client.get_box_value_from_abi_type(box_name, abi_type)
   ```
@@ -310,11 +311,11 @@ Get a box value decoded according to an ABI type.
 
 Get values for multiple boxes.
 
-* **Parameters:**
+- **Parameters:**
   **filter_func** – Optional function to filter box names
-* **Returns:**
+- **Returns:**
   List of box values
-* **Example:**
+- **Example:**
   ```pycon
   >>> box_values = client.get_box_values()
   ```
@@ -323,12 +324,12 @@ Get values for multiple boxes.
 
 Get multiple box values decoded according to an ABI type.
 
-* **Parameters:**
-  * **abi_type** – The ABI type to decode as
-  * **filter_func** – Optional function to filter box names
-* **Returns:**
+- **Parameters:**
+  - **abi_type** – The ABI type to decode as
+  - **filter_func** – Optional function to filter box names
+- **Returns:**
   List of decoded box values
-* **Example:**
+- **Example:**
   ```pycon
   >>> box_values = client.get_box_values_from_abi_type(abi_type)
   ```
@@ -337,12 +338,12 @@ Get multiple box values decoded according to an ABI type.
 
 Fund the application’s account.
 
-* **Parameters:**
-  * **params** – The funding parameters
-  * **send_params** – Send parameters, defaults to None
-* **Returns:**
+- **Parameters:**
+  - **params** – The funding parameters
+  - **send_params** – Send parameters, defaults to None
+- **Returns:**
   The transaction result
-* **Example:**
+- **Example:**
   ```pycon
   >>> result = client.fund_app_account(params)
   ```

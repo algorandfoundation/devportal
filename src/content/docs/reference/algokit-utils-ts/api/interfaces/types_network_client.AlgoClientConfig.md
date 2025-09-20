@@ -2,9 +2,8 @@
 title: AlgoClientConfig
 slug: reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/network-client](/reference/algokit-utils-ts/api/modules/types_network_client/) / AlgoClientConfig
-
-
 
 [types/network-client](/reference/algokit-utils-ts/api/modules/types_network_client/).AlgoClientConfig
 
@@ -30,7 +29,7 @@ The port to use e.g. 4001, 443, etc.
 
 [src/types/network-client.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/network-client.ts#L8)
 
-___
+---
 
 ### server
 
@@ -42,7 +41,7 @@ Base URL of the server e.g. http://localhost, https://testnet-api.algonode.cloud
 
 [src/types/network-client.ts:6](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/network-client.ts#L6)
 
-___
+---
 
 ### token
 

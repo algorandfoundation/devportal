@@ -2,9 +2,8 @@
 title: AssetManager
 slug: reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/asset-manager](/reference/algokit-utils-ts/api/modules/types_asset_manager/) / AssetManager
-
-
 
 [types/asset-manager](/reference/algokit-utils-ts/api/modules/types_asset_manager/).AssetManager
 
@@ -38,9 +37,9 @@ Create a new asset manager.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `algod` | `AlgodClient` | An algod client |
+| Name       | Type                                                                                                      | Description                                                           |
+| :--------- | :-------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| `algod`    | `AlgodClient`                                                                                             | An algod client                                                       |
 | `newGroup` | () => [`TransactionComposer`](/reference/algokit-utils-ts/api/classes/types_composertransactioncomposer/) | A function that creates a new `TransactionComposer` transaction group |
 
 #### Returns
@@ -67,7 +66,7 @@ const assetManager = new AssetManager(algod, () => new TransactionComposer({algo
 
 [src/types/asset-manager.ts:139](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L139)
 
-___
+---
 
 ### \_newGroup
 
@@ -97,11 +96,11 @@ Transactions will be sent in batches of 16 as transaction groups.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `account` | `string` \| `Address` | The account to opt-in |
-| `assetIds` | `bigint`[] | The list of asset IDs to opt-in to |
-| `options?` | `Omit`\<[`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams), ``"sender"``\> & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | Any parameters to control the transaction or execution of the transaction |
+| Name       | Type                                                                                                                                                                                                                         | Description                                                               |
+| :--------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
+| `account`  | `string` \| `Address`                                                                                                                                                                                                        | The account to opt-in                                                     |
+| `assetIds` | `bigint`[]                                                                                                                                                                                                                   | The list of asset IDs to opt-in to                                        |
+| `options?` | `Omit`\<[`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams), `"sender"`\> & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | Any parameters to control the transaction or execution of the transaction |
 
 #### Returns
 
@@ -113,16 +112,19 @@ An array of records matching asset ID to transaction ID of the opt in
 
 ```typescript
 // Basic example
-assetManager.bulkOptIn("ACCOUNTADDRESS", [12345n, 67890n])
+assetManager.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n]);
 // With configuration
-assetManager.bulkOptIn("ACCOUNTADDRESS", [12345n, 67890n], { maxFee: (1000).microAlgo(), suppressLog: true })
+assetManager.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n], {
+  maxFee: (1000).microAlgo(),
+  suppressLog: true,
+});
 ```
 
 #### Defined in
 
 [src/types/asset-manager.ts:233](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L233)
 
-___
+---
 
 ### bulkOptOut
 
@@ -134,11 +136,11 @@ Transactions will be sent in batches of 16 as transaction groups.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `account` | `string` \| `Address` | The account to opt-in |
-| `assetIds` | `bigint`[] | The list of asset IDs to opt-out of |
-| `options?` | `Omit`\<[`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams), ``"sender"``\> & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) & \{ `ensureZeroBalance?`: `boolean`  } | Any parameters to control the transaction or execution of the transaction |
+| Name       | Type                                                                                                                                                                                                                                                                | Description                                                               |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------ |
+| `account`  | `string` \| `Address`                                                                                                                                                                                                                                               | The account to opt-in                                                     |
+| `assetIds` | `bigint`[]                                                                                                                                                                                                                                                          | The list of asset IDs to opt-out of                                       |
+| `options?` | `Omit`\<[`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams), `"sender"`\> & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) & \{ `ensureZeroBalance?`: `boolean` } | Any parameters to control the transaction or execution of the transaction |
 
 #### Returns
 
@@ -150,16 +152,20 @@ An array of records matching asset ID to transaction ID of the opt in
 
 ```typescript
 // Basic example
-assetManager.bulkOptOut("ACCOUNTADDRESS", [12345n, 67890n])
+assetManager.bulkOptOut('ACCOUNTADDRESS', [12345n, 67890n]);
 // With configuration
-assetManager.bulkOptOut("ACCOUNTADDRESS", [12345n, 67890n], { ensureZeroBalance: true, maxFee: (1000).microAlgo(), suppressLog: true })
+assetManager.bulkOptOut('ACCOUNTADDRESS', [12345n, 67890n], {
+  ensureZeroBalance: true,
+  maxFee: (1000).microAlgo(),
+  suppressLog: true,
+});
 ```
 
 #### Defined in
 
 [src/types/asset-manager.ts:283](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L283)
 
-___
+---
 
 ### getAccountInformation
 
@@ -169,10 +175,10 @@ Returns the given sender account's asset holding for a given asset.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `sender` | `string` \| `Address` | The address of the sender/account to look up |
-| `assetId` | `bigint` | The ID of the asset to return a holding for |
+| Name      | Type                  | Description                                  |
+| :-------- | :-------------------- | :------------------------------------------- |
+| `sender`  | `string` \| `Address` | The address of the sender/account to look up |
+| `assetId` | `bigint`              | The ID of the asset to return a holding for  |
 
 #### Returns
 
@@ -183,7 +189,7 @@ The account asset holding information
 **`Example`**
 
 ```typescript
-const address = "XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA";
+const address = 'XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA';
 const assetId = 123345n;
 const accountInfo = await assetManager.getAccountInformation(address, assetId);
 ```
@@ -194,7 +200,7 @@ const accountInfo = await assetManager.getAccountInformation(address, assetId);
 
 [src/types/asset-manager.ts:205](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L205)
 
-___
+---
 
 ### getById
 
@@ -204,8 +210,8 @@ Returns the current asset information for the asset with the given ID.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type     | Description         |
+| :-------- | :------- | :------------------ |
 | `assetId` | `bigint` | The ID of the asset |
 
 #### Returns

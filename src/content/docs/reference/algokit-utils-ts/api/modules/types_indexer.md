@@ -2,9 +2,8 @@
 title: types/indexer
 slug: reference/algokit-utils-ts/api/modules/types_indexer
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/indexer
-
-
 
 ## Table of contents
 
@@ -71,7 +70,7 @@ Use `algosdk.indexerModels.AccountResponse`. Indexer result for an account looku
 
 [src/types/indexer.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L8)
 
-___
+---
 
 ### AccountParticipation
 
@@ -85,7 +84,7 @@ Use `algosdk.indexerModels.AccountParticipation`. Indexer AccountParticipation d
 
 [src/types/indexer.ts:199](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L199)
 
-___
+---
 
 ### AccountResult
 
@@ -99,7 +98,7 @@ Use `algosdk.indexerModels.Account`. Indexer Account information at a given roun
 
 [src/types/indexer.ts:45](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L45)
 
-___
+---
 
 ### AccountStateDelta
 
@@ -113,7 +112,7 @@ Use `algosdk.indexerModels.AccountStateDelta`.
 
 [src/types/indexer.ts:145](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L145)
 
-___
+---
 
 ### AppLocalState
 
@@ -127,7 +126,7 @@ Use `algosdk.indexerModels.ApplicationLocalState`. Indexer Stores local state as
 
 [src/types/indexer.ts:202](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L202)
 
-___
+---
 
 ### ApplicationCreatedLookupResult
 
@@ -141,7 +140,7 @@ Use `algosdk.indexerModels.ApplicationsResponse`. Indexer result for an account'
 
 [src/types/indexer.ts:17](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L17)
 
-___
+---
 
 ### ApplicationLookupResult
 
@@ -155,7 +154,7 @@ Use `algosdk.indexerModels.ApplicationResponse`. Indexer result for an applicati
 
 [src/types/indexer.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L39)
 
-___
+---
 
 ### ApplicationParams
 
@@ -169,7 +168,7 @@ Use `algosdk.indexerModels.ApplicationParams`. Indexer Stores the global informa
 
 [src/types/indexer.ts:154](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L154)
 
-___
+---
 
 ### ApplicationResult
 
@@ -183,7 +182,7 @@ Use `algosdk.indexerModels.Application`. Indexer result of looking up an applica
 
 [src/types/indexer.ts:122](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L122)
 
-___
+---
 
 ### ApplicationTransactionResult
 
@@ -197,7 +196,7 @@ Use `algosdk.indexerModels.TransactionApplication`. Indexer Fields for an applic
 
 [src/types/indexer.ts:99](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L99)
 
-___
+---
 
 ### AssetBalancesLookupResult
 
@@ -211,7 +210,7 @@ Use `algosdk.indexerModels.AssetBalancesResponse`. Indexer result for an asset's
 
 [src/types/indexer.ts:33](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L33)
 
-___
+---
 
 ### AssetConfigTransactionResult
 
@@ -228,7 +227,7 @@ A zero value for asset-id indicates asset creation. A zero value for the params 
 
 [src/types/indexer.ts:106](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L106)
 
-___
+---
 
 ### AssetFreezeTransactionResult
 
@@ -242,7 +241,7 @@ Use `algosdk.indexerModels.TransactionAssetFreeze`. Indexer Fields for an asset 
 
 [src/types/indexer.ts:109](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L109)
 
-___
+---
 
 ### AssetHolding
 
@@ -256,7 +255,7 @@ Use `algosdk.indexerModels.AssetHolding`. Indexer Describes an asset held by an 
 
 [src/types/indexer.ts:205](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L205)
 
-___
+---
 
 ### AssetLookupResult
 
@@ -270,7 +269,7 @@ Use `algosdk.indexerModels.AssetResponse`. Indexer result for an asset lookup, h
 
 [src/types/indexer.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L20)
 
-___
+---
 
 ### AssetParams
 
@@ -284,7 +283,7 @@ Use `algosdk.indexerModels.AssetParams`. Indexer AssetParams specifies the param
 
 [src/types/indexer.ts:176](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L176)
 
-___
+---
 
 ### AssetResult
 
@@ -298,7 +297,7 @@ Use `algosdk.indexerModels.Asset`. Indexer Fields to specify both the unique ide
 
 [src/types/indexer.ts:118](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L118)
 
-___
+---
 
 ### AssetTransferTransactionResult
 
@@ -312,7 +311,7 @@ Use `algosdk.indexerModels.TransactionAssetTransfer`. Indexer Fields for an asse
 
 [src/types/indexer.ts:112](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L112)
 
-___
+---
 
 ### AssetsCreatedLookupResult
 
@@ -326,7 +325,7 @@ Use `algosdk.indexerModels.AssetsResponse`. Indexer result for an account's crea
 
 [src/types/indexer.ts:14](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L14)
 
-___
+---
 
 ### AssetsLookupResult
 
@@ -340,7 +339,7 @@ Use `algosdk.indexerModels.AssetHoldingsResponse`. Indexer result for an account
 
 [src/types/indexer.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L11)
 
-___
+---
 
 ### EvalDelta
 
@@ -354,7 +353,7 @@ Use `algosdk.indexerModels.EvalDelta`. Indexer Represents a TEAL value delta. ht
 
 [src/types/indexer.ts:151](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L151)
 
-___
+---
 
 ### EvalDeltaKeyValue
 
@@ -368,7 +367,7 @@ Use `algosdk.indexerModels.EvalDeltaKeyValue`.
 
 [src/types/indexer.ts:142](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L142)
 
-___
+---
 
 ### KeyRegistrationTransactionResult
 
@@ -382,7 +381,7 @@ Use `algosdk.indexerModels.TransactionKeyreg`. Indexer Fields for a `keyreg` tra
 
 [src/types/indexer.ts:115](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L115)
 
-___
+---
 
 ### LogicTransactionSignature
 
@@ -400,7 +399,7 @@ https://dev.algorand.co/concepts/smart-contracts/logic-sigs
 
 [src/types/indexer.ts:133](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L133)
 
-___
+---
 
 ### MerkleArrayProof
 
@@ -419,6 +418,7 @@ given the distribution of the elt positions and the depth of the tree,
 the path length can increase up to 2^MaxTreeDepth / 2
 
 Consider two different reveals for the same tree:
+
 ```
 .                z5
 .         z3              z4
@@ -429,9 +429,11 @@ Consider two different reveals for the same tree:
 . hints: [a, r, z, z4]
 . len(hints) = 4
 ```
+
 You need a to combine with b to get q, need r to combine with the computed q and get y, and so on.
 
 The worst case is this:
+
 ```
 .               z5
 .        z3              z4
@@ -448,7 +450,7 @@ The worst case is this:
 
 [src/types/indexer.ts:96](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L96)
 
-___
+---
 
 ### MiniAssetHolding
 
@@ -462,7 +464,7 @@ Use `algosdk.indexerModels.MiniAssetHolding`. Indexer Describes an asset holding
 
 [src/types/indexer.ts:208](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L208)
 
-___
+---
 
 ### MultisigTransactionSignature
 
@@ -476,7 +478,7 @@ Use `algosdk.indexerModels.TransactionSignatureMultisig`. Indexer [msig] structu
 
 [src/types/indexer.ts:136](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L136)
 
-___
+---
 
 ### MultisigTransactionSubSignature
 
@@ -490,7 +492,7 @@ Use `algosdk.indexerModels.TransactionSignatureMultisigSubsignature`. Indexer Su
 
 [src/types/indexer.ts:139](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L139)
 
-___
+---
 
 ### PaymentTransactionResult
 
@@ -504,7 +506,7 @@ Use `algosdk.indexerModels.TransactionPayment`. Indexer Fields for a payment tra
 
 [src/types/indexer.ts:48](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L48)
 
-___
+---
 
 ### StateDelta
 
@@ -518,7 +520,7 @@ Use `algosdk.indexerModels.EvalDeltaKeyValue[]`.
 
 [src/types/indexer.ts:148](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L148)
 
-___
+---
 
 ### StateProofTransactionResult
 
@@ -538,7 +540,7 @@ https://dev.algorand.co/reference/rest-apis/algod/#stateproof.
 
 [src/types/indexer.ts:58](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L58)
 
-___
+---
 
 ### StateSchema
 
@@ -557,7 +559,7 @@ The more space used, the larger minimum balance must be maintained in the accoun
 
 [src/types/indexer.ts:163](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L163)
 
-___
+---
 
 ### TransactionLookupResult
 
@@ -571,7 +573,7 @@ Use `algosdk.indexerModels.TransactionResponse`. Indexer result for a transactio
 
 [src/types/indexer.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L36)
 
-___
+---
 
 ### TransactionResult
 
@@ -585,7 +587,7 @@ Use `algosdk.indexerModels.Transaction`. Indexer result for a transaction, https
 
 [src/types/indexer.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L42)
 
-___
+---
 
 ### TransactionSearchResults
 
@@ -599,7 +601,7 @@ Use `algosdk.indexerModels.TransactionsResponse`. Indexer result for a transacti
 
 [src/types/indexer.ts:5](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L5)
 
-___
+---
 
 ### TransactionSignature
 

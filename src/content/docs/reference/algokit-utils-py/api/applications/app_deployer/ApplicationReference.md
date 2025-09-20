@@ -1,10 +1,11 @@
 ---
 title: ApplicationReference
 ---
-#### *class* algokit_utils.applications.app_deployer.ApplicationReference
+
+#### _class_ algokit_utils.applications.app_deployer.ApplicationReference
 
 Information about an Algorand app
 
-#### app_id *: int*
+#### app*id *: int\_
 
-#### app_address *: str*
+#### app*address *: str\_

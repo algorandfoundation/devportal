@@ -1,56 +1,57 @@
 ---
 title: MultiSigAccount
 ---
-#### *class* algokit_utils.models.account.MultiSigAccount(multisig_params: [MultisigMetadata](/reference/algokit-utils-py/api/models/account/multisigmetadata/#algokit_utils.models.account.MultisigMetadata), signing_accounts: list[[SigningAccount](/reference/algokit-utils-py/api/models/account/signingaccount/#algokit_utils.models.account.SigningAccount)])
+
+#### _class_ algokit_utils.models.account.MultiSigAccount(multisig_params: [MultisigMetadata](/reference/algokit-utils-py/api/models/account/multisigmetadata/#algokit_utils.models.account.MultisigMetadata), signing_accounts: list[[SigningAccount](/reference/algokit-utils-py/api/models/account/signingaccount/#algokit_utils.models.account.SigningAccount)])
 
 Account wrapper that supports partial or full multisig signing.
 
 Provides functionality to manage and sign transactions for a multisig account.
 
-* **Parameters:**
-  * **multisig_params** – The parameters for the multisig account
-  * **signing_accounts** – The list of accounts that can sign
+- **Parameters:**
+  - **multisig_params** – The parameters for the multisig account
+  - **signing_accounts** – The list of accounts that can sign
 
-#### *property* multisig *: algosdk.transaction.Multisig*
+#### _property_ multisig _: algosdk.transaction.Multisig_
 
 Get the underlying algosdk.transaction.Multisig object instance.
 
-* **Returns:**
+- **Returns:**
   The algosdk.transaction.Multisig object instance
 
-#### *property* params *: [MultisigMetadata](/reference/algokit-utils-py/api/models/account/multisigmetadata/#algokit_utils.models.account.MultisigMetadata)*
+#### _property_ params _: [MultisigMetadata](/reference/algokit-utils-py/api/models/account/multisigmetadata/#algokit_utils.models.account.MultisigMetadata)_
 
 Get the parameters for the multisig account.
 
-* **Returns:**
+- **Returns:**
   The multisig account parameters
 
-#### *property* signing_accounts *: list[[SigningAccount](/reference/algokit-utils-py/api/models/account/signingaccount/#algokit_utils.models.account.SigningAccount)]*
+#### _property_ signing*accounts *: list[[SigningAccount](/reference/algokit-utils-py/api/models/account/signingaccount/#algokit_utils.models.account.SigningAccount)]\_
 
 Get the list of accounts that are present to sign.
 
-* **Returns:**
+- **Returns:**
   The list of signing accounts
 
-#### *property* address *: str*
+#### _property_ address _: str_
 
 Get the address of the multisig account.
 
-* **Returns:**
+- **Returns:**
   The multisig account address
 
-#### *property* signer *: algosdk.atomic_transaction_composer.TransactionSigner*
+#### _property_ signer _: algosdk.atomic_transaction_composer.TransactionSigner_
 
 Get the transaction signer for this multisig account.
 
-* **Returns:**
+- **Returns:**
   The multisig transaction signer
 
 #### sign(transaction: algosdk.transaction.Transaction) → algosdk.transaction.MultisigTransaction
 
 Sign the given transaction with all present signers.
 
-* **Parameters:**
+- **Parameters:**
   **transaction** – Either a transaction object or a raw, partially signed transaction
-* **Returns:**
+- **Returns:**
   The transaction signed by the present signers

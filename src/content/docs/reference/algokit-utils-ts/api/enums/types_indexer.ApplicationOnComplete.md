@@ -2,9 +2,8 @@
 title: ApplicationOnComplete
 slug: reference/algokit-utils-ts/api/enums/types_indexerapplicationoncomplete
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/indexer](/reference/algokit-utils-ts/api/modules/types_indexer/) / ApplicationOnComplete
-
-
 
 [types/indexer](/reference/algokit-utils-ts/api/modules/types_indexer/).ApplicationOnComplete
 
@@ -25,57 +24,57 @@ Defines the what additional actions occur with the transaction https://dev.algor
 
 ### clear
 
-• **clear** = ``"clear"``
+• **clear** = `"clear"`
 
 #### Defined in
 
 [src/types/indexer.ts:170](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L170)
 
-___
+---
 
 ### closeout
 
-• **closeout** = ``"closeout"``
+• **closeout** = `"closeout"`
 
 #### Defined in
 
 [src/types/indexer.ts:169](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L169)
 
-___
+---
 
 ### delete
 
-• **delete** = ``"delete"``
+• **delete** = `"delete"`
 
 #### Defined in
 
 [src/types/indexer.ts:172](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L172)
 
-___
+---
 
 ### noop
 
-• **noop** = ``"noop"``
+• **noop** = `"noop"`
 
 #### Defined in
 
 [src/types/indexer.ts:167](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L167)
 
-___
+---
 
 ### optin
 
-• **optin** = ``"optin"``
+• **optin** = `"optin"`
 
 #### Defined in
 
 [src/types/indexer.ts:168](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L168)
 
-___
+---
 
 ### update
 
-• **update** = ``"update"``
+• **update** = `"update"`
 
 #### Defined in
 

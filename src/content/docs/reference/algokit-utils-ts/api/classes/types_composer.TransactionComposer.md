@@ -2,9 +2,8 @@
 title: TransactionComposer
 slug: reference/algokit-utils-ts/api/classes/types_composertransactioncomposer
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/composer](/reference/algokit-utils-ts/api/modules/types_composer/) / TransactionComposer
-
-
 
 [types/composer](/reference/algokit-utils-ts/api/modules/types_composer/).TransactionComposer
 
@@ -28,7 +27,7 @@ TransactionComposer helps you compose and execute transactions as a transaction 
 - [getSuggestedParams](#getsuggestedparams)
 - [txnMaxFees](#txnmaxfees)
 - [txns](#txns)
-- [NULL\_SIGNER](#null_signer)
+- [NULL_SIGNER](#null_signer)
 
 ### Methods
 
@@ -86,8 +85,8 @@ Create a `TransactionComposer`.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                                             | Description                         |
+| :------- | :--------------------------------------------------------------------------------------------------------------- | :---------------------------------- |
 | `params` | [`TransactionComposerParams`](/reference/algokit-utils-ts/api/modules/types_composer/#transactioncomposerparams) | The configuration for this composer |
 
 #### Returns
@@ -112,7 +111,7 @@ The algod client used by the composer.
 
 [src/types/composer.ts:563](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L563)
 
-___
+---
 
 ### appManager
 
@@ -122,7 +121,7 @@ ___
 
 [src/types/composer.ts:577](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L577)
 
-___
+---
 
 ### atc
 
@@ -134,7 +133,7 @@ The ATC used to compose the group
 
 [src/types/composer.ts:552](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L552)
 
-___
+---
 
 ### defaultValidityWindow
 
@@ -146,7 +145,7 @@ The default transaction validity window
 
 [src/types/composer.ts:572](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L572)
 
-___
+---
 
 ### defaultValidityWindowIsExplicit
 
@@ -158,7 +157,7 @@ Whether the validity window was explicitly set on construction
 
 [src/types/composer.ts:575](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L575)
 
-___
+---
 
 ### errorTransformers
 
@@ -168,7 +167,7 @@ ___
 
 [src/types/composer.ts:579](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L579)
 
-___
+---
 
 ### getSigner
 
@@ -182,8 +181,8 @@ A function that takes in an address and return a signer function for that addres
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                  |
+| :-------- | :-------------------- |
 | `address` | `string` \| `Address` |
 
 ##### Returns
@@ -194,7 +193,7 @@ A function that takes in an address and return a signer function for that addres
 
 [src/types/composer.ts:569](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L569)
 
-___
+---
 
 ### getSuggestedParams
 
@@ -214,7 +213,7 @@ An async function that will return suggested params for the transaction.
 
 [src/types/composer.ts:566](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L566)
 
-___
+---
 
 ### txnMaxFees
 
@@ -227,7 +226,7 @@ This is set using the value of either maxFee or staticFee.
 
 [src/types/composer.ts:557](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L557)
 
-___
+---
 
 ### txns
 
@@ -239,11 +238,11 @@ Transactions that have not yet been composed
 
 [src/types/composer.ts:560](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L560)
 
-___
+---
 
-### NULL\_SIGNER
+### NULL_SIGNER
 
-▪ `Static` `Private` **NULL\_SIGNER**: `TransactionSigner`
+▪ `Static` `Private` **NULL_SIGNER**: `TransactionSigner`
 
 Signer used to represent a lack of signer
 
@@ -265,8 +264,8 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                     | Description                                 |
+| :------- | :--------------------------------------------------------------------------------------- | :------------------------------------------ |
 | `params` | [`AppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallparams) | The application call transaction parameters |
 
 #### Returns
@@ -278,7 +277,7 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAppCall({ sender: 'CREATORADDRESS' })
+composer.addAppCall({ sender: 'CREATORADDRESS' });
 ```
 
 **`Example`**
@@ -309,7 +308,7 @@ composer.addAppCall({
 
 [src/types/composer.ts:1106](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1106)
 
-___
+---
 
 ### addAppCallMethodCall
 
@@ -321,8 +320,8 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                             | Description                                            |
+| :------- | :----------------------------------------------------------------------------------------------- | :----------------------------------------------------- |
 | `params` | [`AppCallMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallmethodcall) | The ABI method application call transaction parameters |
 
 #### Returns
@@ -338,8 +337,8 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-composer.addAppCallMethodCall({ sender: 'CREATORADDRESS', method: method, args: ["arg1_value"] })
+});
+composer.addAppCallMethodCall({ sender: 'CREATORADDRESS', method: method, args: ['arg1_value'] });
 ```
 
 **`Example`**
@@ -377,7 +376,7 @@ composer.addAppCallMethodCall({
 
 [src/types/composer.ts:1318](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1318)
 
-___
+---
 
 ### addAppCreate
 
@@ -389,34 +388,34 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | `Object` | The application create transaction parameters |
-| `params.accountReferences?` | (`string` \| `Address`)[] | Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). |
-| `params.appReferences?` | `bigint`[] | The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). |
-| `params.approvalProgram` | `string` \| `Uint8Array` | The program to execute for all OnCompletes other than ClearState as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)). |
-| `params.args?` | `Uint8Array`[] | Any [arguments to pass to the smart contract call](/reference/algokit-utils-ts/api/concepts/smart-contracts/languages/teal/argument-passing/#argument-passing). |
-| `params.assetReferences?` | `bigint`[] | The ID of any assets to load to the [foreign assets array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). |
-| `params.boxReferences?` | ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] | Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). Either the name identifier (which will be set against app ID of `0` i.e. the current app), or a box identifier with the name identifier and app ID. |
-| `params.clearStateProgram` | `string` \| `Uint8Array` | The program to execute for ClearState OnComplete as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)). |
-| `params.extraFee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees. |
-| `params.extraProgramPages?` | `number` | Number of extra pages required for the programs. Defaults to the number needed for the programs in this call if not specified. This is immutable once the app is created. |
-| `params.firstValidRound?` | `bigint` | Set the first round this transaction is valid. If left undefined, the value from algod will be used. We recommend you only set this when you intentionally want this to be some time in the future. |
-| `params.lastValidRound?` | `bigint` | The last round this transaction is valid. It is recommended to use `validityWindow` instead. |
-| `params.lease?` | `string` \| `Uint8Array` | Prevent multiple transactions with the same lease being included within the validity window. A [lease](https://dev.algorand.co/concepts/transactions/leases) enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios). |
-| `params.maxFee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods. |
-| `params.note?` | `string` \| `Uint8Array` | Note to attach to the transaction. Max of 1000 bytes. |
-| `params.onComplete?` | `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` | The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op. |
-| `params.rekeyTo?` | `string` \| `Address` | Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying). |
-| `params.schema?` | `Object` | The state schema for the app. This is immutable once the app is created. |
-| `params.schema.globalByteSlices` | `number` | The number of byte slices saved in global state. |
-| `params.schema.globalInts` | `number` | The number of integers saved in global state. |
-| `params.schema.localByteSlices` | `number` | The number of byte slices saved in local state. |
-| `params.schema.localInts` | `number` | The number of integers saved in local state. |
-| `params.sender` | `string` \| `Address` | The address of the account sending the transaction. |
-| `params.signer?` | `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) | The function used to sign transaction(s); if not specified then an attempt will be made to find a registered signer for the given `sender` or use a default signer (if configured). |
-| `params.staticFee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction. |
-| `params.validityWindow?` | `number` \| `bigint` | How many rounds the transaction should be valid for, if not specified then the registered default validity window will be used. |
+| Name                             | Type                                                                                                                                                                                           | Description                                                                                                                                                                                                                                                                            |
+| :------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`                         | `Object`                                                                                                                                                                                       | The application create transaction parameters                                                                                                                                                                                                                                          |
+| `params.accountReferences?`      | (`string` \| `Address`)[]                                                                                                                                                                      | Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                       |
+| `params.appReferences?`          | `bigint`[]                                                                                                                                                                                     | The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                     |
+| `params.approvalProgram`         | `string` \| `Uint8Array`                                                                                                                                                                       | The program to execute for all OnCompletes other than ClearState as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).                                                                                                                   |
+| `params.args?`                   | `Uint8Array`[]                                                                                                                                                                                 | Any [arguments to pass to the smart contract call](/reference/algokit-utils-ts/api/concepts/smart-contracts/languages/teal/argument-passing/#argument-passing).                                                                                                                        |
+| `params.assetReferences?`        | `bigint`[]                                                                                                                                                                                     | The ID of any assets to load to the [foreign assets array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                 |
+| `params.boxReferences?`          | ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] | Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). Either the name identifier (which will be set against app ID of `0` i.e. the current app), or a box identifier with the name identifier and app ID. |
+| `params.clearStateProgram`       | `string` \| `Uint8Array`                                                                                                                                                                       | The program to execute for ClearState OnComplete as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).                                                                                                                                   |
+| `params.extraFee?`               | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)                                                                                                                | The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.                                                                                                                                                                                  |
+| `params.extraProgramPages?`      | `number`                                                                                                                                                                                       | Number of extra pages required for the programs. Defaults to the number needed for the programs in this call if not specified. This is immutable once the app is created.                                                                                                              |
+| `params.firstValidRound?`        | `bigint`                                                                                                                                                                                       | Set the first round this transaction is valid. If left undefined, the value from algod will be used. We recommend you only set this when you intentionally want this to be some time in the future.                                                                                    |
+| `params.lastValidRound?`         | `bigint`                                                                                                                                                                                       | The last round this transaction is valid. It is recommended to use `validityWindow` instead.                                                                                                                                                                                           |
+| `params.lease?`                  | `string` \| `Uint8Array`                                                                                                                                                                       | Prevent multiple transactions with the same lease being included within the validity window. A [lease](https://dev.algorand.co/concepts/transactions/leases) enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).                         |
+| `params.maxFee?`                 | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)                                                                                                                | Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.                                                                                                                                                  |
+| `params.note?`                   | `string` \| `Uint8Array`                                                                                                                                                                       | Note to attach to the transaction. Max of 1000 bytes.                                                                                                                                                                                                                                  |
+| `params.onComplete?`             | `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC`                                                                                                        | The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.                                                                                                                                                              |
+| `params.rekeyTo?`                | `string` \| `Address`                                                                                                                                                                          | Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying).                                                                   |
+| `params.schema?`                 | `Object`                                                                                                                                                                                       | The state schema for the app. This is immutable once the app is created.                                                                                                                                                                                                               |
+| `params.schema.globalByteSlices` | `number`                                                                                                                                                                                       | The number of byte slices saved in global state.                                                                                                                                                                                                                                       |
+| `params.schema.globalInts`       | `number`                                                                                                                                                                                       | The number of integers saved in global state.                                                                                                                                                                                                                                          |
+| `params.schema.localByteSlices`  | `number`                                                                                                                                                                                       | The number of byte slices saved in local state.                                                                                                                                                                                                                                        |
+| `params.schema.localInts`        | `number`                                                                                                                                                                                       | The number of integers saved in local state.                                                                                                                                                                                                                                           |
+| `params.sender`                  | `string` \| `Address`                                                                                                                                                                          | The address of the account sending the transaction.                                                                                                                                                                                                                                    |
+| `params.signer?`                 | `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/)                                                         | The function used to sign transaction(s); if not specified then an attempt will be made to find a registered signer for the given `sender` or use a default signer (if configured).                                                                                                    |
+| `params.staticFee?`              | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)                                                                                                                | The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.                                                                                                                                                 |
+| `params.validityWindow?`         | `number` \| `bigint`                                                                                                                                                                           | How many rounds the transaction should be valid for, if not specified then the registered default validity window will be used.                                                                                                                                                        |
 
 #### Returns
 
@@ -427,7 +426,11 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAppCreate({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE' })
+composer.addAppCreate({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+});
 ```
 
 **`Example`**
@@ -473,7 +476,7 @@ composer.addAppCreate({
 
 [src/types/composer.ts:985](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L985)
 
-___
+---
 
 ### addAppCreateMethodCall
 
@@ -485,8 +488,8 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                                 | Description                                                   |
+| :------- | :--------------------------------------------------------------------------------------------------- | :------------------------------------------------------------ |
 | `params` | [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) | The ABI create method application call transaction parameters |
 
 #### Returns
@@ -502,8 +505,14 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-composer.addAppCreateMethodCall({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE', method: method, args: ["arg1_value"] })
+});
+composer.addAppCreateMethodCall({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+  method: method,
+  args: ['arg1_value'],
+});
 ```
 
 **`Example`**
@@ -550,7 +559,7 @@ composer.addAppCreateMethodCall({
 
 [src/types/composer.ts:1166](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1166)
 
-___
+---
 
 ### addAppDelete
 
@@ -562,8 +571,8 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                         | Description                                   |
+| :------- | :------------------------------------------------------------------------------------------- | :-------------------------------------------- |
 | `params` | [`AppDeleteParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appdeleteparams) | The application delete transaction parameters |
 
 #### Returns
@@ -575,7 +584,7 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAppDelete({ sender: 'CREATORADDRESS' })
+composer.addAppDelete({ sender: 'CREATORADDRESS' });
 ```
 
 **`Example`**
@@ -606,7 +615,7 @@ composer.addAppDelete({
 
 [src/types/composer.ts:1065](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1065)
 
-___
+---
 
 ### addAppDeleteMethodCall
 
@@ -618,8 +627,8 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                                 | Description                                                   |
+| :------- | :--------------------------------------------------------------------------------------------------- | :------------------------------------------------------------ |
 | `params` | [`AppDeleteMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appdeletemethodcall) | The ABI delete method application call transaction parameters |
 
 #### Returns
@@ -635,8 +644,8 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-composer.addAppDeleteMethodCall({ sender: 'CREATORADDRESS', method: method, args: ["arg1_value"] })
+});
+composer.addAppDeleteMethodCall({ sender: 'CREATORADDRESS', method: method, args: ['arg1_value'] });
 ```
 
 **`Example`**
@@ -674,7 +683,7 @@ composer.addAppDeleteMethodCall({
 
 [src/types/composer.ts:1268](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1268)
 
-___
+---
 
 ### addAppUpdate
 
@@ -686,29 +695,29 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | `Object` | The application update transaction parameters |
-| `params.accountReferences?` | (`string` \| `Address`)[] | Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). |
-| `params.appId` | `bigint` | ID of the application; 0 if the application is being created. |
-| `params.appReferences?` | `bigint`[] | The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). |
-| `params.approvalProgram` | `string` \| `Uint8Array` | The program to execute for all OnCompletes other than ClearState as raw teal (string) or compiled teal (base 64 encoded as a byte array (Uint8Array)) |
-| `params.args?` | `Uint8Array`[] | Any [arguments to pass to the smart contract call](/reference/algokit-utils-ts/api/concepts/smart-contracts/languages/teal/argument-passing/#argument-passing). |
-| `params.assetReferences?` | `bigint`[] | The ID of any assets to load to the [foreign assets array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). |
-| `params.boxReferences?` | ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] | Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). Either the name identifier (which will be set against app ID of `0` i.e. the current app), or a box identifier with the name identifier and app ID. |
-| `params.clearStateProgram` | `string` \| `Uint8Array` | The program to execute for ClearState OnComplete as raw teal (string) or compiled teal (base 64 encoded as a byte array (Uint8Array)) |
-| `params.extraFee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees. |
-| `params.firstValidRound?` | `bigint` | Set the first round this transaction is valid. If left undefined, the value from algod will be used. We recommend you only set this when you intentionally want this to be some time in the future. |
-| `params.lastValidRound?` | `bigint` | The last round this transaction is valid. It is recommended to use `validityWindow` instead. |
-| `params.lease?` | `string` \| `Uint8Array` | Prevent multiple transactions with the same lease being included within the validity window. A [lease](https://dev.algorand.co/concepts/transactions/leases) enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios). |
-| `params.maxFee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods. |
-| `params.note?` | `string` \| `Uint8Array` | Note to attach to the transaction. Max of 1000 bytes. |
-| `params.onComplete?` | `UpdateApplicationOC` | The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op. |
-| `params.rekeyTo?` | `string` \| `Address` | Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying). |
-| `params.sender` | `string` \| `Address` | The address of the account sending the transaction. |
-| `params.signer?` | `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) | The function used to sign transaction(s); if not specified then an attempt will be made to find a registered signer for the given `sender` or use a default signer (if configured). |
-| `params.staticFee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction. |
-| `params.validityWindow?` | `number` \| `bigint` | How many rounds the transaction should be valid for, if not specified then the registered default validity window will be used. |
+| Name                        | Type                                                                                                                                                                                           | Description                                                                                                                                                                                                                                                                            |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`                    | `Object`                                                                                                                                                                                       | The application update transaction parameters                                                                                                                                                                                                                                          |
+| `params.accountReferences?` | (`string` \| `Address`)[]                                                                                                                                                                      | Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                       |
+| `params.appId`              | `bigint`                                                                                                                                                                                       | ID of the application; 0 if the application is being created.                                                                                                                                                                                                                          |
+| `params.appReferences?`     | `bigint`[]                                                                                                                                                                                     | The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                     |
+| `params.approvalProgram`    | `string` \| `Uint8Array`                                                                                                                                                                       | The program to execute for all OnCompletes other than ClearState as raw teal (string) or compiled teal (base 64 encoded as a byte array (Uint8Array))                                                                                                                                  |
+| `params.args?`              | `Uint8Array`[]                                                                                                                                                                                 | Any [arguments to pass to the smart contract call](/reference/algokit-utils-ts/api/concepts/smart-contracts/languages/teal/argument-passing/#argument-passing).                                                                                                                        |
+| `params.assetReferences?`   | `bigint`[]                                                                                                                                                                                     | The ID of any assets to load to the [foreign assets array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                 |
+| `params.boxReferences?`     | ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] | Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). Either the name identifier (which will be set against app ID of `0` i.e. the current app), or a box identifier with the name identifier and app ID. |
+| `params.clearStateProgram`  | `string` \| `Uint8Array`                                                                                                                                                                       | The program to execute for ClearState OnComplete as raw teal (string) or compiled teal (base 64 encoded as a byte array (Uint8Array))                                                                                                                                                  |
+| `params.extraFee?`          | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)                                                                                                                | The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.                                                                                                                                                                                  |
+| `params.firstValidRound?`   | `bigint`                                                                                                                                                                                       | Set the first round this transaction is valid. If left undefined, the value from algod will be used. We recommend you only set this when you intentionally want this to be some time in the future.                                                                                    |
+| `params.lastValidRound?`    | `bigint`                                                                                                                                                                                       | The last round this transaction is valid. It is recommended to use `validityWindow` instead.                                                                                                                                                                                           |
+| `params.lease?`             | `string` \| `Uint8Array`                                                                                                                                                                       | Prevent multiple transactions with the same lease being included within the validity window. A [lease](https://dev.algorand.co/concepts/transactions/leases) enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).                         |
+| `params.maxFee?`            | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)                                                                                                                | Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.                                                                                                                                                  |
+| `params.note?`              | `string` \| `Uint8Array`                                                                                                                                                                       | Note to attach to the transaction. Max of 1000 bytes.                                                                                                                                                                                                                                  |
+| `params.onComplete?`        | `UpdateApplicationOC`                                                                                                                                                                          | The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.                                                                                                                                                              |
+| `params.rekeyTo?`           | `string` \| `Address`                                                                                                                                                                          | Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying).                                                                   |
+| `params.sender`             | `string` \| `Address`                                                                                                                                                                          | The address of the account sending the transaction.                                                                                                                                                                                                                                    |
+| `params.signer?`            | `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/)                                                         | The function used to sign transaction(s); if not specified then an attempt will be made to find a registered signer for the given `sender` or use a default signer (if configured).                                                                                                    |
+| `params.staticFee?`         | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)                                                                                                                | The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.                                                                                                                                                 |
+| `params.validityWindow?`    | `number` \| `bigint`                                                                                                                                                                           | How many rounds the transaction should be valid for, if not specified then the registered default validity window will be used.                                                                                                                                                        |
 
 #### Returns
 
@@ -719,7 +728,11 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAppUpdate({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE' })
+composer.addAppUpdate({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+});
 ```
 
 **`Example`**
@@ -752,7 +765,7 @@ composer.addAppUpdate({
 
 [src/types/composer.ts:1026](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1026)
 
-___
+---
 
 ### addAppUpdateMethodCall
 
@@ -764,8 +777,8 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                                 | Description                                                   |
+| :------- | :--------------------------------------------------------------------------------------------------- | :------------------------------------------------------------ |
 | `params` | [`AppUpdateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdatemethodcall) | The ABI update method application call transaction parameters |
 
 #### Returns
@@ -781,8 +794,14 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-composer.addAppUpdateMethodCall({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE', method: method, args: ["arg1_value"] })
+});
+composer.addAppUpdateMethodCall({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+  method: method,
+  args: ['arg1_value'],
+});
 ```
 
 **`Example`**
@@ -822,7 +841,7 @@ composer.addAppUpdateMethodCall({
 
 [src/types/composer.ts:1218](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1218)
 
-___
+---
 
 ### addAssetConfig
 
@@ -832,8 +851,8 @@ Add an asset config transaction to the transaction group.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                             | Description                             |
+| :------- | :----------------------------------------------------------------------------------------------- | :-------------------------------------- |
 | `params` | [`AssetConfigParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetconfigparams) | The asset config transaction parameters |
 
 #### Returns
@@ -845,12 +864,12 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAssetConfig({ sender: "MANAGERADDRESS", assetId: 123456n, manager: "MANAGERADDRESS" })
+composer.addAssetConfig({ sender: 'MANAGERADDRESS', assetId: 123456n, manager: 'MANAGERADDRESS' });
 ```
 
 **`Example`**
 
-```typescript
+````typescript
 composer.addAssetConfig({
   sender: 'MANAGERADDRESS',
   assetId: 123456n,
@@ -898,11 +917,11 @@ The composer so you can chain method calls
 
 ```typescript
 composer.addAssetCreate({ sender: "CREATORADDRESS", total: 100n})
-```
+````
 
 **`Example`**
 
-```typescript
+````typescript
 composer.addAssetCreate({
   sender: 'CREATORADDRESS',
   total: 100n,
@@ -956,7 +975,7 @@ The composer so you can chain method calls
 
 ```typescript
 composer.addAssetDestroy({ sender: "MANAGERADDRESS", assetId: 123456n })
-```
+````
 
 **`Example`**
 
@@ -974,14 +993,14 @@ composer.addAssetDestroy({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
 #### Defined in
 
 [src/types/composer.ts:824](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L824)
 
-___
+---
 
 ### addAssetFreeze
 
@@ -991,8 +1010,8 @@ Add an asset freeze transaction to the transaction group.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                             | Description                             |
+| :------- | :----------------------------------------------------------------------------------------------- | :-------------------------------------- |
 | `params` | [`AssetFreezeParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetfreezeparams) | The asset freeze transaction parameters |
 
 #### Returns
@@ -1004,7 +1023,12 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAssetFreeze({ sender: "MANAGERADDRESS", assetId: 123456n, account: "ACCOUNTADDRESS", frozen: true })
+composer.addAssetFreeze({
+  sender: 'MANAGERADDRESS',
+  assetId: 123456n,
+  account: 'ACCOUNTADDRESS',
+  frozen: true,
+});
 ```
 
 **`Example`**
@@ -1025,14 +1049,14 @@ composer.addAssetFreeze({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
 #### Defined in
 
 [src/types/composer.ts:792](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L792)
 
-___
+---
 
 ### addAssetOptIn
 
@@ -1042,8 +1066,8 @@ Add an asset opt-in transaction to the transaction group.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                           | Description                             |
+| :------- | :--------------------------------------------------------------------------------------------- | :-------------------------------------- |
 | `params` | [`AssetOptInParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetoptinparams) | The asset opt-in transaction parameters |
 
 #### Returns
@@ -1055,7 +1079,7 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAssetOptIn({ sender: "SENDERADDRESS", assetId: 123456n })
+composer.addAssetOptIn({ sender: 'SENDERADDRESS', assetId: 123456n });
 ```
 
 **`Example`**
@@ -1074,14 +1098,14 @@ composer.addAssetOptIn({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
 #### Defined in
 
 [src/types/composer.ts:893](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L893)
 
-___
+---
 
 ### addAssetOptOut
 
@@ -1091,8 +1115,8 @@ Add an asset opt-out transaction to the transaction group.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                             | Description                              |
+| :------- | :----------------------------------------------------------------------------------------------- | :--------------------------------------- |
 | `params` | [`AssetOptOutParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetoptoutparams) | The asset opt-out transaction parameters |
 
 #### Returns
@@ -1104,13 +1128,18 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAssetOptOut({ sender: "SENDERADDRESS", assetId: 123456n, ensureZeroBalance: true })
+composer.addAssetOptOut({ sender: 'SENDERADDRESS', assetId: 123456n, ensureZeroBalance: true });
 ```
 
 **`Example`**
 
 ```typescript
-composer.addAssetOptOut({ sender: "SENDERADDRESS", creator: "CREATORADDRESS", assetId: 123456n, ensureZeroBalance: true })
+composer.addAssetOptOut({
+  sender: 'SENDERADDRESS',
+  creator: 'CREATORADDRESS',
+  assetId: 123456n,
+  ensureZeroBalance: true,
+});
 ```
 
 **`Example`**
@@ -1131,14 +1160,14 @@ composer.addAssetOptOut({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
 #### Defined in
 
 [src/types/composer.ts:931](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L931)
 
-___
+---
 
 ### addAssetTransfer
 
@@ -1148,8 +1177,8 @@ Add an asset transfer transaction to the transaction group.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                                 | Description                               |
+| :------- | :--------------------------------------------------------------------------------------------------- | :---------------------------------------- |
 | `params` | [`AssetTransferParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assettransferparams) | The asset transfer transaction parameters |
 
 #### Returns
@@ -1161,7 +1190,12 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-composer.addAssetTransfer({ sender: "HOLDERADDRESS", assetId: 123456n, amount: 1n, receiver: "RECEIVERADDRESS" })
+composer.addAssetTransfer({
+  sender: 'HOLDERADDRESS',
+  assetId: 123456n,
+  amount: 1n,
+  receiver: 'RECEIVERADDRESS',
+});
 ```
 
 **`Example`**
@@ -1192,7 +1226,7 @@ composer.addAssetTransfer({
 
 [src/types/composer.ts:861](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L861)
 
-___
+---
 
 ### addAtc
 
@@ -1202,8 +1236,8 @@ Add the transactions within an `AtomicTransactionComposer` to the transaction gr
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type                        | Description                                                                     |
+| :---- | :-------------------------- | :------------------------------------------------------------------------------ |
 | `atc` | `AtomicTransactionComposer` | The `AtomicTransactionComposer` to build transactions from and add to the group |
 
 #### Returns
@@ -1215,16 +1249,19 @@ The composer so you can chain method calls
 **`Example`**
 
 ```typescript
-const atc = new AtomicTransactionComposer()
-  .addPayment({ sender: 'SENDERADDRESS', receiver: 'RECEIVERADDRESS', amount: 1000n })
-composer.addAtc(atc)
+const atc = new AtomicTransactionComposer().addPayment({
+  sender: 'SENDERADDRESS',
+  receiver: 'RECEIVERADDRESS',
+  amount: 1000n,
+});
+composer.addAtc(atc);
 ```
 
 #### Defined in
 
 [src/types/composer.ts:1416](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1416)
 
-___
+---
 
 ### addOfflineKeyRegistration
 
@@ -1234,8 +1271,8 @@ Add an offline key registration transaction to the transaction group.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                                                   | Description                                         |
+| :------- | :--------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------- |
 | `params` | [`OfflineKeyRegistrationParams`](/reference/algokit-utils-ts/api/modules/types_composer/#offlinekeyregistrationparams) | The offline key registration transaction parameters |
 
 #### Returns
@@ -1249,7 +1286,7 @@ The composer so you can chain method calls
 ```typescript
 composer.addOfflineKeyRegistration({
   sender: 'SENDERADDRESS',
-})
+});
 ```
 
 **`Example`**
@@ -1269,14 +1306,14 @@ composer.addOfflineKeyRegistration({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
 #### Defined in
 
 [src/types/composer.ts:1399](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1399)
 
-___
+---
 
 ### addOnlineKeyRegistration
 
@@ -1286,8 +1323,8 @@ Add an online key registration transaction to the transaction group.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                                                 | Description                                        |
+| :------- | :------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------- |
 | `params` | [`OnlineKeyRegistrationParams`](/reference/algokit-utils-ts/api/modules/types_composer/#onlinekeyregistrationparams) | The online key registration transaction parameters |
 
 #### Returns
@@ -1301,13 +1338,13 @@ The composer so you can chain method calls
 ```typescript
 composer.addOnlineKeyRegistration({
   sender: 'SENDERADDRESS',
-  voteKey: Uint8Array.from(Buffer.from("voteKeyBase64", 'base64')),
-  selectionKey: Uint8Array.from(Buffer.from("selectionKeyBase64", 'base64')),
-  stateProofKey: Uint8Array.from(Buffer.from("stateProofKeyBase64", 'base64')),
+  voteKey: Uint8Array.from(Buffer.from('voteKeyBase64', 'base64')),
+  selectionKey: Uint8Array.from(Buffer.from('selectionKeyBase64', 'base64')),
+  stateProofKey: Uint8Array.from(Buffer.from('stateProofKeyBase64', 'base64')),
   voteFirst: 1n,
   voteLast: 1000n,
   voteKeyDilution: 1n,
-})
+});
 ```
 
 **`Example`**
@@ -1315,9 +1352,9 @@ composer.addOnlineKeyRegistration({
 ```typescript
 composer.addOnlineKeyRegistration({
   sender: 'SENDERADDRESS',
-  voteKey: Uint8Array.from(Buffer.from("voteKeyBase64", 'base64')),
-  selectionKey: Uint8Array.from(Buffer.from("selectionKeyBase64", 'base64')),
-  stateProofKey: Uint8Array.from(Buffer.from("stateProofKeyBase64", 'base64')),
+  voteKey: Uint8Array.from(Buffer.from('voteKeyBase64', 'base64')),
+  selectionKey: Uint8Array.from(Buffer.from('selectionKeyBase64', 'base64')),
+  stateProofKey: Uint8Array.from(Buffer.from('stateProofKeyBase64', 'base64')),
   voteFirst: 1n,
   voteLast: 1000n,
   voteKeyDilution: 1n,
@@ -1333,14 +1370,14 @@ composer.addOnlineKeyRegistration({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
 #### Defined in
 
 [src/types/composer.ts:1364](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1364)
 
-___
+---
 
 ### addPayment
 
@@ -1350,8 +1387,8 @@ Add a payment transaction to the transaction group.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                     | Description                        |
+| :------- | :--------------------------------------------------------------------------------------- | :--------------------------------- |
 | `params` | [`PaymentParams`](/reference/algokit-utils-ts/api/modules/types_composer/#paymentparams) | The payment transaction parameters |
 
 #### Returns
@@ -1367,12 +1404,12 @@ composer.addPayment({
   sender: 'SENDERADDRESS',
   receiver: 'RECEIVERADDRESS',
   amount: (4).algo(),
-})
+});
 ```
 
 **`Example`**
 
-```typescript
+````typescript
 composer.addPayment({
   amount: (4).algo(),
   receiver: 'RECEIVERADDRESS',
@@ -1421,17 +1458,17 @@ The composer so you can chain method calls
 
 ```typescript
 composer.addTransaction(txn)
-```
+````
 
 #### Defined in
 
 [src/types/composer.ts:639](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L639)
 
-___
+---
 
 ### build
 
-▸ **build**(): `Promise`\<\{ `atc`: `AtomicTransactionComposer` ; `methodCalls`: `any` ; `transactions`: `TransactionWithSigner`[]  }\>
+▸ **build**(): `Promise`\<\{ `atc`: `AtomicTransactionComposer` ; `methodCalls`: `any` ; `transactions`: `TransactionWithSigner`[] }\>
 
 Compose all of the transactions in a single atomic transaction group and an atomic transaction composer.
 
@@ -1442,21 +1479,21 @@ You can safely call this method multiple times to get the same result.
 
 #### Returns
 
-`Promise`\<\{ `atc`: `AtomicTransactionComposer` ; `methodCalls`: `any` ; `transactions`: `TransactionWithSigner`[]  }\>
+`Promise`\<\{ `atc`: `AtomicTransactionComposer` ; `methodCalls`: `any` ; `transactions`: `TransactionWithSigner`[] }\>
 
 The built atomic transaction composer, the transactions and any corresponding method calls
 
 **`Example`**
 
 ```typescript
-const { atc, transactions, methodCalls } = await composer.build()
+const { atc, transactions, methodCalls } = await composer.build();
 ```
 
 #### Defined in
 
 [src/types/composer.ts:1946](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1946)
 
-___
+---
 
 ### buildAppCall
 
@@ -1464,10 +1501,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `validityWindow?`: `number` \| `bigint`  } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `validityWindow?`: `number` \| `bigint`  } \| [`AppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallparams) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| :---------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`          | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `validityWindow?`: `number` \| `bigint` } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `validityWindow?`: `number` \| `bigint` } \| [`AppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallparams) |
+| `suggestedParams` | `SuggestedParams`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 #### Returns
 
@@ -1477,7 +1514,7 @@ ___
 
 [src/types/composer.ts:1755](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1755)
 
-___
+---
 
 ### buildAssetConfig
 
@@ -1485,10 +1522,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | [`AssetConfigParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetconfigparams) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                                             |
+| :---------------- | :----------------------------------------------------------------------------------------------- |
+| `params`          | [`AssetConfigParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetconfigparams) |
+| `suggestedParams` | `SuggestedParams`                                                                                |
 
 #### Returns
 
@@ -1498,7 +1535,7 @@ ___
 
 [src/types/composer.ts:1712](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1712)
 
-___
+---
 
 ### buildAssetCreate
 
@@ -1506,10 +1543,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | [`AssetCreateParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetcreateparams) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                                             |
+| :---------------- | :----------------------------------------------------------------------------------------------- |
+| `params`          | [`AssetCreateParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetcreateparams) |
+| `suggestedParams` | `SuggestedParams`                                                                                |
 
 #### Returns
 
@@ -1519,7 +1556,7 @@ ___
 
 [src/types/composer.ts:1694](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1694)
 
-___
+---
 
 ### buildAssetDestroy
 
@@ -1527,10 +1564,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | [`AssetDestroyParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetdestroyparams) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                                               |
+| :---------------- | :------------------------------------------------------------------------------------------------- |
+| `params`          | [`AssetDestroyParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetdestroyparams) |
+| `suggestedParams` | `SuggestedParams`                                                                                  |
 
 #### Returns
 
@@ -1540,7 +1577,7 @@ ___
 
 [src/types/composer.ts:1725](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1725)
 
-___
+---
 
 ### buildAssetFreeze
 
@@ -1548,10 +1585,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | [`AssetFreezeParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetfreezeparams) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                                             |
+| :---------------- | :----------------------------------------------------------------------------------------------- |
+| `params`          | [`AssetFreezeParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetfreezeparams) |
+| `suggestedParams` | `SuggestedParams`                                                                                |
 
 #### Returns
 
@@ -1561,7 +1598,7 @@ ___
 
 [src/types/composer.ts:1733](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1733)
 
-___
+---
 
 ### buildAssetTransfer
 
@@ -1569,10 +1606,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | [`AssetTransferParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assettransferparams) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                                                 |
+| :---------------- | :--------------------------------------------------------------------------------------------------- |
+| `params`          | [`AssetTransferParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assettransferparams) |
+| `suggestedParams` | `SuggestedParams`                                                                                    |
 
 #### Returns
 
@@ -1582,7 +1619,7 @@ ___
 
 [src/types/composer.ts:1743](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1743)
 
-___
+---
 
 ### buildAtc
 
@@ -1592,8 +1629,8 @@ Build an ATC and return transactions ready to be incorporated into a broader set
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                        |
+| :---- | :-------------------------- |
 | `atc` | `AtomicTransactionComposer` |
 
 #### Returns
@@ -1604,7 +1641,7 @@ Build an ATC and return transactions ready to be incorporated into a broader set
 
 [src/types/composer.ts:1422](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1422)
 
-___
+---
 
 ### buildKeyReg
 
@@ -1612,10 +1649,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | [`OnlineKeyRegistrationParams`](/reference/algokit-utils-ts/api/modules/types_composer/#onlinekeyregistrationparams) \| [`OfflineKeyRegistrationParams`](/reference/algokit-utils-ts/api/modules/types_composer/#offlinekeyregistrationparams) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                                                                                                                                                                                           |
+| :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`          | [`OnlineKeyRegistrationParams`](/reference/algokit-utils-ts/api/modules/types_composer/#onlinekeyregistrationparams) \| [`OfflineKeyRegistrationParams`](/reference/algokit-utils-ts/api/modules/types_composer/#offlinekeyregistrationparams) |
+| `suggestedParams` | `SuggestedParams`                                                                                                                                                                                                                              |
 
 #### Returns
 
@@ -1625,7 +1662,7 @@ ___
 
 [src/types/composer.ts:1806](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1806)
 
-___
+---
 
 ### buildMethodCall
 
@@ -1635,11 +1672,11 @@ Builds an ABI method call transaction and any other associated transactions repr
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) \| [`AppUpdateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdatemethodcall) \| [`AppCallMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallmethodcall) | - |
-| `suggestedParams` | `SuggestedParams` | - |
-| `includeSigner` | `boolean` | Whether to include the actual signer for the transactions. If you are just building transactions without signers yet then set this to `false`. |
+| Name              | Type                                                                                                                                                                                                                                                                                                             | Description                                                                                                                                    |
+| :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`          | [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) \| [`AppUpdateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdatemethodcall) \| [`AppCallMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallmethodcall) | -                                                                                                                                              |
+| `suggestedParams` | `SuggestedParams`                                                                                                                                                                                                                                                                                                | -                                                                                                                                              |
+| `includeSigner`   | `boolean`                                                                                                                                                                                                                                                                                                        | Whether to include the actual signer for the transactions. If you are just building transactions without signers yet then set this to `false`. |
 
 #### Returns
 
@@ -1649,7 +1686,7 @@ Builds an ABI method call transaction and any other associated transactions repr
 
 [src/types/composer.ts:1502](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1502)
 
-___
+---
 
 ### buildPayment
 
@@ -1657,10 +1694,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | [`PaymentParams`](/reference/algokit-utils-ts/api/modules/types_composer/#paymentparams) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                                     |
+| :---------------- | :--------------------------------------------------------------------------------------- |
+| `params`          | [`PaymentParams`](/reference/algokit-utils-ts/api/modules/types_composer/#paymentparams) |
+| `suggestedParams` | `SuggestedParams`                                                                        |
 
 #### Returns
 
@@ -1670,7 +1707,7 @@ ___
 
 [src/types/composer.ts:1684](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1684)
 
-___
+---
 
 ### buildTransactions
 
@@ -1687,14 +1724,14 @@ The array of built transactions and any corresponding method calls
 **`Example`**
 
 ```typescript
-const { transactions, methodCalls, signers } = await composer.buildTransactions()
+const { transactions, methodCalls, signers } = await composer.buildTransactions();
 ```
 
 #### Defined in
 
 [src/types/composer.ts:1888](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1888)
 
-___
+---
 
 ### buildTxn
 
@@ -1704,10 +1741,10 @@ Builds all transaction types apart from `txnWithSigner`, `atc` and `methodCall` 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `txn` | [`Txn`](/reference/algokit-utils-ts/api/modules/types_composer/#txn) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                 |
+| :---------------- | :------------------------------------------------------------------- |
+| `txn`             | [`Txn`](/reference/algokit-utils-ts/api/modules/types_composer/#txn) |
+| `suggestedParams` | `SuggestedParams`                                                    |
 
 #### Returns
 
@@ -1717,7 +1754,7 @@ Builds all transaction types apart from `txnWithSigner`, `atc` and `methodCall` 
 
 [src/types/composer.ts:1829](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1829)
 
-___
+---
 
 ### buildTxnWithSigner
 
@@ -1725,10 +1762,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `txn` | [`Txn`](/reference/algokit-utils-ts/api/modules/types_composer/#txn) |
-| `suggestedParams` | `SuggestedParams` |
+| Name              | Type                                                                 |
+| :---------------- | :------------------------------------------------------------------- |
+| `txn`             | [`Txn`](/reference/algokit-utils-ts/api/modules/types_composer/#txn) |
+| `suggestedParams` | `SuggestedParams`                                                    |
 
 #### Returns
 
@@ -1738,7 +1775,7 @@ ___
 
 [src/types/composer.ts:1856](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1856)
 
-___
+---
 
 ### commonTxnBuildStep
 
@@ -1746,17 +1783,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                              |
+| :-------- | :-------------------------------- |
 | `TParams` | extends `CommonTransactionParams` |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `buildTxn` | (`params`: `TParams`) => `Transaction` |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) |
-| `txnParams` | `TParams` |
+| Name        | Type                                                                                                         |
+| :---------- | :----------------------------------------------------------------------------------------------------------- |
+| `buildTxn`  | (`params`: `TParams`) => `Transaction`                                                                       |
+| `params`    | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) |
+| `txnParams` | `TParams`                                                                                                    |
 
 #### Returns
 
@@ -1766,7 +1803,7 @@ ___
 
 [src/types/composer.ts:1444](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1444)
 
-___
+---
 
 ### count
 
@@ -1784,7 +1821,7 @@ The number of transactions currently added to this composer
 
 [src/types/composer.ts:1929](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1929)
 
-___
+---
 
 ### execute
 
@@ -1792,8 +1829,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                    | Description                              |
+| :-------- | :-------------------------------------------------------------------------------------- | :--------------------------------------- |
 | `params?` | [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters to control execution with |
 
 #### Returns
@@ -1814,32 +1851,32 @@ An alias for `composer.send(params)`.
 
 [src/types/composer.ts:2044](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L2044)
 
-___
+---
 
 ### rebuild
 
-▸ **rebuild**(): `Promise`\<\{ `atc`: `AtomicTransactionComposer` ; `methodCalls`: `any` ; `transactions`: `TransactionWithSigner`[]  }\>
+▸ **rebuild**(): `Promise`\<\{ `atc`: `AtomicTransactionComposer` ; `methodCalls`: `any` ; `transactions`: `TransactionWithSigner`[] }\>
 
 Rebuild the group, discarding any previously built transactions.
 This will potentially cause new signers and suggested params to be used if the callbacks return a new value compared to the first build.
 
 #### Returns
 
-`Promise`\<\{ `atc`: `AtomicTransactionComposer` ; `methodCalls`: `any` ; `transactions`: `TransactionWithSigner`[]  }\>
+`Promise`\<\{ `atc`: `AtomicTransactionComposer` ; `methodCalls`: `any` ; `transactions`: `TransactionWithSigner`[] }\>
 
 The newly built atomic transaction composer and the transactions
 
 **`Example`**
 
 ```typescript
-const { atc, transactions, methodCalls } = await composer.rebuild()
+const { atc, transactions, methodCalls } = await composer.rebuild();
 ```
 
 #### Defined in
 
 [src/types/composer.ts:1985](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1985)
 
-___
+---
 
 ### registerErrorTransformer
 
@@ -1849,8 +1886,8 @@ Register a function that will be used to transform an error caught when simulati
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name          | Type                                                                                           |
+| :------------ | :--------------------------------------------------------------------------------------------- |
 | `transformer` | [`ErrorTransformer`](/reference/algokit-utils-ts/api/modules/types_composer/#errortransformer) |
 
 #### Returns
@@ -1863,7 +1900,7 @@ The composer so you can chain method calls
 
 [src/types/composer.ts:624](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L624)
 
-___
+---
 
 ### send
 
@@ -1873,8 +1910,8 @@ Compose the atomic transaction group and send it to the network.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                    | Description                              |
+| :-------- | :-------------------------------------------------------------------------------------- | :--------------------------------------- |
 | `params?` | [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters to control execution with |
 
 #### Returns
@@ -1886,56 +1923,56 @@ The execution result
 **`Example`**
 
 ```typescript
-const result = await composer.send()
+const result = await composer.send();
 ```
 
 #### Defined in
 
 [src/types/composer.ts:1999](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L1999)
 
-___
+---
 
 ### simulate
 
-▸ **simulate**(): `Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse`  }\>
+▸ **simulate**(): `Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse` }\>
 
 Compose the atomic transaction group and simulate sending it to the network
 
 #### Returns
 
-`Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse`  }\>
+`Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse` }\>
 
 The simulation result
 
 **`Example`**
 
 ```typescript
-const result = await composer.simulate()
+const result = await composer.simulate();
 ```
 
 #### Defined in
 
 [src/types/composer.ts:2056](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L2056)
 
-▸ **simulate**(`options`): `Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse`  }\>
+▸ **simulate**(`options`): `Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse` }\>
 
 Compose the atomic transaction group and simulate sending it to the network
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | `Object` | - |
-| `options.allowMoreLogging?` | `boolean` | - |
-| `options.allowUnnamedResources?` | `boolean` | - |
-| `options.execTraceConfig?` | `SimulateTraceConfig` | - |
-| `options.extraOpcodeBudget?` | `number` \| `bigint` | - |
-| `options.round?` | `number` \| `bigint` | - |
-| `options.skipSignatures` | `boolean` | Whether or not to skip signatures for all built transactions and use an empty signer instead. This will set `fixSigners` and `allowEmptySignatures` when sending the request to the algod API. |
+| Name                             | Type                  | Description                                                                                                                                                                                    |
+| :------------------------------- | :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options`                        | `Object`              | -                                                                                                                                                                                              |
+| `options.allowMoreLogging?`      | `boolean`             | -                                                                                                                                                                                              |
+| `options.allowUnnamedResources?` | `boolean`             | -                                                                                                                                                                                              |
+| `options.execTraceConfig?`       | `SimulateTraceConfig` | -                                                                                                                                                                                              |
+| `options.extraOpcodeBudget?`     | `number` \| `bigint`  | -                                                                                                                                                                                              |
+| `options.round?`                 | `number` \| `bigint`  | -                                                                                                                                                                                              |
+| `options.skipSignatures`         | `boolean`             | Whether or not to skip signatures for all built transactions and use an empty signer instead. This will set `fixSigners` and `allowEmptySignatures` when sending the request to the algod API. |
 
 #### Returns
 
-`Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse`  }\>
+`Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse` }\>
 
 The simulation result
 
@@ -1944,33 +1981,33 @@ The simulation result
 ```typescript
 const result = await composer.simulate({
   skipSignatures: true,
-})
+});
 ```
 
 #### Defined in
 
 [src/types/composer.ts:2067](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L2067)
 
-▸ **simulate**(`options`): `Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse`  }\>
+▸ **simulate**(`options`): `Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse` }\>
 
 Compose the atomic transaction group and simulate sending it to the network
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.allowEmptySignatures?` | `boolean` |
-| `options.allowMoreLogging?` | `boolean` |
-| `options.allowUnnamedResources?` | `boolean` |
-| `options.execTraceConfig?` | `SimulateTraceConfig` |
-| `options.extraOpcodeBudget?` | `number` \| `bigint` |
-| `options.fixSigners?` | `boolean` |
-| `options.round?` | `number` \| `bigint` |
+| Name                             | Type                  |
+| :------------------------------- | :-------------------- |
+| `options`                        | `Object`              |
+| `options.allowEmptySignatures?`  | `boolean`             |
+| `options.allowMoreLogging?`      | `boolean`             |
+| `options.allowUnnamedResources?` | `boolean`             |
+| `options.execTraceConfig?`       | `SimulateTraceConfig` |
+| `options.extraOpcodeBudget?`     | `number` \| `bigint`  |
+| `options.fixSigners?`            | `boolean`             |
+| `options.round?`                 | `number` \| `bigint`  |
 
 #### Returns
 
-`Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse`  }\>
+`Promise`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & \{ `simulateResponse`: `SimulateResponse` }\>
 
 The simulation result
 
@@ -1979,14 +2016,14 @@ The simulation result
 ```typescript
 const result = await composer.simulate({
   extraOpcodeBudget: 1000,
-})
+});
 ```
 
 #### Defined in
 
 [src/types/composer.ts:2080](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L2080)
 
-___
+---
 
 ### transformError
 
@@ -1994,8 +2031,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name            | Type      |
+| :-------------- | :-------- |
 | `originalError` | `unknown` |
 
 #### Returns
@@ -2006,7 +2043,7 @@ ___
 
 [src/types/composer.ts:581](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L581)
 
-___
+---
 
 ### arc2Note
 
@@ -2018,8 +2055,8 @@ https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name   | Type                                                                                                    | Description                     |
+| :----- | :------------------------------------------------------------------------------------------------------ | :------------------------------ |
 | `note` | [`Arc2TransactionNote`](/reference/algokit-utils-ts/api/modules/types_transaction/#arc2transactionnote) | The ARC-2 transaction note data |
 
 #### Returns

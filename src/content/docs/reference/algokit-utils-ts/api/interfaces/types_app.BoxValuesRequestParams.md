@@ -2,9 +2,8 @@
 title: BoxValuesRequestParams
 slug: reference/algokit-utils-ts/api/interfaces/types_appboxvaluesrequestparams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / BoxValuesRequestParams
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).BoxValuesRequestParams
 
@@ -33,7 +32,7 @@ The ID of the app return box names for
 
 [src/types/app.ts:413](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L413)
 
-___
+---
 
 ### boxNames
 
@@ -45,7 +44,7 @@ The names of the boxes to return either as a string, binary array or BoxName`
 
 [src/types/app.ts:415](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L415)
 
-___
+---
 
 ### type
 

@@ -2,9 +2,8 @@
 title: CompiledTeal
 slug: reference/algokit-utils-ts/api/interfaces/types_appcompiledteal
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / CompiledTeal
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).CompiledTeal
 
@@ -32,7 +31,7 @@ The compiled code
 
 [src/types/app.ts:217](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L217)
 
-___
+---
 
 ### compiledBase64ToBytes
 
@@ -44,7 +43,7 @@ The base64 encoded code as a byte array
 
 [src/types/app.ts:221](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L221)
 
-___
+---
 
 ### compiledHash
 
@@ -56,7 +55,7 @@ The hash returned by the compiler
 
 [src/types/app.ts:219](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L219)
 
-___
+---
 
 ### sourceMap
 
@@ -68,7 +67,7 @@ Source map from the compilation
 
 [src/types/app.ts:223](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L223)
 
-___
+---
 
 ### teal
 

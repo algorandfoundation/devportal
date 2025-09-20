@@ -1,12 +1,13 @@
 ---
 title: PcOffsetMethod
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.PcOffsetMethod
+
+#### _class_ algokit_utils.applications.app_spec.arc56.PcOffsetMethod
 
 Bases: `str`, `enum.Enum`
 
 PC offset method types.
 
-#### CBLOCKS *= 'cblocks'*
+#### CBLOCKS _= 'cblocks'_
 
-#### NONE *= 'none'*
+#### NONE _= 'none'_

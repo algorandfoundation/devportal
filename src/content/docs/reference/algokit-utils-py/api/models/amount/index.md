@@ -1,10 +1,11 @@
 ---
 title: amount
 ---
+
 ## Classes
 
-| [`AlgoAmount`](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount)   | Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbers.   |
-|------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| [`AlgoAmount`](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbers. |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 
 ## Module Contents
 
@@ -12,18 +13,18 @@ title: amount
 
 Create an AlgoAmount object representing the given number of Algo.
 
-* **Parameters:**
+- **Parameters:**
   **algo** – The number of Algo to create an AlgoAmount object for.
-* **Returns:**
+- **Returns:**
   An AlgoAmount object representing the given number of Algo.
 
 ### algokit_utils.models.amount.micro_algo(micro_algo: int) → [AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount)
 
 Create an AlgoAmount object representing the given number of µAlgo.
 
-* **Parameters:**
+- **Parameters:**
   **micro_algo** – The number of µAlgo to create an AlgoAmount object for.
-* **Returns:**
+- **Returns:**
   An AlgoAmount object representing the given number of µAlgo.
 
 ### algokit_utils.models.amount.ALGORAND_MIN_TX_FEE
@@ -32,7 +33,7 @@ Create an AlgoAmount object representing the given number of µAlgo.
 
 Calculate the total transaction fees for a given number of transactions.
 
-* **Parameters:**
+- **Parameters:**
   **number_of_transactions** – The number of transactions to calculate the fees for.
-* **Returns:**
+- **Returns:**
   The total transaction fees.

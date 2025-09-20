@@ -2,9 +2,8 @@
 title: AppCallTransactionResultOfType\<T\>
 slug: reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / AppCallTransactionResultOfType
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).AppCallTransactionResultOfType
 
@@ -13,8 +12,8 @@ The result of preparing and/or sending multiple transactions
 ## Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 ## Hierarchy
 
@@ -50,7 +49,7 @@ The response if the transaction was sent and waited for
 
 [src/types/transaction.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L57)
 
-___
+---
 
 ### confirmations
 
@@ -67,7 +66,7 @@ the index of the confirmation will match the index of the underlying transaction
 
 [src/types/transaction.ts:67](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L67)
 
-___
+---
 
 ### return
 
@@ -79,7 +78,7 @@ If an ABI method was called the processed return value
 
 [src/types/app.ts:228](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L228)
 
-___
+---
 
 ### transaction
 
@@ -95,7 +94,7 @@ The transaction
 
 [src/types/transaction.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L55)
 
-___
+---
 
 ### transactions
 

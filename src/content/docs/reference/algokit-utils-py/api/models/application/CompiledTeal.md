@@ -1,24 +1,25 @@
 ---
 title: CompiledTeal
 ---
-#### *class* algokit_utils.models.application.CompiledTeal
+
+#### _class_ algokit_utils.models.application.CompiledTeal
 
 The compiled teal code
 
-#### teal *: str*
+#### teal _: str_
 
 The teal code
 
-#### compiled *: str*
+#### compiled _: str_
 
 The compiled teal code
 
-#### compiled_hash *: str*
+#### compiled*hash *: str\_
 
 The compiled hash
 
-#### compiled_base64_to_bytes *: bytes*
+#### compiled*base64_to_bytes *: bytes\_
 
 The compiled base64 to bytes
 
-#### source_map *: algosdk.source_map.SourceMap | None*
+#### source*map *: algosdk.source*map.SourceMap | None*

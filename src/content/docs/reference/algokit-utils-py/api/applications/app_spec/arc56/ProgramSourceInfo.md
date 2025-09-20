@@ -1,16 +1,17 @@
 ---
 title: ProgramSourceInfo
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.ProgramSourceInfo
+
+#### _class_ algokit_utils.applications.app_spec.arc56.ProgramSourceInfo
 
 Program source information.
 
-#### pc_offset_method *: [PcOffsetMethod](/reference/algokit-utils-py/api/applications/app_spec/arc56/pcoffsetmethod/#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)*
+#### pc*offset_method *: [PcOffsetMethod](/reference/algokit-utils-py/api/applications/app_spec/arc56/pcoffsetmethod/#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)\_
 
 The PC offset method
 
-#### source_info *: list[[SourceInfo](/reference/algokit-utils-py/api/applications/app_spec/arc56/sourceinfo/#algokit_utils.applications.app_spec.arc56.SourceInfo)]*
+#### source*info *: list[[SourceInfo](/reference/algokit-utils-py/api/applications/app_spec/arc56/sourceinfo/#algokit_utils.applications.app_spec.arc56.SourceInfo)]\_
 
 The list of source info entries
 
-#### *static* from_dict(data: dict[str, Any]) → [ProgramSourceInfo](#algokit_utils.applications.app_spec.arc56.ProgramSourceInfo)
+#### _static_ from_dict(data: dict[str, Any]) → [ProgramSourceInfo](#algokit_utils.applications.app_spec.arc56.ProgramSourceInfo)

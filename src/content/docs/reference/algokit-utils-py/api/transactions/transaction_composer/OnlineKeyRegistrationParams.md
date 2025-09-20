@@ -1,32 +1,33 @@
 ---
 title: OnlineKeyRegistrationParams
 ---
-#### *class* algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams
+
+#### _class_ algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams
 
 Bases: `_CommonTxnParams`
 
 Parameters for online key registration.
 
-#### vote_key *: str*
+#### vote*key *: str\_
 
 The root participation public key
 
-#### selection_key *: str*
+#### selection*key *: str\_
 
 The VRF public key
 
-#### vote_first *: int*
+#### vote*first *: int\_
 
 The first round that the participation key is valid
 
-#### vote_last *: int*
+#### vote*last *: int\_
 
 The last round that the participation key is valid
 
-#### vote_key_dilution *: int*
+#### vote*key_dilution *: int\_
 
 The dilution for the 2-level participation key
 
-#### state_proof_key *: bytes | None* *= None*
+#### state*proof_key *: bytes | None\_ _= None_
 
 The 64 byte state proof public key commitment, defaults to None

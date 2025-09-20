@@ -2,9 +2,8 @@
 title: EnsureFundedReturnType
 slug: reference/algokit-utils-ts/api/interfaces/types_transferensurefundedreturntype
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/transfer](/reference/algokit-utils-ts/api/modules/types_transfer/) / EnsureFundedReturnType
-
-
 
 [types/transfer](/reference/algokit-utils-ts/api/modules/types_transfer/).EnsureFundedReturnType
 
@@ -29,7 +28,7 @@ The response if the transaction was sent and waited for
 
 [src/types/transfer.ts:80](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L80)
 
-___
+---
 
 ### transactionId
 

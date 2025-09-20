@@ -2,9 +2,8 @@
 title: types/testing
 slug: reference/algokit-utils-ts/api/modules/types_testing
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/testing
-
-
 
 ## Table of contents
 

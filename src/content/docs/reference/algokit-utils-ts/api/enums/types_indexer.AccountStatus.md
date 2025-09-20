@@ -2,9 +2,8 @@
 title: AccountStatus
 slug: reference/algokit-utils-ts/api/enums/types_indexeraccountstatus
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/indexer](/reference/algokit-utils-ts/api/modules/types_indexer/) / AccountStatus
-
-
 
 [types/indexer](/reference/algokit-utils-ts/api/modules/types_indexer/).AccountStatus
 
@@ -22,7 +21,7 @@ Delegation status of the account
 
 ### NotParticipating
 
-• **NotParticipating** = ``"NotParticipating"``
+• **NotParticipating** = `"NotParticipating"`
 
 Indicates that the associated account is neither a delegator nor a delegate
 
@@ -30,11 +29,11 @@ Indicates that the associated account is neither a delegator nor a delegate
 
 [src/types/indexer.ts:195](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L195)
 
-___
+---
 
 ### Offline
 
-• **Offline** = ``"Offline"``
+• **Offline** = `"Offline"`
 
 Indicates that the associated account is delegated
 
@@ -42,11 +41,11 @@ Indicates that the associated account is delegated
 
 [src/types/indexer.ts:191](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L191)
 
-___
+---
 
 ### Online
 
-• **Online** = ``"Online"``
+• **Online** = `"Online"`
 
 Indicates that the associated account used as part of the delegation pool
 

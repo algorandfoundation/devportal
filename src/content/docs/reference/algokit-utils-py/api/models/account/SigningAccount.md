@@ -1,37 +1,38 @@
 ---
 title: SigningAccount
 ---
-#### *class* algokit_utils.models.account.SigningAccount
+
+#### _class_ algokit_utils.models.account.SigningAccount
 
 Holds the private key and address for an account.
 
 Provides access to the account’s private key, address, public key and transaction signer.
 
-#### private_key *: str*
+#### private*key *: str\_
 
 Base64 encoded private key
 
-#### address *: str* *= ''*
+#### address _: str_ _= ''_
 
 Address for this account
 
-#### *property* public_key *: bytes*
+#### _property_ public*key *: bytes\_
 
 The public key for this account.
 
-* **Returns:**
+- **Returns:**
   The public key as bytes
 
-#### *property* signer *: algosdk.atomic_transaction_composer.AccountTransactionSigner*
+#### _property_ signer _: algosdk.atomic_transaction_composer.AccountTransactionSigner_
 
 Get an AccountTransactionSigner for this account.
 
-* **Returns:**
+- **Returns:**
   A transaction signer for this account
 
-#### *static* new_account() → [SigningAccount](#algokit_utils.models.account.SigningAccount)
+#### _static_ new_account() → [SigningAccount](#algokit_utils.models.account.SigningAccount)
 
 Create a new random account.
 
-* **Returns:**
+- **Returns:**
   A new Account instance

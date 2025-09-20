@@ -2,9 +2,8 @@
 title: AtomicTransactionComposerToSend
 slug: reference/algokit-utils-ts/api/interfaces/types_transactionatomictransactioncomposertosend
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/) / AtomicTransactionComposerToSend
-
-
 
 [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/).AtomicTransactionComposerToSend
 
@@ -41,7 +40,7 @@ This additional context is used and must be supplied when coverAppCallInnerTrans
 
 [src/types/transaction.ts:167](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L167)
 
-___
+---
 
 ### atc
 
@@ -53,7 +52,7 @@ The `AtomicTransactionComposer` with transactions loaded to send
 
 [src/types/transaction.ts:157](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L157)
 
-___
+---
 
 ### coverAppCallInnerTransactionFees
 
@@ -69,7 +68,7 @@ Whether to use simulate to automatically calculate required app call inner trans
 
 [src/types/transaction.ts:142](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L142)
 
-___
+---
 
 ### maxRoundsToWaitForConfirmation
 
@@ -85,7 +84,7 @@ The number of rounds to wait for confirmation. By default until the latest lastV
 
 [src/types/transaction.ts:136](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L136)
 
-___
+---
 
 ### populateAppCallResources
 
@@ -101,22 +100,22 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 [src/types/transaction.ts:140](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L140)
 
-___
+---
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/), ``"fee"`` \| ``"maxFee"`` \| ``"skipSending"`` \| ``"atc"``\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
 
 **`Deprecated`**
 
 - set the parameters at the top level instead
-Any parameters to control the semantics of the send to the network
+  Any parameters to control the semantics of the send to the network
 
 #### Defined in
 
 [src/types/transaction.ts:161](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L161)
 
-___
+---
 
 ### suppressLog
 

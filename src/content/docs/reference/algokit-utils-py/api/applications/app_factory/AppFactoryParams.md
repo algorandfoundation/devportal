@@ -1,18 +1,19 @@
 ---
 title: AppFactoryParams
 ---
-#### *class* algokit_utils.applications.app_factory.AppFactoryParams
 
-#### algorand *: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient)*
+#### _class_ algokit_utils.applications.app_factory.AppFactoryParams
 
-#### app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str*
+#### algorand _: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient)_
 
-#### app_name *: str | None* *= None*
+#### app*spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit*utils.\_legacy_v2.application_specification.ApplicationSpecification | str*
 
-#### default_sender *: str | None* *= None*
+#### app*name *: str | None\_ _= None_
 
-#### default_signer *: algosdk.atomic_transaction_composer.TransactionSigner | None* *= None*
+#### default*sender *: str | None\_ _= None_
 
-#### version *: str | None* *= None*
+#### default*signer *: algosdk.atomic*transaction_composer.TransactionSigner | None* _= None_
 
-#### compilation_params *: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_client/appclientcompilationparams/#algokit_utils.applications.app_client.AppClientCompilationParams) | None* *= None*
+#### version _: str | None_ _= None_
+
+#### compilation*params *: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/app_client/appclientcompilationparams/#algokit_utils.applications.app_client.AppClientCompilationParams) | None\_ _= None_

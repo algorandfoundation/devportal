@@ -1,24 +1,25 @@
 ---
 title: OnUpdate
 ---
-#### *class* algokit_utils.applications.enums.OnUpdate(\*args, \*\*kwds)
+
+#### _class_ algokit_utils.applications.enums.OnUpdate(\*args, \*\*kwds)
 
 Bases: `enum.Enum`
 
 Action to take if an Application has been updated
 
-#### Fail *= 0*
+#### Fail _= 0_
 
 Fail the deployment
 
-#### UpdateApp *= 1*
+#### UpdateApp _= 1_
 
 Update the Application with the new approval and clear programs
 
-#### ReplaceApp *= 2*
+#### ReplaceApp _= 2_
 
 Create a new Application and delete the old Application in a single transaction
 
-#### AppendApp *= 3*
+#### AppendApp _= 3_
 
 Create a new application

@@ -2,9 +2,8 @@
 title: TealSourcesDebugEventData
 slug: reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcesdebugeventdata
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/debugging](/reference/algokit-utils-ts/api/modules/types_debugging/) / TealSourcesDebugEventData
-
-
 
 [types/debugging](/reference/algokit-utils-ts/api/modules/types_debugging/).TealSourcesDebugEventData
 

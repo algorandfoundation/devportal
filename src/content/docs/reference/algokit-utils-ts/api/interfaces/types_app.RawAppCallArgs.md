@@ -2,9 +2,8 @@
 title: RawAppCallArgs
 slug: reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / RawAppCallArgs
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).RawAppCallArgs
 
@@ -45,7 +44,7 @@ The address of any accounts to load in
 
 [src/types/app.ts:79](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L79)
 
-___
+---
 
 ### appArgs
 
@@ -57,7 +56,7 @@ Any application arguments to pass through
 
 [src/types/app.ts:96](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L96)
 
-___
+---
 
 ### apps
 
@@ -73,7 +72,7 @@ IDs of any apps to load into the foreignApps array
 
 [src/types/app.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L81)
 
-___
+---
 
 ### assets
 
@@ -89,7 +88,7 @@ IDs of any assets to load into the foreignAssets array
 
 [src/types/app.ts:83](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L83)
 
-___
+---
 
 ### boxes
 
@@ -105,7 +104,7 @@ Any box references to load
 
 [src/types/app.ts:77](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L77)
 
-___
+---
 
 ### lease
 
@@ -121,7 +120,7 @@ The optional lease for the transaction
 
 [src/types/app.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L75)
 
-___
+---
 
 ### method
 
@@ -133,7 +132,7 @@ Property to aid intellisense
 
 [src/types/app.ts:98](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L98)
 
-___
+---
 
 ### rekeyTo
 

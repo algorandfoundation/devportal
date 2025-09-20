@@ -1,7 +1,8 @@
 ---
 title: SendAppTransactionResult
 ---
-#### *class* algokit_utils.transactions.transaction_sender.SendAppTransactionResult
+
+#### _class_ algokit_utils.transactions.transaction_sender.SendAppTransactionResult
 
 Bases: `SendSingleTransactionResult`, `Generic`[`ABIReturnT`]
 
@@ -9,6 +10,6 @@ Result of an application transaction.
 
 Contains the ABI return value if applicable.
 
-#### abi_return *: ABIReturnT | None* *= None*
+#### abi*return *: ABIReturnT | None\_ _= None_
 
 The ABI return value if applicable

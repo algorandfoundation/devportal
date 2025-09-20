@@ -2,9 +2,8 @@
 title: AppReference
 slug: reference/algokit-utils-ts/api/interfaces/types_appappreference
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / AppReference
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).AppReference
 
@@ -35,7 +34,7 @@ The Algorand address of the account associated with the app
 
 [src/types/app.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L43)
 
-___
+---
 
 ### appId
 

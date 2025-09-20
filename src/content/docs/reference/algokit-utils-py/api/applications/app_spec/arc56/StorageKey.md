@@ -1,24 +1,25 @@
 ---
 title: StorageKey
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.StorageKey
+
+#### _class_ algokit_utils.applications.app_spec.arc56.StorageKey
 
 Storage key information.
 
-#### key *: str*
+#### key _: str_
 
 The storage key
 
-#### key_type *: str*
+#### key*type *: str\_
 
 The type of the key
 
-#### value_type *: str*
+#### value*type *: str\_
 
 The type of the value
 
-#### desc *: str | None* *= None*
+#### desc _: str | None_ _= None_
 
 The optional description
 
-#### *static* from_dict(data: dict[str, Any]) → [StorageKey](#algokit_utils.applications.app_spec.arc56.StorageKey)
+#### _static_ from_dict(data: dict[str, Any]) → [StorageKey](#algokit_utils.applications.app_spec.arc56.StorageKey)

@@ -2,9 +2,8 @@
 title: types/transfer
 slug: reference/algokit-utils-ts/api/modules/types_transfer
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/transfer
-
-
 
 ## Table of contents
 

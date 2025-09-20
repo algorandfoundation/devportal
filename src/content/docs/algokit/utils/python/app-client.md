@@ -1,6 +1,7 @@
 ---
 title: App client and App factory
 ---
+
 > [!NOTE]
 > This page covers the untyped app client, but we recommend using typed clients (coming soon), which will give you a better developer experience with strong typing specific to the app itself.
 

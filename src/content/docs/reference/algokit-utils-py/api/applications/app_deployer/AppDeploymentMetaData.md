@@ -1,16 +1,17 @@
 ---
 title: AppDeploymentMetaData
 ---
-#### *class* algokit_utils.applications.app_deployer.AppDeploymentMetaData
+
+#### _class_ algokit_utils.applications.app_deployer.AppDeploymentMetaData
 
 Metadata about an application stored in a transaction note during creation.
 
-#### name *: str*
+#### name _: str_
 
-#### version *: str*
+#### version _: str_
 
-#### deletable *: bool | None*
+#### deletable _: bool | None_
 
-#### updatable *: bool | None*
+#### updatable _: bool | None_
 
 #### dictify() → dict[str, str | bool]

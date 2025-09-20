@@ -2,9 +2,8 @@
 title: types/logging
 slug: reference/algokit-utils-ts/api/modules/types_logging
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/logging
-
-
 
 ## Table of contents
 
@@ -30,13 +29,13 @@ General purpose logger type, compatible with Winston and others.
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `debug` | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
-| `error` | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
-| `info` | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
+| Name      | Type                                                              |
+| :-------- | :---------------------------------------------------------------- |
+| `debug`   | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
+| `error`   | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
+| `info`    | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
 | `verbose` | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
-| `warn` | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
+| `warn`    | (`message`: `string`, ...`optionalParams`: `unknown`[]) => `void` |
 
 #### Defined in
 
@@ -54,7 +53,7 @@ A logger implementation that writes to console
 
 [src/types/logging.ts:14](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logging.ts#L14)
 
-___
+---
 
 ### infoConsoleLogger
 
@@ -64,7 +63,7 @@ ___
 
 [src/types/logging.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logging.ts#L22)
 
-___
+---
 
 ### nullLogger
 
@@ -76,7 +75,7 @@ A logger implementation that does nothing
 
 [src/types/logging.ts:47](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logging.ts#L47)
 
-___
+---
 
 ### verboseConsoleLogger
 
@@ -86,7 +85,7 @@ ___
 
 [src/types/logging.ts:30](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logging.ts#L30)
 
-___
+---
 
 ### warningConsoleLogger
 

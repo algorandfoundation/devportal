@@ -2,9 +2,8 @@
 title: AlgoSdkClients
 slug: reference/algokit-utils-ts/api/interfaces/types_client_manageralgosdkclients
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/client-manager](/reference/algokit-utils-ts/api/modules/types_client_manager/) / AlgoSdkClients
-
-
 
 [types/client-manager](/reference/algokit-utils-ts/api/modules/types_client_manager/).AlgoSdkClients
 
@@ -30,7 +29,7 @@ Algod client, see https://dev.algorand.co/reference/rest-apis/algod/
 
 [src/types/client-manager.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L16)
 
-___
+---
 
 ### indexer
 
@@ -42,7 +41,7 @@ Optional indexer client, see https://dev.algorand.co/reference/rest-apis/indexer
 
 [src/types/client-manager.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L18)
 
-___
+---
 
 ### kmd
 

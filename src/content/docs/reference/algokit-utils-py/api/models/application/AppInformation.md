@@ -1,48 +1,49 @@
 ---
 title: AppInformation
 ---
-#### *class* algokit_utils.models.application.AppInformation
 
-#### app_id *: int*
+#### _class_ algokit_utils.models.application.AppInformation
+
+#### app*id *: int\_
 
 The ID of the application
 
-#### app_address *: str*
+#### app*address *: str\_
 
 The address of the application
 
-#### approval_program *: bytes*
+#### approval*program *: bytes\_
 
 The approval program
 
-#### clear_state_program *: bytes*
+#### clear*state_program *: bytes\_
 
 The clear state program
 
-#### creator *: str*
+#### creator _: str_
 
 The creator of the application
 
-#### global_state *: dict[str, [AppState](/reference/algokit-utils-py/api/models/application/appstate/#algokit_utils.models.application.AppState)]*
+#### global*state *: dict[str, [AppState](/reference/algokit-utils-py/api/models/application/appstate/#algokit_utils.models.application.AppState)]\_
 
 The global state of the application
 
-#### local_ints *: int*
+#### local*ints *: int\_
 
 The number of local ints
 
-#### local_byte_slices *: int*
+#### local*byte_slices *: int\_
 
 The number of local byte slices
 
-#### global_ints *: int*
+#### global*ints *: int\_
 
 The number of global ints
 
-#### global_byte_slices *: int*
+#### global*byte_slices *: int\_
 
 The number of global byte slices
 
-#### extra_program_pages *: int | None*
+#### extra*program_pages *: int | None\_
 
 The number of extra program pages

@@ -1,7 +1,8 @@
 ---
 title: SendAppCreateFactoryTransactionResult
 ---
-#### *class* algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult
+
+#### _class_ algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult
 
 Bases: [`algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult`](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/sendappcreatetransactionresult/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[`algokit_utils.applications.abi.Arc56ReturnValueType`](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/#algokit_utils.applications.abi.Arc56ReturnValueType)]
 

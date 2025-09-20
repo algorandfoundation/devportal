@@ -1,28 +1,29 @@
 ---
 title: ApplicationMetaData
 ---
-#### *class* algokit_utils.applications.app_deployer.ApplicationMetaData
+
+#### _class_ algokit_utils.applications.app_deployer.ApplicationMetaData
 
 Complete metadata about a deployed app
 
-#### reference *: [ApplicationReference](/reference/algokit-utils-py/api/applications/app_deployer/applicationreference/#algokit_utils.applications.app_deployer.ApplicationReference)*
+#### reference _: [ApplicationReference](/reference/algokit-utils-py/api/applications/app_deployer/applicationreference/#algokit_utils.applications.app_deployer.ApplicationReference)_
 
-#### deploy_metadata *: [AppDeploymentMetaData](/reference/algokit-utils-py/api/applications/app_deployer/appdeploymentmetadata/#algokit_utils.applications.app_deployer.AppDeploymentMetaData)*
+#### deploy*metadata *: [AppDeploymentMetaData](/reference/algokit-utils-py/api/applications/app_deployer/appdeploymentmetadata/#algokit_utils.applications.app_deployer.AppDeploymentMetaData)\_
 
-#### created_round *: int*
+#### created*round *: int\_
 
-#### updated_round *: int*
+#### updated*round *: int\_
 
-#### deleted *: bool* *= False*
+#### deleted _: bool_ _= False_
 
-#### *property* app_id *: int*
+#### _property_ app*id *: int\_
 
-#### *property* app_address *: str*
+#### _property_ app*address *: str\_
 
-#### *property* name *: str*
+#### _property_ name _: str_
 
-#### *property* version *: str*
+#### _property_ version _: str_
 
-#### *property* deletable *: bool | None*
+#### _property_ deletable _: bool | None_
 
-#### *property* updatable *: bool | None*
+#### _property_ updatable _: bool | None_

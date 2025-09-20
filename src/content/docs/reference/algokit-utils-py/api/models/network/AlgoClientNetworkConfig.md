@@ -1,20 +1,21 @@
 ---
 title: AlgoClientNetworkConfig
 ---
-#### *class* algokit_utils.models.network.AlgoClientNetworkConfig
+
+#### _class_ algokit_utils.models.network.AlgoClientNetworkConfig
 
 Connection details for connecting to an {py:class}\`algosdk.v2client.algod.AlgodClient\` or
 {py:class}\`algosdk.v2client.indexer.IndexerClient\`
 
-#### server *: str*
+#### server _: str_
 
 URL for the service e.g. http://localhost or https://testnet-api.algonode.cloud
 
-#### token *: str | None* *= None*
+#### token _: str | None_ _= None_
 
 API Token to authenticate with the service e.g ‘4001’ or ‘8980’
 
-#### port *: str | int | None* *= None*
+#### port _: str | int | None_ _= None_
 
 #### full_url() → str
 

@@ -2,9 +2,8 @@
 title: NetworkDetails
 slug: reference/algokit-utils-ts/api/interfaces/types_network_clientnetworkdetails
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/network-client](/reference/algokit-utils-ts/api/modules/types_network_client/) / NetworkDetails
-
-
 
 [types/network-client](/reference/algokit-utils-ts/api/modules/types_network_client/).NetworkDetails
 
@@ -32,7 +31,7 @@ The base64 genesis hash of the current network.
 
 [src/types/network-client.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/network-client.ts#L34)
 
-___
+---
 
 ### genesisId
 
@@ -44,7 +43,7 @@ The genesis ID of the current network.
 
 [src/types/network-client.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/network-client.ts#L32)
 
-___
+---
 
 ### isLocalNet
 
@@ -56,7 +55,7 @@ Whether or not the network is LocalNet.
 
 [src/types/network-client.ts:30](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/network-client.ts#L30)
 
-___
+---
 
 ### isMainNet
 
@@ -68,7 +67,7 @@ Whether or not the network is MainNet.
 
 [src/types/network-client.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/network-client.ts#L28)
 
-___
+---
 
 ### isTestNet
 

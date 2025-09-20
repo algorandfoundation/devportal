@@ -2,9 +2,8 @@
 title: AVMTracesEventData
 slug: reference/algokit-utils-ts/api/interfaces/types_debuggingavmtraceseventdata
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/debugging](/reference/algokit-utils-ts/api/modules/types_debugging/) / AVMTracesEventData
-
-
 
 [types/debugging](/reference/algokit-utils-ts/api/modules/types_debugging/).AVMTracesEventData
 

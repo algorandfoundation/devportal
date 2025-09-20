@@ -1,10 +1,11 @@
 ---
 title: AlgoClientConfigs
 ---
-#### *class* algokit_utils.models.network.AlgoClientConfigs
 
-#### algod_config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/models/network/algoclientnetworkconfig/#algokit_utils.models.network.AlgoClientNetworkConfig)*
+#### _class_ algokit_utils.models.network.AlgoClientConfigs
 
-#### indexer_config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/models/network/algoclientnetworkconfig/#algokit_utils.models.network.AlgoClientNetworkConfig) | None*
+#### algod*config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/models/network/algoclientnetworkconfig/#algokit_utils.models.network.AlgoClientNetworkConfig)\_
 
-#### kmd_config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/models/network/algoclientnetworkconfig/#algokit_utils.models.network.AlgoClientNetworkConfig) | None*
+#### indexer*config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/models/network/algoclientnetworkconfig/#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
+
+#### kmd*config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/models/network/algoclientnetworkconfig/#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_

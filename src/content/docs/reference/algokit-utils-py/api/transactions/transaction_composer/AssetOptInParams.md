@@ -1,12 +1,13 @@
 ---
 title: AssetOptInParams
 ---
-#### *class* algokit_utils.transactions.transaction_composer.AssetOptInParams
+
+#### _class_ algokit_utils.transactions.transaction_composer.AssetOptInParams
 
 Bases: `_CommonTxnParams`
 
 Parameters for opting into an asset.
 
-#### asset_id *: int*
+#### asset*id *: int\_
 
 The ID of the asset

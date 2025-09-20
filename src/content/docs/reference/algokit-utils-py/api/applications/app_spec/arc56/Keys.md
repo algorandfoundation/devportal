@@ -1,20 +1,21 @@
 ---
 title: Keys
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.Keys
+
+#### _class_ algokit_utils.applications.app_spec.arc56.Keys
 
 Storage keys for different storage types.
 
-#### box *: dict[str, [StorageKey](/reference/algokit-utils-py/api/applications/app_spec/arc56/storagekey/#algokit_utils.applications.app_spec.arc56.StorageKey)]*
+#### box _: dict[str, [StorageKey](/reference/algokit-utils-py/api/applications/app_spec/arc56/storagekey/#algokit_utils.applications.app_spec.arc56.StorageKey)]_
 
 The box storage keys
 
-#### global_state *: dict[str, [StorageKey](/reference/algokit-utils-py/api/applications/app_spec/arc56/storagekey/#algokit_utils.applications.app_spec.arc56.StorageKey)]*
+#### global*state *: dict[str, [StorageKey](/reference/algokit-utils-py/api/applications/app_spec/arc56/storagekey/#algokit_utils.applications.app_spec.arc56.StorageKey)]\_
 
 The global state storage keys
 
-#### local_state *: dict[str, [StorageKey](/reference/algokit-utils-py/api/applications/app_spec/arc56/storagekey/#algokit_utils.applications.app_spec.arc56.StorageKey)]*
+#### local*state *: dict[str, [StorageKey](/reference/algokit-utils-py/api/applications/app_spec/arc56/storagekey/#algokit_utils.applications.app_spec.arc56.StorageKey)]\_
 
 The local state storage keys
 
-#### *static* from_dict(data: dict[str, Any]) → [Keys](#algokit_utils.applications.app_spec.arc56.Keys)
+#### _static_ from_dict(data: dict[str, Any]) → [Keys](#algokit_utils.applications.app_spec.arc56.Keys)

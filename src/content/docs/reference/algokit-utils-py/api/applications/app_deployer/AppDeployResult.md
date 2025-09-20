@@ -1,26 +1,27 @@
 ---
 title: AppDeployResult
 ---
-#### *class* algokit_utils.applications.app_deployer.AppDeployResult
+
+#### _class_ algokit_utils.applications.app_deployer.AppDeployResult
 
 The result of a deployment
 
-#### app *: [ApplicationMetaData](/reference/algokit-utils-py/api/applications/app_deployer/applicationmetadata/#algokit_utils.applications.app_deployer.ApplicationMetaData)*
+#### app _: [ApplicationMetaData](/reference/algokit-utils-py/api/applications/app_deployer/applicationmetadata/#algokit_utils.applications.app_deployer.ApplicationMetaData)_
 
 The application metadata
 
-#### operation_performed *: [algokit_utils.applications.enums.OperationPerformed](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/enums/operationperformed/#algokit_utils.applications.enums.OperationPerformed)*
+#### operation*performed *: [algokit_utils.applications.enums.OperationPerformed](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/enums/operationperformed/#algokit_utils.applications.enums.OperationPerformed)\_
 
 The operation performed
 
-#### create_result *: [algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/sendappcreatetransactionresult/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/abireturn/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### create*result *: [algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/sendappcreatetransactionresult/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/abireturn/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
 
 The create result
 
-#### update_result *: [algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/sendappupdatetransactionresult/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/abireturn/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### update*result *: [algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/sendappupdatetransactionresult/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/abireturn/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
 
 The update result
 
-#### delete_result *: [algokit_utils.transactions.transaction_sender.SendAppTransactionResult](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/sendapptransactionresult/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/abireturn/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### delete*result *: [algokit_utils.transactions.transaction_sender.SendAppTransactionResult](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/sendapptransactionresult/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/applications/abi/abireturn/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
 
 The delete result

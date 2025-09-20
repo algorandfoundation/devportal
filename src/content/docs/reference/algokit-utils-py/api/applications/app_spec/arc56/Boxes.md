@@ -1,24 +1,25 @@
 ---
 title: Boxes
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.Boxes
+
+#### _class_ algokit_utils.applications.app_spec.arc56.Boxes
 
 Box storage requirements.
 
-#### key *: str*
+#### key _: str_
 
 The box key
 
-#### read_bytes *: int*
+#### read*bytes *: int\_
 
 The number of bytes to read
 
-#### write_bytes *: int*
+#### write*bytes *: int\_
 
 The number of bytes to write
 
-#### app *: int | None* *= None*
+#### app _: int | None_ _= None_
 
 The optional application ID
 
-#### *static* from_dict(data: dict[str, Any]) → [Boxes](#algokit_utils.applications.app_spec.arc56.Boxes)
+#### _static_ from_dict(data: dict[str, Any]) → [Boxes](#algokit_utils.applications.app_spec.arc56.Boxes)

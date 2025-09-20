@@ -2,9 +2,8 @@
 title: Schema
 slug: reference/algokit-utils-ts/api/interfaces/types_app_specschema
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app-spec](/reference/algokit-utils-ts/api/modules/types_app_spec/) / Schema
-
-
 
 [types/app-spec](/reference/algokit-utils-ts/api/modules/types_app_spec/).Schema
 
@@ -29,7 +28,7 @@ Declared storage schema
 
 [src/types/app-spec.ts:303](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L303)
 
-___
+---
 
 ### reserved
 

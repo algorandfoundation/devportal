@@ -1,16 +1,17 @@
 ---
 title: TemplateVariables
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.TemplateVariables
+
+#### _class_ algokit_utils.applications.app_spec.arc56.TemplateVariables
 
 Template variable information.
 
-#### type *: str*
+#### type _: str_
 
 The type of the template variable
 
-#### value *: str | None* *= None*
+#### value _: str | None_ _= None_
 
 The optional value of the template variable
 
-#### *static* from_dict(data: dict[str, Any]) → [TemplateVariables](#algokit_utils.applications.app_spec.arc56.TemplateVariables)
+#### _static_ from_dict(data: dict[str, Any]) → [TemplateVariables](#algokit_utils.applications.app_spec.arc56.TemplateVariables)

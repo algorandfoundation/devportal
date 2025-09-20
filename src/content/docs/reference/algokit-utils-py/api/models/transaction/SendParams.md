@@ -1,16 +1,17 @@
 ---
 title: SendParams
 ---
-#### *class* algokit_utils.models.transaction.SendParams
+
+#### _class_ algokit_utils.models.transaction.SendParams
 
 Bases: `TypedDict`
 
 Parameters for sending a transaction
 
-#### max_rounds_to_wait *: int | None*
+#### max*rounds_to_wait *: int | None\_
 
-#### suppress_log *: bool | None*
+#### suppress*log *: bool | None\_
 
-#### populate_app_call_resources *: bool | None*
+#### populate*app_call_resources *: bool | None\_
 
-#### cover_app_call_inner_transaction_fees *: bool | None*
+#### cover*app_call_inner_transaction_fees *: bool | None\_

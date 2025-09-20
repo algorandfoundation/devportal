@@ -1,6 +1,7 @@
 ---
 title: App management
 ---
+
 App management is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It allows you to create, update, delete, call (ABI and otherwise) smart contract apps and the metadata associated with them (including state and boxes).
 
 ## `AppManager`
@@ -10,9 +11,9 @@ The [`AppManager`](/reference/algokit-utils-ts/api/classes/types_app_managerappm
 To get an instance of `AppManager` you can use either [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) via `algorand.app` or instantiate it directly (passing in an algod client instance):
 
 ```typescript
-import { AppManager } from '@algorandfoundation/algokit-utils/types/app-manager'
+import { AppManager } from '@algorandfoundation/algokit-utils/types/app-manager';
 
-const appManager = new AppManager(algod)
+const appManager = new AppManager(algod);
 ```
 
 ## Calling apps
@@ -49,9 +50,9 @@ There is a static method on [`AppManager`](#appmanager) that allows you to parse
 ```typescript
 const confirmation = modelsv2.PendingTransactionResponse.from_obj_for_encoding(
   await algod.pendingTransactionInformation(transactionId).do(),
-)
+);
 
-const abiReturn = AppManager.getABIReturn(confirmation, abiMethod)
+const abiReturn = AppManager.getABIReturn(confirmation, abiMethod);
 ```
 
 ### Creation
@@ -310,7 +311,7 @@ To access local state you can use the following method from an [`AppManager`](#a
 - [`algorand.app.getLocalState(appId, address)`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getlocalstate) - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
 
 ```typescript
-const globalState = await algorand.app.getGlobalState(12345n)
+const globalState = await algorand.app.getGlobalState(12345n);
 ```
 
 Global state is parsed from the underlying algod response via the following static method from [`AppManager`](#appmanager):
@@ -339,7 +340,7 @@ To access local state you can use the following method from an [`AppManager`](#a
 - [`algorand.app.getLocalState(appId, address)`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getlocalstate) - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
 
 ```typescript
-const localState = await algorand.app.getLocalState(12345n, 'ACCOUNTADDRESS')
+const localState = await algorand.app.getLocalState(12345n, 'ACCOUNTADDRESS');
 ```
 
 ### Boxes
@@ -354,15 +355,19 @@ To access and parse box values and names for an app you can use the following me
 - [`AppManager.getBoxReference(boxId)`](/reference/algokit-utils-ts/api/modules/index/#getboxreference) - Returns a `algosdk.BoxReference` representation of the given [box identifier / reference](#box-references), which is useful when constructing a raw `algosdk.Transaction`
 
 ```typescript
-const appId = 12345n
-const boxName: BoxReference = 'my-box'
-const boxName2: BoxReference = 'my-box2'
+const appId = 12345n;
+const boxName: BoxReference = 'my-box';
+const boxName2: BoxReference = 'my-box2';
 
-const boxNames = algorand.app.getBoxNames(appId)
-const boxValue = algorand.app.getBoxValue(appId, boxName)
-const boxValues = algorand.app.getBoxValues(appId, [boxName, boxName2])
-const boxABIValue = algorand.app.getBoxValueFromABIType(appId, boxName, algosdk.ABIStringType)
-const boxABIValues = algorand.app.getBoxValuesFromABIType(appId, [boxName, boxName2], algosdk.ABIStringType)
+const boxNames = algorand.app.getBoxNames(appId);
+const boxValue = algorand.app.getBoxValue(appId, boxName);
+const boxValues = algorand.app.getBoxValues(appId, [boxName, boxName2]);
+const boxABIValue = algorand.app.getBoxValueFromABIType(appId, boxName, algosdk.ABIStringType);
+const boxABIValues = algorand.app.getBoxValuesFromABIType(
+  appId,
+  [boxName, boxName2],
+  algosdk.ABIStringType,
+);
 ```
 
 ## Getting app information
@@ -412,7 +417,7 @@ Referencing boxes can by done by either `BoxIdentifier` (which identifies the na
  *  * `TransactionSignerAccount` (that will be encoded into the
  *    public key address of the corresponding account)
  */
-export type BoxIdentifier = string | Uint8Array | TransactionSignerAccount
+export type BoxIdentifier = string | Uint8Array | TransactionSignerAccount;
 
 /**
  * A grouping of the app ID and name identifier to reference an app box.
@@ -421,11 +426,11 @@ export interface BoxReference {
   /**
    * A unique application id
    */
-  appId: bigint
+  appId: bigint;
   /**
    * Identifier for a box name
    */
-  name: BoxIdentifier
+  name: BoxIdentifier;
 }
 ```
 
@@ -436,8 +441,8 @@ The [`AppManager`](#appmanager) class allows you to compile TEAL code with cachi
 If you call `algorand.app.compileTeal(tealCode)` then the compilation result will be stored and retrievable from `algorand.app.getCompilationResult(tealCode)`.
 
 ```typescript
-const tealCode = 'return 1'
-const compilationResult = await algorand.app.compileTeal(tealCode)
+const tealCode = 'return 1';
+const compilationResult = await algorand.app.compileTeal(tealCode);
 // ...
-const previousCompilationResult = algorand.app.getCompilationResult(tealCode)
+const previousCompilationResult = algorand.app.getCompilationResult(tealCode);
 ```

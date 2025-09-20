@@ -1,6 +1,7 @@
 ---
 title: Algo transfers (payments)
 ---
+
 Algo transfers, or [payments](https://dev.algorand.co/concepts/transactions/types/#payment-transaction), is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [Algo amount handling](/algokit/utils/typescript/amount/) and [Transaction management](/algokit/utils/typescript/transaction/). It allows you to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding.
 
 To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/types/algorand-client.transfer.spec.ts).
@@ -21,7 +22,7 @@ const result = await algorand.send.payment({
   sender: 'SENDERADDRESS',
   receiver: 'RECEIVERADDRESS',
   amount: (4).algo(),
-})
+});
 
 // Advanced example
 const result2 = await algorand.send.payment({
@@ -47,7 +48,7 @@ const result2 = await algorand.send.payment({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 ## `ensureFunded`
@@ -82,33 +83,42 @@ The general structure of these calls is similar, they all take:
 // From account
 
 // Basic example
-await algorand.account.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', (1).algo())
+await algorand.account.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', (1).algo());
 // With configuration
 await algorand.account.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', (1).algo(), {
   minFundingIncrement: (2).algo(),
   fee: (1000).microAlgo(),
   suppressLog: true,
-})
+});
 
 // From environment
 
 // Basic example
-await algorand.account.ensureFundedFromEnvironment('ACCOUNTADDRESS', (1).algo())
+await algorand.account.ensureFundedFromEnvironment('ACCOUNTADDRESS', (1).algo());
 // With configuration
 await algorand.account.ensureFundedFromEnvironment('ACCOUNTADDRESS', (1).algo(), {
   minFundingIncrement: (2).algo(),
   fee: (1000).microAlgo(),
   suppressLog: true,
-})
+});
 
 // TestNet Dispenser API
 
 // Basic example
-await algorand.account.ensureFundedUsingDispenserAPI('ACCOUNTADDRESS', algorand.client.getTestNetDispenserFromEnvironment(), (1).algo())
+await algorand.account.ensureFundedUsingDispenserAPI(
+  'ACCOUNTADDRESS',
+  algorand.client.getTestNetDispenserFromEnvironment(),
+  (1).algo(),
+);
 // With configuration
-await algorand.account.ensureFundedUsingDispenserAPI('ACCOUNTADDRESS', algorand.client.getTestNetDispenserFromEnvironment(), (1).algo(), {
-  minFundingIncrement: (2).algo(),
-})
+await algorand.account.ensureFundedUsingDispenserAPI(
+  'ACCOUNTADDRESS',
+  algorand.client.getTestNetDispenserFromEnvironment(),
+  (1).algo(),
+  {
+    minFundingIncrement: (2).algo(),
+  },
+);
 ```
 
 All 3 variants return an [`EnsureFundedReturnType`](/reference/algokit-utils-ts/api/modules/types_account_manager/) (and the first two also return a [single transaction result](/algokit/utils/typescript/algorand-client/#sending-a-single-transaction)) if a funding transaction was needed, or `undefined` if no transaction was required:

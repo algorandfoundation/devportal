@@ -1,10 +1,11 @@
 ---
 title: transaction_composer
 ---
+
 ## Classes
 
 | [`PaymentParams`](/reference/algokit-utils-py/api/transactions/transaction_composer/paymentparams/#algokit_utils.transactions.transaction_composer.PaymentParams)                                                                      | Parameters for a payment transaction.                                |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | [`AssetCreateParams`](/reference/algokit-utils-py/api/transactions/transaction_composer/assetcreateparams/#algokit_utils.transactions.transaction_composer.AssetCreateParams)                                                          | Parameters for creating a new asset.                                 |
 | [`AssetConfigParams`](/reference/algokit-utils-py/api/transactions/transaction_composer/assetconfigparams/#algokit_utils.transactions.transaction_composer.AssetConfigParams)                                                          | Parameters for configuring an existing asset.                        |
 | [`AssetFreezeParams`](/reference/algokit-utils-py/api/transactions/transaction_composer/assetfreezeparams/#algokit_utils.transactions.transaction_composer.AssetFreezeParams)                                                          | Parameters for freezing an asset.                                    |
@@ -46,10 +47,10 @@ Calculate minimum number of extra_pages required for provided approval and clear
 
 Populate application call resources based on simulation results.
 
-* **Parameters:**
-  * **atc** – The AtomicTransactionComposer containing transactions
-  * **algod** – Algod client for simulation
-* **Returns:**
+- **Parameters:**
+  - **atc** – The AtomicTransactionComposer containing transactions
+  - **algod** – Algod client for simulation
+- **Returns:**
   Modified AtomicTransactionComposer with populated resources
 
 ### algokit_utils.transactions.transaction_composer.prepare_group_for_sending(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer, algod: algosdk.v2client.algod.AlgodClient, populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: AdditionalAtcContext | None = None) → algosdk.atomic_transaction_composer.AtomicTransactionComposer
@@ -58,13 +59,13 @@ Take an existing Atomic Transaction Composer and return a new one with changes a
 based on the supplied parameters to prepare it for sending.
 Please note, that before calling .execute() on the returned ATC, you must call .build_group().
 
-* **Parameters:**
-  * **atc** – The AtomicTransactionComposer containing transactions
-  * **algod** – Algod client for simulation
-  * **populate_app_call_resources** – Whether to populate app call resources
-  * **cover_app_call_inner_transaction_fees** – Whether to cover inner txn fees
-  * **additional_atc_context** – Additional context for the AtomicTransactionComposer
-* **Returns:**
+- **Parameters:**
+  - **atc** – The AtomicTransactionComposer containing transactions
+  - **algod** – Algod client for simulation
+  - **populate_app_call_resources** – Whether to populate app call resources
+  - **cover_app_call_inner_transaction_fees** – Whether to cover inner txn fees
+  - **additional_atc_context** – Additional context for the AtomicTransactionComposer
+- **Returns:**
   Modified AtomicTransactionComposer ready for sending
 
 ### algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer, algod: algosdk.v2client.algod.AlgodClient, \*, max_rounds_to_wait: int | None = 5, skip_waiting: bool = False, suppress_log: bool | None = None, populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: AdditionalAtcContext | None = None) → [SendAtomicTransactionComposerResults](/reference/algokit-utils-py/api/transactions/transaction_composer/sendatomictransactioncomposerresults/#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
@@ -73,17 +74,17 @@ Send an AtomicTransactionComposer transaction group.
 
 Executes a group of transactions atomically using the AtomicTransactionComposer.
 
-* **Parameters:**
-  * **atc** – The AtomicTransactionComposer instance containing the transaction group to send
-  * **algod** – The Algod client to use for sending the transactions
-  * **max_rounds_to_wait** – Maximum number of rounds to wait for confirmation, defaults to 5
-  * **skip_waiting** – If True, don’t wait for transaction confirmation, defaults to False
-  * **suppress_log** – If True, suppress logging, defaults to None
-  * **populate_app_call_resources** – If True, populate app call resources, defaults to None
-  * **cover_app_call_inner_transaction_fees** – If True, cover app call inner transaction fees, defaults to None
-  * **additional_atc_context** – Additional context for the AtomicTransactionComposer
-* **Returns:**
+- **Parameters:**
+  - **atc** – The AtomicTransactionComposer instance containing the transaction group to send
+  - **algod** – The Algod client to use for sending the transactions
+  - **max_rounds_to_wait** – Maximum number of rounds to wait for confirmation, defaults to 5
+  - **skip_waiting** – If True, don’t wait for transaction confirmation, defaults to False
+  - **suppress_log** – If True, suppress logging, defaults to None
+  - **populate_app_call_resources** – If True, populate app call resources, defaults to None
+  - **cover_app_call_inner_transaction_fees** – If True, cover app call inner transaction fees, defaults to None
+  - **additional_atc_context** – Additional context for the AtomicTransactionComposer
+- **Returns:**
   Results from sending the transaction group
-* **Raises:**
-  * **Exception** – If there is an error sending the transactions
-  * **error** – If there is an error from the Algorand node
+- **Raises:**
+  - **Exception** – If there is an error sending the transactions
+  - **error** – If there is an error from the Algorand node

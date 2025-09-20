@@ -2,9 +2,8 @@
 title: Event
 slug: reference/algokit-utils-ts/api/interfaces/types_app_arc56event
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app-arc56](/reference/algokit-utils-ts/api/modules/types_app_arc56/) / Event
-
-
 
 [types/app-arc56](/reference/algokit-utils-ts/api/modules/types_app_arc56/).Event
 
@@ -22,7 +21,7 @@ ARC-28 event
 
 ### args
 
-• **args**: \{ `desc?`: `string` ; `name?`: `string` ; `struct?`: `string` ; `type`: `string`  }[]
+• **args**: \{ `desc?`: `string` ; `name?`: `string` ; `struct?`: `string` ; `type`: `string` }[]
 
 The arguments of the event, in order
 
@@ -30,7 +29,7 @@ The arguments of the event, in order
 
 [src/types/app-arc56.ts:440](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L440)
 
-___
+---
 
 ### desc
 
@@ -42,7 +41,7 @@ Optional, user-friendly description for the event
 
 [src/types/app-arc56.ts:438](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L438)
 
-___
+---
 
 ### name
 

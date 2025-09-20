@@ -1,20 +1,21 @@
 ---
 title: LogicSigAccount
 ---
-#### *class* algokit_utils.models.account.LogicSigAccount(program: bytes, args: list[bytes] | None)
+
+#### _class_ algokit_utils.models.account.LogicSigAccount(program: bytes, args: list[bytes] | None)
 
 Account wrapper that supports logic sig signing.
 
 Provides functionality to manage and sign transactions for a logic sig account.
 
-#### *property* lsig *: algosdk.transaction.LogicSigAccount*
+#### _property_ lsig _: algosdk.transaction.LogicSigAccount_
 
 Get the underlying algosdk.transaction.LogicSigAccount object instance.
 
-* **Returns:**
+- **Returns:**
   The algosdk.transaction.LogicSigAccount object instance
 
-#### *property* address *: str*
+#### _property_ address _: str_
 
 Get the address of the logic sig account.
 
@@ -23,12 +24,12 @@ If the LogicSig is delegated to another account, this will return the address of
 If the LogicSig is not delegated to another account, this will return an escrow address that is the hash of
 the LogicSig’s program code.
 
-* **Returns:**
+- **Returns:**
   The logic sig account address
 
-#### *property* signer *: algosdk.atomic_transaction_composer.LogicSigTransactionSigner*
+#### _property_ signer _: algosdk.atomic_transaction_composer.LogicSigTransactionSigner_
 
 Get the transaction signer for this multisig account.
 
-* **Returns:**
+- **Returns:**
   The multisig transaction signer

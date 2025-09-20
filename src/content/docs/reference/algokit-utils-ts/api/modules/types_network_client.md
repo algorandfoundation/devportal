@@ -2,9 +2,8 @@
 title: types/network-client
 slug: reference/algokit-utils-ts/api/modules/types_network_client
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/network-client
-
-
 
 ## Table of contents
 
@@ -28,8 +27,8 @@ Returns true if the given network genesisId is associated with a LocalNet networ
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name        | Type     | Description            |
+| :---------- | :------- | :--------------------- |
 | `genesisId` | `string` | The network genesis ID |
 
 #### Returns

@@ -1,7 +1,8 @@
 ---
 title: AppFactoryCreateMethodCallResult
 ---
-#### *class* algokit_utils.applications.app_factory.AppFactoryCreateMethodCallResult
+
+#### _class_ algokit_utils.applications.app_factory.AppFactoryCreateMethodCallResult
 
 Bases: [`algokit_utils.transactions.transaction_sender.SendSingleTransactionResult`](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/transactions/transaction_sender/sendsingletransactionresult/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult), `Generic`[`ABIReturnT`]
 
@@ -9,12 +10,12 @@ Base class for transaction results.
 
 Represents the result of sending a single transaction.
 
-#### app_id *: int*
+#### app*id *: int\_
 
-#### app_address *: str*
+#### app*address *: str\_
 
-#### compiled_approval *: Any | None* *= None*
+#### compiled*approval *: Any | None\_ _= None_
 
-#### compiled_clear *: Any | None* *= None*
+#### compiled*clear *: Any | None\_ _= None_
 
-#### abi_return *: ABIReturnT | None* *= None*
+#### abi*return *: ABIReturnT | None\_ _= None_

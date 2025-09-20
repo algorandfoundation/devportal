@@ -1,6 +1,7 @@
 ---
 title: TestNet Dispenser Client
 ---
+
 The TestNet Dispenser Client is a utility for interacting with the AlgoKit TestNet Dispenser API. It provides methods to fund an account, register a refund for a transaction, and get the current limit for an account.
 
 ## Creating a Dispenser Client

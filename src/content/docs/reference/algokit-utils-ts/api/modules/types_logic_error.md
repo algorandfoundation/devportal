@@ -2,9 +2,8 @@
 title: types/logic-error
 slug: reference/algokit-utils-ts/api/modules/types_logic_error
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/logic-error
-
-
 
 ## Table of contents
 

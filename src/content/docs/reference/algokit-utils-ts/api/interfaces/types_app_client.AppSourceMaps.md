@@ -2,9 +2,8 @@
 title: AppSourceMaps
 slug: reference/algokit-utils-ts/api/interfaces/types_app_clientappsourcemaps
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/) / AppSourceMaps
-
-
 
 [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/).AppSourceMaps
 
@@ -29,7 +28,7 @@ The source map of the approval program
 
 [src/types/app-client.ts:266](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L266)
 
-___
+---
 
 ### clearSourceMap
 

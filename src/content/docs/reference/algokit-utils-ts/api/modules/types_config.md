@@ -2,9 +2,8 @@
 title: types/config
 slug: reference/algokit-utils-ts/api/modules/types_config
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/config
-
-
 
 ## Table of contents
 

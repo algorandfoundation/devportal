@@ -1,20 +1,21 @@
 ---
 title: Returns
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.Returns
+
+#### _class_ algokit_utils.applications.app_spec.arc56.Returns
 
 Method return information.
 
-#### type *: str*
+#### type _: str_
 
 The type of the return value
 
-#### desc *: str | None* *= None*
+#### desc _: str | None_ _= None_
 
 The optional description
 
-#### struct *: str | None* *= None*
+#### struct _: str | None_ _= None_
 
 The optional struct type name
 
-#### *static* from_dict(data: dict[str, Any]) → [Returns](#algokit_utils.applications.app_spec.arc56.Returns)
+#### _static_ from_dict(data: dict[str, Any]) → [Returns](#algokit_utils.applications.app_spec.arc56.Returns)

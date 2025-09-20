@@ -2,9 +2,8 @@
 title: types/asset
 slug: reference/algokit-utils-ts/api/modules/types_asset
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/asset
-
-
 
 ## Table of contents
 

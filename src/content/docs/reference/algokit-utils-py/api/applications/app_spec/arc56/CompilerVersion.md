@@ -1,24 +1,25 @@
 ---
 title: CompilerVersion
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.CompilerVersion
+
+#### _class_ algokit_utils.applications.app_spec.arc56.CompilerVersion
 
 Represents compiler version information.
 
-#### commit_hash *: str | None* *= None*
+#### commit*hash *: str | None\_ _= None_
 
 The git commit hash of the compiler
 
-#### major *: int | None* *= None*
+#### major _: int | None_ _= None_
 
 The major version number
 
-#### minor *: int | None* *= None*
+#### minor _: int | None_ _= None_
 
 The minor version number
 
-#### patch *: int | None* *= None*
+#### patch _: int | None_ _= None_
 
 The patch version number
 
-#### *static* from_dict(data: dict[str, Any]) → [CompilerVersion](#algokit_utils.applications.app_spec.arc56.CompilerVersion)
+#### _static_ from_dict(data: dict[str, Any]) → [CompilerVersion](#algokit_utils.applications.app_spec.arc56.CompilerVersion)

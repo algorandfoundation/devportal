@@ -2,9 +2,8 @@
 title: SendTransactionResult
 slug: reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/) / SendTransactionResult
-
-
 
 [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/).SendTransactionResult
 
@@ -39,7 +38,7 @@ The response if the transaction was sent and waited for
 
 [src/types/transaction.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L57)
 
-___
+---
 
 ### transaction
 

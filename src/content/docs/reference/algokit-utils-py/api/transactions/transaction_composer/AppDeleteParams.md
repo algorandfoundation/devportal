@@ -1,36 +1,37 @@
 ---
 title: AppDeleteParams
 ---
-#### *class* algokit_utils.transactions.transaction_composer.AppDeleteParams
+
+#### _class_ algokit_utils.transactions.transaction_composer.AppDeleteParams
 
 Bases: `_CommonTxnParams`
 
 Parameters for deleting an application.
 
-#### app_id *: int*
+#### app*id *: int\_
 
 The ID of the application
 
-#### args *: list[bytes] | None* *= None*
+#### args _: list[bytes] | None_ _= None_
 
 Application arguments, defaults to None
 
-#### account_references *: list[str] | None* *= None*
+#### account*references *: list[str] | None\_ _= None_
 
 Account references, defaults to None
 
-#### app_references *: list[int] | None* *= None*
+#### app*references *: list[int] | None\_ _= None_
 
 App references, defaults to None
 
-#### asset_references *: list[int] | None* *= None*
+#### asset*references *: list[int] | None\_ _= None_
 
 Asset references, defaults to None
 
-#### box_references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None* *= None*
+#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/docs/markdown/autoapi/algokit_utils/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
 
 Box references, defaults to None
 
-#### on_complete *: algosdk.transaction.OnComplete*
+#### on*complete *: algosdk.transaction.OnComplete\_
 
 The OnComplete action, defaults to DeleteApplicationOC

@@ -1,6 +1,7 @@
 ---
 title: Typed application clients
 ---
+
 Typed application clients are automatically generated, typed Python deployment and invocation clients for smart contracts that have a defined [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) or [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application specification so that the development experience is easier with less upskill ramp-up and less deployment errors. These clients give you a type-safe, intellisense-driven experience for invoking the smart contract.
 
 Typed application clients are the recommended way of interacting with smart contracts. If you don’t have/want a typed client, but have an ARC-56/ARC-32 app spec then you can use the [non-typed application clients](/algokit/utils/python/docs/markdown/capabilities/app-client/) and if you want to call a smart contract you don’t have an app spec file for you can use the underlying [app management](/algokit/utils/python/docs/markdown/capabilities/app/) and [app deployment](/algokit/utils/python/docs/markdown/capabilities/app-deploy/) functionality to manually construct transactions.
@@ -12,7 +13,7 @@ You can generate an app spec file:
 - Using [Algorand Python](https://algorandfoundation.github.io/puya/#quick-start)
 - Using [TEALScript](https://tealscript.netlify.app/tutorials/hello-world/0004-artifacts/)
 - By hand by following the specification [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258)/[ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md)
-- Using [Beaker](https://algorand-devrel.github.io/beaker/html/usage.html) (PyTEAL)  *(DEPRECATED)*
+- Using [Beaker](https://algorand-devrel.github.io/beaker/html/usage.html) (PyTEAL) _(DEPRECATED)_
 
 ## Generating a typed client
 

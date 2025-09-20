@@ -2,9 +2,8 @@
 title: UpdatableConfig
 slug: reference/algokit-utils-ts/api/classes/types_configupdatableconfig
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/config](/reference/algokit-utils-ts/api/modules/types_config/) / UpdatableConfig
-
-
 
 [types/config](/reference/algokit-utils-ts/api/modules/types_config/).UpdatableConfig
 
@@ -83,7 +82,7 @@ Readonly.debug
 
 [src/types/config.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L39)
 
-___
+---
 
 ### events
 
@@ -101,7 +100,7 @@ Readonly.events
 
 [src/types/config.ts:59](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L59)
 
-___
+---
 
 ### logger
 
@@ -119,7 +118,7 @@ Readonly.logger
 
 [src/types/config.ts:35](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L35)
 
-___
+---
 
 ### maxSearchDepth
 
@@ -137,7 +136,7 @@ Readonly.maxSearchDepth
 
 [src/types/config.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L55)
 
-___
+---
 
 ### populateAppCallResources
 
@@ -155,15 +154,15 @@ Readonly.populateAppCallResources
 
 [src/types/config.ts:31](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L31)
 
-___
+---
 
 ### projectRoot
 
-• `get` **projectRoot**(): ``null`` \| `string`
+• `get` **projectRoot**(): `null` \| `string`
 
 #### Returns
 
-``null`` \| `string`
+`null` \| `string`
 
 #### Implementation of
 
@@ -173,7 +172,7 @@ Readonly.projectRoot
 
 [src/types/config.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L43)
 
-___
+---
 
 ### traceAll
 
@@ -191,7 +190,7 @@ Readonly.traceAll
 
 [src/types/config.ts:47](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L47)
 
-___
+---
 
 ### traceBufferSizeMb
 
@@ -219,8 +218,8 @@ Update the AlgoKit configuration with your own configuration settings
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name        | Type                                                                                    | Description                           |
+| :---------- | :-------------------------------------------------------------------------------------- | :------------------------------------ |
 | `newConfig` | `Partial`\<[`Config`](/reference/algokit-utils-ts/api/interfaces/types_configconfig/)\> | Partial or complete config to replace |
 
 #### Returns
@@ -231,7 +230,7 @@ Update the AlgoKit configuration with your own configuration settings
 
 [src/types/config.ts:107](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L107)
 
-___
+---
 
 ### getLogger
 
@@ -241,8 +240,8 @@ Returns the current logger, or the null logger if true is passed in to `returnNu
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name                | Type      | Description                              |
+| :------------------ | :-------- | :--------------------------------------- |
 | `returnNullLogger?` | `boolean` | Whether or not to return the null logger |
 
 #### Returns
@@ -255,7 +254,7 @@ The requested logger
 
 [src/types/config.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L68)
 
-___
+---
 
 ### withDebug
 
@@ -265,8 +264,8 @@ Temporarily run with debug set to true.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type            | Description                                                        |
+| :------- | :-------------- | :----------------------------------------------------------------- |
 | `lambda` | () => `unknown` | A lambda expression with code to run with debug config set to true |
 
 #### Returns

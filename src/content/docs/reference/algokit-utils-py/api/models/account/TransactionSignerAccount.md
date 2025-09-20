@@ -1,10 +1,11 @@
 ---
 title: TransactionSignerAccount
 ---
-#### *class* algokit_utils.models.account.TransactionSignerAccount
+
+#### _class_ algokit_utils.models.account.TransactionSignerAccount
 
 A basic transaction signer account.
 
-#### address *: str*
+#### address _: str_
 
-#### signer *: algosdk.atomic_transaction_composer.TransactionSigner*
+#### signer _: algosdk.atomic_transaction_composer.TransactionSigner_

@@ -2,9 +2,8 @@
 title: AssetBulkOptInOutParams
 slug: reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/asset](/reference/algokit-utils-ts/api/modules/types_asset/) / AssetBulkOptInOutParams
-
-
 
 [types/asset](/reference/algokit-utils-ts/api/modules/types_asset/).AssetBulkOptInOutParams
 
@@ -36,7 +35,7 @@ The account to opt in/out for
 
 [src/types/asset.ts:94](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L94)
 
-___
+---
 
 ### assetIds
 
@@ -48,7 +47,7 @@ The IDs of the assets to opt in for / out of
 
 [src/types/asset.ts:96](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L96)
 
-___
+---
 
 ### maxFee
 
@@ -60,7 +59,7 @@ The maximum fee that you are happy to pay per transaction (default: unbounded) -
 
 [src/types/asset.ts:104](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L104)
 
-___
+---
 
 ### note
 
@@ -72,7 +71,7 @@ The (optional) transaction note
 
 [src/types/asset.ts:102](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L102)
 
-___
+---
 
 ### suppressLog
 
@@ -84,7 +83,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 [src/types/asset.ts:106](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L106)
 
-___
+---
 
 ### transactionParams
 
@@ -96,7 +95,7 @@ Optional transaction parameters
 
 [src/types/asset.ts:100](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L100)
 
-___
+---
 
 ### validateBalances
 

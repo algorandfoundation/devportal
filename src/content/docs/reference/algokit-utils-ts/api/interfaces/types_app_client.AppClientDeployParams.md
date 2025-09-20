@@ -2,9 +2,8 @@
 title: AppClientDeployParams
 slug: reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeployparams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/) / AppClientDeployParams
-
-
 
 [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/).AppClientDeployParams
 
@@ -53,7 +52,7 @@ If this is not specified then it will automatically be determined based on the A
 
 [src/types/app-client.ts:173](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L173)
 
-___
+---
 
 ### allowUpdate
 
@@ -70,7 +69,7 @@ If this is not specified then it will automatically be determined based on the A
 
 [src/types/app-client.ts:169](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L169)
 
-___
+---
 
 ### createArgs
 
@@ -86,11 +85,11 @@ Any args to pass to any create transaction that is issued as part of deployment
 
 [src/types/app-client.ts:185](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L185)
 
-___
+---
 
 ### createOnCompleteAction
 
-• `Optional` **createOnCompleteAction**: ``"no_op"`` \| ``"opt_in"`` \| ``"close_out"`` \| ``"update_application"`` \| ``"delete_application"`` \| `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC`
+• `Optional` **createOnCompleteAction**: `"no_op"` \| `"opt_in"` \| `"close_out"` \| `"update_application"` \| `"delete_application"` \| `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC`
 
 Override the on-completion action for the create call; defaults to NoOp
 
@@ -102,7 +101,7 @@ Override the on-completion action for the create call; defaults to NoOp
 
 [src/types/app-client.ts:187](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L187)
 
-___
+---
 
 ### deleteArgs
 
@@ -118,7 +117,7 @@ Any args to pass to any delete transaction that is issued as part of deployment
 
 [src/types/app-client.ts:191](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L191)
 
-___
+---
 
 ### deployTimeParams
 
@@ -134,11 +133,11 @@ Any deploy-time parameters to replace in the TEAL code
 
 [src/types/app-client.ts:183](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L183)
 
-___
+---
 
 ### onSchemaBreak
 
-• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/) \| ``"replace"`` \| ``"fail"`` \| ``"append"``
+• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/) \| `"replace"` \| `"fail"` \| `"append"`
 
 What action to perform if a schema break is detected
 
@@ -150,11 +149,11 @@ What action to perform if a schema break is detected
 
 [src/types/app-client.ts:175](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L175)
 
-___
+---
 
 ### onUpdate
 
-• `Optional` **onUpdate**: ``"replace"`` \| ``"fail"`` \| ``"append"`` \| [`OnUpdate`](/reference/algokit-utils-ts/api/enums/types_apponupdate/) \| ``"update"``
+• `Optional` **onUpdate**: `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/reference/algokit-utils-ts/api/enums/types_apponupdate/) \| `"update"`
 
 What action to perform if a TEAL update is detected
 
@@ -166,7 +165,7 @@ What action to perform if a TEAL update is detected
 
 [src/types/app-client.ts:177](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L177)
 
-___
+---
 
 ### schema
 
@@ -178,11 +177,11 @@ Any overrides for the storage schema to request for the created app; by default 
 
 [src/types/app-client.ts:197](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L197)
 
-___
+---
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/), ``"skipSending"`` \| ``"skipWaiting"``\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/), `"skipSending"` \| `"skipWaiting"`\>
 
 Parameters to control transaction sending
 
@@ -194,7 +193,7 @@ Parameters to control transaction sending
 
 [src/types/app-client.ts:165](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L165)
 
-___
+---
 
 ### sender
 
@@ -210,7 +209,7 @@ The optional sender to send the transaction from, will use the application clien
 
 [src/types/app-client.ts:163](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L163)
 
-___
+---
 
 ### updateArgs
 
@@ -226,7 +225,7 @@ Any args to pass to any update transaction that is issued as part of deployment
 
 [src/types/app-client.ts:189](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L189)
 
-___
+---
 
 ### version
 

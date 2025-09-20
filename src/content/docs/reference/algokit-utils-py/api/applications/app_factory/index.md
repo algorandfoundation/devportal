@@ -1,10 +1,11 @@
 ---
 title: app_factory
 ---
+
 ## Classes
 
 | [`AppFactoryParams`](/reference/algokit-utils-py/api/applications/app_factory/appfactoryparams/#algokit_utils.applications.app_factory.AppFactoryParams)                                                                |                                                                            |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | [`AppFactoryCreateParams`](/reference/algokit-utils-py/api/applications/app_factory/appfactorycreateparams/#algokit_utils.applications.app_factory.AppFactoryCreateParams)                                              | Parameters for creating application with bare call.                        |
 | [`AppFactoryCreateMethodCallParams`](/reference/algokit-utils-py/api/applications/app_factory/appfactorycreatemethodcallparams/#algokit_utils.applications.app_factory.AppFactoryCreateMethodCallParams)                | Parameters for creating application with method call                       |
 | [`AppFactoryCreateMethodCallResult`](/reference/algokit-utils-py/api/applications/app_factory/appfactorycreatemethodcallresult/#algokit_utils.applications.app_factory.AppFactoryCreateMethodCallResult)                | Base class for transaction results.                                        |

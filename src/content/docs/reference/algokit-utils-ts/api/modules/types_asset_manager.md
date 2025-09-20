@@ -2,9 +2,8 @@
 title: types/asset-manager
 slug: reference/algokit-utils-ts/api/modules/types_asset_manager
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / types/asset-manager
-
-
 
 ## Table of contents
 

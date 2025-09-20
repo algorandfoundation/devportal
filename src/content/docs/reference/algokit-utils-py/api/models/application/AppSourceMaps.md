@@ -1,14 +1,15 @@
 ---
 title: AppSourceMaps
 ---
-#### *class* algokit_utils.models.application.AppSourceMaps
+
+#### _class_ algokit_utils.models.application.AppSourceMaps
 
 The source maps for the application
 
-#### approval_source_map *: algosdk.source_map.SourceMap | None* *= None*
+#### approval*source_map *: algosdk.source*map.SourceMap | None* _= None_
 
 The source map for the approval program
 
-#### clear_source_map *: algosdk.source_map.SourceMap | None* *= None*
+#### clear*source_map *: algosdk.source*map.SourceMap | None* _= None_
 
 The source map for the clear state program

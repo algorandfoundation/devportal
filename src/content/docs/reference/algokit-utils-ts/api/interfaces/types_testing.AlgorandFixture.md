@@ -2,9 +2,8 @@
 title: AlgorandFixture
 slug: reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixture
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/) / AlgorandFixture
-
-
 
 [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/).AlgorandFixture
 
@@ -45,7 +44,7 @@ Testing framework agnostic handler method to run before each test to prepare the
 
 [src/types/testing.ts:90](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L90)
 
-___
+---
 
 ### newScope
 
@@ -59,34 +58,34 @@ You can call this from any testing framework specific hook method to control whe
 
 ```typescript
 describe('MY MODULE', () => {
-  const fixture = algorandFixture()
-  beforeEach(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture();
+  beforeEach(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount } = fixture.context
+    const { algorand, testAccount } = fixture.context;
 
     // Test stuff!
-  })
-})
+  });
+});
 ```
 
 **`Example`**
 
 ```typescript
 describe('MY MODULE', () => {
-  const fixture = algorandFixture()
-  beforeAll(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture();
+  beforeAll(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('test1', async () => {
-    const { algorand, testAccount } = fixture.context
+    const { algorand, testAccount } = fixture.context;
 
     // Test stuff!
-  })
+  });
   test('test2', async () => {
-    const { algorand, testAccount } = fixture.context
+    const { algorand, testAccount } = fixture.context;
     // algorand and testAccount are the same as in test1
-  })
-})
+  });
+});
 ```
 
 #### Type declaration
@@ -117,7 +116,7 @@ Retrieve an `AlgorandClient` loaded with the current context, including testAcco
 
 [src/types/testing.ts:84](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L84)
 
-___
+---
 
 ### context
 

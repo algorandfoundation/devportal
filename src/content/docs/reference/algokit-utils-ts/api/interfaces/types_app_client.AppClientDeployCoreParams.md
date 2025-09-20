@@ -2,9 +2,8 @@
 title: AppClientDeployCoreParams
 slug: reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycoreparams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/) / AppClientDeployCoreParams
-
-
 
 [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/).AppClientDeployCoreParams
 
@@ -41,7 +40,7 @@ If this is not specified then it will automatically be determined based on the A
 
 [src/types/app-client.ts:173](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L173)
 
-___
+---
 
 ### allowUpdate
 
@@ -54,11 +53,11 @@ If this is not specified then it will automatically be determined based on the A
 
 [src/types/app-client.ts:169](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L169)
 
-___
+---
 
 ### onSchemaBreak
 
-• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/) \| ``"replace"`` \| ``"fail"`` \| ``"append"``
+• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/) \| `"replace"` \| `"fail"` \| `"append"`
 
 What action to perform if a schema break is detected
 
@@ -66,11 +65,11 @@ What action to perform if a schema break is detected
 
 [src/types/app-client.ts:175](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L175)
 
-___
+---
 
 ### onUpdate
 
-• `Optional` **onUpdate**: ``"replace"`` \| ``"fail"`` \| ``"append"`` \| [`OnUpdate`](/reference/algokit-utils-ts/api/enums/types_apponupdate/) \| ``"update"``
+• `Optional` **onUpdate**: `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/reference/algokit-utils-ts/api/enums/types_apponupdate/) \| `"update"`
 
 What action to perform if a TEAL update is detected
 
@@ -78,11 +77,11 @@ What action to perform if a TEAL update is detected
 
 [src/types/app-client.ts:177](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L177)
 
-___
+---
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/), ``"skipSending"`` \| ``"skipWaiting"``\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/), `"skipSending"` \| `"skipWaiting"`\>
 
 Parameters to control transaction sending
 
@@ -90,7 +89,7 @@ Parameters to control transaction sending
 
 [src/types/app-client.ts:165](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L165)
 
-___
+---
 
 ### sender
 
@@ -102,7 +101,7 @@ The optional sender to send the transaction from, will use the application clien
 
 [src/types/app-client.ts:163](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L163)
 
-___
+---
 
 ### version
 

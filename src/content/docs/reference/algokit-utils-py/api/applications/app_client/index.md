@@ -1,10 +1,11 @@
 ---
 title: app_client
 ---
+
 ## Classes
 
 | [`AppClientCompilationResult`](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationresult/#algokit_utils.applications.app_client.AppClientCompilationResult)                | Result of compiling an application's TEAL code.                       |
-|-----------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | [`AppClientCompilationParams`](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationparams/#algokit_utils.applications.app_client.AppClientCompilationParams)                | Parameters for compiling an application's TEAL code.                  |
 | [`CommonAppCallParams`](/reference/algokit-utils-py/api/applications/app_client/commonappcallparams/#algokit_utils.applications.app_client.CommonAppCallParams)                                     | Common configuration for app call transaction parameters              |
 | [`AppClientCreateSchema`](/reference/algokit-utils-py/api/applications/app_client/appclientcreateschema/#algokit_utils.applications.app_client.AppClientCreateSchema)                               | Schema for application creation.                                      |
@@ -26,9 +27,9 @@ Calculate the offset after constant blocks in TEAL program.
 
 Analyzes a compiled TEAL program to find the ending offset position after any bytecblock and intcblock operations.
 
-* **Parameters:**
+- **Parameters:**
   **program** – The compiled TEAL program as bytes
-* **Returns:**
+- **Returns:**
   The maximum offset position after any constant block operations
 
 ### algokit_utils.applications.app_client.CreateOnComplete
