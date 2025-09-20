@@ -1,0 +1,40 @@
+---
+title: AdditionalAtomicTransactionComposerContext
+slug: reference/algokit-utils-ts/api/interfaces/types_transactionadditionalatomictransactioncomposercontext
+---
+[@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/overview) / [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/) / AdditionalAtomicTransactionComposerContext
+
+
+
+[types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/).AdditionalAtomicTransactionComposerContext
+
+Additional context about the `AtomicTransactionComposer`.
+
+## Table of contents
+
+### Properties
+
+- [maxFees](#maxfees)
+- [suggestedParams](#suggestedparams)
+
+## Properties
+
+### maxFees
+
+• **maxFees**: `Map`\<`number`, [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)\>
+
+A map of transaction index in the `AtomicTransactionComposer` to the max fee that can be calculated for a transaction in the group
+
+#### Defined in
+
+[src/types/transaction.ts:148](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L148)
+
+___
+
+### suggestedParams
+
+• **suggestedParams**: `Pick`\<`SuggestedParams`, ``"fee"`` \| ``"minFee"``\>
+
+#### Defined in
+
+[src/types/transaction.ts:151](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L151)

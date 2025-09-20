@@ -1,26 +1,25 @@
 ---
 title: App management
 ---
-
 App management is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It allows you to create, update, delete, call (ABI and otherwise) smart contract apps and the metadata associated with them (including state and boxes).
 
 ## `AppManager`
 
-The `AppManager` is a class that is used to manage app information.
+The [`AppManager`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/) is a class that is used to manage app information.
 
-To get an instance of `AppManager` you can use either [`AlgorandClient`](./algorand-client) via `algorand.app` or instantiate it directly (passing in an algod client instance):
+To get an instance of `AppManager` you can use either [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) via `algorand.app` or instantiate it directly (passing in an algod client instance):
 
 ```typescript
-import { AppManager } from '@algorandfoundation/algokit-utils/types/app-manager';
+import { AppManager } from '@algorandfoundation/algokit-utils/types/app-manager'
 
-const appManager = new AppManager(algod);
+const appManager = new AppManager(algod)
 ```
 
 ## Calling apps
 
 ### App Clients
 
-The recommended way of interacting with apps is via [Typed app clients](./typed-app-clients) or if you can't use a typed app client then an [untyped app client](./app-client). The methods shown on this page are the underlying mechanisms that app clients use and are for advanced use cases when you want more control.
+The recommended way of interacting with apps is via [Typed app clients](/algokit/utils/typescript/typed-app-clients/) or if you can't use a typed app client then an [untyped app client](/algokit/utils/typescript/app-client/). The methods shown on this page are the underlying mechanisms that app clients use and are for advanced use cases when you want more control.
 
 ### Calling an app
 
@@ -31,17 +30,17 @@ When calling an app there are two types of transactions:
 
 Calling an app involves providing some [common parameters](#common-app-parameters) and some parameters that will depend on the type of app call (create vs update vs other) per below sections.
 
-When [sending transactions directly via AlgorandClient](./algorand-client#sending-a-single-transaction) the `SingleSendTransactionResult` return value is expanded with extra fields depending on the type of app call:
+When [sending transactions directly via AlgorandClient](/algokit/utils/typescript/algorand-client/#sending-a-single-transaction) the `SingleSendTransactionResult` return value is expanded with extra fields depending on the type of app call:
 
-- All app calls extend `SendAppTransactionResult`, which has:
+- All app calls extend [`SendAppTransactionResult`](/reference/algokit-utils-ts/api/modules/types_transaction/#sendapptransactionresult), which has:
   - `return?: ABIReturn` - Which will contain an ABI return value if a non-void ABI method was called:
     - `rawReturnValue: Uint8Array` - The raw binary of the return value
     - `returnValue: ABIValue` - The decoded value in the appropriate JavaScript object
     - `decodeError: Error` - If there was a decoding error the above 2 values will be `undefined` and this will have the error
-- Update and create calls extend `SendAppUpdateTransactionResult`, which has:
+- Update and create calls extend [`SendAppUpdateTransactionResult`](/reference/algokit-utils-ts/api/modules/types_transaction/#sendappupdatetransactionresult), which has:
   - `compiledApproval: CompiledTeal | undefined` - The compilation result of approval, if approval program was supplied as a string and thus compiled by algod
   - `compiledClear: CompiledTeal | undefined` - The compilation result of clear state, if clear state program was supplied as a string and thus compiled by algod
-- Create calls extend `SendAppCreateTransactionResult`, which has:
+- Create calls extend [`SendAppCreateTransactionResult`](/reference/algokit-utils-ts/api/modules/types_transaction/#sendappcreatetransactionresult), which has:
   - `appId: bigint` - The id of the created app
   - `appAddress: string` - The Algorand address of the account associated with the app
 
@@ -50,18 +49,18 @@ There is a static method on [`AppManager`](#appmanager) that allows you to parse
 ```typescript
 const confirmation = modelsv2.PendingTransactionResponse.from_obj_for_encoding(
   await algod.pendingTransactionInformation(transactionId).do(),
-);
+)
 
-const abiReturn = AppManager.getABIReturn(confirmation, abiMethod);
+const abiReturn = AppManager.getABIReturn(confirmation, abiMethod)
 ```
 
 ### Creation
 
-To create an app via a raw app transaction you can use `algorand.send.appCreate(params)` (immediately send a single app creation transaction), `algorand.createTransaction.appCreate(params)` (construct an app creation transaction), or `algorand.newGroup().addAppCreate(params)` (add app creation to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To create an app via a raw app transaction you can use `algorand.send.appCreate(params)` (immediately send a single app creation transaction), `algorand.createTransaction.appCreate(params)` (construct an app creation transaction), or `algorand.newGroup().addAppCreate(params)` (add app creation to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
 To create an app via an ABI method call you can use `algorand.send.appCreateMethodCall(params)` (immediately send a single app creation transaction), `algorand.createTransaction.appCreateMethodCall(params)` (construct an app creation transaction), or `algorand.newGroup().addAppCreateMethodCall(params)` (add app creation to a group of transactions).
 
-The base type for specifying an app creation transaction is `AppCreateParams` (extended as `AppCreateMethodCall` for ABI method call version), which has the following parameters in addition to the [common parameters](#common-app-parameters):
+The base type for specifying an app creation transaction is [`AppCreateParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreateparams) (extended as [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) for ABI method call version), which has the following parameters in addition to the [common parameters](#common-app-parameters):
 
 - `onComplete?: Exclude<algosdk.OnApplicationComplete, algosdk.OnApplicationComplete.ClearStateOC>` - The on-completion action to specify for the call; defaults to NoOp and allows any on-completion apart from clear state.
 - `approvalProgram: Uint8Array | string` - The program to execute for all OnCompletes other than ClearState as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).
@@ -73,7 +72,7 @@ The base type for specifying an app creation transaction is `AppCreateParams` (e
   - `localByteSlices: number` - The number of byte slices saved in local state.
 - `extraProgramPages?: number` - Number of extra pages required for the programs. This is immutable once the app is created.
 
-If you pass in `approvalProgram` or `clearStateProgram` as a string then it will automatically be compiled using Algod and the compilation result will be available via `algorand.app.getCompilationResult` (including the source map). To skip this behaviour you can pass in the compiled TEAL as `Uint8Array`.
+If you pass in `approvalProgram` or `clearStateProgram` as a string then it will automatically be compiled using Algod and the compilation result will be available via [`algorand.app.getCompilationResult`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getcompilationresult) (including the source map). To skip this behaviour you can pass in the compiled TEAL as `Uint8Array`.
 
 ```typescript
 // Basic raw example
@@ -134,17 +133,17 @@ const createdAppId = result.appId
 
 ### Updating
 
-To update an app via a raw app transaction you can use `algorand.send.appUpdate(params)` (immediately send a single app update transaction), `algorand.createTransaction.appUpdate(params)` (construct an app update transaction), or `algorand.newGroup().addAppUpdate(params)` (add app update to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To update an app via a raw app transaction you can use `algorand.send.appUpdate(params)` (immediately send a single app update transaction), `algorand.createTransaction.appUpdate(params)` (construct an app update transaction), or `algorand.newGroup().addAppUpdate(params)` (add app update to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
 To create an app via an ABI method call you can use `algorand.send.appUpdateMethodCall(params)` (immediately send a single app update transaction), `algorand.createTransaction.appUpdateMethodCall(params)` (construct an app update transaction), or `algorand.newGroup().addAppUpdateMethodCall(params)` (add app update to a group of transactions).
 
-The base type for specifying an app update transaction is `AppUpdateParams` (extended as `AppUpdateMethodCall` for ABI method call version), which has the following parameters in addition to the [common parameters](#common-app-parameters):
+The base type for specifying an app update transaction is [`AppUpdateParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdateparams) (extended as [`AppUpdateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdatemethodcall) for ABI method call version), which has the following parameters in addition to the [common parameters](#common-app-parameters):
 
 - `onComplete?: algosdk.OnApplicationComplete.UpdateApplicationOC` - On Complete can either be omitted or set to update
 - `approvalProgram: Uint8Array | string` - The program to execute for all OnCompletes other than ClearState as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).
 - `clearStateProgram: Uint8Array | string` - The program to execute for ClearState OnComplete as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).
 
-If you pass in `approvalProgram` or `clearStateProgram` as a string then it will automatically be compiled using Algod and the compilation result will be available via `algorand.app.getCompilationResult` (including the source map). To skip this behaviour you can pass in the compiled TEAL as `Uint8Array`.
+If you pass in `approvalProgram` or `clearStateProgram` as a string then it will automatically be compiled using Algod and the compilation result will be available via [`algorand.app.getCompilationResult`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getcompilationresult) (including the source map). To skip this behaviour you can pass in the compiled TEAL as `Uint8Array`.
 
 ```typescript
 // Basic raw example
@@ -196,11 +195,11 @@ await algorand.send.appUpdateMethodCall({
 
 ### Deleting
 
-To delete an app via a raw app transaction you can use `algorand.send.appDelete(params)` (immediately send a single app deletion transaction), `algorand.createTransaction.appDelete(params)` (construct an app deletion transaction), or `algorand.newGroup().addAppDelete(params)` (add app deletion to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To delete an app via a raw app transaction you can use `algorand.send.appDelete(params)` (immediately send a single app deletion transaction), `algorand.createTransaction.appDelete(params)` (construct an app deletion transaction), or `algorand.newGroup().addAppDelete(params)` (add app deletion to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
 To delete an app via an ABI method call you can use `algorand.send.appDeleteMethodCall(params)` (immediately send a single app deletion transaction), `algorand.createTransaction.appDeleteMethodCall(params)` (construct an app deletion transaction), or `algorand.newGroup().addAppDeleteMethodCall(params)` (add app deletion to a group of transactions).
 
-The base type for specifying an app deletion transaction is `AppDeleteParams` (extended as `AppDeleteMethodCall` for ABI method call version), which has the following parameters in addition to the [common parameters](#common-app-parameters):
+The base type for specifying an app deletion transaction is [`AppDeleteParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appdeleteparams) (extended as [`AppDeleteMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appdeletemethodcall) for ABI method call version), which has the following parameters in addition to the [common parameters](#common-app-parameters):
 
 - `onComplete?: algosdk.OnApplicationComplete.DeleteApplicationOC` - On Complete can either be omitted or set to delete
 
@@ -250,11 +249,11 @@ await algorand.send.appDeleteMethodCall({
 
 ## Calling
 
-To call an app via a raw app transaction you can use `algorand.send.appCall(params)` (immediately send a single app call transaction), `algorand.createTransaction.appCall(params)` (construct an app call transaction), or `algorand.newGroup().addAppCall(params)` (add app deletion to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To call an app via a raw app transaction you can use `algorand.send.appCall(params)` (immediately send a single app call transaction), `algorand.createTransaction.appCall(params)` (construct an app call transaction), or `algorand.newGroup().addAppCall(params)` (add app deletion to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
 To call an app via an ABI method call you can use `algorand.send.appCallMethodCall(params)` (immediately send a single app call transaction), `algorand.createTransaction.appCallMethodCall(params)` (construct an app call transaction), or `algorand.newGroup().addAppCallMethodCall(params)` (add app call to a group of transactions).
 
-The base type for specifying an app call transaction is `AppCallParams` (extended as `AppCallMethodCall` for ABI method call version), which has the following parameters in addition to the [common parameters](#common-app-parameters):
+The base type for specifying an app call transaction is [`AppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallparams) (extended as [`AppCallMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallmethodcall) for ABI method call version), which has the following parameters in addition to the [common parameters](#common-app-parameters):
 
 - `onComplete?: Exclude<algosdk.OnApplicationComplete, algosdk.OnApplicationComplete.UpdateApplicationOC>` - On Complete can either be omitted (which will result in no-op) or set to any on-complete apart from update
 
@@ -308,15 +307,15 @@ await algorand.send.appCallMethodCall({
 
 To access local state you can use the following method from an [`AppManager`](#appmanager) instance:
 
-- `algorand.app.getLocalState(appId, address)` - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
+- [`algorand.app.getLocalState(appId, address)`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getlocalstate) - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
 
 ```typescript
-const globalState = await algorand.app.getGlobalState(12345n);
+const globalState = await algorand.app.getGlobalState(12345n)
 ```
 
 Global state is parsed from the underlying algod response via the following static method from [`AppManager`](#appmanager):
 
-- `AppManager.decodeAppState(state)` - Takes the raw response from the algod API for global state and returns a friendly generic object keyed by the UTF-8 value of the key
+- [`AppManager.decodeAppState(state)`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#decodeappstate) - Takes the raw response from the algod API for global state and returns a friendly generic object keyed by the UTF-8 value of the key
 
 ```typescript
 const globalAppState = /* value from algod */
@@ -337,49 +336,45 @@ if (typeof appState['value1'].value === 'string') {
 
 To access local state you can use the following method from an [`AppManager`](#appmanager) instance:
 
-- `algorand.app.getLocalState(appId, address)` - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
+- [`algorand.app.getLocalState(appId, address)`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getlocalstate) - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
 
 ```typescript
-const localState = await algorand.app.getLocalState(12345n, 'ACCOUNTADDRESS');
+const localState = await algorand.app.getLocalState(12345n, 'ACCOUNTADDRESS')
 ```
 
 ### Boxes
 
 To access and parse box values and names for an app you can use the following methods from an [`AppManager`](#appmanager) instance:
 
-- `algorand.app.getBoxNames(appId: bigint)` - Returns the current box names for the given app ID
-- `algorand.app.getBoxValue(appId: bigint, boxName: BoxIdentifier)` - Returns the binary value of the given box name for the given app ID
-- `algorand.app.getBoxValues(appId: bigint, boxNames: BoxIdentifier[])` - Returns the binary values of the given box names for the given app ID
-- `algorand.app.getBoxValueFromABIType(request: {appId: bigint, boxName: BoxIdentifier, type: algosdk.ABIType}})` - Returns the parsed ABI value of the given box name for the given app ID for the provided ABI type
-- `algorand.app.getBoxValuesFromABIType(request: {appId: bigint, boxNames: BoxIdentifier[], type: algosdk.ABIType})` - Returns the parsed ABI values of the given box names for the given app ID for the provided ABI type
-- `AppManager.getBoxReference(boxId)` - Returns a `algosdk.BoxReference` representation of the given [box identifier / reference](#box-references), which is useful when constructing a raw `algosdk.Transaction`
+- [`algorand.app.getBoxNames(appId: bigint)`](/reference/algokit-utils-ts/api/modules/index/#getboxnames) - Returns the current [box names](#boxname) for the given app ID
+- [`algorand.app.getBoxValue(appId: bigint, boxName: BoxIdentifier)`](/reference/algokit-utils-ts/api/modules/index/#getboxvalue) - Returns the binary value of the given box name for the given app ID
+- [`algorand.app.getBoxValues(appId: bigint, boxNames: BoxIdentifier[])`](../code/modules/index.md#getboxvalues) - Returns the binary values of the given box names for the given app ID
+- [`algorand.app.getBoxValueFromABIType(request: {appId: bigint, boxName: BoxIdentifier, type: algosdk.ABIType}})`](/reference/algokit-utils-ts/api/modules/index/#getboxvaluefromabitype) - Returns the parsed ABI value of the given box name for the given app ID for the provided ABI type
+- [`algorand.app.getBoxValuesFromABIType(request: {appId: bigint, boxNames: BoxIdentifier[], type: algosdk.ABIType})`](../code/modules/index.md#getboxvaluesfromabitype) - Returns the parsed ABI values of the given box names for the given app ID for the provided ABI type
+- [`AppManager.getBoxReference(boxId)`](/reference/algokit-utils-ts/api/modules/index/#getboxreference) - Returns a `algosdk.BoxReference` representation of the given [box identifier / reference](#box-references), which is useful when constructing a raw `algosdk.Transaction`
 
 ```typescript
-const appId = 12345n;
-const boxName: BoxReference = 'my-box';
-const boxName2: BoxReference = 'my-box2';
+const appId = 12345n
+const boxName: BoxReference = 'my-box'
+const boxName2: BoxReference = 'my-box2'
 
-const boxNames = algorand.app.getBoxNames(appId);
-const boxValue = algorand.app.getBoxValue(appId, boxName);
-const boxValues = algorand.app.getBoxValues(appId, [boxName, boxName2]);
-const boxABIValue = algorand.app.getBoxValueFromABIType(appId, boxName, algosdk.ABIStringType);
-const boxABIValues = algorand.app.getBoxValuesFromABIType(
-  appId,
-  [boxName, boxName2],
-  algosdk.ABIStringType,
-);
+const boxNames = algorand.app.getBoxNames(appId)
+const boxValue = algorand.app.getBoxValue(appId, boxName)
+const boxValues = algorand.app.getBoxValues(appId, [boxName, boxName2])
+const boxABIValue = algorand.app.getBoxValueFromABIType(appId, boxName, algosdk.ABIStringType)
+const boxABIValues = algorand.app.getBoxValuesFromABIType(appId, [boxName, boxName2], algosdk.ABIStringType)
 ```
 
 ## Getting app information
 
 To get reference information and metadata about an existing app you can use the following methods:
 
-- `algorand.app.getById(appId)` - Returns current app information by app ID from an [`AppManager`](#appmanager) instance
-- `indexer.lookupAccountCreatedApplicationByAddress(indexer, address, getAll?, paginationLimit?)` - Returns all apps created by a given account from [indexer](./indexer)
+- [`algorand.app.getById(appId)`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getbyid) - Returns current app information by app ID from an [`AppManager`](#appmanager) instance
+- [`indexer.lookupAccountCreatedApplicationByAddress(indexer, address, getAll?, paginationLimit?)`](/reference/algokit-utils-ts/api/modules/indexindexer/#lookupaccountcreatedapplicationbyaddress) - Returns all apps created by a given account from [indexer](/algokit/utils/typescript/indexer/)
 
 ## Common app parameters
 
-When interacting with apps (creating, updating, deleting, calling), there are some `CommonAppCallParams` that you will be able to pass in to all calls in addition to the [common transaction parameters](./algorand-client#transaction-parameters):
+When interacting with apps (creating, updating, deleting, calling), there are some [`CommonAppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commonappcallparams) that you will be able to pass in to all calls in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `appId: bigint` - ID of the application; only specified if the application is not being created.
 - `onComplete?: algosdk.OnApplicationComplete` - The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call (noting each call type will have restrictions that affect this value).
@@ -389,7 +384,7 @@ When interacting with apps (creating, updating, deleting, calling), there are so
 - `assetReferences?: bigint[]` - The ID of any assets to load to the [foreign assets array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 - `boxReferences?: (BoxReference | BoxIdentifier)[]` - Any [boxes](#box-references) to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays)
 
-When making an ABI call, the `args` parameter is replaced with a different type and there is also a `method` parameter per the `AppMethodCall` type:
+When making an ABI call, the `args` parameter is replaced with a different type and there is also a `method` parameter per the [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall) type:
 
 - `method: algosdk.ABIMethod`
 - `args: ABIArgument[]` The arguments to pass to the ABI call, which can be one of:
@@ -402,7 +397,7 @@ When making an ABI call, the `args` parameter is replaced with a different type 
     - An array of one of the above types
   - `algosdk.TransactionWithSigner`
   - `algosdk.Transaction`
-  - `Promise<Transaction>` - which allows you to use an AlgorandClient call that [returns a transaction](./algorand-client#creating-single-transactions) without needing to await the call
+  - `Promise<Transaction>` - which allows you to use an AlgorandClient call that [returns a transaction](/algokit/utils/typescript/algorand-client/#creating-single-transactions) without needing to await the call
   - `AppMethodCall` - parameters that define another (nested) ABI method call, which will in turn get resolved to one or more transactions
 
 ## Box references
@@ -417,7 +412,7 @@ Referencing boxes can by done by either `BoxIdentifier` (which identifies the na
  *  * `TransactionSignerAccount` (that will be encoded into the
  *    public key address of the corresponding account)
  */
-export type BoxIdentifier = string | Uint8Array | TransactionSignerAccount;
+export type BoxIdentifier = string | Uint8Array | TransactionSignerAccount
 
 /**
  * A grouping of the app ID and name identifier to reference an app box.
@@ -426,11 +421,11 @@ export interface BoxReference {
   /**
    * A unique application id
    */
-  appId: bigint;
+  appId: bigint
   /**
    * Identifier for a box name
    */
-  name: BoxIdentifier;
+  name: BoxIdentifier
 }
 ```
 
@@ -441,8 +436,8 @@ The [`AppManager`](#appmanager) class allows you to compile TEAL code with cachi
 If you call `algorand.app.compileTeal(tealCode)` then the compilation result will be stored and retrievable from `algorand.app.getCompilationResult(tealCode)`.
 
 ```typescript
-const tealCode = 'return 1';
-const compilationResult = await algorand.app.compileTeal(tealCode);
+const tealCode = 'return 1'
+const compilationResult = await algorand.app.compileTeal(tealCode)
 // ...
-const previousCompilationResult = algorand.app.getCompilationResult(tealCode);
+const previousCompilationResult = algorand.app.getCompilationResult(tealCode)
 ```

@@ -16,7 +16,7 @@ export const algokitCLIConfig: ImportOptions = {
   owner: 'algorandfoundation',
   repo: 'algokit-cli',
   assetsPath: 'src/assets/imports/algokit/cli',
-  assetsBaseUrl: '~/assets/imports/algokit/cli',
+  assetsBaseUrl: '@assets/imports/algokit/cli',
   includes: [
     {
       pattern: 'docs/algokit.md',

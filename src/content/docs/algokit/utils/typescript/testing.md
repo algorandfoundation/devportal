@@ -1,19 +1,18 @@
 ---
 title: Automated testing
 ---
-
 Automated testing is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It allows you to use terse, robust automated testing primitives that work across any testing framework (including jest and vitest) to facilitate fixture management, quickly generating isolated and funded test accounts, transaction logging, indexer wait management and log capture.
 
-To see some usage examples check out the all of the [automated tests](../../src/) and the various \*.spec.ts files (AlgoKit Utils [dogfoods](https://en.wikipedia.org/wiki/Eating_your_own_dog_food) it's own testing library). Alternatively, you can see an example of using this library to test a smart contract with [the tests](https://github.com/algorandfoundation/nft_voting_tool/blob/main/src/algorand/smart_contracts/tests/voting.spec.ts) for the [on-chain voting tool](https://github.com/algorandfoundation/nft_voting_tool#readme).
+To see some usage examples check out the all of the [automated tests](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/testing) and the various \*.spec.ts files (AlgoKit Utils [dogfoods](https://en.wikipedia.org/wiki/Eating_your_own_dog_food) it's own testing library). Alternatively, you can see an example of using this library to test a smart contract with [the tests](https://github.com/algorandfoundation/nft_voting_tool/blob/main/src/algorand/smart_contracts/tests/voting.spec.ts) for the [on-chain voting tool](https://github.com/algorandfoundation/nft_voting_tool#readme).
 
 ## Module import
 
-The testing capability is not exposed from the root algokit module so there is a clear separation between testing functionality and non-testing functionality.
+The testing capability is not exposed from the [root algokit module](/reference/algokit-utils-ts/api/modules/index/) so there is a clear separation between testing functionality and non-testing functionality.
 
-To access all of the functionality in the testing capability individually, you can import the testing module:
+To access all of the functionality in the testing capability individually, you can import the [testing module](/reference/algokit-utils-ts/api/modules/testing/):
 
 ```typescript
-import * as algotesting from '@algorandfoundation/algokit-utils/testing';
+import * as algotesting from '@algorandfoundation/algokit-utils/testing'
 ```
 
 ## Algorand fixture
@@ -21,7 +20,7 @@ import * as algotesting from '@algorandfoundation/algokit-utils/testing';
 In general, the only entrypoint you will need to use the testing capability is just by importing the `algorandFixture` since it exposes the rest of the functionality in a manner that is easy to integrate with an underlying test framework like Jest or vitest:
 
 ```typescript
-import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
+import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
 ```
 
 ### Using with Jest
@@ -31,19 +30,19 @@ To integrate with [Jest](https://jestjs.io/) you need to pass the `fixture.newSc
 #### Per-test isolation
 
 ```typescript
-import { describe, test, beforeEach } from '@jest/globals';
-import { algorandFixture } from './testing';
+import { describe, test, beforeEach } from '@jest/globals'
+import { algorandFixture } from './testing'
 
 describe('MY MODULE', () => {
-  const fixture = algorandFixture();
-  beforeEach(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture()
+  beforeEach(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount /* ... */ } = fixture.context;
+    const { algorand, testAccount /* ... */ } = fixture.context
 
     // Test stuff!
-  });
-});
+  })
+})
 ```
 
 Occasionally there may be a delay when first running the fixture setup so we add a 10s timeout to avoid intermittent test failures (`10_000`).
@@ -51,19 +50,19 @@ Occasionally there may be a delay when first running the fixture setup so we add
 #### Test suite isolation
 
 ```typescript
-import { describe, test, beforeAll } from '@jest/globals';
-import { algorandFixture } from './testing';
+import { describe, test, beforeAll } from '@jest/globals'
+import { algorandFixture } from './testing'
 
 describe('MY MODULE', () => {
-  const fixture = algorandFixture();
-  beforeAll(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture()
+  beforeAll(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount /* ... */ } = fixture.context;
+    const { algorand, testAccount /* ... */ } = fixture.context
 
     // Test stuff!
-  });
-});
+  })
+})
 ```
 
 Occasionally there may be a delay when first running the fixture setup so we add a 10s timeout to avoid intermittent test failures (`10_000`).
@@ -75,19 +74,19 @@ To integrate with [vitest](https://vitest.dev/) you need to pass the `fixture.be
 #### Per-test isolation
 
 ```typescript
-import { describe, test, beforeEach } from 'vitest';
-import { algorandFixture } from './testing';
+import { describe, test, beforeEach } from 'vitest'
+import { algorandFixture } from './testing'
 
 describe('MY MODULE', () => {
-  const fixture = algorandFixture();
-  beforeEach(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture()
+  beforeEach(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount /* ... */ } = fixture.context;
+    const { algorand, testAccount /* ... */ } = fixture.context
 
     // Test stuff!
-  });
-});
+  })
+})
 ```
 
 Occasionally there may be a delay when first running the fixture setup so we add a 10s timeout to avoid intermittent test failures (`10_000`).
@@ -95,19 +94,19 @@ Occasionally there may be a delay when first running the fixture setup so we add
 #### Test suite isolation
 
 ```typescript
-import { describe, test, beforeAll } from 'vitest';
-import { algorandFixture } from './testing';
+import { describe, test, beforeAll } from 'vitest'
+import { algorandFixture } from './testing'
 
 describe('MY MODULE', () => {
-  const fixture = algorandFixture();
-  beforeAll(fixture.newScope, 10_000); // Add a 10s timeout to cater for occasionally slow LocalNet calls
+  const fixture = algorandFixture()
+  beforeAll(fixture.newScope, 10_000) // Add a 10s timeout to cater for occasionally slow LocalNet calls
 
   test('MY TEST', async () => {
-    const { algorand, testAccount /* ... */ } = fixture.context;
+    const { algorand, testAccount /* ... */ } = fixture.context
 
     // Test stuff!
-  });
-});
+  })
+})
 ```
 
 Occasionally there may be a delay when first running the fixture setup so we add a 10s timeout to avoid intermittent test failures (`10_000`).
@@ -119,14 +118,14 @@ When calling `algorandFixture()` you can optionally pass in some fixture configu
 - `algod?: Algodv2` - An optional algod client, if not specified then it will create one against environment variables defined network (if present) or default LocalNet
 - `indexer?: Indexer` - An optional indexer client, if not specified then it will create one against environment variables defined network (if present) or default LocalNet
 - `kmd?: Kmd` - An optional kmd client, if not specified then it will create one against environment variables defined network (if present) or default LocalNet
-- `testAccountFunding?: AlgoAmount` - The [amount](./amount) of funds to allocate to the default testing account, if not specified then it will get `10` ALGO
+- `testAccountFunding?: AlgoAmount` - The [amount](/algokit/utils/typescript/amount/) of funds to allocate to the default testing account, if not specified then it will get `10` ALGO
 - `accountGetter?: (algod: Algodv2, kmd?: Kmd) => Promise<Account>` - Optional override for how to get an account; this allows you to retrieve test accounts from a known or cached list of accounts.
 
 ### Using the fixture context
 
-The `fixture.context` property is of type `AlgorandTestAutomationContext` exposes the following properties from which you can pick which ones you want in a given test using an object [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
+The `fixture.context` property is of type [`AlgorandTestAutomationContext`](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/) exposes the following properties from which you can pick which ones you want in a given test using an object [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
 
-- `algorand: AlgorandClient` - An [`AlgorandClient`](./algorand-client) instance
+- `algorand: AlgorandClient` - An [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) instance
 - `algod: Algodv2` - Proxy Algod client instance that will log sent transactions in `transactionLogger`
 - `indexer: Indexer` - Indexer client instance
 - `kmd: Kmd` - KMD client instance
@@ -141,32 +140,32 @@ The `fixture.context` property is of type `AlgorandTestAutomationContext` expose
 If you want to capture log messages from AlgoKit that are issued within your test so that you can assert on them or parse them for debugging information etc. then you can use the log capture fixture.
 
 ```typescript
-import { algoKitLogCaptureFixture } from '@algorandfoundation/algokit-utils/testing';
+import { algoKitLogCaptureFixture } from '@algorandfoundation/algokit-utils/testing'
 ```
 
-The log capture fixture works by setting the logger within the AlgoKit configuration to be a `TestLogger` during the test run.
+The log capture fixture works by setting the logger within the AlgoKit configuration to be a [`TestLogger`](/reference/algokit-utils-ts/api/classes/testingtestlogger/) during the test run.
 
 ### Using with Jest
 
 To integrate with [Jest](https://jestjs.io/) you need to pass the `fixture.beforeEach` method into Jest's `beforeEach` method and then within each test you can access `fixture.context` to access per-test isolated fixture values.
 
 ```typescript
-import { describe, test, beforeEach, afterEach } from '@jest/globals';
-import { algoKitLogCaptureFixture } from './testing';
+import { describe, test, beforeEach, afterEach } from '@jest/globals'
+import { algoKitLogCaptureFixture } from './testing'
 
 describe('MY MODULE', () => {
-  const logs = algoKitLogCaptureFixture();
-  beforeEach(logs.beforeEach);
-  afterEach(logs.afterEach);
+  const logs = algoKitLogCaptureFixture()
+  beforeEach(logs.beforeEach)
+  afterEach(logs.afterEach)
 
   test('MY TEST', async () => {
-    const { algorand, testAccount } = fixture.context;
+    const { algorand, testAccount } = fixture.context
     // Test stuff!
 
-    const capturedLogs = logs.testLogger.capturedLogs;
+    const capturedLogs = logs.testLogger.capturedLogs
     // do stuff with the logs
-  });
-});
+  })
+})
 ```
 
 ### Using with vitest
@@ -174,22 +173,22 @@ describe('MY MODULE', () => {
 To integrate with [vitest](https://vitest.dev/) you need to pass the `fixture.beforeEach` method into vitest's `beforeEach` method and then within each test you can access `fixture.context` to access per-test isolated fixture values.
 
 ```typescript
-import { describe, test, beforeEach, afterEach } from 'vitest';
-import { algoKitLogCaptureFixture } from './testing';
+import { describe, test, beforeEach, afterEach } from 'vitest'
+import { algoKitLogCaptureFixture } from './testing'
 
 describe('MY MODULE', () => {
-  const logs = algoKitLogCaptureFixture();
-  beforeEach(logs.beforeEach);
-  afterEach(logs.afterEach);
+  const logs = algoKitLogCaptureFixture()
+  beforeEach(logs.beforeEach)
+  afterEach(logs.afterEach)
 
   test('MY TEST', async () => {
-    const { algorand, testAccount } = fixture.context;
+    const { algorand, testAccount } = fixture.context
     // Test stuff!
 
-    const capturedLogs = logs.testLogger.capturedLogs;
+    const capturedLogs = logs.testLogger.capturedLogs
     // do stuff with the logs
-  });
-});
+  })
+})
 ```
 
 ### Snapshot testing the logs
@@ -199,17 +198,15 @@ If you want to quickly pin some behaviour of what logic you have does in terms o
 This might look something like this:
 
 ```typescript
-const { algorand, testAccount } = fixture.context;
-const result = await algorand.client
-  .getTypedClientById(HelloWorldContractClient, { id: 0 })
-  .deploy();
+const { algorand, testAccount } = fixture.context
+const result = await algorand.client.getTypedClientById(HelloWorldContractClient, { id: 0 }).deploy()
 expect(
   logging.testLogger.getLogSnapshot({
     accounts: [testAccount],
     transactions: [result.transaction],
     apps: [result.appId],
   }),
-).toMatchSnapshot();
+).toMatchSnapshot()
 ```
 
 ## Waiting for indexer
@@ -228,7 +225,7 @@ The testing capability provides mechanisms for waiting for indexer to catch up, 
 
 When testing, it can be useful to capture all of the transactions that have been issued with a given test run. They can then be asserted on, or used for [waiting for indexer](#waiting-for-indexer), etc.
 
-The testing capability provides the ability to capture transactions via the `TransactionLogger` class.
+The testing capability provides the ability to capture transactions via the [`TransactionLogger`](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/) class.
 
 The `TransactionLogger` has the following methods:
 
@@ -244,15 +241,15 @@ The easiest way to use this functionality is via the [Algorand fixture](#algoran
 
 When testing, it's often useful to ephemerally generate random accounts, fund them with some number of Algo and then use that account to perform transactions. By creating an ephemeral, random account you naturally get isolation between tests and test runs and don't need to start from a specific blockchain network state. This makes test less flakey, and also means the same test can be run against LocalNet and (say) TestNet.
 
-The key when generating a test account is getting hold of a [dispenser](./transfer#dispenser) and then [ensuring the test account is funded](./transfer#ensurefunded).
+The key when generating a test account is getting hold of a [dispenser](/algokit/utils/typescript/transfer/#dispenser) and then [ensuring the test account is funded](/algokit/utils/typescript/transfer/#ensurefunded).
 
 To make it easier to quickly get a test account the testing capability provides the following mechanisms:
 
-- `algotesting.getTestAccount(testAccountParams, algod, kmd?)` - Generates a random new account, logs the mnemonic of the account (unless suppressed), funds it from the [dispenser](./transfer#dispenser)
+- [`algotesting.getTestAccount(testAccountParams, algod, kmd?)`](/reference/algokit-utils-ts/api/modules/testing/#gettestaccount) - Generates a random new account, logs the mnemonic of the account (unless suppressed), funds it from the [dispenser](/algokit/utils/typescript/transfer/#dispenser)
 - `algorandFixture.testAccount` - A test account that is always generated for every test (log output suppressed to reduce noise, but worth noting that means the mnemonic isn't logged for this account), by default it is given 10 Algo unless overridden in the [fixture config](#fixture-configuration)
-- `algorandFixture.generateAccount(testAccountParams)` - Allows you to quickly generate a test account with the `algod` and `kmd` instances that are part of the given fixture
+- [`algorandFixture.generateAccount(testAccountParams)`](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#generateaccount) - Allows you to quickly generate a test account with the `algod` and `kmd` instances that are part of the given fixture
 
-The parameters object that controls test account generation, `GetTestAccountParams`, has the following properties:
+The parameters object that controls test account generation, [`GetTestAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/), has the following properties:
 
 - `initialFunds: AlgoAmount` - Initial funds to ensure the account has
 - `suppressLog?: boolean` - Whether to suppress the log (which includes a mnemonic) or not (default: do not suppress the log)

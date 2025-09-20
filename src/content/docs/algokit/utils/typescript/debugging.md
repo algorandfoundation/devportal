@@ -1,7 +1,6 @@
 ---
 title: Debugger
 ---
-
 The AlgoKit TypeScript Utilities package provides a set of debugging tools that can be used to simulate and trace transactions on the Algorand blockchain. These tools and methods are optimized for developers who are building applications on Algorand and need to test and debug their smart contracts via [AlgoKit AVM Debugger extension](https://github.com/algorandfoundation/algokit-avm-vscode-debugger).
 
 ## Configuration
@@ -11,10 +10,10 @@ The `config.ts` file contains the `UpdatableConfig` class which manages and upda
 To enable debug mode in your project you can configure it as follows:
 
 ```ts
-import { Config } from '@algorandfoundation/algokit-utils';
+import { Config } from '@algorandfoundation/algokit-utils'
 Config.configure({
   debug: true,
-});
+})
 ```
 
 ## Debugging in `node` environment (recommended)
@@ -29,18 +28,18 @@ To keep the `algokit-utils-ts` package lean and isomporphic, the debugging utili
 
 ## Debugging in `browser` environment
 
-Note: `algokit-utils-ts-debug` cannot be used in browser environments. However, you can still obtain and persist simulation traces from the browser's `Console` tab when submitting transactions using the algokit-utils-ts package. To enable this functionality, activate debug mode in the algokit-utils-ts config as described in the [getting started](./docs/code/getting-started) guide.
+Note: `algokit-utils-ts-debug` cannot be used in browser environments. However, you can still obtain and persist simulation traces from the browser's `Console` tab when submitting transactions using the algokit-utils-ts package.
 
 ### Subscribe to the `simulate` response event
 
 After setting the `debug` flag to true in the [configuration](#configuration) section, subscribe to the `TxnGroupSimulated` event as follows:
 
 ```ts
-import { AVMTracesEventData, Config, EventType } from '@algorandfoundation/algokit-utils';
+import { AVMTracesEventData, Config, EventType } from '@algorandfoundation/algokit-utils'
 
 Config.events.on(EventType.TxnGroupSimulated, (eventData: AVMTracesEventData) => {
-  Config.logger.info(JSON.stringify(eventData.simulateResponse.get_obj_for_encoding(), null, 2));
-});
+  Config.logger.info(JSON.stringify(eventData.simulateResponse.get_obj_for_encoding(), null, 2))
+})
 ```
 
 This will output any simulation traces that have been emitted whilst calling your app. Place this code immediately after the `Config.configure` call to ensure it executes before any transactions are submitted for simulation.

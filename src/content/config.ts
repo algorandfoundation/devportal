@@ -13,8 +13,8 @@ import {
   arcStandardsConfig,
   nodekitConfig,
   algokitCLIConfig,
-  // utilsTypescriptGuidesConfig,
-  // utilsTypescriptApiConfig,
+  algokitUtilsTypescriptConfig,
+  algokitUtilsPythonConfig,
 } from '../../imports/configs/index.js';
 
 const IMPORT_REMOTE = process.env.IMPORT_GITHUB === 'true';
@@ -26,8 +26,8 @@ const REMOTE_CONTENT: ImportOptions[] = [
   arcStandardsConfig,
   nodekitConfig,
   algokitCLIConfig,
-  // utilsTypescriptGuidesConfig, //disabled for now
-  // utilsTypescriptApiConfig, //disabled for now
+  algokitUtilsTypescriptConfig,
+  algokitUtilsPythonConfig,
 ];
 
 export const collections = {

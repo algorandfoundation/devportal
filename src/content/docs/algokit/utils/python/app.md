@@ -1,12 +1,11 @@
 ---
 title: App management
 ---
-
 App management is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It allows you to create, update, delete, call (ABI and otherwise) smart contract apps and the metadata associated with them (including state and boxes).
 
 ## `AppManager`
 
-The `AppManager` is a class that is used to manage app information. To get an instance of `AppManager` you can use either [`AlgorandClient`](algorand-client) via `algorand.app` or instantiate it directly (passing in an algod client instance):
+The `AppManager` is a class that is used to manage app information. To get an instance of `AppManager` you can use either [`AlgorandClient`](/algokit/utils/python/docs/markdown/capabilities/algorand-client/) via `algorand.app` or instantiate it directly (passing in an algod client instance):
 
 ```python
 from algokit_utils import AppManager
@@ -18,7 +17,7 @@ app_manager = AppManager(algod_client)
 
 ### App Clients
 
-The recommended way of interacting with apps is via [App clients](app-client) and [App factory](app-client#appfactory). The methods shown on this page are the underlying mechanisms that app clients use and are for advanced use cases when you want more control.
+The recommended way of interacting with apps is via [App clients](/algokit/utils/python/docs/markdown/capabilities/app-client/) and [App factory](/algokit/utils/python/docs/markdown/capabilities/app-client/#appfactory). The methods shown on this page are the underlying mechanisms that app clients use and are for advanced use cases when you want more control.
 
 ### Compilation
 
@@ -162,4 +161,4 @@ For ABI method calls, additional parameters:
 - `method` - The ABI method to call
 - `args` - ABI typed arguments to pass
 
-See [App client](app-client) for more details on constructing app calls.
+See [App client](/algokit/utils/python/docs/markdown/capabilities/app-client/) for more details on constructing app calls.

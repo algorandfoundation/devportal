@@ -1,7 +1,6 @@
 ---
 title: Testing
 ---
-
 The following is a collection of useful snippets that can help you get started with testing your Algorand applications using AlgoKit utils. For the sake of simplicity, we’ll use [pytest](https://docs.pytest.org/en/latest/) in the examples below.
 
 ## Basic Test Setup

@@ -1,10 +1,9 @@
 ---
 title: Algo amount handling
 ---
-
 Algo amount handling is one of the core capabilities provided by AlgoKit Utils. It allows you to reliably and tersely specify amounts of microAlgo and Algo and safely convert between them.
 
-Any AlgoKit Utils function that needs an Algo amount will take an `AlgoAmount` object, which ensures that there is never any confusion about what value is being passed around. Whenever an AlgoKit Utils function calls into an underlying algosdk function, or if you need to take an `AlgoAmount` and pass it into an underlying algosdk function (per the [modularity principle](../index#core-principles)) you can safely and explicitly convert to microAlgo or Algo.
+Any AlgoKit Utils function that needs an Algo amount will take an `AlgoAmount` object, which ensures that there is never any confusion about what value is being passed around. Whenever an AlgoKit Utils function calls into an underlying algosdk function, or if you need to take an `AlgoAmount` and pass it into an underlying algosdk function (per the [modularity principle](/algokit/utils/python/#core-principles)) you can safely and explicitly convert to microAlgo or Algo.
 
 To see some usage examples check out the automated tests. Alternatively, you can see the reference documentation for `AlgoAmount`.
 

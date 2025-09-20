@@ -1,7 +1,6 @@
 ---
 title: Transaction management
 ---
-
 Transaction management is one of the core capabilities provided by AlgoKit Utils. It allows you to construct, simulate and send single or grouped transactions with consistent and highly configurable semantics, including configurable control of transaction notes, logging, fees, multiple sender account types, and sending behavior.
 
 ## Transaction Results
@@ -131,7 +130,7 @@ Key differences between result types:
 
 To understand how to create, simulate and send transactions consult:
 
-- The [`TransactionComposer`](transaction-composer) documentation for composing transaction groups
-- The [`AlgorandClient`](algorand-client) documentation for a high-level interface to send transactions
+- The [`TransactionComposer`](/algokit/utils/python/docs/markdown/capabilities/transaction-composer/) documentation for composing transaction groups
+- The [`AlgorandClient`](/algokit/utils/python/docs/markdown/capabilities/algorand-client/) documentation for a high-level interface to send transactions
 
 The transaction composer documentation covers the details of constructing transactions and transaction groups, while the Algorand client documentation covers the high-level interface for sending transactions.

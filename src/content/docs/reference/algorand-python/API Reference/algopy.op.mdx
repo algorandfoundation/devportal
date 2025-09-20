@@ -12,29 +12,30 @@ title: "algopy.op"
 
 ## Classes
 
-| [`AcctParamsGet`](#algopy.op.AcctParamsGet)     | X is field F from account A. Y is 1 if A owns positive algos, else 0<br/>Native TEAL op: [`acct_params_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#acct_params_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-|-------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`AppGlobal`](#algopy.op.AppGlobal)             | Get or modify Global app state<br/>Native TEAL ops: [`app_global_del`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_global_del), [`app_global_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_global_get), [`app_global_get_ex`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_global_get_ex), [`app_global_put`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_global_put)                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| [`AppLocal`](#algopy.op.AppLocal)               | Get or modify Local app state<br/>Native TEAL ops: [`app_local_del`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_local_del), [`app_local_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_local_get), [`app_local_get_ex`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_local_get_ex), [`app_local_put`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_local_put)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| [`AppParamsGet`](#algopy.op.AppParamsGet)       | X is field F from app A. Y is 1 if A exists, else 0 params: Txn.ForeignApps offset or an *available* app id. Return: did_exist flag (1 if the application existed and 0 otherwise), value.<br/>Native TEAL op: [`app_params_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_params_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| [`AssetHoldingGet`](#algopy.op.AssetHoldingGet) | X is field F from account A’s holding of asset B. Y is 1 if A is opted into B, else 0 params: Txn.Accounts offset (or, since v4, an *available* address), asset id (or, since v4, a Txn.ForeignAssets offset). Return: did_exist flag (1 if the asset existed and 0 otherwise), value.<br/>Native TEAL op: [`asset_holding_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#asset_holding_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| [`AssetParamsGet`](#algopy.op.AssetParamsGet)   | X is field F from asset A. Y is 1 if A exists, else 0 params: Txn.ForeignAssets offset (or, since v4, an *available* asset id. Return: did_exist flag (1 if the asset existed and 0 otherwise), value.<br/>Native TEAL op: [`asset_params_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#asset_params_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| [`Base64`](#algopy.op.Base64)                   | Available values for the `base64` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| [`Block`](#algopy.op.Block)                     | field F of block A. Fail unless A falls between txn.LastValid-1002 and txn.FirstValid (exclusive)<br/>Native TEAL op: [`block`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#block)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| [`Box`](#algopy.op.Box)                         | Get or modify box state<br/>Native TEAL ops: [`box_create`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_create), [`box_del`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_del), [`box_extract`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_extract), [`box_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_get), [`box_len`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_len), [`box_put`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_put), [`box_replace`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_replace), [`box_resize`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_resize), [`box_splice`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_splice) |
-| [`EC`](#algopy.op.EC)                           | Available values for the `EC` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| [`ECDSA`](#algopy.op.ECDSA)                     | Available values for the `ECDSA` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| [`EllipticCurve`](#algopy.op.EllipticCurve)     | Elliptic Curve functions<br/>Native TEAL ops: [`ec_add`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_add), [`ec_map_to`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_map_to), [`ec_multi_scalar_mul`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_multi_scalar_mul), [`ec_pairing_check`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_pairing_check), [`ec_scalar_mul`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_scalar_mul), [`ec_subgroup_check`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_subgroup_check)                                                                                                                                                                                                                                                            |
-| [`GITxn`](#algopy.op.GITxn)                     | Get values for inner transaction in the last group submitted<br/>Native TEAL ops: [`gitxn`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#gitxn), [`gitxnas`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#gitxnas)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| [`GTxn`](#algopy.op.GTxn)                       | Get values for transactions in the current group<br/>Native TEAL ops: [`gtxns`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#gtxns), [`gtxnsas`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#gtxnsas)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| [`Global`](#algopy.op.Global)                   | Get Global values<br/>Native TEAL op: [`global`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#global)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| [`ITxn`](#algopy.op.ITxn)                       | Get values for the last inner transaction<br/>Native TEAL ops: [`itxn`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn), [`itxnas`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxnas)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| [`ITxnCreate`](#algopy.op.ITxnCreate)           | Create inner transactions<br/>Native TEAL ops: [`itxn_begin`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn_begin), [`itxn_field`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn_field), [`itxn_next`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn_next), [`itxn_submit`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn_submit)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| [`JsonRef`](#algopy.op.JsonRef)                 | key B’s value, of type R, from a [valid]() utf-8 encoded json object A *Warning*: Usage should be restricted to very rare use cases, as JSON decoding is expensive and quite limited. In addition, JSON objects are large and not optimized for size.  Almost all smart contracts should use simpler and smaller methods (such as the [ABI](https://arc.algorand.foundation/ARCs/arc-0004). This opcode should only be used in cases where JSON is only available option, e.g. when a third-party only signs JSON.<br/>Native TEAL op: [`json_ref`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#json_ref)                                                                                                                                                                                                                                                                                                                                                       |
-| [`Scratch`](#algopy.op.Scratch)                 | Load or store scratch values<br/>Native TEAL ops: [`loads`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#loads), [`stores`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#stores)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| [`Txn`](#algopy.op.Txn)                         | Get values for the current executing transaction<br/>Native TEAL ops: [`txn`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#txn), [`txnas`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#txnas)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| [`VoterParamsGet`](#algopy.op.VoterParamsGet)   | X is field F from online account A as of the balance round: 320 rounds before the current round. Y is 1 if A had positive algos online in the agreement round, else Y is 0 and X is a type specific zero-value<br/>Native TEAL op: [`voter_params_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#voter_params_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| [`VrfVerify`](#algopy.op.VrfVerify)             | Available values for the `vrf_verify` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| [`AcctParamsGet`](#algopy.op.AcctParamsGet)           | X is field F from account A. Y is 1 if A owns positive algos, else 0<br/>Native TEAL op: [`acct_params_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#acct_params_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|-------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`AppGlobal`](#algopy.op.AppGlobal)                   | Get or modify Global app state<br/>Native TEAL ops: [`app_global_del`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_global_del), [`app_global_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_global_get), [`app_global_get_ex`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_global_get_ex), [`app_global_put`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_global_put)                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| [`AppLocal`](#algopy.op.AppLocal)                     | Get or modify Local app state<br/>Native TEAL ops: [`app_local_del`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_local_del), [`app_local_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_local_get), [`app_local_get_ex`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_local_get_ex), [`app_local_put`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_local_put)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| [`AppParamsGet`](#algopy.op.AppParamsGet)             | X is field F from app A. Y is 1 if A exists, else 0 params: Txn.ForeignApps offset or an *available* app id. Return: did_exist flag (1 if the application existed and 0 otherwise), value.<br/>Native TEAL op: [`app_params_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#app_params_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| [`AssetHoldingGet`](#algopy.op.AssetHoldingGet)       | X is field F from account A’s holding of asset B. Y is 1 if A is opted into B, else 0 params: Txn.Accounts offset (or, since v4, an *available* address), asset id (or, since v4, a Txn.ForeignAssets offset). Return: did_exist flag (1 if the asset existed and 0 otherwise), value.<br/>Native TEAL op: [`asset_holding_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#asset_holding_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| [`AssetParamsGet`](#algopy.op.AssetParamsGet)         | X is field F from asset A. Y is 1 if A exists, else 0 params: Txn.ForeignAssets offset (or, since v4, an *available* asset id. Return: did_exist flag (1 if the asset existed and 0 otherwise), value.<br/>Native TEAL op: [`asset_params_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#asset_params_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| [`Base64`](#algopy.op.Base64)                         | Available values for the `base64` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| [`Block`](#algopy.op.Block)                           | field F of block A. Fail unless A falls between txn.LastValid-1002 and txn.FirstValid (exclusive)<br/>Native TEAL op: [`block`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#block)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| [`Box`](#algopy.op.Box)                               | Get or modify box state<br/>Native TEAL ops: [`box_create`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_create), [`box_del`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_del), [`box_extract`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_extract), [`box_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_get), [`box_len`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_len), [`box_put`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_put), [`box_replace`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_replace), [`box_resize`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_resize), [`box_splice`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#box_splice) |
+| [`EC`](#algopy.op.EC)                                 | Available values for the `EC` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| [`ECDSA`](#algopy.op.ECDSA)                           | Available values for the `ECDSA` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| [`EllipticCurve`](#algopy.op.EllipticCurve)           | Elliptic Curve functions<br/>Native TEAL ops: [`ec_add`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_add), [`ec_map_to`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_map_to), [`ec_multi_scalar_mul`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_multi_scalar_mul), [`ec_pairing_check`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_pairing_check), [`ec_scalar_mul`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_scalar_mul), [`ec_subgroup_check`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#ec_subgroup_check)                                                                                                                                                                                                                                                            |
+| [`GITxn`](#algopy.op.GITxn)                           | Get values for inner transaction in the last group submitted<br/>Native TEAL ops: [`gitxn`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#gitxn), [`gitxnas`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#gitxnas)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| [`GTxn`](#algopy.op.GTxn)                             | Get values for transactions in the current group<br/>Native TEAL ops: [`gtxns`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#gtxns), [`gtxnsas`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#gtxnsas)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| [`Global`](#algopy.op.Global)                         | Get Global values<br/>Native TEAL op: [`global`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#global)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| [`ITxn`](#algopy.op.ITxn)                             | Get values for the last inner transaction<br/>Native TEAL ops: [`itxn`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn), [`itxnas`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxnas)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| [`ITxnCreate`](#algopy.op.ITxnCreate)                 | Create inner transactions<br/>Native TEAL ops: [`itxn_begin`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn_begin), [`itxn_field`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn_field), [`itxn_next`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn_next), [`itxn_submit`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#itxn_submit)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| [`JsonRef`](#algopy.op.JsonRef)                       | key B’s value, of type R, from a [valid]() utf-8 encoded json object A *Warning*: Usage should be restricted to very rare use cases, as JSON decoding is expensive and quite limited. In addition, JSON objects are large and not optimized for size.  Almost all smart contracts should use simpler and smaller methods (such as the [ABI](https://arc.algorand.foundation/ARCs/arc-0004). This opcode should only be used in cases where JSON is only available option, e.g. when a third-party only signs JSON.<br/>Native TEAL op: [`json_ref`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#json_ref)                                                                                                                                                                                                                                                                                                                                                       |
+| [`MiMCConfigurations`](#algopy.op.MiMCConfigurations) | Available values for the `Mimc Configurations` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| [`Scratch`](#algopy.op.Scratch)                       | Load or store scratch values<br/>Native TEAL ops: [`loads`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#loads), [`stores`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#stores)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| [`Txn`](#algopy.op.Txn)                               | Get values for the current executing transaction<br/>Native TEAL ops: [`txn`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#txn), [`txnas`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#txnas)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| [`VoterParamsGet`](#algopy.op.VoterParamsGet)         | X is field F from online account A as of the balance round: 320 rounds before the current round. Y is 1 if A had positive algos online in the agreement round, else Y is 0 and X is a type specific zero-value<br/>Native TEAL op: [`voter_params_get`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#voter_params_get)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| [`VrfVerify`](#algopy.op.VrfVerify)                   | Available values for the `vrf_verify` enum                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 
 <a id="functions"></a>
 
@@ -66,7 +67,7 @@ title: "algopy.op"
 | [`extract_uint16`](#algopy.op.extract_uint16)           | A uint16 formed from a range of big-endian bytes from A starting at B up to but not including B+2. If B+2 is larger than the array length, the program fails                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | [`extract_uint32`](#algopy.op.extract_uint32)           | A uint32 formed from a range of big-endian bytes from A starting at B up to but not including B+4. If B+4 is larger than the array length, the program fails                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | [`extract_uint64`](#algopy.op.extract_uint64)           | A uint64 formed from a range of big-endian bytes from A starting at B up to but not including B+8. If B+8 is larger than the array length, the program fails                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| [`falcon_verify`](#algopy.op.falcon_verify)             | for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey<br/>Min AVM version: 11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| [`falcon_verify`](#algopy.op.falcon_verify)             | for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey<br/>Min AVM version: 12                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | [`gaid`](#algopy.op.gaid)                               | ID of the asset or application created in the Ath transaction of the current group<br/>`gaids` fails unless the requested transaction created an asset or application and A \< GroupIndex.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | [`getbit`](#algopy.op.getbit)                           | Bth bit of (byte-array or integer) A. If B is greater than or equal to the bit length of the value (8\*byte length), the program fails<br/>see explanation of bit ordering in setbit                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | [`getbyte`](#algopy.op.getbyte)                         | Bth byte of A, as an integer. If B is greater than or equal to the array length, the program fails                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -74,6 +75,7 @@ title: "algopy.op"
 | [`gload_uint64`](#algopy.op.gload_uint64)               | Bth scratch space value of the Ath transaction in the current group                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | [`itob`](#algopy.op.itob)                               | converts uint64 A to big-endian byte array, always of length 8                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | [`keccak256`](#algopy.op.keccak256)                     | Keccak256 hash of value A, yields [32]byte                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| [`mimc`](#algopy.op.mimc)                               | MiMC hash of scalars A, using curve and parameters specified by configuration C<br/>A is a list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A’s length is not a multiple of 32 or any element exceeds the curve modulus.                                                                                                                                                                                                                                                                                                                                                                                |
 | [`min_balance`](#algopy.op.min_balance)                 | minimum required balance for account A, in microalgos. Required balance is affected by ASA, App, and Box usage. When creating or opting into an app, the minimum balance grows before the app code runs, therefore the increase is visible there. When deleting or closing out, the minimum balance decreases after the app executes. Changes caused by inner transactions or box usage are observable immediately following the opcode effecting the change.<br/>params: Txn.Accounts offset (or, since v4, an *available* account address), *available* application id (or, since v4, a Txn.ForeignApps offset). Return: value. |
 | [`mulw`](#algopy.op.mulw)                               | A times B as a 128-bit result in two uint64s. X is the high 64 bits, Y is the low                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | [`online_stake`](#algopy.op.online_stake)               | the total online stake in the agreement round<br/>Min AVM version: 11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -90,7 +92,7 @@ title: "algopy.op"
 | [`shr`](#algopy.op.shr)                                 | A divided by 2^B                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | [`sqrt`](#algopy.op.sqrt)                               | The largest integer I such that I^2 \<= A                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | [`substring`](#algopy.op.substring)                     | A range of bytes from A starting at B up to but not including C. If C \< B, or either is larger than the array length, the program fails                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| [`sumhash512`](#algopy.op.sumhash512)                   | sumhash512 of value A, yields [64]byte<br/>Min AVM version: 11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| [`sumhash512`](#algopy.op.sumhash512)                   | sumhash512 of value A, yields [64]byte<br/>Min AVM version: 12                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | [`vrf_verify`](#algopy.op.vrf_verify)                   | Verify the proof B of message A against pubkey C. Returns vrf output and verification flag.<br/>`VrfAlgorand` is the VRF used in Algorand. It is ECVRF-ED25519-SHA512-Elligator2, specified in the IETF internet draft [draft-irtf-cfrg-vrf-03](https://datatracker.ietf.org/doc/draft-irtf-cfrg-vrf/03/).<br/>:param VrfVerify s:  parameters index                                                                                                                                                                                                                                                                              |
 
 <a id="api"></a>
@@ -5052,7 +5054,7 @@ payouts_max_balance *: Final[[algopy.UInt64](algopy.mdx#algopy.UInt64)]*
 
 Ellipsis
 
-The maximum algo balance an account can have in the agreement round to receive block payouts in the proposal round.
+The maximum balance an account can have in the agreement round to receive block payouts in the proposal round.
 Min AVM version: 11
 
 <a id="algopy.op.Global.payouts_min_balance"></a>
@@ -5063,7 +5065,7 @@ payouts_min_balance *: Final[[algopy.UInt64](algopy.mdx#algopy.UInt64)]*
 
 Ellipsis
 
-The minimum algo balance an account must have in the agreement round to receive block payouts in the proposal round.
+The minimum balance an account must have in the agreement round to receive block payouts in the proposal round.
 Min AVM version: 11
 
 <a id="algopy.op.Global.payouts_percent"></a>
@@ -6371,6 +6373,821 @@ json_uint64(a: [algopy.Bytes](algopy.mdx#algopy.Bytes) | bytes, b: [algopy.Bytes
 
 Native TEAL opcode: [`json_ref`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#json_ref)
 
+<a id="algopy.op.MiMCConfigurations"></a>
+
+## *class* algopy.op.MiMCConfigurations
+
+MiMCConfigurations
+
+Available values for the `Mimc Configurations` enum
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algopy.op.MiMCConfigurations.BLS12_381Mp111"></a>
+
+### BLS12_381Mp111
+
+BLS12_381Mp111 *: [algopy.op.MiMCConfigurations](#algopy.op.MiMCConfigurations)*
+
+Ellipsis
+
+MiMC configuration for the BLS12-381 curve with Miyaguchi-Preneel mode, 111 rounds, exponent 5, seed “seed”
+Min AVM version: 11
+
+<a id="algopy.op.MiMCConfigurations.BN254Mp110"></a>
+
+### BN254Mp110
+
+BN254Mp110 *: [algopy.op.MiMCConfigurations](#algopy.op.MiMCConfigurations)*
+
+Ellipsis
+
+MiMC configuration for the BN254 curve with Miyaguchi-Preneel mode, 110 rounds, exponent 5, seed “seed”
+Min AVM version: 11
+
+<a id="algopy.op.MiMCConfigurations.__add__"></a>
+
+### \_\_add_\_
+
+__add__()
+
+Return self+value.
+
+<a id="algopy.op.MiMCConfigurations.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__()
+
+Return bool(key in self).
+
+<a id="algopy.op.MiMCConfigurations.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algopy.op.MiMCConfigurations.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algopy.op.MiMCConfigurations.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algopy.op.MiMCConfigurations.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Return a formatted version of the string as described by format_spec.
+
+<a id="algopy.op.MiMCConfigurations.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algopy.op.MiMCConfigurations.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algopy.op.MiMCConfigurations.__getitem__"></a>
+
+### \_\_getitem_\_
+
+__getitem__()
+
+Return self[key].
+
+<a id="algopy.op.MiMCConfigurations.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algopy.op.MiMCConfigurations.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algopy.op.MiMCConfigurations.__hash__"></a>
+
+### \_\_hash_\_
+
+__hash__()
+
+Return hash(self).
+
+<a id="algopy.op.MiMCConfigurations.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Implement iter(self).
+
+<a id="algopy.op.MiMCConfigurations.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algopy.op.MiMCConfigurations.__len__"></a>
+
+### \_\_len_\_
+
+__len__()
+
+Return len(self).
+
+<a id="algopy.op.MiMCConfigurations.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algopy.op.MiMCConfigurations.__mod__"></a>
+
+### \_\_mod_\_
+
+__mod__()
+
+Return self%value.
+
+<a id="algopy.op.MiMCConfigurations.__mul__"></a>
+
+### \_\_mul_\_
+
+__mul__()
+
+Return self\*value.
+
+<a id="algopy.op.MiMCConfigurations.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algopy.op.MiMCConfigurations.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algopy.op.MiMCConfigurations.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algopy.op.MiMCConfigurations.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algopy.op.MiMCConfigurations.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algopy.op.MiMCConfigurations.__rmod__"></a>
+
+### \_\_rmod_\_
+
+__rmod__()
+
+Return value%self.
+
+<a id="algopy.op.MiMCConfigurations.__rmul__"></a>
+
+### \_\_rmul_\_
+
+__rmul__()
+
+Return value\*self.
+
+<a id="algopy.op.MiMCConfigurations.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algopy.op.MiMCConfigurations.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+Return the size of the string in memory, in bytes.
+
+<a id="algopy.op.MiMCConfigurations.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algopy.op.MiMCConfigurations.capitalize"></a>
+
+### capitalize
+
+capitalize()
+
+Return a capitalized version of the string.
+
+More specifically, make the first character have upper case and the rest lower
+case.
+
+<a id="algopy.op.MiMCConfigurations.casefold"></a>
+
+### casefold
+
+casefold()
+
+Return a version of the string suitable for caseless comparisons.
+
+<a id="algopy.op.MiMCConfigurations.center"></a>
+
+### center
+
+center()
+
+Return a centered string of length width.
+
+Padding is done using the specified fill character (default is a space).
+
+<a id="algopy.op.MiMCConfigurations.count"></a>
+
+### count
+
+count()
+
+S.count(sub[, start[, end]]) -\> int
+
+Return the number of non-overlapping occurrences of substring sub in
+string S[start:end].  Optional arguments start and end are
+interpreted as in slice notation.
+
+<a id="algopy.op.MiMCConfigurations.encode"></a>
+
+### encode
+
+encode()
+
+Encode the string using the codec registered for encoding.
+
+encoding
+The encoding in which to encode the string.
+errors
+The error handling scheme to use for encoding errors.
+The default is ‘strict’ meaning that encoding errors raise a
+UnicodeEncodeError.  Other possible values are ‘ignore’, ‘replace’ and
+‘xmlcharrefreplace’ as well as any other name registered with
+codecs.register_error that can handle UnicodeEncodeErrors.
+
+<a id="algopy.op.MiMCConfigurations.endswith"></a>
+
+### endswith
+
+endswith()
+
+S.endswith(suffix[, start[, end]]) -\> bool
+
+Return True if S ends with the specified suffix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+suffix can also be a tuple of strings to try.
+
+<a id="algopy.op.MiMCConfigurations.expandtabs"></a>
+
+### expandtabs
+
+expandtabs()
+
+Return a copy where all tab characters are expanded using spaces.
+
+If tabsize is not given, a tab size of 8 characters is assumed.
+
+<a id="algopy.op.MiMCConfigurations.find"></a>
+
+### find
+
+find()
+
+S.find(sub[, start[, end]]) -\> int
+
+Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.
+
+Return -1 on failure.
+
+<a id="algopy.op.MiMCConfigurations.format"></a>
+
+### format
+
+format()
+
+S.format(\*args, \*\*kwargs) -\> str
+
+Return a formatted version of S, using substitutions from args and kwargs.
+The substitutions are identified by braces (‘\{’ and ‘\}’).
+
+<a id="algopy.op.MiMCConfigurations.format_map"></a>
+
+### format_map
+
+format_map()
+
+S.format_map(mapping) -\> str
+
+Return a formatted version of S, using substitutions from mapping.
+The substitutions are identified by braces (‘\{’ and ‘\}’).
+
+<a id="algopy.op.MiMCConfigurations.index"></a>
+
+### index
+
+index()
+
+S.index(sub[, start[, end]]) -\> int
+
+Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.
+
+Raises ValueError when the substring is not found.
+
+<a id="algopy.op.MiMCConfigurations.isalnum"></a>
+
+### isalnum
+
+isalnum()
+
+Return True if the string is an alpha-numeric string, False otherwise.
+
+A string is alpha-numeric if all characters in the string are alpha-numeric and
+there is at least one character in the string.
+
+<a id="algopy.op.MiMCConfigurations.isalpha"></a>
+
+### isalpha
+
+isalpha()
+
+Return True if the string is an alphabetic string, False otherwise.
+
+A string is alphabetic if all characters in the string are alphabetic and there
+is at least one character in the string.
+
+<a id="algopy.op.MiMCConfigurations.isascii"></a>
+
+### isascii
+
+isascii()
+
+Return True if all characters in the string are ASCII, False otherwise.
+
+ASCII characters have code points in the range U+0000-U+007F.
+Empty string is ASCII too.
+
+<a id="algopy.op.MiMCConfigurations.isdecimal"></a>
+
+### isdecimal
+
+isdecimal()
+
+Return True if the string is a decimal string, False otherwise.
+
+A string is a decimal string if all characters in the string are decimal and
+there is at least one character in the string.
+
+<a id="algopy.op.MiMCConfigurations.isdigit"></a>
+
+### isdigit
+
+isdigit()
+
+Return True if the string is a digit string, False otherwise.
+
+A string is a digit string if all characters in the string are digits and there
+is at least one character in the string.
+
+<a id="algopy.op.MiMCConfigurations.isidentifier"></a>
+
+### isidentifier
+
+isidentifier()
+
+Return True if the string is a valid Python identifier, False otherwise.
+
+Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
+such as “def” or “class”.
+
+<a id="algopy.op.MiMCConfigurations.islower"></a>
+
+### islower
+
+islower()
+
+Return True if the string is a lowercase string, False otherwise.
+
+A string is lowercase if all cased characters in the string are lowercase and
+there is at least one cased character in the string.
+
+<a id="algopy.op.MiMCConfigurations.isnumeric"></a>
+
+### isnumeric
+
+isnumeric()
+
+Return True if the string is a numeric string, False otherwise.
+
+A string is numeric if all characters in the string are numeric and there is at
+least one character in the string.
+
+<a id="algopy.op.MiMCConfigurations.isprintable"></a>
+
+### isprintable
+
+isprintable()
+
+Return True if the string is printable, False otherwise.
+
+A string is printable if all of its characters are considered printable in
+repr() or if it is empty.
+
+<a id="algopy.op.MiMCConfigurations.isspace"></a>
+
+### isspace
+
+isspace()
+
+Return True if the string is a whitespace string, False otherwise.
+
+A string is whitespace if all characters in the string are whitespace and there
+is at least one character in the string.
+
+<a id="algopy.op.MiMCConfigurations.istitle"></a>
+
+### istitle
+
+istitle()
+
+Return True if the string is a title-cased string, False otherwise.
+
+In a title-cased string, upper- and title-case characters may only
+follow uncased characters and lowercase characters only cased ones.
+
+<a id="algopy.op.MiMCConfigurations.isupper"></a>
+
+### isupper
+
+isupper()
+
+Return True if the string is an uppercase string, False otherwise.
+
+A string is uppercase if all cased characters in the string are uppercase and
+there is at least one cased character in the string.
+
+<a id="algopy.op.MiMCConfigurations.join"></a>
+
+### join
+
+join()
+
+Concatenate any number of strings.
+
+The string whose method is called is inserted in between each given string.
+The result is returned as a new string.
+
+Example: ‘.’.join([‘ab’, ‘pq’, ‘rs’]) -\> ‘ab.pq.rs’
+
+<a id="algopy.op.MiMCConfigurations.ljust"></a>
+
+### ljust
+
+ljust()
+
+Return a left-justified string of length width.
+
+Padding is done using the specified fill character (default is a space).
+
+<a id="algopy.op.MiMCConfigurations.lower"></a>
+
+### lower
+
+lower()
+
+Return a copy of the string converted to lowercase.
+
+<a id="algopy.op.MiMCConfigurations.lstrip"></a>
+
+### lstrip
+
+lstrip()
+
+Return a copy of the string with leading whitespace removed.
+
+If chars is given and not None, remove characters in chars instead.
+
+<a id="algopy.op.MiMCConfigurations.partition"></a>
+
+### partition
+
+partition()
+
+Partition the string into three parts using the given separator.
+
+This will search for the separator in the string.  If the separator is found,
+returns a 3-tuple containing the part before the separator, the separator
+itself, and the part after it.
+
+If the separator is not found, returns a 3-tuple containing the original string
+and two empty strings.
+
+<a id="algopy.op.MiMCConfigurations.removeprefix"></a>
+
+### removeprefix
+
+removeprefix()
+
+Return a str with the given prefix string removed if present.
+
+If the string starts with the prefix string, return string[len(prefix):].
+Otherwise, return a copy of the original string.
+
+<a id="algopy.op.MiMCConfigurations.removesuffix"></a>
+
+### removesuffix
+
+removesuffix()
+
+Return a str with the given suffix string removed if present.
+
+If the string ends with the suffix string and that suffix is not empty,
+return string[:-len(suffix)]. Otherwise, return a copy of the original
+string.
+
+<a id="algopy.op.MiMCConfigurations.replace"></a>
+
+### replace
+
+replace()
+
+Return a copy with all occurrences of substring old replaced by new.
+
+count
+Maximum number of occurrences to replace.
+-1 (the default value) means replace all occurrences.
+
+If the optional argument count is given, only the first count occurrences are
+replaced.
+
+<a id="algopy.op.MiMCConfigurations.rfind"></a>
+
+### rfind
+
+rfind()
+
+S.rfind(sub[, start[, end]]) -\> int
+
+Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.
+
+Return -1 on failure.
+
+<a id="algopy.op.MiMCConfigurations.rindex"></a>
+
+### rindex
+
+rindex()
+
+S.rindex(sub[, start[, end]]) -\> int
+
+Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.
+
+Raises ValueError when the substring is not found.
+
+<a id="algopy.op.MiMCConfigurations.rjust"></a>
+
+### rjust
+
+rjust()
+
+Return a right-justified string of length width.
+
+Padding is done using the specified fill character (default is a space).
+
+<a id="algopy.op.MiMCConfigurations.rpartition"></a>
+
+### rpartition
+
+rpartition()
+
+Partition the string into three parts using the given separator.
+
+This will search for the separator in the string, starting at the end. If
+the separator is found, returns a 3-tuple containing the part before the
+separator, the separator itself, and the part after it.
+
+If the separator is not found, returns a 3-tuple containing two empty strings
+and the original string.
+
+<a id="algopy.op.MiMCConfigurations.rsplit"></a>
+
+### rsplit
+
+rsplit()
+
+Return a list of the substrings in the string, using sep as the separator string.
+
+sep
+The separator used to split the string.
+
+```none
+When set to None (the default value), will split on any whitespace
+character (including \n \r \t \f and spaces) and will discard
+empty strings from the result.
+```
+
+maxsplit
+Maximum number of splits.
+-1 (the default value) means no limit.
+
+Splitting starts at the end of the string and works to the front.
+
+<a id="algopy.op.MiMCConfigurations.rstrip"></a>
+
+### rstrip
+
+rstrip()
+
+Return a copy of the string with trailing whitespace removed.
+
+If chars is given and not None, remove characters in chars instead.
+
+<a id="algopy.op.MiMCConfigurations.split"></a>
+
+### split
+
+split()
+
+Return a list of the substrings in the string, using sep as the separator string.
+
+sep
+The separator used to split the string.
+
+```none
+When set to None (the default value), will split on any whitespace
+character (including \n \r \t \f and spaces) and will discard
+empty strings from the result.
+```
+
+maxsplit
+Maximum number of splits.
+-1 (the default value) means no limit.
+
+Splitting starts at the front of the string and works to the end.
+
+Note, str.split() is mainly useful for data that has been intentionally
+delimited.  With natural text that includes punctuation, consider using
+the regular expression module.
+
+<a id="algopy.op.MiMCConfigurations.splitlines"></a>
+
+### splitlines
+
+splitlines()
+
+Return a list of the lines in the string, breaking at line boundaries.
+
+Line breaks are not included in the resulting list unless keepends is given and
+true.
+
+<a id="algopy.op.MiMCConfigurations.startswith"></a>
+
+### startswith
+
+startswith()
+
+S.startswith(prefix[, start[, end]]) -\> bool
+
+Return True if S starts with the specified prefix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+prefix can also be a tuple of strings to try.
+
+<a id="algopy.op.MiMCConfigurations.strip"></a>
+
+### strip
+
+strip()
+
+Return a copy of the string with leading and trailing whitespace removed.
+
+If chars is given and not None, remove characters in chars instead.
+
+<a id="algopy.op.MiMCConfigurations.swapcase"></a>
+
+### swapcase
+
+swapcase()
+
+Convert uppercase characters to lowercase and lowercase characters to uppercase.
+
+<a id="algopy.op.MiMCConfigurations.title"></a>
+
+### title
+
+title()
+
+Return a version of the string where each word is titlecased.
+
+More specifically, words start with uppercased characters and all remaining
+cased characters have lower case.
+
+<a id="algopy.op.MiMCConfigurations.translate"></a>
+
+### translate
+
+translate()
+
+Replace each character in the string using the given translation table.
+
+table
+Translation table, which must be a mapping of Unicode ordinals to
+Unicode ordinals, strings, or None.
+
+The table must implement lookup/indexing via **getitem**, for instance a
+dictionary or list.  If this operation raises LookupError, the character is
+left untouched.  Characters mapped to None are deleted.
+
+<a id="algopy.op.MiMCConfigurations.upper"></a>
+
+### upper
+
+upper()
+
+Return a copy of the string converted to uppercase.
+
+<a id="algopy.op.MiMCConfigurations.zfill"></a>
+
+### zfill
+
+zfill()
+
+Pad a numeric string with zeros on the left, to fill a field of the given width.
+
+The string is never truncated.
+
 <a id="algopy.op.Scratch"></a>
 
 ## *class* algopy.op.Scratch
@@ -7112,7 +7929,7 @@ Native TEAL op: [`voter_params_get`](https://developer.algorand.org/docs/get-det
 
 ### *static* voter_balance
 
-voter_balance(a: [algopy.Bytes](algopy.mdx#algopy.Bytes) | [algopy.UInt64](algopy.mdx#algopy.UInt64) | bytes | int, /) → tuple[[algopy.UInt64](algopy.mdx#algopy.UInt64), bool]
+voter_balance(a: [algopy.Account](algopy.mdx#algopy.Account) | [algopy.UInt64](algopy.mdx#algopy.UInt64) | int, /) → tuple[[algopy.UInt64](algopy.mdx#algopy.UInt64), bool]
 
 Min AVM version: 11
 :returns tuple[UInt64, bool]: Online stake in microalgos
@@ -7123,7 +7940,7 @@ Native TEAL opcode: [`voter_params_get`](https://developer.algorand.org/docs/get
 
 ### *static* voter_incentive_eligible
 
-voter_incentive_eligible(a: [algopy.Bytes](algopy.mdx#algopy.Bytes) | [algopy.UInt64](algopy.mdx#algopy.UInt64) | bytes | int, /) → tuple[bool, bool]
+voter_incentive_eligible(a: [algopy.Account](algopy.mdx#algopy.Account) | [algopy.UInt64](algopy.mdx#algopy.UInt64) | int, /) → tuple[bool, bool]
 
 Min AVM version: 11
 :returns tuple[bool, bool]: Had this account opted into block payouts
@@ -8201,7 +9018,7 @@ Native TEAL opcode: [`extract_uint64`](https://developer.algorand.org/docs/get-d
 falcon_verify(a: [algopy.Bytes](algopy.mdx#algopy.Bytes) | bytes, b: [algopy.Bytes](algopy.mdx#algopy.Bytes) | bytes, c: [algopy.Bytes](algopy.mdx#algopy.Bytes) | bytes, /) → bool
 
 for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey
-Min AVM version: 11
+Min AVM version: 12
 
 Native TEAL opcode: [`falcon_verify`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#falcon_verify)
 
@@ -8276,6 +9093,21 @@ keccak256(a: [algopy.Bytes](algopy.mdx#algopy.Bytes) | bytes, /) → [algopy.Byt
 Keccak256 hash of value A, yields [32]byte
 
 Native TEAL opcode: [`keccak256`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#keccak256)
+
+<a id="algopy.op.mimc"></a>
+
+## algopy.op.mimc
+
+mimc(c: [algopy.op.MiMCConfigurations](#algopy.op.MiMCConfigurations), a: [algopy.Bytes](algopy.mdx#algopy.Bytes) | bytes, /) → [algopy.Bytes](algopy.mdx#algopy.Bytes)
+
+MiMC hash of scalars A, using curve and parameters specified by configuration C
+A is a list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A’s length is not a multiple of 32 or any element exceeds the curve modulus.
+
+The MiMC hash function has known collisions since any input which is a multiple of the elliptic curve modulus will hash to the same value. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
+Min AVM version: 11
+:param MiMCConfigurations c: configuration index
+
+Native TEAL opcode: [`mimc`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#mimc)
 
 <a id="algopy.op.min_balance"></a>
 
@@ -8449,7 +9281,7 @@ Native TEAL opcode: [`substring`](https://developer.algorand.org/docs/get-detail
 sumhash512(a: [algopy.Bytes](algopy.mdx#algopy.Bytes) | bytes, /) → [algopy.Bytes](algopy.mdx#algopy.Bytes)
 
 sumhash512 of value A, yields [64]byte
-Min AVM version: 11
+Min AVM version: 12
 
 Native TEAL opcode: [`sumhash512`](https://developer.algorand.org/docs/get-details/dapps/avm/teal/opcodes/v10/#sumhash512)
 
