@@ -12,7 +12,7 @@
     "lint": "eslint . && prettier -c ./src/** && astro check",
     "preview": "astro preview",
     "astro": "astro",
-    "import:github": "IMPORT_GITHUB=false astro sync && prettier --write 'src/content/docs/reference/**/*.{md,mdx}' 'src/content/docs/algokit/utils/**/*.{md,mdx}'",
+    "import:github": "IMPORT_GITHUB=true astro sync && prettier --write 'src/content/docs/reference/**/*.{md,mdx}' 'src/content/docs/algokit/utils/**/*.{md,mdx}'",
     "import:dry-run": "IMPORT_GITHUB=true IMPORT_DRY_RUN=true astro sync",
     "generate-opcode-list": "npx tsx scripts/generate-opcode-list.js",
     "generate-diagrams": "npx tsx scripts/generate-diagrams.ts",
