@@ -82,7 +82,7 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Setup submodules
-        run: git submodule update --init && pnpm run import:utils-ts
+        run: git submodule update --init
 
       - name: Setup .npmrc for GitHub Packages
         run: |
