@@ -29,8 +29,8 @@ export default defineConfig({
             '**[FUTURELINK]*',
             '**/algokit/cli/**', // Exclude CLI docs as they are imported and link validation raises a false positive for some anchor links
             '**/reference/algokit-utils-py/**',
-            '**/algokit/utils/python/**',
-            '**/reference/algokit-utils-ts/API Reference/**',
+            '**/reference/algokit-utils-ts/**',
+            '**/algokit/utils/**',
             '**/reference/algorand-python/**',
             '**/reference/algorand-teal/**',
             '**/reference/algorand-typescript/**',
