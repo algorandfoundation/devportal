@@ -31,7 +31,7 @@ To setup the completions, AlgoKit provides commands that will modify the current
 > **Note**
 > If you would prefer AlgoKit to not modify your interactive shell scripts you can install the completions yourself by following the instructions [here](https://click.palletsprojects.com/en/8.1.x/shell-completion/).
 
-To [install](/algokit/cli/commands#install) completions for the current shell execute `algokit completions install`. You should see output similar to below:
+To [install](/reference/algokit-cli#install) completions for the current shell execute `algokit completions install`. You should see output similar to below:
 
 ```
 $ ~ algokit completions install
@@ -43,7 +43,7 @@ After installing the completions don't forget to restart the shell to begin usin
 
 ## Uninstalling
 
-To [uninstall](/algokit/cli/commands#uninstall) completions for the current shell run `algokit completions uninstall`:
+To [uninstall](/reference/algokit-cli#uninstall) completions for the current shell run `algokit completions uninstall`:
 
 ```
 $ ~ algokit completions uninstall
@@ -52,6 +52,6 @@ AlgoKit completions uninstalled for zsh 🎉
 
 ## Shell Option
 
-To install/uninstall the completions for a specific [shell](/algokit/cli/commands#shell) the `--shell` option can be used e.g. `algokit completions install --shell bash`.
+To install/uninstall the completions for a specific [shell](/reference/algokit-cli#shell) the `--shell` option can be used e.g. `algokit completions install --shell bash`.
 
-To learn more about the `algokit completions` command, please refer to [completions](/algokit/cli/commands#completions) in the AlgoKit CLI reference documentation.
+To learn more about the `algokit completions` command, please refer to [completions](/reference/algokit-cli#completions) in the AlgoKit CLI reference documentation.

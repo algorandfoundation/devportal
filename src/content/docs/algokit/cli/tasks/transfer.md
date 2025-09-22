@@ -52,4 +52,4 @@ By default:
 
 ## Further Reading
 
-For in-depth details, visit the [transfer section](../../cli/index.md#transfer) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [transfer section](../../cli/#transfer) in the AlgoKit CLI reference documentation.

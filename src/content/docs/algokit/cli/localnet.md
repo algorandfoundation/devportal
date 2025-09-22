@@ -7,7 +7,7 @@ AlgoKit LocalNet uses Docker images that are optimised for a great dev experienc
 
 The philosophy we take with AlgoKit LocalNet is that you should treat it as an ephemeral network. This means assume it could be reset at any time - don't store data on there that you can't recover / recreate. We have optimised the AlgoKit LocalNet experience to minimise situations where the network will get reset to improve the experience, but it can and will still happen in a number of situations.
 
-> For details on executing `algokit localnet` without `docker` or `podman` refer to the [codespaces](#github-codespaces-based-localnet) section.
+> For details on executing `algokit localnet` without `docker` or `podman` refer to the [codespaces](#codespaces) section.
 
 ## Prerequisites
 
@@ -131,11 +131,11 @@ To reset the LocalNet you can execute `algokit localnet reset`, which will tear 
 
 ### Viewing transactions in the LocalNet
 
-You can see a web-based user interface of the current state of your LocalNet including all transactions by using the [AlgoKit Explore](./explore.md) feature, e.g. by executing `algokit localnet explore`.
+You can see a web-based user interface of the current state of your LocalNet including all transactions by using the [AlgoKit Explore](/algokit/cli/explore/) feature, e.g. by executing `algokit localnet explore`.
 
 ### Executing goal commands against AlgoKit LocalNet
 
-See the [AlgoKit Goal](./goal.md) feature. You can also execute `algokit localnet console` to open a [Bash shell which allows you to run the goal commandline](./goal.md#running-multiple-commands).
+See the [AlgoKit Goal](/algokit/cli/goal/) feature. You can also execute `algokit localnet console` to open a [Bash shell which allows you to run the goal commandline](/algokit/cli/goal/#running-multiple-commands).
 
 Note: if you want to copy files into the container so you can access them via goal then you can use the following:
 
@@ -165,7 +165,7 @@ AlgoKit Utils provides methods to help you do this:
 - TypeScript - [`ensureFunded`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/capabilities/transfer.md#ensurefunded) and [`getDispenserAccount`](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/capabilities/transfer.md#dispenser)
 - Python - [`ensure_funded`](https://algorandfoundation.github.io/algokit-utils-py/html/apidocs/algokit_utils/algokit_utils.html#algokit_utils.ensure_funded) and [`get_dispenser_account`](https://algorandfoundation.github.io/algokit-utils-py/html/apidocs/algokit_utils/algokit_utils.html#algokit_utils.get_dispenser_account)
 
-For more details about the `AlgoKit localnet` command, please refer to the [AlgoKit CLI reference documentation](../cli/index.md#localnet).
+For more details about the `AlgoKit localnet` command, please refer to the [AlgoKit CLI reference documentation](/reference/algokit-cli#localnet).
 
 ## GitHub Codespaces-based LocalNet
 
@@ -187,6 +187,6 @@ Running an interactive session ensures that you have control over the lifecycle 
 - `-r`, `--repo-url`: The URL of the repository to use. Defaults to the AlgoKit base template repository (`algorandfoundation/algokit-base-template`). The reason why algokit-base-template is used by default is due to [.devcontainer.json](https://github.com/algorandfoundation/algokit-base-template/blob/main/template_content/.devcontainer.json) which defines the scripts that take care of setting up AlgoKit CLI during container start. You can use any custom repo as a base, however it's important to ensure the reference [.devcontainer.json](https://github.com/algorandfoundation/algokit-base-template/blob/main/template_content/.devcontainer.json) file exists in your repository **otherwise there will be no ports to forward from the codespace**.
 - `--force`, `-f`: Force deletes stale codespaces and skips confirmation prompts. Defaults to explicitly prompting for confirmation.
 
-For more details about managing LocalNet in GitHub Codespaces, please refer to the [AlgoKit CLI reference documentation](../cli/index.md#codespace).
+For more details about managing LocalNet in GitHub Codespaces, please refer to the [AlgoKit CLI reference documentation](/reference/algokit-cli#codespace).
 
 > Tip: By specifying alternative port values it is possible to have several LocalNet instances running where one is using default ports via `algokit localnet start` with Docker | Podman and the other relies on port forwarding via `algokit localnet codespace`.

@@ -126,6 +126,28 @@ export function createSourceInfoTransform(
 }
 
 /**
+ * Creates a path-based frontmatter transform that only applies to specific files
+ * @param targetPath - Path to match (e.g., "docs/algokit.md")
+ * @param options - Configuration for the frontmatter transformation
+ * @returns Transform function that only applies to the specified path
+ */
+export function createPathBasedFrontmatterTransform(
+  targetPath: string,
+  options: FrontmatterTransformOptions,
+): TransformFunction {
+  const frontmatterTransform = createFrontmatterTransform(options);
+
+  return (content: string, context): string => {
+    // Only apply the transform if the path matches
+    if (context.path === targetPath) {
+      return frontmatterTransform(content, context);
+    }
+    // Return unchanged for other files
+    return content;
+  };
+}
+
+/**
  * Creates a transform for sidebar configuration
  * @param sidebarConfig - Sidebar configuration options
  * @returns Transform function

@@ -61,4 +61,4 @@ If no package manager is specified, AlgoKit will prompt you to select one intera
 
 ## Further Reading
 
-For in-depth details, visit the [configuration section](/algokit/cli/commands#config) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [configuration section](/reference/algokit-cli#config) in the AlgoKit CLI reference documentation.
