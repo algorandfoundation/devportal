@@ -1,6 +1,7 @@
 ---
 title: AlgoKit CLI Overview
-slug: algokit/cli/overview
+sidebar:
+  label: Overview
 ---
 The Algorand AlgoKit CLI is the one-stop shop tool for developers building on the Algorand network. The goal of AlgoKit is to help developers build and launch secure, automated production-ready applications rapidly.
 
@@ -8,19 +9,19 @@ The Algorand AlgoKit CLI is the one-stop shop tool for developers building on th
 
 For details on how to use individual features see the following
 
-- [Bootstrap](/algokit/cli/project/bootstrap) - Bootstrap AlgoKit project dependencies
-- [Compile](/algokit/cli/compile) - Compile Algorand Python code
-- [Completions](/algokit/cli/completions) - Install shell completions for AlgoKit
-- [Deploy](/algokit/cli/project/deploy) - Deploy your smart contracts effortlessly to various networks
-- [Dispenser](/algokit/cli/dispenser) - Fund your TestNet account with ALGOs from the AlgoKit TestNet Dispenser
-- [Doctor](/algokit/cli/doctor) - Check AlgoKit installation and dependencies
-- [Explore](/algokit/cli/explore) - Explore Algorand Blockchains using lora
-- [Generate](/algokit/cli/generate) - Generate code for an Algorand project
-- [Goal](/algokit/cli/goal) - Run the Algorand goal CLI against the AlgoKit Sandbox
-- [Init](/algokit/cli/init) - Quickly initialize new projects using official Algorand Templates or community provided templates
-- [LocalNet](/algokit/cli/localnet) - Manage a locally sandboxed private Algorand network
-- [Project](/algokit/cli/project) - Manage an AlgoKit project workspace on your file system
-- [Tasks](/algokit/cli/tasks) - Perform a variety of useful operations on the Algorand blockchain
+- [Bootstrap](/algokit/cli/project/bootstrap/) - Bootstrap AlgoKit project dependencies
+- [Compile](/algokit/cli/compile/) - Compile Algorand Python code
+- [Completions](/algokit/cli/completions/) - Install shell completions for AlgoKit
+- [Deploy](/algokit/cli/project/deploy/) - Deploy your smart contracts effortlessly to various networks
+- [Dispenser](/algokit/cli/dispenser/) - Fund your TestNet account with ALGOs from the AlgoKit TestNet Dispenser
+- [Doctor](/algokit/cli/doctor/) - Check AlgoKit installation and dependencies
+- [Explore](/algokit/cli/explore/) - Explore Algorand Blockchains using lora
+- [Generate](/algokit/cli/generate/) - Generate code for an Algorand project
+- [Goal](/algokit/cli/goal/) - Run the Algorand goal CLI against the AlgoKit Sandbox
+- [Init](/algokit/cli/init/) - Quickly initialize new projects using official Algorand Templates or community provided templates
+- [LocalNet](/algokit/cli/localnet/) - Manage a locally sandboxed private Algorand network
+- [Project](/algokit/cli/project/) - Manage an AlgoKit project workspace on your file system
+- [Tasks](/algokit/cli/tasks/) - Perform a variety of useful operations on the Algorand blockchain
 
 ## Common AlgoKit CLI options
 
@@ -29,9 +30,9 @@ AlgoKit has a number of global options that can impact all commands. Note: these
 - `-h, --help` The help option can be used on any command to get details on any command, its sub-commands and options.
 - `-v, --verbose` Enables DEBUG logging, useful when troubleshooting or if you want to peek under the covers and learn what AlgoKit CLI is doing.
 - `--color / --no-color` Enables or disables output of console styling, we also support the [NO_COLOR](https://no-color.org) environment variable.
-- `--skip-version-check` Skips updated AlgoKit version checking and prompting for that execution, this can also be disabled [permanently on a given machine](/algokit/cli/commands#version-prompt) with `algokit config version-prompt disable`.
+- `--skip-version-check` Skips updated AlgoKit version checking and prompting for that execution, this can also be disabled [permanently on a given machine](./cli/#version-prompt) with `algokit config version-prompt disable`.
 
-See also the [AlgoKit CLI Reference](/algokit/cli/commands), which details every command, sub-command and option.
+See also the [AlgoKit CLI Reference](./cli/), which details every command, sub-command and option.
 
 ## AlgoKit Tutorials
 

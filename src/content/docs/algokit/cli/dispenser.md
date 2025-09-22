@@ -58,7 +58,7 @@ $ algokit dispenser fund [OPTIONS]
 This command funds your wallet address with TestNet ALGOs.
 Options
 
-- `--receiver`, -r: Receiver [alias](./tasks/wallet.md#add) or address to fund with TestNet ALGOs. This option is required.
+- `--receiver`, -r: Receiver [alias](/algokit/cli/tasks/wallet/#add) or address to fund with TestNet ALGOs. This option is required.
 - `--amount`, -a: Amount to fund. Defaults to microAlgos. This option is required.
 - `--whole-units`: Use whole units (Algos) instead of smallest divisible units (microAlgos). Disabled by default.
 
@@ -73,7 +73,7 @@ Options
 
 - `--txID`, -t: Transaction ID of your refund operation. This option is required. The receiver address of the transaction must be the same as the dispenser wallet address that you can obtain by observing a `sender` field of [`fund`](#fund) transaction.
 
-> Please note, performing a refund operation will not immediately change your daily fund limit. Your daily fund limit is reset daily at midnigth UTC. If you have reached your daily fund limit, you will not be able to perform a refund operation until your daily fund limit is reset.
+> Please note, performing a refund operation will not immedately change your daily fund limit. Your daily fund limit is reset daily at midnigth UTC. If you have reached your daily fund limit, you will not be able to perform a refund operation until your daily fund limit is reset.
 
 ## Limit
 
@@ -88,4 +88,4 @@ Options
 
 ## Further Reading
 
-For in-depth details, visit the [dispenser section](../cli/index.md#dispenser) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [dispenser section](/reference/algokit-cli#dispenser) in the AlgoKit CLI reference documentation.

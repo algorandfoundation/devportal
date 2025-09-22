@@ -133,7 +133,14 @@ export interface FrontmatterTransformOptions {
 /**
  * Supported YAML frontmatter formats
  */
-export type YamlValue = string | number | boolean | Date | null | YamlValue[] | { [key: string]: YamlValue };
+export type YamlValue =
+  | string
+  | number
+  | boolean
+  | Date
+  | null
+  | YamlValue[]
+  | { [key: string]: YamlValue };
 
 /**
  * Parsed frontmatter result

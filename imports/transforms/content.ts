@@ -3,7 +3,9 @@ import type { TransformFunction } from '@larkiny/astro-github-loader';
 /**
  * Creates a transform function that removes specific lines from content
  */
-export function createRemoveLineTransform(lineToRemove: string): TransformFunction {
+export function createRemoveLineTransform(
+  lineToRemove: string,
+): TransformFunction {
   return (content: string, context) => {
     return content.replaceAll(lineToRemove, '');
   };
@@ -12,7 +14,10 @@ export function createRemoveLineTransform(lineToRemove: string): TransformFuncti
 /**
  * Creates a transform function that replaces text using string replacement
  */
-export function createReplaceTransform(from: string, to: string): TransformFunction {
+export function createReplaceTransform(
+  from: string,
+  to: string,
+): TransformFunction {
   return (content: string, context) => {
     return content.replaceAll(from, to);
   };
@@ -21,7 +26,10 @@ export function createReplaceTransform(from: string, to: string): TransformFunct
 /**
  * Creates a transform function that replaces text using regex
  */
-export function createRegexReplaceTransform(pattern: RegExp, replacement: string): TransformFunction {
+export function createRegexReplaceTransform(
+  pattern: RegExp,
+  replacement: string,
+): TransformFunction {
   return (content: string, context) => {
     return content.replaceAll(pattern, replacement);
   };
@@ -30,7 +38,9 @@ export function createRegexReplaceTransform(pattern: RegExp, replacement: string
 /**
  * Creates a transform function that removes multiple specific lines
  */
-export function createRemoveMultipleLinesTransform(linesToRemove: string[]): TransformFunction {
+export function createRemoveMultipleLinesTransform(
+  linesToRemove: string[],
+): TransformFunction {
   return (content: string, context) => {
     let result = content;
     for (const line of linesToRemove) {

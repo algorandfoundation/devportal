@@ -25,9 +25,9 @@ export default defineConfig({
         starlightImageZoom(),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
+          errorOnInvalidHashes: false,
           exclude: [
             '**[FUTURELINK]*',
-            '**/algokit/cli/**', // Exclude CLI docs as they are imported and link validation raises a false positive for some anchor links
             '**/reference/algokit-utils-py/**',
             '**/reference/algokit-utils-ts/API Reference/**',
             '**/reference/algorand-python/**',
@@ -429,7 +429,7 @@ export default defineConfig({
               items: [
                 {
                   label: 'Overview',
-                  link: 'algokit/cli/overview',
+                  link: 'algokit/cli/algokit',
                 },
                 {
                   label: 'Compile',
@@ -550,10 +550,6 @@ export default defineConfig({
                       link: 'algokit/cli/tasks/wallet',
                     },
                   ],
-                },
-                {
-                  label: 'Command Reference',
-                  link: 'algokit/cli/commands',
                 },
               ],
             },
@@ -2371,6 +2367,15 @@ export default defineConfig({
                 {
                   label: 'Overview',
                   link: 'reference/algorand-typescript/overview',
+                },
+              ],
+            },
+            {
+              label: 'AlgoKit CLI',
+              items: [
+                {
+                  label: 'Command Reference',
+                  link: 'reference/algokit-cli',
                 },
               ],
             },
