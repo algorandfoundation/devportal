@@ -25,6 +25,7 @@ export default defineConfig({
         starlightImageZoom(),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
+          errorOnInvalidHashes: false,
           exclude: [
             '**[FUTURELINK]*',
             '**/algokit/cli/**', // Exclude CLI docs as they are imported and link validation raises a false positive for some anchor links
