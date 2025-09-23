@@ -95,10 +95,23 @@ export const utilsTypescriptConfig: ImportOptions = {
   enabled: true,
 };
 
+const SOURCE_GUIDES_PATH_PY = 'docs/markdown/capabilities/';
 const SOURCE_API_PATH_PY = 'docs/markdown/autoapi/algokit_utils/';
+const IMPORT_API_PATH_PY = 'src/content/docs/reference/algokit-utils-py/api';
+
+// Path mappings to restructure imported files
+const GUIDES_PATH_MAPPINGS_PY = {
+  'docs/markdown/capabilities/': '',
+  'docs/markdown/index.md': 'overview.md',
+  'docs/markdown/v3-migration-guide.md': 'v3-migration-guide.md',
+};
+const API_PATH_MAPPINGS_PY = {
+  'docs/markdown/autoapi/algokit_utils/': '',
+  'docs/markdown/autoapi/algokit_utils/index.md': 'overview.md',
+};
 
 /**
- * Imports documentation from algokit-utils-ts
+ * Imports documentation from algokit-utils-py
  */
 export const utilsPythonConfig: ImportOptions = {
   name: 'AlgoKit Utils Python Docs',
@@ -112,21 +125,12 @@ export const utilsPythonConfig: ImportOptions = {
       pattern:
         'docs/markdown/{capabilities/**/*.md,index.md,v3-migration-guide.md}',
       basePath: 'src/content/docs/algokit/utils/python',
-      pathMappings: {
-        'docs/markdown/capabilities/': '',
-        'docs/markdown/README.md': 'overview.md',
-        'docs/markdown/v3-migration-guide.md': 'v3-migration-guide.md',
-      },
-    },
-    {
-      pattern: 'docs/markdown/autoapi/algokit_utils/**/*',
-      basePath: 'src/content/docs/reference/algokit-utils-ts/api',
-      pathMappings: {
-        'docs/code/': '',
-      },
+      pathMappings: GUIDES_PATH_MAPPINGS_PY,
       transforms: [
+        convertH1ToTitle,
         createConditionalTransform(
-          path => path === 'docs/code/README.md',
+          path => matchesPath(`docs/markdown/index.md`, path),
+          removeH1,
           createFrontmatterTransform({
             frontmatter: {
               title: 'AlgoKit Utils API Reference',
@@ -136,34 +140,54 @@ export const utilsPythonConfig: ImportOptions = {
             preserveExisting: false,
           }),
         ),
+        createConditionalTransform(
+          path => matchesPath(`docs/markdown/v3-migration-guide.md`, path),
+          removeH1,
+          createFrontmatterTransform({
+            frontmatter: {
+              title: 'Python Utils v3 Migration Guide',
+              sidebar: { label: 'v3 Migration Guide', order: 0 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+        ),
+      ],
+    },
+    {
+      pattern: `${SOURCE_API_PATH_PY}**/*`,
+      basePath: IMPORT_API_PATH_PY,
+      pathMappings: API_PATH_MAPPINGS_PY,
+      transforms: [
+        createConditionalTransform(
+          path => matchesPath(`${SOURCE_API_PATH_PY}**/*.md`, path),
+          convertH1ToTitleMatch(/[^.]*$/),
+        ),
       ],
     },
   ],
-  transforms: [convertH1ToTitle],
   linkTransform: {
     stripPrefixes: ['src/content/docs'],
     linkMappings: [
       ...createStarlightLinkMappings(),
+      ...generateLinkMappings(GUIDES_PATH_MAPPINGS_PY),
+      ...generateLinkMappings(API_PATH_MAPPINGS_PY, {
+        crossSectionPath: '/reference/algokit-utils-py/api',
+      }),
       {
-        pattern: /^docs\/capabilities\/(.+)$/,
-        replacement: (match, relativePath) => {
-          return relativePath;
-        },
-        global: true,
-      },
+        contextFilter: context =>
+          context.sourcePath.startsWith('docs/markdown/autoapi/algokit_utils/'),
+        relativeLinks: true,
+        pattern: /.*/,
+        replacement: (match: string, anchor: string, context: any) => {
+          // Transform relative path to absolute path within the API reference
+          const relativePath = match.replace(/\.md$/, '');
+          const finalPath = `/reference/algokit-utils-py/api/${relativePath}`;
 
-      {
-        pattern: /^docs\/README\.md$/,
-        replacement: 'overview.md',
-        global: true,
-      },
-
-      {
-        pattern: /^docs\/code\/(.+)$/,
-        replacement: (match, relativePath) => {
-          return `/reference/algokit-utils-ts/api/${relativePath}`;
+          // Use pathToStarlightUrl to handle index files and trailing slashes properly
+          return finalPath.replace(/\/index$/, '/');
         },
-        global: true,
+        global: false,
       },
     ],
   },

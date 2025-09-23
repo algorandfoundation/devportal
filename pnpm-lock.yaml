@@ -33,11 +33,14 @@ importers:
         specifier: ^3.15.1
         version: 3.15.1
       '@larkiny/astro-github-loader':
-        specifier: ^1.2.9
-        version: 1.2.9(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
+        specifier: ^1.2.10
+        version: 1.2.10(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
       '@tailwindcss/vite':
         specifier: ^4.0.14
         version: 4.0.14(vite@6.1.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.2)(yaml@2.7.0))
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       astro:
         specifier: ^5.3.1
         version: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
@@ -83,6 +86,9 @@ importers:
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
+      starlight-auto-sidebar:
+        specifier: ^0.1.2
+        version: 0.1.2(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))
       starlight-image-zoom:
         specifier: ^0.11.1
         version: 0.11.1(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))
@@ -1136,8 +1142,8 @@ packages:
   '@jsdevtools/ono@7.1.3':
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
 
-  '@larkiny/astro-github-loader@1.2.9':
-    resolution: {integrity: sha512-6r+p8+yb5BJSw0ri4zgDfEuCoWepeg8xppOKdV5fn+DSmHSz3Db1qNJUzmWYW/5CmkpywPW9Uv802Cp+SLCf+Q==, tarball: https://npm.pkg.github.com/download/@larkiny/astro-github-loader/1.2.9/bd6dcac5aac5bab5a0f6cad6478cd79eefa9cf31}
+  '@larkiny/astro-github-loader@1.2.10':
+    resolution: {integrity: sha512-3Q5dpsOHQeIQyHX+DUspGiwuCtLIgkBPNtuGqXOJnScewSu7Hp1rDKT8p/2sR0Uflj5ircdBEnwjdV9wAsdKAg==, tarball: https://npm.pkg.github.com/download/@larkiny/astro-github-loader/1.2.10/1a8da1f9fb094342abd32d23cfa3cf53ae927ea1}
     peerDependencies:
       astro: ^5.5.6
 
@@ -4345,6 +4351,12 @@ packages:
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
+  starlight-auto-sidebar@0.1.2:
+    resolution: {integrity: sha512-7wxR9r/dMGl0ISjO7LxmSQHFdUN/UdiEDWQ+ehv5AL8udEYgItZIvPrUWv5tAg4EF5Okj451mRp8s1bU9f6fmA==}
+    engines: {node: '>=18.17.1'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.32.0'
+
   starlight-image-zoom@0.11.1:
     resolution: {integrity: sha512-TmnAyS+MWWV6h1fjuezrMFA36REd+7QzcjDFFFyC4ws5FDMoHsjQn0MlHM0cUaHEKfQ9y1PpL9LijCvRFuGbuw==}
     engines: {node: '>=18'}
@@ -6064,7 +6076,7 @@ snapshots:
 
   '@jsdevtools/ono@7.1.3': {}
 
-  '@larkiny/astro-github-loader@1.2.9(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
+  '@larkiny/astro-github-loader@1.2.10(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
     dependencies:
       astro: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
       github-slugger: 2.0.0
@@ -10071,6 +10083,11 @@ snapshots:
       through: 2.3.8
 
   sprintf-js@1.0.3: {}
+
+  starlight-auto-sidebar@0.1.2(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))):
+    dependencies:
+      '@astrojs/starlight': 0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
+      github-slugger: 2.0.0
 
   starlight-image-zoom@0.11.1(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))):
     dependencies:

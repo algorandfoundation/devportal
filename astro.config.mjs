@@ -9,6 +9,7 @@ import starlightLinksValidator from 'starlight-links-validator';
 import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-links';
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
+import starlightAutoSidebar from 'starlight-auto-sidebar';
 import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
@@ -67,6 +68,7 @@ export default defineConfig({
             },
           ],
         }),
+        starlightAutoSidebar(),
       ],
       head: [
         {
@@ -2307,76 +2309,9 @@ export default defineConfig({
               items: [
                 {
                   label: 'API Reference',
-                  items: [
-                    {
-                      label: 'algokit_utils._debugging',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils__debugging',
-                    },
-                    {
-                      label: 'algokit_utils._ensure_funded',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils__ensure_funded',
-                    },
-                    {
-                      label: 'algokit_utils._transfer',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils__transfer',
-                    },
-                    {
-                      label: 'algokit_utils.account',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_account',
-                    },
-                    {
-                      label: 'algokit_utils._debugging',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils__debugging',
-                    },
-                    {
-                      label: 'algokit_utils.application_client',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_application_client',
-                    },
-                    {
-                      label: 'algokit_utils.application_specification',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_application_specification',
-                    },
-                    {
-                      label: 'algokit_utils.asset',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_asset',
-                    },
-                    {
-                      label: 'algokit_utils.common',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_common',
-                    },
-                    {
-                      label: 'algokit_utils.config',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_config',
-                    },
-                    {
-                      label: 'algokit_utils.deploy',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_deploy',
-                    },
-                    {
-                      label: 'algokit_utils.dispenser_api',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_dispenser_api',
-                    },
-                    {
-                      label: 'algokit_utils.logic_error',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_logic_error',
-                    },
-                    {
-                      label: 'algokit_utils.models',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_models',
-                    },
-                    {
-                      label: 'algokit_utils.network_clients',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_network_clients',
-                    },
-                    {
-                      label: 'algokit_utils',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils',
-                    },
-                  ],
-                },
-                {
-                  label: 'Overview',
-                  link: 'reference/algokit-utils-py/overview',
+                  autogenerate: {
+                    directory: 'reference/algokit-utils-py/api',
+                  },
                 },
               ],
             },
