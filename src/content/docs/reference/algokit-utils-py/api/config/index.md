@@ -12,6 +12,6 @@ title: algokit_utils.config
 
 ### algokit_utils.config.ALGOKIT_PROJECT_ROOT
 
-### algokit_utils.config.ALGOKIT_CONFIG_FILENAME _= '.algokit.toml'_
+### algokit*utils.config.ALGOKIT_CONFIG_FILENAME *= '.algokit.toml'\_
 
 ### algokit_utils.config.config

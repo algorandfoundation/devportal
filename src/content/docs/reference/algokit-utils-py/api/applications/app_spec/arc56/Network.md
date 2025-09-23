@@ -6,7 +6,7 @@ title: algokit_utils.applications.app_spec.arc56.Network
 
 Network-specific application information.
 
-#### app_id _: int_
+#### app*id *: int\_
 
 The application ID on the network
 

@@ -6,6 +6,6 @@ title: algokit_utils.applications.app_deployer.ApplicationReference
 
 Information about an Algorand app
 
-#### app_id _: int_
+#### app*id *: int\_
 
-#### app_address _: str_
+#### app*address *: str\_

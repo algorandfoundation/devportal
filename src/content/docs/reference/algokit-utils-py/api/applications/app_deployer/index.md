@@ -15,4 +15,4 @@ title: algokit_utils.applications.app_deployer
 
 ## Module Contents
 
-### algokit_utils.applications.app_deployer.APP_DEPLOY_NOTE_DAPP _: str_ _= 'ALGOKIT_DEPLOYER'_
+### algokit*utils.applications.app_deployer.APP_DEPLOY_NOTE_DAPP *: str\_ _= 'ALGOKIT_DEPLOYER'_

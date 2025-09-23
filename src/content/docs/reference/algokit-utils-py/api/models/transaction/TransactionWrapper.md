@@ -12,12 +12,12 @@ Wrapper around algosdk.transaction.Transaction with optional property validators
 
 #### _property_ keyreg _: algosdk.transaction.KeyregTxn_
 
-#### _property_ asset_config _: algosdk.transaction.AssetConfigTxn_
+#### _property_ asset*config *: algosdk.transaction.AssetConfigTxn\_
 
-#### _property_ asset_transfer _: algosdk.transaction.AssetTransferTxn_
+#### _property_ asset*transfer *: algosdk.transaction.AssetTransferTxn\_
 
-#### _property_ asset_freeze _: algosdk.transaction.AssetFreezeTxn_
+#### _property_ asset*freeze *: algosdk.transaction.AssetFreezeTxn\_
 
-#### _property_ application_call _: algosdk.transaction.ApplicationCallTxn_
+#### _property_ application*call *: algosdk.transaction.ApplicationCallTxn\_
 
-#### _property_ state_proof _: algosdk.transaction.StateProofTxn_
+#### _property_ state*proof *: algosdk.transaction.StateProofTxn\_

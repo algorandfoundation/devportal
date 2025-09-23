@@ -10,15 +10,15 @@ title: algokit_utils.applications.abi
 
 ## Module Contents
 
-### _type_ algokit_utils.applications.abi.ABIValue _= bool | int | str | bytes | bytearray | list['ABIValue'] | tuple['ABIValue'] | dict[str, 'ABIValue']_
+### _type_ algokit*utils.applications.abi.ABIValue *= bool | int | str | bytes | bytearray | list['ABIValue'] | tuple['ABIValue'] | dict[str, 'ABIValue']\_
 
-### _type_ algokit_utils.applications.abi.ABIStruct _= dict[str, list[dict[str, 'ABIValue']]]_
+### _type_ algokit*utils.applications.abi.ABIStruct *= dict[str, list[dict[str, 'ABIValue']]]\_
 
-### _type_ algokit_utils.applications.abi.Arc56ReturnValueType _= ABIValue | ABIStruct | None_
+### _type_ algokit*utils.applications.abi.Arc56ReturnValueType *= ABIValue | ABIStruct | None\_
 
-### _type_ algokit_utils.applications.abi.ABIType _= algosdk.abi.ABIType_
+### _type_ algokit*utils.applications.abi.ABIType *= algosdk.abi.ABIType\_
 
-### _type_ algokit_utils.applications.abi.ABIArgumentType _= algosdk.abi.ABIType | algosdk.abi.ABITransactionType | algosdk.abi.ABIReferenceType_
+### _type_ algokit*utils.applications.abi.ABIArgumentType *= algosdk.abi.ABIType | algosdk.abi.ABITransactionType | algosdk.abi.ABIReferenceType\_
 
 ### algokit_utils.applications.abi.get_arc56_value(abi_return: [ABIReturn](#algokit_utils.applications.abi.ABIReturn), method: [algokit_utils.applications.app_spec.arc56.Method](/reference/algokit-utils-py/api/applications/app_spec/arc56/method/#algokit_utils.applications.app_spec.arc56.Method) | algosdk.abi.method.Method, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/api/applications/app_spec/arc56/structfield/#algokit_utils.applications.app_spec.arc56.StructField)]]) → Arc56ReturnValueType
 

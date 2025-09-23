@@ -8,6 +8,6 @@ Bases: `AppClientCreateSchema`, `AppClientMethodCallParams`
 
 Parameters for creating application with method call
 
-#### on_complete _: CreateOnComplete | None_ _= None_
+#### on*complete *: CreateOnComplete | None\_ _= None_
 
 Optional on complete action

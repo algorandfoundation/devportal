@@ -6,7 +6,7 @@ title: algokit_utils.assets.asset_manager.AccountAssetInformation
 
 Information about an account’s holding of a particular asset.
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the asset
 

@@ -12,6 +12,6 @@ title: algokit_utils.models.state
 
 ## Module Contents
 
-### _type_ algokit_utils.models.state.TealTemplateParams _= Mapping[str, str | int | bytes] | dict[str, str | int | bytes]_
+### _type_ algokit*utils.models.state.TealTemplateParams *= Mapping[str, str | int | bytes] | dict[str, str | int | bytes]\_
 
-### _type_ algokit_utils.models.state.BoxIdentifier _= str | bytes | AccountTransactionSigner_
+### _type_ algokit*utils.models.state.BoxIdentifier *= str | bytes | AccountTransactionSigner\_

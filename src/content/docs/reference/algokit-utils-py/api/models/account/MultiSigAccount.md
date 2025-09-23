@@ -26,7 +26,7 @@ Get the parameters for the multisig account.
 - **Returns:**
   The multisig account parameters
 
-#### _property_ signing_accounts _: list[[SigningAccount](#algokit_utils.models.account.SigningAccount)]_
+#### _property_ signing*accounts *: list[[SigningAccount](#algokit_utils.models.account.SigningAccount)]\_
 
 Get the list of accounts that are present to sign.
 

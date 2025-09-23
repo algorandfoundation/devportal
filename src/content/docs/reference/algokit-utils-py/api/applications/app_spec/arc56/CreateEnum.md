@@ -8,8 +8,8 @@ Bases: `str`, `enum.Enum`
 
 Enum representing different create types for application transactions.
 
-#### DELETE_APPLICATION _= 'DeleteApplication'_
+#### DELETE*APPLICATION *= 'DeleteApplication'\_
 
-#### NO_OP _= 'NoOp'_
+#### NO*OP *= 'NoOp'\_
 
-#### OPT_IN _= 'OptIn'_
+#### OPT*IN *= 'OptIn'\_

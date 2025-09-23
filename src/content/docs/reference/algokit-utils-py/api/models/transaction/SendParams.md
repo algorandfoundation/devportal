@@ -8,10 +8,10 @@ Bases: `TypedDict`
 
 Parameters for sending a transaction
 
-#### max_rounds_to_wait _: int | None_
+#### max*rounds_to_wait *: int | None\_
 
-#### suppress_log _: bool | None_
+#### suppress*log *: bool | None\_
 
-#### populate_app_call_resources _: bool | None_
+#### populate*app_call_resources *: bool | None\_
 
-#### cover_app_call_inner_transaction_fees _: bool | None_
+#### cover*app_call_inner_transaction_fees *: bool | None\_

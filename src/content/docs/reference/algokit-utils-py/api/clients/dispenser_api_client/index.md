@@ -16,6 +16,6 @@ title: algokit_utils.clients.dispenser_api_client
 
 ### algokit_utils.clients.dispenser_api_client.DISPENSER_ASSETS
 
-### algokit_utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT _= 15_
+### algokit*utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT *= 15\_
 
-### algokit_utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY _= 'ALGOKIT_DISPENSER_ACCESS_TOKEN'_
+### algokit*utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY *= 'ALGOKIT*DISPENSER_ACCESS_TOKEN'*

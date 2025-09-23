@@ -23,19 +23,19 @@ Returns the logger instance.
 
 Returns the debug status.
 
-#### _property_ project_root _: pathlib.Path | None_
+#### _property_ project*root *: pathlib.Path | None\_
 
 Returns the project root path.
 
-#### _property_ trace_all _: bool_
+#### _property_ trace*all *: bool\_
 
 Indicates whether simulation traces for all operations should be stored.
 
-#### _property_ trace_buffer_size_mb _: int | float_
+#### _property_ trace*buffer_size_mb *: int | float\_
 
 Returns the size of the trace buffer in megabytes.
 
-#### _property_ populate_app_call_resource _: bool_
+#### _property_ populate*app_call_resource *: bool\_
 
 Indicates whether or not to populate app call resources.
 

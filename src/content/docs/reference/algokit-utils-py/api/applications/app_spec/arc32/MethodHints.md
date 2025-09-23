@@ -6,13 +6,13 @@ title: algokit_utils.applications.app_spec.arc32.MethodHints
 
 MethodHints provides hints to the caller about how to call the method
 
-#### read_only _: bool_ _= False_
+#### read*only *: bool\_ _= False_
 
 #### structs _: dict[str, [StructArgDict](#algokit_utils.applications.app_spec.arc32.StructArgDict)]_
 
-#### default_arguments _: dict[str, [DefaultArgumentDict](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]_
+#### default*arguments *: dict[str, [DefaultArgumentDict](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]\_
 
-#### call_config _: MethodConfigDict_
+#### call*config *: MethodConfigDict\_
 
 #### empty() → bool
 

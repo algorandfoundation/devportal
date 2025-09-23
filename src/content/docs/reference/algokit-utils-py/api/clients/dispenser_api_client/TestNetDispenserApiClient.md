@@ -12,9 +12,9 @@ and it will be auto loaded. If both are set, the constructor argument takes prec
 
 Default request timeout is 15 seconds. Modify by passing request_timeout to the constructor.
 
-#### auth_token _: str_
+#### auth*token *: str\_
 
-#### request_timeout _= 15_
+#### request*timeout *= 15\_
 
 #### fund(address: str, amount: int) → [DispenserFundResponse](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)
 

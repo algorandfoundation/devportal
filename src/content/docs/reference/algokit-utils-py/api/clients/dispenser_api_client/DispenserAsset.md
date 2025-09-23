@@ -4,7 +4,7 @@ title: algokit_utils.clients.dispenser_api_client.DispenserAsset
 
 #### _class_ algokit_utils.clients.dispenser_api_client.DispenserAsset
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the asset
 

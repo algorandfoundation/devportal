@@ -6,11 +6,11 @@ title: algokit_utils.applications.app_spec.arc56.ProgramSourceInfo
 
 Program source information.
 
-#### pc_offset_method _: [PcOffsetMethod](#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)_
+#### pc*offset_method *: [PcOffsetMethod](#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)\_
 
 The PC offset method
 
-#### source_info _: list[[SourceInfo](#algokit_utils.applications.app_spec.arc56.SourceInfo)]_
+#### source*info *: list[[SourceInfo](#algokit_utils.applications.app_spec.arc56.SourceInfo)]\_
 
 The list of source info entries
 

@@ -4,19 +4,19 @@ title: algokit_utils.models.application.AppInformation
 
 #### _class_ algokit_utils.models.application.AppInformation
 
-#### app_id _: int_
+#### app*id *: int\_
 
 The ID of the application
 
-#### app_address _: str_
+#### app*address *: str\_
 
 The address of the application
 
-#### approval_program _: bytes_
+#### approval*program *: bytes\_
 
 The approval program
 
-#### clear_state_program _: bytes_
+#### clear*state_program *: bytes\_
 
 The clear state program
 
@@ -24,26 +24,26 @@ The clear state program
 
 The creator of the application
 
-#### global_state _: dict[str, [AppState](#algokit_utils.models.application.AppState)]_
+#### global*state *: dict[str, [AppState](#algokit_utils.models.application.AppState)]\_
 
 The global state of the application
 
-#### local_ints _: int_
+#### local*ints *: int\_
 
 The number of local ints
 
-#### local_byte_slices _: int_
+#### local*byte_slices *: int\_
 
 The number of local byte slices
 
-#### global_ints _: int_
+#### global*ints *: int\_
 
 The number of global ints
 
-#### global_byte_slices _: int_
+#### global*byte_slices *: int\_
 
 The number of global byte slices
 
-#### extra_program_pages _: int | None_
+#### extra*program_pages *: int | None\_
 
 The number of extra program pages

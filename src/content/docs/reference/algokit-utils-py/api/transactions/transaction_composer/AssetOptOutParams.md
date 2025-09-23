@@ -8,7 +8,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for opting out of an asset.
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the asset
 

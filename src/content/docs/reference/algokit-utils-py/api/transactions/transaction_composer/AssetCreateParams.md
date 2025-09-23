@@ -12,11 +12,11 @@ Parameters for creating a new asset.
 
 The total amount of the smallest divisible unit to create
 
-#### asset_name _: str | None_ _= None_
+#### asset*name *: str | None\_ _= None_
 
 The full name of the asset
 
-#### unit_name _: str | None_ _= None_
+#### unit*name *: str | None\_ _= None_
 
 The short ticker name for the asset
 
@@ -28,7 +28,7 @@ The metadata URL for the asset
 
 The amount of decimal places the asset should have
 
-#### default_frozen _: bool | None_ _= None_
+#### default*frozen *: bool | None\_ _= None_
 
 Whether the asset is frozen by default in the creator address
 
@@ -48,6 +48,6 @@ The address that can freeze the asset in any account
 
 The address that can clawback the asset from any account
 
-#### metadata_hash _: bytes | None_ _= None_
+#### metadata*hash *: bytes | None\_ _= None_
 
 Hash of the metadata contained in the metadata URL

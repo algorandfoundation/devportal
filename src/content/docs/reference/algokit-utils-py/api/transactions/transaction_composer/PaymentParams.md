@@ -16,6 +16,6 @@ The account that will receive the ALGO
 
 Amount to send
 
-#### close_remainder_to _: str | None_ _= None_
+#### close*remainder_to *: str | None\_ _= None_
 
 If given, close the sender account and send the remaining balance to this address, defaults to None

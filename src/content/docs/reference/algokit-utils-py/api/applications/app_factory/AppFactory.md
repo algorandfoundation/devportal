@@ -19,11 +19,11 @@ to interact with those (or other) app instances.
   >>> )
   ```
 
-#### _property_ app_name _: str_
+#### _property_ app*name *: str\_
 
 The name of the app
 
-#### _property_ app_spec _: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract)_
+#### _property_ app*spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract)\_
 
 The app spec
 
@@ -71,7 +71,7 @@ Get the transaction sender.
 - **Returns:**
   The \_TransactionSender instance.
 
-#### _property_ create_transaction _: \_TransactionCreator_
+#### _property_ create*transaction *: \_TransactionCreator\_
 
 Get the transaction creator.
 

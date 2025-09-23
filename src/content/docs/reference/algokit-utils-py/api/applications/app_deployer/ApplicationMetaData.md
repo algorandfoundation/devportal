@@ -8,17 +8,17 @@ Complete metadata about a deployed app
 
 #### reference _: [ApplicationReference](#algokit_utils.applications.app_deployer.ApplicationReference)_
 
-#### deploy_metadata _: [AppDeploymentMetaData](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)_
+#### deploy*metadata *: [AppDeploymentMetaData](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)\_
 
-#### created_round _: int_
+#### created*round *: int\_
 
-#### updated_round _: int_
+#### updated*round *: int\_
 
 #### deleted _: bool_ _= False_
 
-#### _property_ app_id _: int_
+#### _property_ app*id *: int\_
 
-#### _property_ app_address _: str_
+#### _property_ app*address *: str\_
 
 #### _property_ name _: str_
 

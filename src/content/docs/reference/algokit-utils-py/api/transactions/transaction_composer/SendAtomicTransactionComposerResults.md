@@ -6,7 +6,7 @@ title: algokit_utils.transactions.transaction_composer.SendAtomicTransactionComp
 
 Results from sending an AtomicTransactionComposer transaction group.
 
-#### group_id _: str_
+#### group*id *: str\_
 
 The group ID if this was a transaction group
 
@@ -14,7 +14,7 @@ The group ID if this was a transaction group
 
 The confirmation info for each transaction
 
-#### tx_ids _: list[str]_
+#### tx*ids *: list[str]\_
 
 The transaction IDs that were sent
 
@@ -26,6 +26,6 @@ The transactions that were sent
 
 The ABI return values from any ABI method calls
 
-#### simulate_response _: dict[str, Any] | None_ _= None_
+#### simulate*response *: dict[str, Any] | None\_ _= None_
 
 The simulation response if simulation was performed, defaults to None

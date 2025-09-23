@@ -46,7 +46,7 @@ Create a payment transaction to transfer Algo between accounts.
       ))
   ```
 
-#### _property_ asset_create _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetCreateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetcreateparams/#algokit_utils.transactions.transaction_composer.AssetCreateParams)], algosdk.transaction.Transaction]_
+#### _property_ asset*create *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetCreateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetcreateparams/#algokit_utils.transactions.transaction_composer.AssetCreateParams)], algosdk.transaction.Transaction]\_
 
 Create a create Algorand Standard Asset transaction.
 
@@ -83,7 +83,7 @@ Create a create Algorand Standard Asset transaction.
   ))
   ```
 
-#### _property_ asset_config _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetConfigParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetconfigparams/#algokit_utils.transactions.transaction_composer.AssetConfigParams)], algosdk.transaction.Transaction]_
+#### _property_ asset*config *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetConfigParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetconfigparams/#algokit_utils.transactions.transaction_composer.AssetConfigParams)], algosdk.transaction.Transaction]\_
 
 Create an asset config transaction to reconfigure an existing Algorand Standard Asset.
 
@@ -115,7 +115,7 @@ Create an asset config transaction to reconfigure an existing Algorand Standard 
   ))
   ```
 
-#### _property_ asset_freeze _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetFreezeParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetfreezeparams/#algokit_utils.transactions.transaction_composer.AssetFreezeParams)], algosdk.transaction.Transaction]_
+#### _property_ asset*freeze *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetFreezeParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetfreezeparams/#algokit_utils.transactions.transaction_composer.AssetFreezeParams)], algosdk.transaction.Transaction]\_
 
 Create an Algorand Standard Asset freeze transaction.
 
@@ -148,7 +148,7 @@ Create an Algorand Standard Asset freeze transaction.
   ))
   ```
 
-#### _property_ asset_destroy _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetDestroyParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetdestroyparams/#algokit_utils.transactions.transaction_composer.AssetDestroyParams)], algosdk.transaction.Transaction]_
+#### _property_ asset*destroy *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetDestroyParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetdestroyparams/#algokit_utils.transactions.transaction_composer.AssetDestroyParams)], algosdk.transaction.Transaction]\_
 
 Create an Algorand Standard Asset destroy transaction.
 
@@ -176,7 +176,7 @@ Create an Algorand Standard Asset destroy transaction.
   ))
   ```
 
-#### _property_ asset_transfer _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetTransferParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assettransferparams/#algokit_utils.transactions.transaction_composer.AssetTransferParams)], algosdk.transaction.Transaction]_
+#### _property_ asset*transfer *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetTransferParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assettransferparams/#algokit_utils.transactions.transaction_composer.AssetTransferParams)], algosdk.transaction.Transaction]\_
 
 Create an Algorand Standard Asset transfer transaction.
 
@@ -211,7 +211,7 @@ Create an Algorand Standard Asset transfer transaction.
   ))
   ```
 
-#### _property_ asset_opt_in _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetOptInParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetoptinparams/#algokit_utils.transactions.transaction_composer.AssetOptInParams)], algosdk.transaction.Transaction]_
+#### _property_ asset*opt_in *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetOptInParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetoptinparams/#algokit_utils.transactions.transaction_composer.AssetOptInParams)], algosdk.transaction.Transaction]\_
 
 Create an Algorand Standard Asset opt-in transaction.
 
@@ -239,7 +239,7 @@ Create an Algorand Standard Asset opt-in transaction.
   ))
   ```
 
-#### _property_ asset_opt_out _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetOptOutParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetoptoutparams/#algokit_utils.transactions.transaction_composer.AssetOptOutParams)], algosdk.transaction.Transaction]_
+#### _property_ asset*opt_out *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetOptOutParams](/reference/algokit-utils-py/api/transactions/transaction_composer/assetoptoutparams/#algokit_utils.transactions.transaction_composer.AssetOptOutParams)], algosdk.transaction.Transaction]\_
 
 Create an asset opt-out transaction.
 
@@ -268,7 +268,7 @@ Create an asset opt-out transaction.
   ))
   ```
 
-#### _property_ app_create _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCreateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appcreateparams/#algokit_utils.transactions.transaction_composer.AppCreateParams)], algosdk.transaction.Transaction]_
+#### _property_ app*create *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCreateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appcreateparams/#algokit_utils.transactions.transaction_composer.AppCreateParams)], algosdk.transaction.Transaction]\_
 
 Create an application create transaction.
 
@@ -315,7 +315,7 @@ Create an application create transaction.
   ))
   ```
 
-#### _property_ app_update _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppUpdateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appupdateparams/#algokit_utils.transactions.transaction_composer.AppUpdateParams)], algosdk.transaction.Transaction]_
+#### _property_ app*update *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppUpdateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appupdateparams/#algokit_utils.transactions.transaction_composer.AppUpdateParams)], algosdk.transaction.Transaction]\_
 
 Create an application update transaction.
 
@@ -354,7 +354,7 @@ Create an application update transaction.
   ))
   ```
 
-#### _property_ app_delete _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppDeleteParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appdeleteparams/#algokit_utils.transactions.transaction_composer.AppDeleteParams)], algosdk.transaction.Transaction]_
+#### _property_ app*delete *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppDeleteParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appdeleteparams/#algokit_utils.transactions.transaction_composer.AppDeleteParams)], algosdk.transaction.Transaction]\_
 
 Create an application delete transaction.
 
@@ -388,7 +388,7 @@ Create an application delete transaction.
   ))
   ```
 
-#### _property_ app_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appcallparams/#algokit_utils.transactions.transaction_composer.AppCallParams)], algosdk.transaction.Transaction]_
+#### _property_ app*call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appcallparams/#algokit_utils.transactions.transaction_composer.AppCallParams)], algosdk.transaction.Transaction]\_
 
 Create an application call transaction.
 
@@ -444,7 +444,7 @@ Create an application call transaction.
   ))
   ```
 
-#### _property_ app_create_method_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appcreatemethodcallparams/#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/reference/algokit-utils-py/api/transactions/transaction_composer/builttransactions/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
+#### _property_ app*create_method_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appcreatemethodcallparams/#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/reference/algokit-utils-py/api/transactions/transaction_composer/builttransactions/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]\_
 
 Create an application create call with ABI method call transaction.
 
@@ -483,7 +483,7 @@ Create an application create call with ABI method call transaction.
   ))
   ```
 
-#### _property_ app_update_method_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appupdatemethodcallparams/#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/reference/algokit-utils-py/api/transactions/transaction_composer/builttransactions/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
+#### _property_ app*update_method_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appupdatemethodcallparams/#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/reference/algokit-utils-py/api/transactions/transaction_composer/builttransactions/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]\_
 
 Create an application update call with ABI method call transaction.
 
@@ -521,7 +521,7 @@ Create an application update call with ABI method call transaction.
   ))
   ```
 
-#### _property_ app_delete_method_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appdeletemethodcallparams/#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/reference/algokit-utils-py/api/transactions/transaction_composer/builttransactions/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
+#### _property_ app*delete_method_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appdeletemethodcallparams/#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/reference/algokit-utils-py/api/transactions/transaction_composer/builttransactions/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]\_
 
 Create an application delete call with ABI method call transaction.
 
@@ -555,7 +555,7 @@ Create an application delete call with ABI method call transaction.
   ))
   ```
 
-#### _property_ app_call_method_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCallMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appcallmethodcallparams/#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/reference/algokit-utils-py/api/transactions/transaction_composer/builttransactions/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
+#### _property_ app*call_method_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCallMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/appcallmethodcallparams/#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/reference/algokit-utils-py/api/transactions/transaction_composer/builttransactions/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]\_
 
 Create an application call with ABI method call transaction.
 
@@ -589,7 +589,7 @@ Create an application call with ABI method call transaction.
 
   ))
 
-#### _property_ online_key_registration _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams](/reference/algokit-utils-py/api/transactions/transaction_composer/onlinekeyregistrationparams/#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)], algosdk.transaction.Transaction]_
+#### _property_ online*key_registration *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams](/reference/algokit-utils-py/api/transactions/transaction_composer/onlinekeyregistrationparams/#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)], algosdk.transaction.Transaction]\_
 
 Create an online key registration transaction.
 
@@ -630,7 +630,7 @@ Create an online key registration transaction.
   ))
   ```
 
-#### _property_ offline_key_registration _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams](/reference/algokit-utils-py/api/transactions/transaction_composer/offlinekeyregistrationparams/#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)], algosdk.transaction.Transaction]_
+#### _property_ offline*key_registration *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams](/reference/algokit-utils-py/api/transactions/transaction_composer/offlinekeyregistrationparams/#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)], algosdk.transaction.Transaction]\_
 
 Create an offline key registration transaction.
 

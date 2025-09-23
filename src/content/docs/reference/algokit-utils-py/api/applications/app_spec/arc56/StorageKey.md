@@ -10,11 +10,11 @@ Storage key information.
 
 The storage key
 
-#### key_type _: str_
+#### key*type *: str\_
 
 The type of the key
 
-#### value_type _: str_
+#### value*type *: str\_
 
 The type of the value
 

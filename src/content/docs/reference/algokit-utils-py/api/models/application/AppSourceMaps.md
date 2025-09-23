@@ -6,10 +6,10 @@ title: algokit_utils.models.application.AppSourceMaps
 
 The source maps for the application
 
-#### approval_source_map _: algosdk.source_map.SourceMap | None_ _= None_
+#### approval*source_map *: algosdk.source*map.SourceMap | None* _= None_
 
 The source map for the approval program
 
-#### clear_source_map _: algosdk.source_map.SourceMap | None_ _= None_
+#### clear*source_map *: algosdk.source*map.SourceMap | None* _= None_
 
 The source map for the clear state program

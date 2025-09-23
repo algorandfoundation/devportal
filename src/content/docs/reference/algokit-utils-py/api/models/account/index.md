@@ -13,4 +13,4 @@ title: algokit_utils.models.account
 
 ## Module Contents
 
-### algokit_utils.models.account.DISPENSER_ACCOUNT_NAME _= 'DISPENSER'_
+### algokit*utils.models.account.DISPENSER_ACCOUNT_NAME *= 'DISPENSER'\_

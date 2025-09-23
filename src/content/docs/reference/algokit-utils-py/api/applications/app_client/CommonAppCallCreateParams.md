@@ -8,6 +8,6 @@ Bases: `AppClientCreateSchema`, `CommonAppCallParams`
 
 Common configuration for app create call transaction parameters.
 
-#### on_complete _: CreateOnComplete | None_ _= None_
+#### on*complete *: CreateOnComplete | None\_ _= None_
 
 Optional on complete action

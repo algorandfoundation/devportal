@@ -6,7 +6,7 @@ title: algokit_utils.applications.app_spec.arc56.CompilerVersion
 
 Represents compiler version information.
 
-#### commit_hash _: str | None_ _= None_
+#### commit*hash *: str | None\_ _= None_
 
 The git commit hash of the compiler
 

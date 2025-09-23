@@ -10,10 +10,10 @@ Result of creating a new application.
 
 Contains the app ID and address of the newly created application.
 
-#### app_id _: int_
+#### app*id *: int\_
 
 The ID of the newly created application
 
-#### app_address _: str_
+#### app*address *: str\_
 
 The address of the newly created application

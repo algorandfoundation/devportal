@@ -6,11 +6,11 @@ title: algokit_utils.applications.app_spec.arc56.StorageMap
 
 Storage map information.
 
-#### key_type _: str_
+#### key*type *: str\_
 
 The type of the map keys
 
-#### value_type _: str_
+#### value*type *: str\_
 
 The type of the map values
 

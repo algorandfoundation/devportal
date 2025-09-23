@@ -10,7 +10,7 @@ Information about the compiler used.
 
 The type of compiler used
 
-#### compiler_version _: [CompilerVersion](#algokit_utils.applications.app_spec.arc56.CompilerVersion)_
+#### compiler*version *: [CompilerVersion](#algokit_utils.applications.app_spec.arc56.CompilerVersion)\_
 
 Version information for the compiler
 

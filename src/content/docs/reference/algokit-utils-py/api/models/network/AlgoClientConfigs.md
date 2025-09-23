@@ -4,8 +4,8 @@ title: algokit_utils.models.network.AlgoClientConfigs
 
 #### _class_ algokit_utils.models.network.AlgoClientConfigs
 
-#### algod_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig)_
+#### algod*config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig)\_
 
-#### indexer_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None_
+#### indexer*config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
 
-#### kmd_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None_
+#### kmd*config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
