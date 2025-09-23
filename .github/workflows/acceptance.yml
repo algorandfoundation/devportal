@@ -36,7 +36,12 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Setup submodules
-        run: git submodule update --init && pnpm run import:utils-ts
+        run: git submodule update --init
+
+      - name: Setup .npmrc for GitHub Packages
+        run: |
+          echo "@larkiny:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.TEMP_PACKAGES_TOKEN }}" >> .npmrc
 
       - name: Install Dependencies
         run: pnpm install
@@ -77,7 +82,12 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Setup submodules
-        run: git submodule update --init && pnpm run import:utils-ts
+        run: git submodule update --init
+
+      - name: Setup .npmrc for GitHub Packages
+        run: |
+          echo "@larkiny:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.TEMP_PACKAGES_TOKEN }}" >> .npmrc
 
       - name: Install Dependencies
         run: pnpm install
@@ -87,3 +97,4 @@ jobs:
         env:
           TSTRUCT_TOKEN: ${{ secrets.TSTRUCT_TOKEN }}
           PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
+          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
