@@ -26,6 +26,7 @@
     "clean:nodekit": "rm -rf src/content/docs/nodes/nodekit-reference src/assets/imports/nodekit .astro",
     "clean:cli": "rm -rf src/content/docs/algokit/cli src/assets/imports/algokit-cli .astro",
     "clean:utils-ts": "rm -rf src/content/docs/algokit/utils/typescript src/content/docs/reference/algokit-utils-ts/api src/assets/imports/algokit-utils-ts .astro",
+    "clean:utils-py": "rm -rf src/content/docs/algokit/utils/python src/content/docs/reference/algokit-utils-py/api src/assets/imports/algokit-utils-py .astro",
     "sidebar:generate": "npx tsx scripts/manage-sidebar-meta.js",
     "sidebar:update": "npx tsx scripts/manage-sidebar-meta.js --update",
     "sidebar:overwrite": "npx tsx scripts/manage-sidebar-meta.js --overwrite",
