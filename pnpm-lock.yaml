@@ -33,11 +33,14 @@ importers:
         specifier: ^3.15.1
         version: 3.15.1
       '@larkiny/astro-github-loader':
-        specifier: ^1.1.0
-        version: 1.1.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
+        specifier: ^1.2.10
+        version: 1.2.10(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
       '@tailwindcss/vite':
         specifier: ^4.0.14
         version: 4.0.14(vite@6.1.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.2)(yaml@2.7.0))
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       astro:
         specifier: ^5.3.1
         version: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
@@ -62,6 +65,9 @@ importers:
       octokit:
         specifier: ^5.0.3
         version: 5.0.3
+      picomatch:
+        specifier: ^4.0.3
+        version: 4.0.3
       prismjs:
         specifier: ^1.29.0
         version: 1.29.0
@@ -80,6 +86,9 @@ importers:
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
+      starlight-auto-sidebar:
+        specifier: ^0.1.2
+        version: 0.1.2(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))
       starlight-image-zoom:
         specifier: ^0.11.1
         version: 0.11.1(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))
@@ -1133,8 +1142,8 @@ packages:
   '@jsdevtools/ono@7.1.3':
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
 
-  '@larkiny/astro-github-loader@1.1.0':
-    resolution: {integrity: sha512-bo7nygR0KSf35aMMsFo5+3CyuMwbPyCHSsa8g+Y3sk1ilWMHid88H4nSoapk5WsfsvBueurtFNsVeDhuT25Vbw==, tarball: https://npm.pkg.github.com/download/@larkiny/astro-github-loader/1.1.0/b2aa47a908acc0198ad34e6d991ee31f9a2e305a}
+  '@larkiny/astro-github-loader@1.2.10':
+    resolution: {integrity: sha512-3Q5dpsOHQeIQyHX+DUspGiwuCtLIgkBPNtuGqXOJnScewSu7Hp1rDKT8p/2sR0Uflj5ircdBEnwjdV9wAsdKAg==, tarball: https://npm.pkg.github.com/download/@larkiny/astro-github-loader/1.2.10/1a8da1f9fb094342abd32d23cfa3cf53ae927ea1}
     peerDependencies:
       astro: ^5.5.6
 
@@ -3930,6 +3939,10 @@ packages:
     resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
     engines: {node: '>=12'}
 
+  picomatch@4.0.3:
+    resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
+    engines: {node: '>=12'}
+
   pify@4.0.1:
     resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
     engines: {node: '>=6'}
@@ -4337,6 +4350,12 @@ packages:
 
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
+
+  starlight-auto-sidebar@0.1.2:
+    resolution: {integrity: sha512-7wxR9r/dMGl0ISjO7LxmSQHFdUN/UdiEDWQ+ehv5AL8udEYgItZIvPrUWv5tAg4EF5Okj451mRp8s1bU9f6fmA==}
+    engines: {node: '>=18.17.1'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.32.0'
 
   starlight-image-zoom@0.11.1:
     resolution: {integrity: sha512-TmnAyS+MWWV6h1fjuezrMFA36REd+7QzcjDFFFyC4ws5FDMoHsjQn0MlHM0cUaHEKfQ9y1PpL9LijCvRFuGbuw==}
@@ -6057,12 +6076,12 @@ snapshots:
 
   '@jsdevtools/ono@7.1.3': {}
 
-  '@larkiny/astro-github-loader@1.1.0(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
+  '@larkiny/astro-github-loader@1.2.10(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
     dependencies:
       astro: 5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
       github-slugger: 2.0.0
       octokit: 4.1.4
-      picomatch: 4.0.2
+      picomatch: 4.0.3
 
   '@mdx-js/mdx@3.1.0(acorn@8.14.0)':
     dependencies:
@@ -6456,7 +6475,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.6
       estree-walker: 2.0.2
-      picomatch: 4.0.2
+      picomatch: 4.0.3
     optionalDependencies:
       rollup: 4.50.0
 
@@ -7133,7 +7152,7 @@ snapshots:
       neotraverse: 0.6.18
       p-limit: 6.2.0
       p-queue: 8.1.0
-      picomatch: 4.0.2
+      picomatch: 4.0.3
       preferred-pm: 4.1.1
       prompts: 2.4.2
       rehype: 13.0.2
@@ -7951,13 +7970,13 @@ snapshots:
     dependencies:
       pend: 1.2.0
 
-  fdir@6.4.3(picomatch@4.0.2):
+  fdir@6.4.3(picomatch@4.0.3):
     optionalDependencies:
-      picomatch: 4.0.2
+      picomatch: 4.0.3
 
-  fdir@6.5.0(picomatch@4.0.2):
+  fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
-      picomatch: 4.0.2
+      picomatch: 4.0.3
 
   file-entry-cache@8.0.0:
     dependencies:
@@ -9531,6 +9550,8 @@ snapshots:
 
   picomatch@4.0.2: {}
 
+  picomatch@4.0.3: {}
+
   pify@4.0.1: {}
 
   pinkie-promise@1.0.0:
@@ -10063,6 +10084,11 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
+  starlight-auto-sidebar@0.1.2(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))):
+    dependencies:
+      '@astrojs/starlight': 0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
+      github-slugger: 2.0.0
+
   starlight-image-zoom@0.11.1(@astrojs/starlight@0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))):
     dependencies:
       '@astrojs/starlight': 0.32.1(astro@5.3.1(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
@@ -10265,13 +10291,13 @@ snapshots:
 
   tinyglobby@0.2.12:
     dependencies:
-      fdir: 6.4.3(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.4.3(picomatch@4.0.3)
+      picomatch: 4.0.3
 
   tinyglobby@0.2.14:
     dependencies:
-      fdir: 6.5.0(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
 
   to-fast-properties@2.0.0: {}
 
@@ -10499,8 +10525,8 @@ snapshots:
   vite@6.3.5(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.2)(yaml@2.7.0):
     dependencies:
       esbuild: 0.25.9
-      fdir: 6.5.0(picomatch@4.0.2)
-      picomatch: 4.0.2
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
       postcss: 8.5.3
       rollup: 4.50.0
       tinyglobby: 0.2.14

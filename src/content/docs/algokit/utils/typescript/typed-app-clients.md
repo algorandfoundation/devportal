@@ -2,9 +2,9 @@
 title: Typed application clients
 ---
 
-Typed application clients are automatically generated, typed TypeScript deployment and invocation clients for smart contracts that have a defined [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) or [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032) application specification so that the development experience is easier with less upskill ramp-up and less deployment errors. These clients give you a type-safe, intellisense-driven experience for invoking the smart contract.
+Typed application clients are automatically generated, typed TypeScript deployment and invocation clients for smart contracts that have a defined [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) or [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application specification so that the development experience is easier with less upskill ramp-up and less deployment errors. These clients give you a type-safe, intellisense-driven experience for invoking the smart contract.
 
-Typed application clients are the recommended way of interacting with smart contracts. If you don't have/want a typed client, but have an ARC-56/ARC-32 app spec then you can use the [non-typed application clients](./app-client) and if you want to call a smart contract you don't have an app spec file for you can use the underlying [app management](./app) and [app deployment](./app-deploy) functionality to manually construct transactions.
+Typed application clients are the recommended way of interacting with smart contracts. If you don't have/want a typed client, but have an ARC-56/ARC-32 app spec then you can use the [non-typed application clients](/algokit/utils/typescript/app-client/) and if you want to call a smart contract you don't have an app spec file for you can use the underlying [app management](/algokit/utils/typescript/app/) and [app deployment](/algokit/utils/typescript/app-deploy/) functionality to manually construct transactions.
 
 ## Generating an app spec
 
@@ -12,22 +12,22 @@ You can generate an app spec file:
 
 - Using [Algorand Python](https://algorandfoundation.github.io/puya/#quick-start)
 - Using [TEALScript](https://tealscript.netlify.app/tutorials/hello-world/0004-artifacts/)
-- By hand by following the specification [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258)/[ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032)
+- By hand by following the specification [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258)/[ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md)
 - Using [Beaker](https://algorand-devrel.github.io/beaker/html/usage.html) (PyTEAL) _(DEPRECATED)_
 
 ## Generating a typed client
 
-To generate a typed client from an app spec file you can use [AlgoKit CLI](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate#1-typed-clients):
+To generate a typed client from an app spec file you can use [AlgoKit CLI](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate.md#1-typed-clients):
 
 ```
 > algokit generate client application.json --output /absolute/path/to/client.ts
 ```
 
-Note: AlgoKit Utils >= 7.0.0 is compatible with the older 3.0.0 generated typed clients, however if you want to utilise the new features or leverage ARC-56 support, you will need to generate using >= 4.0.0. See [AlgoKit CLI generator version pinning](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate#version-pinning) for more information on how to lock to a specific version.
+Note: AlgoKit Utils >= 7.0.0 is compatible with the older 3.0.0 generated typed clients, however if you want to utilise the new features or leverage ARC-56 support, you will need to generate using >= 4.0.0. See [AlgoKit CLI generator version pinning](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate.md#version-pinning) for more information on how to lock to a specific version.
 
 ## Getting a typed client instance
 
-To get an instance of a typed client you can use an [`AlgorandClient`](./algorand-client) instance or a typed app [`Factory`](#creating-a-typed-factory-instance) instance.
+To get an instance of a typed client you can use an [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) instance or a typed app [`Factory`](#creating-a-typed-factory-instance) instance.
 
 The approach to obtaining a client instance depends on how many app clients you require for a given app spec and if the app has already been deployed, which is summarised below:
 
@@ -116,7 +116,7 @@ const appClient2 = await factory.getAppClientByCreatorAndName({
 </tbody>
 </table>
 
-To understand the difference between resolving by ID vs by creator and name see the underlying [app client documentation](./app-client#appclient).
+To understand the difference between resolving by ID vs by creator and name see the underlying [app client documentation](/algokit/utils/typescript/app-client/#appclient).
 
 ### App is not deployed
 
@@ -172,7 +172,7 @@ const factory = new MyContractFactory({
 
 ## Client usage
 
-See the [official usage docs](https://github.com/algorandfoundation/algokit-client-generator-ts/blob/main/docs/usage) for full details.
+See the [official usage docs](https://github.com/algorandfoundation/algokit-client-generator-ts/blob/main/docs/usage.md) for full details.
 
 For a simple example that deploys a contract and calls a `"hello"` method, see below:
 

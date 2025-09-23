@@ -12,18 +12,18 @@ To import the indexer functions you can:
 import { indexer } from '@algorandfoundation/algokit-utils';
 ```
 
-All of the indexer functions require you to pass in an indexer SDK client, which you can get from [`AlgorandClient`](./algorand-client) via `algorand.client.indexer`. These calls are not made more easy to call by exposing via `AlgorandClient` and thus not requiring the indexer SDK client to be passed in. This is because we want to add a tiny bit of friction to using indexer, given it's an expensive API to run for node providers, the data from it can sometimes be slow and stale, and there are alternatives [that](https://github.com/algorandfoundation/algokit-subscriber-ts) [allow](https://github.com/algorand/conduit) individual projects to index subsets of chain data specific to them as a preferred option. In saying that, it's a very useful API for doing ad hoc data retrieval, writing automated tests, and many other uses.
+All of the indexer functions require you to pass in an indexer SDK client, which you can get from [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) via `algorand.client.indexer`. These calls are not made more easy to call by exposing via `AlgorandClient` and thus not requiring the indexer SDK client to be passed in. This is because we want to add a tiny bit of friction to using indexer, given it's an expensive API to run for node providers, the data from it can sometimes be slow and stale, and there are alternatives [that](https://github.com/algorandfoundation/algokit-subscriber-ts) [allow](https://github.com/algorand/conduit) individual projects to index subsets of chain data specific to them as a preferred option. In saying that, it's a very useful API for doing ad hoc data retrieval, writing automated tests, and many other uses.
 
 ## Indexer wrapper functions
 
 There is a subset of [indexer API calls](https://dev.algorand.co/reference/rest-apis/indexer) that are exposed as easy to use methods with correct typing exposed and automatic pagination for multi item returns.
 
-- `indexer.lookupTransactionById(transactionId, algorand.client.indexer)` - Finds a transaction by ID
-- `indexer.lookupAccountByAddress(accountAddress, algorand.client.indexer)` - Finds an account by address
-- `indexer.lookupAccountCreatedApplicationByAddress(algorand.client.indexer, address, getAll?, paginationLimit?)` - Finds all applications created for an account
-- `indexer.lookupAssetHoldings(algorand.client.indexer, assetId, options?, paginationLimit?)` - Finds all asset holdings for the given asset
-- `indexer.searchTransactions(algorand.client.indexer, searchCriteria, paginationLimit?)` - Search for transactions with a given set of criteria
-- `indexer.executePaginatedRequest(extractItems, buildRequest)` - Execute the given indexer request with automatic pagination
+- [`indexer.lookupTransactionById(transactionId, algorand.client.indexer)`](../code/modules/#lookuptransactionbyid) - Finds a transaction by ID
+- [`indexer.lookupAccountByAddress(accountAddress, algorand.client.indexer)`](../code/modules/#lookupaccountbyaddress) - Finds an account by address
+- [`indexer.lookupAccountCreatedApplicationByAddress(algorand.client.indexer, address, getAll?, paginationLimit?)`](../code/modules/#lookupaccountcreatedapplicationbyaddress) - Finds all applications created for an account
+- [`indexer.lookupAssetHoldings(algorand.client.indexer, assetId, options?, paginationLimit?)`](../code/modules/#lookupassetholdings) - Finds all asset holdings for the given asset
+- [`indexer.searchTransactions(algorand.client.indexer, searchCriteria, paginationLimit?)`](../code/modules/#searchtransactions) - Search for transactions with a given set of criteria
+- [`indexer.executePaginatedRequest(extractItems, buildRequest)`](../code/modules/#executepaginatedrequest) - Execute the given indexer request with automatic pagination
 
 ### Search transactions example
 

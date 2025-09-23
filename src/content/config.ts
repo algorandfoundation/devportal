@@ -3,6 +3,8 @@ import { docsSchema } from '@astrojs/starlight/schema';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { Octokit } from 'octokit';
 import { githubLoader } from '@larkiny/astro-github-loader';
+import { autoSidebarLoader } from 'starlight-auto-sidebar/loader';
+import { autoSidebarSchema } from 'starlight-auto-sidebar/schema';
 import type {
   ImportOptions,
   LoaderContext,
@@ -13,8 +15,8 @@ import {
   arcStandardsConfig,
   nodekitConfig,
   algokitCLIConfig,
-  // utilsTypescriptGuidesConfig,
-  // utilsTypescriptApiConfig,
+  utilsTypescriptConfig,
+  utilsPythonConfig,
 } from '../../imports/configs/index.js';
 
 const IMPORT_REMOTE = process.env.IMPORT_GITHUB === 'true';
@@ -26,8 +28,8 @@ const REMOTE_CONTENT: ImportOptions[] = [
   arcStandardsConfig,
   nodekitConfig,
   algokitCLIConfig,
-  // utilsTypescriptGuidesConfig, //disabled for now
-  // utilsTypescriptApiConfig, //disabled for now
+  utilsTypescriptConfig,
+  utilsPythonConfig,
 ];
 
 export const collections = {
@@ -44,9 +46,7 @@ export const collections = {
             if (!config.enabled) continue;
 
             try {
-              console.log(
-                `📥 Loading ${config.name} (clear: ${config.clear})...`,
-              );
+              console.log(`📥 Loading ${config.name}...`);
               await githubLoader({
                 octokit: GITHUB_API_CLIENT,
                 configs: [config],
@@ -62,5 +62,9 @@ export const collections = {
       },
     },
     schema: docsSchema(),
+  }),
+  autoSidebar: defineCollection({
+    loader: autoSidebarLoader(),
+    schema: autoSidebarSchema(),
   }),
 };
