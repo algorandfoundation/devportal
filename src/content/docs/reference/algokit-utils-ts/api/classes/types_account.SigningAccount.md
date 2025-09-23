@@ -1,9 +1,8 @@
 ---
 title: SigningAccount
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/account](/reference/algokit-utils-ts/api/modules/types_account/) / SigningAccount
-
-
 
 [types/account](/reference/algokit-utils-ts/api/modules/types_account/).SigningAccount
 
@@ -40,10 +39,10 @@ Account wrapper that supports a rekeyed account
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `account` | `default` |
-| `sender` | `undefined` \| `string` \| `Address` |
+| Name      | Type                                 |
+| :-------- | :----------------------------------- |
+| `account` | `default`                            |
+| `sender`  | `undefined` \| `string` \| `Address` |
 
 #### Returns
 
@@ -63,7 +62,7 @@ Account wrapper that supports a rekeyed account
 
 [src/types/account.ts:80](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L80)
 
-___
+---
 
 ### \_sender
 
@@ -73,7 +72,7 @@ ___
 
 [src/types/account.ts:82](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L82)
 
-___
+---
 
 ### \_signer
 
@@ -103,7 +102,7 @@ Account.addr
 
 [src/types/account.ts:87](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L87)
 
-___
+---
 
 ### sender
 
@@ -119,7 +118,7 @@ Algorand account of the sender address and signer private key
 
 [src/types/account.ts:108](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L108)
 
-___
+---
 
 ### signer
 
@@ -135,7 +134,7 @@ Transaction signer for the underlying signing account
 
 [src/types/account.ts:101](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L101)
 
-___
+---
 
 ### sk
 

@@ -1,9 +1,8 @@
 ---
 title: AlgoKitLogCaptureFixture
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/) / AlgoKitLogCaptureFixture
-
-
 
 [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/).AlgoKitLogCaptureFixture
 
@@ -38,7 +37,7 @@ Testing framework agnostic handler method to run after each test to reset the lo
 
 [src/types/testing.ts:158](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L158)
 
-___
+---
 
 ### beforeEach
 

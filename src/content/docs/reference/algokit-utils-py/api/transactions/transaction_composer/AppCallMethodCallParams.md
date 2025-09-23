@@ -1,16 +1,17 @@
 ---
 title: algokit_utils.transactions.transaction_composer.AppCallMethodCallParams
 ---
-#### *class* algokit_utils.transactions.transaction_composer.AppCallMethodCallParams
+
+#### _class_ algokit_utils.transactions.transaction_composer.AppCallMethodCallParams
 
 Bases: `_BaseAppMethodCall`
 
 Parameters for a regular ABI method call.
 
-#### app_id *: int*
+#### app_id _: int_
 
 The ID of the application
 
-#### on_complete *: algosdk.transaction.OnComplete | None* *= None*
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 The OnComplete action, defaults to None

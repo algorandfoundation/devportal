@@ -1,9 +1,8 @@
 ---
 title: Arc56Method
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-arc56](/reference/algokit-utils-ts/api/modules/types_app_arc56/) / Arc56Method
-
-
 
 [types/app-arc56](/reference/algokit-utils-ts/api/modules/types_app_arc56/).Arc56Method
 
@@ -47,8 +46,8 @@ Wrapper around `algosdk.ABIMethod` that represents an ARC-56 ABI method.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                                                                          |
+| :------- | :---------------------------------------------------------------------------- |
 | `method` | [`Method`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/) |
 
 #### Returns
@@ -67,7 +66,7 @@ algosdk.ABIMethod.constructor
 
 ### args
 
-• `Readonly` **args**: \{ `defaultValue?`: \{ `data`: `string` ; `source`: ``"method"`` \| ``"box"`` \| ``"global"`` \| ``"local"`` \| ``"literal"`` ; `type?`: `string`  } ; `desc?`: `string` ; `name?`: `string` ; `struct?`: `string` ; `type`: `ABIArgumentType`  }[]
+• `Readonly` **args**: \{ `defaultValue?`: \{ `data`: `string` ; `source`: `"method"` \| `"box"` \| `"global"` \| `"local"` \| `"literal"` ; `type?`: `string` } ; `desc?`: `string` ; `name?`: `string` ; `struct?`: `string` ; `type`: `ABIArgumentType` }[]
 
 #### Overrides
 
@@ -77,7 +76,7 @@ algosdk.ABIMethod.args
 
 [src/types/app-arc56.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L24)
 
-___
+---
 
 ### description
 
@@ -91,7 +90,7 @@ algosdk.ABIMethod.description
 
 node_modules/algosdk/dist/types/abi/method.d.ts:28
 
-___
+---
 
 ### events
 
@@ -105,7 +104,7 @@ algosdk.ABIMethod.events
 
 node_modules/algosdk/dist/types/abi/method.d.ts:38
 
-___
+---
 
 ### method
 
@@ -115,7 +114,7 @@ ___
 
 [src/types/app-arc56.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L27)
 
-___
+---
 
 ### name
 
@@ -129,7 +128,7 @@ algosdk.ABIMethod.name
 
 node_modules/algosdk/dist/types/abi/method.d.ts:27
 
-___
+---
 
 ### readonly
 
@@ -143,7 +142,7 @@ algosdk.ABIMethod.readonly
 
 node_modules/algosdk/dist/types/abi/method.d.ts:39
 
-___
+---
 
 ### returns
 
@@ -151,11 +150,11 @@ ___
 
 #### Type declaration
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `desc?` | `string` | Optional, user-friendly description for the return value |
-| `struct?` | `string` | If the type is a struct, the name of the struct |
-| `type` | `ABIReturnType` | - |
+| Name      | Type            | Description                                              |
+| :-------- | :-------------- | :------------------------------------------------------- |
+| `desc?`   | `string`        | Optional, user-friendly description for the return value |
+| `struct?` | `string`        | If the type is a struct, the name of the struct          |
+| `type`    | `ABIReturnType` | -                                                        |
 
 #### Overrides
 
@@ -183,7 +182,7 @@ algosdk.ABIMethod.getSelector
 
 node_modules/algosdk/dist/types/abi/method.d.ts:42
 
-___
+---
 
 ### getSignature
 
@@ -201,7 +200,7 @@ algosdk.ABIMethod.getSignature
 
 node_modules/algosdk/dist/types/abi/method.d.ts:41
 
-___
+---
 
 ### toJSON
 
@@ -219,7 +218,7 @@ algosdk.ABIMethod.toJSON
 
 [src/types/app-arc56.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L39)
 
-___
+---
 
 ### txnCount
 
@@ -237,7 +236,7 @@ algosdk.ABIMethod.txnCount
 
 node_modules/algosdk/dist/types/abi/method.d.ts:43
 
-___
+---
 
 ### fromSignature
 
@@ -245,8 +244,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type     |
+| :---------- | :------- |
 | `signature` | `string` |
 
 #### Returns

@@ -1,9 +1,8 @@
 ---
 title: types/client-manager
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/client-manager
-
-
 
 ## Table of contents
 
@@ -32,7 +31,7 @@ title: types/client-manager
 
 ### ClientAppClientByNetworkParams
 
-Ƭ **ClientAppClientByNetworkParams**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), ``"algorand"`` \| ``"appId"``\>\>
+Ƭ **ClientAppClientByNetworkParams**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appId"`\>\>
 
 Params to get an app client by network from `ClientManager`.
 
@@ -40,11 +39,11 @@ Params to get an app client by network from `ClientManager`.
 
 [src/types/client-manager.ts:33](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L33)
 
-___
+---
 
 ### ClientAppClientParams
 
-Ƭ **ClientAppClientParams**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), ``"algorand"``\>\>
+Ƭ **ClientAppClientParams**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"algorand"`\>\>
 
 Params to get an app client by ID from `ClientManager`.
 
@@ -52,11 +51,11 @@ Params to get an app client by ID from `ClientManager`.
 
 [src/types/client-manager.ts:30](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L30)
 
-___
+---
 
 ### ClientAppFactoryParams
 
-Ƭ **ClientAppFactoryParams**: [`Expand`](#expand)\<`Omit`\<[`AppFactoryParams`](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/), ``"algorand"``\>\>
+Ƭ **ClientAppFactoryParams**: [`Expand`](#expand)\<`Omit`\<[`AppFactoryParams`](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/), `"algorand"`\>\>
 
 Params to get an app factory from `ClientManager`.
 
@@ -64,11 +63,11 @@ Params to get an app factory from `ClientManager`.
 
 [src/types/client-manager.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L24)
 
-___
+---
 
 ### ClientResolveAppClientByCreatorAndNameParams
 
-Ƭ **ClientResolveAppClientByCreatorAndNameParams**: [`Expand`](#expand)\<`Omit`\<[`ResolveAppClientByCreatorAndName`](#resolveappclientbycreatorandname), ``"algorand"``\>\>
+Ƭ **ClientResolveAppClientByCreatorAndNameParams**: [`Expand`](#expand)\<`Omit`\<[`ResolveAppClientByCreatorAndName`](#resolveappclientbycreatorandname), `"algorand"`\>\>
 
 Params to get an app client by creator address and name from `ClientManager`.
 
@@ -76,11 +75,11 @@ Params to get an app client by creator address and name from `ClientManager`.
 
 [src/types/client-manager.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L27)
 
-___
+---
 
 ### ClientTypedAppClientByCreatorAndNameParams
 
-Ƭ **ClientTypedAppClientByCreatorAndNameParams**: [`Expand`](#expand)\<`Omit`\<[`ResolveAppClientByCreatorAndName`](#resolveappclientbycreatorandname), ``"algorand"`` \| ``"appSpec"``\>\>
+Ƭ **ClientTypedAppClientByCreatorAndNameParams**: [`Expand`](#expand)\<`Omit`\<[`ResolveAppClientByCreatorAndName`](#resolveappclientbycreatorandname), `"algorand"` \| `"appSpec"`\>\>
 
 Params to get a typed app client by creator address and name from `ClientManager`.
 
@@ -88,11 +87,11 @@ Params to get a typed app client by creator address and name from `ClientManager
 
 [src/types/client-manager.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L36)
 
-___
+---
 
 ### ClientTypedAppClientByNetworkParams
 
-Ƭ **ClientTypedAppClientByNetworkParams**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), ``"algorand"`` \| ``"appSpec"`` \| ``"appId"``\>\>
+Ƭ **ClientTypedAppClientByNetworkParams**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"` \| `"appId"`\>\>
 
 Params to get a typed app client by network from `ClientManager`.
 
@@ -100,11 +99,11 @@ Params to get a typed app client by network from `ClientManager`.
 
 [src/types/client-manager.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L42)
 
-___
+---
 
 ### ClientTypedAppClientParams
 
-Ƭ **ClientTypedAppClientParams**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), ``"algorand"`` \| ``"appSpec"``\>\>
+Ƭ **ClientTypedAppClientParams**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"`\>\>
 
 Params to get a typed app client by ID from `ClientManager`.
 
@@ -112,11 +111,11 @@ Params to get a typed app client by ID from `ClientManager`.
 
 [src/types/client-manager.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L39)
 
-___
+---
 
 ### ClientTypedAppFactoryParams
 
-Ƭ **ClientTypedAppFactoryParams**: [`Expand`](#expand)\<`Omit`\<[`AppFactoryParams`](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/), ``"algorand"`` \| ``"appSpec"``\>\>
+Ƭ **ClientTypedAppFactoryParams**: [`Expand`](#expand)\<`Omit`\<[`AppFactoryParams`](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/), `"algorand"` \| `"appSpec"`\>\>
 
 Params to get a typed app factory from `ClientManager`.
 

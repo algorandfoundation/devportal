@@ -1,7 +1,8 @@
 ---
 title: algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol
 ---
-#### *class* algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol(algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient), \*\*kwargs: Any)
+
+#### _class_ algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol(algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient), \*\*kwargs: Any)
 
 Bases: `Protocol`, `Generic`[`CreateParamsT`, `UpdateParamsT`, `DeleteParamsT`]
 

@@ -1,9 +1,8 @@
 ---
 title: AppClientCallCoreParams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/) / AppClientCallCoreParams
-
-
 
 [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/).AppClientCallCoreParams
 
@@ -29,7 +28,7 @@ The transaction note for the smart contract call
 
 [src/types/app-client.ts:215](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L215)
 
-___
+---
 
 ### sendParams
 
@@ -41,7 +40,7 @@ Parameters to control transaction sending
 
 [src/types/app-client.ts:217](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L217)
 
-___
+---
 
 ### sender
 

@@ -1,9 +1,8 @@
 ---
 title: 'Namespace: indexer'
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [index]() / indexer
-
-
 
 [index]().indexer
 
@@ -40,16 +39,16 @@ title: 'Namespace: indexer'
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TResult` | `TResult` |
+| Name       | Type             |
+| :--------- | :--------------- |
+| `TResult`  | `TResult`        |
 | `TRequest` | extends `Object` |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `extractItems` | (`response`: `any`) => `TResult`[] |
+| Name           | Type                                   |
+| :------------- | :------------------------------------- |
+| `extractItems` | (`response`: `any`) => `TResult`[]     |
 | `buildRequest` | (`nextToken?`: `string`) => `TRequest` |
 
 #### Returns
@@ -60,7 +59,7 @@ title: 'Namespace: indexer'
 
 [src/indexer-lookup.ts:145](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-lookup.ts#L145)
 
-___
+---
 
 ### lookupAccountByAddress
 
@@ -68,10 +67,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name             | Type                  | Description                           |
+| :--------------- | :-------------------- | :------------------------------------ |
 | `accountAddress` | `string` \| `Address` | The address of the account to look up |
-| `indexer` | `IndexerClient` | An indexer client |
+| `indexer`        | `IndexerClient`       | An indexer client                     |
 
 #### Returns
 
@@ -88,7 +87,7 @@ Looks up an account by address using Indexer.
 
 [src/indexer-lookup.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-lookup.ts#L26)
 
-___
+---
 
 ### lookupAccountCreatedApplicationByAddress
 
@@ -98,12 +97,12 @@ Looks up applications that were created by the given address; will automatically
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `indexer` | `IndexerClient` | `undefined` | An indexer instance |
-| `address` | `string` \| `Address` | `undefined` | The address of the creator to look up |
-| `getAll` | `undefined` \| `boolean` | `undefined` | Whether or not to include deleted applications |
-| `paginationLimit?` | `number` | `undefined` | The number of records to return per paginated request, default 1000 |
+| Name               | Type                     | Default value | Description                                                         |
+| :----------------- | :----------------------- | :------------ | :------------------------------------------------------------------ |
+| `indexer`          | `IndexerClient`          | `undefined`   | An indexer instance                                                 |
+| `address`          | `string` \| `Address`    | `undefined`   | The address of the creator to look up                               |
+| `getAll`           | `undefined` \| `boolean` | `undefined`   | Whether or not to include deleted applications                      |
+| `paginationLimit?` | `number`                 | `undefined`   | The number of records to return per paginated request, default 1000 |
 
 #### Returns
 
@@ -115,7 +114,7 @@ The list of application results
 
 [src/indexer-lookup.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-lookup.ts#L38)
 
-___
+---
 
 ### lookupAssetHoldings
 
@@ -125,12 +124,12 @@ Looks up asset holdings for the given asset; will automatically paginate through
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `indexer` | `IndexerClient` | An indexer instance |
-| `assetId` | `number` \| `bigint` | The ID of the asset to look up holdings for |
-| `options?` | [`LookupAssetHoldingsOptions`](/reference/algokit-utils-ts/api/interfaces/types_indexerlookupassetholdingsoptions/) | Optional options to control the lookup |
-| `paginationLimit?` | `number` | The number of records to return per paginated request, default 1000 |
+| Name               | Type                                                                                                                | Description                                                         |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------ |
+| `indexer`          | `IndexerClient`                                                                                                     | An indexer instance                                                 |
+| `assetId`          | `number` \| `bigint`                                                                                                | The ID of the asset to look up holdings for                         |
+| `options?`         | [`LookupAssetHoldingsOptions`](/reference/algokit-utils-ts/api/interfaces/types_indexerlookupassetholdingsoptions/) | Optional options to control the lookup                              |
+| `paginationLimit?` | `number`                                                                                                            | The number of records to return per paginated request, default 1000 |
 
 #### Returns
 
@@ -142,7 +141,7 @@ The list of application results
 
 [src/indexer-lookup.ts:72](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-lookup.ts#L72)
 
-___
+---
 
 ### lookupTransactionById
 
@@ -150,10 +149,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `transactionId` | `string` | The ID of the transaction to look up |
-| `indexer` | `IndexerClient` | An indexer client |
+| Name            | Type            | Description                          |
+| :-------------- | :-------------- | :----------------------------------- |
+| `transactionId` | `string`        | The ID of the transaction to look up |
+| `indexer`       | `IndexerClient` | An indexer client                    |
 
 #### Returns
 
@@ -170,7 +169,7 @@ Looks up a transaction by ID using Indexer.
 
 [src/indexer-lookup.ts:15](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-lookup.ts#L15)
 
-___
+---
 
 ### searchTransactions
 
@@ -180,11 +179,11 @@ Allows transactions to be searched for the given criteria.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `indexer` | `IndexerClient` | An indexer client |
-| `searchCriteria` | (`s`: `default`) => `default` | The criteria to search for |
-| `paginationLimit?` | `number` | The number of records to return per paginated request, default 1000 |
+| Name               | Type                          | Description                                                         |
+| :----------------- | :---------------------------- | :------------------------------------------------------------------ |
+| `indexer`          | `IndexerClient`               | An indexer client                                                   |
+| `searchCriteria`   | (`s`: `default`) => `default` | The criteria to search for                                          |
+| `paginationLimit?` | `number`                      | The number of records to return per paginated request, default 1000 |
 
 #### Returns
 

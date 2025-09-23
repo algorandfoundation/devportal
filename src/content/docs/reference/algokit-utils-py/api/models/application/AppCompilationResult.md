@@ -1,14 +1,15 @@
 ---
 title: algokit_utils.models.application.AppCompilationResult
 ---
-#### *class* algokit_utils.models.application.AppCompilationResult
+
+#### _class_ algokit_utils.models.application.AppCompilationResult
 
 The compiled teal code
 
-#### compiled_approval *: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)*
+#### compiled_approval _: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)_
 
 The compiled approval program
 
-#### compiled_clear *: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)*
+#### compiled_clear _: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)_
 
 The compiled clear state program

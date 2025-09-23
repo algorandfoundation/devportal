@@ -1,9 +1,8 @@
 ---
 title: StorageMap
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-arc56](/reference/algokit-utils-ts/api/modules/types_app_arc56/) / StorageMap
-
-
 
 [types/app-arc56](/reference/algokit-utils-ts/api/modules/types_app_arc56/).StorageMap
 
@@ -30,7 +29,7 @@ Description of what the key-value pairs in this mapping hold
 
 [src/types/app-arc56.ts:494](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L494)
 
-___
+---
 
 ### keyType
 
@@ -42,7 +41,7 @@ The type of the keys in the map
 
 [src/types/app-arc56.ts:496](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L496)
 
-___
+---
 
 ### prefix
 
@@ -54,7 +53,7 @@ The base64-encoded prefix of the map keys
 
 [src/types/app-arc56.ts:500](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L500)
 
-___
+---
 
 ### valueType
 

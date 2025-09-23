@@ -1,15 +1,14 @@
 ---
 title: AppClientCallABIArgs
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/) / AppClientCallABIArgs
-
-
 
 [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/).AppClientCallABIArgs
 
 ## Hierarchy
 
-- `Omit`\<[`ABIAppCallArgs`](/reference/algokit-utils-ts/api/modules/types_app/#abiappcallargs), ``"method"``\>
+- `Omit`\<[`ABIAppCallArgs`](/reference/algokit-utils-ts/api/modules/types_app/#abiappcallargs), `"method"`\>
 
   ↳ **`AppClientCallABIArgs`**
 
@@ -42,7 +41,7 @@ Omit.accounts
 
 [src/types/app.ts:79](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L79)
 
-___
+---
 
 ### apps
 
@@ -58,7 +57,7 @@ Omit.apps
 
 [src/types/app.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L81)
 
-___
+---
 
 ### assets
 
@@ -74,7 +73,7 @@ Omit.assets
 
 [src/types/app.ts:83](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L83)
 
-___
+---
 
 ### boxes
 
@@ -90,7 +89,7 @@ Omit.boxes
 
 [src/types/app.ts:77](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L77)
 
-___
+---
 
 ### lease
 
@@ -106,7 +105,7 @@ Omit.lease
 
 [src/types/app.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L75)
 
-___
+---
 
 ### method
 
@@ -118,7 +117,7 @@ If calling an ABI method then either the name of the method, or the ABI signatur
 
 [src/types/app-client.ts:204](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L204)
 
-___
+---
 
 ### methodArgs
 
@@ -134,7 +133,7 @@ Omit.methodArgs
 
 [src/types/app.ts:117](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L117)
 
-___
+---
 
 ### rekeyTo
 

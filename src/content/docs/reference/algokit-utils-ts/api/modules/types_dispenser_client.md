@@ -1,9 +1,8 @@
 ---
 title: types/dispenser-client
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/dispenser-client
-
-
 
 ## Table of contents
 

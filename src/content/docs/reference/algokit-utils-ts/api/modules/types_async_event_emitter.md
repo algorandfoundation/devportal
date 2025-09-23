@@ -1,9 +1,8 @@
 ---
 title: types/async-event-emitter
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/async-event-emitter
-
-
 
 ## Table of contents
 
@@ -23,9 +22,9 @@ title: types/async-event-emitter
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
+| Name | Type      |
+| :--- | :-------- |
+| `T`  | `unknown` |
 
 #### Type declaration
 
@@ -33,9 +32,9 @@ title: types/async-event-emitter
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | `T` |
+| Name        | Type                 |
+| :---------- | :------------------- |
+| `event`     | `T`                  |
 | `eventName` | `string` \| `symbol` |
 
 ##### Returns

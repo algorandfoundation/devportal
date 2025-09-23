@@ -1,16 +1,17 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.Actions
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.Actions
+
+#### _class_ algokit_utils.applications.app_spec.arc56.Actions
 
 Method actions information.
 
-#### call *: list[[CallEnum](#algokit_utils.applications.app_spec.arc56.CallEnum)] | None* *= None*
+#### call _: list[[CallEnum](#algokit_utils.applications.app_spec.arc56.CallEnum)] | None_ _= None_
 
 The optional list of allowed call actions
 
-#### create *: list[[CreateEnum](#algokit_utils.applications.app_spec.arc56.CreateEnum)] | None* *= None*
+#### create _: list[[CreateEnum](#algokit_utils.applications.app_spec.arc56.CreateEnum)] | None_ _= None_
 
 The optional list of allowed create actions
 
-#### *static* from_dict(data: dict[str, Any]) → [Actions](#algokit_utils.applications.app_spec.arc56.Actions)
+#### _static_ from_dict(data: dict[str, Any]) → [Actions](#algokit_utils.applications.app_spec.arc56.Actions)

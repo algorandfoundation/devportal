@@ -1,9 +1,8 @@
 ---
 title: testing
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / testing
-
-
 
 ## Table of contents
 
@@ -36,21 +35,21 @@ The fixture
 **`Example`**
 
 ```typescript
-const logs = algoKitLogCaptureFixture()
+const logs = algoKitLogCaptureFixture();
 
-beforeEach(logs.beforeEach)
-afterEach(logs.afterEach)
+beforeEach(logs.beforeEach);
+afterEach(logs.afterEach);
 
 test('My test', () => {
-    const capturedLogs = logs.testLogger.capturedLogs
-})
+  const capturedLogs = logs.testLogger.capturedLogs;
+});
 ```
 
 #### Defined in
 
 [src/testing/fixtures/algokit-log-capture-fixture.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/fixtures/algokit-log-capture-fixture.ts#L22)
 
-___
+---
 
 ### algorandFixture
 
@@ -58,15 +57,15 @@ ___
 
 Creates a test fixture for automated testing against Algorand.
 By default it tests against an environment variable specified client
- if the standard environment variables are specified, otherwise against
- a default LocalNet instance, but you can pass in an algod, indexer
- and/or kmd (or their respective config) if you want to test against
+if the standard environment variables are specified, otherwise against
+a default LocalNet instance, but you can pass in an algod, indexer
+and/or kmd (or their respective config) if you want to test against
 an explicitly defined network.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name             | Type                                                                                                      | Description               |
+| :--------------- | :-------------------------------------------------------------------------------------------------------- | :------------------------ |
 | `fixtureConfig?` | [`AlgorandFixtureConfig`](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/) | The fixture configuration |
 
 #### Returns
@@ -125,10 +124,10 @@ test('My test', async () => {
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name            | Type                                                                                                                     | Description               |
+| :-------------- | :----------------------------------------------------------------------------------------------------------------------- | :------------------------ |
 | `fixtureConfig` | `undefined` \| [`AlgorandFixtureConfig`](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/) | The fixture configuration |
-| `config` | [`AlgoConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoconfig/) | The fixture configuration |
+| `config`        | [`AlgoConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoconfig/)                               | The fixture configuration |
 
 #### Returns
 
@@ -142,15 +141,15 @@ Config can be passed in directly to fixture config now.
 
 Creates a test fixture for automated testing against Algorand.
 By default it tests against an environment variable specified client
- if the standard environment variables are specified, otherwise against
- a default LocalNet instance, but you can pass in an algod, indexer
- and/or kmd if you want to test against an explicitly defined network.
+if the standard environment variables are specified, otherwise against
+a default LocalNet instance, but you can pass in an algod, indexer
+and/or kmd if you want to test against an explicitly defined network.
 
 #### Defined in
 
 [src/testing/fixtures/algorand-fixture.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L75)
 
-___
+---
 
 ### getTestAccount
 
@@ -158,11 +157,11 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`GetTestAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/) | The config for the test account to generate |
-| `algod` | `AlgodClient` | An algod client |
-| `kmd?` | `KmdClient` | A KMD client, if not specified then a default KMD client will be loaded from environment variables and if not found fallback to the default LocalNet KMD client |
+| Name     | Type                                                                                                    | Description                                                                                                                                                     |
+| :------- | :------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params` | [`GetTestAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/) | The config for the test account to generate                                                                                                                     |
+| `algod`  | `AlgodClient`                                                                                           | An algod client                                                                                                                                                 |
+| `kmd?`   | `KmdClient`                                                                                             | A KMD client, if not specified then a default KMD client will be loaded from environment variables and if not found fallback to the default LocalNet KMD client |
 
 #### Returns
 
@@ -192,10 +191,10 @@ Note: By default this will log the mnemonic of the account.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`GetTestAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/) | The config for the test account to generate |
-| `algorand` | [`AlgorandClient`](/reference/algokit-utils-ts/api/classes/types_algorand_clientalgorandclient/) | An AlgorandClient client |
+| Name       | Type                                                                                                    | Description                                 |
+| :--------- | :------------------------------------------------------------------------------------------------------ | :------------------------------------------ |
+| `params`   | [`GetTestAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/) | The config for the test account to generate |
+| `algorand` | [`AlgorandClient`](/reference/algokit-utils-ts/api/classes/types_algorand_clientalgorandclient/)        | An AlgorandClient client                    |
 
 #### Returns
 
@@ -207,7 +206,7 @@ The account, with private key loaded
 
 [src/testing/account.ts:35](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/account.ts#L35)
 
-___
+---
 
 ### runWhenIndexerCaughtUp
 
@@ -220,13 +219,13 @@ Very rudimentary implementation designed for automated testing.
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type                   | Description     |
+| :---- | :--------------------- | :-------------- |
 | `run` | () => `Promise`\<`T`\> | The code to run |
 
 #### Returns
@@ -238,7 +237,7 @@ The result (as a promise), or throws if the indexer didn't catch up in time
 **`Example`**
 
 ```typescript
-const transaction = await runWhenIndexerCaughtUp(() => indexer.lookupTransactionByID(txnId).do())
+const transaction = await runWhenIndexerCaughtUp(() => indexer.lookupTransactionByID(txnId).do());
 ```
 
 #### Defined in

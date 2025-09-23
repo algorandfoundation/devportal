@@ -1,9 +1,8 @@
 ---
 title: AlgorandTestAutomationContext
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/) / AlgorandTestAutomationContext
-
-
 
 [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/).AlgorandTestAutomationContext
 
@@ -35,7 +34,7 @@ Algod client instance that will log transactions in `transactionLogger`
 
 [src/types/testing.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L22)
 
-___
+---
 
 ### algorand
 
@@ -47,7 +46,7 @@ An AlgorandClient instance loaded with the current context, including testAccoun
 
 [src/types/testing.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L20)
 
-___
+---
 
 ### generateAccount
 
@@ -61,8 +60,8 @@ Generate and fund an additional ephemerally created account
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                       |
+| :------- | :------------------------- |
 | `params` | [`GetTestAccountParams`]() |
 
 ##### Returns
@@ -73,7 +72,7 @@ Generate and fund an additional ephemerally created account
 
 [src/types/testing.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L32)
 
-___
+---
 
 ### indexer
 
@@ -85,7 +84,7 @@ Indexer client instance
 
 [src/types/testing.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L24)
 
-___
+---
 
 ### kmd
 
@@ -97,7 +96,7 @@ KMD client instance
 
 [src/types/testing.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L26)
 
-___
+---
 
 ### testAccount
 
@@ -109,7 +108,7 @@ Default, funded test account that is ephemerally created
 
 [src/types/testing.ts:30](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L30)
 
-___
+---
 
 ### transactionLogger
 
@@ -121,7 +120,7 @@ Transaction logger that will log transaction IDs for all transactions issued by 
 
 [src/types/testing.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L28)
 
-___
+---
 
 ### waitForIndexer
 
@@ -141,7 +140,7 @@ Wait for the indexer to catch up with all transactions logged by `transactionLog
 
 [src/types/testing.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L34)
 
-___
+---
 
 ### waitForIndexerTransaction
 
@@ -155,8 +154,8 @@ Wait for the indexer to catch up with the given transaction ID
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name            | Type     |
+| :-------------- | :------- |
 | `transactionId` | `string` |
 
 ##### Returns

@@ -4,9 +4,8 @@ sidebar:
   label: Overview
   order: 0
 ---
+
 @algorandfoundation/algokit-utils
-
-
 
 ## Table of contents
 

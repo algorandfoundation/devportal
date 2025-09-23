@@ -1,9 +1,8 @@
 ---
 title: types/algorand-client-transaction-sender
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/algorand-client-transaction-sender
-
-
 
 ## Table of contents
 

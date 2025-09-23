@@ -1,24 +1,25 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.SourceInfo
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.SourceInfo
+
+#### _class_ algokit_utils.applications.app_spec.arc56.SourceInfo
 
 Source code location information.
 
-#### pc *: list[int]*
+#### pc _: list[int]_
 
 The list of program counter values
 
-#### error_message *: str | None* *= None*
+#### error_message _: str | None_ _= None_
 
 The optional error message
 
-#### source *: str | None* *= None*
+#### source _: str | None_ _= None_
 
 The optional source code
 
-#### teal *: int | None* *= None*
+#### teal _: int | None_ _= None_
 
 The optional TEAL version
 
-#### *static* from_dict(data: dict[str, Any]) → [SourceInfo](#algokit_utils.applications.app_spec.arc56.SourceInfo)
+#### _static_ from_dict(data: dict[str, Any]) → [SourceInfo](#algokit_utils.applications.app_spec.arc56.SourceInfo)

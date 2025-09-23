@@ -1,9 +1,8 @@
 ---
 title: TealSourceDebugEventData
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/debugging](/reference/algokit-utils-ts/api/modules/types_debugging/) / TealSourceDebugEventData
-
-
 
 [types/debugging](/reference/algokit-utils-ts/api/modules/types_debugging/).TealSourceDebugEventData
 
@@ -29,7 +28,7 @@ The name of the application
 
 [src/types/debugging.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/debugging.ts#L28)
 
-___
+---
 
 ### compiledTeal
 
@@ -41,7 +40,7 @@ The compiled TEAL code
 
 [src/types/debugging.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/debugging.ts#L32)
 
-___
+---
 
 ### fileName
 

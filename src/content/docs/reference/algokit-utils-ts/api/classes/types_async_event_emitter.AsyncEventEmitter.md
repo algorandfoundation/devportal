@@ -1,9 +1,8 @@
 ---
 title: AsyncEventEmitter
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/async-event-emitter](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/) / AsyncEventEmitter
-
-
 
 [types/async-event-emitter](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/).AsyncEventEmitter
 
@@ -46,7 +45,7 @@ title: AsyncEventEmitter
 
 [src/types/async-event-emitter.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/async-event-emitter.ts#L7)
 
-___
+---
 
 ### listenerWrapperMap
 
@@ -56,7 +55,7 @@ ___
 
 [src/types/async-event-emitter.ts:6](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/async-event-emitter.ts#L6)
 
-___
+---
 
 ### off
 
@@ -68,10 +67,10 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` \| `symbol` |
-| `listener` | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`unknown`\> |
+| Name        | Type                                                                                                                       |
+| :---------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `eventName` | `string` \| `symbol`                                                                                                       |
+| `listener`  | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`unknown`\> |
 
 ##### Returns
 
@@ -89,16 +88,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `K` | extends [`EventType`](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/) |
+| Name | Type                                                                                          |
+| :--- | :-------------------------------------------------------------------------------------------- |
+| `K`  | extends [`EventType`](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/) |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `K` |
-| `event` | [`EventDataMap`](/reference/algokit-utils-ts/api/modules/types_lifecycle_events/#eventdatamap)[`K`] |
+| Name        | Type                                                                                                |
+| :---------- | :-------------------------------------------------------------------------------------------------- |
+| `eventName` | `K`                                                                                                 |
+| `event`     | [`EventDataMap`](/reference/algokit-utils-ts/api/modules/types_lifecycle_events/#eventdatamap)[`K`] |
 
 #### Returns
 
@@ -112,10 +111,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type                 |
+| :---------- | :------------------- |
 | `eventName` | `string` \| `symbol` |
-| `event` | `unknown` |
+| `event`     | `unknown`            |
 
 #### Returns
 
@@ -125,7 +124,7 @@ ___
 
 [src/types/async-event-emitter.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/async-event-emitter.ts#L10)
 
-___
+---
 
 ### on
 
@@ -133,16 +132,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `K` | extends [`EventType`](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/) |
+| Name | Type                                                                                          |
+| :--- | :-------------------------------------------------------------------------------------------- |
+| `K`  | extends [`EventType`](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/) |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `K` |
-| `listener` | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<[`EventDataMap`](/reference/algokit-utils-ts/api/modules/types_lifecycle_events/#eventdatamap)[`K`]\> |
+| Name        | Type                                                                                                                                                                                                                 |
+| :---------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eventName` | `K`                                                                                                                                                                                                                  |
+| `listener`  | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<[`EventDataMap`](/reference/algokit-utils-ts/api/modules/types_lifecycle_events/#eventdatamap)[`K`]\> |
 
 #### Returns
 
@@ -156,16 +155,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
+| Name | Type      |
+| :--- | :-------- |
+| `T`  | `unknown` |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` \| `symbol` |
-| `listener` | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`T`\> |
+| Name        | Type                                                                                                                 |
+| :---------- | :------------------------------------------------------------------------------------------------------------------- |
+| `eventName` | `string` \| `symbol`                                                                                                 |
+| `listener`  | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`T`\> |
 
 #### Returns
 
@@ -175,7 +174,7 @@ ___
 
 [src/types/async-event-emitter.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/async-event-emitter.ts#L18)
 
-___
+---
 
 ### once
 
@@ -183,16 +182,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `K` | extends [`EventType`](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/) |
+| Name | Type                                                                                          |
+| :--- | :-------------------------------------------------------------------------------------------- |
+| `K`  | extends [`EventType`](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/) |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `K` |
-| `listener` | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<[`EventDataMap`](/reference/algokit-utils-ts/api/modules/types_lifecycle_events/#eventdatamap)[`K`]\> |
+| Name        | Type                                                                                                                                                                                                                 |
+| :---------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eventName` | `K`                                                                                                                                                                                                                  |
+| `listener`  | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<[`EventDataMap`](/reference/algokit-utils-ts/api/modules/types_lifecycle_events/#eventdatamap)[`K`]\> |
 
 #### Returns
 
@@ -206,16 +205,16 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
+| Name | Type      |
+| :--- | :-------- |
+| `T`  | `unknown` |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` \| `symbol` |
-| `listener` | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`T`\> |
+| Name        | Type                                                                                                                 |
+| :---------- | :------------------------------------------------------------------------------------------------------------------- |
+| `eventName` | `string` \| `symbol`                                                                                                 |
+| `listener`  | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`T`\> |
 
 #### Returns
 
@@ -225,7 +224,7 @@ ___
 
 [src/types/async-event-emitter.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/async-event-emitter.ts#L26)
 
-___
+---
 
 ### removeListener
 
@@ -233,10 +232,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventName` | `string` \| `symbol` |
-| `listener` | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`unknown`\> |
+| Name        | Type                                                                                                                       |
+| :---------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `eventName` | `string` \| `symbol`                                                                                                       |
+| `listener`  | [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`unknown`\> |
 
 #### Returns
 

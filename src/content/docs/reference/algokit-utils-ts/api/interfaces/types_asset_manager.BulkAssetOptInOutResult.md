@@ -1,9 +1,8 @@
 ---
 title: BulkAssetOptInOutResult
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/asset-manager](/reference/algokit-utils-ts/api/modules/types_asset_manager/) / BulkAssetOptInOutResult
-
-
 
 [types/asset-manager](/reference/algokit-utils-ts/api/modules/types_asset_manager/).BulkAssetOptInOutResult
 
@@ -28,7 +27,7 @@ The ID of the asset opted into / out of
 
 [src/types/asset-manager.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L11)
 
-___
+---
 
 ### transactionId
 

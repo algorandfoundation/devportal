@@ -1,6 +1,7 @@
 ---
 title: v8 migration
 ---
+
 Version 8 of AlgoKit Utils adds support for algosdk@3. This algosdk version has a number of major breaking changes and as a result we have also needed to make some breaking changes to support it. All changes between version 7 and 8 have been made to support algosdk@3.
 
 Depending on the complexity of your project, you may find that first migrating to version 7, then migrating to version 8 is easier and offers a more gradual experience. Either way this migration will heavily reference the [v7 migration guide](/algokit/utils/typescript/v7-migration/) as it documents the majority of changes you will likely need to make.
@@ -21,30 +22,30 @@ A simple example of the before and after follows:
 
 ```typescript
 /**** Before ****/
-import * as algokit from '@algorandfoundation/algokit-utils'
-const algod = algokit.getAlgoClient()
+import * as algokit from '@algorandfoundation/algokit-utils';
+const algod = algokit.getAlgoClient();
 const account = await algokit.mnemonicAccountFromEnvironment(
   {
     name: 'MY_ACCOUNT',
     fundWith: algokit.algos(2),
   },
   algod,
-)
+);
 const payment = await algokit.transferAlgos({
   from: account.addr,
   to: 'RECEIVER',
   amount: algokit.algos(1),
-})
+});
 
 /**** After ****/
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-const algorand = await AlgorandClient.fromEnvironment()
-const account = await algorand.account.fromEnvironment('MY_ACCOUNT', (2).algo())
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+const algorand = await AlgorandClient.fromEnvironment();
+const account = await algorand.account.fromEnvironment('MY_ACCOUNT', (2).algo());
 const payment = await algorand.send.payment({
   sender: account, // NOTE: .addr has been removed from the v7 version of this same code
   receiver: 'RECEIVER',
   amount: (1).algo(),
-})
+});
 ```
 
 ## >=6.1.0<7.0.0 Migration Guide
@@ -76,14 +77,14 @@ Any changes needed here should be related to converting an algosdk `Account` or 
 One scenario that requires a `string` rather than `string | Address` is passing an address as an ABI method arg. This is due to algosdk not supporting this type as an `ABIValue`. When passing an `Address` as an ABI method arg, you'll need to convert to the encoded address representation using `toString()`, like below:
 
 ```typescript
-const alice = algorand.account.random()
-const bob = algorand.account.random()
+const alice = algorand.account.random();
+const bob = algorand.account.random();
 
 const result = await appClient.send.call({
   sender: alice,
   method: 'hello',
   args: [bob.addr.toString()], // NOTE: the conversion to the encoded string representation
-})
+});
 ```
 
 It's also worth noting that the account utils (`algorand.account.random()` in this scenario) returns a type which combines `Address`, `Account` and `TransactionSignerAccount`, so that you can simply pass the object (`alice` in this case) returned into a function that accepts an `Address` or `Account`, which allows you to remove `.addr` in a lot of cases.
@@ -97,7 +98,7 @@ const payment = await algorand.createTransaction.payment({
   sender: 'SENDER',
   receiver: 'RECEIVER',
   amount: (1).algo(),
-})
+});
 
-const result = await algorand.newGroup().addTransaction(payment).simulate()
+const result = await algorand.newGroup().addTransaction(payment).simulate();
 ```

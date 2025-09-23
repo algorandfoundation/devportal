@@ -1,16 +1,17 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.Local
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.Local
+
+#### _class_ algokit_utils.applications.app_spec.arc56.Local
 
 Local state schema.
 
-#### bytes *: int*
+#### bytes _: int_
 
 The number of byte slices in local state
 
-#### ints *: int*
+#### ints _: int_
 
 The number of integers in local state
 
-#### *static* from_dict(data: dict[str, Any]) → [Local](#algokit_utils.applications.app_spec.arc56.Local)
+#### _static_ from_dict(data: dict[str, Any]) → [Local](#algokit_utils.applications.app_spec.arc56.Local)

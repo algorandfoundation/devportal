@@ -1,12 +1,13 @@
 ---
 title: algokit_utils.models.simulate.SimulationTrace
 ---
-#### *class* algokit_utils.models.simulate.SimulationTrace
 
-#### app_budget_added *: int | None*
+#### _class_ algokit_utils.models.simulate.SimulationTrace
 
-#### app_budget_consumed *: int | None*
+#### app_budget_added _: int | None_
 
-#### failure_message *: str | None*
+#### app_budget_consumed _: int | None_
 
-#### exec_trace *: dict[str, object]*
+#### failure_message _: str | None_
+
+#### exec_trace _: dict[str, object]_

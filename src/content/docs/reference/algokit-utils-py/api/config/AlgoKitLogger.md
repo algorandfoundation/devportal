@@ -1,7 +1,8 @@
 ---
 title: algokit_utils.config.AlgoKitLogger
 ---
-#### *class* algokit_utils.config.AlgoKitLogger(name: str = 'algokit-utils-py', level: int = logging.NOTSET)
+
+#### _class_ algokit_utils.config.AlgoKitLogger(name: str = 'algokit-utils-py', level: int = logging.NOTSET)
 
 Bases: `logging.Logger`
 
@@ -18,6 +19,6 @@ in the instance given above, channel names might be “input” for the upper
 level, and “input.csv”, “input.xls” and “input.gnu” for the sub-levels.
 There is no arbitrary limit to the depth of nesting.
 
-#### *classmethod* get_null_logger() → logging.Logger
+#### _classmethod_ get_null_logger() → logging.Logger
 
 Return a logger that does nothing (a null logger).

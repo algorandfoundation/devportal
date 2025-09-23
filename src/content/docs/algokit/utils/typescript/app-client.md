@@ -1,6 +1,7 @@
 ---
 title: App client and App factory
 ---
+
 > [!NOTE]
 > This page covers the untyped app client, but we recommend using [typed clients](/algokit/utils/typescript/typed-app-clients/), which will give you a better developer experience with strong typing and intellisense specific to the app itself.
 
@@ -20,7 +21,7 @@ To get an instance of `AppFactory` you can use either [`AlgorandClient`](/algoki
 // Minimal example
 const factory = algorand.client.getAppFactory({
   appSpec: '{/* ARC-56 or ARC-32 compatible JSON */}',
-})
+});
 // Advanced example
 const factory = algorand.client.getAppFactory({
   appSpec: parsedArc32OrArc56AppSpec,
@@ -30,7 +31,7 @@ const factory = algorand.client.getAppFactory({
   updatable: true,
   deletable: false,
   deployTimeParams: { ONE: 1, TWO: 'value' },
-})
+});
 ```
 
 ## `AppClient`
@@ -45,15 +46,15 @@ const appClient = algorand.client.getAppClientByCreatorAndName({
   appSpec: '{/* ARC-56 or ARC-32 compatible JSON */}',
   // appId resolved by looking for app ID of named app by this creator
   creatorAddress: 'CREATORADDRESS',
-})
+});
 const appClient = algorand.client.getAppClientById({
   appSpec: '{/* ARC-56 or ARC-32 compatible JSON */}',
   appId: 12345n,
-})
+});
 const appClient = algorand.client.getAppClientByNetwork({
   appSpec: '{/* ARC-56 or ARC-32 compatible JSON */}',
   // appId resolved by using ARC-56 spec to find app ID for current network
-})
+});
 
 // Advanced example
 const appClient = algorand.client.getAppClientById({
@@ -63,7 +64,7 @@ const appClient = algorand.client.getAppClientById({
   defaultSender: 'SENDERADDRESS',
   approvalSourceMap: approvalTealSourceMap,
   clearSourceMap: clearTealSourceMap,
-})
+});
 ```
 
 You can get the `appId` and `appAddress` at any time as properties on the `AppClient` along with `appName` and `appSpec`.
@@ -78,22 +79,22 @@ This is possible via two methods on the app factory:
 - [`factory.getAppClientByCreatorAndName(params)`](/reference/algokit-utils-ts/api/classes/types_app_factoryappfactory/#getappclientbycreatorandname) - Returns a new `AppClient` client, resolving the app by creator address and name using AlgoKit app deployment semantics (i.e. looking for the app creation transaction note). Automatically populates appName, defaultSender and source maps from the factory if not specified in the params.
 
 ```typescript
-const appClient1 = factory.getAppClientById({ appId: 12345n })
-const appClient2 = factory.getAppClientById({ appId: 12346n })
-const appClient3 = factory.getAppClientById({ appId: 12345n, defaultSender: 'SENDER2ADDRESS' })
+const appClient1 = factory.getAppClientById({ appId: 12345n });
+const appClient2 = factory.getAppClientById({ appId: 12346n });
+const appClient3 = factory.getAppClientById({ appId: 12345n, defaultSender: 'SENDER2ADDRESS' });
 const appClient4 = factory.getAppClientByCreatorAndName({
   creatorAddress: 'CREATORADDRESS',
-})
+});
 const appClient5 = factory.getAppClientByCreatorAndName({
   creatorAddress: 'CREATORADDRESS',
   appName: 'NonDefaultAppName',
-})
+});
 const appClient6 = factory.getAppClientByCreatorAndName({
   creatorAddress: 'CREATORADDRESS',
   appName: 'NonDefaultAppName',
   ignoreCache: true, // Perform fresh indexer lookups
   defaultSender: 'SENDER2ADDRESS',
-})
+});
 ```
 
 ## Creating and deploying an app
@@ -113,7 +114,7 @@ The create method is a wrapper over the `appCreate` (bare calls) and `appCreateM
 
 ```typescript
 // Use no-argument bare-call
-const { result, appClient } = factory.send.bare.create()
+const { result, appClient } = factory.send.bare.create();
 // Specify parameters for bare-call and override other parameters
 const { result, appClient } = factory.send.bare.create({
   args: [new Uint8Array(1, 2, 3, 4)],
@@ -126,12 +127,12 @@ const { result, appClient } = factory.send.bare.create({
   updatable: true,
   deletable: false,
   populateAppCallResources: true,
-})
+});
 // Specify parameters for ABI method call
 const { result, appClient } = factory.send.create({
   method: 'create_application',
   args: [1, 'something'],
-})
+});
 ```
 
 If you want to construct a custom create call, use the underlying [`algorand.send.appCreate` / `algorand.createTransaction.appCreate` / `algorand.send.appCreateMethodCall` / `algorand.createTransaction.appCreateMethodCall` methods](/algokit/utils/typescript/app/#creation) then you can get params objects:
@@ -238,19 +239,19 @@ const call1 = await appClient.send.update({
   method: 'update_abi',
   args: ['string_io'],
   deployTimeParams,
-})
+});
 const call2 = await appClient.send.delete({
   method: 'delete_abi',
   args: ['string_io'],
-})
-const call3 = await appClient.send.optIn({ method: 'opt_in' })
-const call4 = await appClient.send.bare.clearState()
+});
+const call3 = await appClient.send.optIn({ method: 'opt_in' });
+const call4 = await appClient.send.bare.clearState();
 
 const transaction = await appClient.createTransaction.bare.closeOut({
   args: [new Uint8Array(1, 2, 3)],
-})
+});
 
-const params = appClient.params.optIn({ method: 'optin' })
+const params = appClient.params.optIn({ method: 'optin' });
 ```
 
 ### Nested ABI Method Call Transactions
@@ -285,17 +286,17 @@ const payment = algorand.createTransaction.payment({
   sender: alice.addr,
   receiver: alice.addr,
   amount: microAlgo(1),
-})
+});
 
 const myOtherMethodCall = await appClient.params.call({
   method: 'myOtherMethod',
   args: [payment],
-})
+});
 
 const myMethodCall = await appClient.send.call({
   method: 'myMethod',
   args: [undefined, myOtherMethodCall],
-})
+});
 ```
 
 `myOtherMethodCall` supplies the pay transaction to the transaction group and, by association, `myOtherMethodCall` has access to it as defined in its signature.
@@ -320,7 +321,7 @@ const result = await appClient.send.call({
     }),
   ],
   boxReferences: ['Box1'],
-})
+});
 ```
 
 You can also get the funding call as a params object via `appClient.params.fundAppAccount(params)`.
@@ -347,10 +348,10 @@ Where `{method}` is one of:
 - `getMap(mapName)` - Returns all map values for the given map in a key=>value record. It's recommended that this is only done when you have a unique `prefix` for the map otherwise there's a high risk that incorrect values will be included in the map.
 
 ```typescript
-const values = appClient.state.global.getAll()
-const value = appClient.state.local('ADDRESS').getValue('value1')
-const mapValue = appClient.state.box.getMapValue('map1', 'mapKey')
-const map = appClient.state.global.getMap('myMap')
+const values = appClient.state.global.getAll();
+const value = appClient.state.local('ADDRESS').getValue('value1');
+const mapValue = appClient.state.box.getMapValue('map1', 'mapKey');
+const map = appClient.state.global.getMap('myMap');
 ```
 
 ### Generic methods
@@ -366,17 +367,17 @@ There are various methods defined that let you read state from the smart contrac
 - `getBoxValuesFromABIType(type, filter)` - Gets the current values of the boxes from an ABI type using [`algorand.app.getBoxValuesFromABIType`](/algokit/utils/typescript/app/#boxes)
 
 ```typescript
-const globalState = await appClient.getGlobalState()
-const localState = await appClient.getLocalState('ACCOUNTADDRESS')
+const globalState = await appClient.getGlobalState();
+const localState = await appClient.getLocalState('ACCOUNTADDRESS');
 
-const boxName: BoxReference = 'my-box'
-const boxName2: BoxReference = 'my-box2'
+const boxName: BoxReference = 'my-box';
+const boxName2: BoxReference = 'my-box2';
 
-const boxNames = appClient.getBoxNames()
-const boxValue = appClient.getBoxValue(boxName)
-const boxValues = appClient.getBoxValues([boxName, boxName2])
-const boxABIValue = appClient.getBoxValueFromABIType(boxName, algosdk.ABIStringType)
-const boxABIValues = appClient.getBoxValuesFromABIType([boxName, boxName2], algosdk.ABIStringType)
+const boxNames = appClient.getBoxNames();
+const boxValue = appClient.getBoxValue(boxName);
+const boxValues = appClient.getBoxValues([boxName, boxName2]);
+const boxABIValue = appClient.getBoxValueFromABIType(boxName, algosdk.ABIStringType);
+const boxABIValues = appClient.getBoxValuesFromABIType([boxName, boxName2], algosdk.ABIStringType);
 ```
 
 ## Handling logic errors and diagnosing errors
@@ -411,7 +412,7 @@ Note: This information will only show if the app client / app factory has a sour
 If you want to go a step further and automatically issue a [simulated transaction](https://algorand.github.io/js-algorand-sdk/classes/modelsv2.SimulateTransactionResult.html) and get trace information when there is an error when an ABI method is called you can turn on debug mode:
 
 ```typescript
-Config.configure({ debug: true })
+Config.configure({ debug: true });
 ```
 
 If you do that then the exception will have the `traces` property within the underlying exception will have key information from the simulation within it and this will get populated into the `led.traces` property of the thrown error.

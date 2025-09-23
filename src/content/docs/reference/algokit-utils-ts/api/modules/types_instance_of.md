@@ -1,9 +1,8 @@
 ---
 title: types/instance-of
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/instance-of
-
-
 
 ## Table of contents
 
@@ -21,8 +20,8 @@ A type that represents the interface of the class given as the generic parameter
 
 #### Type parameters
 
-| Name |
-| :------ |
+| Name        |
+| :---------- |
 | `ClassType` |
 
 #### Defined in

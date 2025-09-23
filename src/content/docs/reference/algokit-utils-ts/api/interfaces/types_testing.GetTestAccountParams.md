@@ -1,9 +1,8 @@
 ---
 title: GetTestAccountParams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/) / GetTestAccountParams
-
-
 
 [types/testing](/reference/algokit-utils-ts/api/modules/types_testing/).GetTestAccountParams
 
@@ -31,8 +30,8 @@ Optional override for how to get a test account; this allows you to retrieve acc
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type                                                                                             |
+| :--------- | :----------------------------------------------------------------------------------------------- |
 | `algorand` | [`AlgorandClient`](/reference/algokit-utils-ts/api/classes/types_algorand_clientalgorandclient/) |
 
 ##### Returns
@@ -43,7 +42,7 @@ Optional override for how to get a test account; this allows you to retrieve acc
 
 [src/types/testing.ts:48](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L48)
 
-___
+---
 
 ### initialFunds
 
@@ -55,7 +54,7 @@ Initial funds to ensure the account has
 
 [src/types/testing.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/testing.ts#L44)
 
-___
+---
 
 ### suppressLog
 

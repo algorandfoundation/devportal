@@ -1,9 +1,8 @@
 ---
 title: AccountConfig
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/account](/reference/algokit-utils-ts/api/modules/types_account/) / AccountConfig
-
-
 
 [types/account](/reference/algokit-utils-ts/api/modules/types_account/).AccountConfig
 
@@ -33,7 +32,7 @@ Mnemonic for an account
 
 [src/types/account.ts:294](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L294)
 
-___
+---
 
 ### accountName
 
@@ -45,7 +44,7 @@ Account name used to retrieve config
 
 [src/types/account.ts:298](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L298)
 
-___
+---
 
 ### senderAddress
 
@@ -57,7 +56,7 @@ Address of a rekeyed account
 
 [src/types/account.ts:296](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L296)
 
-___
+---
 
 ### senderMnemonic
 

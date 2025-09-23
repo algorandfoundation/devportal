@@ -1,9 +1,8 @@
 ---
 title: AppMetadata
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / AppMetadata
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).AppMetadata
 
@@ -48,7 +47,7 @@ The Algorand address of the account associated with the app
 
 [src/types/app.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L43)
 
-___
+---
 
 ### appId
 
@@ -64,7 +63,7 @@ The id of the app
 
 [src/types/app.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L41)
 
-___
+---
 
 ### createdMetadata
 
@@ -76,7 +75,7 @@ The metadata when the app was created
 
 [src/types/app.ts:265](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L265)
 
-___
+---
 
 ### createdRound
 
@@ -88,7 +87,7 @@ The round the app was created
 
 [src/types/app.ts:261](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L261)
 
-___
+---
 
 ### deletable
 
@@ -104,7 +103,7 @@ Whether or not the app is deletable / permanent / unspecified
 
 [src/types/app.ts:253](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L253)
 
-___
+---
 
 ### deleted
 
@@ -116,7 +115,7 @@ Whether or not the app is deleted
 
 [src/types/app.ts:267](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L267)
 
-___
+---
 
 ### name
 
@@ -132,7 +131,7 @@ The unique name identifier of the app within the creator account
 
 [src/types/app.ts:249](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L249)
 
-___
+---
 
 ### updatable
 
@@ -148,7 +147,7 @@ Whether or not the app is updatable / immutable / unspecified
 
 [src/types/app.ts:255](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L255)
 
-___
+---
 
 ### updatedRound
 
@@ -160,7 +159,7 @@ The last round that the app was updated
 
 [src/types/app.ts:263](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L263)
 
-___
+---
 
 ### version
 

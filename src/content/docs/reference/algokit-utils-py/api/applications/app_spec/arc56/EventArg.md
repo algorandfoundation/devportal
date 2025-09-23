@@ -1,24 +1,25 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.EventArg
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.EventArg
+
+#### _class_ algokit_utils.applications.app_spec.arc56.EventArg
 
 Event argument information.
 
-#### type *: str*
+#### type _: str_
 
 The type of the event argument
 
-#### desc *: str | None* *= None*
+#### desc _: str | None_ _= None_
 
 The optional description of the argument
 
-#### name *: str | None* *= None*
+#### name _: str | None_ _= None_
 
 The optional name of the argument
 
-#### struct *: str | None* *= None*
+#### struct _: str | None_ _= None_
 
 The optional struct type name
 
-#### *static* from_dict(data: dict[str, Any]) → [EventArg](#algokit_utils.applications.app_spec.arc56.EventArg)
+#### _static_ from_dict(data: dict[str, Any]) → [EventArg](#algokit_utils.applications.app_spec.arc56.EventArg)

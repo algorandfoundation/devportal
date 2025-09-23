@@ -1,9 +1,8 @@
 ---
 title: DispenserFundResponse
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/dispenser-client](/reference/algokit-utils-ts/api/modules/types_dispenser_client/) / DispenserFundResponse
-
-
 
 [types/dispenser-client](/reference/algokit-utils-ts/api/modules/types_dispenser_client/).DispenserFundResponse
 
@@ -28,7 +27,7 @@ The number of µAlgo that was funded.
 
 [src/types/dispenser-client.ts:29](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/dispenser-client.ts#L29)
 
-___
+---
 
 ### txId
 

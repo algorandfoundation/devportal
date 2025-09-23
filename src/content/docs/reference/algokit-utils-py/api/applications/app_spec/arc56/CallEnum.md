@@ -1,20 +1,21 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.CallEnum
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.CallEnum
+
+#### _class_ algokit_utils.applications.app_spec.arc56.CallEnum
 
 Bases: `str`, `enum.Enum`
 
 Enum representing different call types for application transactions.
 
-#### CLEAR_STATE *= 'ClearState'*
+#### CLEAR_STATE _= 'ClearState'_
 
-#### CLOSE_OUT *= 'CloseOut'*
+#### CLOSE_OUT _= 'CloseOut'_
 
-#### DELETE_APPLICATION *= 'DeleteApplication'*
+#### DELETE_APPLICATION _= 'DeleteApplication'_
 
-#### NO_OP *= 'NoOp'*
+#### NO_OP _= 'NoOp'_
 
-#### OPT_IN *= 'OptIn'*
+#### OPT_IN _= 'OptIn'_
 
-#### UPDATE_APPLICATION *= 'UpdateApplication'*
+#### UPDATE_APPLICATION _= 'UpdateApplication'_

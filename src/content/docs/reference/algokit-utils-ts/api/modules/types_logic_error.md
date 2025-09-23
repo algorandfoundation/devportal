@@ -1,9 +1,8 @@
 ---
 title: types/logic-error
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/logic-error
-
-
 
 ## Table of contents
 

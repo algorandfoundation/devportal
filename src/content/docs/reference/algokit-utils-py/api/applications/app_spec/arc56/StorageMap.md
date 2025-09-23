@@ -1,24 +1,25 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.StorageMap
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.StorageMap
+
+#### _class_ algokit_utils.applications.app_spec.arc56.StorageMap
 
 Storage map information.
 
-#### key_type *: str*
+#### key_type _: str_
 
 The type of the map keys
 
-#### value_type *: str*
+#### value_type _: str_
 
 The type of the map values
 
-#### desc *: str | None* *= None*
+#### desc _: str | None_ _= None_
 
 The optional description
 
-#### prefix *: str | None* *= None*
+#### prefix _: str | None_ _= None_
 
 The optional key prefix
 
-#### *static* from_dict(data: dict[str, Any]) → [StorageMap](#algokit_utils.applications.app_spec.arc56.StorageMap)
+#### _static_ from_dict(data: dict[str, Any]) → [StorageMap](#algokit_utils.applications.app_spec.arc56.StorageMap)

@@ -1,15 +1,16 @@
 ---
 title: algokit_utils.errors.logic_error
 ---
+
 ## Exceptions
 
-| [`LogicError`](#algokit_utils.errors.logic_error.LogicError)   | Common base class for all non-exit exceptions.   |
-|-----------------------------------------------------------------------------|--------------------------------------------------|
+| [`LogicError`](#algokit_utils.errors.logic_error.LogicError) | Common base class for all non-exit exceptions. |
+| ------------------------------------------------------------ | ---------------------------------------------- |
 
 ## Classes
 
-| [`LogicErrorData`](#algokit_utils.errors.logic_error.LogicErrorData)   | dict() -> new empty dictionary   |
-|-----------------------------------------------------------------------------------------|----------------------------------|
+| [`LogicErrorData`](#algokit_utils.errors.logic_error.LogicErrorData) | dict() -> new empty dictionary |
+| -------------------------------------------------------------------- | ------------------------------ |
 
 ## Module Contents
 

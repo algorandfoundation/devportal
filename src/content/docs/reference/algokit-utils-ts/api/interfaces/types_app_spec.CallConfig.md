@@ -1,9 +1,8 @@
 ---
 title: CallConfig
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-spec](/reference/algokit-utils-ts/api/modules/types_app_spec/) / CallConfig
-
-
 
 [types/app-spec](/reference/algokit-utils-ts/api/modules/types_app_spec/).CallConfig
 
@@ -13,17 +12,17 @@ Call configuration for a method
 
 ### Properties
 
-- [close\_out](#close_out)
-- [delete\_application](#delete_application)
-- [no\_op](#no_op)
-- [opt\_in](#opt_in)
-- [update\_application](#update_application)
+- [close_out](#close_out)
+- [delete_application](#delete_application)
+- [no_op](#no_op)
+- [opt_in](#opt_in)
+- [update_application](#update_application)
 
 ## Properties
 
-### close\_out
+### close_out
 
-• `Optional` **close\_out**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
+• `Optional` **close_out**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
 
 Close out call config
 
@@ -31,11 +30,11 @@ Close out call config
 
 [src/types/app-spec.ts:192](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L192)
 
-___
+---
 
-### delete\_application
+### delete_application
 
-• `Optional` **delete\_application**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
+• `Optional` **delete_application**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
 
 Delete call config
 
@@ -43,11 +42,11 @@ Delete call config
 
 [src/types/app-spec.ts:196](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L196)
 
-___
+---
 
-### no\_op
+### no_op
 
-• `Optional` **no\_op**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
+• `Optional` **no_op**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
 
 NoOp call config
 
@@ -55,11 +54,11 @@ NoOp call config
 
 [src/types/app-spec.ts:188](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L188)
 
-___
+---
 
-### opt\_in
+### opt_in
 
-• `Optional` **opt\_in**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
+• `Optional` **opt_in**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
 
 Opt-in call config
 
@@ -67,11 +66,11 @@ Opt-in call config
 
 [src/types/app-spec.ts:190](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L190)
 
-___
+---
 
-### update\_application
+### update_application
 
-• `Optional` **update\_application**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
+• `Optional` **update_application**: [`CallConfigValue`](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
 
 Update call config
 

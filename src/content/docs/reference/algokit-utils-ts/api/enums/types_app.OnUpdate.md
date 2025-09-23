@@ -1,9 +1,8 @@
 ---
 title: OnUpdate
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / OnUpdate
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).OnUpdate
 
@@ -22,7 +21,7 @@ What action to perform when deploying an app and an update is detected in the TE
 
 ### AppendApp
 
-• **AppendApp** = ``3``
+• **AppendApp** = `3`
 
 Create a new app
 
@@ -30,11 +29,11 @@ Create a new app
 
 [src/types/app.ts:296](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L296)
 
-___
+---
 
 ### Fail
 
-• **Fail** = ``0``
+• **Fail** = `0`
 
 Fail the deployment
 
@@ -42,11 +41,11 @@ Fail the deployment
 
 [src/types/app.ts:290](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L290)
 
-___
+---
 
 ### ReplaceApp
 
-• **ReplaceApp** = ``2``
+• **ReplaceApp** = `2`
 
 Delete the app and create a new one in its place
 
@@ -54,11 +53,11 @@ Delete the app and create a new one in its place
 
 [src/types/app.ts:294](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L294)
 
-___
+---
 
 ### UpdateApp
 
-• **UpdateApp** = ``1``
+• **UpdateApp** = `1`
 
 Update the app
 

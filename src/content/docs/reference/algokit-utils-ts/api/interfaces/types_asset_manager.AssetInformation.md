@@ -1,9 +1,8 @@
 ---
 title: AssetInformation
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/asset-manager](/reference/algokit-utils-ts/api/modules/types_asset_manager/) / AssetInformation
-
-
 
 [types/asset-manager](/reference/algokit-utils-ts/api/modules/types_asset_manager/).AssetInformation
 
@@ -42,7 +41,7 @@ The ID of the asset.
 
 [src/types/asset-manager.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L19)
 
-___
+---
 
 ### assetName
 
@@ -56,7 +55,7 @@ Max size is 32 bytes.
 
 [src/types/asset-manager.ts:110](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L110)
 
-___
+---
 
 ### assetNameAsBytes
 
@@ -70,7 +69,7 @@ Max size is 32 bytes.
 
 [src/types/asset-manager.ts:116](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L116)
 
-___
+---
 
 ### clawback
 
@@ -88,7 +87,7 @@ If not set the field is permanently empty.
 
 [src/types/asset-manager.ts:92](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L92)
 
-___
+---
 
 ### creator
 
@@ -104,7 +103,7 @@ closing out an asset position and opting-out of the asset.
 
 [src/types/asset-manager.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L27)
 
-___
+---
 
 ### decimals
 
@@ -112,17 +111,17 @@ ___
 
 The amount of decimal places the asset was created with.
 
-* If 0, the asset is not divisible;
-* If 1, the base unit of the asset is in tenths;
-* If 2, the base unit of the asset is in hundredths;
-* If 3, the base unit of the asset is in thousandths;
-* and so on up to 19 decimal places.
+- If 0, the asset is not divisible;
+- If 1, the base unit of the asset is in tenths;
+- If 2, the base unit of the asset is in hundredths;
+- If 3, the base unit of the asset is in thousandths;
+- and so on up to 19 decimal places.
 
 #### Defined in
 
 [src/types/asset-manager.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L43)
 
-___
+---
 
 ### defaultFrozen
 
@@ -138,7 +137,7 @@ transaction from the `freeze` account.
 
 [src/types/asset-manager.ts:51](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L51)
 
-___
+---
 
 ### freeze
 
@@ -154,7 +153,7 @@ If not set the field is permanently empty.
 
 [src/types/asset-manager.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L81)
 
-___
+---
 
 ### manager
 
@@ -168,7 +167,7 @@ If not set the asset is permanently immutable.
 
 [src/types/asset-manager.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L57)
 
-___
+---
 
 ### metadataHash
 
@@ -182,7 +181,7 @@ The format of this metadata is up to the application.
 
 [src/types/asset-manager.ts:134](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L134)
 
-___
+---
 
 ### reserve
 
@@ -204,7 +203,7 @@ If not set the field is permanently empty.
 
 [src/types/asset-manager.ts:72](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L72)
 
-___
+---
 
 ### total
 
@@ -218,7 +217,7 @@ For example, if `decimals` is, say, 2, then for every 100 `total` there is 1 who
 
 [src/types/asset-manager.ts:33](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L33)
 
-___
+---
 
 ### unitName
 
@@ -232,7 +231,7 @@ Max size is 8 bytes.
 
 [src/types/asset-manager.ts:98](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L98)
 
-___
+---
 
 ### unitNameAsBytes
 
@@ -246,7 +245,7 @@ Max size is 8 bytes.
 
 [src/types/asset-manager.ts:104](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L104)
 
-___
+---
 
 ### url
 
@@ -260,7 +259,7 @@ Max size is 96 bytes.
 
 [src/types/asset-manager.ts:122](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset-manager.ts#L122)
 
-___
+---
 
 ### urlAsBytes
 

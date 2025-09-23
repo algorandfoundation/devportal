@@ -1,9 +1,8 @@
 ---
 title: MultisigAccount
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/account](/reference/algokit-utils-ts/api/modules/types_account/) / MultisigAccount
-
-
 
 [types/account](/reference/algokit-utils-ts/api/modules/types_account/).MultisigAccount
 
@@ -41,9 +40,9 @@ Account wrapper that supports partial or full multisig signing.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `multisigParams` | `MultisigMetadata` |
+| Name              | Type                                  |
+| :---------------- | :------------------------------------ |
+| `multisigParams`  | `MultisigMetadata`                    |
 | `signingAccounts` | (`default` \| [`SigningAccount`]())[] |
 
 #### Returns
@@ -64,7 +63,7 @@ Account wrapper that supports partial or full multisig signing.
 
 [src/types/account.ts:23](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L23)
 
-___
+---
 
 ### \_params
 
@@ -74,7 +73,7 @@ ___
 
 [src/types/account.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L21)
 
-___
+---
 
 ### \_signer
 
@@ -84,7 +83,7 @@ ___
 
 [src/types/account.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L24)
 
-___
+---
 
 ### \_signingAccounts
 
@@ -110,7 +109,7 @@ The address of the multisig account
 
 [src/types/account.ts:37](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L37)
 
-___
+---
 
 ### params
 
@@ -126,7 +125,7 @@ The parameters for the multisig account
 
 [src/types/account.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L27)
 
-___
+---
 
 ### signer
 
@@ -142,7 +141,7 @@ The transaction signer for the multisig account
 
 [src/types/account.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L42)
 
-___
+---
 
 ### signingAccounts
 
@@ -168,8 +167,8 @@ Sign the given transaction
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name          | Type                          | Description                                                        |
+| :------------ | :---------------------------- | :----------------------------------------------------------------- |
 | `transaction` | `Uint8Array` \| `Transaction` | Either a transaction object or a raw, partially signed transaction |
 
 #### Returns
@@ -181,7 +180,7 @@ The transaction signed by the present signers
 **`Example`**
 
 ```typescript
-const signedTxn = multisigAccount.sign(myTransaction)
+const signedTxn = multisigAccount.sign(myTransaction);
 ```
 
 #### Defined in

@@ -1,24 +1,25 @@
 ---
 title: algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams
 ---
-#### *class* algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams
+
+#### _class_ algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams
 
 Bases: `_BaseAppMethodCall`
 
 Parameters for an ABI method call that updates an application.
 
-#### app_id *: int*
+#### app_id _: int_
 
 The ID of the application
 
-#### approval_program *: str | bytes*
+#### approval_program _: str | bytes_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear_state_program *: str | bytes*
+#### clear_state_program _: str | bytes_
 
 The program to execute for ClearState OnComplete
 
-#### on_complete *: algosdk.transaction.OnComplete*
+#### on_complete _: algosdk.transaction.OnComplete_
 
 The OnComplete action

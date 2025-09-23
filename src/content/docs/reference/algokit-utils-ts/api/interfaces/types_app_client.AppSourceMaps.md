@@ -1,9 +1,8 @@
 ---
 title: AppSourceMaps
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/) / AppSourceMaps
-
-
 
 [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/).AppSourceMaps
 
@@ -28,7 +27,7 @@ The source map of the approval program
 
 [src/types/app-client.ts:266](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L266)
 
-___
+---
 
 ### clearSourceMap
 

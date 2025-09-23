@@ -1,41 +1,42 @@
 ---
 title: algokit_utils.transactions.transaction_composer.TransactionComposer
 ---
-#### *class* algokit_utils.transactions.transaction_composer.TransactionComposer(algod: algosdk.v2client.algod.AlgodClient, get_signer: collections.abc.Callable[[str], algosdk.atomic_transaction_composer.TransactionSigner], get_suggested_params: collections.abc.Callable[[], algosdk.transaction.SuggestedParams] | None = None, default_validity_window: int | None = None, app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager) | None = None, error_transformers: list[ErrorTransformer] | None = None)
+
+#### _class_ algokit_utils.transactions.transaction_composer.TransactionComposer(algod: algosdk.v2client.algod.AlgodClient, get_signer: collections.abc.Callable[[str], algosdk.atomic_transaction_composer.TransactionSigner], get_suggested_params: collections.abc.Callable[[], algosdk.transaction.SuggestedParams] | None = None, default_validity_window: int | None = None, app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager) | None = None, error_transformers: list[ErrorTransformer] | None = None)
 
 A class for composing and managing Algorand transactions.
 
 Provides a high-level interface for building and executing transaction groups using the Algosdk library.
 Supports various transaction types including payments, asset operations, application calls, and key registrations.
 
-* **Parameters:**
-  * **algod** – An instance of AlgodClient used to get suggested params and send transactions
-  * **get_signer** – A function that takes an address and returns a TransactionSigner for that address
-  * **get_suggested_params** – Optional function to get suggested transaction parameters,
+- **Parameters:**
+  - **algod** – An instance of AlgodClient used to get suggested params and send transactions
+  - **get_signer** – A function that takes an address and returns a TransactionSigner for that address
+  - **get_suggested_params** – Optional function to get suggested transaction parameters,
     defaults to using algod.suggested_params()
-  * **default_validity_window** – Optional default validity window for transactions in rounds, defaults to 10
-  * **app_manager** – Optional AppManager instance for compiling TEAL programs, defaults to None
-  * **error_transformers** – Optional list of error transformers to use when an error is caught in simulate or send
+  - **default_validity_window** – Optional default validity window for transactions in rounds, defaults to 10
+  - **app_manager** – Optional AppManager instance for compiling TEAL programs, defaults to None
+  - **error_transformers** – Optional list of error transformers to use when an error is caught in simulate or send
 
 #### register_error_transformer(transformer: ErrorTransformer) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Register a function that will be used to transform an error caught when simulating or sending.
 
-* **Parameters:**
+- **Parameters:**
   **transformer** – The error transformer function
-* **Returns:**
+- **Returns:**
   The composer so you can chain method calls
 
 #### add_transaction(transaction: algosdk.transaction.Transaction, signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add a raw transaction to the composer.
 
-* **Parameters:**
-  * **transaction** – The transaction to add
-  * **signer** – Optional transaction signer, defaults to getting signer from transaction sender
-* **Returns:**
+- **Parameters:**
+  - **transaction** – The transaction to add
+  - **signer** – Optional transaction signer, defaults to getting signer from transaction sender
+- **Returns:**
   The transaction composer instance for chaining
-* **Example:**
+- **Example:**
   ```pycon
   >>> composer.add_transaction(transaction)
   ```
@@ -44,7 +45,7 @@ Add a raw transaction to the composer.
 
 Add a payment transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = PaymentParams(
   ...     sender="SENDER_ADDRESS",
@@ -55,16 +56,16 @@ Add a payment transaction.
   ... )
   >>> composer.add_payment(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The payment transaction parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_asset_create(params: [AssetCreateParams](#algokit_utils.transactions.transaction_composer.AssetCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset creation transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AssetCreateParams(
   ...     sender="SENDER_ADDRESS",
@@ -81,16 +82,16 @@ Add an asset creation transaction.
   ...     ... (see AssetCreateParams for more options)
   >>> composer.add_asset_create(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The asset creation parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_asset_config(params: [AssetConfigParams](#algokit_utils.transactions.transaction_composer.AssetConfigParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset configuration transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AssetConfigParams(
   ...     sender="SENDER_ADDRESS",
@@ -103,16 +104,16 @@ Add an asset configuration transaction.
   ... )
   >>> composer.add_asset_config(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The asset configuration parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_asset_freeze(params: [AssetFreezeParams](#algokit_utils.transactions.transaction_composer.AssetFreezeParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset freeze transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AssetFreezeParams(
   ...     sender="SENDER_ADDRESS",
@@ -123,16 +124,16 @@ Add an asset freeze transaction.
   ... )
   >>> composer.add_asset_freeze(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The asset freeze parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_asset_destroy(params: [AssetDestroyParams](#algokit_utils.transactions.transaction_composer.AssetDestroyParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset destruction transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AssetDestroyParams(
   ...     sender="SENDER_ADDRESS",
@@ -140,16 +141,16 @@ Add an asset destruction transaction.
   ...     ... (see AssetDestroyParams for more options)
   >>> composer.add_asset_destroy(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The asset destruction parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_asset_transfer(params: [AssetTransferParams](#algokit_utils.transactions.transaction_composer.AssetTransferParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset transfer transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AssetTransferParams(
   ...     sender="SENDER_ADDRESS",
@@ -161,16 +162,16 @@ Add an asset transfer transaction.
   ...     ... (see AssetTransferParams for more options)
   >>> composer.add_asset_transfer(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The asset transfer parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_asset_opt_in(params: [AssetOptInParams](#algokit_utils.transactions.transaction_composer.AssetOptInParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset opt-in transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AssetOptInParams(
   ...     sender="SENDER_ADDRESS",
@@ -179,16 +180,16 @@ Add an asset opt-in transaction.
   ... )
   >>> composer.add_asset_opt_in(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The asset opt-in parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_asset_opt_out(params: [AssetOptOutParams](#algokit_utils.transactions.transaction_composer.AssetOptOutParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset opt-out transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AssetOptOutParams(
   ...     sender="SENDER_ADDRESS",
@@ -197,16 +198,16 @@ Add an asset opt-out transaction.
   ...     ... (see AssetOptOutParams for more options)
   >>> composer.add_asset_opt_out(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The asset opt-out parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_app_create(params: [AppCreateParams](#algokit_utils.transactions.transaction_composer.AppCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application creation transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AppCreateParams(
   ...     sender="SENDER_ADDRESS",
@@ -224,16 +225,16 @@ Add an application creation transaction.
   ... )
   >>> composer.add_app_create(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The application creation parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_app_update(params: [AppUpdateParams](#algokit_utils.transactions.transaction_composer.AppUpdateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application update transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AppUpdateParams(
   ...     sender="SENDER_ADDRESS",
@@ -249,16 +250,16 @@ Add an application update transaction.
   ...     ... (see AppUpdateParams for more options)
   >>> composer.add_app_update(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The application update parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_app_delete(params: [AppDeleteParams](#algokit_utils.transactions.transaction_composer.AppDeleteParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application deletion transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AppDeleteParams(
   ...     sender="SENDER_ADDRESS",
@@ -272,16 +273,16 @@ Add an application deletion transaction.
   ...     ... (see AppDeleteParams for more options)
   >>> composer.add_app_delete(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The application deletion parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_app_call(params: [AppCallParams](#algokit_utils.transactions.transaction_composer.AppCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application call transaction.
 
-* **Example:**
+- **Example:**
   ```pycon
   >>> params = AppCallParams(
   ...     sender="SENDER_ADDRESS",
@@ -294,20 +295,20 @@ Add an application call transaction.
   ... )
   >>> composer.add_app_call(params)
   ```
-* **Parameters:**
+- **Parameters:**
   **params** – The application call parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_app_create_method_call(params: [AppCreateMethodCallParams](#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application creation method call transaction.
 
-* **Parameters:**
+- **Parameters:**
   **params** – The application creation method call parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
-* **Example:**
+- **Example:**
   ```pycon
   >>> # Basic example
   >>> method = algosdk.abi.Method(
@@ -366,56 +367,56 @@ Add an application creation method call transaction.
 
 Add an application update method call transaction.
 
-* **Parameters:**
+- **Parameters:**
   **params** – The application update method call parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_app_delete_method_call(params: [AppDeleteMethodCallParams](#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application deletion method call transaction.
 
-* **Parameters:**
+- **Parameters:**
   **params** – The application deletion method call parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_app_call_method_call(params: [AppCallMethodCallParams](#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application call method call transaction.
 
-* **Parameters:**
+- **Parameters:**
   **params** – The application call method call parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_online_key_registration(params: [OnlineKeyRegistrationParams](#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an online key registration transaction.
 
-* **Parameters:**
+- **Parameters:**
   **params** – The online key registration parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_offline_key_registration(params: [OfflineKeyRegistrationParams](#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an offline key registration transaction.
 
-* **Parameters:**
+- **Parameters:**
   **params** – The offline key registration parameters
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
 
 #### add_atc(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an existing AtomicTransactionComposer’s transactions.
 
-* **Parameters:**
+- **Parameters:**
   **atc** – The AtomicTransactionComposer to add
-* **Returns:**
+- **Returns:**
   The transaction composer instance for chaining
-* **Example:**
+- **Example:**
   ```pycon
   >>> atc = AtomicTransactionComposer()
   >>> atc.add_transaction(TransactionWithSigner(transaction, signer))
@@ -426,28 +427,28 @@ Add an existing AtomicTransactionComposer’s transactions.
 
 Get the total number of transactions.
 
-* **Returns:**
+- **Returns:**
   The number of transactions
 
 #### build() → [TransactionComposerBuildResult](#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)
 
 Build the transaction group.
 
-* **Returns:**
+- **Returns:**
   The built transaction group result
 
 #### rebuild() → [TransactionComposerBuildResult](#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)
 
 Rebuild the transaction group from scratch.
 
-* **Returns:**
+- **Returns:**
   The rebuilt transaction group result
 
 #### build_transactions() → [BuiltTransactions](#algokit_utils.transactions.transaction_composer.BuiltTransactions)
 
 Build and return the transactions without executing them.
 
-* **Returns:**
+- **Returns:**
   The built transactions result
 
 #### execute(\*, max_rounds_to_wait: int | None = None) → [SendAtomicTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
@@ -456,41 +457,41 @@ Build and return the transactions without executing them.
 
 Send the transaction group to the network.
 
-* **Parameters:**
+- **Parameters:**
   **params** – Parameters for the send operation
-* **Returns:**
+- **Returns:**
   The transaction send results
-* **Raises:**
-  **self._transform_error** – If the transaction fails (may be transformed by error transformers)
+- **Raises:**
+  **self.\_transform_error** – If the transaction fails (may be transformed by error transformers)
 
 #### simulate(allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None, skip_signatures: bool | None = None) → [SendAtomicTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
 
 Simulate transaction group execution with configurable validation rules.
 
-* **Parameters:**
-  * **allow_more_logs** – Whether to allow more logs than the standard limit
-  * **allow_empty_signatures** – Whether to allow transactions with empty signatures
-  * **allow_unnamed_resources** – Whether to allow unnamed resources.
-  * **extra_opcode_budget** – Additional opcode budget to allocate
-  * **exec_trace_config** – Configuration for execution tracing
-  * **simulation_round** – Round number to simulate at
-  * **skip_signatures** – Whether to skip signature validation
-* **Returns:**
+- **Parameters:**
+  - **allow_more_logs** – Whether to allow more logs than the standard limit
+  - **allow_empty_signatures** – Whether to allow transactions with empty signatures
+  - **allow_unnamed_resources** – Whether to allow unnamed resources.
+  - **extra_opcode_budget** – Additional opcode budget to allocate
+  - **exec_trace_config** – Configuration for execution tracing
+  - **simulation_round** – Round number to simulate at
+  - **skip_signatures** – Whether to skip signature validation
+- **Returns:**
   The simulation results
-* **Example:**
+- **Example:**
   ```pycon
   >>> result = composer.simulate(extra_opcode_budget=1000, skip_signatures=True, ...)
   ```
 
-#### *static* arc2_note(note: algokit_utils.models.transaction.Arc2TransactionNote) → bytes
+#### _static_ arc2_note(note: algokit_utils.models.transaction.Arc2TransactionNote) → bytes
 
 Create an encoded transaction note that follows the ARC-2 spec.
 
 [https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md)
 
-* **Parameters:**
+- **Parameters:**
   **note** – The ARC-2 note to encode
-* **Returns:**
+- **Returns:**
   The encoded note bytes
-* **Raises:**
+- **Raises:**
   **ValueError** – If the dapp_name is invalid

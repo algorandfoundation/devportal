@@ -1,9 +1,8 @@
 ---
 title: CreateAssetParams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/asset](/reference/algokit-utils-ts/api/modules/types_asset/) / CreateAssetParams
-
-
 
 [types/asset](/reference/algokit-utils-ts/api/modules/types_asset/).CreateAssetParams
 
@@ -61,7 +60,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 [src/types/transaction.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L36)
 
-___
+---
 
 ### clawbackAccount
 
@@ -74,7 +73,7 @@ If not set at asset creation or subsequently set to empty by the manager the fie
 
 [src/types/asset.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L57)
 
-___
+---
 
 ### creator
 
@@ -88,7 +87,7 @@ This account automatically is opted in to the asset and holds all units after cr
 
 [src/types/asset.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L11)
 
-___
+---
 
 ### decimals
 
@@ -105,7 +104,7 @@ This field can only be specified upon asset creation.
 
 [src/types/asset.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L26)
 
-___
+---
 
 ### fee
 
@@ -121,7 +120,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 [src/types/transaction.ts:40](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L40)
 
-___
+---
 
 ### freezeAccount
 
@@ -134,7 +133,7 @@ If not set at asset creation or subsequently set to empty by the manager the fie
 
 [src/types/asset.ts:53](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L53)
 
-___
+---
 
 ### frozenByDefault
 
@@ -146,7 +145,7 @@ Whether to freeze holdings for this asset by default. If `true` then for anyone 
 
 [src/types/asset.ts:59](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L59)
 
-___
+---
 
 ### lease
 
@@ -158,7 +157,7 @@ An (optional) [transaction lease](https://dev.algorand.co/concepts/transactions/
 
 [src/types/asset.ts:66](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L66)
 
-___
+---
 
 ### manager
 
@@ -171,7 +170,7 @@ If not set at asset creation or subsequently set to empty by the manager the ass
 
 [src/types/asset.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L43)
 
-___
+---
 
 ### maxFee
 
@@ -187,7 +186,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 [src/types/transaction.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L42)
 
-___
+---
 
 ### maxRoundsToWaitForConfirmation
 
@@ -203,7 +202,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 [src/types/transaction.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L44)
 
-___
+---
 
 ### metadataHash
 
@@ -216,7 +215,7 @@ The format of this metadata is up to the application. This field can only be spe
 
 [src/types/asset.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L39)
 
-___
+---
 
 ### name
 
@@ -228,7 +227,7 @@ The optional name of the asset. Max size if 32 bytes. This field can only be spe
 
 [src/types/asset.ts:29](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L29)
 
-___
+---
 
 ### note
 
@@ -240,7 +239,7 @@ The (optional) transaction note
 
 [src/types/asset.ts:64](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L64)
 
-___
+---
 
 ### populateAppCallResources
 
@@ -256,7 +255,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 [src/types/transaction.ts:46](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L46)
 
-___
+---
 
 ### reserveAccount
 
@@ -271,7 +270,7 @@ If not set at asset creation or subsequently set to empty by the manager the fie
 
 [src/types/asset.ts:49](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L49)
 
-___
+---
 
 ### skipSending
 
@@ -288,7 +287,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 [src/types/transaction.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L32)
 
-___
+---
 
 ### skipWaiting
 
@@ -304,7 +303,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 [src/types/transaction.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L34)
 
-___
+---
 
 ### suppressLog
 
@@ -320,7 +319,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 [src/types/transaction.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L38)
 
-___
+---
 
 ### total
 
@@ -334,7 +333,7 @@ This field can only be specified upon asset creation.
 
 [src/types/asset.ts:17](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L17)
 
-___
+---
 
 ### transactionParams
 
@@ -346,7 +345,7 @@ Optional transaction parameters
 
 [src/types/asset.ts:62](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L62)
 
-___
+---
 
 ### unit
 
@@ -358,7 +357,7 @@ The optional name of the unit of this asset. Max size is 8 bytes. This field can
 
 [src/types/asset.ts:31](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/asset.ts#L31)
 
-___
+---
 
 ### url
 

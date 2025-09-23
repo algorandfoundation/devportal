@@ -1,9 +1,8 @@
 ---
 title: types/config
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/config
-
-
 
 ## Table of contents
 

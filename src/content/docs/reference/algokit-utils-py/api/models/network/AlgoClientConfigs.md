@@ -1,10 +1,11 @@
 ---
 title: algokit_utils.models.network.AlgoClientConfigs
 ---
-#### *class* algokit_utils.models.network.AlgoClientConfigs
 
-#### algod_config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig)*
+#### _class_ algokit_utils.models.network.AlgoClientConfigs
 
-#### indexer_config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None*
+#### algod_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig)_
 
-#### kmd_config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None*
+#### indexer_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None_
+
+#### kmd_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None_

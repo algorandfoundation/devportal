@@ -1,9 +1,8 @@
 ---
 title: AppClientParams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/) / AppClientParams
-
-
 
 [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/).AppClientParams
 
@@ -34,7 +33,7 @@ An `AlgorandClient` instance
 
 [src/types/app-client.ts:331](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L331)
 
-___
+---
 
 ### appId
 
@@ -46,7 +45,7 @@ The ID of the app instance this client should make calls against.
 
 [src/types/app-client.ts:321](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L321)
 
-___
+---
 
 ### appName
 
@@ -59,22 +58,23 @@ Defaults to the ARC-32/ARC-56 app spec name
 
 [src/types/app-client.ts:337](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L337)
 
-___
+---
 
 ### appSpec
 
 • **appSpec**: `string` \| [`Arc56Contract`]() \| [`AppSpec`]()
 
 The ARC-56 or ARC-32 application spec as either:
- * Parsed JSON ARC-56 `Contract`
- * Parsed JSON ARC-32 `AppSpec`
- * Raw JSON string (in either ARC-56 or ARC-32 format)
+
+- Parsed JSON ARC-56 `Contract`
+- Parsed JSON ARC-32 `AppSpec`
+- Raw JSON string (in either ARC-56 or ARC-32 format)
 
 #### Defined in
 
 [src/types/app-client.ts:328](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L328)
 
-___
+---
 
 ### approvalSourceMap
 
@@ -86,7 +86,7 @@ Optional source map for the approval program
 
 [src/types/app-client.ts:343](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L343)
 
-___
+---
 
 ### clearSourceMap
 
@@ -98,7 +98,7 @@ Optional source map for the clear state program
 
 [src/types/app-client.ts:345](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L345)
 
-___
+---
 
 ### defaultSender
 
@@ -110,7 +110,7 @@ Optional address to use for the account to use as the default sender for calls.
 
 [src/types/app-client.ts:339](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L339)
 
-___
+---
 
 ### defaultSigner
 

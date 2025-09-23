@@ -1,9 +1,8 @@
 ---
 title: AppClientCompilationResult
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/) / AppClientCompilationResult
-
-
 
 [types/app-client](/reference/algokit-utils-ts/api/modules/types_app_client/).AppClientCompilationResult
 
@@ -38,7 +37,7 @@ The compiled bytecode of the approval program, ready to deploy to algod
 
 [src/types/app-client.ts:285](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L285)
 
-___
+---
 
 ### clearStateProgram
 
@@ -50,7 +49,7 @@ The compiled bytecode of the clear state program, ready to deploy to algod
 
 [src/types/app-client.ts:287](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L287)
 
-___
+---
 
 ### compiledApproval
 
@@ -66,7 +65,7 @@ Partial.compiledApproval
 
 [src/types/app.ts:335](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L335)
 
-___
+---
 
 ### compiledClear
 

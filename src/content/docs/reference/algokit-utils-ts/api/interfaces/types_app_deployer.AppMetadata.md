@@ -1,9 +1,8 @@
 ---
 title: AppMetadata
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-deployer](/reference/algokit-utils-ts/api/modules/types_app_deployer/) / AppMetadata
-
-
 
 [types/app-deployer](/reference/algokit-utils-ts/api/modules/types_app_deployer/).AppMetadata
 
@@ -42,7 +41,7 @@ The Algorand address of the account associated with the app
 
 [src/types/app-deployer.ts:78](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L78)
 
-___
+---
 
 ### appId
 
@@ -54,7 +53,7 @@ The id of the app
 
 [src/types/app-deployer.ts:76](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L76)
 
-___
+---
 
 ### createdMetadata
 
@@ -66,7 +65,7 @@ The metadata when the app was created
 
 [src/types/app-deployer.ts:84](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L84)
 
-___
+---
 
 ### createdRound
 
@@ -78,7 +77,7 @@ The round the app was created
 
 [src/types/app-deployer.ts:80](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L80)
 
-___
+---
 
 ### deletable
 
@@ -94,7 +93,7 @@ Whether or not the app is deletable / permanent / unspecified
 
 [src/types/app.ts:253](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L253)
 
-___
+---
 
 ### deleted
 
@@ -106,7 +105,7 @@ Whether or not the app is deleted
 
 [src/types/app-deployer.ts:86](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L86)
 
-___
+---
 
 ### name
 
@@ -122,7 +121,7 @@ The unique name identifier of the app within the creator account
 
 [src/types/app.ts:249](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L249)
 
-___
+---
 
 ### updatable
 
@@ -138,7 +137,7 @@ Whether or not the app is updatable / immutable / unspecified
 
 [src/types/app.ts:255](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L255)
 
-___
+---
 
 ### updatedRound
 
@@ -150,7 +149,7 @@ The last round that the app was updated
 
 [src/types/app-deployer.ts:82](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L82)
 
-___
+---
 
 ### version
 

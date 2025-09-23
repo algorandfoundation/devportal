@@ -1,9 +1,8 @@
 ---
 title: BoxReference
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-manager](/reference/algokit-utils-ts/api/modules/types_app_manager/) / BoxReference
-
-
 
 [types/app-manager](/reference/algokit-utils-ts/api/modules/types_app_manager/).BoxReference
 
@@ -28,7 +27,7 @@ A unique application id
 
 [src/types/app-manager.ts:66](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-manager.ts#L66)
 
-___
+---
 
 ### name
 

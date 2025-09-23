@@ -1,9 +1,8 @@
 ---
 title: types/asset-manager
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/asset-manager
-
-
 
 ## Table of contents
 

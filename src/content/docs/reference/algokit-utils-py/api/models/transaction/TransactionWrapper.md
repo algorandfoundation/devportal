@@ -1,22 +1,23 @@
 ---
 title: algokit_utils.models.transaction.TransactionWrapper
 ---
-#### *class* algokit_utils.models.transaction.TransactionWrapper(transaction: algosdk.transaction.Transaction)
+
+#### _class_ algokit_utils.models.transaction.TransactionWrapper(transaction: algosdk.transaction.Transaction)
 
 Wrapper around algosdk.transaction.Transaction with optional property validators
 
-#### *property* raw *: algosdk.transaction.Transaction*
+#### _property_ raw _: algosdk.transaction.Transaction_
 
-#### *property* payment *: algosdk.transaction.PaymentTxn*
+#### _property_ payment _: algosdk.transaction.PaymentTxn_
 
-#### *property* keyreg *: algosdk.transaction.KeyregTxn*
+#### _property_ keyreg _: algosdk.transaction.KeyregTxn_
 
-#### *property* asset_config *: algosdk.transaction.AssetConfigTxn*
+#### _property_ asset_config _: algosdk.transaction.AssetConfigTxn_
 
-#### *property* asset_transfer *: algosdk.transaction.AssetTransferTxn*
+#### _property_ asset_transfer _: algosdk.transaction.AssetTransferTxn_
 
-#### *property* asset_freeze *: algosdk.transaction.AssetFreezeTxn*
+#### _property_ asset_freeze _: algosdk.transaction.AssetFreezeTxn_
 
-#### *property* application_call *: algosdk.transaction.ApplicationCallTxn*
+#### _property_ application_call _: algosdk.transaction.ApplicationCallTxn_
 
-#### *property* state_proof *: algosdk.transaction.StateProofTxn*
+#### _property_ state_proof _: algosdk.transaction.StateProofTxn_

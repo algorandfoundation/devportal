@@ -1,39 +1,40 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.Method
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.Method
+
+#### _class_ algokit_utils.applications.app_spec.arc56.Method
 
 Method information.
 
-#### actions *: [Actions](#algokit_utils.applications.app_spec.arc56.Actions)*
+#### actions _: [Actions](#algokit_utils.applications.app_spec.arc56.Actions)_
 
 The allowed actions
 
-#### args *: list[[MethodArg](#algokit_utils.applications.app_spec.arc56.MethodArg)]*
+#### args _: list[[MethodArg](#algokit_utils.applications.app_spec.arc56.MethodArg)]_
 
 The method arguments
 
-#### name *: str*
+#### name _: str_
 
 The method name
 
-#### returns *: [Returns](#algokit_utils.applications.app_spec.arc56.Returns)*
+#### returns _: [Returns](#algokit_utils.applications.app_spec.arc56.Returns)_
 
 The return information
 
-#### desc *: str | None* *= None*
+#### desc _: str | None_ _= None_
 
 The optional description
 
-#### events *: list[[Event](#algokit_utils.applications.app_spec.arc56.Event)] | None* *= None*
+#### events _: list[[Event](#algokit_utils.applications.app_spec.arc56.Event)] | None_ _= None_
 
 The optional list of events
 
-#### readonly *: bool | None* *= None*
+#### readonly _: bool | None_ _= None_
 
 The optional readonly flag
 
-#### recommendations *: [Recommendations](#algokit_utils.applications.app_spec.arc56.Recommendations) | None* *= None*
+#### recommendations _: [Recommendations](#algokit_utils.applications.app_spec.arc56.Recommendations) | None_ _= None_
 
 The optional execution recommendations
 
@@ -41,9 +42,9 @@ The optional execution recommendations
 
 Convert to ABI method.
 
-* **Raises:**
+- **Raises:**
   **ValueError** – If underlying ABI method is not initialized
-* **Returns:**
+- **Returns:**
   ABI method
 
-#### *static* from_dict(data: dict[str, Any]) → [Method](#algokit_utils.applications.app_spec.arc56.Method)
+#### _static_ from_dict(data: dict[str, Any]) → [Method](#algokit_utils.applications.app_spec.arc56.Method)

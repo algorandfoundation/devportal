@@ -1,24 +1,23 @@
 ---
 title: index
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / index
-
-
 
 ## Table of contents
 
 ### References
 
-- [ALGOKIT\_DIR](#algokit_dir)
+- [ALGOKIT_DIR](#algokit_dir)
 - [AVMTracesEventData](#avmtraceseventdata)
 - [AlgorandClient](#algorandclient)
-- [DEFAULT\_MAX\_SEARCH\_DEPTH](#default_max_search_depth)
+- [DEFAULT_MAX_SEARCH_DEPTH](#default_max_search_depth)
 - [EventDataMap](#eventdatamap)
 - [EventType](#eventtype)
-- [SOURCES\_DIR](#sources_dir)
+- [SOURCES_DIR](#sources_dir)
 - [SearchForTransactions](#searchfortransactions)
-- [TEAL\_FILE\_EXT](#teal_file_ext)
-- [TEAL\_SOURCEMAP\_EXT](#teal_sourcemap_ext)
+- [TEAL_FILE_EXT](#teal_file_ext)
+- [TEAL_SOURCEMAP_EXT](#teal_sourcemap_ext)
 - [TealSourceDebugEventData](#tealsourcedebugeventdata)
 - [TealSourcesDebugEventData](#tealsourcesdebugeventdata)
 - [executePaginatedRequest](#executepaginatedrequest)
@@ -39,11 +38,11 @@ title: index
 
 ### Variables
 
-- [ALGORAND\_MIN\_TX\_FEE](#algorand_min_tx_fee)
+- [ALGORAND_MIN_TX_FEE](#algorand_min_tx_fee)
 - [Config](#config)
-- [MAX\_APP\_CALL\_ACCOUNT\_REFERENCES](#max_app_call_account_references)
-- [MAX\_APP\_CALL\_FOREIGN\_REFERENCES](#max_app_call_foreign_references)
-- [MAX\_TRANSACTION\_GROUP\_SIZE](#max_transaction_group_size)
+- [MAX_APP_CALL_ACCOUNT_REFERENCES](#max_app_call_account_references)
+- [MAX_APP_CALL_FOREIGN_REFERENCES](#max_app_call_foreign_references)
+- [MAX_TRANSACTION_GROUP_SIZE](#max_transaction_group_size)
 
 ### Functions
 
@@ -141,107 +140,107 @@ title: index
 
 ## References
 
-### ALGOKIT\_DIR
+### ALGOKIT_DIR
 
 Re-exports [ALGOKIT_DIR](#algokit_dir)
 
-___
+---
 
 ### AVMTracesEventData
 
 Re-exports [AVMTracesEventData](/reference/algokit-utils-ts/api/interfaces/types_debuggingavmtraceseventdata/)
 
-___
+---
 
 ### AlgorandClient
 
 Re-exports [AlgorandClient](/reference/algokit-utils-ts/api/classes/types_algorand_clientalgorandclient/)
 
-___
+---
 
-### DEFAULT\_MAX\_SEARCH\_DEPTH
+### DEFAULT_MAX_SEARCH_DEPTH
 
 Re-exports [DEFAULT_MAX_SEARCH_DEPTH](#default_max_search_depth)
 
-___
+---
 
 ### EventDataMap
 
 Re-exports [EventDataMap](#eventdatamap)
 
-___
+---
 
 ### EventType
 
 Re-exports [EventType](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/)
 
-___
+---
 
-### SOURCES\_DIR
+### SOURCES_DIR
 
 Re-exports [SOURCES_DIR](#sources_dir)
 
-___
+---
 
 ### SearchForTransactions
 
 Re-exports [SearchForTransactions](#searchfortransactions)
 
-___
+---
 
-### TEAL\_FILE\_EXT
+### TEAL_FILE_EXT
 
 Re-exports [TEAL_FILE_EXT](#teal_file_ext)
 
-___
+---
 
-### TEAL\_SOURCEMAP\_EXT
+### TEAL_SOURCEMAP_EXT
 
 Re-exports [TEAL_SOURCEMAP_EXT](#teal_sourcemap_ext)
 
-___
+---
 
 ### TealSourceDebugEventData
 
 Re-exports [TealSourceDebugEventData](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcedebugeventdata/)
 
-___
+---
 
 ### TealSourcesDebugEventData
 
 Re-exports [TealSourcesDebugEventData](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcesdebugeventdata/)
 
-___
+---
 
 ### executePaginatedRequest
 
 Re-exports [executePaginatedRequest](#executepaginatedrequest)
 
-___
+---
 
 ### lookupAccountByAddress
 
 Re-exports [lookupAccountByAddress](#lookupaccountbyaddress)
 
-___
+---
 
 ### lookupAccountCreatedApplicationByAddress
 
 Re-exports [lookupAccountCreatedApplicationByAddress](#lookupaccountcreatedapplicationbyaddress)
 
-___
+---
 
 ### lookupAssetHoldings
 
 Re-exports [lookupAssetHoldings](#lookupassetholdings)
 
-___
+---
 
 ### lookupTransactionById
 
 Re-exports [lookupTransactionById](#lookuptransactionbyid)
 
-___
+---
 
 ### searchTransactions
 
@@ -251,7 +250,7 @@ Re-exports [searchTransactions](#searchtransactions)
 
 ### AccountInformation
 
-Ƭ **AccountInformation**: `Omit`\<[`NumberConverter`](#numberconverter)\<`AccountInformationModel`\>, ``"getEncodingSchema"`` \| ``"toEncodingData"`` \| ``"authAddr"``\> & \{ `authAddr?`: `string`  }
+Ƭ **AccountInformation**: `Omit`\<[`NumberConverter`](#numberconverter)\<`AccountInformationModel`\>, `"getEncodingSchema"` \| `"toEncodingData"` \| `"authAddr"`\> & \{ `authAddr?`: `string` }
 
 **`Deprecated`**
 
@@ -261,7 +260,7 @@ Account information at a given round.
 
 [src/account/account.ts:135](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L135)
 
-___
+---
 
 ### NumberConverter
 
@@ -269,9 +268,9 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `AccountInformationModel` |
+| Name | Type                              |
+| :--- | :-------------------------------- |
+| `T`  | extends `AccountInformationModel` |
 
 #### Defined in
 
@@ -279,15 +278,15 @@ ___
 
 ## Variables
 
-### ALGORAND\_MIN\_TX\_FEE
+### ALGORAND_MIN_TX_FEE
 
-• `Const` **ALGORAND\_MIN\_TX\_FEE**: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
+• `Const` **ALGORAND_MIN_TX_FEE**: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 #### Defined in
 
 [src/amount.ts:93](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L93)
 
-___
+---
 
 ### Config
 
@@ -299,31 +298,31 @@ The AlgoKit config. To update it use the configure method.
 
 [src/config.ts:4](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/config.ts#L4)
 
-___
+---
 
-### MAX\_APP\_CALL\_ACCOUNT\_REFERENCES
+### MAX_APP_CALL_ACCOUNT_REFERENCES
 
-• `Const` **MAX\_APP\_CALL\_ACCOUNT\_REFERENCES**: ``4``
+• `Const` **MAX_APP_CALL_ACCOUNT_REFERENCES**: `4`
 
 #### Defined in
 
 [src/transaction/transaction.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L39)
 
-___
+---
 
-### MAX\_APP\_CALL\_FOREIGN\_REFERENCES
+### MAX_APP_CALL_FOREIGN_REFERENCES
 
-• `Const` **MAX\_APP\_CALL\_FOREIGN\_REFERENCES**: ``8``
+• `Const` **MAX_APP_CALL_FOREIGN_REFERENCES**: `8`
 
 #### Defined in
 
 [src/transaction/transaction.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L38)
 
-___
+---
 
-### MAX\_TRANSACTION\_GROUP\_SIZE
+### MAX_TRANSACTION_GROUP_SIZE
 
-• `Const` **MAX\_TRANSACTION\_GROUP\_SIZE**: ``16``
+• `Const` **MAX_TRANSACTION_GROUP_SIZE**: `16`
 
 #### Defined in
 
@@ -339,8 +338,8 @@ Returns an amount of Algo using AlgoAmount
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                 | Description        |
+| :------ | :------------------- | :----------------- |
 | `algos` | `number` \| `bigint` | The amount of Algo |
 
 #### Returns
@@ -351,7 +350,7 @@ Returns an amount of Algo using AlgoAmount
 
 [src/amount.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L68)
 
-___
+---
 
 ### algos
 
@@ -361,8 +360,8 @@ Returns an amount of Algo using AlgoAmount
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                 | Description        |
+| :------ | :------------------- | :----------------- |
 | `algos` | `number` \| `bigint` | The amount of Algo |
 
 #### Returns
@@ -373,7 +372,7 @@ Returns an amount of Algo using AlgoAmount
 
 [src/amount.ts:61](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L61)
 
-___
+---
 
 ### assetBulkOptIn
 
@@ -381,10 +380,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `optIn` | [`AssetBulkOptInOutParams`](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/) | The bulk opt-in request. |
-| `algod` | `AlgodClient` | An instance of the Algodv2 class from the `algosdk` library. |
+| Name    | Type                                                                                                        | Description                                                  |
+| :------ | :---------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| `optIn` | [`AssetBulkOptInOutParams`](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/) | The bulk opt-in request.                                     |
+| `algod` | `AlgodClient`                                                                                               | An instance of the Algodv2 class from the `algosdk` library. |
 
 #### Returns
 
@@ -405,14 +404,14 @@ If there is an error during the opt-in process.
 **`Example`**
 
 ```ts
-algokit.bulkOptIn({ account: account, assetIds: [12345, 67890] }, algod)
+algokit.bulkOptIn({ account: account, assetIds: [12345, 67890] }, algod);
 ```
 
 #### Defined in
 
 [src/asset.ts:130](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset.ts#L130)
 
-___
+---
 
 ### assetBulkOptOut
 
@@ -420,10 +419,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `optOut` | [`AssetBulkOptInOutParams`](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/) | The bulk opt-out request. |
-| `algod` | `AlgodClient` | An instance of the Algodv2 client used to interact with the Algorand blockchain. |
+| Name     | Type                                                                                                        | Description                                                                      |
+| :------- | :---------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
+| `optOut` | [`AssetBulkOptInOutParams`](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/) | The bulk opt-out request.                                                        |
+| `algod`  | `AlgodClient`                                                                                               | An instance of the Algodv2 client used to interact with the Algorand blockchain. |
 
 #### Returns
 
@@ -444,14 +443,14 @@ If there is an error during the opt-out process.
 **`Example`**
 
 ```ts
-algokit.bulkOptOut({ account: account, assetIds: [12345, 67890] }, algod)
+algokit.bulkOptOut({ account: account, assetIds: [12345, 67890] }, algod);
 ```
 
 #### Defined in
 
 [src/asset.ts:157](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset.ts#L157)
 
-___
+---
 
 ### assetOptIn
 
@@ -459,10 +458,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                                                                                          | Description           |
+| :------ | :-------------------------------------------------------------------------------------------- | :-------------------- |
 | `optIn` | [`AssetOptInParams`](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/) | The opt-in definition |
-| `algod` | `AlgodClient` | An algod client |
+| `algod` | `AlgodClient`                                                                                 | An algod client       |
 
 #### Returns
 
@@ -479,14 +478,14 @@ Opt-in an account to an asset.
 **`Example`**
 
 ```typescript
-await algokit.assetOptIn({ account, assetId }, algod)
+await algokit.assetOptIn({ account, assetId }, algod);
 ```
 
 #### Defined in
 
 [src/asset.ts:67](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset.ts#L67)
 
-___
+---
 
 ### assetOptOut
 
@@ -494,10 +493,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                            | Description           |
+| :------- | :---------------------------------------------------------------------------------------------- | :-------------------- |
 | `optOut` | [`AssetOptOutParams`](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptoutparams/) | The opt-in definition |
-| `algod` | `AlgodClient` | An algod client |
+| `algod`  | `AlgodClient`                                                                                   | An algod client       |
 
 #### Returns
 
@@ -514,14 +513,14 @@ Opt-out an account from an asset.
 **`Example`**
 
 ```typescript
-await algokit.assetOptOut({ account, assetId, assetCreatorAddress }, algod)
+await algokit.assetOptOut({ account, assetId, assetCreatorAddress }, algod);
 ```
 
 #### Defined in
 
 [src/asset.ts:98](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset.ts#L98)
 
-___
+---
 
 ### callApp
 
@@ -529,10 +528,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `call` | [`AppCallParams`](/reference/algokit-utils-ts/api/interfaces/types_appappcallparams/) | The call details. |
-| `algod` | `AlgodClient` | An algod client |
+| Name    | Type                                                                                  | Description       |
+| :------ | :------------------------------------------------------------------------------------ | :---------------- |
+| `call`  | [`AppCallParams`](/reference/algokit-utils-ts/api/interfaces/types_appappcallparams/) | The call details. |
+| `algod` | `AlgodClient`                                                                         | An algod client   |
 
 #### Returns
 
@@ -551,7 +550,7 @@ Issues a call to a given app.
 
 [src/app.ts:187](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L187)
 
-___
+---
 
 ### capTransactionFee
 
@@ -559,10 +558,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `transaction` | `Transaction` \| `SuggestedParams` | The transaction to cap or suggested params object about to be used to create a transaction |
-| `maxAcceptableFee` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | The maximum acceptable fee to pay |
+| Name               | Type                                                                            | Description                                                                                |
+| :----------------- | :------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------- |
+| `transaction`      | `Transaction` \| `SuggestedParams`                                              | The transaction to cap or suggested params object about to be used to create a transaction |
+| `maxAcceptableFee` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | The maximum acceptable fee to pay                                                          |
 
 #### Returns
 
@@ -580,7 +579,7 @@ the estimated rate.
 
 [src/transaction/transaction.ts:1056](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L1056)
 
-___
+---
 
 ### compileTeal
 
@@ -588,10 +587,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `tealCode` | `string` | The TEAL code |
-| `algod` | `AlgodClient` | An algod client |
+| Name       | Type          | Description     |
+| :--------- | :------------ | :-------------- |
+| `tealCode` | `string`      | The TEAL code   |
+| `algod`    | `AlgodClient` | An algod client |
 
 #### Returns
 
@@ -609,7 +608,7 @@ Compiles the given TEAL using algod and returns the result, including source map
 
 [src/app.ts:419](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L419)
 
-___
+---
 
 ### controlFees
 
@@ -617,18 +616,18 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `Transaction` \| `SuggestedParams` |
+| Name | Type                                       |
+| :--- | :----------------------------------------- |
+| `T`  | extends `Transaction` \| `SuggestedParams` |
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `transaction` | `T` | The transaction or suggested params |
-| `feeControl` | `Object` | The fee control parameters |
-| `feeControl.fee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | - |
-| `feeControl.maxFee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | - |
+| Name                 | Type                                                                            | Description                         |
+| :------------------- | :------------------------------------------------------------------------------ | :---------------------------------- |
+| `transaction`        | `T`                                                                             | The transaction or suggested params |
+| `feeControl`         | `Object`                                                                        | The fee control parameters          |
+| `feeControl.fee?`    | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | -                                   |
+| `feeControl.maxFee?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | -                                   |
 
 #### Returns
 
@@ -644,7 +643,7 @@ Allows for control of fees on a `Transaction` or `SuggestedParams` object
 
 [src/transaction/transaction.ts:1083](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L1083)
 
-___
+---
 
 ### createApp
 
@@ -652,10 +651,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                      | Description                           |
+| :------- | :---------------------------------------------------------------------------------------- | :------------------------------------ |
 | `create` | [`CreateAppParams`](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/) | The parameters to create the app with |
-| `algod` | `AlgodClient` | An algod client |
+| `algod`  | `AlgodClient`                                                                             | An algod client                       |
 
 #### Returns
 
@@ -674,22 +673,22 @@ Creates a smart contract app, returns the details of the created app.
 
 [src/app.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L44)
 
-___
+---
 
 ### createAsset
 
-▸ **createAsset**(`create`, `algod`): `Promise`\<[`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/) & \{ `confirmation?`: \{ `assetIndex`: `number` \| `bigint`  }  }\>
+▸ **createAsset**(`create`, `algod`): `Promise`\<[`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/) & \{ `confirmation?`: \{ `assetIndex`: `number` \| `bigint` } }\>
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                            | Description                   |
+| :------- | :---------------------------------------------------------------------------------------------- | :---------------------------- |
 | `create` | [`CreateAssetParams`](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/) | The asset creation definition |
-| `algod` | `AlgodClient` | An algod client |
+| `algod`  | `AlgodClient`                                                                                   | An algod client               |
 
 #### Returns
 
-`Promise`\<[`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/) & \{ `confirmation?`: \{ `assetIndex`: `number` \| `bigint`  }  }\>
+`Promise`\<[`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/) & \{ `confirmation?`: \{ `assetIndex`: `number` \| `bigint` } }\>
 
 The transaction object and optionally the confirmation if it was sent to the chain (`skipSending` is `false` or unset)
 
@@ -702,14 +701,14 @@ Create an Algorand Standard Asset (ASA).
 **`Example`**
 
 ```typescript
-await algokit.createAsset({ creator: account, total: 1, decimals: 0, name: 'My asset' }, algod)
+await algokit.createAsset({ creator: account, total: 1, decimals: 0, name: 'My asset' }, algod);
 ```
 
 #### Defined in
 
 [src/asset.ts:23](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset.ts#L23)
 
-___
+---
 
 ### decodeAppState
 
@@ -717,9 +716,9 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `state` | \{ `key`: `string` ; `value`: `TealValue` \| `EvalDelta`  }[] | A `global-state`, `local-state`, `global-state-deltas` or `local-state-deltas` |
+| Name    | Type                                                         | Description                                                                    |
+| :------ | :----------------------------------------------------------- | :----------------------------------------------------------------------------- |
+| `state` | \{ `key`: `string` ; `value`: `TealValue` \| `EvalDelta` }[] | A `global-state`, `local-state`, `global-state-deltas` or `local-state-deltas` |
 
 #### Returns
 
@@ -738,23 +737,23 @@ generic object keyed by the UTF-8 value of the key.
 
 [src/app.ts:345](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L345)
 
-___
+---
 
 ### deployApp
 
-▸ **deployApp**(`deployment`, `algod`, `indexer?`): `Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: ``"create"`` \| ``"update"`` ; `return?`: [`ABIReturn`](#abireturn)  } \| [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](#abireturn) ; `operationPerformed`: ``"replace"`` ; `return?`: [`ABIReturn`](#abireturn)  } \| [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: ``"nothing"``  }\>
+▸ **deployApp**(`deployment`, `algod`, `indexer?`): `Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"create"` \| `"update"` ; `return?`: [`ABIReturn`](#abireturn) } \| [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](#abireturn) ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](#abireturn) } \| [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"nothing"` }\>
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `deployment` | [`AppDeploymentParams`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/) | The arguments to control the app deployment |
-| `algod` | `AlgodClient` | An algod client |
-| `indexer?` | `IndexerClient` | An indexer client, needed if `existingDeployments` not passed in |
+| Name         | Type                                                                                              | Description                                                      |
+| :----------- | :------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------- |
+| `deployment` | [`AppDeploymentParams`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/) | The arguments to control the app deployment                      |
+| `algod`      | `AlgodClient`                                                                                     | An algod client                                                  |
+| `indexer?`   | `IndexerClient`                                                                                   | An indexer client, needed if `existingDeployments` not passed in |
 
 #### Returns
 
-`Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: ``"create"`` \| ``"update"`` ; `return?`: [`ABIReturn`](#abireturn)  } \| [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](#abireturn) ; `operationPerformed`: ``"replace"`` ; `return?`: [`ABIReturn`](#abireturn)  } \| [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: ``"nothing"``  }\>
+`Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"create"` \| `"update"` ; `return?`: [`ABIReturn`](#abireturn) } \| [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](#abireturn) ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](#abireturn) } \| [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"nothing"` }\>
 
 The app reference of the new/existing app
 
@@ -776,7 +775,7 @@ To understand the architecture decisions behind this functionality please see ht
 
 [src/app-deploy.ts:51](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deploy.ts#L51)
 
-___
+---
 
 ### encodeLease
 
@@ -786,8 +785,8 @@ Encodes a transaction lease into a 32-byte array ready to be included in an Algo
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                     | Description                                                                              |
+| :------- | :----------------------- | :--------------------------------------------------------------------------------------- |
 | `lease?` | `string` \| `Uint8Array` | The transaction lease as a string or binary array or null/undefined if there is no lease |
 
 #### Returns
@@ -803,20 +802,20 @@ if the length of the data is > 32 bytes or empty
 **`Example`**
 
 ```ts
-algokit.encodeLease('UNIQUE_ID')
+algokit.encodeLease('UNIQUE_ID');
 ```
 
 **`Example`**
 
 ```ts
-algokit.encodeLease(new Uint8Array([1, 2, 3]))
+algokit.encodeLease(new Uint8Array([1, 2, 3]));
 ```
 
 #### Defined in
 
 [src/transaction/transaction.ts:80](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L80)
 
-___
+---
 
 ### encodeTransactionNote
 
@@ -824,8 +823,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                                  | Description          |
+| :------ | :------------------------------------ | :------------------- |
 | `note?` | [`TransactionNote`](#transactionnote) | The transaction note |
 
 #### Returns
@@ -834,12 +833,13 @@ ___
 
 the transaction note ready for inclusion in a transaction
 
- Case on the value of `data` this either be:
-  * `null` | `undefined`: `undefined`
-  * `string`: The string value
-  * Uint8Array: passthrough
-  * Arc2TransactionNote object: ARC-0002 compatible transaction note
-  * Else: The object/value converted into a JSON string representation
+Case on the value of `data` this either be:
+
+- `null` | `undefined`: `undefined`
+- `string`: The string value
+- Uint8Array: passthrough
+- Arc2TransactionNote object: ARC-0002 compatible transaction note
+- Else: The object/value converted into a JSON string representation
 
 **`Deprecated`**
 
@@ -851,7 +851,7 @@ Encodes a transaction note into a byte array ready to be included in an Algorand
 
 [src/transaction/transaction.ts:56](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L56)
 
-___
+---
 
 ### ensureFunded
 
@@ -859,17 +859,17 @@ ___
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`EnsureFundedParams`](/reference/algokit-utils-ts/api/interfaces/types_transferensurefundedparams/) |
+| Name | Type                                                                                                         |
+| :--- | :----------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`EnsureFundedParams`](/reference/algokit-utils-ts/api/interfaces/types_transferensurefundedparams/) |
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `funding` | `T` | The funding configuration of type `EnsureFundedParams`, including the account to fund, minimum spending balance, and optional parameters. If you set `useDispenserApi` to true, you must also set `ALGOKIT_DISPENSER_ACCESS_TOKEN` in your environment variables. |
-| `algod` | `AlgodClient` | An instance of the Algodv2 client. |
-| `kmd?` | `KmdClient` | An optional instance of the Kmd client. |
+| Name      | Type          | Description                                                                                                                                                                                                                                                       |
+| :-------- | :------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `funding` | `T`           | The funding configuration of type `EnsureFundedParams`, including the account to fund, minimum spending balance, and optional parameters. If you set `useDispenserApi` to true, you must also set `ALGOKIT_DISPENSER_ACCESS_TOKEN` in your environment variables. |
+| `algod`   | `AlgodClient` | An instance of the Algodv2 client.                                                                                                                                                                                                                                |
+| `kmd?`    | `KmdClient`   | An optional instance of the Kmd client.                                                                                                                                                                                                                           |
 
 #### Returns
 
@@ -891,7 +891,7 @@ https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr
 
 [src/transfer/transfer.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transfer/transfer.ts#L26)
 
-___
+---
 
 ### getABIMethodSignature
 
@@ -899,8 +899,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                             | Description                          |
+| :------- | :------------------------------- | :----------------------------------- |
 | `method` | `ABIMethodParams` \| `ABIMethod` | The method to return a signature for |
 
 #### Returns
@@ -919,7 +919,7 @@ Returns the encoded ABI spec for a given ABI Method
 
 [src/app.ts:430](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L430)
 
-___
+---
 
 ### getABIReturn
 
@@ -927,10 +927,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `args?` | [`AppCallArgs`](#appcallargs) | The arguments that were used for the call |
-| `confirmation?` | `PendingTransactionResponse` | The transaction confirmation from algod |
+| Name            | Type                          | Description                               |
+| :-------------- | :---------------------------- | :---------------------------------------- |
+| `args?`         | [`AppCallArgs`](#appcallargs) | The arguments that were used for the call |
+| `confirmation?` | `PendingTransactionResponse`  | The transaction confirmation from algod   |
 
 #### Returns
 
@@ -948,7 +948,7 @@ Returns any ABI return values for the given app call arguments and transaction c
 
 [src/app.ts:235](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L235)
 
-___
+---
 
 ### getABIReturnValue
 
@@ -959,10 +959,10 @@ Converts `bigint`'s for Uint's < 64 to `number` for easier use.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `result` | `ABIResult` | The `ABIReturn` |
-| `type` | `ABIReturnType` | - |
+| Name     | Type            | Description     |
+| :------- | :-------------- | :-------------- |
+| `result` | `ABIResult`     | The `ABIReturn` |
+| `type`   | `ABIReturnType` | -               |
 
 #### Returns
 
@@ -972,7 +972,7 @@ Converts `bigint`'s for Uint's < 64 to `number` for easier use.
 
 [src/transaction/transaction.ts:922](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L922)
 
-___
+---
 
 ### getAccount
 
@@ -980,11 +980,11 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `account` | `string` \| \{ `fundWith?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `name`: `string`  } | The details of the account to get, either the name identifier (string) or an object with: * `name`: The name identifier of the account * `fundWith`: The amount to fund the account with when it gets created (when targeting LocalNet), if not specified then 1000 ALGO will be funded from the dispenser account |
-| `algod` | `AlgodClient` | An algod client |
-| `kmdClient?` | `KmdClient` | An optional KMD client to use to create an account (when targeting LocalNet), if not specified then a default KMD client will be loaded from environment variables |
+| Name         | Type                                                                                                                             | Description                                                                                                                                                                                                                                                                                                        |
+| :----------- | :------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `account`    | `string` \| \{ `fundWith?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `name`: `string` } | The details of the account to get, either the name identifier (string) or an object with: _ `name`: The name identifier of the account _ `fundWith`: The amount to fund the account with when it gets created (when targeting LocalNet), if not specified then 1000 ALGO will be funded from the dispenser account |
+| `algod`      | `AlgodClient`                                                                                                                    | An algod client                                                                                                                                                                                                                                                                                                    |
+| `kmdClient?` | `KmdClient`                                                                                                                      | An optional KMD client to use to create an account (when targeting LocalNet), if not specified then a default KMD client will be loaded from environment variables                                                                                                                                                 |
 
 #### Returns
 
@@ -1001,18 +1001,20 @@ Returns an Algorand account with private key loaded by convention based on the g
 Note: This function expects to run in a Node.js environment.
 
 ## Convention:
-* **Non-LocalNet:** will load process.env['{NAME}_MNEMONIC'] as a mnemonic secret; **Note: Be careful how the mnemonic is handled**,
- never commit it into source control and ideally load it via a secret storage service rather than the file system.
+
+- **Non-LocalNet:** will load process.env['{NAME}_MNEMONIC'] as a mnemonic secret; **Note: Be careful how the mnemonic is handled**,
+  never commit it into source control and ideally load it via a secret storage service rather than the file system.
   If process.env['{NAME}_SENDER'] is defined then it will use that for the sender address (i.e. to support rekeyed accounts)
-* **LocalNet:** will load the account from a KMD wallet called {NAME} and if that wallet doesn't exist it will create it and fund the account for you
+- **LocalNet:** will load the account from a KMD wallet called {NAME} and if that wallet doesn't exist it will create it and fund the account for you
 
 This allows you to write code that will work seamlessly in production and local development (LocalNet) without manual config locally (including when you reset the LocalNet).
 
 **`Example`**
 
 If you have a mnemonic secret loaded into `process.env.ACCOUNT_MNEMONIC` then you can call the following to get that private key loaded into an account object:
+
 ```typescript
-const account = await getAccount('ACCOUNT', algod)
+const account = await getAccount('ACCOUNT', algod);
 ```
 
 If that code runs against LocalNet then a wallet called `ACCOUNT` will automatically be created with an account that is automatically funded with 1000 (default) ALGO from the default LocalNet dispenser.
@@ -1025,13 +1027,13 @@ If that code runs against LocalNet then a wallet called `ACCOUNT` will automatic
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `account` | `Object` | The details of the account to get, an object with: * `config`: Account configuration. To get from environment use getAccountConfigFromEnvironment(accountName) * `fundWith`: The amount to fund the account with when it gets created (when targeting LocalNet), if not specified then 1000 ALGO will be funded from the dispenser account |
-| `account.config` | [`AccountConfig`](/reference/algokit-utils-ts/api/interfaces/types_accountaccountconfig/) | - |
-| `account.fundWith?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | - |
-| `algod` | `AlgodClient` | An algod client |
-| `kmdClient?` | `KmdClient` | An optional KMD client to use to create an account (when targeting LocalNet), if not specified then a default KMD client will be loaded from environment variables |
+| Name                | Type                                                                                      | Description                                                                                                                                                                                                                                                                                                                                |
+| :------------------ | :---------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `account`           | `Object`                                                                                  | The details of the account to get, an object with: _ `config`: Account configuration. To get from environment use getAccountConfigFromEnvironment(accountName) _ `fundWith`: The amount to fund the account with when it gets created (when targeting LocalNet), if not specified then 1000 ALGO will be funded from the dispenser account |
+| `account.config`    | [`AccountConfig`](/reference/algokit-utils-ts/api/interfaces/types_accountaccountconfig/) | -                                                                                                                                                                                                                                                                                                                                          |
+| `account.fundWith?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)           | -                                                                                                                                                                                                                                                                                                                                          |
+| `algod`             | `AlgodClient`                                                                             | An algod client                                                                                                                                                                                                                                                                                                                            |
+| `kmdClient?`        | `KmdClient`                                                                               | An optional KMD client to use to create an account (when targeting LocalNet), if not specified then a default KMD client will be loaded from environment variables                                                                                                                                                                         |
 
 #### Returns
 
@@ -1049,8 +1051,9 @@ Note: This function expects to run in a Node.js environment.
 **`Example`**
 
 If you have a mnemonic secret loaded into `process.env.ACCOUNT_MNEMONIC` then you can call the following to get that private key loaded into an account object:
+
 ```typescript
-const account = await getAccount({config: getAccountConfigFromEnvironment('ACCOUNT')}, algod)
+const account = await getAccount({ config: getAccountConfigFromEnvironment('ACCOUNT') }, algod);
 ```
 
 If that code runs against LocalNet then a wallet called `ACCOUNT` will automatically be created with an account that is automatically funded with 1000 (default) ALGO from the default LocalNet dispenser.
@@ -1059,7 +1062,7 @@ If that code runs against LocalNet then a wallet called `ACCOUNT` will automatic
 
 [src/account/get-account.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/get-account.ts#L68)
 
-___
+---
 
 ### getAccountAddressAsString
 
@@ -1067,8 +1070,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name                  | Type     | Description                                                                       |
+| :-------------------- | :------- | :-------------------------------------------------------------------------------- |
 | `addressEncodedInB64` | `string` | The base64 encoded version of the underlying byte array of the address public key |
 
 #### Returns
@@ -1085,7 +1088,7 @@ Returns the string address of an Algorand account from a base64 encoded version 
 
 [src/account/account.ts:128](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L128)
 
-___
+---
 
 ### getAccountAddressAsUint8Array
 
@@ -1093,8 +1096,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                      | Description                                                                     |
+| :-------- | :-------------------------------------------------------- | :------------------------------------------------------------------------------ |
 | `account` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | Either an account (with private key loaded) or the string address of an account |
 
 #### Returns
@@ -1111,7 +1114,7 @@ Returns an account's address as a byte array
 
 [src/account/account.ts:117](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L117)
 
-___
+---
 
 ### getAccountAssetInformation
 
@@ -1119,11 +1122,11 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `sender` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | The address of the sender/account to look up |
-| `assetId` | `number` \| `bigint` | The ID of the asset to return a holding for |
-| `algod` | `AlgodClient` | The algod instance |
+| Name      | Type                                                      | Description                                  |
+| :-------- | :-------------------------------------------------------- | :------------------------------------------- |
+| `sender`  | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | The address of the sender/account to look up |
+| `assetId` | `number` \| `bigint`                                      | The ID of the asset to return a holding for  |
+| `algod`   | `AlgodClient`                                             | The algod instance                           |
 
 #### Returns
 
@@ -1140,7 +1143,7 @@ Returns the given sender account's asset holding for a given asset.
 **`Example`**
 
 ```typescript
-const address = "XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA";
+const address = 'XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA';
 const assetId = 123345;
 const accountInfo = await account.getAccountAssetInformation(address, assetId, algod);
 ```
@@ -1151,7 +1154,7 @@ const accountInfo = await account.getAccountAssetInformation(address, assetId, a
 
 [src/account/account.ts:201](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L201)
 
-___
+---
 
 ### getAccountConfigFromEnvironment
 
@@ -1159,8 +1162,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name          | Type     | Description  |
+| :------------ | :------- | :----------- |
 | `accountName` | `string` | account name |
 
 #### Returns
@@ -1184,7 +1187,7 @@ environment variables
 
 [src/account/get-account-config-from-environment.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/get-account-config-from-environment.ts#L13)
 
-___
+---
 
 ### getAccountInformation
 
@@ -1192,10 +1195,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                      | Description                                  |
+| :------- | :-------------------------------------------------------- | :------------------------------------------- |
 | `sender` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | The address of the sender/account to look up |
-| `algod` | `AlgodClient` | The algod instance |
+| `algod`  | `AlgodClient`                                             | The algod instance                           |
 
 #### Returns
 
@@ -1212,7 +1215,7 @@ Returns the given sender account's current status, balance and spendable amounts
 **`Example`**
 
 ```typescript
-const address = "XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA";
+const address = 'XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA';
 const accountInfo = await account.getInformation(address, algod);
 ```
 
@@ -1222,7 +1225,7 @@ const accountInfo = await account.getInformation(address, algod);
 
 [src/account/account.ts:156](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L156)
 
-___
+---
 
 ### getAlgoClient
 
@@ -1230,8 +1233,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                                   | Description                                                                      |
+| :-------- | :----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
 | `config?` | [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/) | The config if you want to override the default (getting config from process.env) |
 
 #### Returns
@@ -1247,38 +1250,42 @@ Returns an algod SDK client that automatically retries transient failures on ide
 **`Example`**
 
 ```typescript
- // Uses process.env.ALGOD_SERVER, process.env.ALGOD_PORT and process.env.ALGOD_TOKEN
- // Automatically detects if you are using PureStake to switch in the right header name for ALGOD_TOKEN
- const algod = getAlgoClient()
- await algod.healthCheck().do()
- ```
-
-**`Example`**
-
-```typescript
- const algod = getAlgoClient(getAlgoNodeConfig('testnet', 'algod'))
- await algod.healthCheck().do()
+// Uses process.env.ALGOD_SERVER, process.env.ALGOD_PORT and process.env.ALGOD_TOKEN
+// Automatically detects if you are using PureStake to switch in the right header name for ALGOD_TOKEN
+const algod = getAlgoClient();
+await algod.healthCheck().do();
 ```
 
 **`Example`**
 
 ```typescript
- const algod = getAlgoClient(getAlgoNodeConfig('mainnet', 'algod'))
- await algod.healthCheck().do()
+const algod = getAlgoClient(getAlgoNodeConfig('testnet', 'algod'));
+await algod.healthCheck().do();
 ```
 
 **`Example`**
 
 ```typescript
- const algod = getAlgoClient({server: 'http://localhost', port: '4001', token: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'})
- await algod.healthCheck().do()
+const algod = getAlgoClient(getAlgoNodeConfig('mainnet', 'algod'));
+await algod.healthCheck().do();
+```
+
+**`Example`**
+
+```typescript
+const algod = getAlgoClient({
+  server: 'http://localhost',
+  port: '4001',
+  token: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+});
+await algod.healthCheck().do();
 ```
 
 #### Defined in
 
 [src/network-client.ts:88](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L88)
 
-___
+---
 
 ### getAlgoIndexerClient
 
@@ -1286,8 +1293,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                                   | Description                                                                      |
+| :-------- | :----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
 | `config?` | [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/) | The config if you want to override the default (getting config from process.env) |
 
 #### Returns
@@ -1303,37 +1310,41 @@ Returns an indexer SDK client that automatically retries transient failures on i
 **`Example`**
 
 ```typescript
- // Uses process.env.INDEXER_SERVER, process.env.INDEXER_PORT and process.env.INDEXER_TOKEN
- const indexer = getAlgoIndexerClient()
- await indexer.makeHealthCheck().do()
- ```
-
-**`Example`**
-
-```typescript
- const indexer = getAlgoIndexerClient(getAlgoNodeConfig('testnet', 'indexer'))
- await indexer.makeHealthCheck().do()
+// Uses process.env.INDEXER_SERVER, process.env.INDEXER_PORT and process.env.INDEXER_TOKEN
+const indexer = getAlgoIndexerClient();
+await indexer.makeHealthCheck().do();
 ```
 
 **`Example`**
 
 ```typescript
- const indexer = getAlgoIndexerClient(getAlgoNodeConfig('mainnet', 'indexer'))
- await indexer.makeHealthCheck().do()
+const indexer = getAlgoIndexerClient(getAlgoNodeConfig('testnet', 'indexer'));
+await indexer.makeHealthCheck().do();
 ```
 
 **`Example`**
 
 ```typescript
- const indexer = getAlgoIndexerClient({server: 'http://localhost', port: '8980', token: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'})
- await indexer.makeHealthCheck().do()
+const indexer = getAlgoIndexerClient(getAlgoNodeConfig('mainnet', 'indexer'));
+await indexer.makeHealthCheck().do();
+```
+
+**`Example`**
+
+```typescript
+const indexer = getAlgoIndexerClient({
+  server: 'http://localhost',
+  port: '8980',
+  token: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+});
+await indexer.makeHealthCheck().do();
 ```
 
 #### Defined in
 
 [src/network-client.ts:121](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L121)
 
-___
+---
 
 ### getAlgoKmdClient
 
@@ -1341,8 +1352,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                                   | Description                                                                      |
+| :-------- | :----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
 | `config?` | [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/) | The config if you want to override the default (getting config from process.env) |
 
 #### Returns
@@ -1360,21 +1371,25 @@ KMD client allows you to export private keys, which is useful to get the default
 **`Example`**
 
 ```typescript
- // Uses process.env.ALGOD_SERVER, process.env.KMD_PORT (or if not specified: port 4002) and process.env.ALGOD_TOKEN
- const kmd = getAlgoKmdClient()
- ```
+// Uses process.env.ALGOD_SERVER, process.env.KMD_PORT (or if not specified: port 4002) and process.env.ALGOD_TOKEN
+const kmd = getAlgoKmdClient();
+```
 
 **`Example`**
 
 ```typescript
- const kmd = getAlgoKmdClient({server: 'http://localhost', port: '4002', token: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'})
+const kmd = getAlgoKmdClient({
+  server: 'http://localhost',
+  port: '4002',
+  token: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+});
 ```
 
 #### Defined in
 
 [src/network-client.ts:144](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L144)
 
-___
+---
 
 ### getAlgoNodeConfig
 
@@ -1382,10 +1397,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `network` | ``"testnet"`` \| ``"mainnet"`` | Which network to connect to - TestNet or MainNet |
-| `config` | ``"algod"`` \| ``"indexer"`` | Which algod config to return - Algod or Indexer |
+| Name      | Type                       | Description                                      |
+| :-------- | :------------------------- | :----------------------------------------------- |
+| `network` | `"testnet"` \| `"mainnet"` | Which network to connect to - TestNet or MainNet |
+| `config`  | `"algod"` \| `"indexer"`   | Which algod config to return - Algod or Indexer  |
 
 #### Returns
 
@@ -1401,7 +1416,7 @@ Returns the Algorand configuration to point to the AlgoNode service
 
 [src/network-client.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L43)
 
-___
+---
 
 ### getAlgodConfigFromEnvironment
 
@@ -1421,7 +1436,7 @@ Retrieve the algod configuration from environment variables (expects to be calle
 
 [src/network-client.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L22)
 
-___
+---
 
 ### getAppArgsForABICall
 
@@ -1429,9 +1444,9 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `args` | [`ABIAppCallArgs`](#abiappcallargs) | The ABI app call args |
+| Name   | Type                                          | Description            |
+| :----- | :-------------------------------------------- | :--------------------- |
+| `args` | [`ABIAppCallArgs`](#abiappcallargs)           | The ABI app call args  |
 | `from` | [`SendTransactionFrom`](#sendtransactionfrom) | The transaction signer |
 
 #### Returns
@@ -1450,21 +1465,21 @@ Returns the app args ready to load onto an ABI method call in `AtomicTransaction
 
 [src/app.ts:378](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L378)
 
-___
+---
 
 ### getAppArgsForTransaction
 
-▸ **getAppArgsForTransaction**(`args?`): `undefined` \| \{ `accounts`: `undefined` \| `string`[] ; `appArgs`: `undefined` \| `Uint8Array`[] ; `boxes`: `undefined` \| `BoxReference`[] ; `foreignApps`: `undefined` \| `number`[] = args.apps; `foreignAssets`: `undefined` \| `number`[] = args.assets; `lease`: `undefined` \| `Uint8Array`  }
+▸ **getAppArgsForTransaction**(`args?`): `undefined` \| \{ `accounts`: `undefined` \| `string`[] ; `appArgs`: `undefined` \| `Uint8Array`[] ; `boxes`: `undefined` \| `BoxReference`[] ; `foreignApps`: `undefined` \| `number`[] = args.apps; `foreignAssets`: `undefined` \| `number`[] = args.assets; `lease`: `undefined` \| `Uint8Array` }
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                                                                                    | Description       |
+| :------ | :-------------------------------------------------------------------------------------- | :---------------- |
 | `args?` | [`RawAppCallArgs`](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/) | The app call args |
 
 #### Returns
 
-`undefined` \| \{ `accounts`: `undefined` \| `string`[] ; `appArgs`: `undefined` \| `Uint8Array`[] ; `boxes`: `undefined` \| `BoxReference`[] ; `foreignApps`: `undefined` \| `number`[] = args.apps; `foreignAssets`: `undefined` \| `number`[] = args.assets; `lease`: `undefined` \| `Uint8Array`  }
+`undefined` \| \{ `accounts`: `undefined` \| `string`[] ; `appArgs`: `undefined` \| `Uint8Array`[] ; `boxes`: `undefined` \| `BoxReference`[] ; `foreignApps`: `undefined` \| `number`[] = args.apps; `foreignAssets`: `undefined` \| `number`[] = args.assets; `lease`: `undefined` \| `Uint8Array` }
 
 The args ready to load into a `Transaction`
 
@@ -1478,7 +1493,7 @@ Returns the app args ready to load onto an app `Transaction` object
 
 [src/app.ts:356](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L356)
 
-___
+---
 
 ### getAppBoxNames
 
@@ -1486,10 +1501,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                 | Description                            |
+| :------ | :------------------- | :------------------------------------- |
 | `appId` | `number` \| `bigint` | The ID of the app return box names for |
-| `algod` | `AlgodClient` | An algod client instance |
+| `algod` | `AlgodClient`        | An algod client instance               |
 
 #### Returns
 
@@ -1506,7 +1521,7 @@ Returns the names of the boxes for the given app.
 
 [src/app.ts:276](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L276)
 
-___
+---
 
 ### getAppBoxValue
 
@@ -1514,11 +1529,11 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `appId` | `number` \| `bigint` | The ID of the app return box names for |
+| Name      | Type                                                                                                  | Description                                                                 |
+| :-------- | :---------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `appId`   | `number` \| `bigint`                                                                                  | The ID of the app return box names for                                      |
 | `boxName` | `string` \| `Uint8Array` \| [`BoxName`](/reference/algokit-utils-ts/api/interfaces/types_appboxname/) | The name of the box to return either as a string, binary array or `BoxName` |
-| `algod` | `AlgodClient` | An algod client instance |
+| `algod`   | `AlgodClient`                                                                                         | An algod client instance                                                    |
 
 #### Returns
 
@@ -1535,7 +1550,7 @@ Returns the value of the given box name for the given app.
 
 [src/app.ts:288](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L288)
 
-___
+---
 
 ### getAppBoxValueFromABIType
 
@@ -1543,10 +1558,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                                  | Description                              |
+| :-------- | :---------------------------------------------------------------------------------------------------- | :--------------------------------------- |
 | `request` | [`BoxValueRequestParams`](/reference/algokit-utils-ts/api/interfaces/types_appboxvaluerequestparams/) | The parameters for the box value request |
-| `algod` | `AlgodClient` | An algod client instance |
+| `algod`   | `AlgodClient`                                                                                         | An algod client instance                 |
 
 #### Returns
 
@@ -1563,7 +1578,7 @@ Returns the value of the given box name for the given app decoded based on the g
 
 [src/app.ts:314](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L314)
 
-___
+---
 
 ### getAppBoxValues
 
@@ -1571,11 +1586,11 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `appId` | `number` | The ID of the app return box names for |
+| Name       | Type                                                                                                      | Description                                                                    |
+| :--------- | :-------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
+| `appId`    | `number`                                                                                                  | The ID of the app return box names for                                         |
 | `boxNames` | (`string` \| `Uint8Array` \| [`BoxName`](/reference/algokit-utils-ts/api/interfaces/types_appboxname/))[] | The names of the boxes to return either as a string, binary array or `BoxName` |
-| `algod` | `AlgodClient` | An algod client instance |
+| `algod`    | `AlgodClient`                                                                                             | An algod client instance                                                       |
 
 #### Returns
 
@@ -1592,7 +1607,7 @@ Returns the value of the given box names for the given app.
 
 [src/app.ts:300](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L300)
 
-___
+---
 
 ### getAppBoxValuesFromABIType
 
@@ -1600,10 +1615,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                                    | Description                              |
+| :-------- | :------------------------------------------------------------------------------------------------------ | :--------------------------------------- |
 | `request` | [`BoxValuesRequestParams`](/reference/algokit-utils-ts/api/interfaces/types_appboxvaluesrequestparams/) | The parameters for the box value request |
-| `algod` | `AlgodClient` | An algod client instance |
+| `algod`   | `AlgodClient`                                                                                           | An algod client instance                 |
 
 #### Returns
 
@@ -1620,7 +1635,7 @@ Returns the value of the given box names for the given app decoded based on the 
 
 [src/app.ts:329](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L329)
 
-___
+---
 
 ### getAppById
 
@@ -1628,10 +1643,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                 | Description       |
+| :------ | :------------------- | :---------------- |
 | `appId` | `number` \| `bigint` | The id of the app |
-| `algod` | `AlgodClient` | An algod client |
+| `algod` | `AlgodClient`        | An algod client   |
 
 #### Returns
 
@@ -1649,7 +1664,7 @@ Gets the current data for the given app from algod.
 
 [src/app.ts:406](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L406)
 
-___
+---
 
 ### getAppClient
 
@@ -1657,10 +1672,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name         | Type                                      | Description            |
+| :----------- | :---------------------------------------- | :--------------------- |
 | `appDetails` | [`AppSpecAppDetails`](#appspecappdetails) | The details of the app |
-| `algod` | `AlgodClient` | An algod instance |
+| `algod`      | `AlgodClient`                             | An algod instance      |
 
 #### Returns
 
@@ -1712,7 +1727,7 @@ const client = algokit.getAppClient(
 
 [src/app-client.ts:40](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L40)
 
-___
+---
 
 ### getAppClientByCreatorAndName
 
@@ -1720,10 +1735,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name         | Type                                                                      | Description                                |
+| :----------- | :------------------------------------------------------------------------ | :----------------------------------------- |
 | `appDetails` | [`AppSpecAppDetailsByCreatorAndName`](#appspecappdetailsbycreatorandname) | The details of the app by creator and name |
-| `algod` | `AlgodClient` | An algod instance |
+| `algod`      | `AlgodClient`                                                             | An algod instance                          |
 
 #### Returns
 
@@ -1743,21 +1758,21 @@ Create a new ApplicationClient instance by creator and name
 
 ```ts
 const client = algokit.getAppClientByCreatorAndName(
-    {
-      app: appSpec,
-      sender: account,
-      creatorAddress: account,
-      findExistingUsing: indexerClient,
-    },
-    algodClient,
-  )
+  {
+    app: appSpec,
+    sender: account,
+    creatorAddress: account,
+    findExistingUsing: indexerClient,
+  },
+  algodClient,
+);
 ```
 
 #### Defined in
 
 [src/app-client.ts:93](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L93)
 
-___
+---
 
 ### getAppClientById
 
@@ -1765,10 +1780,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name         | Type                                              | Description            |
+| :----------- | :------------------------------------------------ | :--------------------- |
 | `appDetails` | [`AppSpecAppDetailsById`](#appspecappdetailsbyid) | The details of the app |
-| `algod` | `AlgodClient` | An algod instance |
+| `algod`      | `AlgodClient`                                     | An algod instance      |
 
 #### Returns
 
@@ -1788,20 +1803,20 @@ Create a new ApplicationClient instance by id
 
 ```ts
 const client = algokit.getAppClientById(
-    {
-      app: {appSpec},
-      sender: {account},
-      id: {id},
-    },
-    algodClient,
-  )
+  {
+    app: { appSpec },
+    sender: { account },
+    id: { id },
+  },
+  algodClient,
+);
 ```
 
 #### Defined in
 
 [src/app-client.ts:66](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L66)
 
-___
+---
 
 ### getAppDeploymentTransactionNote
 
@@ -1809,8 +1824,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name       | Type                                                                                          | Description                    |
+| :--------- | :-------------------------------------------------------------------------------------------- | :----------------------------- |
 | `metadata` | [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/) | The metadata of the deployment |
 
 #### Returns
@@ -1829,7 +1844,7 @@ Return the transaction note for an app deployment.
 
 [src/app-deploy.ts:271](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deploy.ts#L271)
 
-___
+---
 
 ### getAppGlobalState
 
@@ -1837,10 +1852,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                 | Description                               |
+| :------ | :------------------- | :---------------------------------------- |
 | `appId` | `number` \| `bigint` | The ID of the app return global state for |
-| `algod` | `AlgodClient` | An algod client instance |
+| `algod` | `AlgodClient`        | An algod client instance                  |
 
 #### Returns
 
@@ -1858,7 +1873,7 @@ Returns the current global state values for the given app ID
 
 [src/app.ts:252](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L252)
 
-___
+---
 
 ### getAppLocalState
 
@@ -1866,11 +1881,11 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `appId` | `number` \| `bigint` | The ID of the app return global state for |
+| Name      | Type                                                      | Description                                                                                                       |
+| :-------- | :-------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------- |
+| `appId`   | `number` \| `bigint`                                      | The ID of the app return global state for                                                                         |
 | `account` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | Either the string address of an account or an account object for the account to get local state for the given app |
-| `algod` | `AlgodClient` | An algod client instance |
+| `algod`   | `AlgodClient`                                             | An algod client instance                                                                                          |
 
 #### Returns
 
@@ -1888,7 +1903,7 @@ Returns the current global state values for the given app ID and account
 
 [src/app.ts:265](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L265)
 
-___
+---
 
 ### getAppOnCompleteAction
 
@@ -1896,8 +1911,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name                  | Type                                                     | Description              |
+| :-------------------- | :------------------------------------------------------- | :----------------------- |
 | `onCompletionAction?` | [`AppCallType`](#appcalltype) \| `OnApplicationComplete` | The on completion action |
 
 #### Returns
@@ -1920,7 +1935,7 @@ If given an `AppCallType` will convert the string enum to the correct underlying
 
 [src/app.ts:154](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L154)
 
-___
+---
 
 ### getAtomicTransactionComposerTransactions
 
@@ -1928,8 +1943,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type                        | Description                     |
+| :---- | :-------------------------- | :------------------------------ |
 | `atc` | `AtomicTransactionComposer` | The atomic transaction composer |
 
 #### Returns
@@ -1948,7 +1963,7 @@ Returns the array of transactions currently present in the given `AtomicTransact
 
 [src/transaction/transaction.ts:1132](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L1132)
 
-___
+---
 
 ### getBoxReference
 
@@ -1956,8 +1971,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name  | Type                                                                                                                                       | Description                       |
+| :---- | :----------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------- |
 | `box` | [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_appboxreference/) \| [`BoxIdentifier`](#boxidentifier) \| `BoxReference` | The box to return a reference for |
 
 #### Returns
@@ -1976,7 +1991,7 @@ Returns a `algosdk.BoxReference` given a `BoxIdentifier` or `BoxReference`.
 
 [src/app.ts:389](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L389)
 
-___
+---
 
 ### getConfigFromEnvOrDefaults
 
@@ -1996,7 +2011,7 @@ Retrieve configurations from environment variables when defined or get defaults 
 
 [src/network-client.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L13)
 
-___
+---
 
 ### getCreatorAppsByName
 
@@ -2004,10 +2019,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name             | Type                                                      | Description                                                                                                                  |
+| :--------------- | :-------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
 | `creatorAccount` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | The account (with private key loaded) or string address of an account that is the creator of the apps you want to search for |
-| `indexer` | `IndexerClient` | An indexer client |
+| `indexer`        | `IndexerClient`                                           | An indexer client                                                                                                            |
 
 #### Returns
 
@@ -2027,7 +2042,7 @@ Returns a lookup of name => app metadata (id, address, ...metadata) for all apps
 
 [src/app-deploy.ts:244](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deploy.ts#L244)
 
-___
+---
 
 ### getDefaultLocalNetConfig
 
@@ -2035,9 +2050,9 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `configOrPort` | `number` \| ``"algod"`` \| ``"indexer"`` \| ``"kmd"`` | Which algod config to return - algod, kmd, or indexer OR a port number |
+| Name           | Type                                            | Description                                                            |
+| :------------- | :---------------------------------------------- | :--------------------------------------------------------------------- |
+| `configOrPort` | `number` \| `"algod"` \| `"indexer"` \| `"kmd"` | Which algod config to return - algod, kmd, or indexer OR a port number |
 
 #### Returns
 
@@ -2053,22 +2068,22 @@ Returns the Algorand configuration to point to the default LocalNet
 
 [src/network-client.ts:54](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L54)
 
-___
+---
 
 ### getDispenserAccount
 
-▸ **getDispenserAccount**(`algod`, `kmd?`): `Promise`\<`Address` & [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/)  }\>
+▸ **getDispenserAccount**(`algod`, `kmd?`): `Promise`\<`Address` & [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/) }\>
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `algod` | `AlgodClient` | An algod client |
-| `kmd?` | `KmdClient` | A KMD client, if not specified then a default KMD client will be loaded from environment variables |
+| Name    | Type          | Description                                                                                        |
+| :------ | :------------ | :------------------------------------------------------------------------------------------------- |
+| `algod` | `AlgodClient` | An algod client                                                                                    |
+| `kmd?`  | `KmdClient`   | A KMD client, if not specified then a default KMD client will be loaded from environment variables |
 
 #### Returns
 
-`Promise`\<`Address` & [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/)  }\>
+`Promise`\<`Address` & [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/) }\>
 
 **`Deprecated`**
 
@@ -2077,13 +2092,13 @@ Use `algorand.account.dispenserFromEnvironment()` or `new AccountManager(clientM
 Returns an account (with private key loaded) that can act as a dispenser
 
 If running on LocalNet then it will return the default dispenser account automatically,
- otherwise it will load the account mnemonic stored in process.env.DISPENSER_MNEMONIC
+otherwise it will load the account mnemonic stored in process.env.DISPENSER_MNEMONIC
 
 #### Defined in
 
 [src/account/get-dispenser-account.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/get-dispenser-account.ts#L19)
 
-___
+---
 
 ### getIndexerConfigFromEnvironment
 
@@ -2103,7 +2118,7 @@ Retrieve the indexer configuration from environment variables (expects to be cal
 
 [src/network-client.ts:31](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L31)
 
-___
+---
 
 ### getKmdWalletAccount
 
@@ -2111,13 +2126,13 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `walletAccount` | `Object` | The details of the wallet, with: * `name`: The name of the wallet to retrieve an account from * `predicate`: An optional filter to use to find the account (otherwise it will return a random account from the wallet) |
-| `walletAccount.name` | `string` | - |
-| `walletAccount.predicate?` | (`account`: `Record`\<`string`, `any`\>) => `boolean` | - |
-| `algod` | `AlgodClient` | An algod client |
-| `kmdClient?` | `KmdClient` | A KMD client, if not specified then a default KMD client will be loaded from environment variables |
+| Name                       | Type                                                  | Description                                                                                                                                                                                                            |
+| :------------------------- | :---------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `walletAccount`            | `Object`                                              | The details of the wallet, with: _ `name`: The name of the wallet to retrieve an account from _ `predicate`: An optional filter to use to find the account (otherwise it will return a random account from the wallet) |
+| `walletAccount.name`       | `string`                                              | -                                                                                                                                                                                                                      |
+| `walletAccount.predicate?` | (`account`: `Record`\<`string`, `any`\>) => `boolean` | -                                                                                                                                                                                                                      |
+| `algod`                    | `AlgodClient`                                         | An algod client                                                                                                                                                                                                        |
+| `kmdClient?`               | `KmdClient`                                           | A KMD client, if not specified then a default KMD client will be loaded from environment variables                                                                                                                     |
 
 #### Returns
 
@@ -2132,17 +2147,18 @@ Returns an Algorand account with private key loaded from the given KMD wallet (i
 **`Example`**
 
 ```typescript
-const defaultDispenserAccount = await getKmdWalletAccount(algod,
+const defaultDispenserAccount = await getKmdWalletAccount(
+  algod,
   'unencrypted-default-wallet',
-  a => a.status !== 'Offline' && a.amount > 1_000_000_000
-)
+  a => a.status !== 'Offline' && a.amount > 1_000_000_000,
+);
 ```
 
 #### Defined in
 
 [src/localnet/get-kmd-wallet-account.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/localnet/get-kmd-wallet-account.ts#L27)
 
-___
+---
 
 ### getLocalNetDispenserAccount
 
@@ -2150,10 +2166,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `algod` | `AlgodClient` | An algod client |
-| `kmd?` | `KmdClient` | A KMD client, if not specified then a default KMD client will be loaded from environment variables |
+| Name    | Type          | Description                                                                                        |
+| :------ | :------------ | :------------------------------------------------------------------------------------------------- |
+| `algod` | `AlgodClient` | An algod client                                                                                    |
+| `kmd?`  | `KmdClient`   | A KMD client, if not specified then a default KMD client will be loaded from environment variables |
 
 #### Returns
 
@@ -2169,7 +2185,7 @@ Returns an Algorand account with private key loaded for the default LocalNet dis
 
 [src/localnet/get-localnet-dispenser-account.ts:15](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/localnet/get-localnet-dispenser-account.ts#L15)
 
-___
+---
 
 ### getOrCreateKmdWalletAccount
 
@@ -2177,13 +2193,13 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `walletAccount` | `Object` | The wallet details with: * `name`: The name of the wallet to retrieve / create * `fundWith`: The number of Algo to fund the account with when it gets created, if not specified then 1000 ALGO will be funded from the dispenser account |
-| `walletAccount.fundWith?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | - |
-| `walletAccount.name` | `string` | - |
-| `algod` | `AlgodClient` | An algod client |
-| `kmdClient?` | `KmdClient` | A KMD client, if not specified then a default KMD client will be loaded from environment variables |
+| Name                      | Type                                                                            | Description                                                                                                                                                                                                                              |
+| :------------------------ | :------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `walletAccount`           | `Object`                                                                        | The wallet details with: _ `name`: The name of the wallet to retrieve / create _ `fundWith`: The number of Algo to fund the account with when it gets created, if not specified then 1000 ALGO will be funded from the dispenser account |
+| `walletAccount.fundWith?` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) | -                                                                                                                                                                                                                                        |
+| `walletAccount.name`      | `string`                                                                        | -                                                                                                                                                                                                                                        |
+| `algod`                   | `AlgodClient`                                                                   | An algod client                                                                                                                                                                                                                          |
+| `kmdClient?`              | `KmdClient`                                                                     | A KMD client, if not specified then a default KMD client will be loaded from environment variables                                                                                                                                       |
 
 #### Returns
 
@@ -2199,7 +2215,7 @@ Gets an account with private key loaded from a KMD wallet of the given name, or 
 
 This is useful to get idempotent accounts from LocalNet without having to specify the private key (which will change when resetting the LocalNet).
 
-This significantly speeds up local dev time and improves experience since you can write code that *just works* first go without manual config in a fresh LocalNet.
+This significantly speeds up local dev time and improves experience since you can write code that _just works_ first go without manual config in a fresh LocalNet.
 
 If this is used via `mnemonicAccountFromEnvironment`, then you can even use the same code that runs on production without changes for local development!
 
@@ -2207,7 +2223,7 @@ If this is used via `mnemonicAccountFromEnvironment`, then you can even use the 
 
 [src/localnet/get-or-create-kmd-wallet-account.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/localnet/get-or-create-kmd-wallet-account.ts#L28)
 
-___
+---
 
 ### getSenderAddress
 
@@ -2215,8 +2231,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                      | Description          |
+| :------- | :-------------------------------------------------------- | :------------------- |
 | `sender` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | A transaction sender |
 
 #### Returns
@@ -2236,7 +2252,7 @@ Returns the public address of the given transaction sender.
 
 [src/transaction/transaction.ts:116](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L116)
 
-___
+---
 
 ### getSenderTransactionSigner
 
@@ -2244,8 +2260,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                                          |
+| :---- | :-------------------------------------------- |
 | `val` | [`SendTransactionFrom`](#sendtransactionfrom) |
 
 #### Returns
@@ -2266,7 +2282,7 @@ This function has memoization, so will return the same transaction signer for a 
 
 [src/transaction/transaction.ts:174](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L174)
 
-___
+---
 
 ### getTestNetDispenserApiClient
 
@@ -2274,9 +2290,9 @@ ___
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `params` | ``null`` \| [`TestNetDispenserApiClientParams`](/reference/algokit-utils-ts/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/) | `null` | An object containing parameters for the TestNetDispenserApiClient class. Or null if you want the client to load the access token from the environment variable `ALGOKIT_DISPENSER_ACCESS_TOKEN`. |
+| Name     | Type                                                                                                                                             | Default value | Description                                                                                                                                                                                      |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params` | `null` \| [`TestNetDispenserApiClientParams`](/reference/algokit-utils-ts/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/) | `null`        | An object containing parameters for the TestNetDispenserApiClient class. Or null if you want the client to load the access token from the environment variable `ALGOKIT_DISPENSER_ACCESS_TOKEN`. |
 
 #### Returns
 
@@ -2294,19 +2310,17 @@ Refer to [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/tes
 **`Example`**
 
 ```ts
-const client = algokit.getTestNetDispenserApiClient(
-    {
-      authToken: 'your_auth_token',
-      requestTimeout: 15,
-    }
-)
+const client = algokit.getTestNetDispenserApiClient({
+  authToken: 'your_auth_token',
+  requestTimeout: 15,
+});
 ```
 
 #### Defined in
 
 [src/dispenser-client.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/dispenser-client.ts#L21)
 
-___
+---
 
 ### getTransactionParams
 
@@ -2314,10 +2328,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                             | Description                          |
+| :------- | :------------------------------- | :----------------------------------- |
 | `params` | `undefined` \| `SuggestedParams` | Optionally provide parameters to use |
-| `algod` | `AlgodClient` | Algod algod |
+| `algod`  | `AlgodClient`                    | Algod algod                          |
 
 #### Returns
 
@@ -2335,7 +2349,7 @@ Returns suggested transaction parameters from algod unless some are already prov
 
 [src/transaction/transaction.ts:1110](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L1110)
 
-___
+---
 
 ### getTransactionWithSigner
 
@@ -2343,10 +2357,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `transaction` | `Transaction` \| [`TransactionToSign`](/reference/algokit-utils-ts/api/interfaces/types_transactiontransactiontosign/) \| `Promise`\<[`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/)\> \| `TransactionWithSigner` | One of: A TransactionWithSigner object (returned as is), a TransactionToSign object (signer is obtained from the signer property), a Transaction object (signer is extracted from the defaultSender parameter), an async SendTransactionResult returned by one of algokit utils' helpers (signer is obtained from the defaultSender parameter) |
-| `defaultSender?` | [`SendTransactionFrom`](#sendtransactionfrom) | The default sender to be used to obtain a signer where the object provided to the transaction parameter does not include a signer. |
+| Name             | Type                                                                                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                                                    |
+| :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `transaction`    | `Transaction` \| [`TransactionToSign`](/reference/algokit-utils-ts/api/interfaces/types_transactiontransactiontosign/) \| `Promise`\<[`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/)\> \| `TransactionWithSigner` | One of: A TransactionWithSigner object (returned as is), a TransactionToSign object (signer is obtained from the signer property), a Transaction object (signer is extracted from the defaultSender parameter), an async SendTransactionResult returned by one of algokit utils' helpers (signer is obtained from the defaultSender parameter) |
+| `defaultSender?` | [`SendTransactionFrom`](#sendtransactionfrom)                                                                                                                                                                                                                                   | The default sender to be used to obtain a signer where the object provided to the transaction parameter does not include a signer.                                                                                                                                                                                                             |
 
 #### Returns
 
@@ -2366,7 +2380,7 @@ AtomicTransactionComposer's addTransaction method.
 
 [src/transaction/transaction.ts:133](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L133)
 
-___
+---
 
 ### isLocalNet
 
@@ -2374,8 +2388,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type          |
+| :------ | :------------ |
 | `algod` | `AlgodClient` |
 
 #### Returns
@@ -2392,7 +2406,7 @@ Returns true if the algod client is pointing to a LocalNet Algorand network
 
 [src/localnet/is-localnet.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/localnet/is-localnet.ts#L9)
 
-___
+---
 
 ### isMainNet
 
@@ -2400,8 +2414,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type          |
+| :------ | :------------ |
 | `algod` | `AlgodClient` |
 
 #### Returns
@@ -2416,7 +2430,7 @@ Use `await algorand.client.isMainNet()` or `await new ClientManager({ algod }).i
 
 [src/network-client.ts:154](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L154)
 
-___
+---
 
 ### isSchemaIsBroken
 
@@ -2424,10 +2438,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                     | Description         |
+| :------- | :----------------------- | :------------------ |
 | `before` | `ApplicationStateSchema` | The existing schema |
-| `after` | `ApplicationStateSchema` | The new schema |
+| `after`  | `ApplicationStateSchema` | The new schema      |
 
 #### Returns
 
@@ -2440,14 +2454,14 @@ Whether or not there is a breaking change
 Use `before.numByteSlice < after.numByteSlice || before.numUint < after.numUint` instead.
 
 Returns true is there is a breaking change in the application state schema from before to after.
- i.e. if the schema becomes larger, since applications can't ask for more schema after creation.
- Otherwise, there is no error, the app just doesn't store data in the extra schema :(
+i.e. if the schema becomes larger, since applications can't ask for more schema after creation.
+Otherwise, there is no error, the app just doesn't store data in the extra schema :(
 
 #### Defined in
 
 [src/app-deploy.ts:229](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deploy.ts#L229)
 
-___
+---
 
 ### isTestNet
 
@@ -2455,8 +2469,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type          |
+| :------ | :------------ |
 | `algod` | `AlgodClient` |
 
 #### Returns
@@ -2471,7 +2485,7 @@ Use `await algorand.client.isTestNet()` or `await new ClientManager({ algod }).i
 
 [src/network-client.ts:149](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L149)
 
-___
+---
 
 ### microAlgo
 
@@ -2481,8 +2495,8 @@ Returns an amount of µAlgo using AlgoAmount
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name         | Type                 | Description         |
+| :----------- | :------------------- | :------------------ |
 | `microAlgos` | `number` \| `bigint` | The amount of µAlgo |
 
 #### Returns
@@ -2493,7 +2507,7 @@ Returns an amount of µAlgo using AlgoAmount
 
 [src/amount.ts:82](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L82)
 
-___
+---
 
 ### microAlgos
 
@@ -2503,8 +2517,8 @@ Returns an amount of µAlgo using AlgoAmount
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name         | Type                 | Description         |
+| :----------- | :------------------- | :------------------ |
 | `microAlgos` | `number` \| `bigint` | The amount of µAlgo |
 
 #### Returns
@@ -2515,7 +2529,7 @@ Returns an amount of µAlgo using AlgoAmount
 
 [src/amount.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L75)
 
-___
+---
 
 ### mnemonicAccount
 
@@ -2523,8 +2537,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name             | Type     | Description                                                                                                                                                                                                                                                        |
+| :--------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `mnemonicSecret` | `string` | The mnemonic secret representing the private key of an account; **Note: Be careful how the mnemonic is handled**, never commit it into source control and ideally load it from the environment (ideally via a secret storage service) rather than the file system. |
 
 #### Returns
@@ -2543,7 +2557,7 @@ This is a wrapper around algosdk.mnemonicToSecretKey to provide a more friendly/
 
 [src/account/mnemonic-account.ts:14](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/mnemonic-account.ts#L14)
 
-___
+---
 
 ### mnemonicAccountFromEnvironment
 
@@ -2551,11 +2565,11 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `account` | `string` \| \{ `fundWith?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `name`: `string`  } | The details of the account to get, either the name identifier (string) or an object with: * `name`: string: The name identifier of the account * `fundWith`: The amount to fund the account with when it gets created (when targeting LocalNet), if not specified then 1000 ALGO will be funded from the dispenser account |
-| `algod` | `AlgodClient` | An algod client |
-| `kmdClient?` | `KmdClient` | An optional KMD client to use to create an account (when targeting LocalNet), if not specified then a default KMD client will be loaded from environment variables |
+| Name         | Type                                                                                                                             | Description                                                                                                                                                                                                                                                                                                                |
+| :----------- | :------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `account`    | `string` \| \{ `fundWith?`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `name`: `string` } | The details of the account to get, either the name identifier (string) or an object with: _ `name`: string: The name identifier of the account _ `fundWith`: The amount to fund the account with when it gets created (when targeting LocalNet), if not specified then 1000 ALGO will be funded from the dispenser account |
+| `algod`      | `AlgodClient`                                                                                                                    | An algod client                                                                                                                                                                                                                                                                                                            |
+| `kmdClient?` | `KmdClient`                                                                                                                      | An optional KMD client to use to create an account (when targeting LocalNet), if not specified then a default KMD client will be loaded from environment variables                                                                                                                                                         |
 
 #### Returns
 
@@ -2572,18 +2586,20 @@ Returns an Algorand account with private key loaded by convention from environme
 Note: This function expects to run in a Node.js environment.
 
 ## Convention:
-* **Non-LocalNet:** will load process.env['{NAME}_MNEMONIC'] as a mnemonic secret; **Note: Be careful how the mnemonic is handled**,
- never commit it into source control and ideally load it via a secret storage service rather than the file system.
+
+- **Non-LocalNet:** will load process.env['{NAME}_MNEMONIC'] as a mnemonic secret; **Note: Be careful how the mnemonic is handled**,
+  never commit it into source control and ideally load it via a secret storage service rather than the file system.
   If process.env['{NAME}_SENDER'] is defined then it will use that for the sender address (i.e. to support rekeyed accounts)
-* **LocalNet:** will load the account from a KMD wallet called {NAME} and if that wallet doesn't exist it will create it and fund the account for you
+- **LocalNet:** will load the account from a KMD wallet called {NAME} and if that wallet doesn't exist it will create it and fund the account for you
 
 This allows you to write code that will work seamlessly in production and local development (LocalNet) without manual config locally (including when you reset the LocalNet).
 
 **`Example`**
 
 If you have a mnemonic secret loaded into `process.env.MY_ACCOUNT_MNEMONIC` then you can call the following to get that private key loaded into an account object:
+
 ```typescript
-const account = await mnemonicAccountFromEnvironment('MY_ACCOUNT', algod)
+const account = await mnemonicAccountFromEnvironment('MY_ACCOUNT', algod);
 ```
 
 If that code runs against LocalNet then a wallet called `MY_ACCOUNT` will automatically be created with an account that is automatically funded with 1000 (default) ALGO from the default LocalNet dispenser.
@@ -2593,7 +2609,7 @@ If not running against LocalNet then it will use proces.env.MY_ACCOUNT_MNEMONIC 
 
 [src/account/account.ts:97](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L97)
 
-___
+---
 
 ### multisigAccount
 
@@ -2601,10 +2617,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `multisigParams` | `MultisigMetadata` | The parameters that define the multisig account |
-| `signingAccounts` | (`default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/))[] | The signers that are currently present |
+| Name              | Type                                                                                                      | Description                                     |
+| :---------------- | :-------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `multisigParams`  | `MultisigMetadata`                                                                                        | The parameters that define the multisig account |
+| `signingAccounts` | (`default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/))[] | The signers that are currently present          |
 
 #### Returns
 
@@ -2622,7 +2638,7 @@ Returns an account wrapper that supports partial or full multisig signing.
 
 [src/account/account.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L24)
 
-___
+---
 
 ### performAtomicTransactionComposerSimulate
 
@@ -2633,11 +2649,11 @@ Uses empty transaction signers for all transactions.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `atc` | `AtomicTransactionComposer` | The AtomicTransactionComposer with transaction(s) loaded. |
-| `algod` | `AlgodClient` | An Algod client to perform the simulation. |
-| `options?` | `Omit`\<\{ `allowEmptySignatures?`: `boolean` ; `allowMoreLogging?`: `boolean` ; `allowUnnamedResources?`: `boolean` ; `execTraceConfig?`: `SimulateTraceConfig` ; `extraOpcodeBudget?`: `number` \| `bigint` ; `fixSigners?`: `boolean` ; `round?`: `number` \| `bigint` ; `txnGroups`: `SimulateRequestTransactionGroup`[]  }, ``"txnGroups"``\> | - |
+| Name       | Type                                                                                                                                                                                                                                                                                                                                            | Description                                               |
+| :--------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------- |
+| `atc`      | `AtomicTransactionComposer`                                                                                                                                                                                                                                                                                                                     | The AtomicTransactionComposer with transaction(s) loaded. |
+| `algod`    | `AlgodClient`                                                                                                                                                                                                                                                                                                                                   | An Algod client to perform the simulation.                |
+| `options?` | `Omit`\<\{ `allowEmptySignatures?`: `boolean` ; `allowMoreLogging?`: `boolean` ; `allowUnnamedResources?`: `boolean` ; `execTraceConfig?`: `SimulateTraceConfig` ; `extraOpcodeBudget?`: `number` \| `bigint` ; `fixSigners?`: `boolean` ; `round?`: `number` \| `bigint` ; `txnGroups`: `SimulateRequestTransactionGroup`[] }, `"txnGroups"`\> | -                                                         |
 
 #### Returns
 
@@ -2649,7 +2665,7 @@ The simulation result, which includes various details about how the transactions
 
 [src/transaction/perform-atomic-transaction-composer-simulate.ts:14](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/perform-atomic-transaction-composer-simulate.ts#L14)
 
-___
+---
 
 ### performTemplateSubstitution
 
@@ -2657,9 +2673,9 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `tealCode` | `string` | The TEAL logic to compile |
+| Name              | Type                                                                                            | Description                                                  |
+| :---------------- | :---------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| `tealCode`        | `string`                                                                                        | The TEAL logic to compile                                    |
 | `templateParams?` | [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/) | Any parameters to replace in the .teal file before compiling |
 
 #### Returns
@@ -2680,7 +2696,7 @@ Looks for `TMPL_{parameter}` for template replacements.
 
 [src/app-deploy.ts:309](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deploy.ts#L309)
 
-___
+---
 
 ### performTemplateSubstitutionAndCompile
 
@@ -2688,12 +2704,12 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `tealCode` | `string` | The TEAL logic to compile |
-| `algod` | `AlgodClient` | An algod client |
-| `templateParams?` | [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/) | Any parameters to replace in the .teal file before compiling |
-| `deploymentMetadata?` | [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/) | The deployment metadata the app will be deployed with |
+| Name                  | Type                                                                                            | Description                                                  |
+| :-------------------- | :---------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| `tealCode`            | `string`                                                                                        | The TEAL logic to compile                                    |
+| `algod`               | `AlgodClient`                                                                                   | An algod client                                              |
+| `templateParams?`     | [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/) | Any parameters to replace in the .teal file before compiling |
+| `deploymentMetadata?` | [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/)   | The deployment metadata the app will be deployed with        |
 
 #### Returns
 
@@ -2713,7 +2729,7 @@ Looks for `TMPL_{parameter}` for template replacements.
 
 [src/app-deploy.ts:326](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deploy.ts#L326)
 
-___
+---
 
 ### persistSourceMaps
 
@@ -2721,8 +2737,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type      |
+| :-------- | :-------- |
 | `_params` | `unknown` |
 
 #### Returns
@@ -2741,7 +2757,7 @@ This function persists the source maps for the given sources.
 
 [src/debugging/debugging.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/debugging/debugging.ts#L8)
 
-___
+---
 
 ### populateAppCallResources
 
@@ -2752,10 +2768,10 @@ app call resources populated into it
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `atc` | `AtomicTransactionComposer` | The ATC containing the txn group |
-| `algod` | `AlgodClient` | The algod client to use for the simulation |
+| Name    | Type                        | Description                                |
+| :------ | :-------------------------- | :----------------------------------------- |
+| `atc`   | `AtomicTransactionComposer` | The ATC containing the txn group           |
+| `algod` | `AlgodClient`               | The algod client to use for the simulation |
 
 #### Returns
 
@@ -2767,7 +2783,7 @@ A new ATC with the resources populated into the transactions
 
 [src/transaction/transaction.ts:388](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L388)
 
-___
+---
 
 ### prepareGroupForSending
 
@@ -2779,11 +2795,11 @@ Please note, that before calling `.execute()` on the returned ATC, you must call
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `atc` | `AtomicTransactionComposer` | The ATC containing the txn group |
-| `algod` | `AlgodClient` | The algod client to use for the simulation |
-| `sendParams` | [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The send params for the transaction group |
+| Name                    | Type                                                                                                                                                    | Description                                                                               |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------- |
+| `atc`                   | `AtomicTransactionComposer`                                                                                                                             | The ATC containing the txn group                                                          |
+| `algod`                 | `AlgodClient`                                                                                                                                           | The algod client to use for the simulation                                                |
+| `sendParams`            | [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)                                                                 | The send params for the transaction group                                                 |
 | `additionalAtcContext?` | [`AdditionalAtomicTransactionComposerContext`](/reference/algokit-utils-ts/api/interfaces/types_transactionadditionalatomictransactioncomposercontext/) | Additional ATC context used to determine how best to change the transactions in the group |
 
 #### Returns
@@ -2796,7 +2812,7 @@ A new ATC with the changes applied
 
 [src/transaction/transaction.ts:407](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L407)
 
-___
+---
 
 ### randomAccount
 
@@ -2818,7 +2834,7 @@ This is a wrapper around algosdk.generateAccount to provide a more friendly/obvi
 
 [src/account/account.ts:60](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L60)
 
-___
+---
 
 ### rekeyAccount
 
@@ -2826,10 +2842,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type                                                                                           | Description          |
+| :------ | :--------------------------------------------------------------------------------------------- | :------------------- |
 | `rekey` | [`AlgoRekeyParams`](/reference/algokit-utils-ts/api/interfaces/types_transferalgorekeyparams/) | The rekey definition |
-| `algod` | `AlgodClient` | An algod client |
+| `algod` | `AlgodClient`                                                                                  | An algod client      |
 
 #### Returns
 
@@ -2848,14 +2864,14 @@ Rekey an account to a new address.
 **`Example`**
 
 ```typescript
-await algokit.rekeyAccount({ from, rekeyTo }, algod)
+await algokit.rekeyAccount({ from, rekeyTo }, algod);
 ```
 
 #### Defined in
 
 [src/transfer/transfer.ts:125](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transfer/transfer.ts#L125)
 
-___
+---
 
 ### rekeyedAccount
 
@@ -2863,10 +2879,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `signer` | `default` | The account, with private key loaded, that is signing |
-| `sender` | `string` | The address of the rekeyed account that will act as a sender |
+| Name     | Type      | Description                                                  |
+| :------- | :-------- | :----------------------------------------------------------- |
+| `signer` | `default` | The account, with private key loaded, that is signing        |
+| `sender` | `string`  | The address of the rekeyed account that will act as a sender |
 
 #### Returns
 
@@ -2884,7 +2900,7 @@ Returns an account wrapper that supports a rekeyed account.
 
 [src/account/account.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L36)
 
-___
+---
 
 ### replaceDeployTimeControlParams
 
@@ -2892,12 +2908,12 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `tealCode` | `string` | The TEAL code to substitute |
-| `params` | `Object` | The deploy-time deployment control parameter value to replace |
-| `params.deletable?` | `boolean` | - |
-| `params.updatable?` | `boolean` | - |
+| Name                | Type      | Description                                                   |
+| :------------------ | :-------- | :------------------------------------------------------------ |
+| `tealCode`          | `string`  | The TEAL code to substitute                                   |
+| `params`            | `Object`  | The deploy-time deployment control parameter value to replace |
+| `params.deletable?` | `boolean` | -                                                             |
+| `params.updatable?` | `boolean` | -                                                             |
 
 #### Returns
 
@@ -2911,17 +2927,17 @@ Use `AppManager.replaceTealTemplateDeployTimeControlParams` instead
 
 Replaces deploy-time deployment control parameters within the given teal code.
 
-* `TMPL_UPDATABLE` for updatability / immutability control
-* `TMPL_DELETABLE` for deletability / permanence control
+- `TMPL_UPDATABLE` for updatability / immutability control
+- `TMPL_DELETABLE` for deletability / permanence control
 
 Note: If these values are not undefined, but the corresponding `TMPL_*` value
- isn't in the teal code it will throw an exception.
+isn't in the teal code it will throw an exception.
 
 #### Defined in
 
 [src/app-deploy.ts:294](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deploy.ts#L294)
 
-___
+---
 
 ### sendAtomicTransactionComposer
 
@@ -2931,10 +2947,10 @@ Signs and sends transactions that have been collected by an `AtomicTransactionCo
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                                                              | Description                                                                                                               |
+| :-------- | :-------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
 | `atcSend` | [`AtomicTransactionComposerToSend`](/reference/algokit-utils-ts/api/interfaces/types_transactionatomictransactioncomposertosend/) | The parameters controlling the send, including `atc` The `AtomicTransactionComposer` and params to control send behaviour |
-| `algod` | `AlgodClient` | An algod client |
+| `algod`   | `AlgodClient`                                                                                                                     | An algod client                                                                                                           |
 
 #### Returns
 
@@ -2946,22 +2962,22 @@ An object with transaction IDs, transactions, group transaction ID (`groupTransa
 
 [src/transaction/transaction.ts:782](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L782)
 
-___
+---
 
 ### sendGroupOfTransactions
 
-▸ **sendGroupOfTransactions**(`groupSend`, `algod`): `Promise`\<`Omit`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/), ``"returns"``\>\>
+▸ **sendGroupOfTransactions**(`groupSend`, `algod`): `Promise`\<`Omit`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/), `"returns"`\>\>
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `groupSend` | [`TransactionGroupToSend`](/reference/algokit-utils-ts/api/interfaces/types_transactiontransactiongrouptosend/) | The group details to send, with: * `transactions`: The array of transactions to send along with their signing account * `sendParams`: The parameters to dictate how the group is sent |
-| `algod` | `AlgodClient` | An algod client |
+| Name        | Type                                                                                                            | Description                                                                                                                                                                           |
+| :---------- | :-------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `groupSend` | [`TransactionGroupToSend`](/reference/algokit-utils-ts/api/interfaces/types_transactiontransactiongrouptosend/) | The group details to send, with: _ `transactions`: The array of transactions to send along with their signing account _ `sendParams`: The parameters to dictate how the group is sent |
+| `algod`     | `AlgodClient`                                                                                                   | An algod client                                                                                                                                                                       |
 
 #### Returns
 
-`Promise`\<`Omit`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/), ``"returns"``\>\>
+`Promise`\<`Omit`\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/), `"returns"`\>\>
 
 An object with transaction IDs, transactions, group transaction ID (`groupTransactionId`) if more than 1 transaction sent, and (if `skipWaiting` is `false` or unset) confirmation (`confirmation`)
 
@@ -2975,7 +2991,7 @@ Signs and sends a group of [up to 16](https://dev.algorand.co/concepts/transacti
 
 [src/transaction/transaction.ts:955](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L955)
 
-___
+---
 
 ### sendTransaction
 
@@ -2983,13 +2999,13 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `send` | `Object` | The details for the transaction to prepare/send, including: * `transaction`: The unsigned transaction * `from`: The account to sign the transaction with: either an account with private key loaded or a logic signature account * `config`: The sending configuration for this transaction |
-| `send.from` | [`SendTransactionFrom`](#sendtransactionfrom) | - |
-| `send.sendParams?` | [`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/) | - |
-| `send.transaction` | `Transaction` | - |
-| `algod` | `AlgodClient` | An algod client |
+| Name               | Type                                                                                                          | Description                                                                                                                                                                                                                                                                                  |
+| :----------------- | :------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `send`             | `Object`                                                                                                      | The details for the transaction to prepare/send, including: _ `transaction`: The unsigned transaction _ `from`: The account to sign the transaction with: either an account with private key loaded or a logic signature account \* `config`: The sending configuration for this transaction |
+| `send.from`        | [`SendTransactionFrom`](#sendtransactionfrom)                                                                 | -                                                                                                                                                                                                                                                                                            |
+| `send.sendParams?` | [`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/) | -                                                                                                                                                                                                                                                                                            |
+| `send.transaction` | `Transaction`                                                                                                 | -                                                                                                                                                                                                                                                                                            |
+| `algod`            | `AlgodClient`                                                                                                 | An algod client                                                                                                                                                                                                                                                                              |
 
 #### Returns
 
@@ -3007,7 +3023,7 @@ Prepares a transaction for sending and then (if instructed) signs and sends the 
 
 [src/transaction/transaction.ts:215](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L215)
 
-___
+---
 
 ### signTransaction
 
@@ -3015,10 +3031,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `transaction` | `Transaction` | The transaction to sign |
-| `signer` | [`SendTransactionFrom`](#sendtransactionfrom) | The signer to sign |
+| Name          | Type                                          | Description             |
+| :------------ | :-------------------------------------------- | :---------------------- |
+| `transaction` | `Transaction`                                 | The transaction to sign |
+| `signer`      | [`SendTransactionFrom`](#sendtransactionfrom) | The signer to sign      |
 
 #### Returns
 
@@ -3038,7 +3054,7 @@ Signs a single transaction by the given signer.
 
 [src/transaction/transaction.ts:192](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L192)
 
-___
+---
 
 ### stripTealComments
 
@@ -3046,8 +3062,8 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name       | Type     | Description               |
+| :--------- | :------- | :------------------------ |
 | `tealCode` | `string` | The TEAL logic to compile |
 
 #### Returns
@@ -3066,7 +3082,7 @@ Remove comments from TEAL Code
 
 [src/app-deploy.ts:351](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deploy.ts#L351)
 
-___
+---
 
 ### transactionFees
 
@@ -3076,8 +3092,8 @@ Returns an amount of µAlgo to cover standard fees for the given number of trans
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name                   | Type     | Description                                                   |
+| :--------------------- | :------- | :------------------------------------------------------------ |
 | `numberOfTransactions` | `number` | The of standard transaction fees to return the amount of Algo |
 
 #### Returns
@@ -3088,7 +3104,7 @@ Returns an amount of µAlgo to cover standard fees for the given number of trans
 
 [src/amount.ts:89](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L89)
 
-___
+---
 
 ### transactionSignerAccount
 
@@ -3096,10 +3112,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `signer` | `TransactionSigner` | The transaction signer |
-| `sender` | `string` | The address of sender account |
+| Name     | Type                | Description                   |
+| :------- | :------------------ | :---------------------------- |
+| `signer` | `TransactionSigner` | The transaction signer        |
+| `sender` | `string`            | The address of sender account |
 
 #### Returns
 
@@ -3117,7 +3133,7 @@ Returns an account wrapper that supports a transaction signer with associated se
 
 [src/account/account.ts:48](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account/account.ts#L48)
 
-___
+---
 
 ### transferAlgos
 
@@ -3125,10 +3141,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name       | Type                                                                                                 | Description             |
+| :--------- | :--------------------------------------------------------------------------------------------------- | :---------------------- |
 | `transfer` | [`AlgoTransferParams`](/reference/algokit-utils-ts/api/interfaces/types_transferalgotransferparams/) | The transfer definition |
-| `algod` | `AlgodClient` | An algod client |
+| `algod`    | `AlgodClient`                                                                                        | An algod client         |
 
 #### Returns
 
@@ -3145,14 +3161,14 @@ Transfer Algo between two accounts.
 **`Example`**
 
 ```typescript
-await algokit.transferAlgos({ from, to, amount: algokit.algo(1) }, algod)
+await algokit.transferAlgos({ from, to, amount: algokit.algo(1) }, algod);
 ```
 
 #### Defined in
 
 [src/transfer/transfer-algos.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transfer/transfer-algos.ts#L22)
 
-___
+---
 
 ### transferAsset
 
@@ -3160,10 +3176,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name       | Type                                                                                                   | Description             |
+| :--------- | :----------------------------------------------------------------------------------------------------- | :---------------------- |
 | `transfer` | [`TransferAssetParams`](/reference/algokit-utils-ts/api/interfaces/types_transfertransferassetparams/) | The transfer definition |
-| `algod` | `AlgodClient` | An algod client |
+| `algod`    | `AlgodClient`                                                                                          | An algod client         |
 
 #### Returns
 
@@ -3180,14 +3196,14 @@ Transfer asset between two accounts.
 **`Example`**
 
 ```typescript
-await algokit.transferAsset({ from, to, assetId, amount }, algod)
+await algokit.transferAsset({ from, to, assetId, amount }, algod);
 ```
 
 #### Defined in
 
 [src/transfer/transfer.ts:90](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transfer/transfer.ts#L90)
 
-___
+---
 
 ### updateApp
 
@@ -3195,10 +3211,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name     | Type                                                                                      | Description                           |
+| :------- | :---------------------------------------------------------------------------------------- | :------------------------------------ |
 | `update` | [`UpdateAppParams`](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/) | The parameters to update the app with |
-| `algod` | `AlgodClient` | An algod client |
+| `algod`  | `AlgodClient`                                                                             | An algod client                       |
 
 #### Returns
 
@@ -3217,7 +3233,7 @@ Updates a smart contract app.
 
 [src/app.ts:104](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L104)
 
-___
+---
 
 ### waitForConfirmation
 
@@ -3228,11 +3244,11 @@ number of rounds have passed.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `transactionId` | `string` | The transaction ID to wait for |
+| Name              | Type                 | Description                      |
+| :---------------- | :------------------- | :------------------------------- |
+| `transactionId`   | `string`             | The transaction ID to wait for   |
 | `maxRoundsToWait` | `number` \| `bigint` | Maximum number of rounds to wait |
-| `algod` | `AlgodClient` | An algod client |
+| `algod`           | `AlgodClient`        | An algod client                  |
 
 #### Returns
 

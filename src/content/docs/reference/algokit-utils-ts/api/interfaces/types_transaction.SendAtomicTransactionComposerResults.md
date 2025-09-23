@@ -1,9 +1,8 @@
 ---
 title: SendAtomicTransactionComposerResults
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/) / SendAtomicTransactionComposerResults
-
-
 
 [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/).SendAtomicTransactionComposerResults
 
@@ -42,7 +41,7 @@ the index of the confirmation will match the index of the underlying transaction
 
 [src/types/transaction.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L81)
 
-___
+---
 
 ### groupId
 
@@ -54,7 +53,7 @@ base64 encoded representation of the group ID of the atomic group
 
 [src/types/transaction.ts:73](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L73)
 
-___
+---
 
 ### returns
 
@@ -66,7 +65,7 @@ If ABI method(s) were called the processed return values
 
 [src/types/transaction.ts:77](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L77)
 
-___
+---
 
 ### transactions
 
@@ -82,7 +81,7 @@ The transactions that have been prepared and/or sent
 
 [src/types/transaction.ts:63](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L63)
 
-___
+---
 
 ### txIds
 

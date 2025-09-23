@@ -1,20 +1,21 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.State
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.State
+
+#### _class_ algokit_utils.applications.app_spec.arc56.State
 
 Application state information.
 
-#### keys *: [Keys](#algokit_utils.applications.app_spec.arc56.Keys)*
+#### keys _: [Keys](#algokit_utils.applications.app_spec.arc56.Keys)_
 
 The storage keys
 
-#### maps *: [Maps](#algokit_utils.applications.app_spec.arc56.Maps)*
+#### maps _: [Maps](#algokit_utils.applications.app_spec.arc56.Maps)_
 
 The storage maps
 
-#### schema *: [Schema](#algokit_utils.applications.app_spec.arc56.Schema)*
+#### schema _: [Schema](#algokit_utils.applications.app_spec.arc56.Schema)_
 
 The state schema
 
-#### *static* from_dict(data: dict[str, Any]) → [State](#algokit_utils.applications.app_spec.arc56.State)
+#### _static_ from_dict(data: dict[str, Any]) → [State](#algokit_utils.applications.app_spec.arc56.State)

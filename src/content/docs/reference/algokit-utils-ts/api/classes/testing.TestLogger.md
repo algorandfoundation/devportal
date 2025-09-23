@@ -1,9 +1,8 @@
 ---
 title: TestLogger
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [testing](/reference/algokit-utils-ts/api/modules/testing/) / TestLogger
-
-
 
 [testing](/reference/algokit-utils-ts/api/modules/testing/).TestLogger
 
@@ -49,8 +48,8 @@ Create a new test logger that wraps the given logger if provided.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name              | Type                                                                      | Description                           |
+| :---------------- | :------------------------------------------------------------------------ | :------------------------------------ |
 | `originalLogger?` | [`Logger`](/reference/algokit-utils-ts/api/modules/types_logging/#logger) | The optional original logger to wrap. |
 
 #### Returns
@@ -71,7 +70,7 @@ Create a new test logger that wraps the given logger if provided.
 
 [src/testing/test-logger.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/test-logger.ts#L10)
 
-___
+---
 
 ### originalLogger
 
@@ -113,7 +112,7 @@ Clears all logs captured so far.
 
 [src/testing/test-logger.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/test-logger.ts#L27)
 
-___
+---
 
 ### debug
 
@@ -121,9 +120,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
+| Name                | Type        |
+| :------------------ | :---------- |
+| `message`           | `string`    |
 | `...optionalParams` | `unknown`[] |
 
 #### Returns
@@ -138,7 +137,7 @@ Logger.debug
 
 [src/testing/test-logger.ts:89](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/test-logger.ts#L89)
 
-___
+---
 
 ### error
 
@@ -146,9 +145,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
+| Name                | Type        |
+| :------------------ | :---------- |
+| `message`           | `string`    |
 | `...optionalParams` | `unknown`[] |
 
 #### Returns
@@ -163,7 +162,7 @@ Logger.error
 
 [src/testing/test-logger.ts:73](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/test-logger.ts#L73)
 
-___
+---
 
 ### getLogSnapshot
 
@@ -171,14 +170,14 @@ ___
 
 Returns a captured log snapshot.
 This helps ensure that the provided configuration items won't appear
- with random values in the log snapshot, but rather will get substituted with predictable ids.
+with random values in the log snapshot, but rather will get substituted with predictable ids.
 
 https://jestjs.io/docs/snapshot-testing#2-tests-should-be-deterministic
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name      | Type                                                                                              | Description                |
+| :-------- | :------------------------------------------------------------------------------------------------ | :------------------------- |
 | `config?` | [`LogSnapshotConfig`](/reference/algokit-utils-ts/api/interfaces/types_testinglogsnapshotconfig/) | The snapshot configuration |
 
 #### Returns
@@ -199,7 +198,7 @@ expect(logger.getLogSnapshot()).toMatchSnapshot()
 
 [src/testing/test-logger.ts:47](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/test-logger.ts#L47)
 
-___
+---
 
 ### info
 
@@ -207,9 +206,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
+| Name                | Type        |
+| :------------------ | :---------- |
+| `message`           | `string`    |
 | `...optionalParams` | `unknown`[] |
 
 #### Returns
@@ -224,7 +223,7 @@ Logger.info
 
 [src/testing/test-logger.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/test-logger.ts#L81)
 
-___
+---
 
 ### verbose
 
@@ -232,9 +231,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
+| Name                | Type        |
+| :------------------ | :---------- |
+| `message`           | `string`    |
 | `...optionalParams` | `unknown`[] |
 
 #### Returns
@@ -249,7 +248,7 @@ Logger.verbose
 
 [src/testing/test-logger.ts:85](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/test-logger.ts#L85)
 
-___
+---
 
 ### warn
 
@@ -257,9 +256,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
+| Name                | Type        |
+| :------------------ | :---------- |
+| `message`           | `string`    |
 | `...optionalParams` | `unknown`[] |
 
 #### Returns

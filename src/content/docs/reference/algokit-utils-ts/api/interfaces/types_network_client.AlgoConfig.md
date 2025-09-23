@@ -1,9 +1,8 @@
 ---
 title: AlgoConfig
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/network-client](/reference/algokit-utils-ts/api/modules/types_network_client/) / AlgoConfig
-
-
 
 [types/network-client](/reference/algokit-utils-ts/api/modules/types_network_client/).AlgoConfig
 
@@ -29,7 +28,7 @@ Algod client configuration
 
 [src/types/network-client.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/network-client.ts#L16)
 
-___
+---
 
 ### indexerConfig
 
@@ -41,7 +40,7 @@ Indexer client configuration
 
 [src/types/network-client.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/network-client.ts#L18)
 
-___
+---
 
 ### kmdConfig
 

@@ -1,9 +1,8 @@
 ---
 title: DispenserLimitResponse
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/dispenser-client](/reference/algokit-utils-ts/api/modules/types_dispenser_client/) / DispenserLimitResponse
-
-
 
 [types/dispenser-client](/reference/algokit-utils-ts/api/modules/types_dispenser_client/).DispenserLimitResponse
 

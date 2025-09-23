@@ -1,14 +1,15 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.CreateEnum
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.CreateEnum
+
+#### _class_ algokit_utils.applications.app_spec.arc56.CreateEnum
 
 Bases: `str`, `enum.Enum`
 
 Enum representing different create types for application transactions.
 
-#### DELETE_APPLICATION *= 'DeleteApplication'*
+#### DELETE_APPLICATION _= 'DeleteApplication'_
 
-#### NO_OP *= 'NoOp'*
+#### NO_OP _= 'NoOp'_
 
-#### OPT_IN *= 'OptIn'*
+#### OPT_IN _= 'OptIn'_

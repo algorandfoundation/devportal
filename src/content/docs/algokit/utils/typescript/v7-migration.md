@@ -1,6 +1,7 @@
 ---
 title: v7 migration
 ---
+
 Version 7 of AlgoKit Utils moved from a stateless function-based interface to a stateful class-based interface. Doing this allowed for a much easier and simpler consumption experience guided by intellisense, involves less passing around of redundant values (e.g. `algod` client) and is more performant since commonly retrieved values like transaction parameters are able to be cached.
 
 The entry point to the vast majority of functionality in AlgoKit Utils is now available via a single entry-point, the [`AlgorandClient` class](/algokit/utils/typescript/algorand-client/).
@@ -19,36 +20,36 @@ A simple example of the before and after follows:
 
 ```typescript
 /**** Before ****/
-import * as algokit from '@algorandfoundation/algokit-utils'
-const algod = algokit.getAlgoClient()
+import * as algokit from '@algorandfoundation/algokit-utils';
+const algod = algokit.getAlgoClient();
 const account = await algokit.mnemonicAccountFromEnvironment(
   {
     name: 'MY_ACCOUNT',
     fundWith: algokit.algos(2),
   },
   algod,
-)
+);
 const payment = await algokit.transferAlgos({
   from: account,
   to: 'RECEIVER',
   amount: algokit.algos(1),
-})
+});
 
 /**** After ****/
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
-const algorand = await AlgorandClient.fromEnvironment()
-const account = await algorand.account.fromEnvironment('MY_ACCOUNT', (2).algo())
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
+const algorand = await AlgorandClient.fromEnvironment();
+const account = await algorand.account.fromEnvironment('MY_ACCOUNT', (2).algo());
 const payment = await algorand.send.payment({
   sender: account.addr,
   receiver: 'RECEIVER',
   amount: (1).algo(),
-})
+});
 ```
 
 If you were following the recommended guidance for AlgoKit Utils then you can easily tell if you are using the old version by looking for this import line (which can act as a good todo checklist if you are migrating):
 
 ```typescript
-import * as algokit from '@algorandfoundation/algokit-utils'
+import * as algokit from '@algorandfoundation/algokit-utils';
 ```
 
 ### Migrating
@@ -64,11 +65,11 @@ The next step is to get an `AlgorandClient` instance at the same place(s) you ha
 You can retrieve an algod / indexer / kmd object to avoid the need to immediately have to rewrite all of the old calls by accessing them from the `AlgorandClient` instance, e.g.:
 
 ```typescript
-const algorand = AlgorandClient.mainNet() // ... or whichever other method you want to get a client
-const algod = algorand.client.algod
+const algorand = AlgorandClient.mainNet(); // ... or whichever other method you want to get a client
+const algod = algorand.client.algod;
 // And if you need these...
-const indexer = algorand.client.indexer
-const kmd = algorand.client.kmd
+const indexer = algorand.client.indexer;
+const kmd = algorand.client.kmd;
 ```
 
 Once you have fully migrated you will likely find you won't need these sdk client instances and can delete those variables.
@@ -161,42 +162,42 @@ Some imports have changed, which may need to updated. This only applies if you a
 
    ```typescript
    /**** Before ****/
-   import AlgokitComposer from '@algorandfoundation/algokit-utils/types/composer'
+   import AlgokitComposer from '@algorandfoundation/algokit-utils/types/composer';
    const composer = new AlgokitComposer({
      //...
-   })
+   });
 
    /**** After ****/
-   import { TransactionComposer } from '@algorandfoundation/algokit-utils/types/composer'
+   import { TransactionComposer } from '@algorandfoundation/algokit-utils/types/composer';
    const composer = new TransactionComposer({
      //...
-   })
+   });
    ```
 
 1. The `AlgorandClient` class is no longer available as a default export.
 
    ```typescript
    /**** Before ****/
-   import AlgorandClient from '../../types/algorand-client'
+   import AlgorandClient from '../../types/algorand-client';
    const algorand = AlgorandClient.fromClients({
      //...
-   })
+   });
 
    /**** After ****/
-   import { AlgorandClient } from '../../types/algorand-client'
+   import { AlgorandClient } from '../../types/algorand-client';
    const algorand = AlgorandClient.fromClients({
      //...
-   })
+   });
    ```
 
 1. The `ExecuteParams` type has been renamed to `SendParams` and moved from `/types/composer` to `/types/transaction`.
 
    ```typescript
    /**** Before ****/
-   import { ExecuteParams } from '@algorandfoundation/algokit-utils/types/composer'
+   import { ExecuteParams } from '@algorandfoundation/algokit-utils/types/composer';
 
    /**** After ****/
-   import { SendParams } from '@algorandfoundation/algokit-utils/types/transaction'
+   import { SendParams } from '@algorandfoundation/algokit-utils/types/transaction';
    ```
 
 #### Step 2 - Accommodate AlgorandClient changes
@@ -205,10 +206,10 @@ Some imports have changed, which may need to updated. This only applies if you a
 
    ```typescript
    /**** Before ****/
-   algorand.setSuggestedParamsTimeout(60_000)
+   algorand.setSuggestedParamsTimeout(60_000);
 
    /**** After ****/
-   algorand.setSuggestedParamsCacheTimeout(60_000)
+   algorand.setSuggestedParamsCacheTimeout(60_000);
    ```
 
 #### Step 3 - Accommodate AlgokitComposer (now TransactionComposer) changes
@@ -219,48 +220,48 @@ Some imports have changed, which may need to updated. This only applies if you a
    /**** Before ****/
    const composer = algorand.newGroup().addMethodCall({
      // ...
-   })
+   });
 
    /**** After ****/
    const composer = algorand.newGroup().addAppCallMethodCall({
      // ...
-   })
+   });
    // or
    const composer = algorand.newGroup().addAppCreateMethodCall({
      // ...
-   })
+   });
    // or
    const composer = algorand.newGroup().addAppDeleteMethodCall({
      // ...
-   })
+   });
    // or
    const composer = algorand.newGroup().addAppUpdateMethodCall({
      // ...
-   })
+   });
    ```
 
    ```typescript
    /**** Before ****/
    const composer = algorand.newGroup().addAppCall({
      // ...
-   })
+   });
 
    /**** After ****/
    const composer = algorand.newGroup().addAppCall({
      // ...
-   })
+   });
    // or
    const composer = algorand.newGroup().addAppCreate({
      // ...
-   })
+   });
    // or
    const composer = algorand.newGroup().addAppDelete({
      // ...
-   })
+   });
    // or
    const composer = algorand.newGroup().addAppUpdate({
      // ...
-   })
+   });
    ```
 
 1. `clearProgram` has been renamed to `clearStateProgram`, `extraPages` has been renamed to `extraProgramPages` in the app call params to match the algod api
@@ -272,7 +273,7 @@ Some imports have changed, which may need to updated. This only applies if you a
      approvalProgram,
      clearProgram,
      extraPages,
-   })
+   });
 
    /**** After ****/
    const composer = algorand.newGroup().addAppCreate({
@@ -280,7 +281,7 @@ Some imports have changed, which may need to updated. This only applies if you a
      approvalProgram,
      clearStateProgram,
      extraProgramPages,
-   })
+   });
    ```
 
 #### Step 4 - Accommodate AlgorandClient transaction related changes
@@ -289,10 +290,18 @@ Some imports have changed, which may need to updated. This only applies if you a
 
    ```typescript
    /**** Before ****/
-   const payment = await algorand.transactions.payment({ sender: 'SENDER', receiver: 'RECEIVER', amount: (1000).microAlgo() })
+   const payment = await algorand.transactions.payment({
+     sender: 'SENDER',
+     receiver: 'RECEIVER',
+     amount: (1000).microAlgo(),
+   });
 
    /**** After ****/
-   const payment = await algorand.createTransaction.payment({ sender: 'SENDER', receiver: 'RECEIVER', amount: (1000).microAlgo() })
+   const payment = await algorand.createTransaction.payment({
+     sender: 'SENDER',
+     receiver: 'RECEIVER',
+     amount: (1000).microAlgo(),
+   });
    ```
 
 1. `algorand.send.*(params, executeOptions)` has had the second `executeOptions` object collapsed into the first `params` object
@@ -308,7 +317,7 @@ Some imports have changed, which may need to updated. This only applies if you a
      {
        maxRoundsToWaitForConfirmation: 100,
      },
-   )
+   );
 
    /**** After ****/
    await algorand.send.payment({
@@ -316,7 +325,7 @@ Some imports have changed, which may need to updated. This only applies if you a
      assetId: assetId,
      signer: alice,
      maxRoundsToWaitForConfirmation: 100,
-   })
+   });
    ```
 
 #### Step 5 - Accommodate AccountManager changes
@@ -325,32 +334,32 @@ Some imports have changed, which may need to updated. This only applies if you a
 
    ```typescript
    /**** Before ****/
-   algorand.account.rekeyed(signer, 'SENDER')
+   algorand.account.rekeyed(signer, 'SENDER');
 
    /**** After ****/
-   algorand.account.rekeyed('SENDER', signer)
+   algorand.account.rekeyed('SENDER', signer);
    ```
 
 1. All microAlgo return values from `algorand.account.getInformation()` now return an `AlgoAmount` and `amount` is renamed to `balance` and `round` to `validAsOfRound` (which is now a bigint for broader consistency)
 
    ```typescript
    /**** Before ****/
-   const { amount, round } = algorand.account.getInformation('ACCOUNTADDRESS')
-   const algoBalance = algosdk.microalgosToAlgos(amount)
+   const { amount, round } = algorand.account.getInformation('ACCOUNTADDRESS');
+   const algoBalance = algosdk.microalgosToAlgos(amount);
 
    /**** After ****/
-   const { balance, validAsOfRound } = algorand.account.getInformation('ACCOUNTADDRESS')
-   const algoBalance = balance.algo
+   const { balance, validAsOfRound } = algorand.account.getInformation('ACCOUNTADDRESS');
+   const algoBalance = balance.algo;
    ```
 
 1. Renamed `algorand.account.getAssetInformation` to `algorand.asset.getAccountInformation`
 
    ```typescript
    /**** Before ****/
-   const assetInfo = await algorand.account.getAssetInformation('ACCOUNTADDRESS', 1234)
+   const assetInfo = await algorand.account.getAssetInformation('ACCOUNTADDRESS', 1234);
 
    /**** After ****/
-   const assetInfo = await algorand.asset.getAccountInformation('ACCOUNTADDRESS', 1234n)
+   const assetInfo = await algorand.asset.getAccountInformation('ACCOUNTADDRESS', 1234n);
    ```
 
 #### Step 6 - Accommodate ApplicationClient changes
@@ -381,11 +390,11 @@ If you'd like to continue to save the debug artefacts in your Node projects, you
 1. Activate the new package:
 
    ```typescript
-   import { Config } from '@algorandfoundation/algokit-utils'
-   import { registerDebugEventHandlers } from '@algorandfoundation/algokit-utils-debug'
+   import { Config } from '@algorandfoundation/algokit-utils';
+   import { registerDebugEventHandlers } from '@algorandfoundation/algokit-utils-debug';
 
-   Config.configure({ debug: true })
-   registerDebugEventHandlers()
+   Config.configure({ debug: true });
+   registerDebugEventHandlers();
    ```
 
 This approach maintains debug functionality while ensuring compatibility with frontend bundlers.

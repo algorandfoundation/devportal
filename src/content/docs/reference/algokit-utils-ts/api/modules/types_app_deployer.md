@@ -1,9 +1,8 @@
 ---
 title: types/app-deployer
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/app-deployer
-
-
 
 ## Table of contents
 
@@ -29,7 +28,7 @@ title: types/app-deployer
 
 ### AppDeployParams
 
-Ƭ **AppDeployParams**: [`Expand`](#expand)\<[`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) & \{ `createParams`: [`AppCreateParams`](#appcreateparams) \| [`AppCreateMethodCall`](#appcreatemethodcall) ; `deleteParams`: [`DeployAppDeleteParams`](#deployappdeleteparams) \| [`DeployAppDeleteMethodCall`](#deployappdeletemethodcall) ; `deployTimeParams?`: [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/) ; `existingDeployments?`: [`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/) ; `ignoreCache?`: `boolean` ; `metadata`: [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/) ; `onSchemaBreak?`: ``"replace"`` \| ``"fail"`` \| ``"append"`` \| [`OnSchemaBreak`](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/) ; `onUpdate?`: ``"update"`` \| ``"replace"`` \| ``"fail"`` \| ``"append"`` \| [`OnUpdate`](/reference/algokit-utils-ts/api/enums/types_apponupdate/) ; `updateParams`: [`DeployAppUpdateParams`](#deployappupdateparams) \| [`DeployAppUpdateMethodCall`](#deployappupdatemethodcall)  }\>
+Ƭ **AppDeployParams**: [`Expand`](#expand)\<[`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) & \{ `createParams`: [`AppCreateParams`](#appcreateparams) \| [`AppCreateMethodCall`](#appcreatemethodcall) ; `deleteParams`: [`DeployAppDeleteParams`](#deployappdeleteparams) \| [`DeployAppDeleteMethodCall`](#deployappdeletemethodcall) ; `deployTimeParams?`: [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/) ; `existingDeployments?`: [`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/) ; `ignoreCache?`: `boolean` ; `metadata`: [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/) ; `onSchemaBreak?`: `"replace"` \| `"fail"` \| `"append"` \| [`OnSchemaBreak`](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/) ; `onUpdate?`: `"update"` \| `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/reference/algokit-utils-ts/api/enums/types_apponupdate/) ; `updateParams`: [`DeployAppUpdateParams`](#deployappupdateparams) \| [`DeployAppUpdateMethodCall`](#deployappupdatemethodcall) }\>
 
 The parameters to idempotently deploy an app
 
@@ -37,21 +36,21 @@ The parameters to idempotently deploy an app
 
 [src/types/app-deployer.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L39)
 
-___
+---
 
 ### AppDeployResult
 
-Ƭ **AppDeployResult**: [`Expand`](#expand)\<\{ `operationPerformed`: ``"create"``  } & `Omit`\<[`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/), ``"appId"`` \| ``"appAddress"``\> & [`SendAppCreateTransactionResult`](#sendappcreatetransactionresult)\> \| [`Expand`](#expand)\<\{ `operationPerformed`: ``"update"``  } & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/) & [`SendAppUpdateTransactionResult`](#sendappupdatetransactionresult)\> \| [`Expand`](#expand)\<\{ `operationPerformed`: ``"replace"``  } & `Omit`\<[`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/), ``"appId"`` \| ``"appAddress"``\> & [`SendAppCreateTransactionResult`](#sendappcreatetransactionresult) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](#abireturn)  }\> \| [`Expand`](#expand)\<\{ `operationPerformed`: ``"nothing"``  } & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/)\>
+Ƭ **AppDeployResult**: [`Expand`](#expand)\<\{ `operationPerformed`: `"create"` } & `Omit`\<[`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/), `"appId"` \| `"appAddress"`\> & [`SendAppCreateTransactionResult`](#sendappcreatetransactionresult)\> \| [`Expand`](#expand)\<\{ `operationPerformed`: `"update"` } & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/) & [`SendAppUpdateTransactionResult`](#sendappupdatetransactionresult)\> \| [`Expand`](#expand)\<\{ `operationPerformed`: `"replace"` } & `Omit`\<[`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/), `"appId"` \| `"appAddress"`\> & [`SendAppCreateTransactionResult`](#sendappcreatetransactionresult) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](#abireturn) }\> \| [`Expand`](#expand)\<\{ `operationPerformed`: `"nothing"` } & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/)\>
 
 #### Defined in
 
 [src/types/app-deployer.ts:99](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L99)
 
-___
+---
 
 ### DeployAppDeleteMethodCall
 
-Ƭ **DeployAppDeleteMethodCall**: [`Expand`](#expand)\<`Omit`\<[`AppDeleteMethodCall`](#appdeletemethodcall), ``"appId"``\>\>
+Ƭ **DeployAppDeleteMethodCall**: [`Expand`](#expand)\<`Omit`\<[`AppDeleteMethodCall`](#appdeletemethodcall), `"appId"`\>\>
 
 Params to specify a delete method call for an app deployment
 
@@ -59,11 +58,11 @@ Params to specify a delete method call for an app deployment
 
 [src/types/app-deployer.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L36)
 
-___
+---
 
 ### DeployAppDeleteParams
 
-Ƭ **DeployAppDeleteParams**: [`Expand`](#expand)\<`Omit`\<[`AppDeleteParams`](#appdeleteparams), ``"appId"``\>\>
+Ƭ **DeployAppDeleteParams**: [`Expand`](#expand)\<`Omit`\<[`AppDeleteParams`](#appdeleteparams), `"appId"`\>\>
 
 Params to specify a transaction for an app deployment
 
@@ -71,11 +70,11 @@ Params to specify a transaction for an app deployment
 
 [src/types/app-deployer.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L34)
 
-___
+---
 
 ### DeployAppUpdateMethodCall
 
-Ƭ **DeployAppUpdateMethodCall**: [`Expand`](#expand)\<`Omit`\<[`AppUpdateMethodCall`](#appupdatemethodcall), ``"appId"`` \| ``"approvalProgram"`` \| ``"clearStateProgram"``\>\>
+Ƭ **DeployAppUpdateMethodCall**: [`Expand`](#expand)\<`Omit`\<[`AppUpdateMethodCall`](#appupdatemethodcall), `"appId"` \| `"approvalProgram"` \| `"clearStateProgram"`\>\>
 
 Params to specify an update method call for an app deployment
 
@@ -83,11 +82,11 @@ Params to specify an update method call for an app deployment
 
 [src/types/app-deployer.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L32)
 
-___
+---
 
 ### DeployAppUpdateParams
 
-Ƭ **DeployAppUpdateParams**: [`Expand`](#expand)\<`Omit`\<[`AppUpdateParams`](#appupdateparams), ``"appId"`` \| ``"approvalProgram"`` \| ``"clearStateProgram"``\>\>
+Ƭ **DeployAppUpdateParams**: [`Expand`](#expand)\<`Omit`\<[`AppUpdateParams`](#appupdateparams), `"appId"` \| `"approvalProgram"` \| `"clearStateProgram"`\>\>
 
 Params to specify an update transaction for an app deployment
 

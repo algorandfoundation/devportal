@@ -1,9 +1,8 @@
 ---
 title: EnsureFundedResult
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/account-manager](/reference/algokit-utils-ts/api/modules/types_account_manager/) / EnsureFundedResult
-
-
 
 [types/account-manager](/reference/algokit-utils-ts/api/modules/types_account_manager/).EnsureFundedResult
 
@@ -28,7 +27,7 @@ The amount that was sent to the account.
 
 [src/types/account-manager.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account-manager.ts#L22)
 
-___
+---
 
 ### transactionId
 

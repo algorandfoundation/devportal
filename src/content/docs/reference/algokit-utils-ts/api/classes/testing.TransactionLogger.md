@@ -1,9 +1,8 @@
 ---
 title: TransactionLogger
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [testing](/reference/algokit-utils-ts/api/modules/testing/) / TransactionLogger
-
-
 
 [testing](/reference/algokit-utils-ts/api/modules/testing/).TransactionLogger
 
@@ -53,7 +52,7 @@ Useful for automated tests.
 
 [src/testing/transaction-logger.ts:14](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/transaction-logger.ts#L14)
 
-___
+---
 
 ### \_sentTransactionIds
 
@@ -83,12 +82,12 @@ readonly `string`[]
 
 ### \_pushTxn
 
-▸ **_pushTxn**(`stxn`): `void`
+▸ **\_pushTxn**(`stxn`): `void`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type         |
+| :----- | :----------- |
 | `stxn` | `Uint8Array` |
 
 #### Returns
@@ -99,7 +98,7 @@ readonly `string`[]
 
 [src/testing/transaction-logger.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/transaction-logger.ts#L16)
 
-___
+---
 
 ### capture
 
@@ -109,8 +108,8 @@ Return a proxy that wraps the given Algodv2 with this transaction logger.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type          | Description           |
+| :------ | :------------ | :-------------------- |
 | `algod` | `AlgodClient` | The `Algodv2` to wrap |
 
 #### Returns
@@ -123,7 +122,7 @@ The wrapped `Algodv2`, any transactions sent using this algod instance will be l
 
 [src/testing/transaction-logger.ts:54](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/transaction-logger.ts#L54)
 
-___
+---
 
 ### clear
 
@@ -139,7 +138,7 @@ Clear all logged IDs.
 
 [src/testing/transaction-logger.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/transaction-logger.ts#L34)
 
-___
+---
 
 ### logRawTransaction
 
@@ -149,8 +148,8 @@ The method that captures raw transactions and stores the transaction IDs.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                 | Type                           |
+| :------------------- | :----------------------------- |
 | `signedTransactions` | `Uint8Array` \| `Uint8Array`[] |
 
 #### Returns
@@ -161,7 +160,7 @@ The method that captures raw transactions and stores the transaction IDs.
 
 [src/testing/transaction-logger.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/transaction-logger.ts#L41)
 
-___
+---
 
 ### waitForIndexer
 
@@ -171,8 +170,8 @@ Wait until all logged transactions IDs appear in the given `Indexer`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type            |
+| :-------- | :-------------- |
 | `indexer` | `IndexerClient` |
 
 #### Returns

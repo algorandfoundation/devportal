@@ -1,28 +1,29 @@
 ---
 title: algokit_utils.applications.app_spec.arc56.Recommendations
 ---
-#### *class* algokit_utils.applications.app_spec.arc56.Recommendations
+
+#### _class_ algokit_utils.applications.app_spec.arc56.Recommendations
 
 Method execution recommendations.
 
-#### accounts *: list[str] | None* *= None*
+#### accounts _: list[str] | None_ _= None_
 
 The optional list of accounts
 
-#### apps *: list[int] | None* *= None*
+#### apps _: list[int] | None_ _= None_
 
 The optional list of applications
 
-#### assets *: list[int] | None* *= None*
+#### assets _: list[int] | None_ _= None_
 
 The optional list of assets
 
-#### boxes *: [Boxes](#algokit_utils.applications.app_spec.arc56.Boxes) | None* *= None*
+#### boxes _: [Boxes](#algokit_utils.applications.app_spec.arc56.Boxes) | None_ _= None_
 
 The optional box storage requirements
 
-#### inner_transaction_count *: int | None* *= None*
+#### inner_transaction_count _: int | None_ _= None_
 
 The optional inner transaction count
 
-#### *static* from_dict(data: dict[str, Any]) → [Recommendations](#algokit_utils.applications.app_spec.arc56.Recommendations)
+#### _static_ from_dict(data: dict[str, Any]) → [Recommendations](#algokit_utils.applications.app_spec.arc56.Recommendations)

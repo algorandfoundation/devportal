@@ -1,10 +1,11 @@
 ---
 title: algokit_utils.models.transaction.BaseArc2Note
 ---
-#### *class* algokit_utils.models.transaction.BaseArc2Note
+
+#### _class_ algokit_utils.models.transaction.BaseArc2Note
 
 Bases: `TypedDict`
 
 Base ARC-0002 transaction note structure
 
-#### dapp_name *: str*
+#### dapp_name _: str_

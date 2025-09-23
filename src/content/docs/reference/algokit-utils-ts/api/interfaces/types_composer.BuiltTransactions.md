@@ -1,9 +1,8 @@
 ---
 title: BuiltTransactions
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/composer](/reference/algokit-utils-ts/api/modules/types_composer/) / BuiltTransactions
-
-
 
 [types/composer](/reference/algokit-utils-ts/api/modules/types_composer/).BuiltTransactions
 
@@ -29,7 +28,7 @@ Any `ABIMethod` objects associated with any of the transactions in a map keyed b
 
 [src/types/composer.ts:541](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L541)
 
-___
+---
 
 ### signers
 
@@ -41,7 +40,7 @@ Any `TransactionSigner` objects associated with any of the transactions in a map
 
 [src/types/composer.ts:543](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/composer.ts#L543)
 
-___
+---
 
 ### transactions
 

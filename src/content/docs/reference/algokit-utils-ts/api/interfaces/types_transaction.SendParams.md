@@ -1,9 +1,8 @@
 ---
 title: SendParams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/) / SendParams
-
-
 
 [types/transaction](/reference/algokit-utils-ts/api/modules/types_transaction/).SendParams
 
@@ -36,7 +35,7 @@ Whether to use simulate to automatically calculate required app call inner trans
 
 [src/types/transaction.ts:142](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L142)
 
-___
+---
 
 ### maxRoundsToWaitForConfirmation
 
@@ -48,7 +47,7 @@ The number of rounds to wait for confirmation. By default until the latest lastV
 
 [src/types/transaction.ts:136](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L136)
 
-___
+---
 
 ### populateAppCallResources
 
@@ -60,7 +59,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 [src/types/transaction.ts:140](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L140)
 
-___
+---
 
 ### suppressLog
 

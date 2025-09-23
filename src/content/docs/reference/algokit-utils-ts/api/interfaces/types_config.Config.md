@@ -1,9 +1,8 @@
 ---
 title: Config
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/config](/reference/algokit-utils-ts/api/modules/types_config/) / Config
-
-
 
 [types/config](/reference/algokit-utils-ts/api/modules/types_config/).Config
 
@@ -34,7 +33,7 @@ Whether or not debug mode is enabled
 
 [src/types/config.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L9)
 
-___
+---
 
 ### events
 
@@ -44,7 +43,7 @@ ___
 
 [src/types/config.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L24)
 
-___
+---
 
 ### logger
 
@@ -56,7 +55,7 @@ Logger
 
 [src/types/config.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L7)
 
-___
+---
 
 ### maxSearchDepth
 
@@ -68,7 +67,7 @@ The maximum depth to search for a specific file
 
 [src/types/config.ts:17](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L17)
 
-___
+---
 
 ### populateAppCallResources
 
@@ -81,11 +80,11 @@ Default value is false.
 
 [src/types/config.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L22)
 
-___
+---
 
 ### projectRoot
 
-• **projectRoot**: ``null`` \| `string`
+• **projectRoot**: `null` \| `string`
 
 The path to the project root directory
 
@@ -93,7 +92,7 @@ The path to the project root directory
 
 [src/types/config.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L11)
 
-___
+---
 
 ### traceAll
 
@@ -105,7 +104,7 @@ Indicates whether to trace all operations
 
 [src/types/config.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/config.ts#L13)
 
-___
+---
 
 ### traceBufferSizeMb
 

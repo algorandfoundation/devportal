@@ -1,9 +1,8 @@
 ---
 title: types/lifecycle-events
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/lifecycle-events
-
-
 
 ## Table of contents
 
@@ -27,10 +26,10 @@ title: types/lifecycle-events
 
 #### Type declaration
 
-| Name | Type |
-| :------ | :------ |
-| `AppCompiled` | [`TealSourcesDebugEventData`](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcesdebugeventdata/) |
-| `TxnGroupSimulated` | [`AVMTracesEventData`](/reference/algokit-utils-ts/api/interfaces/types_debuggingavmtraceseventdata/) |
+| Name                | Type                                                                                                                |
+| :------------------ | :------------------------------------------------------------------------------------------------------------------ |
+| `AppCompiled`       | [`TealSourcesDebugEventData`](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcesdebugeventdata/) |
+| `TxnGroupSimulated` | [`AVMTracesEventData`](/reference/algokit-utils-ts/api/interfaces/types_debuggingavmtraceseventdata/)               |
 
 #### Defined in
 

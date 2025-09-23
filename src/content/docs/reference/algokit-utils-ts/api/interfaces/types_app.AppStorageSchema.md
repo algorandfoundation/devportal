@@ -1,9 +1,8 @@
 ---
 title: AppStorageSchema
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / AppStorageSchema
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).AppStorageSchema
 
@@ -31,7 +30,7 @@ Any extra pages that are needed for the smart contract; if left blank then the r
 
 [src/types/app.ts:209](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L209)
 
-___
+---
 
 ### globalByteSlices
 
@@ -43,7 +42,7 @@ Restricts number of byte slices in global state
 
 [src/types/app.ts:207](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L207)
 
-___
+---
 
 ### globalInts
 
@@ -55,7 +54,7 @@ Restricts number of ints in global state
 
 [src/types/app.ts:205](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L205)
 
-___
+---
 
 ### localByteSlices
 
@@ -67,7 +66,7 @@ Restricts number of byte slices in per-user local state
 
 [src/types/app.ts:203](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L203)
 
-___
+---
 
 ### localInts
 

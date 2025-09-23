@@ -1,9 +1,8 @@
 ---
 title: LogicError
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/logic-error](/reference/algokit-utils-ts/api/modules/types_logic_error/) / LogicError
-
-
 
 [types/logic-error](/reference/algokit-utils-ts/api/modules/types_logic_error/).LogicError
 
@@ -30,7 +29,7 @@ Wraps key functionality around processing logic errors
 - [name](#name)
 - [program](#program)
 - [stack](#stack)
-- [teal\_line](#teal_line)
+- [teal_line](#teal_line)
 - [prepareStackTrace](#preparestacktrace)
 - [stackTraceLimit](#stacktracelimit)
 
@@ -49,11 +48,11 @@ Create a new logic error object.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `errorDetails` | [`LogicErrorDetails`](/reference/algokit-utils-ts/api/interfaces/types_logic_errorlogicerrordetails/) | The details of the logic error |
-| `program` | `string`[] | The TEAL source code, split by line |
-| `getLineForPc` | (`pc`: `number`) => `undefined` \| `number` | The source map of the TEAL source code |
+| Name           | Type                                                                                                  | Description                            |
+| :------------- | :---------------------------------------------------------------------------------------------------- | :------------------------------------- |
+| `errorDetails` | [`LogicErrorDetails`](/reference/algokit-utils-ts/api/interfaces/types_logic_errorlogicerrordetails/) | The details of the logic error         |
+| `program`      | `string`[]                                                                                            | The TEAL source code, split by line    |
+| `getLineForPc` | (`pc`: `number`) => `undefined` \| `number`                                                           | The source map of the TEAL source code |
 
 #### Returns
 
@@ -81,7 +80,7 @@ Error.cause
 
 node_modules/typescript/lib/lib.es2022.error.d.ts:24
 
-___
+---
 
 ### led
 
@@ -91,7 +90,7 @@ ___
 
 [src/types/logic-error.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logic-error.ts#L44)
 
-___
+---
 
 ### lines
 
@@ -101,7 +100,7 @@ ___
 
 [src/types/logic-error.ts:46](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logic-error.ts#L46)
 
-___
+---
 
 ### message
 
@@ -115,7 +114,7 @@ Error.message
 
 node_modules/typescript/lib/lib.es5.d.ts:1077
 
-___
+---
 
 ### name
 
@@ -129,7 +128,7 @@ Error.name
 
 node_modules/typescript/lib/lib.es5.d.ts:1076
 
-___
+---
 
 ### program
 
@@ -139,7 +138,7 @@ ___
 
 [src/types/logic-error.ts:45](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logic-error.ts#L45)
 
-___
+---
 
 ### stack
 
@@ -153,17 +152,17 @@ Error.stack
 
 [src/types/logic-error.ts:48](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logic-error.ts#L48)
 
-___
+---
 
-### teal\_line
+### teal_line
 
-• **teal\_line**: `number` = `0`
+• **teal_line**: `number` = `0`
 
 #### Defined in
 
 [src/types/logic-error.ts:47](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/logic-error.ts#L47)
 
-___
+---
 
 ### prepareStackTrace
 
@@ -181,9 +180,9 @@ https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | `Error` |
+| Name          | Type         |
+| :------------ | :----------- |
+| `err`         | `Error`      |
 | `stackTraces` | `CallSite`[] |
 
 ##### Returns
@@ -198,7 +197,7 @@ Error.prepareStackTrace
 
 node_modules/@types/node/globals.d.ts:28
 
-___
+---
 
 ### stackTraceLimit
 
@@ -222,9 +221,9 @@ Create .stack property on a target object
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `targetObject` | `object` |
+| Name              | Type       |
+| :---------------- | :--------- |
+| `targetObject`    | `object`   |
 | `constructorOpt?` | `Function` |
 
 #### Returns
@@ -239,7 +238,7 @@ Error.captureStackTrace
 
 node_modules/@types/node/globals.d.ts:21
 
-___
+---
 
 ### parseLogicError
 
@@ -249,8 +248,8 @@ Takes an error message and parses out the details of any logic errors in there.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name    | Type  | Description                |
+| :------ | :---- | :------------------------- |
 | `error` | `any` | The error message to parse |
 
 #### Returns

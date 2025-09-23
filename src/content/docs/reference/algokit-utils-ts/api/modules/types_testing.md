@@ -1,9 +1,8 @@
 ---
 title: types/testing
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/testing
-
-
 
 ## Table of contents
 

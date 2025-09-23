@@ -1,9 +1,8 @@
 ---
 title: types/expand
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / types/expand
-
-
 
 ## Table of contents
 
@@ -23,8 +22,8 @@ See https://stackoverflow.com/a/69288824
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Defined in
 

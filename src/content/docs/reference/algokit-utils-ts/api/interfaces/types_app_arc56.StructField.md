@@ -1,9 +1,8 @@
 ---
 title: StructField
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-arc56](/reference/algokit-utils-ts/api/modules/types_app_arc56/) / StructField
-
-
 
 [types/app-arc56](/reference/algokit-utils-ts/api/modules/types_app_arc56/).StructField
 
@@ -28,7 +27,7 @@ The name of the struct field
 
 [src/types/app-arc56.ts:473](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L473)
 
-___
+---
 
 ### type
 

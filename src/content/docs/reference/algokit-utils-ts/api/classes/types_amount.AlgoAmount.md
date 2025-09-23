@@ -1,9 +1,8 @@
 ---
 title: AlgoAmount
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/amount](/reference/algokit-utils-ts/api/modules/types_amount/) / AlgoAmount
-
-
 
 [types/amount](/reference/algokit-utils-ts/api/modules/types_amount/).AlgoAmount
 
@@ -45,9 +44,9 @@ Create a new `AlgoAmount` instance.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `amount` | \{ `algos`: `number` \| `bigint`  } \| \{ `algo`: `number` \| `bigint`  } \| \{ `microAlgos`: `number` \| `bigint`  } \| \{ `microAlgo`: `number` \| `bigint`  } | An object specifying the amount in Algo or µALGO. Use the key 'algo' for Algo amounts and 'microAlgo' for µALGO. |
+| Name     | Type                                                                                                                                                         | Description                                                                                                      |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
+| `amount` | \{ `algos`: `number` \| `bigint` } \| \{ `algo`: `number` \| `bigint` } \| \{ `microAlgos`: `number` \| `bigint` } \| \{ `microAlgo`: `number` \| `bigint` } | An object specifying the amount in Algo or µALGO. Use the key 'algo' for Algo amounts and 'microAlgo' for µALGO. |
 
 #### Returns
 
@@ -91,7 +90,7 @@ Return the amount as a number in Algo
 
 [src/types/amount.ts:23](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/amount.ts#L23)
 
-___
+---
 
 ### algos
 
@@ -107,7 +106,7 @@ Return the amount as a number in Algo
 
 [src/types/amount.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/amount.ts#L18)
 
-___
+---
 
 ### microAlgo
 
@@ -123,7 +122,7 @@ Return the amount as a number in µAlgo
 
 [src/types/amount.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/amount.ts#L13)
 
-___
+---
 
 ### microAlgos
 
@@ -153,7 +152,7 @@ Return the amount as a number in µAlgo
 
 [src/types/amount.ts:50](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/amount.ts#L50)
 
-___
+---
 
 ### valueOf
 
@@ -171,7 +170,7 @@ the algos or microAlgos properties
 
 [src/types/amount.ts:58](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/amount.ts#L58)
 
-___
+---
 
 ### Algo
 
@@ -181,8 +180,8 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                 |
+| :------- | :------------------- |
 | `amount` | `number` \| `bigint` |
 
 #### Returns
@@ -193,7 +192,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 [src/types/amount.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/amount.ts#L68)
 
-___
+---
 
 ### Algos
 
@@ -203,8 +202,8 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                 |
+| :------- | :------------------- |
 | `amount` | `number` \| `bigint` |
 
 #### Returns
@@ -215,7 +214,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 [src/types/amount.ts:63](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/amount.ts#L63)
 
-___
+---
 
 ### MicroAlgo
 
@@ -225,8 +224,8 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                 |
+| :------- | :------------------- |
 | `amount` | `number` \| `bigint` |
 
 #### Returns
@@ -237,7 +236,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 [src/types/amount.ts:78](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/amount.ts#L78)
 
-___
+---
 
 ### MicroAlgos
 
@@ -247,8 +246,8 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                 |
+| :------- | :------------------- |
 | `amount` | `number` \| `bigint` |
 
 #### Returns

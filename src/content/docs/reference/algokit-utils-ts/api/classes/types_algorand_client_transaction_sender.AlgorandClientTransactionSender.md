@@ -1,9 +1,8 @@
 ---
 title: AlgorandClientTransactionSender
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/algorand-client-transaction-sender](/reference/algokit-utils-ts/api/modules/types_algorand_client_transaction_sender/) / AlgorandClientTransactionSender
-
-
 
 [types/algorand-client-transaction-sender](/reference/algokit-utils-ts/api/modules/types_algorand_client_transaction_sender/).AlgorandClientTransactionSender
 
@@ -57,11 +56,11 @@ Creates a new `AlgorandClientSender`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `newGroup` | () => [`TransactionComposer`]() | A lambda that starts a new `TransactionComposer` transaction group |
-| `assetManager` | [`AssetManager`]() | An `AssetManager` instance |
-| `appManager` | [`AppManager`]() | An `AppManager` instance |
+| Name           | Type                            | Description                                                        |
+| :------------- | :------------------------------ | :----------------------------------------------------------------- |
+| `newGroup`     | () => [`TransactionComposer`]() | A lambda that starts a new `TransactionComposer` transaction group |
+| `assetManager` | [`AssetManager`]()              | An `AssetManager` instance                                         |
+| `appManager`   | [`AppManager`]()                | An `AppManager` instance                                           |
 
 #### Returns
 
@@ -70,7 +69,11 @@ Creates a new `AlgorandClientSender`
 **`Example`**
 
 ```typescript
-const transactionSender = new AlgorandClientTransactionSender(() => new TransactionComposer(), assetManager, appManager)
+const transactionSender = new AlgorandClientTransactionSender(
+  () => new TransactionComposer(),
+  assetManager,
+  appManager,
+);
 ```
 
 #### Defined in
@@ -87,7 +90,7 @@ const transactionSender = new AlgorandClientTransactionSender(() => new Transact
 
 [src/types/algorand-client-transaction-sender.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L39)
 
-___
+---
 
 ### \_assetManager
 
@@ -97,7 +100,7 @@ ___
 
 [src/types/algorand-client-transaction-sender.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L38)
 
-___
+---
 
 ### \_newGroup
 
@@ -115,11 +118,11 @@ ___
 
 [src/types/algorand-client-transaction-sender.ts:37](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L37)
 
-___
+---
 
 ### appCall
 
-• **appCall**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `onComplete?`: `OnApplicationComplete`  } & \{ `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `ClearStateOC` \| `DeleteApplicationOC`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **appCall**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `onComplete?`: `OnApplicationComplete` } & \{ `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `ClearStateOC` \| `DeleteApplicationOC` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Call a smart contract.
 
@@ -128,7 +131,7 @@ Note: you may prefer to use `algorand.client` to get an app client for more adva
 **`Example`**
 
 ```typescript
-await algorand.send.appCall({ sender: 'CREATORADDRESS' })
+await algorand.send.appCall({ sender: 'CREATORADDRESS' });
 ```
 
 **`Example`**
@@ -163,27 +166,27 @@ await algorand.send.appCall({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `onComplete?`: `OnApplicationComplete`  } & \{ `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `ClearStateOC` \| `DeleteApplicationOC`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app call transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Description                                 |
+| :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `onComplete?`: `OnApplicationComplete` } & \{ `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `ClearStateOC` \| `DeleteApplicationOC` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app call transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:731](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L731)
 
-___
+---
 
 ### appCallMethodCall
 
-• **appCallMethodCall**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **appCallMethodCall**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Call a smart contract via an ABI method.
 
@@ -196,8 +199,12 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-await algorand.send.appCallMethodCall({ sender: 'CREATORADDRESS', method: method, args: ["arg1_value"] })
+});
+await algorand.send.appCallMethodCall({
+  sender: 'CREATORADDRESS',
+  method: method,
+  args: ['arg1_value'],
+});
 ```
 
 **`Example`**
@@ -239,27 +246,27 @@ await algorand.send.appCallMethodCall({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app call transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Description                                 |
+| :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
+| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app call transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:971](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L971)
 
-___
+---
 
 ### appCreate
 
-• **appCreate**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **appCreate**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Create a smart contract.
 
@@ -268,8 +275,12 @@ Note: you may prefer to use `algorand.client` to get an app client for more adva
 **`Example`**
 
 ```typescript
-const result = await algorand.send.appCreate({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE' })
-const createdAppId = result.appId
+const result = await algorand.send.appCreate({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+});
+const createdAppId = result.appId;
 ```
 
 **`Example`**
@@ -313,27 +324,27 @@ await algorand.send.appCreate({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app creation transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Description                                     |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app creation transaction |
 
 ##### Returns
 
-`Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:594](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L594)
 
-___
+---
 
 ### appCreateMethodCall
 
-• **appCreateMethodCall**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **appCreateMethodCall**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Create a smart contract via an ABI method.
 
@@ -346,9 +357,15 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-const result = await algorand.send.appCreateMethodCall({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE', method: method, args: ["arg1_value"] })
-const createdAppId = result.appId
+});
+const result = await algorand.send.appCreateMethodCall({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+  method: method,
+  args: ['arg1_value'],
+});
+const createdAppId = result.appId;
 ```
 
 **`Example`**
@@ -399,27 +416,27 @@ await algorand.send.appCreateMethodCall({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app creation transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Description                                     |
+| :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app creation transaction |
 
 ##### Returns
 
-`Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:798](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L798)
 
-___
+---
 
 ### appDelete
 
-• **appDelete**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `onComplete?`: `OnApplicationComplete`  } & \{ `onComplete?`: `DeleteApplicationOC`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **appDelete**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `onComplete?`: `OnApplicationComplete` } & \{ `onComplete?`: `DeleteApplicationOC` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Delete a smart contract.
 
@@ -428,7 +445,7 @@ Note: you may prefer to use `algorand.client` to get an app client for more adva
 **`Example`**
 
 ```typescript
-await algorand.send.appDelete({ sender: 'CREATORADDRESS' })
+await algorand.send.appDelete({ sender: 'CREATORADDRESS' });
 ```
 
 **`Example`**
@@ -463,27 +480,27 @@ await algorand.send.appDelete({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `onComplete?`: `OnApplicationComplete`  } & \{ `onComplete?`: `DeleteApplicationOC`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app deletion transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Description                                     |
+| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `onComplete?`: `OnApplicationComplete` } & \{ `onComplete?`: `DeleteApplicationOC` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app deletion transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:686](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L686)
 
-___
+---
 
 ### appDeleteMethodCall
 
-• **appDeleteMethodCall**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **appDeleteMethodCall**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Delete a smart contract via an ABI method.
 
@@ -496,8 +513,12 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-await algorand.send.appDeleteMethodCall({ sender: 'CREATORADDRESS', method: method, args: ["arg1_value"] })
+});
+await algorand.send.appDeleteMethodCall({
+  sender: 'CREATORADDRESS',
+  method: method,
+  args: ['arg1_value'],
+});
 ```
 
 **`Example`**
@@ -539,27 +560,27 @@ await algorand.send.appDeleteMethodCall({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app deletion transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Description                                     |
+| :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app deletion transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:914](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L914)
 
-___
+---
 
 ### appUpdate
 
-• **appUpdate**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **appUpdate**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Update a smart contract.
 
@@ -568,7 +589,11 @@ Note: you may prefer to use `algorand.client` to get an app client for more adva
 **`Example`**
 
 ```typescript
-await algorand.send.appUpdate({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE' })
+await algorand.send.appUpdate({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+});
 ```
 
 **`Example`**
@@ -605,27 +630,27 @@ await algorand.send.appUpdate({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app update transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Description                                   |
+| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------- |
+| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app update transaction |
 
 ##### Returns
 
-`Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:641](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L641)
 
-___
+---
 
 ### appUpdateMethodCall
 
-• **appUpdateMethodCall**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **appUpdateMethodCall**: (`params`: \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Update a smart contract via an ABI method.
 
@@ -638,8 +663,14 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-})
-await algorand.send.appUpdateMethodCall({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE', method: method, args: ["arg1_value"] })
+});
+await algorand.send.appUpdateMethodCall({
+  sender: 'CREATORADDRESS',
+  approvalProgram: 'TEALCODE',
+  clearStateProgram: 'TEALCODE',
+  method: method,
+  args: ['arg1_value'],
+});
 ```
 
 **`Example`**
@@ -683,27 +714,27 @@ await algorand.send.appUpdateMethodCall({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app update transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Description                                   |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------- |
+| `params` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } & \{ `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `method`: `ABIMethod` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the app update transaction |
 
 ##### Returns
 
-`Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:857](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L857)
 
-___
+---
 
 ### assetConfig
 
-• **assetConfig**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint` ; `clawback?`: `string` \| `Address` ; `freeze?`: `string` \| `Address` ; `manager`: `undefined` \| `string` \| `Address` ; `reserve?`: `string` \| `Address`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **assetConfig**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint` ; `clawback?`: `string` \| `Address` ; `freeze?`: `string` \| `Address` ; `manager`: `undefined` \| `string` \| `Address` ; `reserve?`: `string` \| `Address` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Configure an existing Algorand Standard Asset.
 
@@ -714,7 +745,11 @@ all fields are immutable from that point forward.
 **`Example`**
 
 ```typescript
-await algorand.send.assetConfig({ sender: "MANAGERADDRESS", assetId: 123456n, manager: "MANAGERADDRESS" })
+await algorand.send.assetConfig({
+  sender: 'MANAGERADDRESS',
+  assetId: 123456n,
+  manager: 'MANAGERADDRESS',
+});
 ```
 
 **`Example`**
@@ -743,32 +778,32 @@ await algorand.send.assetConfig({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint` ; `clawback?`: `string` \| `Address` ; `freeze?`: `string` \| `Address` ; `manager`: `undefined` \| `string` \| `Address` ; `reserve?`: `string` \| `Address`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset config transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                            | Description                                     |
+| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint` ; `clawback?`: `string` \| `Address` ; `freeze?`: `string` \| `Address` ; `manager`: `undefined` \| `string` \| `Address` ; `reserve?`: `string` \| `Address` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset config transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:304](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L304)
 
-___
+---
 
 ### assetDestroy
 
-• **assetDestroy**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **assetDestroy**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Destroys an Algorand Standard Asset.
 
@@ -779,7 +814,7 @@ the asset can be deleted.
 **`Example`**
 
 ```typescript
-await algorand.send.assetDestroy({ sender: "MANAGERADDRESS", assetId: 123456n })
+await algorand.send.assetDestroy({ sender: 'MANAGERADDRESS', assetId: 123456n });
 ```
 
 **`Example`**
@@ -804,39 +839,44 @@ await algorand.send.assetDestroy({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset destroy transaction |
+| Name     | Type                                                                                                                                                                                                                              | Description                                      |
+| :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------- |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset destroy transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:384](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L384)
 
-___
+---
 
 ### assetFreeze
 
-• **assetFreeze**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `account`: `string` \| `Address` ; `assetId`: `bigint` ; `frozen`: `boolean`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **assetFreeze**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `account`: `string` \| `Address` ; `assetId`: `bigint` ; `frozen`: `boolean` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Freeze or unfreeze an Algorand Standard Asset for an account.
 
 **`Example`**
 
 ```typescript
-await algorand.send.assetFreeze({ sender: "MANAGERADDRESS", assetId: 123456n, account: "ACCOUNTADDRESS", frozen: true })
+await algorand.send.assetFreeze({
+  sender: 'MANAGERADDRESS',
+  assetId: 123456n,
+  account: 'ACCOUNTADDRESS',
+  frozen: true,
+});
 ```
 
 **`Example`**
@@ -863,39 +903,39 @@ await algorand.send.assetFreeze({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `account`: `string` \| `Address` ; `assetId`: `bigint` ; `frozen`: `boolean`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset freeze transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                       | Description                                     |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `account`: `string` \| `Address` ; `assetId`: `bigint` ; `frozen`: `boolean` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset freeze transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:343](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L343)
 
-___
+---
 
 ### assetOptIn
 
-• **assetOptIn**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **assetOptIn**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Opt an account into an Algorand Standard Asset.
 
 **`Example`**
 
 ```typescript
-await algorand.send.assetOptIn({ sender: "SENDERADDRESS", assetId: 123456n })
+await algorand.send.assetOptIn({ sender: 'SENDERADDRESS', assetId: 123456n });
 ```
 
 **`Example`**
@@ -920,39 +960,44 @@ await algorand.send.assetOptIn({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset opt-in transaction |
+| Name     | Type                                                                                                                                                                                                                              | Description                                     |
+| :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetId`: `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset opt-in transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:464](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L464)
 
-___
+---
 
 ### assetTransfer
 
-• **assetTransfer**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `amount`: `bigint` ; `assetId`: `bigint` ; `clawbackTarget?`: `string` \| `Address` ; `closeAssetTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **assetTransfer**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `amount`: `bigint` ; `assetId`: `bigint` ; `clawbackTarget?`: `string` \| `Address` ; `closeAssetTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Transfer an Algorand Standard Asset.
 
 **`Example`**
 
 ```typescript
-await algorand.send.assetTransfer({ sender: "HOLDERADDRESS", assetId: 123456n, amount: 1n, receiver: "RECEIVERADDRESS" })
+await algorand.send.assetTransfer({
+  sender: 'HOLDERADDRESS',
+  assetId: 123456n,
+  amount: 1n,
+  receiver: 'RECEIVERADDRESS',
+});
 ```
 
 **`Example`**
@@ -987,27 +1032,27 @@ await algorand.send.assetTransfer({
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `amount`: `bigint` ; `assetId`: `bigint` ; `clawbackTarget?`: `string` \| `Address` ; `closeAssetTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset transfer transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                           | Description                                       |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------ |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `amount`: `bigint` ; `assetId`: `bigint` ; `clawbackTarget?`: `string` \| `Address` ; `closeAssetTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset transfer transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:426](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L426)
 
-___
+---
 
 ### offlineKeyRegistration
 
-• **offlineKeyRegistration**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `preventAccountFromEverParticipatingAgain?`: `boolean`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **offlineKeyRegistration**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `preventAccountFromEverParticipatingAgain?`: `boolean` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Register an offline key.
 
@@ -1016,7 +1061,7 @@ Register an offline key.
 ```typescript
 const result = await algorand.send.offlineKeyRegistration({
   sender: 'SENDERADDRESS',
-})
+});
 ```
 
 **`Example`**
@@ -1036,32 +1081,32 @@ const result = await algorand.send.offlineKeyRegistration({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `preventAccountFromEverParticipatingAgain?`: `boolean`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the key registration transaction |
+| Name     | Type                                                                                                                                                                                                                                                                 | Description                                         |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------- |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `preventAccountFromEverParticipatingAgain?`: `boolean` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the key registration transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:1050](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L1050)
 
-___
+---
 
 ### onlineKeyRegistration
 
-• **onlineKeyRegistration**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `selectionKey`: `Uint8Array` ; `stateProofKey?`: `Uint8Array` ; `voteFirst`: `bigint` ; `voteKey`: `Uint8Array` ; `voteKeyDilution`: `bigint` ; `voteLast`: `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **onlineKeyRegistration**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `selectionKey`: `Uint8Array` ; `stateProofKey?`: `Uint8Array` ; `voteFirst`: `bigint` ; `voteKey`: `Uint8Array` ; `voteKeyDilution`: `bigint` ; `voteLast`: `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Register an online key.
 
@@ -1070,13 +1115,13 @@ Register an online key.
 ```typescript
 const result = await algorand.send.onlineKeyRegistration({
   sender: 'SENDERADDRESS',
-  voteKey: Uint8Array.from(Buffer.from("voteKeyBase64", 'base64')),
-  selectionKey: Uint8Array.from(Buffer.from("selectionKeyBase64", 'base64')),
-  stateProofKey: Uint8Array.from(Buffer.from("stateProofKeyBase64", 'base64')),
+  voteKey: Uint8Array.from(Buffer.from('voteKeyBase64', 'base64')),
+  selectionKey: Uint8Array.from(Buffer.from('selectionKeyBase64', 'base64')),
+  stateProofKey: Uint8Array.from(Buffer.from('stateProofKeyBase64', 'base64')),
   voteFirst: 1n,
   voteLast: 1000n,
   voteKeyDilution: 1n,
-})
+});
 ```
 
 **`Example`**
@@ -1084,9 +1129,9 @@ const result = await algorand.send.onlineKeyRegistration({
 ```typescript
 const result = await algorand.send.onlineKeyRegistration({
   sender: 'SENDERADDRESS',
-  voteKey: Uint8Array.from(Buffer.from("voteKeyBase64", 'base64')),
-  selectionKey: Uint8Array.from(Buffer.from("selectionKeyBase64", 'base64')),
-  stateProofKey: Uint8Array.from(Buffer.from("stateProofKeyBase64", 'base64')),
+  voteKey: Uint8Array.from(Buffer.from('voteKeyBase64', 'base64')),
+  selectionKey: Uint8Array.from(Buffer.from('selectionKeyBase64', 'base64')),
+  stateProofKey: Uint8Array.from(Buffer.from('stateProofKeyBase64', 'base64')),
   voteFirst: 1n,
   voteLast: 1000n,
   voteKeyDilution: 1n,
@@ -1102,32 +1147,32 @@ const result = await algorand.send.onlineKeyRegistration({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-})
+});
 ```
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `selectionKey`: `Uint8Array` ; `stateProofKey?`: `Uint8Array` ; `voteFirst`: `bigint` ; `voteKey`: `Uint8Array` ; `voteKeyDilution`: `bigint` ; `voteLast`: `bigint`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the key registration transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                               | Description                                         |
+| :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------- |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `selectionKey`: `Uint8Array` ; `stateProofKey?`: `Uint8Array` ; `voteFirst`: `bigint` ; `voteKey`: `Uint8Array` ; `voteKeyDilution`: `bigint` ; `voteLast`: `bigint` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the key registration transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:1017](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L1017)
 
-___
+---
 
 ### payment
 
-• **payment**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `amount`: [`AlgoAmount`]() ; `closeRemainderTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+• **payment**: (`params`: [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `amount`: [`AlgoAmount`]() ; `closeRemainderTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Send a payment transaction to transfer Algo between accounts.
 
@@ -1135,10 +1180,10 @@ Send a payment transaction to transfer Algo between accounts.
 
 ```typescript
 const result = await algorand.send.payment({
- sender: 'SENDERADDRESS',
- receiver: 'RECEIVERADDRESS',
- amount: (4).algo(),
-})
+  sender: 'SENDERADDRESS',
+  receiver: 'RECEIVERADDRESS',
+  amount: (4).algo(),
+});
 ```
 
 **`Example`**
@@ -1167,22 +1212,22 @@ const result = await algorand.send.payment({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `amount`: [`AlgoAmount`]() ; `closeRemainderTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the payment transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                      | Description                                |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------- |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `amount`: [`AlgoAmount`]() ; `closeRemainderTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the payment transaction |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
@@ -1192,171 +1237,171 @@ const result = await algorand.send.payment({
 
 ### \_send
 
-▸ **_send**\<`T`\>(`c`, `log?`): (`params`: `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ **\_send**\<`T`\>(`c`, `log?`): (`params`: `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `c` | (`c`: [`TransactionComposer`]()) => (`params`: `T`) => [`TransactionComposer`]() |
-| `log?` | `Object` |
-| `log.postLog?` | (`params`: `T`, `result`: \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }) => `string` |
-| `log.preLog?` | (`params`: `T`, `transaction`: `Transaction`) => `string` |
+| Name           | Type                                                                                                                                                                                                                                                                                                                                                |
+| :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `c`            | (`c`: [`TransactionComposer`]()) => (`params`: `T`) => [`TransactionComposer`]()                                                                                                                                                                                                                                                                    |
+| `log?`         | `Object`                                                                                                                                                                                                                                                                                                                                            |
+| `log.postLog?` | (`params`: `T`, `result`: \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }) => `string` |
+| `log.preLog?`  | (`params`: `T`, `transaction`: `Transaction`) => `string`                                                                                                                                                                                                                                                                                           |
 
 #### Returns
 
 `fn`
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                                                                                          |
+| :------- | :-------------------------------------------------------------------------------------------- |
 | `params` | `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L68)
 
-___
+---
 
 ### \_sendAppCall
 
-▸ **_sendAppCall**\<`T`\>(`c`, `log?`): (`params`: `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ **\_sendAppCall**\<`T`\>(`c`, `log?`): (`params`: `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } \| [`AppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallparams) \| [`AppDeleteParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appdeleteparams) \| [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) \| [`AppUpdateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdatemethodcall) \| [`AppDeleteMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appdeletemethodcall) \| [`AppCallMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallmethodcall) |
+| Name | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| :--- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } \| [`AppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallparams) \| [`AppDeleteParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appdeleteparams) \| [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) \| [`AppUpdateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdatemethodcall) \| [`AppDeleteMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appdeletemethodcall) \| [`AppCallMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallmethodcall) |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `c` | (`c`: [`TransactionComposer`]()) => (`params`: `T`) => [`TransactionComposer`]() |
-| `log?` | `Object` |
-| `log.postLog?` | (`params`: `T`, `result`: \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }) => `string` |
-| `log.preLog?` | (`params`: `T`, `transaction`: `Transaction`) => `string` |
+| Name           | Type                                                                                                                                                                                                                                                                                                                                                |
+| :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `c`            | (`c`: [`TransactionComposer`]()) => (`params`: `T`) => [`TransactionComposer`]()                                                                                                                                                                                                                                                                    |
+| `log?`         | `Object`                                                                                                                                                                                                                                                                                                                                            |
+| `log.postLog?` | (`params`: `T`, `result`: \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }) => `string` |
+| `log.preLog?`  | (`params`: `T`, `transaction`: `Transaction`) => `string`                                                                                                                                                                                                                                                                                           |
 
 #### Returns
 
 `fn`
 
-▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                                                                                          |
+| :------- | :-------------------------------------------------------------------------------------------- |
 | `params` | `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) |
 
 ##### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:103](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L103)
 
-___
+---
 
 ### \_sendAppCreateCall
 
-▸ **_sendAppCreateCall**\<`T`\>(`c`, `log?`): (`params`: `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ **\_sendAppCreateCall**\<`T`\>(`c`, `log?`): (`params`: `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } \| [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) |
+| Name | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| :--- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } \| [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `c` | (`c`: [`TransactionComposer`]()) => (`params`: `T`) => [`TransactionComposer`]() |
-| `log?` | `Object` |
-| `log.postLog?` | (`params`: `T`, `result`: \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }) => `string` |
-| `log.preLog?` | (`params`: `T`, `transaction`: `Transaction`) => `string` |
+| Name           | Type                                                                                                                                                                                                                                                                                                                                                |
+| :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `c`            | (`c`: [`TransactionComposer`]()) => (`params`: `T`) => [`TransactionComposer`]()                                                                                                                                                                                                                                                                    |
+| `log?`         | `Object`                                                                                                                                                                                                                                                                                                                                            |
+| `log.postLog?` | (`params`: `T`, `result`: \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }) => `string` |
+| `log.preLog?`  | (`params`: `T`, `transaction`: `Transaction`) => `string`                                                                                                                                                                                                                                                                                           |
 
 #### Returns
 
 `fn`
 
-▸ (`params`): `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                                                                                          |
+| :------- | :-------------------------------------------------------------------------------------------- |
 | `params` | `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) |
 
 ##### Returns
 
-`Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `appAddress`: `Address` ; `appId`: `bigint` ; `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:146](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L146)
 
-___
+---
 
 ### \_sendAppUpdateCall
 
-▸ **_sendAppUpdateCall**\<`T`\>(`c`, `log?`): (`params`: `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ **\_sendAppUpdateCall**\<`T`\>(`c`, `log?`): (`params`: `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/)) => `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } \| [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) \| [`AppUpdateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdatemethodcall) |
+| Name | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| :--- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } \| [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) \| [`AppUpdateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appupdatemethodcall) |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `c` | (`c`: [`TransactionComposer`]()) => (`params`: `T`) => [`TransactionComposer`]() |
-| `log?` | `Object` |
-| `log.postLog?` | (`params`: `T`, `result`: \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }) => `string` |
-| `log.preLog?` | (`params`: `T`, `transaction`: `Transaction`) => `string` |
+| Name           | Type                                                                                                                                                                                                                                                                                                                                                |
+| :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `c`            | (`c`: [`TransactionComposer`]()) => (`params`: `T`) => [`TransactionComposer`]()                                                                                                                                                                                                                                                                    |
+| `log?`         | `Object`                                                                                                                                                                                                                                                                                                                                            |
+| `log.postLog?` | (`params`: `T`, `result`: \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }) => `string` |
+| `log.preLog?`  | (`params`: `T`, `transaction`: `Transaction`) => `string`                                                                                                                                                                                                                                                                                           |
 
 #### Returns
 
 `fn`
 
-▸ (`params`): `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ (`params`): `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                                                                                          |
+| :------- | :-------------------------------------------------------------------------------------------- |
 | `params` | `T` & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) |
 
 ##### Returns
 
-`Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `compiledClear?`: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:127](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L127)
 
-___
+---
 
 ### assetCreate
 
-▸ **assetCreate**(`params`): `Promise`\<\{ `assetId`: `bigint` ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ **assetCreate**(`params`): `Promise`\<\{ `assetId`: `bigint` ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Create a new Algorand Standard Asset.
 
@@ -1365,20 +1410,20 @@ opted in to the asset and will hold all units after creation.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetName?`: `string` ; `clawback?`: `string` \| `Address` ; `decimals?`: `number` ; `defaultFrozen?`: `boolean` ; `freeze?`: `string` \| `Address` ; `manager?`: `string` \| `Address` ; `metadataHash?`: `string` \| `Uint8Array` ; `reserve?`: `string` \| `Address` ; `total`: `bigint` ; `unitName?`: `string` ; `url?`: `string`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset creation transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                       |
+| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------ |
+| `params` | [`CommonTransactionParams`](/reference/algokit-utils-ts/api/modules/types_composer/#commontransactionparams) & \{ `assetName?`: `string` ; `clawback?`: `string` \| `Address` ; `decimals?`: `number` ; `defaultFrozen?`: `boolean` ; `freeze?`: `string` \| `Address` ; `manager?`: `string` \| `Address` ; `metadataHash?`: `string` \| `Uint8Array` ; `reserve?`: `string` \| `Address` ; `total`: `bigint` ; `unitName?`: `string` ; `url?`: `string` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset creation transaction |
 
 #### Returns
 
-`Promise`\<\{ `assetId`: `bigint` ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `assetId`: `bigint` ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 The result of the asset create transaction and the transaction that was sent
 
 **`Example`**
 
 ```typescript
-await algorand.send.assetCreate({ sender: "CREATORADDRESS", total: 100n})
+await algorand.send.assetCreate({ sender: 'CREATORADDRESS', total: 100n });
 ```
 
 **`Example`**
@@ -1413,47 +1458,56 @@ await algorand.send.assetCreate({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:255](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L255)
 
-___
+---
 
 ### assetOptOut
 
-▸ **assetOptOut**(`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+▸ **assetOptOut**(`params`): `Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 Opt an account out of an Algorand Standard Asset.
 
-*Note:* If the account has a balance of the asset,
+_Note:_ If the account has a balance of the asset,
 it will not be able to opt-out unless `ensureZeroBalance`
 is set to `false` (but then the account will lose the assets).
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `params` | `Omit`\<[`AssetOptOutParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetoptoutparams), ``"creator"``\> & \{ `creator?`: `string` \| `Address` ; `ensureZeroBalance`: `boolean`  } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset opt-out transaction |
+| Name     | Type                                                                                                                                                                                                                                                                                        | Description                                      |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------- |
+| `params` | `Omit`\<[`AssetOptOutParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetoptoutparams), `"creator"`\> & \{ `creator?`: `string` \| `Address` ; `ensureZeroBalance`: `boolean` } & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) | The parameters for the asset opt-out transaction |
 
 #### Returns
 
-`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[]  }\>
+`Promise`\<\{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] }\>
 
 The result of the asset opt-out transaction and the transaction that was sent
 
 **`Example`**
 
 ```typescript
-await algorand.send.assetOptOut({ sender: "SENDERADDRESS", assetId: 123456n, ensureZeroBalance: true })
+await algorand.send.assetOptOut({
+  sender: 'SENDERADDRESS',
+  assetId: 123456n,
+  ensureZeroBalance: true,
+});
 ```
 
 **`Example`**
 
 ```typescript
-await algorand.send.assetOptOut({ sender: "SENDERADDRESS", creator: "CREATORADDRESS", assetId: 123456n, ensureZeroBalance: true })
+await algorand.send.assetOptOut({
+  sender: 'SENDERADDRESS',
+  creator: 'CREATORADDRESS',
+  assetId: 123456n,
+  ensureZeroBalance: true,
+});
 ```
 
 **`Example`**
@@ -1480,14 +1534,14 @@ await algorand.send.assetOptOut({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
 #### Defined in
 
 [src/types/algorand-client-transaction-sender.ts:511](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/algorand-client-transaction-sender.ts#L511)
 
-___
+---
 
 ### newGroup
 
@@ -1505,7 +1559,7 @@ A new instance of `TransactionComposer`.
 
 ```ts
 const composer = AlgorandClient.mainNet().send.newGroup();
-const result = await composer.addTransaction(payment).send()
+const result = await composer.addTransaction(payment).send();
 ```
 
 #### Defined in

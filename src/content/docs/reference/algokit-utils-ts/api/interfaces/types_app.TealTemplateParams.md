@@ -1,9 +1,8 @@
 ---
 title: TealTemplateParams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app](/reference/algokit-utils-ts/api/modules/types_app/) / TealTemplateParams
-
-
 
 [types/app](/reference/algokit-utils-ts/api/modules/types_app/).TealTemplateParams
 

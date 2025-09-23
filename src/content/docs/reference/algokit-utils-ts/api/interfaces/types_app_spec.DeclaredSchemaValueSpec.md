@@ -1,9 +1,8 @@
 ---
 title: DeclaredSchemaValueSpec
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-spec](/reference/algokit-utils-ts/api/modules/types_app_spec/) / DeclaredSchemaValueSpec
-
-
 
 [types/app-spec](/reference/algokit-utils-ts/api/modules/types_app_spec/).DeclaredSchemaValueSpec
 
@@ -30,7 +29,7 @@ A description of the variable
 
 [src/types/app-spec.ts:277](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L277)
 
-___
+---
 
 ### key
 
@@ -42,7 +41,7 @@ The name of the key
 
 [src/types/app-spec.ts:275](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L275)
 
-___
+---
 
 ### static
 
@@ -54,7 +53,7 @@ Whether or not the value is set statically (at create time only) or dynamically
 
 [src/types/app-spec.ts:279](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L279)
 
-___
+---
 
 ### type
 

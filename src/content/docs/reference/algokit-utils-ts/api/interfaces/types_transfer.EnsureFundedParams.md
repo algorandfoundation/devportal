@@ -1,9 +1,8 @@
 ---
 title: EnsureFundedParams
 ---
+
 [@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/transfer](/reference/algokit-utils-ts/api/modules/types_transfer/) / EnsureFundedParams
-
-
 
 [types/transfer](/reference/algokit-utils-ts/api/modules/types_transfer/).EnsureFundedParams
 
@@ -49,7 +48,7 @@ The account to fund
 
 [src/types/transfer.ts:40](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L40)
 
-___
+---
 
 ### atc
 
@@ -65,7 +64,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 [src/types/transaction.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L36)
 
-___
+---
 
 ### fee
 
@@ -81,7 +80,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 [src/types/transaction.ts:40](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L40)
 
-___
+---
 
 ### fundingSource
 
@@ -93,7 +92,7 @@ The account to use as a funding source, will default to using the dispenser acco
 
 [src/types/transfer.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L42)
 
-___
+---
 
 ### lease
 
@@ -105,7 +104,7 @@ An (optional) [transaction lease](https://dev.algorand.co/concepts/transactions/
 
 [src/types/transfer.ts:52](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L52)
 
-___
+---
 
 ### maxFee
 
@@ -121,7 +120,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 [src/types/transaction.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L42)
 
-___
+---
 
 ### maxRoundsToWaitForConfirmation
 
@@ -137,7 +136,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 [src/types/transaction.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L44)
 
-___
+---
 
 ### minFundingIncrement
 
@@ -149,7 +148,7 @@ When issuing a funding amount, the minimum amount to transfer (avoids many small
 
 [src/types/transfer.ts:46](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L46)
 
-___
+---
 
 ### minSpendingBalance
 
@@ -161,7 +160,7 @@ The minimum balance of Algo that the account should have available to spend (i.e
 
 [src/types/transfer.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L44)
 
-___
+---
 
 ### note
 
@@ -173,7 +172,7 @@ The (optional) transaction note, default: "Funding account to meet minimum requi
 
 [src/types/transfer.ts:50](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transfer.ts#L50)
 
-___
+---
 
 ### populateAppCallResources
 
@@ -189,7 +188,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 [src/types/transaction.ts:46](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L46)
 
-___
+---
 
 ### skipSending
 
@@ -206,7 +205,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 [src/types/transaction.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L32)
 
-___
+---
 
 ### skipWaiting
 
@@ -222,7 +221,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 [src/types/transaction.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L34)
 
-___
+---
 
 ### suppressLog
 
@@ -238,7 +237,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 [src/types/transaction.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L38)
 
-___
+---
 
 ### transactionParams
 

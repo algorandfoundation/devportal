@@ -1,6 +1,7 @@
 ---
 title: Migration Guide - v3
 ---
+
 Version 3 of `algokit-utils-ts` moved from a stateless function-based interface to a stateful class-based interfaces. This change allows for:
 
 - Easier and simpler consumption experience guided by IDE autocompletion
@@ -13,7 +14,7 @@ Version 3 of `algokit-utils-ts` moved from a stateless function-based interface 
 
 The entry point to most functionality in AlgoKit Utils is now available via a single entry-point, the `AlgorandClient` class.
 
-The v2 interfaces and abstractions will be removed in future major version bumps, however in order to ensure gradual migration, *all v2 abstractions are available* with respective deprecation warnings. The new way to use AlgoKit Utils is via the `AlgorandClient` class, which is easier, simpler, and more convenient to use and has powerful new features.
+The v2 interfaces and abstractions will be removed in future major version bumps, however in order to ensure gradual migration, _all v2 abstractions are available_ with respective deprecation warnings. The new way to use AlgoKit Utils is via the `AlgorandClient` class, which is easier, simpler, and more convenient to use and has powerful new features.
 
 > BREAKING CHANGE: the `beta` module is now removed, any imports from `algokit_utils.beta` will now raise an error with a link to a new expected import path. This is due to the fact that the interfaces introduced in `beta` are now refined and available in the main module.
 
@@ -157,7 +158,7 @@ The existing `ApplicationClient` (untyped app client) class is still present unt
 All of the functionality in `ApplicationClient` is available within the new classes, but their interface is slightly different to make it easier to use and more consistent with the new `AlgorandClient` functionality. The key existing methods that have changed all have `@deprecation` notices to help guide you on this, but broadly the changes are:
 
 - The app resolution semantics, now have static methods that determine different ways of constructing a client and the constructor itself is very simple (requiring `app_id`)
-- If you want to call `create` or `deploy` then you need an `AppFactory` to do that, and then it will in turn give you an `AppClient` instance that is connected to the app you just created / deployed. This significantly simplifies the app client because now the app client has a clear operating purpose: allow for calls and state management for an *instance* of an app, whereas the app factory handles all of the calls when you don’t have an instance yet (or may or may not have an instance in the case of `deploy`).
+- If you want to call `create` or `deploy` then you need an `AppFactory` to do that, and then it will in turn give you an `AppClient` instance that is connected to the app you just created / deployed. This significantly simplifies the app client because now the app client has a clear operating purpose: allow for calls and state management for an _instance_ of an app, whereas the app factory handles all of the calls when you don’t have an instance yet (or may or may not have an instance in the case of `deploy`).
 - This means that you can simply access `client.app_id` and `client.app_address` on `AppClient` since these values are known statically and won’t change (previously associated calls to `app_address`, `app_id` properties potentially required extra API calls as the values weren’t always available).
 - Adding `fund_app_account` which serves as a convenience method to top up the balance of address associated with application.
 - All of the methods that return or execute a transaction (`update`, `call`, `opt_in`, etc.) are now exposed in an interface similar to the one in [`AlgorandClient`](capabilities/algorand-client.md#creating-and-issuing-transactions), namely (where `{call_type}` is one of: `update` / `delete` / `opt_in` / `close_out` / `clear_state` / `call`):

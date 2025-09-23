@@ -1,18 +1,19 @@
 ---
 title: algokit_utils.applications.app_factory.AppFactoryParams
 ---
-#### *class* algokit_utils.applications.app_factory.AppFactoryParams
 
-#### algorand *: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient)*
+#### _class_ algokit_utils.applications.app_factory.AppFactoryParams
 
-#### app_spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils._legacy_v2.application_specification.ApplicationSpecification | str*
+#### algorand _: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient)_
 
-#### app_name *: str | None* *= None*
+#### app_spec _: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils.\_legacy_v2.application_specification.ApplicationSpecification | str_
 
-#### default_sender *: str | None* *= None*
+#### app_name _: str | None_ _= None_
 
-#### default_signer *: algosdk.atomic_transaction_composer.TransactionSigner | None* *= None*
+#### default_sender _: str | None_ _= None_
 
-#### version *: str | None* *= None*
+#### default_signer _: algosdk.atomic_transaction_composer.TransactionSigner | None_ _= None_
 
-#### compilation_params *: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationparams/#algokit_utils.applications.app_client.AppClientCompilationParams) | None* *= None*
+#### version _: str | None_ _= None_
+
+#### compilation_params _: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/api/applications/app_client/appclientcompilationparams/#algokit_utils.applications.app_client.AppClientCompilationParams) | None_ _= None_
