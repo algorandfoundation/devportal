@@ -1,0 +1,673 @@
+---
+title: "algokit_utils.clients.dispenser_api_client"
+---
+
+<a id="module-algokit_utils.clients.dispenser_api_client"></a>
+
+<a id="algokit-utils-clients-dispenser-api-client"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`DispenserAssetName`](#algokit_utils.clients.dispenser_api_client.DispenserAssetName)               | Enum where members are also (and must be) ints                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`TestNetDispenserApiClient`](#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient) | Client for interacting with the [AlgoKit TestNet Dispenser API](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md).<br/>To get started create a new access token via `algokit dispenser login --ci`<br/>and pass it to the client constructor as `auth_token`.<br/>Alternatively set the access token as environment variable `ALGOKIT_DISPENSER_ACCESS_TOKEN`,<br/>and it will be auto loaded. If both are set, the constructor argument takes precedence. |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName"></a>
+
+## *class* algokit_utils.clients.dispenser_api_client.DispenserAssetName
+
+DispenserAssetName
+
+Enum where members are also (and must be) ints
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__abs__"></a>
+
+### \_\_abs_\_
+
+__abs__()
+
+abs(self)
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__add__"></a>
+
+### \_\_add_\_
+
+__add__()
+
+Return self+value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__and__"></a>
+
+### \_\_and_\_
+
+__and__()
+
+Return self&value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__bool__"></a>
+
+### \_\_bool_\_
+
+__bool__()
+
+True if self else False
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__ceil__"></a>
+
+### \_\_ceil_\_
+
+__ceil__()
+
+Ceiling of an Integral returns itself.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__divmod__"></a>
+
+### \_\_divmod_\_
+
+__divmod__()
+
+Return divmod(self, value).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__float__"></a>
+
+### \_\_float_\_
+
+__float__()
+
+float(self)
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__floor__"></a>
+
+### \_\_floor_\_
+
+__floor__()
+
+Flooring an Integral returns itself.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__floordiv__"></a>
+
+### \_\_floordiv_\_
+
+__floordiv__()
+
+Return self//value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Convert to a string according to format_spec.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__hash__"></a>
+
+### \_\_hash_\_
+
+__hash__()
+
+Return hash(self).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__index__"></a>
+
+### \_\_index_\_
+
+__index__()
+
+Return self converted to an integer, if self is suitable for use as an index into a list.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__int__"></a>
+
+### \_\_int_\_
+
+__int__()
+
+int(self)
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__invert__"></a>
+
+### \_\_invert_\_
+
+__invert__()
+
+~self
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__lshift__"></a>
+
+### \_\_lshift_\_
+
+__lshift__()
+
+Return self\<\<value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__mod__"></a>
+
+### \_\_mod_\_
+
+__mod__()
+
+Return self%value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__mul__"></a>
+
+### \_\_mul_\_
+
+__mul__()
+
+Return self\*value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__neg__"></a>
+
+### \_\_neg_\_
+
+__neg__()
+
+-self
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__pos__"></a>
+
+### \_\_pos_\_
+
+__pos__()
+
++self
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__pow__"></a>
+
+### \_\_pow_\_
+
+__pow__()
+
+Return pow(self, value, mod).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__radd__"></a>
+
+### \_\_radd_\_
+
+__radd__()
+
+Return value+self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rand__"></a>
+
+### \_\_rand_\_
+
+__rand__()
+
+Return value&self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rdivmod__"></a>
+
+### \_\_rdivmod_\_
+
+__rdivmod__()
+
+Return divmod(value, self).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rfloordiv__"></a>
+
+### \_\_rfloordiv_\_
+
+__rfloordiv__()
+
+Return value//self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rlshift__"></a>
+
+### \_\_rlshift_\_
+
+__rlshift__()
+
+Return value\<\<self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rmod__"></a>
+
+### \_\_rmod_\_
+
+__rmod__()
+
+Return value%self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rmul__"></a>
+
+### \_\_rmul_\_
+
+__rmul__()
+
+Return value\*self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__round__"></a>
+
+### \_\_round_\_
+
+__round__()
+
+Rounding an Integral returns itself.
+
+Rounding with an ndigits argument also returns an integer.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rpow__"></a>
+
+### \_\_rpow_\_
+
+__rpow__()
+
+Return pow(value, self, mod).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rrshift__"></a>
+
+### \_\_rrshift_\_
+
+__rrshift__()
+
+Return value\>\>self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rshift__"></a>
+
+### \_\_rshift_\_
+
+__rshift__()
+
+Return self\>\>value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rsub__"></a>
+
+### \_\_rsub_\_
+
+__rsub__()
+
+Return value-self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rtruediv__"></a>
+
+### \_\_rtruediv_\_
+
+__rtruediv__()
+
+Return value/self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__rxor__"></a>
+
+### \_\_rxor_\_
+
+__rxor__()
+
+Return value^self.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+Returns size in memory, in bytes.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__sub__"></a>
+
+### \_\_sub_\_
+
+__sub__()
+
+Return self-value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__truediv__"></a>
+
+### \_\_truediv_\_
+
+__truediv__()
+
+Return self/value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__trunc__"></a>
+
+### \_\_trunc_\_
+
+__trunc__()
+
+Truncating an Integral returns itself.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.__xor__"></a>
+
+### \_\_xor_\_
+
+__xor__()
+
+Return self^value.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.as_integer_ratio"></a>
+
+### as_integer_ratio
+
+as_integer_ratio()
+
+Return a pair of integers, whose ratio is equal to the original int.
+
+The ratio is in lowest terms and has a positive denominator.
+
+> > > (10).as_integer_ratio()
+> > > (10, 1)
+> > > (-10).as_integer_ratio()
+> > > (-10, 1)
+> > > (0).as_integer_ratio()
+> > > (0, 1)
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.bit_count"></a>
+
+### bit_count
+
+bit_count()
+
+Number of ones in the binary representation of the absolute value of self.
+
+Also known as the population count.
+
+> > > bin(13)
+> > > ‘0b1101’
+> > > (13).bit_count()
+> > > 3
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.bit_length"></a>
+
+### bit_length
+
+bit_length()
+
+Number of bits necessary to represent self in binary.
+
+> > > bin(37)
+> > > ‘0b100101’
+> > > (37).bit_length()
+> > > 6
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.conjugate"></a>
+
+### conjugate
+
+conjugate()
+
+Returns self, the complex conjugate of any int.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.denominator"></a>
+
+### *class* denominator
+
+denominator
+
+the denominator of a rational number in lowest terms
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.imag"></a>
+
+### *class* imag
+
+imag
+
+the imaginary part of a complex number
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.is_integer"></a>
+
+### is_integer
+
+is_integer()
+
+Returns True. Exists for duck type compatibility with float.is_integer.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.name"></a>
+
+### name
+
+name()
+
+The name of the Enum member.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.numerator"></a>
+
+### *class* numerator
+
+numerator
+
+the numerator of a rational number in lowest terms
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.real"></a>
+
+### *class* real
+
+real
+
+the real part of a complex number
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.to_bytes"></a>
+
+### to_bytes
+
+to_bytes()
+
+Return an array of bytes representing an integer.
+
+length
+Length of bytes object to use.  An OverflowError is raised if the
+integer is not representable with the given number of bytes.  Default
+is length 1.
+byteorder
+The byte order used to represent the integer.  If byteorder is ‘big’,
+the most significant byte is at the beginning of the byte array.  If
+byteorder is ‘little’, the most significant byte is at the end of the
+byte array.  To request the native byte order of the host system, use
+\`sys.byteorder’ as the byte order value.  Default is to use ‘big’.
+signed
+Determines whether two’s complement is used to represent the integer.
+If signed is False and a negative integer is given, an OverflowError
+is raised.
+
+<a id="algokit_utils.clients.dispenser_api_client.DispenserAssetName.value"></a>
+
+### value
+
+value()
+
+The value of the Enum member.
+
+<a id="algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient"></a>
+
+## *class* algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient
+
+TestNetDispenserApiClient(auth_token: str | None = None, request_timeout: int = DISPENSER_REQUEST_TIMEOUT)
+
+Client for interacting with the [AlgoKit TestNet Dispenser API](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md).
+To get started create a new access token via `algokit dispenser login --ci`
+and pass it to the client constructor as `auth_token`.
+Alternatively set the access token as environment variable `ALGOKIT_DISPENSER_ACCESS_TOKEN`,
+and it will be auto loaded. If both are set, the constructor argument takes precedence.
+
+Default request timeout is 15 seconds. Modify by passing `request_timeout` to the constructor.
+
+## Initialization
+
+<a id="algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient.fund"></a>
+
+### fund
+
+fund(address: str, amount: int, asset_id: int | None = None) → algokit_utils.clients.dispenser_api_client.DispenserFundResponse
+
+Fund an account with Algos from the dispenser API
+
+:param address: The address to fund
+:param amount: The amount of Algos to fund
+:param asset_id: The asset ID to fund (deprecated)
+:return: The transaction ID of the funded transaction
+:raises Exception: If the dispenser API request fails
+
+:example:
+\>\>\> dispenser_client = TestNetDispenserApiClient()
+\>\>\> dispenser_client.fund(address=”SENDER_ADDRESS”, amount=1000000)
+
+<a id="algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient.get_limit"></a>
+
+### get_limit
+
+get_limit(address: str) → algokit_utils.clients.dispenser_api_client.DispenserLimitResponse
+
+Get current limit for an account with Algos from the dispenser API
+
+<a id="algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient.refund"></a>
+
+### refund
+
+refund(refund_txn_id: str) → None
+
+Register a refund for a transaction with the dispenser API

@@ -1,0 +1,225 @@
+---
+title: "algokit_utils.models.account"
+---
+
+<a id="module-algokit_utils.models.account"></a>
+
+<a id="algokit-utils-models-account"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`LogicSigAccount`](#algokit_utils.models.account.LogicSigAccount)                   | Account wrapper that supports logic sig signing.                |
+|--------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| [`MultiSigAccount`](#algokit_utils.models.account.MultiSigAccount)                   | Account wrapper that supports partial or full multisig signing. |
+| [`MultisigMetadata`](#algokit_utils.models.account.MultisigMetadata)                 | Metadata for a multisig account.                                |
+| [`SigningAccount`](#algokit_utils.models.account.SigningAccount)                     | Holds the private key and address for an account.               |
+| [`TransactionSignerAccount`](#algokit_utils.models.account.TransactionSignerAccount) | A basic transaction signer account.                             |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.models.account.LogicSigAccount"></a>
+
+## *class* algokit_utils.models.account.LogicSigAccount
+
+LogicSigAccount(program: bytes, args: list[bytes] | None)
+
+Account wrapper that supports logic sig signing.
+
+Provides functionality to manage and sign transactions for a logic sig account.
+
+## Initialization
+
+<a id="algokit_utils.models.account.LogicSigAccount.address"></a>
+
+### *property* address
+
+address *: str*
+
+Get the address of the logic sig account.
+
+If the LogicSig is delegated to another account, this will return the address of that account.
+
+If the LogicSig is not delegated to another account, this will return an escrow address that is the hash of
+the LogicSig’s program code.
+
+:return: The logic sig account address
+
+<a id="algokit_utils.models.account.LogicSigAccount.lsig"></a>
+
+### *property* lsig
+
+lsig *: [algosdk.transaction.LogicSigAccount](../algosdk/algosdk.transaction.mdx#algosdk.transaction.LogicSigAccount)*
+
+Get the underlying `algosdk.transaction.LogicSigAccount` object instance.
+
+:return: The `algosdk.transaction.LogicSigAccount` object instance
+
+<a id="algokit_utils.models.account.LogicSigAccount.signer"></a>
+
+### *property* signer
+
+signer *: [algosdk.atomic_transaction_composer.LogicSigTransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.LogicSigTransactionSigner)*
+
+Get the transaction signer for this multisig account.
+
+:return: The multisig transaction signer
+
+<a id="algokit_utils.models.account.MultiSigAccount"></a>
+
+## *class* algokit_utils.models.account.MultiSigAccount
+
+MultiSigAccount(multisig_params: [algokit_utils.models.account.MultisigMetadata](#algokit_utils.models.account.MultisigMetadata), signing_accounts: list[[algokit_utils.models.account.SigningAccount](#algokit_utils.models.account.SigningAccount)])
+
+Account wrapper that supports partial or full multisig signing.
+
+Provides functionality to manage and sign transactions for a multisig account.
+
+:param multisig_params: The parameters for the multisig account
+:param signing_accounts: The list of accounts that can sign
+
+## Initialization
+
+<a id="algokit_utils.models.account.MultiSigAccount.address"></a>
+
+### *property* address
+
+address *: str*
+
+Get the address of the multisig account.
+
+:return: The multisig account address
+
+<a id="algokit_utils.models.account.MultiSigAccount.multisig"></a>
+
+### *property* multisig
+
+multisig *: [algosdk.transaction.Multisig](../algosdk/algosdk.transaction.mdx#algosdk.transaction.Multisig)*
+
+Get the underlying `algosdk.transaction.Multisig` object instance.
+
+:return: The `algosdk.transaction.Multisig` object instance
+
+<a id="algokit_utils.models.account.MultiSigAccount.params"></a>
+
+### *property* params
+
+params *: [algokit_utils.models.account.MultisigMetadata](#algokit_utils.models.account.MultisigMetadata)*
+
+Get the parameters for the multisig account.
+
+:return: The multisig account parameters
+
+<a id="algokit_utils.models.account.MultiSigAccount.sign"></a>
+
+### sign
+
+sign(transaction: [algosdk.transaction.Transaction](../algosdk/algosdk.transaction.mdx#algosdk.transaction.Transaction)) → [algosdk.transaction.MultisigTransaction](../algosdk/algosdk.transaction.mdx#algosdk.transaction.MultisigTransaction)
+
+Sign the given transaction with all present signers.
+
+:param transaction: Either a transaction object or a raw, partially signed transaction
+:return: The transaction signed by the present signers
+
+<a id="algokit_utils.models.account.MultiSigAccount.signer"></a>
+
+### *property* signer
+
+signer *: [algosdk.atomic_transaction_composer.TransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.TransactionSigner)*
+
+Get the transaction signer for this multisig account.
+
+:return: The multisig transaction signer
+
+<a id="algokit_utils.models.account.MultiSigAccount.signing_accounts"></a>
+
+### *property* signing_accounts
+
+signing_accounts *: list[[algokit_utils.models.account.SigningAccount](#algokit_utils.models.account.SigningAccount)]*
+
+Get the list of accounts that are present to sign.
+
+:return: The list of signing accounts
+
+<a id="algokit_utils.models.account.MultisigMetadata"></a>
+
+## *class* algokit_utils.models.account.MultisigMetadata
+
+MultisigMetadata
+
+Metadata for a multisig account.
+
+Contains the version, threshold and addresses for a multisig account.
+
+<a id="algokit_utils.models.account.SigningAccount"></a>
+
+## *class* algokit_utils.models.account.SigningAccount
+
+SigningAccount
+
+Holds the private key and address for an account.
+
+Provides access to the account’s private key, address, public key and transaction signer.
+
+<a id="algokit_utils.models.account.SigningAccount.address"></a>
+
+### address
+
+address *: str*
+
+‘field(…)’
+
+Address for this account
+
+<a id="algokit_utils.models.account.SigningAccount.new_account"></a>
+
+### *static* new_account
+
+new_account() → [algokit_utils.models.account.SigningAccount](#algokit_utils.models.account.SigningAccount)
+
+Create a new random account.
+
+:return: A new Account instance
+
+<a id="algokit_utils.models.account.SigningAccount.private_key"></a>
+
+### private_key
+
+private_key *: str*
+
+None
+
+Base64 encoded private key
+
+<a id="algokit_utils.models.account.SigningAccount.public_key"></a>
+
+### *property* public_key
+
+public_key *: bytes*
+
+The public key for this account.
+
+:return: The public key as bytes
+
+<a id="algokit_utils.models.account.SigningAccount.signer"></a>
+
+### *property* signer
+
+signer *: [algosdk.atomic_transaction_composer.AccountTransactionSigner](../algosdk/algosdk.atomic_transaction_composer.mdx#algosdk.atomic_transaction_composer.AccountTransactionSigner)*
+
+Get an AccountTransactionSigner for this account.
+
+:return: A transaction signer for this account
+
+<a id="algokit_utils.models.account.TransactionSignerAccount"></a>
+
+## *class* algokit_utils.models.account.TransactionSignerAccount
+
+TransactionSignerAccount
+
+A basic transaction signer account.

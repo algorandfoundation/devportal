@@ -1,0 +1,728 @@
+---
+title: "algokit_utils.models.state"
+---
+
+<a id="module-algokit_utils.models.state"></a>
+
+<a id="algokit-utils-models-state"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`BoxName`](#algokit_utils.models.state.BoxName)           | The name of the box                                                   |
+|------------------------------------------------------------|-----------------------------------------------------------------------|
+| [`BoxReference`](#algokit_utils.models.state.BoxReference) | Represents a box reference with a foreign app index and the box name. |
+| [`BoxValue`](#algokit_utils.models.state.BoxValue)         | The value of the box                                                  |
+| [`DataTypeFlag`](#algokit_utils.models.state.DataTypeFlag) | Enum where members are also (and must be) ints                        |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.models.state.BoxName"></a>
+
+## *class* algokit_utils.models.state.BoxName
+
+BoxName
+
+The name of the box
+
+<a id="algokit_utils.models.state.BoxName.name"></a>
+
+### name
+
+name *: str*
+
+None
+
+The name of the box as a string
+
+<a id="algokit_utils.models.state.BoxName.name_base64"></a>
+
+### name_base64
+
+name_base64 *: str*
+
+None
+
+The name of the box as a base64 encoded string
+
+<a id="algokit_utils.models.state.BoxName.name_raw"></a>
+
+### name_raw
+
+name_raw *: bytes*
+
+None
+
+The name of the box as raw bytes
+
+<a id="algokit_utils.models.state.BoxReference"></a>
+
+## *class* algokit_utils.models.state.BoxReference
+
+BoxReference(app_id: int, name: bytes | str)
+
+Represents a box reference with a foreign app index and the box name.
+
+Args:
+app_index (int): index of the application in the foreign app array
+name (bytes): key for the box in bytes
+
+## Initialization
+
+<a id="algokit_utils.models.state.BoxReference.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__(other: object) → bool
+
+Return self==value.
+
+<a id="algokit_utils.models.state.BoxReference.translate_box_references"></a>
+
+### *static* translate_box_references
+
+translate_box_references(references: List[Tuple[int, Union[bytes, bytearray, str, int]]], foreign_apps: List[int], this_app_id: int) → List[[algosdk.box_reference.BoxReference](../algosdk/algosdk.box_reference.mdx#algosdk.box_reference.BoxReference)]
+
+Translates a list of tuples with app IDs and names into an array of
+BoxReferences with foreign indices.
+
+Args:
+references (list[(int, bytes)]): list of tuples specifying app id
+and key for boxes the app may access
+foreign_apps (list[int]): list of other applications in appl call
+this_app_id (int): app ID of the box being references
+
+<a id="algokit_utils.models.state.BoxValue"></a>
+
+## *class* algokit_utils.models.state.BoxValue
+
+BoxValue
+
+The value of the box
+
+<a id="algokit_utils.models.state.BoxValue.name"></a>
+
+### name
+
+name *: [algokit_utils.models.state.BoxName](#algokit_utils.models.state.BoxName)*
+
+None
+
+The name of the box
+
+<a id="algokit_utils.models.state.BoxValue.value"></a>
+
+### value
+
+value *: bytes*
+
+None
+
+The value of the box as raw bytes
+
+<a id="algokit_utils.models.state.DataTypeFlag"></a>
+
+## *class* algokit_utils.models.state.DataTypeFlag
+
+DataTypeFlag
+
+Enum where members are also (and must be) ints
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__abs__"></a>
+
+### \_\_abs_\_
+
+__abs__()
+
+abs(self)
+
+<a id="algokit_utils.models.state.DataTypeFlag.__add__"></a>
+
+### \_\_add_\_
+
+__add__()
+
+Return self+value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__and__"></a>
+
+### \_\_and_\_
+
+__and__()
+
+Return self&value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__bool__"></a>
+
+### \_\_bool_\_
+
+__bool__()
+
+True if self else False
+
+<a id="algokit_utils.models.state.DataTypeFlag.__ceil__"></a>
+
+### \_\_ceil_\_
+
+__ceil__()
+
+Ceiling of an Integral returns itself.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__divmod__"></a>
+
+### \_\_divmod_\_
+
+__divmod__()
+
+Return divmod(self, value).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__float__"></a>
+
+### \_\_float_\_
+
+__float__()
+
+float(self)
+
+<a id="algokit_utils.models.state.DataTypeFlag.__floor__"></a>
+
+### \_\_floor_\_
+
+__floor__()
+
+Flooring an Integral returns itself.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__floordiv__"></a>
+
+### \_\_floordiv_\_
+
+__floordiv__()
+
+Return self//value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Convert to a string according to format_spec.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__hash__"></a>
+
+### \_\_hash_\_
+
+__hash__()
+
+Return hash(self).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__index__"></a>
+
+### \_\_index_\_
+
+__index__()
+
+Return self converted to an integer, if self is suitable for use as an index into a list.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__int__"></a>
+
+### \_\_int_\_
+
+__int__()
+
+int(self)
+
+<a id="algokit_utils.models.state.DataTypeFlag.__invert__"></a>
+
+### \_\_invert_\_
+
+__invert__()
+
+~self
+
+<a id="algokit_utils.models.state.DataTypeFlag.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__lshift__"></a>
+
+### \_\_lshift_\_
+
+__lshift__()
+
+Return self\<\<value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__mod__"></a>
+
+### \_\_mod_\_
+
+__mod__()
+
+Return self%value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__mul__"></a>
+
+### \_\_mul_\_
+
+__mul__()
+
+Return self\*value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__neg__"></a>
+
+### \_\_neg_\_
+
+__neg__()
+
+-self
+
+<a id="algokit_utils.models.state.DataTypeFlag.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__pos__"></a>
+
+### \_\_pos_\_
+
+__pos__()
+
++self
+
+<a id="algokit_utils.models.state.DataTypeFlag.__pow__"></a>
+
+### \_\_pow_\_
+
+__pow__()
+
+Return pow(self, value, mod).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__radd__"></a>
+
+### \_\_radd_\_
+
+__radd__()
+
+Return value+self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rand__"></a>
+
+### \_\_rand_\_
+
+__rand__()
+
+Return value&self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rdivmod__"></a>
+
+### \_\_rdivmod_\_
+
+__rdivmod__()
+
+Return divmod(value, self).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rfloordiv__"></a>
+
+### \_\_rfloordiv_\_
+
+__rfloordiv__()
+
+Return value//self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rlshift__"></a>
+
+### \_\_rlshift_\_
+
+__rlshift__()
+
+Return value\<\<self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rmod__"></a>
+
+### \_\_rmod_\_
+
+__rmod__()
+
+Return value%self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rmul__"></a>
+
+### \_\_rmul_\_
+
+__rmul__()
+
+Return value\*self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__round__"></a>
+
+### \_\_round_\_
+
+__round__()
+
+Rounding an Integral returns itself.
+
+Rounding with an ndigits argument also returns an integer.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rpow__"></a>
+
+### \_\_rpow_\_
+
+__rpow__()
+
+Return pow(value, self, mod).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rrshift__"></a>
+
+### \_\_rrshift_\_
+
+__rrshift__()
+
+Return value\>\>self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rshift__"></a>
+
+### \_\_rshift_\_
+
+__rshift__()
+
+Return self\>\>value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rsub__"></a>
+
+### \_\_rsub_\_
+
+__rsub__()
+
+Return value-self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rtruediv__"></a>
+
+### \_\_rtruediv_\_
+
+__rtruediv__()
+
+Return value/self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__rxor__"></a>
+
+### \_\_rxor_\_
+
+__rxor__()
+
+Return value^self.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+Returns size in memory, in bytes.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.models.state.DataTypeFlag.__sub__"></a>
+
+### \_\_sub_\_
+
+__sub__()
+
+Return self-value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__truediv__"></a>
+
+### \_\_truediv_\_
+
+__truediv__()
+
+Return self/value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__trunc__"></a>
+
+### \_\_trunc_\_
+
+__trunc__()
+
+Truncating an Integral returns itself.
+
+<a id="algokit_utils.models.state.DataTypeFlag.__xor__"></a>
+
+### \_\_xor_\_
+
+__xor__()
+
+Return self^value.
+
+<a id="algokit_utils.models.state.DataTypeFlag.as_integer_ratio"></a>
+
+### as_integer_ratio
+
+as_integer_ratio()
+
+Return a pair of integers, whose ratio is equal to the original int.
+
+The ratio is in lowest terms and has a positive denominator.
+
+> > > (10).as_integer_ratio()
+> > > (10, 1)
+> > > (-10).as_integer_ratio()
+> > > (-10, 1)
+> > > (0).as_integer_ratio()
+> > > (0, 1)
+
+<a id="algokit_utils.models.state.DataTypeFlag.bit_count"></a>
+
+### bit_count
+
+bit_count()
+
+Number of ones in the binary representation of the absolute value of self.
+
+Also known as the population count.
+
+> > > bin(13)
+> > > ‘0b1101’
+> > > (13).bit_count()
+> > > 3
+
+<a id="algokit_utils.models.state.DataTypeFlag.bit_length"></a>
+
+### bit_length
+
+bit_length()
+
+Number of bits necessary to represent self in binary.
+
+> > > bin(37)
+> > > ‘0b100101’
+> > > (37).bit_length()
+> > > 6
+
+<a id="algokit_utils.models.state.DataTypeFlag.conjugate"></a>
+
+### conjugate
+
+conjugate()
+
+Returns self, the complex conjugate of any int.
+
+<a id="algokit_utils.models.state.DataTypeFlag.denominator"></a>
+
+### *class* denominator
+
+denominator
+
+the denominator of a rational number in lowest terms
+
+<a id="algokit_utils.models.state.DataTypeFlag.imag"></a>
+
+### *class* imag
+
+imag
+
+the imaginary part of a complex number
+
+<a id="algokit_utils.models.state.DataTypeFlag.is_integer"></a>
+
+### is_integer
+
+is_integer()
+
+Returns True. Exists for duck type compatibility with float.is_integer.
+
+<a id="algokit_utils.models.state.DataTypeFlag.name"></a>
+
+### name
+
+name()
+
+The name of the Enum member.
+
+<a id="algokit_utils.models.state.DataTypeFlag.numerator"></a>
+
+### *class* numerator
+
+numerator
+
+the numerator of a rational number in lowest terms
+
+<a id="algokit_utils.models.state.DataTypeFlag.real"></a>
+
+### *class* real
+
+real
+
+the real part of a complex number
+
+<a id="algokit_utils.models.state.DataTypeFlag.to_bytes"></a>
+
+### to_bytes
+
+to_bytes()
+
+Return an array of bytes representing an integer.
+
+length
+Length of bytes object to use.  An OverflowError is raised if the
+integer is not representable with the given number of bytes.  Default
+is length 1.
+byteorder
+The byte order used to represent the integer.  If byteorder is ‘big’,
+the most significant byte is at the beginning of the byte array.  If
+byteorder is ‘little’, the most significant byte is at the end of the
+byte array.  To request the native byte order of the host system, use
+\`sys.byteorder’ as the byte order value.  Default is to use ‘big’.
+signed
+Determines whether two’s complement is used to represent the integer.
+If signed is False and a negative integer is given, an OverflowError
+is raised.
+
+<a id="algokit_utils.models.state.DataTypeFlag.value"></a>
+
+### value
+
+value()
+
+The value of the Enum member.

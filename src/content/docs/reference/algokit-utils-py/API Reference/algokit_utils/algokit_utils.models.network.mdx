@@ -1,0 +1,57 @@
+---
+title: "algokit_utils.models.network"
+---
+
+<a id="module-algokit_utils.models.network"></a>
+
+<a id="algokit-utils-models-network"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`AlgoClientNetworkConfig`](#algokit_utils.models.network.AlgoClientNetworkConfig)   | Connection details for connecting to an [`algosdk.v2client.algod.AlgodClient`](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient) or<br/>[`algosdk.v2client.indexer.IndexerClient`](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient)   |
+|--------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.models.network.AlgoClientNetworkConfig"></a>
+
+## *class* algokit_utils.models.network.AlgoClientNetworkConfig
+
+AlgoClientNetworkConfig
+
+Connection details for connecting to an [`algosdk.v2client.algod.AlgodClient`](../algosdk/algosdk.v2client.algod.mdx#algosdk.v2client.algod.AlgodClient) or
+[`algosdk.v2client.indexer.IndexerClient`](../algosdk/algosdk.v2client.indexer.mdx#algosdk.v2client.indexer.IndexerClient)
+
+<a id="algokit_utils.models.network.AlgoClientNetworkConfig.full_url"></a>
+
+### full_url
+
+full_url() → str
+
+Returns the full URL for the service
+
+<a id="algokit_utils.models.network.AlgoClientNetworkConfig.server"></a>
+
+### server
+
+server *: str*
+
+None
+
+URL for the service e.g. `http://localhost` or `https://testnet-api.algonode.cloud`
+
+<a id="algokit_utils.models.network.AlgoClientNetworkConfig.token"></a>
+
+### token
+
+token *: str | None*
+
+None
+
+API Token to authenticate with the service e.g ‘4001’ or ‘8980’

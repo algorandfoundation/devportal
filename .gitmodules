@@ -2,10 +2,6 @@
 	path = imports/repos/puya
 	url = https://github.com/algorandfoundation/puya
 	branch = main
-[submodule "imports/repos/algokit-utils-ts"]
-	path = imports/repos/algokit-utils-ts
-	url = https://github.com/algorandfoundation/algokit-utils-ts
-	branch = main
 [submodule "imports/repos/algokit-utils-py"]
 	path = imports/repos/algokit-utils-py
 	url = https://github.com/algorandfoundation/algokit-utils-py

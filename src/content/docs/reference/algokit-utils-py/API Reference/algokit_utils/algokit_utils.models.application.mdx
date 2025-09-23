@@ -1,0 +1,126 @@
+---
+title: "algokit_utils.models.application"
+---
+
+<a id="module-algokit_utils.models.application"></a>
+
+<a id="algokit-utils-models-application"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`AppCompilationResult`](#algokit_utils.models.application.AppCompilationResult)   | The compiled teal code              |
+|------------------------------------------------------------------------------------|-------------------------------------|
+| [`AppSourceMaps`](#algokit_utils.models.application.AppSourceMaps)                 | The source maps for the application |
+| [`CompiledTeal`](#algokit_utils.models.application.CompiledTeal)                   | The compiled teal code              |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.models.application.AppCompilationResult"></a>
+
+## *class* algokit_utils.models.application.AppCompilationResult
+
+AppCompilationResult
+
+The compiled teal code
+
+<a id="algokit_utils.models.application.AppCompilationResult.compiled_approval"></a>
+
+### compiled_approval
+
+compiled_approval *: [algokit_utils.models.application.CompiledTeal](#algokit_utils.models.application.CompiledTeal)*
+
+None
+
+The compiled approval program
+
+<a id="algokit_utils.models.application.AppCompilationResult.compiled_clear"></a>
+
+### compiled_clear
+
+compiled_clear *: [algokit_utils.models.application.CompiledTeal](#algokit_utils.models.application.CompiledTeal)*
+
+None
+
+The compiled clear state program
+
+<a id="algokit_utils.models.application.AppSourceMaps"></a>
+
+## *class* algokit_utils.models.application.AppSourceMaps
+
+AppSourceMaps
+
+The source maps for the application
+
+<a id="algokit_utils.models.application.AppSourceMaps.approval_source_map"></a>
+
+### approval_source_map
+
+approval_source_map *: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None*
+
+None
+
+The source map for the approval program
+
+<a id="algokit_utils.models.application.AppSourceMaps.clear_source_map"></a>
+
+### clear_source_map
+
+clear_source_map *: [algosdk.source_map.SourceMap](../algosdk/algosdk.source_map.mdx#algosdk.source_map.SourceMap) | None*
+
+None
+
+The source map for the clear state program
+
+<a id="algokit_utils.models.application.CompiledTeal"></a>
+
+## *class* algokit_utils.models.application.CompiledTeal
+
+CompiledTeal
+
+The compiled teal code
+
+<a id="algokit_utils.models.application.CompiledTeal.compiled"></a>
+
+### compiled
+
+compiled *: str*
+
+None
+
+The compiled teal code
+
+<a id="algokit_utils.models.application.CompiledTeal.compiled_base64_to_bytes"></a>
+
+### compiled_base64_to_bytes
+
+compiled_base64_to_bytes *: bytes*
+
+None
+
+The compiled base64 to bytes
+
+<a id="algokit_utils.models.application.CompiledTeal.compiled_hash"></a>
+
+### compiled_hash
+
+compiled_hash *: str*
+
+None
+
+The compiled hash
+
+<a id="algokit_utils.models.application.CompiledTeal.teal"></a>
+
+### teal
+
+teal *: str*
+
+None
+
+The teal code

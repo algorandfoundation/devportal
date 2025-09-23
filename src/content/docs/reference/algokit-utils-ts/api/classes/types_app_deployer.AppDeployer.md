@@ -1,0 +1,228 @@
+---
+title: AppDeployer
+---
+[@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [types/app-deployer](/reference/algokit-utils-ts/api/modules/types_app_deployer/) / AppDeployer
+
+
+
+[types/app-deployer](/reference/algokit-utils-ts/api/modules/types_app_deployer/).AppDeployer
+
+Allows management of deployment and deployment metadata of applications.
+
+## Table of contents
+
+### Constructors
+
+- [constructor](#constructor)
+
+### Properties
+
+- [\_appLookups](#_applookups)
+- [\_appManager](#_appmanager)
+- [\_indexer](#_indexer)
+- [\_transactionSender](#_transactionsender)
+
+### Methods
+
+- [deploy](#deploy)
+- [getCreatorAppsByName](#getcreatorappsbyname)
+- [updateAppLookup](#updateapplookup)
+
+## Constructors
+
+### constructor
+
+• **new AppDeployer**(`appManager`, `transactionSender`, `indexer?`): [`AppDeployer`]()
+
+Creates an `AppManager`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `appManager` | [`AppManager`]() | An `AppManager` instance |
+| `transactionSender` | [`AlgorandClientTransactionSender`]() | An `AlgorandClientTransactionSender` instance |
+| `indexer?` | `IndexerClient` | An optional indexer instance; supply if you want to indexer to look up app metadata |
+
+#### Returns
+
+[`AppDeployer`]()
+
+**`Example`**
+
+```ts
+const deployer = new AppDeployer(appManager, transactionSender, indexer)
+```
+
+#### Defined in
+
+[src/types/app-deployer.ts:128](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L128)
+
+## Properties
+
+### \_appLookups
+
+• `Private` **\_appLookups**: `Map`\<`string`, [`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/)\>
+
+#### Defined in
+
+[src/types/app-deployer.ts:116](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L116)
+
+___
+
+### \_appManager
+
+• `Private` **\_appManager**: [`AppManager`]()
+
+#### Defined in
+
+[src/types/app-deployer.ts:113](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L113)
+
+___
+
+### \_indexer
+
+• `Private` `Optional` **\_indexer**: `IndexerClient`
+
+#### Defined in
+
+[src/types/app-deployer.ts:115](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L115)
+
+___
+
+### \_transactionSender
+
+• `Private` **\_transactionSender**: [`AlgorandClientTransactionSender`]()
+
+#### Defined in
+
+[src/types/app-deployer.ts:114](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L114)
+
+## Methods
+
+### deploy
+
+▸ **deploy**(`deployment`): `Promise`\<[`AppDeployResult`](/reference/algokit-utils-ts/api/modules/types_app_deployer/#appdeployresult)\>
+
+Idempotently deploy (create if not exists, update if changed) an app against the given name for the given creator account, including deploy-time TEAL template placeholder substitutions (if specified).
+
+To understand the architecture decisions behind this functionality please see https://github.com/algorandfoundation/algokit-cli/blob/main/docs/architecture-decisions/2023-01-12_smart-contract-deployment.md
+
+**Note:** When using the return from this function be sure to check `operationPerformed` to get access to various return properties like `transaction`, `confirmation` and `deleteResult`.
+
+**Note:** if there is a breaking state schema change to an existing app (and `onSchemaBreak` is set to `'replace'`) the existing app will be deleted and re-created.
+
+**Note:** if there is an update (different TEAL code) to an existing app (and `onUpdate` is set to `'replace'`) the existing app will be deleted and re-created.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `deployment` | `Object` | The arguments to control the app deployment |
+| `deployment.coverAppCallInnerTransactionFees?` | `boolean` | Whether to use simulate to automatically calculate required app call inner transaction fees and cover them in the parent app call transaction fee |
+| `deployment.createParams` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } \| [`AppCreateMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appcreatemethodcall) | Create transaction parameters to use if a create needs to be issued as part of deployment |
+| `deployment.deleteParams` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `method`: `ABIMethod` ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } | Delete transaction parameters to use if a delete needs to be issued as part of deployment |
+| `deployment.deployTimeParams?` | [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/) | Any deploy-time parameters to replace in the TEAL code before compiling it (used if teal code is passed in as a string) |
+| `deployment.existingDeployments?` | [`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/) | Optional cached value of the existing apps for the given creator; use this to avoid an indexer lookup |
+| `deployment.ignoreCache?` | `boolean` | Whether or not to ignore the app metadata cache and force a lookup, default: use the cache * |
+| `deployment.maxRoundsToWaitForConfirmation?` | `number` | The number of rounds to wait for confirmation. By default until the latest lastValid has past. |
+| `deployment.metadata` | [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/) | The deployment metadata |
+| `deployment.onSchemaBreak?` | [`OnSchemaBreak`](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/) \| ``"replace"`` \| ``"fail"`` \| ``"append"`` | What action to perform if a schema break (storage schema or extra pages change) is detected: * `fail` - Fail the deployment (throw an error, **default**) * `replace` - Delete the old app and create a new one * `append` - Deploy a new app and leave the old one as is |
+| `deployment.onUpdate?` | ``"replace"`` \| ``"fail"`` \| ``"append"`` \| [`OnUpdate`](/reference/algokit-utils-ts/api/enums/types_apponupdate/) \| ``"update"`` | What action to perform if a TEAL code update is detected: * `fail` - Fail the deployment (throw an error, **default**) * `update` - Update the app with the new TEAL code * `replace` - Delete the old app and create a new one * `append` - Deploy a new app and leave the old one as is |
+| `deployment.populateAppCallResources?` | `boolean` | Whether to use simulate to automatically populate app call resources in the txn objects. Defaults to `Config.populateAppCallResources`. |
+| `deployment.suppressLog?` | `boolean` | Whether to suppress log messages from transaction send, default: do not suppress. |
+| `deployment.updateParams` | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `args?`: (`undefined` \| `Transaction` \| `ABIValue` \| `TransactionWithSigner` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number`  } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<\{ `accountReferences?`: (... \| ...)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: BoxIdentifier \| BoxReference[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  }\> \| [`AppMethodCall`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcall)\<[`AppMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appmethodcallparams)\>)[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `method`: `ABIMethod` ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint`  } | Update transaction parameters to use if an update needs to be issued as part of deployment |
+
+#### Returns
+
+`Promise`\<[`AppDeployResult`](/reference/algokit-utils-ts/api/modules/types_app_deployer/#appdeployresult)\>
+
+The result of the deployment
+
+**`Example`**
+
+```ts
+const deployResult = await deployer.deploy({
+  createParams: {
+    sender: 'SENDER_ADDRESS',
+    approvalProgram: 'APPROVAL PROGRAM',
+    clearStateProgram: 'CLEAR PROGRAM',
+    schema: {
+      globalByteSlices: 0,
+      globalInts: 0,
+      localByteSlices: 0,
+      localInts: 0
+    }
+  },
+  updateParams: {
+    sender: 'SENDER_ADDRESS'
+  },
+  deleteParams: {
+    sender: 'SENDER_ADDRESS'
+  },
+  metadata: { name: 'my_app', version: '2.0', updatable: false, deletable: false },
+  onSchemaBreak: 'append',
+  onUpdate: 'append'
+ })
+```
+
+#### Defined in
+
+[src/types/app-deployer.ts:172](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L172)
+
+___
+
+### getCreatorAppsByName
+
+▸ **getCreatorAppsByName**(`creatorAddress`, `ignoreCache?`): `Promise`\<[`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/)\>
+
+Returns a lookup of name => app metadata (id, address, ...metadata) for all apps created by the given account that have
+an [ARC-2](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md) `AppDeployNote` as the transaction
+note of the app creation transaction.
+
+This function caches the result for the given creator account so that subsequent calls will not require an indexer lookup.
+
+If the `AppManager` instance wasn't created with an indexer client, this function will throw an error.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `creatorAddress` | `string` \| `Address` | The address of the account that is the creator of the apps you want to search for |
+| `ignoreCache?` | `boolean` | Whether or not to ignore the cache and force a lookup, default: use the cache |
+
+#### Returns
+
+`Promise`\<[`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/)\>
+
+A name-based lookup of the app metadata
+
+**`Example`**
+
+```ts
+const result = await deployer.getCreatorAppsByName(creator)
+
+#### Defined in
+
+[src/types/app-deployer.ts:495](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L495)
+
+___
+
+### updateAppLookup
+
+▸ **updateAppLookup**(`sender`, `appMetadata`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `sender` | `string` \| `Address` |
+| `appMetadata` | [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/types/app-deployer.ts:469](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L469)

@@ -1,21 +1,20 @@
 ---
 title: Transaction composer
 ---
-
 The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.
 
-It's the core of how the [`AlgorandClient`](./algorand-client) class composes and sends transactions.
+It's the core of how the [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) class composes and sends transactions.
 
-To get an instance of `TransactionComposer` you can either get it from an [app client](./app-client), from an [`AlgorandClient`](./algorand-client), or by new-ing up via the constructor.
+To get an instance of `TransactionComposer` you can either get it from an [app client](/algokit/utils/typescript/app-client/), from an [`AlgorandClient`](/algokit/utils/typescript/algorand-client/), or by new-ing up via the constructor.
 
 ```typescript
-const composerFromAlgorand = algorand.newGroup();
-const composerFromAppClient = appClient.algorand.newGroup();
+const composerFromAlgorand = algorand.newGroup()
+const composerFromAppClient = appClient.algorand.newGroup()
 const composerFromConstructor = new TransactionComposer({
   algod,
   /* Return the algosdk.TransactionSigner for this address*/
   getSigner: (address: string) => signer,
-});
+})
 const composerFromConstructorWithOptionalParams = new TransactionComposer({
   algod,
   /* Return the algosdk.TransactionSigner for this address*/
@@ -23,19 +22,19 @@ const composerFromConstructorWithOptionalParams = new TransactionComposer({
   getSuggestedParams: () => algod.getTransactionParams().do(),
   defaultValidityWindow: 1000,
   appManager: new AppManager(algod),
-});
+})
 ```
 
 ## Constructing a transaction
 
-To construct a transaction you need to add it to the composer, passing in the relevant params object for that transaction. Params are normal JavaScript objects and all of them extend the [common call parameters](./algorand-client#transaction-parameters).
+To construct a transaction you need to add it to the composer, passing in the relevant [params object](/reference/algokit-utils-ts/api/modules/types_composer/#type-aliases) for that transaction. Params are normal JavaScript objects and all of them extend the [common call parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters).
 
-The methods to construct a transaction are all named `add{TransactionType}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
+The [methods to construct a transaction](../code/classes/types_composer.default.md#methods) are all named `add{TransactionType}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
 
 For example:
 
 ```typescript
-const myMethod = algosdk.ABIMethod.fromSignature('my_method()void');
+const myMethod = algosdk.ABIMethod.fromSignature('my_method()void')
 const result = algorand
   .newGroup()
   .addPayment({ sender: 'SENDER', receiver: 'RECEIVER', amount: (100).microAlgo() })
@@ -44,7 +43,7 @@ const result = algorand
     appId: 123n,
     method: myMethod,
     args: [1, 2, 3],
-  });
+  })
 ```
 
 ## Sending a transaction
@@ -59,7 +58,7 @@ Additionally `send()` takes a number of parameters which allow you to opt-in to 
 For example:
 
 ```typescript
-const myMethod = algosdk.ABIMethod.fromSignature('my_method()void');
+const myMethod = algosdk.ABIMethod.fromSignature('my_method()void')
 const result = algorand
   .newGroup()
   .addAppCallMethodCall({
@@ -70,7 +69,7 @@ const result = algorand
   })
   .send({
     populateAppCallResources: true,
-  });
+  })
 ```
 
 If `my_method` in the above example accesses any resources, they will be automatically discovered and added before sending the transaction to the network.
@@ -82,7 +81,7 @@ If `my_method` in the above example accesses any resources, they will be automat
 For example:
 
 ```typescript
-const myMethod = algosdk.ABIMethod.fromSignature('my_method()void');
+const myMethod = algosdk.ABIMethod.fromSignature('my_method()void')
 const result = algorand
   .newGroup()
   .addAppCallMethodCall({
@@ -94,7 +93,7 @@ const result = algorand
   })
   .send({
     coverAppCallInnerTransactionFees: true,
-  });
+  })
 ```
 
 Assuming the app account is not covering any of the inner transaction fees, if `my_method` in the above example sends 2 inner transactions, then the fee calculated for the parent transaction will be 3000 µALGO when the transaction is sent to the network.
@@ -141,23 +140,23 @@ A more complex valid scenario which leverages an app client to send an ABI metho
 const appFactory = algorand.client.getAppFactory({
   appSpec: 'APP_SPEC',
   defaultSender: sender.addr,
-});
+})
 
-const { appClient: appClient1 } = await appFactory.send.bare.create();
-const { appClient: appClient2 } = await appFactory.send.bare.create();
+const { appClient: appClient1 } = await appFactory.send.bare.create()
+const { appClient: appClient2 } = await appFactory.send.bare.create()
 
 const paymentArg = algorand.createTransaction.payment({
   sender: sender.addr,
   receiver: receiver.addr,
   amount: microAlgo(1),
-});
+})
 
 // Note the use of .params. here, this ensure that maxFee is still available to the composer
 const appCallArg = await appClient2.params.call({
   method: 'my_other_method',
   args: [],
   maxFee: microAlgo(2000),
-});
+})
 
 const result = await appClient1.algorand
   .newGroup()
@@ -170,7 +169,7 @@ const result = await appClient1.algorand
   )
   .send({
     coverAppCallInnerTransactionFees: true,
-  });
+  })
 ```
 
 This feature should efficiently calculate the minimum fee needed to execute an app call transaction with inners, however we always recommend testing your specific scenario behaves as expected before releasing.
@@ -208,7 +207,7 @@ const result = await algorand
     method: abiMethod,
     args: [1, 2, 3],
   })
-  .simulate();
+  .simulate()
 ```
 
 The above will execute a simulate request asserting that all transactions in the group are correctly signed.
@@ -232,5 +231,5 @@ const result = await algorand
   })
   .simulate({
     skipSignatures: true,
-  });
+  })
 ```

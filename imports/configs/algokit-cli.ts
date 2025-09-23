@@ -1,6 +1,6 @@
 import type { ImportOptions } from '@larkiny/astro-github-loader';
-import { createStarlightPathMappings } from '../transforms/links.js';
-import { convertH1ToTitle, removeH1 } from '../transforms/common.js';
+import { createStarlightLinkMappings } from '../transforms/links.js';
+import { convertH1ToTitle } from '../transforms/common.js';
 import { createFrontmatterTransform } from '../transforms/frontmatter.js';
 
 /**
@@ -41,8 +41,8 @@ export const algokitCLIConfig: ImportOptions = {
   transforms: [convertH1ToTitle],
   linkTransform: {
     stripPrefixes: ['src/content/docs'],
-    pathMappings: [
-      ...createStarlightPathMappings(),
+    linkMappings: [
+      ...createStarlightLinkMappings(),
       // Map unresolved CLI links to reference section
       {
         pattern: /^\.\.\/cli\/?$/,

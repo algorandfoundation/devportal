@@ -1,0 +1,1350 @@
+---
+title: "algokit_utils.models.transaction"
+---
+
+<a id="module-algokit_utils.models.transaction"></a>
+
+<a id="algokit-utils-models-transaction"></a>
+
+<a id="module-contents"></a>
+
+<a id="classes"></a>
+
+## Classes
+
+| [`BaseArc2Note`](#algokit_utils.models.transaction.BaseArc2Note)                 | Base ARC-0002 transaction note structure                                         |
+|----------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| [`JsonFormatArc2Note`](#algokit_utils.models.transaction.JsonFormatArc2Note)     | ARC-0002 note for JSON format                                                    |
+| [`SendParams`](#algokit_utils.models.transaction.SendParams)                     | Parameters for sending a transaction                                             |
+| [`StringFormatArc2Note`](#algokit_utils.models.transaction.StringFormatArc2Note) | ARC-0002 note for string-based formats (m/b/u)                                   |
+| [`TransactionWrapper`](#algokit_utils.models.transaction.TransactionWrapper)     | Wrapper around algosdk.transaction.Transaction with optional property validators |
+
+<a id="api"></a>
+
+## API
+
+<a id="algokit_utils.models.transaction.BaseArc2Note"></a>
+
+## *class* algokit_utils.models.transaction.BaseArc2Note
+
+BaseArc2Note
+
+Base ARC-0002 transaction note structure
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__()
+
+True if the dictionary has the specified key, else False.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__delitem__"></a>
+
+### \_\_delitem_\_
+
+__delitem__()
+
+Delete self[key].
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__getitem__"></a>
+
+### \_\_getitem_\_
+
+__getitem__()
+
+Return self[key].
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__ior__"></a>
+
+### \_\_ior_\_
+
+__ior__()
+
+Return self|=value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Implement iter(self).
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__len__"></a>
+
+### \_\_len_\_
+
+__len__()
+
+Return len(self).
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__reversed__"></a>
+
+### \_\_reversed_\_
+
+__reversed__()
+
+Return a reverse iterator over the dict keys.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__setitem__"></a>
+
+### \_\_setitem_\_
+
+__setitem__()
+
+Set self[key] to value.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+D.**sizeof**() -\> size of D in memory, in bytes
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.clear"></a>
+
+### clear
+
+clear()
+
+D.clear() -\> None.  Remove all items from D.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.copy"></a>
+
+### copy
+
+copy()
+
+D.copy() -\> a shallow copy of D
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.get"></a>
+
+### get
+
+get()
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.items"></a>
+
+### items
+
+items()
+
+D.items() -\> a set-like object providing a view on D’s items
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.keys"></a>
+
+### keys
+
+keys()
+
+D.keys() -\> a set-like object providing a view on D’s keys
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.pop"></a>
+
+### pop
+
+pop()
+
+D.pop(k[,d]) -\> v, remove specified key and return the corresponding value.
+
+If the key is not found, return the default if given; otherwise,
+raise a KeyError.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.popitem"></a>
+
+### popitem
+
+popitem()
+
+Remove and return a (key, value) pair as a 2-tuple.
+
+Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.setdefault"></a>
+
+### setdefault
+
+setdefault()
+
+Insert key with a value of default if key is not in the dictionary.
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.update"></a>
+
+### update
+
+update()
+
+D.update([E, ]\*\*F) -\> None.  Update D from mapping/iterable E and F.
+If E is present and has a .keys() method, then does:  for k in E.keys(): D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]
+
+<a id="algokit_utils.models.transaction.BaseArc2Note.values"></a>
+
+### values
+
+values()
+
+D.values() -\> an object providing a view on D’s values
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note"></a>
+
+## *class* algokit_utils.models.transaction.JsonFormatArc2Note
+
+JsonFormatArc2Note
+
+ARC-0002 note for JSON format
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__()
+
+True if the dictionary has the specified key, else False.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__delitem__"></a>
+
+### \_\_delitem_\_
+
+__delitem__()
+
+Delete self[key].
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__getitem__"></a>
+
+### \_\_getitem_\_
+
+__getitem__()
+
+Return self[key].
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__ior__"></a>
+
+### \_\_ior_\_
+
+__ior__()
+
+Return self|=value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Implement iter(self).
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__len__"></a>
+
+### \_\_len_\_
+
+__len__()
+
+Return len(self).
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__reversed__"></a>
+
+### \_\_reversed_\_
+
+__reversed__()
+
+Return a reverse iterator over the dict keys.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__setitem__"></a>
+
+### \_\_setitem_\_
+
+__setitem__()
+
+Set self[key] to value.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+D.**sizeof**() -\> size of D in memory, in bytes
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.clear"></a>
+
+### clear
+
+clear()
+
+D.clear() -\> None.  Remove all items from D.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.copy"></a>
+
+### copy
+
+copy()
+
+D.copy() -\> a shallow copy of D
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.get"></a>
+
+### get
+
+get()
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.items"></a>
+
+### items
+
+items()
+
+D.items() -\> a set-like object providing a view on D’s items
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.keys"></a>
+
+### keys
+
+keys()
+
+D.keys() -\> a set-like object providing a view on D’s keys
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.pop"></a>
+
+### pop
+
+pop()
+
+D.pop(k[,d]) -\> v, remove specified key and return the corresponding value.
+
+If the key is not found, return the default if given; otherwise,
+raise a KeyError.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.popitem"></a>
+
+### popitem
+
+popitem()
+
+Remove and return a (key, value) pair as a 2-tuple.
+
+Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.setdefault"></a>
+
+### setdefault
+
+setdefault()
+
+Insert key with a value of default if key is not in the dictionary.
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.update"></a>
+
+### update
+
+update()
+
+D.update([E, ]\*\*F) -\> None.  Update D from mapping/iterable E and F.
+If E is present and has a .keys() method, then does:  for k in E.keys(): D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]
+
+<a id="algokit_utils.models.transaction.JsonFormatArc2Note.values"></a>
+
+### values
+
+values()
+
+D.values() -\> an object providing a view on D’s values
+
+<a id="algokit_utils.models.transaction.SendParams"></a>
+
+## *class* algokit_utils.models.transaction.SendParams
+
+SendParams
+
+Parameters for sending a transaction
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.models.transaction.SendParams.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__()
+
+True if the dictionary has the specified key, else False.
+
+<a id="algokit_utils.models.transaction.SendParams.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.models.transaction.SendParams.__delitem__"></a>
+
+### \_\_delitem_\_
+
+__delitem__()
+
+Delete self[key].
+
+<a id="algokit_utils.models.transaction.SendParams.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.models.transaction.SendParams.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.models.transaction.SendParams.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.models.transaction.SendParams.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.models.transaction.SendParams.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.models.transaction.SendParams.__getitem__"></a>
+
+### \_\_getitem_\_
+
+__getitem__()
+
+Return self[key].
+
+<a id="algokit_utils.models.transaction.SendParams.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.SendParams.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.models.transaction.SendParams.__ior__"></a>
+
+### \_\_ior_\_
+
+__ior__()
+
+Return self|=value.
+
+<a id="algokit_utils.models.transaction.SendParams.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Implement iter(self).
+
+<a id="algokit_utils.models.transaction.SendParams.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.models.transaction.SendParams.__len__"></a>
+
+### \_\_len_\_
+
+__len__()
+
+Return len(self).
+
+<a id="algokit_utils.models.transaction.SendParams.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.models.transaction.SendParams.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.models.transaction.SendParams.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.models.transaction.SendParams.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.models.transaction.SendParams.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.SendParams.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.SendParams.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.models.transaction.SendParams.__reversed__"></a>
+
+### \_\_reversed_\_
+
+__reversed__()
+
+Return a reverse iterator over the dict keys.
+
+<a id="algokit_utils.models.transaction.SendParams.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.models.transaction.SendParams.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.models.transaction.SendParams.__setitem__"></a>
+
+### \_\_setitem_\_
+
+__setitem__()
+
+Set self[key] to value.
+
+<a id="algokit_utils.models.transaction.SendParams.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+D.**sizeof**() -\> size of D in memory, in bytes
+
+<a id="algokit_utils.models.transaction.SendParams.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.models.transaction.SendParams.clear"></a>
+
+### clear
+
+clear()
+
+D.clear() -\> None.  Remove all items from D.
+
+<a id="algokit_utils.models.transaction.SendParams.copy"></a>
+
+### copy
+
+copy()
+
+D.copy() -\> a shallow copy of D
+
+<a id="algokit_utils.models.transaction.SendParams.get"></a>
+
+### get
+
+get()
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.models.transaction.SendParams.items"></a>
+
+### items
+
+items()
+
+D.items() -\> a set-like object providing a view on D’s items
+
+<a id="algokit_utils.models.transaction.SendParams.keys"></a>
+
+### keys
+
+keys()
+
+D.keys() -\> a set-like object providing a view on D’s keys
+
+<a id="algokit_utils.models.transaction.SendParams.pop"></a>
+
+### pop
+
+pop()
+
+D.pop(k[,d]) -\> v, remove specified key and return the corresponding value.
+
+If the key is not found, return the default if given; otherwise,
+raise a KeyError.
+
+<a id="algokit_utils.models.transaction.SendParams.popitem"></a>
+
+### popitem
+
+popitem()
+
+Remove and return a (key, value) pair as a 2-tuple.
+
+Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.
+
+<a id="algokit_utils.models.transaction.SendParams.setdefault"></a>
+
+### setdefault
+
+setdefault()
+
+Insert key with a value of default if key is not in the dictionary.
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.models.transaction.SendParams.update"></a>
+
+### update
+
+update()
+
+D.update([E, ]\*\*F) -\> None.  Update D from mapping/iterable E and F.
+If E is present and has a .keys() method, then does:  for k in E.keys(): D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]
+
+<a id="algokit_utils.models.transaction.SendParams.values"></a>
+
+### values
+
+values()
+
+D.values() -\> an object providing a view on D’s values
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note"></a>
+
+## *class* algokit_utils.models.transaction.StringFormatArc2Note
+
+StringFormatArc2Note
+
+ARC-0002 note for string-based formats (m/b/u)
+
+## Initialization
+
+Initialize self.  See help(type(self)) for accurate signature.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__contains__"></a>
+
+### \_\_contains_\_
+
+__contains__()
+
+True if the dictionary has the specified key, else False.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__delattr__"></a>
+
+### \_\_delattr_\_
+
+__delattr__()
+
+Implement delattr(self, name).
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__delitem__"></a>
+
+### \_\_delitem_\_
+
+__delitem__()
+
+Delete self[key].
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__dir__"></a>
+
+### \_\_dir_\_
+
+__dir__()
+
+Default dir() implementation.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__eq__"></a>
+
+### \_\_eq_\_
+
+__eq__()
+
+Return self==value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__format__"></a>
+
+### \_\_format_\_
+
+__format__()
+
+Default object formatter.
+
+Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__ge__"></a>
+
+### \_\_ge_\_
+
+__ge__()
+
+Return self\>=value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__getattribute__"></a>
+
+### \_\_getattribute_\_
+
+__getattribute__()
+
+Return getattr(self, name).
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__getitem__"></a>
+
+### \_\_getitem_\_
+
+__getitem__()
+
+Return self[key].
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__getstate__"></a>
+
+### \_\_getstate_\_
+
+__getstate__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__gt__"></a>
+
+### \_\_gt_\_
+
+__gt__()
+
+Return self\>value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__ior__"></a>
+
+### \_\_ior_\_
+
+__ior__()
+
+Return self|=value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__iter__"></a>
+
+### \_\_iter_\_
+
+__iter__()
+
+Implement iter(self).
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__le__"></a>
+
+### \_\_le_\_
+
+__le__()
+
+Return self\<=value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__len__"></a>
+
+### \_\_len_\_
+
+__len__()
+
+Return len(self).
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__lt__"></a>
+
+### \_\_lt_\_
+
+__lt__()
+
+Return self\<value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__ne__"></a>
+
+### \_\_ne_\_
+
+__ne__()
+
+Return self!=value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__new__"></a>
+
+### \_\_new_\_
+
+__new__()
+
+Create and return a new object.  See help(type) for accurate signature.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__or__"></a>
+
+### \_\_or_\_
+
+__or__()
+
+Return self|value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__reduce__"></a>
+
+### \_\_reduce_\_
+
+__reduce__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__reduce_ex__"></a>
+
+### \_\_reduce_ex_\_
+
+__reduce_ex__()
+
+Helper for pickle.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__repr__"></a>
+
+### \_\_repr_\_
+
+__repr__()
+
+Return repr(self).
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__reversed__"></a>
+
+### \_\_reversed_\_
+
+__reversed__()
+
+Return a reverse iterator over the dict keys.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__ror__"></a>
+
+### \_\_ror_\_
+
+__ror__()
+
+Return value|self.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__setattr__"></a>
+
+### \_\_setattr_\_
+
+__setattr__()
+
+Implement setattr(self, name, value).
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__setitem__"></a>
+
+### \_\_setitem_\_
+
+__setitem__()
+
+Set self[key] to value.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__sizeof__"></a>
+
+### \_\_sizeof_\_
+
+__sizeof__()
+
+D.**sizeof**() -\> size of D in memory, in bytes
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.__str__"></a>
+
+### \_\_str_\_
+
+__str__()
+
+Return str(self).
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.clear"></a>
+
+### clear
+
+clear()
+
+D.clear() -\> None.  Remove all items from D.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.copy"></a>
+
+### copy
+
+copy()
+
+D.copy() -\> a shallow copy of D
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.get"></a>
+
+### get
+
+get()
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.items"></a>
+
+### items
+
+items()
+
+D.items() -\> a set-like object providing a view on D’s items
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.keys"></a>
+
+### keys
+
+keys()
+
+D.keys() -\> a set-like object providing a view on D’s keys
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.pop"></a>
+
+### pop
+
+pop()
+
+D.pop(k[,d]) -\> v, remove specified key and return the corresponding value.
+
+If the key is not found, return the default if given; otherwise,
+raise a KeyError.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.popitem"></a>
+
+### popitem
+
+popitem()
+
+Remove and return a (key, value) pair as a 2-tuple.
+
+Pairs are returned in LIFO (last-in, first-out) order.
+Raises KeyError if the dict is empty.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.setdefault"></a>
+
+### setdefault
+
+setdefault()
+
+Insert key with a value of default if key is not in the dictionary.
+
+Return the value for key if key is in the dictionary, else default.
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.update"></a>
+
+### update
+
+update()
+
+D.update([E, ]\*\*F) -\> None.  Update D from mapping/iterable E and F.
+If E is present and has a .keys() method, then does:  for k in E.keys(): D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]
+
+<a id="algokit_utils.models.transaction.StringFormatArc2Note.values"></a>
+
+### values
+
+values()
+
+D.values() -\> an object providing a view on D’s values
+
+<a id="algokit_utils.models.transaction.TransactionWrapper"></a>
+
+## *class* algokit_utils.models.transaction.TransactionWrapper
+
+TransactionWrapper(transaction: [algosdk.transaction.Transaction](../algosdk/algosdk.transaction.mdx#algosdk.transaction.Transaction))
+
+Wrapper around algosdk.transaction.Transaction with optional property validators
+
+## Initialization
