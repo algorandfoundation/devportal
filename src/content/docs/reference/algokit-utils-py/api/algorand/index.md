@@ -1,8 +1,11 @@
 ---
-title: algokit_utils.algorand
+title: algorand
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`AlgorandClient`](/reference/algokit-utils-py/api/AlgorandClient#algokit_utils.algorand.AlgorandClient) | A client that brokers easy access to Algorand functionality. |
-| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| [`AlgorandClient`](AlgorandClient.md#algokit_utils.algorand.AlgorandClient) | A client that brokers easy access to Algorand functionality. |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------ |

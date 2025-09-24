@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_sender.SendSingleTransactionResult
+title: SendSingleTransactionResult
+sidebar:
+  label: SendSingleTransactionResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_sender.SendSingleTransactionResult

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.application.CompiledTeal
+title: CompiledTeal
+sidebar:
+  label: CompiledTeal
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.application.CompiledTeal

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.protocols.typed_clients.TypedAppClientProtocol
+title: TypedAppClientProtocol
+sidebar:
+  label: TypedAppClientProtocol
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.protocols.typed_clients.TypedAppClientProtocol(\*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, algorand: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient), approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None)
@@ -38,7 +43,7 @@ only the presence of given attributes, ignoring their type signatures.
 Protocol classes can be generic, they are defined as:
 
 ```default
-class GenProto[T](/reference/algokit-utils-py/api/Protocol):
+class GenProto[T](Protocol):
     def meth(self) -> T:
         ...
 ```

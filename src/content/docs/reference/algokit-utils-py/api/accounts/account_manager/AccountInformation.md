@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.accounts.account_manager.AccountInformation
+title: AccountInformation
+sidebar:
+  label: AccountInformation
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.accounts.account_manager.AccountInformation

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.account.MultisigMetadata
+title: MultisigMetadata
+sidebar:
+  label: MultisigMetadata
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.account.MultisigMetadata

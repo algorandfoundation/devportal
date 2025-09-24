@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.network.AlgoClientNetworkConfig
+title: AlgoClientNetworkConfig
+sidebar:
+  label: AlgoClientNetworkConfig
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.network.AlgoClientNetworkConfig

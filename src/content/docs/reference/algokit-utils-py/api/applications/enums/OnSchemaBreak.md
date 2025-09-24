@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.enums.OnSchemaBreak
+title: OnSchemaBreak
+sidebar:
+  label: OnSchemaBreak
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.enums.OnSchemaBreak(\*args, \*\*kwds)

@@ -1,16 +1,21 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.SourceInfoModel
+title: SourceInfoModel
+sidebar:
+  label: SourceInfoModel
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.SourceInfoModel
 
 Source information for approval and clear programs.
 
-#### approval _: [ProgramSourceInfo](/reference/algokit-utils-py/api/ProgramSourceInfo#algokit_utils.applications.app_spec.arc56.ProgramSourceInfo)_
+#### approval _: [ProgramSourceInfo](ProgramSourceInfo.md#algokit_utils.applications.app_spec.arc56.ProgramSourceInfo)_
 
 The approval program source info
 
-#### clear _: [ProgramSourceInfo](/reference/algokit-utils-py/api/ProgramSourceInfo#algokit_utils.applications.app_spec.arc56.ProgramSourceInfo)_
+#### clear _: [ProgramSourceInfo](ProgramSourceInfo.md#algokit_utils.applications.app_spec.arc56.ProgramSourceInfo)_
 
 The clear program source info
 

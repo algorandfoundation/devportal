@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.abi.BoxABIValue
+title: BoxABIValue
+sidebar:
+  label: BoxABIValue
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.abi.BoxABIValue

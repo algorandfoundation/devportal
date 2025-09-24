@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult
+title: SendAppCreateTransactionResult
+sidebar:
+  label: SendAppCreateTransactionResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult

@@ -1,16 +1,19 @@
 ---
-title: algokit_utils.clients.dispenser_api_client
+title: clients.dispenser_api_client
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`DispenserApiConfig`](/reference/algokit-utils-py/api/DispenserApiConfig#algokit_utils.clients.dispenser_api_client.DispenserApiConfig)                      |                                                                                                                                                                                                                                |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [`DispenserAssetName`](/reference/algokit-utils-py/api/DispenserAssetName#algokit_utils.clients.dispenser_api_client.DispenserAssetName)                      | Enum where members are also (and must be) ints                                                                                                                                                                                 |
-| [`DispenserAsset`](/reference/algokit-utils-py/api/DispenserAsset#algokit_utils.clients.dispenser_api_client.DispenserAsset)                                  |                                                                                                                                                                                                                                |
-| [`DispenserFundResponse`](/reference/algokit-utils-py/api/DispenserFundResponse#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)             |                                                                                                                                                                                                                                |
-| [`DispenserLimitResponse`](/reference/algokit-utils-py/api/DispenserLimitResponse#algokit_utils.clients.dispenser_api_client.DispenserLimitResponse)          |                                                                                                                                                                                                                                |
-| [`TestNetDispenserApiClient`](/reference/algokit-utils-py/api/TestNetDispenserApiClient#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient) | Client for interacting with the [AlgoKit TestNet Dispenser API](<[https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md)>). |
+| [`DispenserApiConfig`](DispenserApiConfig.md#algokit_utils.clients.dispenser_api_client.DispenserApiConfig)                      |                                                                                                                                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`DispenserAssetName`](DispenserAssetName.md#algokit_utils.clients.dispenser_api_client.DispenserAssetName)                      | Enum where members are also (and must be) ints                                                                                                                                                                                 |
+| [`DispenserAsset`](DispenserAsset.md#algokit_utils.clients.dispenser_api_client.DispenserAsset)                                  |                                                                                                                                                                                                                                |
+| [`DispenserFundResponse`](DispenserFundResponse.md#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)             |                                                                                                                                                                                                                                |
+| [`DispenserLimitResponse`](DispenserLimitResponse.md#algokit_utils.clients.dispenser_api_client.DispenserLimitResponse)          |                                                                                                                                                                                                                                |
+| [`TestNetDispenserApiClient`](TestNetDispenserApiClient.md#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient) | Client for interacting with the [AlgoKit TestNet Dispenser API](<[https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md)>). |
 
 ## Module Contents
 

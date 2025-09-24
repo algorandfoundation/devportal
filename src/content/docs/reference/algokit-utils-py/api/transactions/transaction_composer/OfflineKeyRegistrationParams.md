@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams
+title: OfflineKeyRegistrationParams
+sidebar:
+  label: OfflineKeyRegistrationParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.AssetFreezeParams
+title: AssetFreezeParams
+sidebar:
+  label: AssetFreezeParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_composer.AssetFreezeParams

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.transaction.SendParams
+title: SendParams
+sidebar:
+  label: SendParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.transaction.SendParams

@@ -1,8 +1,11 @@
 ---
-title: algokit_utils.accounts
+title: accounts
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Submodules
 
-- [algokit_utils.accounts.account_manager](/reference/algokit-utils-py/api/account_manager/)
-- [algokit_utils.accounts.kmd_account_manager](/reference/algokit-utils-py/api/kmd_account_manager/)
+- [algokit_utils.accounts.account_manager](account_manager/)
+- [algokit_utils.accounts.kmd_account_manager](kmd_account_manager/)

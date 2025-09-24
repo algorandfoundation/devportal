@@ -1,11 +1,14 @@
 ---
-title: algokit_utils.applications.app_manager
+title: applications.app_manager
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`AppManager`](/reference/algokit-utils-py/api/AppManager#algokit_utils.applications.app_manager.AppManager) | A manager class for interacting with Algorand applications. |
-| ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
+| [`AppManager`](AppManager.md#algokit_utils.applications.app_manager.AppManager) | A manager class for interacting with Algorand applications. |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 
 ## Module Contents
 

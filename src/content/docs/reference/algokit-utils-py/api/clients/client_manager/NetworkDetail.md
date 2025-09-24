@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.clients.client_manager.NetworkDetail
+title: NetworkDetail
+sidebar:
+  label: NetworkDetail
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.clients.client_manager.NetworkDetail

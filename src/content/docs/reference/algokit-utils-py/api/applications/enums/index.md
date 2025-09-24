@@ -1,10 +1,13 @@
 ---
-title: algokit_utils.applications.enums
+title: applications.enums
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`OnSchemaBreak`](/reference/algokit-utils-py/api/OnSchemaBreak#algokit_utils.applications.enums.OnSchemaBreak)                | Action to take if an Application's schema has breaking changes |
-| ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------- |
-| [`OnUpdate`](/reference/algokit-utils-py/api/OnUpdate#algokit_utils.applications.enums.OnUpdate)                               | Action to take if an Application has been updated              |
-| [`OperationPerformed`](/reference/algokit-utils-py/api/OperationPerformed#algokit_utils.applications.enums.OperationPerformed) | Describes the actions taken during deployment                  |
+| [`OnSchemaBreak`](OnSchemaBreak.md#algokit_utils.applications.enums.OnSchemaBreak)                | Action to take if an Application's schema has breaking changes |
+| ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [`OnUpdate`](OnUpdate.md#algokit_utils.applications.enums.OnUpdate)                               | Action to take if an Application has been updated              |
+| [`OperationPerformed`](OperationPerformed.md#algokit_utils.applications.enums.OperationPerformed) | Describes the actions taken during deployment                  |

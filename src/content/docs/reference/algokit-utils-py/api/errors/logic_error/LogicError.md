@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.errors.logic_error.LogicError
+title: LogicError
+sidebar:
+  label: LogicError
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _exception_ algokit_utils.errors.logic_error.LogicError(\*, logic_error_str: str, program: str, source_map: AlgoSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[[algokit_utils.models.simulate.SimulationTrace](/reference/algokit-utils-py/api/models/simulate/simulationtrace/#algokit_utils.models.simulate.SimulationTrace)] | None = None, get_line_for_pc: collections.abc.Callable[[int], int | None] | None = None)

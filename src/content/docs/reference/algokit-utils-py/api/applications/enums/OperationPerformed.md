@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.enums.OperationPerformed
+title: OperationPerformed
+sidebar:
+  label: OperationPerformed
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.enums.OperationPerformed(\*args, \*\*kwds)

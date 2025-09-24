@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.transaction.TransactionWrapper
+title: TransactionWrapper
+sidebar:
+  label: TransactionWrapper
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.transaction.TransactionWrapper(transaction: algosdk.transaction.Transaction)

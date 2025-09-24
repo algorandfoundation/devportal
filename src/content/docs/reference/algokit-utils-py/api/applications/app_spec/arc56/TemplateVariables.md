@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.TemplateVariables
+title: TemplateVariables
+sidebar:
+  label: TemplateVariables
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.TemplateVariables

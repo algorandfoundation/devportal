@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.assets.asset_manager.AssetInformation
+title: AssetInformation
+sidebar:
+  label: AssetInformation
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.assets.asset_manager.AssetInformation

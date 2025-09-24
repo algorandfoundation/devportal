@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult
+title: EnsureFundedFromTestnetDispenserApiResult
+sidebar:
+  label: EnsureFundedFromTestnetDispenserApiResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult

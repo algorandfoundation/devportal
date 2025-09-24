@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.account.LogicSigAccount
+title: LogicSigAccount
+sidebar:
+  label: LogicSigAccount
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.account.LogicSigAccount(program: bytes, args: list[bytes] | None)

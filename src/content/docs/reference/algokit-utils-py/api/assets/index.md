@@ -1,7 +1,10 @@
 ---
-title: algokit_utils.assets
+title: assets
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Submodules
 
-- [algokit_utils.assets.asset_manager](/reference/algokit-utils-py/api/asset_manager/)
+- [algokit_utils.assets.asset_manager](asset_manager/)

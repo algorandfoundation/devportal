@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.clients.client_manager.AlgoSdkClients
+title: AlgoSdkClients
+sidebar:
+  label: AlgoSdkClients
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.clients.client_manager.AlgoSdkClients(algod: algosdk.v2client.algod.AlgodClient, indexer: algosdk.v2client.indexer.IndexerClient | None = None, kmd: algosdk.kmd.KMDClient | None = None)

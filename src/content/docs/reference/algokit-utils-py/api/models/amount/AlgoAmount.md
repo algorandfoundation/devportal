@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.amount.AlgoAmount
+title: AlgoAmount
+sidebar:
+  label: AlgoAmount
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.amount.AlgoAmount(\*, micro_algo: int)

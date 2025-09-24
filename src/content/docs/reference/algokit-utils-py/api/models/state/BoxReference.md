@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.state.BoxReference
+title: BoxReference
+sidebar:
+  label: BoxReference
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.state.BoxReference(app_id: int, name: bytes | str)

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.state.BoxName
+title: BoxName
+sidebar:
+  label: BoxName
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.state.BoxName

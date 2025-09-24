@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.account.TransactionSignerAccount
+title: TransactionSignerAccount
+sidebar:
+  label: TransactionSignerAccount
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.account.TransactionSignerAccount

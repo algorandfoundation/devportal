@@ -1,8 +1,11 @@
 ---
-title: algokit_utils.protocols.account
+title: protocols.account
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`TransactionSignerAccountProtocol`](/reference/algokit-utils-py/api/TransactionSignerAccountProtocol#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | An account that has a transaction signer. |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| [`TransactionSignerAccountProtocol`](TransactionSignerAccountProtocol.md#algokit_utils.protocols.account.TransactionSignerAccountProtocol) | An account that has a transaction signer. |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------- |

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams
+title: AppDeleteMethodCallParams
+sidebar:
+  label: AppDeleteMethodCallParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams

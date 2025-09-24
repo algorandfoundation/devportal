@@ -1,12 +1,17 @@
 ---
-title: algokit_utils.applications.app_deployer.AppDeployParams
+title: AppDeployParams
+sidebar:
+  label: AppDeployParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_deployer.AppDeployParams
 
 Parameters for deploying an app
 
-#### metadata _: [AppDeploymentMetaData](/reference/algokit-utils-py/api/AppDeploymentMetaData#algokit_utils.applications.app_deployer.AppDeploymentMetaData)_
+#### metadata _: [AppDeploymentMetaData](AppDeploymentMetaData.md#algokit_utils.applications.app_deployer.AppDeploymentMetaData)_
 
 The deployment metadata
 
@@ -34,7 +39,7 @@ The update parameters
 
 The deletion parameters
 
-#### existing*deployments *: [ApplicationLookup](/reference/algokit-utils-py/api/ApplicationLookup#algokit_utils.applications.app_deployer.ApplicationLookup) | None\_ _= None_
+#### existing*deployments *: [ApplicationLookup](ApplicationLookup.md#algokit_utils.applications.app_deployer.ApplicationLookup) | None\_ _= None_
 
 Optional existing deployments
 

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.clients.dispenser_api_client.DispenserAsset
+title: DispenserAsset
+sidebar:
+  label: DispenserAsset
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.clients.dispenser_api_client.DispenserAsset

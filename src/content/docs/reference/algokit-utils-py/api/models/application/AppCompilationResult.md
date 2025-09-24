@@ -1,15 +1,20 @@
 ---
-title: algokit_utils.models.application.AppCompilationResult
+title: AppCompilationResult
+sidebar:
+  label: AppCompilationResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.application.AppCompilationResult
 
 The compiled teal code
 
-#### compiled*approval *: [CompiledTeal](/reference/algokit-utils-py/api/CompiledTeal#algokit_utils.models.application.CompiledTeal)\_
+#### compiled*approval *: [CompiledTeal](CompiledTeal.md#algokit_utils.models.application.CompiledTeal)\_
 
 The compiled approval program
 
-#### compiled*clear *: [CompiledTeal](/reference/algokit-utils-py/api/CompiledTeal#algokit_utils.models.application.CompiledTeal)\_
+#### compiled*clear *: [CompiledTeal](CompiledTeal.md#algokit_utils.models.application.CompiledTeal)\_
 
 The compiled clear state program

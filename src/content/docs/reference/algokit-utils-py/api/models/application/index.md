@@ -1,12 +1,15 @@
 ---
-title: algokit_utils.models.application
+title: models.application
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`AppState`](/reference/algokit-utils-py/api/AppState#algokit_utils.models.application.AppState)                                     |                                     |
-| ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| [`AppInformation`](/reference/algokit-utils-py/api/AppInformation#algokit_utils.models.application.AppInformation)                   |                                     |
-| [`CompiledTeal`](/reference/algokit-utils-py/api/CompiledTeal#algokit_utils.models.application.CompiledTeal)                         | The compiled teal code              |
-| [`AppCompilationResult`](/reference/algokit-utils-py/api/AppCompilationResult#algokit_utils.models.application.AppCompilationResult) | The compiled teal code              |
-| [`AppSourceMaps`](/reference/algokit-utils-py/api/AppSourceMaps#algokit_utils.models.application.AppSourceMaps)                      | The source maps for the application |
+| [`AppState`](AppState.md#algokit_utils.models.application.AppState)                                     |                                     |
+| ------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| [`AppInformation`](AppInformation.md#algokit_utils.models.application.AppInformation)                   |                                     |
+| [`CompiledTeal`](CompiledTeal.md#algokit_utils.models.application.CompiledTeal)                         | The compiled teal code              |
+| [`AppCompilationResult`](AppCompilationResult.md#algokit_utils.models.application.AppCompilationResult) | The compiled teal code              |
+| [`AppSourceMaps`](AppSourceMaps.md#algokit_utils.models.application.AppSourceMaps)                      | The source maps for the application |

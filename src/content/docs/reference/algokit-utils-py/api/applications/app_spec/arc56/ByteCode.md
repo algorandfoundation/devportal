@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.ByteCode
+title: ByteCode
+sidebar:
+  label: ByteCode
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.ByteCode

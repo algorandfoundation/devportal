@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.Recommendations
+title: Recommendations
+sidebar:
+  label: Recommendations
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.Recommendations
@@ -18,7 +23,7 @@ The optional list of applications
 
 The optional list of assets
 
-#### boxes _: [Boxes](/reference/algokit-utils-py/api/Boxes#algokit_utils.applications.app_spec.arc56.Boxes) | None_ _= None_
+#### boxes _: [Boxes](Boxes.md#algokit_utils.applications.app_spec.arc56.Boxes) | None_ _= None_
 
 The optional box storage requirements
 

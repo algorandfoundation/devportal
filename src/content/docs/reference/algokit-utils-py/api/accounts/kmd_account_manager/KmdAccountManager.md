@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.accounts.kmd_account_manager.KmdAccountManager
+title: KmdAccountManager
+sidebar:
+  label: KmdAccountManager
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.accounts.kmd_account_manager.KmdAccountManager(client_manager: [algokit_utils.clients.client_manager.ClientManager](/reference/algokit-utils-py/api/clients/client_manager/clientmanager/#algokit_utils.clients.client_manager.ClientManager))
@@ -15,7 +20,7 @@ Returns the KMD client, initializing it if needed.
 - **Returns:**
   The KMD client
 
-#### get_wallet_account(wallet_name: str, predicate: collections.abc.Callable[[dict[str, Any]], bool] | None = None, sender: str | None = None) → [KmdAccount](/reference/algokit-utils-py/api/KmdAccount#algokit_utils.accounts.kmd_account_manager.KmdAccount) | None
+#### get_wallet_account(wallet_name: str, predicate: collections.abc.Callable[[dict[str, Any]], bool] | None = None, sender: str | None = None) → [KmdAccount](KmdAccount.md#algokit_utils.accounts.kmd_account_manager.KmdAccount) | None
 
 Returns an Algorand signing account with private key loaded from the given KMD wallet.
 
@@ -29,7 +34,7 @@ if no predicate is provided.
 - **Returns:**
   The signing account or None if no matching wallet or account was found
 
-#### get_or_create_wallet_account(name: str, fund_with: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None = None) → [KmdAccount](/reference/algokit-utils-py/api/KmdAccount#algokit_utils.accounts.kmd_account_manager.KmdAccount)
+#### get_or_create_wallet_account(name: str, fund_with: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None = None) → [KmdAccount](KmdAccount.md#algokit_utils.accounts.kmd_account_manager.KmdAccount)
 
 Gets or creates a funded account in a KMD wallet of the given name.
 
@@ -41,7 +46,7 @@ Provides idempotent access to accounts from LocalNet without specifying the priv
 - **Returns:**
   An Algorand account with private key loaded
 
-#### get_localnet_dispenser_account() → [KmdAccount](/reference/algokit-utils-py/api/KmdAccount#algokit_utils.accounts.kmd_account_manager.KmdAccount)
+#### get_localnet_dispenser_account() → [KmdAccount](KmdAccount.md#algokit_utils.accounts.kmd_account_manager.KmdAccount)
 
 Returns an Algorand account with private key loaded for the default LocalNet dispenser account.
 

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_spec.arc32.DefaultArgumentDict
+title: DefaultArgumentDict
+sidebar:
+  label: DefaultArgumentDict
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc32.DefaultArgumentDict

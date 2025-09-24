@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.transaction.BaseArc2Note
+title: BaseArc2Note
+sidebar:
+  label: BaseArc2Note
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.transaction.BaseArc2Note

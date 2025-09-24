@@ -1,12 +1,17 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.Event
+title: Event
+sidebar:
+  label: Event
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.Event
 
 Event information.
 
-#### args _: list[[EventArg](/reference/algokit-utils-py/api/EventArg#algokit_utils.applications.app_spec.arc56.EventArg)]_
+#### args _: list[[EventArg](EventArg.md#algokit_utils.applications.app_spec.arc56.EventArg)]_
 
 The list of event arguments
 

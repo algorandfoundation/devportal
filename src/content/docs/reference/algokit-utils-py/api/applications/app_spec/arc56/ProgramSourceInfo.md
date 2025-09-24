@@ -1,16 +1,21 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.ProgramSourceInfo
+title: ProgramSourceInfo
+sidebar:
+  label: ProgramSourceInfo
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.ProgramSourceInfo
 
 Program source information.
 
-#### pc*offset_method *: [PcOffsetMethod](/reference/algokit-utils-py/api/PcOffsetMethod#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)\_
+#### pc*offset_method *: [PcOffsetMethod](PcOffsetMethod.md#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)\_
 
 The PC offset method
 
-#### source*info *: list[[SourceInfo](/reference/algokit-utils-py/api/SourceInfo#algokit_utils.applications.app_spec.arc56.SourceInfo)]\_
+#### source*info *: list[[SourceInfo](SourceInfo.md#algokit_utils.applications.app_spec.arc56.SourceInfo)]\_
 
 The list of source info entries
 

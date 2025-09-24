@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_manager.AppManager
+title: AppManager
+sidebar:
+  label: AppManager
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_manager.AppManager(algod_client: algosdk.v2client.algod.AlgodClient)

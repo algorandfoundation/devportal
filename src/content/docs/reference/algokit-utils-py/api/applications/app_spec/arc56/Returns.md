@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.Returns
+title: Returns
+sidebar:
+  label: Returns
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.Returns

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.abi.get_abi_decoded_value
+title: get_abi_decoded_value
+sidebar:
+  label: get_abi_decoded_value
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### algokit_utils.applications.abi.get_abi_decoded_value(value: bytes | int | str, type_str: str | ABIArgumentType, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/api/applications/app_spec/arc56/structfield/#algokit_utils.applications.app_spec.arc56.StructField)]]) → ABIValue

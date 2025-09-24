@@ -1,12 +1,15 @@
 ---
-title: algokit_utils.applications.abi
+title: applications.abi
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`ABIReturn`](/reference/algokit-utils-py/api/ABIReturn#algokit_utils.applications.abi.ABIReturn)       | Represents the return value from an ABI method call. |
-| ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| [`BoxABIValue`](/reference/algokit-utils-py/api/BoxABIValue#algokit_utils.applications.abi.BoxABIValue) | Represents an ABI value stored in a box.             |
+| [`ABIReturn`](ABIReturn.md#algokit_utils.applications.abi.ABIReturn)       | Represents the return value from an ABI method call. |
+| -------------------------------------------------------------------------- | ---------------------------------------------------- |
+| [`BoxABIValue`](BoxABIValue.md#algokit_utils.applications.abi.BoxABIValue) | Represents an ABI value stored in a box.             |
 
 ## Module Contents
 
@@ -20,7 +23,7 @@ title: algokit_utils.applications.abi
 
 ### _type_ algokit*utils.applications.abi.ABIArgumentType *= algosdk.abi.ABIType | algosdk.abi.ABITransactionType | algosdk.abi.ABIReferenceType\_
 
-### algokit_utils.applications.abi.get_arc56_value(abi_return: [ABIReturn](/reference/algokit-utils-py/api/ABIReturn#algokit_utils.applications.abi.ABIReturn), method: [algokit_utils.applications.app_spec.arc56.Method](/reference/algokit-utils-py/api/applications/app_spec/arc56/method/#algokit_utils.applications.app_spec.arc56.Method) | algosdk.abi.method.Method, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/api/applications/app_spec/arc56/structfield/#algokit_utils.applications.app_spec.arc56.StructField)]]) → Arc56ReturnValueType
+### algokit_utils.applications.abi.get_arc56_value(abi_return: [ABIReturn](ABIReturn.md#algokit_utils.applications.abi.ABIReturn), method: [algokit_utils.applications.app_spec.arc56.Method](/reference/algokit-utils-py/api/applications/app_spec/arc56/method/#algokit_utils.applications.app_spec.arc56.Method) | algosdk.abi.method.Method, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/api/applications/app_spec/arc56/structfield/#algokit_utils.applications.app_spec.arc56.StructField)]]) → Arc56ReturnValueType
 
 Gets the ARC-56 formatted return value from an ABI return.
 

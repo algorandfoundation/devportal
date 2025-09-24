@@ -25,7 +25,7 @@ import {
  * @param transforms - Transform functions to apply in sequence when condition is true
  * @returns Transform function that conditionally applies the given transforms
  */
-export function createConditionalTransform(
+export function conditionalTransform(
   condition: (path: string) => boolean,
   ...transforms: TransformFunction[]
 ): TransformFunction {
@@ -172,5 +172,181 @@ export function removeH1WithText(content: string): {
   return {
     content: transformedContent,
     headingText,
+  };
+}
+
+/**
+ * Creates a transform function that extracts H1 heading text, removes the H1 line,
+ * and sets both the title and sidebar.label properties in frontmatter with the extracted text
+ * @param titleMatch - Optional regex pattern to extract/transform part of the H1 text for title
+ * @param sidebarMatch - Optional regex pattern to extract/transform part of the H1 text for sidebar.label
+ * @param matchIndex - Which regex capture group to use (default: 1)
+ * @param fallback - Whether to use full H1 text if pattern doesn't match (default: true)
+ * @returns Transform function
+ */
+export function extractH1ToSidebarAndTitle(
+  titleMatch?: RegExp,
+  sidebarMatch?: RegExp,
+  matchIndex: number = 1,
+  fallback: boolean = true,
+): TransformFunction {
+  return (content, context) => {
+    // Parse existing frontmatter first
+    const parsed = parseFrontmatter(content);
+
+    // Look for H1 in the content body
+    const h1Match = parsed.content.match(/^#\s+(.+)$/m);
+    if (!h1Match) {
+      return content; // No H1 found, return unchanged
+    }
+
+    const fullH1Text = h1Match[1].trim();
+    let titleText: string;
+    let sidebarText: string;
+
+    // Apply title pattern matching if provided
+    if (titleMatch) {
+      const patternMatch = fullH1Text.match(titleMatch);
+      if (patternMatch && patternMatch[matchIndex]) {
+        titleText = patternMatch[matchIndex].trim();
+      } else if (fallback) {
+        titleText = fullH1Text;
+      } else {
+        return content; // No match and no fallback, return unchanged
+      }
+    } else {
+      titleText = fullH1Text;
+    }
+
+    // Apply sidebar pattern matching if provided, otherwise use title text
+    if (sidebarMatch) {
+      const patternMatch = fullH1Text.match(sidebarMatch);
+      if (patternMatch && patternMatch[matchIndex]) {
+        sidebarText = patternMatch[matchIndex].trim();
+      } else if (fallback) {
+        sidebarText = titleText; // Fallback to title text
+      } else {
+        return content; // No match and no fallback, return unchanged
+      }
+    } else {
+      sidebarText = titleText; // Use same text as title
+    }
+
+    // Remove H1 from content first
+    const contentWithoutH1 = combineFrontmatterAndContent(
+      parsed.data,
+      parsed.content.replace(/^#\s+.+$/m, '').trim(),
+    );
+
+    // Use existing frontmatter transform to set both title and sidebar.label
+    const frontmatterTransform = createFrontmatterTransform({
+      frontmatter: {
+        title: titleText,
+        sidebar: { label: sidebarText },
+      },
+      mode: 'merge',
+      preserveExisting: false, // We want to overwrite both title and label
+    });
+
+    return frontmatterTransform(contentWithoutH1, context);
+  };
+}
+
+/**
+ * Transform function that extracts H1 heading text, removes it, and sets both title and sidebar.label
+ * This is a convenience function that uses createExtractH1ToSidebarLabel with no pattern matching
+ */
+export const extractH1ToSidebarLabel: TransformFunction =
+  extractH1ToSidebarAndTitle();
+
+/**
+ * Creates a transform function that extracts values from content using regex patterns
+ * and uses those values to create a frontmatter transform
+ * @param pattern - Regex pattern to match against the content
+ * @param matchIndices - Single index or array of indices for capture groups to extract
+ * @param transformFactory - Function that receives extracted values and returns a transform function
+ * @param fallback - Whether to apply transform with empty values if pattern doesn't match (default: false)
+ * @returns Transform function
+ */
+export function createContentBasedFrontmatterTransform(
+  pattern: RegExp,
+  matchIndices: number | number[],
+  transformFactory: (extractedValues: string[]) => TransformFunction,
+  fallback: boolean = false,
+): TransformFunction {
+  return (content, context) => {
+    // Parse the content to get the full text for pattern matching
+    const parsed = parseFrontmatter(content);
+    const fullContent = parsed.content;
+
+    // Try to match the pattern against the content
+    const match = fullContent.match(pattern);
+
+    let extractedValues: string[] = [];
+
+    if (match) {
+      // Normalize matchIndices to always be an array
+      const indices = Array.isArray(matchIndices) ? matchIndices : [matchIndices];
+
+      // Extract values from the specified capture groups
+      extractedValues = indices.map(index => {
+        if (match[index] !== undefined) {
+          return match[index].trim();
+        }
+        return '';
+      });
+    } else if (!fallback) {
+      // No match and no fallback, return unchanged
+      return content;
+    }
+    // If fallback is true but no match, extractedValues remains empty array
+
+    // Create the transform function using the factory
+    const generatedTransform = transformFactory(extractedValues);
+
+    // Apply the generated transform
+    return generatedTransform(content, context);
+  };
+}
+
+/**
+ * Removes all content up to and including a specified heading pattern
+ * Useful for removing table of contents or preamble sections
+ * @param headingPattern - Regex pattern to match the heading to remove up to (inclusive)
+ * @returns Transform function
+ */
+export function createRemoveContentUpToHeading(
+  headingPattern: RegExp,
+): TransformFunction {
+  return (content, context) => {
+    // Parse existing frontmatter first
+    const parsed = parseFrontmatter(content);
+
+    // Find the heading in the content
+    const match = parsed.content.match(headingPattern);
+    if (!match) {
+      return content; // No heading found, return unchanged
+    }
+
+    // Find the position after the matched heading line
+    const lines = parsed.content.split('\n');
+    let foundLineIndex = -1;
+
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].match(headingPattern)) {
+        foundLineIndex = i;
+        break;
+      }
+    }
+
+    if (foundLineIndex === -1) {
+      return content; // Heading not found, return unchanged
+    }
+
+    // Remove everything up to and including the found line
+    const remainingLines = lines.slice(foundLineIndex + 1);
+    const cleanedContent = remainingLines.join('\n').trim();
+
+    return combineFrontmatterAndContent(parsed.data, cleanedContent);
   };
 }

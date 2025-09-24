@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_deployer.AppDeployer
+title: AppDeployer
+sidebar:
+  label: AppDeployer
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_deployer.AppDeployer(app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), transaction_sender: [algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender](/reference/algokit-utils-py/api/transactions/transaction_sender/algorandclienttransactionsender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender), indexer: algosdk.v2client.indexer.IndexerClient | None = None)
@@ -15,7 +20,7 @@ Manages deployment and deployment metadata of applications
   >>> deployer = AppDeployer(app_manager, transaction_sender, indexer)
   ```
 
-#### deploy(deployment: [AppDeployParams](/reference/algokit-utils-py/api/AppDeployParams#algokit_utils.applications.app_deployer.AppDeployParams)) → [AppDeployResult](/reference/algokit-utils-py/api/AppDeployResult#algokit_utils.applications.app_deployer.AppDeployResult)
+#### deploy(deployment: [AppDeployParams](AppDeployParams.md#algokit_utils.applications.app_deployer.AppDeployParams)) → [AppDeployResult](AppDeployResult.md#algokit_utils.applications.app_deployer.AppDeployResult)
 
 Idempotently deploy (create if not exists, update if changed) an app against the given name for the given
 creator account, including deploy-time TEAL template placeholder substitutions (if specified).
@@ -70,7 +75,7 @@ the existing app will be deleted and re-created.
   ... )
   ```
 
-#### get_creator_apps_by_name(\*, creator_address: str, ignore_cache: bool = False) → [ApplicationLookup](/reference/algokit-utils-py/api/ApplicationLookup#algokit_utils.applications.app_deployer.ApplicationLookup)
+#### get_creator_apps_by_name(\*, creator_address: str, ignore_cache: bool = False) → [ApplicationLookup](ApplicationLookup.md#algokit_utils.applications.app_deployer.ApplicationLookup)
 
 Returns a lookup of name => app metadata (id, address, …metadata) for all apps created by the given account
 that have an [ARC-2](<[https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md)>) AppDeployNote as

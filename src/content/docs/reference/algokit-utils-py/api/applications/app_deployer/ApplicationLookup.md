@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_deployer.ApplicationLookup
+title: ApplicationLookup
+sidebar:
+  label: ApplicationLookup
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_deployer.ApplicationLookup
@@ -11,4 +16,4 @@ apps or discovering multiple app_ids
 
 #### creator _: str_
 
-#### apps _: dict[str, [ApplicationMetaData](/reference/algokit-utils-py/api/ApplicationMetaData#algokit_utils.applications.app_deployer.ApplicationMetaData)]_
+#### apps _: dict[str, [ApplicationMetaData](ApplicationMetaData.md#algokit_utils.applications.app_deployer.ApplicationMetaData)]_
