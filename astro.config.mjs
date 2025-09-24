@@ -422,7 +422,7 @@ export default defineConfig({
               items: [
                 {
                   label: 'Overview',
-                  link: 'algokit/cli/algokit',
+                  link: 'algokit/cli/overview',
                 },
                 {
                   label: 'Compile',
