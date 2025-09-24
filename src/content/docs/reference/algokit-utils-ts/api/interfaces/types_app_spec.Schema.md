@@ -12,14 +12,14 @@ The storage schema definition
 
 ### Properties
 
-- [declared](#declared)
-- [reserved](#reserved)
+- [declared](types_app_spec.Schema.md#declared)
+- [reserved](types_app_spec.Schema.md#reserved)
 
 ## Properties
 
 ### declared
 
-• **declared**: `Record`\<`string`, [`DeclaredSchemaValueSpec`]()\>
+• **declared**: `Record`\<`string`, [`DeclaredSchemaValueSpec`](types_app_spec.DeclaredSchemaValueSpec.md)\>
 
 Declared storage schema
 
@@ -31,7 +31,7 @@ Declared storage schema
 
 ### reserved
 
-• **reserved**: `Record`\<`string`, [`ReservedSchemaValueSpec`]()\>
+• **reserved**: `Record`\<`string`, [`ReservedSchemaValueSpec`](types_app_spec.ReservedSchemaValueSpec.md)\>
 
 Reserved storage schema
 

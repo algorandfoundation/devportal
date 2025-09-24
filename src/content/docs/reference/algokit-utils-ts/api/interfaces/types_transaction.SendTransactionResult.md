@@ -12,18 +12,18 @@ The result of sending a transaction
 
 - **`SendTransactionResult`**
 
-  ↳ [`AppCallTransactionResultOfType`]()
+  ↳ [`AppCallTransactionResultOfType`](types_app.AppCallTransactionResultOfType.md)
 
-  ↳ [`ConfirmedTransactionResult`]()
+  ↳ [`ConfirmedTransactionResult`](types_transaction.ConfirmedTransactionResult.md)
 
-  ↳ [`ConfirmedTransactionResults`]()
+  ↳ [`ConfirmedTransactionResults`](types_transaction.ConfirmedTransactionResults.md)
 
 ## Table of contents
 
 ### Properties
 
-- [confirmation](#confirmation)
-- [transaction](#transaction)
+- [confirmation](types_transaction.SendTransactionResult.md#confirmation)
+- [transaction](types_transaction.SendTransactionResult.md#transaction)
 
 ## Properties
 

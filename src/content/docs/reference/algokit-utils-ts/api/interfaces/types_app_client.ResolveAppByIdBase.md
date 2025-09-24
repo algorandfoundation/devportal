@@ -12,14 +12,14 @@ Configuration to resolve app by ID
 
 - **`ResolveAppByIdBase`**
 
-  ↳ [`ResolveAppById`]()
+  ↳ [`ResolveAppById`](types_app_client.ResolveAppById.md)
 
 ## Table of contents
 
 ### Properties
 
-- [id](#id)
-- [name](#name)
+- [id](types_app_client.ResolveAppByIdBase.md#id)
+- [name](types_app_client.ResolveAppByIdBase.md#name)
 
 ## Properties
 

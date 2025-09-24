@@ -10,9 +10,9 @@ title: AppClientCompilationParams
 
 ### Properties
 
-- [deletable](#deletable)
-- [deployTimeParams](#deploytimeparams)
-- [updatable](#updatable)
+- [deletable](types_app_client.AppClientCompilationParams.md#deletable)
+- [deployTimeParams](types_app_client.AppClientCompilationParams.md#deploytimeparams)
+- [updatable](types_app_client.AppClientCompilationParams.md#updatable)
 
 ## Properties
 
@@ -30,7 +30,7 @@ Whether or not the contract should have deploy-time permanence control set, unde
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`]()
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](types_app.TealTemplateParams.md)
 
 Any deploy-time parameters to replace in the TEAL code
 

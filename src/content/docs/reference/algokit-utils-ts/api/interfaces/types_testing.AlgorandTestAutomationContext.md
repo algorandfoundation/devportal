@@ -12,15 +12,15 @@ Test automation context.
 
 ### Properties
 
-- [algod](#algod)
-- [algorand](#algorand)
-- [generateAccount](#generateaccount)
-- [indexer](#indexer)
-- [kmd](#kmd)
-- [testAccount](#testaccount)
-- [transactionLogger](#transactionlogger)
-- [waitForIndexer](#waitforindexer)
-- [waitForIndexerTransaction](#waitforindexertransaction)
+- [algod](types_testing.AlgorandTestAutomationContext.md#algod)
+- [algorand](types_testing.AlgorandTestAutomationContext.md#algorand)
+- [generateAccount](types_testing.AlgorandTestAutomationContext.md#generateaccount)
+- [indexer](types_testing.AlgorandTestAutomationContext.md#indexer)
+- [kmd](types_testing.AlgorandTestAutomationContext.md#kmd)
+- [testAccount](types_testing.AlgorandTestAutomationContext.md#testaccount)
+- [transactionLogger](types_testing.AlgorandTestAutomationContext.md#transactionlogger)
+- [waitForIndexer](types_testing.AlgorandTestAutomationContext.md#waitforindexer)
+- [waitForIndexerTransaction](types_testing.AlgorandTestAutomationContext.md#waitforindexertransaction)
 
 ## Properties
 
@@ -50,23 +50,23 @@ An AlgorandClient instance loaded with the current context, including testAccoun
 
 ### generateAccount
 
-• **generateAccount**: (`params`: [`GetTestAccountParams`]()) => `Promise`\<`Address` & `default` & [`TransactionSignerAccount`]()\>
+• **generateAccount**: (`params`: [`GetTestAccountParams`](types_testing.GetTestAccountParams.md)) => `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md)\>
 
 Generate and fund an additional ephemerally created account
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<`Address` & `default` & [`TransactionSignerAccount`]()\>
+▸ (`params`): `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md)\>
 
 ##### Parameters
 
-| Name     | Type                       |
-| :------- | :------------------------- |
-| `params` | [`GetTestAccountParams`]() |
+| Name     | Type                                                            |
+| :------- | :-------------------------------------------------------------- |
+| `params` | [`GetTestAccountParams`](types_testing.GetTestAccountParams.md) |
 
 ##### Returns
 
-`Promise`\<`Address` & `default` & [`TransactionSignerAccount`]()\>
+`Promise`\<`Address` & `default` & [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md)\>
 
 #### Defined in
 
@@ -100,7 +100,7 @@ KMD client instance
 
 ### testAccount
 
-• **testAccount**: `Address` & [`TransactionSignerAccount`]() & `default`
+• **testAccount**: `Address` & [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md) & `default`
 
 Default, funded test account that is ephemerally created
 

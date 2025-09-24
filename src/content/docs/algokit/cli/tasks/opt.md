@@ -69,4 +69,4 @@ $ algokit task opt-out --account {YOUR_ACCOUNT} --all
 
 ## Further Reading
 
-For in-depth details, visit the [opt-in](../../cli/#opt-in) and [opt-out](../../cli/#opt-out) sections in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [opt-in](/reference/algokit-cli/#opt-in) and [opt-out](docs/cli/#opt-out) sections in the AlgoKit CLI reference documentation.

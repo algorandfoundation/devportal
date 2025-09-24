@@ -18,31 +18,31 @@ Wrapper around `algosdk.ABIMethod` that represents an ARC-56 ABI method.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_app_arc56.Arc56Method.md#constructor)
 
 ### Properties
 
-- [args](#args)
-- [description](#description)
-- [events](#events)
-- [method](#method)
-- [name](#name)
-- [readonly](#readonly)
-- [returns](#returns)
+- [args](types_app_arc56.Arc56Method.md#args)
+- [description](types_app_arc56.Arc56Method.md#description)
+- [events](types_app_arc56.Arc56Method.md#events)
+- [method](types_app_arc56.Arc56Method.md#method)
+- [name](types_app_arc56.Arc56Method.md#name)
+- [readonly](types_app_arc56.Arc56Method.md#readonly)
+- [returns](types_app_arc56.Arc56Method.md#returns)
 
 ### Methods
 
-- [getSelector](#getselector)
-- [getSignature](#getsignature)
-- [toJSON](#tojson)
-- [txnCount](#txncount)
-- [fromSignature](#fromsignature)
+- [getSelector](types_app_arc56.Arc56Method.md#getselector)
+- [getSignature](types_app_arc56.Arc56Method.md#getsignature)
+- [toJSON](types_app_arc56.Arc56Method.md#tojson)
+- [txnCount](types_app_arc56.Arc56Method.md#txncount)
+- [fromSignature](types_app_arc56.Arc56Method.md#fromsignature)
 
 ## Constructors
 
 ### constructor
 
-• **new Arc56Method**(`method`): [`Arc56Method`]()
+• **new Arc56Method**(`method`): [`Arc56Method`](types_app_arc56.Arc56Method.md)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Wrapper around `algosdk.ABIMethod` that represents an ARC-56 ABI method.
 
 #### Returns
 
-[`Arc56Method`]()
+[`Arc56Method`](types_app_arc56.Arc56Method.md)
 
 #### Overrides
 

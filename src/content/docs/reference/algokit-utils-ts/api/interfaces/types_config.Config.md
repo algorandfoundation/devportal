@@ -12,14 +12,14 @@ The AlgoKit configuration type
 
 ### Properties
 
-- [debug](#debug)
-- [events](#events)
-- [logger](#logger)
-- [maxSearchDepth](#maxsearchdepth)
-- [populateAppCallResources](#populateappcallresources)
-- [projectRoot](#projectroot)
-- [traceAll](#traceall)
-- [traceBufferSizeMb](#tracebuffersizemb)
+- [debug](types_config.Config.md#debug)
+- [events](types_config.Config.md#events)
+- [logger](types_config.Config.md#logger)
+- [maxSearchDepth](types_config.Config.md#maxsearchdepth)
+- [populateAppCallResources](types_config.Config.md#populateappcallresources)
+- [projectRoot](types_config.Config.md#projectroot)
+- [traceAll](types_config.Config.md#traceall)
+- [traceBufferSizeMb](types_config.Config.md#tracebuffersizemb)
 
 ## Properties
 

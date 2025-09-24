@@ -11,4 +11,4 @@ apps or discovering multiple app_ids
 
 #### creator _: str_
 
-#### apps _: dict[str, [ApplicationMetaData](#algokit_utils.applications.app_deployer.ApplicationMetaData)]_
+#### apps _: dict[str, [ApplicationMetaData](/reference/algokit-utils-py/api/ApplicationMetaData#algokit_utils.applications.app_deployer.ApplicationMetaData)]_

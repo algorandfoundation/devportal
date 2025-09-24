@@ -12,9 +12,9 @@ Set of transactions built by `TransactionComposer`.
 
 ### Properties
 
-- [methodCalls](#methodcalls)
-- [signers](#signers)
-- [transactions](#transactions)
+- [methodCalls](types_composer.BuiltTransactions.md#methodcalls)
+- [signers](types_composer.BuiltTransactions.md#signers)
+- [transactions](types_composer.BuiltTransactions.md#transactions)
 
 ## Properties
 

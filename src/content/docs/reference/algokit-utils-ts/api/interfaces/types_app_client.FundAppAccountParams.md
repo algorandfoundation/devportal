@@ -12,10 +12,10 @@ Parameters for funding an app account
 
 ### Properties
 
-- [amount](#amount)
-- [note](#note)
-- [sendParams](#sendparams)
-- [sender](#sender)
+- [amount](types_app_client.FundAppAccountParams.md#amount)
+- [note](types_app_client.FundAppAccountParams.md#note)
+- [sendParams](types_app_client.FundAppAccountParams.md#sendparams)
+- [sender](types_app_client.FundAppAccountParams.md#sender)
 
 ## Properties
 
@@ -43,7 +43,7 @@ The transaction note for the smart contract call
 
 ### sendParams
 
-• `Optional` **sendParams**: [`SendTransactionParams`]()
+• `Optional` **sendParams**: [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
 
 Parameters to control transaction sending
 

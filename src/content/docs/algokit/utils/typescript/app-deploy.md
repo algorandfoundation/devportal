@@ -8,7 +8,7 @@ It's optional to use this functionality, since you can construct your own deploy
 
 App deployment is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App management](/algokit/utils/typescript/app/).
 
-To see some usage examples check out the [automated tests](../../src/app-deploy.spec.ts).
+To see some usage examples check out the [automated tests](src/app-deploy.spec.ts).
 
 ## Smart contract development lifecycle
 
@@ -28,7 +28,7 @@ Namely, it described the concept of a smart contract development lifecycle:
    1. **Validate** the deployed app via automated testing of the smart contracts to provide confidence in their correctness
    2. **Call** deployed smart contract with runtime parameters to utilise it
 
-![App deployment lifecycle](@assets/imports/algokit-utils-ts/lifecycle-1758632863476.jpg)
+![App deployment lifecycle](@assets/imports/algokit-utils-ts/lifecycle-1758711837657.jpg)
 
 The App deployment capability provided by AlgoKit Utils helps implement **#2 Deployment**.
 
@@ -219,7 +219,7 @@ It will automatically [add metadata to the transaction note of the create or upd
 
 ### Input parameters
 
-The first parameter `deployment` is an [`AppDeployParams`](../code/interfaces/types_app_deployer.AppDeployParams.md), which is an object with:
+The first parameter `deployment` is an [`AppDeployParams`](/reference/algokit-utils-ts/api/modules/types_app_deployer/#appdeployparams), which is an object with:
 
 - `metadata: AppDeployMetadata` - determines the [deployment metadata](#deployment-metadata) of the deployment
 - `createParams: AppCreateParams | AppCreateMethodCall` - the parameters for an [app creation call](/algokit/utils/typescript/app/#creation) (raw or ABI method call)

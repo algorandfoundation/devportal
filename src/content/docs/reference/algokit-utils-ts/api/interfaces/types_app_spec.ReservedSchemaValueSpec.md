@@ -12,9 +12,9 @@ Reserved schema value specification
 
 ### Properties
 
-- [descr](#descr)
-- [max_keys](#max_keys)
-- [type](#type)
+- [descr](types_app_spec.ReservedSchemaValueSpec.md#descr)
+- [max_keys](types_app_spec.ReservedSchemaValueSpec.md#max_keys)
+- [type](types_app_spec.ReservedSchemaValueSpec.md#type)
 
 ## Properties
 

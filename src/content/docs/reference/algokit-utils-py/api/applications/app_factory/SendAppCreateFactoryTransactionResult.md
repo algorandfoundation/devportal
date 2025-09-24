@@ -4,7 +4,7 @@ title: algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionRes
 
 #### _class_ algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult
 
-Bases: [`algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult`](/reference/algokit-utils-py/api/transactions/transaction_sender/sendappcreatetransactionresult/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[`algokit_utils.applications.abi.Arc56ReturnValueType`](#algokit_utils.applications.abi.Arc56ReturnValueType)]
+Bases: [`algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult`](/reference/algokit-utils-py/api/transactions/transaction_sender/sendappcreatetransactionresult/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[`algokit_utils.applications.abi.Arc56ReturnValueType`](/reference/algokit-utils-py/api/applications/abi/#algokit_utils.applications.abi.Arc56ReturnValueType)]
 
 Result of creating a new application.
 

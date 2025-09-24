@@ -12,9 +12,9 @@ Common (core) parameters to construct a ApplicationClient contract call
 
 ### Properties
 
-- [note](#note)
-- [sendParams](#sendparams)
-- [sender](#sender)
+- [note](types_app_client.AppClientCallCoreParams.md#note)
+- [sendParams](types_app_client.AppClientCallCoreParams.md#sendparams)
+- [sender](types_app_client.AppClientCallCoreParams.md#sender)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The transaction note for the smart contract call
 
 ### sendParams
 
-• `Optional` **sendParams**: [`SendTransactionParams`]()
+• `Optional` **sendParams**: [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
 
 Parameters to control transaction sending
 

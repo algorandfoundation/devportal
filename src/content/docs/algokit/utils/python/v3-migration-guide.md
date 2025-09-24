@@ -1,5 +1,8 @@
 ---
-title: Migration Guide - v3
+title: Python Utils v3 Migration Guide
+sidebar:
+  label: v3 Migration Guide
+  order: 0
 ---
 
 Version 3 of `algokit-utils-ts` moved from a stateless function-based interface to a stateful class-based interfaces. This change allows for:
@@ -100,7 +103,7 @@ Transaction creation and sending is now more structured:
 #### Before:
 
 ```python
-# Single transaction
+
 result = algokit_utils.transfer_algos(
     from_account=account,
     to_addr="RECEIVER",

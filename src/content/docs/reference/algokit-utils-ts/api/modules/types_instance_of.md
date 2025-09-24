@@ -8,7 +8,7 @@ title: types/instance-of
 
 ### Type Aliases
 
-- [InterfaceOf](#interfaceof)
+- [InterfaceOf](types_instance_of.md#interfaceof)
 
 ## Type Aliases
 

@@ -41,4 +41,4 @@ This message indicates that either the current directory does not contain a `.al
 
 ## Further Reading
 
-To learn more about the `algokit project list` command, please refer to [list](../../cli/#list) in the AlgoKit CLI reference documentation.
+To learn more about the `algokit project list` command, please refer to [list](/reference/algokit-cli/#list) in the AlgoKit CLI reference documentation.

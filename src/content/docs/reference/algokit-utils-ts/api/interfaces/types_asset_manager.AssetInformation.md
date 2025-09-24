@@ -12,22 +12,22 @@ Information about an asset.
 
 ### Properties
 
-- [assetId](#assetid)
-- [assetName](#assetname)
-- [assetNameAsBytes](#assetnameasbytes)
-- [clawback](#clawback)
-- [creator](#creator)
-- [decimals](#decimals)
-- [defaultFrozen](#defaultfrozen)
-- [freeze](#freeze)
-- [manager](#manager)
-- [metadataHash](#metadatahash)
-- [reserve](#reserve)
-- [total](#total)
-- [unitName](#unitname)
-- [unitNameAsBytes](#unitnameasbytes)
-- [url](#url)
-- [urlAsBytes](#urlasbytes)
+- [assetId](types_asset_manager.AssetInformation.md#assetid)
+- [assetName](types_asset_manager.AssetInformation.md#assetname)
+- [assetNameAsBytes](types_asset_manager.AssetInformation.md#assetnameasbytes)
+- [clawback](types_asset_manager.AssetInformation.md#clawback)
+- [creator](types_asset_manager.AssetInformation.md#creator)
+- [decimals](types_asset_manager.AssetInformation.md#decimals)
+- [defaultFrozen](types_asset_manager.AssetInformation.md#defaultfrozen)
+- [freeze](types_asset_manager.AssetInformation.md#freeze)
+- [manager](types_asset_manager.AssetInformation.md#manager)
+- [metadataHash](types_asset_manager.AssetInformation.md#metadatahash)
+- [reserve](types_asset_manager.AssetInformation.md#reserve)
+- [total](types_asset_manager.AssetInformation.md#total)
+- [unitName](types_asset_manager.AssetInformation.md#unitname)
+- [unitNameAsBytes](types_asset_manager.AssetInformation.md#unitnameasbytes)
+- [url](types_asset_manager.AssetInformation.md#url)
+- [urlAsBytes](types_asset_manager.AssetInformation.md#urlasbytes)
 
 ## Properties
 

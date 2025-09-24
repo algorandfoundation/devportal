@@ -10,7 +10,7 @@ The result of sending and confirming a transaction
 
 ## Hierarchy
 
-- [`SendTransactionResult`]()
+- [`SendTransactionResult`](types_transaction.SendTransactionResult.md)
 
   ↳ **`ConfirmedTransactionResult`**
 
@@ -18,8 +18,8 @@ The result of sending and confirming a transaction
 
 ### Properties
 
-- [confirmation](#confirmation)
-- [transaction](#transaction)
+- [confirmation](types_transaction.ConfirmedTransactionResult.md#confirmation)
+- [transaction](types_transaction.ConfirmedTransactionResult.md#transaction)
 
 ## Properties
 
@@ -31,7 +31,7 @@ The response from sending and waiting for the transaction
 
 #### Overrides
 
-[SendTransactionResult]().[confirmation](#confirmation)
+[SendTransactionResult](types_transaction.SendTransactionResult.md).[confirmation](types_transaction.SendTransactionResult.md#confirmation)
 
 #### Defined in
 
@@ -47,7 +47,7 @@ The transaction
 
 #### Inherited from
 
-[SendTransactionResult]().[transaction](#transaction)
+[SendTransactionResult](types_transaction.SendTransactionResult.md).[transaction](types_transaction.SendTransactionResult.md#transaction)
 
 #### Defined in
 

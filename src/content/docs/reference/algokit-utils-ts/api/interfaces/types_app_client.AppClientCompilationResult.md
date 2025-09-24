@@ -12,7 +12,7 @@ Always contains the compiled bytecode, and may contain the result of compiling T
 
 ## Hierarchy
 
-- `Partial`\<[`AppCompilationResult`]()\>
+- `Partial`\<[`AppCompilationResult`](types_app.AppCompilationResult.md)\>
 
   ↳ **`AppClientCompilationResult`**
 
@@ -20,10 +20,10 @@ Always contains the compiled bytecode, and may contain the result of compiling T
 
 ### Properties
 
-- [approvalProgram](#approvalprogram)
-- [clearStateProgram](#clearstateprogram)
-- [compiledApproval](#compiledapproval)
-- [compiledClear](#compiledclear)
+- [approvalProgram](types_app_client.AppClientCompilationResult.md#approvalprogram)
+- [clearStateProgram](types_app_client.AppClientCompilationResult.md#clearstateprogram)
+- [compiledApproval](types_app_client.AppClientCompilationResult.md#compiledapproval)
+- [compiledClear](types_app_client.AppClientCompilationResult.md#compiledclear)
 
 ## Properties
 
@@ -53,7 +53,7 @@ The compiled bytecode of the clear state program, ready to deploy to algod
 
 ### compiledApproval
 
-• `Optional` **compiledApproval**: [`CompiledTeal`]()
+• `Optional` **compiledApproval**: [`CompiledTeal`](types_app.CompiledTeal.md)
 
 The result of compiling the approval program
 
@@ -69,7 +69,7 @@ Partial.compiledApproval
 
 ### compiledClear
 
-• `Optional` **compiledClear**: [`CompiledTeal`]()
+• `Optional` **compiledClear**: [`CompiledTeal`](types_app.CompiledTeal.md)
 
 The result of compiling the clear state program
 

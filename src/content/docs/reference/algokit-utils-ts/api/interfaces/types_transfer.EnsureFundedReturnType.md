@@ -12,8 +12,8 @@ title: EnsureFundedReturnType
 
 ### Properties
 
-- [amount](#amount)
-- [transactionId](#transactionid)
+- [amount](types_transfer.EnsureFundedReturnType.md#amount)
+- [transactionId](types_transfer.EnsureFundedReturnType.md#transactionid)
 
 ## Properties
 

@@ -8,141 +8,141 @@ title: index
 
 ### References
 
-- [ALGOKIT_DIR](#algokit_dir)
-- [AVMTracesEventData](#avmtraceseventdata)
-- [AlgorandClient](#algorandclient)
-- [DEFAULT_MAX_SEARCH_DEPTH](#default_max_search_depth)
-- [EventDataMap](#eventdatamap)
-- [EventType](#eventtype)
-- [SOURCES_DIR](#sources_dir)
-- [SearchForTransactions](#searchfortransactions)
-- [TEAL_FILE_EXT](#teal_file_ext)
-- [TEAL_SOURCEMAP_EXT](#teal_sourcemap_ext)
-- [TealSourceDebugEventData](#tealsourcedebugeventdata)
-- [TealSourcesDebugEventData](#tealsourcesdebugeventdata)
-- [executePaginatedRequest](#executepaginatedrequest)
-- [lookupAccountByAddress](#lookupaccountbyaddress)
-- [lookupAccountCreatedApplicationByAddress](#lookupaccountcreatedapplicationbyaddress)
-- [lookupAssetHoldings](#lookupassetholdings)
-- [lookupTransactionById](#lookuptransactionbyid)
-- [searchTransactions](#searchtransactions)
+- [ALGOKIT_DIR](index.md#algokit_dir)
+- [AVMTracesEventData](index.md#avmtraceseventdata)
+- [AlgorandClient](index.md#algorandclient)
+- [DEFAULT_MAX_SEARCH_DEPTH](index.md#default_max_search_depth)
+- [EventDataMap](index.md#eventdatamap)
+- [EventType](index.md#eventtype)
+- [SOURCES_DIR](index.md#sources_dir)
+- [SearchForTransactions](index.md#searchfortransactions)
+- [TEAL_FILE_EXT](index.md#teal_file_ext)
+- [TEAL_SOURCEMAP_EXT](index.md#teal_sourcemap_ext)
+- [TealSourceDebugEventData](index.md#tealsourcedebugeventdata)
+- [TealSourcesDebugEventData](index.md#tealsourcesdebugeventdata)
+- [executePaginatedRequest](index.md#executepaginatedrequest)
+- [lookupAccountByAddress](index.md#lookupaccountbyaddress)
+- [lookupAccountCreatedApplicationByAddress](index.md#lookupaccountcreatedapplicationbyaddress)
+- [lookupAssetHoldings](index.md#lookupassetholdings)
+- [lookupTransactionById](index.md#lookuptransactionbyid)
+- [searchTransactions](index.md#searchtransactions)
 
 ### Namespaces
 
-- [indexer]()
+- [indexer](index.indexer.md)
 
 ### Type Aliases
 
-- [AccountInformation](#accountinformation)
-- [NumberConverter](#numberconverter)
+- [AccountInformation](index.md#accountinformation)
+- [NumberConverter](index.md#numberconverter)
 
 ### Variables
 
-- [ALGORAND_MIN_TX_FEE](#algorand_min_tx_fee)
-- [Config](#config)
-- [MAX_APP_CALL_ACCOUNT_REFERENCES](#max_app_call_account_references)
-- [MAX_APP_CALL_FOREIGN_REFERENCES](#max_app_call_foreign_references)
-- [MAX_TRANSACTION_GROUP_SIZE](#max_transaction_group_size)
+- [ALGORAND_MIN_TX_FEE](index.md#algorand_min_tx_fee)
+- [Config](index.md#config)
+- [MAX_APP_CALL_ACCOUNT_REFERENCES](index.md#max_app_call_account_references)
+- [MAX_APP_CALL_FOREIGN_REFERENCES](index.md#max_app_call_foreign_references)
+- [MAX_TRANSACTION_GROUP_SIZE](index.md#max_transaction_group_size)
 
 ### Functions
 
-- [algo](#algo)
-- [algos](#algos)
-- [assetBulkOptIn](#assetbulkoptin)
-- [assetBulkOptOut](#assetbulkoptout)
-- [assetOptIn](#assetoptin)
-- [assetOptOut](#assetoptout)
-- [callApp](#callapp)
-- [capTransactionFee](#captransactionfee)
-- [compileTeal](#compileteal)
-- [controlFees](#controlfees)
-- [createApp](#createapp)
-- [createAsset](#createasset)
-- [decodeAppState](#decodeappstate)
-- [deployApp](#deployapp)
-- [encodeLease](#encodelease)
-- [encodeTransactionNote](#encodetransactionnote)
-- [ensureFunded](#ensurefunded)
-- [getABIMethodSignature](#getabimethodsignature)
-- [getABIReturn](#getabireturn)
-- [getABIReturnValue](#getabireturnvalue)
-- [getAccount](#getaccount)
-- [getAccountAddressAsString](#getaccountaddressasstring)
-- [getAccountAddressAsUint8Array](#getaccountaddressasuint8array)
-- [getAccountAssetInformation](#getaccountassetinformation)
-- [getAccountConfigFromEnvironment](#getaccountconfigfromenvironment)
-- [getAccountInformation](#getaccountinformation)
-- [getAlgoClient](#getalgoclient)
-- [getAlgoIndexerClient](#getalgoindexerclient)
-- [getAlgoKmdClient](#getalgokmdclient)
-- [getAlgoNodeConfig](#getalgonodeconfig)
-- [getAlgodConfigFromEnvironment](#getalgodconfigfromenvironment)
-- [getAppArgsForABICall](#getappargsforabicall)
-- [getAppArgsForTransaction](#getappargsfortransaction)
-- [getAppBoxNames](#getappboxnames)
-- [getAppBoxValue](#getappboxvalue)
-- [getAppBoxValueFromABIType](#getappboxvaluefromabitype)
-- [getAppBoxValues](#getappboxvalues)
-- [getAppBoxValuesFromABIType](#getappboxvaluesfromabitype)
-- [getAppById](#getappbyid)
-- [getAppClient](#getappclient)
-- [getAppClientByCreatorAndName](#getappclientbycreatorandname)
-- [getAppClientById](#getappclientbyid)
-- [getAppDeploymentTransactionNote](#getappdeploymenttransactionnote)
-- [getAppGlobalState](#getappglobalstate)
-- [getAppLocalState](#getapplocalstate)
-- [getAppOnCompleteAction](#getapponcompleteaction)
-- [getAtomicTransactionComposerTransactions](#getatomictransactioncomposertransactions)
-- [getBoxReference](#getboxreference)
-- [getConfigFromEnvOrDefaults](#getconfigfromenvordefaults)
-- [getCreatorAppsByName](#getcreatorappsbyname)
-- [getDefaultLocalNetConfig](#getdefaultlocalnetconfig)
-- [getDispenserAccount](#getdispenseraccount)
-- [getIndexerConfigFromEnvironment](#getindexerconfigfromenvironment)
-- [getKmdWalletAccount](#getkmdwalletaccount)
-- [getLocalNetDispenserAccount](#getlocalnetdispenseraccount)
-- [getOrCreateKmdWalletAccount](#getorcreatekmdwalletaccount)
-- [getSenderAddress](#getsenderaddress)
-- [getSenderTransactionSigner](#getsendertransactionsigner)
-- [getTestNetDispenserApiClient](#gettestnetdispenserapiclient)
-- [getTransactionParams](#gettransactionparams)
-- [getTransactionWithSigner](#gettransactionwithsigner)
-- [isLocalNet](#islocalnet)
-- [isMainNet](#ismainnet)
-- [isSchemaIsBroken](#isschemaisbroken)
-- [isTestNet](#istestnet)
-- [microAlgo](#microalgo)
-- [microAlgos](#microalgos)
-- [mnemonicAccount](#mnemonicaccount)
-- [mnemonicAccountFromEnvironment](#mnemonicaccountfromenvironment)
-- [multisigAccount](#multisigaccount)
-- [performAtomicTransactionComposerSimulate](#performatomictransactioncomposersimulate)
-- [performTemplateSubstitution](#performtemplatesubstitution)
-- [performTemplateSubstitutionAndCompile](#performtemplatesubstitutionandcompile)
-- [persistSourceMaps](#persistsourcemaps)
-- [populateAppCallResources](#populateappcallresources)
-- [prepareGroupForSending](#preparegroupforsending)
-- [randomAccount](#randomaccount)
-- [rekeyAccount](#rekeyaccount)
-- [rekeyedAccount](#rekeyedaccount)
-- [replaceDeployTimeControlParams](#replacedeploytimecontrolparams)
-- [sendAtomicTransactionComposer](#sendatomictransactioncomposer)
-- [sendGroupOfTransactions](#sendgroupoftransactions)
-- [sendTransaction](#sendtransaction)
-- [signTransaction](#signtransaction)
-- [stripTealComments](#striptealcomments)
-- [transactionFees](#transactionfees)
-- [transactionSignerAccount](#transactionsigneraccount)
-- [transferAlgos](#transferalgos)
-- [transferAsset](#transferasset)
-- [updateApp](#updateapp)
-- [waitForConfirmation](#waitforconfirmation)
+- [algo](index.md#algo)
+- [algos](index.md#algos)
+- [assetBulkOptIn](index.md#assetbulkoptin)
+- [assetBulkOptOut](index.md#assetbulkoptout)
+- [assetOptIn](index.md#assetoptin)
+- [assetOptOut](index.md#assetoptout)
+- [callApp](index.md#callapp)
+- [capTransactionFee](index.md#captransactionfee)
+- [compileTeal](index.md#compileteal)
+- [controlFees](index.md#controlfees)
+- [createApp](index.md#createapp)
+- [createAsset](index.md#createasset)
+- [decodeAppState](index.md#decodeappstate)
+- [deployApp](index.md#deployapp)
+- [encodeLease](index.md#encodelease)
+- [encodeTransactionNote](index.md#encodetransactionnote)
+- [ensureFunded](index.md#ensurefunded)
+- [getABIMethodSignature](index.md#getabimethodsignature)
+- [getABIReturn](index.md#getabireturn)
+- [getABIReturnValue](index.md#getabireturnvalue)
+- [getAccount](index.md#getaccount)
+- [getAccountAddressAsString](index.md#getaccountaddressasstring)
+- [getAccountAddressAsUint8Array](index.md#getaccountaddressasuint8array)
+- [getAccountAssetInformation](index.md#getaccountassetinformation)
+- [getAccountConfigFromEnvironment](index.md#getaccountconfigfromenvironment)
+- [getAccountInformation](index.md#getaccountinformation)
+- [getAlgoClient](index.md#getalgoclient)
+- [getAlgoIndexerClient](index.md#getalgoindexerclient)
+- [getAlgoKmdClient](index.md#getalgokmdclient)
+- [getAlgoNodeConfig](index.md#getalgonodeconfig)
+- [getAlgodConfigFromEnvironment](index.md#getalgodconfigfromenvironment)
+- [getAppArgsForABICall](index.md#getappargsforabicall)
+- [getAppArgsForTransaction](index.md#getappargsfortransaction)
+- [getAppBoxNames](index.md#getappboxnames)
+- [getAppBoxValue](index.md#getappboxvalue)
+- [getAppBoxValueFromABIType](index.md#getappboxvaluefromabitype)
+- [getAppBoxValues](index.md#getappboxvalues)
+- [getAppBoxValuesFromABIType](index.md#getappboxvaluesfromabitype)
+- [getAppById](index.md#getappbyid)
+- [getAppClient](index.md#getappclient)
+- [getAppClientByCreatorAndName](index.md#getappclientbycreatorandname)
+- [getAppClientById](index.md#getappclientbyid)
+- [getAppDeploymentTransactionNote](index.md#getappdeploymenttransactionnote)
+- [getAppGlobalState](index.md#getappglobalstate)
+- [getAppLocalState](index.md#getapplocalstate)
+- [getAppOnCompleteAction](index.md#getapponcompleteaction)
+- [getAtomicTransactionComposerTransactions](index.md#getatomictransactioncomposertransactions)
+- [getBoxReference](index.md#getboxreference)
+- [getConfigFromEnvOrDefaults](index.md#getconfigfromenvordefaults)
+- [getCreatorAppsByName](index.md#getcreatorappsbyname)
+- [getDefaultLocalNetConfig](index.md#getdefaultlocalnetconfig)
+- [getDispenserAccount](index.md#getdispenseraccount)
+- [getIndexerConfigFromEnvironment](index.md#getindexerconfigfromenvironment)
+- [getKmdWalletAccount](index.md#getkmdwalletaccount)
+- [getLocalNetDispenserAccount](index.md#getlocalnetdispenseraccount)
+- [getOrCreateKmdWalletAccount](index.md#getorcreatekmdwalletaccount)
+- [getSenderAddress](index.md#getsenderaddress)
+- [getSenderTransactionSigner](index.md#getsendertransactionsigner)
+- [getTestNetDispenserApiClient](index.md#gettestnetdispenserapiclient)
+- [getTransactionParams](index.md#gettransactionparams)
+- [getTransactionWithSigner](index.md#gettransactionwithsigner)
+- [isLocalNet](index.md#islocalnet)
+- [isMainNet](index.md#ismainnet)
+- [isSchemaIsBroken](index.md#isschemaisbroken)
+- [isTestNet](index.md#istestnet)
+- [microAlgo](index.md#microalgo)
+- [microAlgos](index.md#microalgos)
+- [mnemonicAccount](index.md#mnemonicaccount)
+- [mnemonicAccountFromEnvironment](index.md#mnemonicaccountfromenvironment)
+- [multisigAccount](index.md#multisigaccount)
+- [performAtomicTransactionComposerSimulate](index.md#performatomictransactioncomposersimulate)
+- [performTemplateSubstitution](index.md#performtemplatesubstitution)
+- [performTemplateSubstitutionAndCompile](index.md#performtemplatesubstitutionandcompile)
+- [persistSourceMaps](index.md#persistsourcemaps)
+- [populateAppCallResources](index.md#populateappcallresources)
+- [prepareGroupForSending](index.md#preparegroupforsending)
+- [randomAccount](index.md#randomaccount)
+- [rekeyAccount](index.md#rekeyaccount)
+- [rekeyedAccount](index.md#rekeyedaccount)
+- [replaceDeployTimeControlParams](index.md#replacedeploytimecontrolparams)
+- [sendAtomicTransactionComposer](index.md#sendatomictransactioncomposer)
+- [sendGroupOfTransactions](index.md#sendgroupoftransactions)
+- [sendTransaction](index.md#sendtransaction)
+- [signTransaction](index.md#signtransaction)
+- [stripTealComments](index.md#striptealcomments)
+- [transactionFees](index.md#transactionfees)
+- [transactionSignerAccount](index.md#transactionsigneraccount)
+- [transferAlgos](index.md#transferalgos)
+- [transferAsset](index.md#transferasset)
+- [updateApp](index.md#updateapp)
+- [waitForConfirmation](index.md#waitforconfirmation)
 
 ## References
 
 ### ALGOKIT_DIR
 
-Re-exports [ALGOKIT_DIR](#algokit_dir)
+Re-exports [ALGOKIT_DIR](types_debugging.md#algokit_dir)
 
 ---
 
@@ -160,13 +160,13 @@ Re-exports [AlgorandClient](/reference/algokit-utils-ts/api/classes/types_algora
 
 ### DEFAULT_MAX_SEARCH_DEPTH
 
-Re-exports [DEFAULT_MAX_SEARCH_DEPTH](#default_max_search_depth)
+Re-exports [DEFAULT_MAX_SEARCH_DEPTH](types_debugging.md#default_max_search_depth)
 
 ---
 
 ### EventDataMap
 
-Re-exports [EventDataMap](#eventdatamap)
+Re-exports [EventDataMap](types_lifecycle_events.md#eventdatamap)
 
 ---
 
@@ -178,25 +178,25 @@ Re-exports [EventType](/reference/algokit-utils-ts/api/enums/types_lifecycle_eve
 
 ### SOURCES_DIR
 
-Re-exports [SOURCES_DIR](#sources_dir)
+Re-exports [SOURCES_DIR](types_debugging.md#sources_dir)
 
 ---
 
 ### SearchForTransactions
 
-Re-exports [SearchForTransactions](#searchfortransactions)
+Re-exports [SearchForTransactions](index.indexer.md#searchfortransactions)
 
 ---
 
 ### TEAL_FILE_EXT
 
-Re-exports [TEAL_FILE_EXT](#teal_file_ext)
+Re-exports [TEAL_FILE_EXT](types_debugging.md#teal_file_ext)
 
 ---
 
 ### TEAL_SOURCEMAP_EXT
 
-Re-exports [TEAL_SOURCEMAP_EXT](#teal_sourcemap_ext)
+Re-exports [TEAL_SOURCEMAP_EXT](types_debugging.md#teal_sourcemap_ext)
 
 ---
 
@@ -214,43 +214,43 @@ Re-exports [TealSourcesDebugEventData](/reference/algokit-utils-ts/api/interface
 
 ### executePaginatedRequest
 
-Re-exports [executePaginatedRequest](#executepaginatedrequest)
+Re-exports [executePaginatedRequest](index.indexer.md#executepaginatedrequest)
 
 ---
 
 ### lookupAccountByAddress
 
-Re-exports [lookupAccountByAddress](#lookupaccountbyaddress)
+Re-exports [lookupAccountByAddress](index.indexer.md#lookupaccountbyaddress)
 
 ---
 
 ### lookupAccountCreatedApplicationByAddress
 
-Re-exports [lookupAccountCreatedApplicationByAddress](#lookupaccountcreatedapplicationbyaddress)
+Re-exports [lookupAccountCreatedApplicationByAddress](index.indexer.md#lookupaccountcreatedapplicationbyaddress)
 
 ---
 
 ### lookupAssetHoldings
 
-Re-exports [lookupAssetHoldings](#lookupassetholdings)
+Re-exports [lookupAssetHoldings](index.indexer.md#lookupassetholdings)
 
 ---
 
 ### lookupTransactionById
 
-Re-exports [lookupTransactionById](#lookuptransactionbyid)
+Re-exports [lookupTransactionById](index.indexer.md#lookuptransactionbyid)
 
 ---
 
 ### searchTransactions
 
-Re-exports [searchTransactions](#searchtransactions)
+Re-exports [searchTransactions](index.indexer.md#searchtransactions)
 
 ## Type Aliases
 
 ### AccountInformation
 
-Ƭ **AccountInformation**: `Omit`\<[`NumberConverter`](#numberconverter)\<`AccountInformationModel`\>, `"getEncodingSchema"` \| `"toEncodingData"` \| `"authAddr"`\> & \{ `authAddr?`: `string` }
+Ƭ **AccountInformation**: `Omit`\<[`NumberConverter`](index.md#numberconverter)\<`AccountInformationModel`\>, `"getEncodingSchema"` \| `"toEncodingData"` \| `"authAddr"`\> & \{ `authAddr?`: `string` }
 
 **`Deprecated`**
 
@@ -524,7 +524,7 @@ await algokit.assetOptOut({ account, assetId, assetCreatorAddress }, algod);
 
 ### callApp
 
-▸ **callApp**(`call`, `algod`): `Promise`\<[`AppCallTransactionResult`](#appcalltransactionresult)\>
+▸ **callApp**(`call`, `algod`): `Promise`\<[`AppCallTransactionResult`](types_app.md#appcalltransactionresult)\>
 
 #### Parameters
 
@@ -535,7 +535,7 @@ await algokit.assetOptOut({ account, assetId, assetCreatorAddress }, algod);
 
 #### Returns
 
-`Promise`\<[`AppCallTransactionResult`](#appcalltransactionresult)\>
+`Promise`\<[`AppCallTransactionResult`](types_app.md#appcalltransactionresult)\>
 
 The result of the call
 
@@ -647,7 +647,7 @@ Allows for control of fees on a `Transaction` or `SuggestedParams` object
 
 ### createApp
 
-▸ **createApp**(`create`, `algod`): `Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`AppCallTransactionResult`](#appcalltransactionresult) & [`AppReference`](/reference/algokit-utils-ts/api/interfaces/types_appappreference/)\>
+▸ **createApp**(`create`, `algod`): `Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`AppCallTransactionResult`](types_app.md#appcalltransactionresult) & [`AppReference`](/reference/algokit-utils-ts/api/interfaces/types_appappreference/)\>
 
 #### Parameters
 
@@ -658,7 +658,7 @@ Allows for control of fees on a `Transaction` or `SuggestedParams` object
 
 #### Returns
 
-`Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`AppCallTransactionResult`](#appcalltransactionresult) & [`AppReference`](/reference/algokit-utils-ts/api/interfaces/types_appappreference/)\>
+`Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`AppCallTransactionResult`](types_app.md#appcalltransactionresult) & [`AppReference`](/reference/algokit-utils-ts/api/interfaces/types_appappreference/)\>
 
 The details of the created app, or the transaction to create it if `skipSending` and the compilation result
 
@@ -741,7 +741,7 @@ generic object keyed by the UTF-8 value of the key.
 
 ### deployApp
 
-▸ **deployApp**(`deployment`, `algod`, `indexer?`): `Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"create"` \| `"update"` ; `return?`: [`ABIReturn`](#abireturn) } \| [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](#abireturn) ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](#abireturn) } \| [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"nothing"` }\>
+▸ **deployApp**(`deployment`, `algod`, `indexer?`): `Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"create"` \| `"update"` ; `return?`: [`ABIReturn`](types_app.md#abireturn) } \| [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](types_app.md#abireturn) ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](types_app.md#abireturn) } \| [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"nothing"` }\>
 
 #### Parameters
 
@@ -753,7 +753,7 @@ generic object keyed by the UTF-8 value of the key.
 
 #### Returns
 
-`Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"create"` \| `"update"` ; `return?`: [`ABIReturn`](#abireturn) } \| [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](#abireturn) ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](#abireturn) } \| [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"nothing"` }\>
+`Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"create"` \| `"update"` ; `return?`: [`ABIReturn`](types_app.md#abireturn) } \| [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/) & [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](types_app.md#abireturn) ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](types_app.md#abireturn) } \| [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"nothing"` }\>
 
 The app reference of the new/existing app
 
@@ -823,9 +823,9 @@ algokit.encodeLease(new Uint8Array([1, 2, 3]));
 
 #### Parameters
 
-| Name    | Type                                  | Description          |
-| :------ | :------------------------------------ | :------------------- |
-| `note?` | [`TransactionNote`](#transactionnote) | The transaction note |
+| Name    | Type                                                      | Description          |
+| :------ | :-------------------------------------------------------- | :------------------- |
+| `note?` | [`TransactionNote`](types_transaction.md#transactionnote) | The transaction note |
 
 #### Returns
 
@@ -923,18 +923,18 @@ Returns the encoded ABI spec for a given ABI Method
 
 ### getABIReturn
 
-▸ **getABIReturn**(`args?`, `confirmation?`): [`ABIReturn`](#abireturn) \| `undefined`
+▸ **getABIReturn**(`args?`, `confirmation?`): [`ABIReturn`](types_app.md#abireturn) \| `undefined`
 
 #### Parameters
 
-| Name            | Type                          | Description                               |
-| :-------------- | :---------------------------- | :---------------------------------------- |
-| `args?`         | [`AppCallArgs`](#appcallargs) | The arguments that were used for the call |
-| `confirmation?` | `PendingTransactionResponse`  | The transaction confirmation from algod   |
+| Name            | Type                                      | Description                               |
+| :-------------- | :---------------------------------------- | :---------------------------------------- |
+| `args?`         | [`AppCallArgs`](types_app.md#appcallargs) | The arguments that were used for the call |
+| `confirmation?` | `PendingTransactionResponse`              | The transaction confirmation from algod   |
 
 #### Returns
 
-[`ABIReturn`](#abireturn) \| `undefined`
+[`ABIReturn`](types_app.md#abireturn) \| `undefined`
 
 The return value for the method call
 
@@ -952,7 +952,7 @@ Returns any ABI return values for the given app call arguments and transaction c
 
 ### getABIReturnValue
 
-▸ **getABIReturnValue**(`result`, `type`): [`ABIReturn`](#abireturn)
+▸ **getABIReturnValue**(`result`, `type`): [`ABIReturn`](types_app.md#abireturn)
 
 Takes an algosdk `ABIResult` and converts it to an `ABIReturn`.
 Converts `bigint`'s for Uint's < 64 to `number` for easier use.
@@ -966,7 +966,7 @@ Converts `bigint`'s for Uint's < 64 to `number` for easier use.
 
 #### Returns
 
-[`ABIReturn`](#abireturn)
+[`ABIReturn`](types_app.md#abireturn)
 
 #### Defined in
 
@@ -1096,9 +1096,9 @@ Returns the string address of an Algorand account from a base64 encoded version 
 
 #### Parameters
 
-| Name      | Type                                                      | Description                                                                     |
-| :-------- | :-------------------------------------------------------- | :------------------------------------------------------------------------------ |
-| `account` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | Either an account (with private key loaded) or the string address of an account |
+| Name      | Type                                                                          | Description                                                                     |
+| :-------- | :---------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
+| `account` | `string` \| [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) | Either an account (with private key loaded) or the string address of an account |
 
 #### Returns
 
@@ -1118,19 +1118,19 @@ Returns an account's address as a byte array
 
 ### getAccountAssetInformation
 
-▸ **getAccountAssetInformation**(`sender`, `assetId`, `algod`): `Promise`\<[`AccountAssetInformation`](#accountassetinformation)\>
+▸ **getAccountAssetInformation**(`sender`, `assetId`, `algod`): `Promise`\<[`AccountAssetInformation`](types_account.md#accountassetinformation)\>
 
 #### Parameters
 
-| Name      | Type                                                      | Description                                  |
-| :-------- | :-------------------------------------------------------- | :------------------------------------------- |
-| `sender`  | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | The address of the sender/account to look up |
-| `assetId` | `number` \| `bigint`                                      | The ID of the asset to return a holding for  |
-| `algod`   | `AlgodClient`                                             | The algod instance                           |
+| Name      | Type                                                                          | Description                                  |
+| :-------- | :---------------------------------------------------------------------------- | :------------------------------------------- |
+| `sender`  | `string` \| [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) | The address of the sender/account to look up |
+| `assetId` | `number` \| `bigint`                                                          | The ID of the asset to return a holding for  |
+| `algod`   | `AlgodClient`                                                                 | The algod instance                           |
 
 #### Returns
 
-`Promise`\<[`AccountAssetInformation`](#accountassetinformation)\>
+`Promise`\<[`AccountAssetInformation`](types_account.md#accountassetinformation)\>
 
 The account asset holding information
 
@@ -1191,18 +1191,18 @@ environment variables
 
 ### getAccountInformation
 
-▸ **getAccountInformation**(`sender`, `algod`): `Promise`\<[`AccountInformation`](#accountinformation)\>
+▸ **getAccountInformation**(`sender`, `algod`): `Promise`\<[`AccountInformation`](index.md#accountinformation)\>
 
 #### Parameters
 
-| Name     | Type                                                      | Description                                  |
-| :------- | :-------------------------------------------------------- | :------------------------------------------- |
-| `sender` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | The address of the sender/account to look up |
-| `algod`  | `AlgodClient`                                             | The algod instance                           |
+| Name     | Type                                                                          | Description                                  |
+| :------- | :---------------------------------------------------------------------------- | :------------------------------------------- |
+| `sender` | `string` \| [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) | The address of the sender/account to look up |
+| `algod`  | `AlgodClient`                                                                 | The algod instance                           |
 
 #### Returns
 
-`Promise`\<[`AccountInformation`](#accountinformation)\>
+`Promise`\<[`AccountInformation`](index.md#accountinformation)\>
 
 The account information
 
@@ -1444,10 +1444,10 @@ Retrieve the algod configuration from environment variables (expects to be calle
 
 #### Parameters
 
-| Name   | Type                                          | Description            |
-| :----- | :-------------------------------------------- | :--------------------- |
-| `args` | [`ABIAppCallArgs`](#abiappcallargs)           | The ABI app call args  |
-| `from` | [`SendTransactionFrom`](#sendtransactionfrom) | The transaction signer |
+| Name   | Type                                                              | Description            |
+| :----- | :---------------------------------------------------------------- | :--------------------- |
+| `args` | [`ABIAppCallArgs`](types_app.md#abiappcallargs)                   | The ABI app call args  |
+| `from` | [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) | The transaction signer |
 
 #### Returns
 
@@ -1672,10 +1672,10 @@ Gets the current data for the given app from algod.
 
 #### Parameters
 
-| Name         | Type                                      | Description            |
-| :----------- | :---------------------------------------- | :--------------------- |
-| `appDetails` | [`AppSpecAppDetails`](#appspecappdetails) | The details of the app |
-| `algod`      | `AlgodClient`                             | An algod instance      |
+| Name         | Type                                                         | Description            |
+| :----------- | :----------------------------------------------------------- | :--------------------- |
+| `appDetails` | [`AppSpecAppDetails`](types_app_client.md#appspecappdetails) | The details of the app |
+| `algod`      | `AlgodClient`                                                | An algod instance      |
 
 #### Returns
 
@@ -1735,10 +1735,10 @@ const client = algokit.getAppClient(
 
 #### Parameters
 
-| Name         | Type                                                                      | Description                                |
-| :----------- | :------------------------------------------------------------------------ | :----------------------------------------- |
-| `appDetails` | [`AppSpecAppDetailsByCreatorAndName`](#appspecappdetailsbycreatorandname) | The details of the app by creator and name |
-| `algod`      | `AlgodClient`                                                             | An algod instance                          |
+| Name         | Type                                                                                         | Description                                |
+| :----------- | :------------------------------------------------------------------------------------------- | :----------------------------------------- |
+| `appDetails` | [`AppSpecAppDetailsByCreatorAndName`](types_app_client.md#appspecappdetailsbycreatorandname) | The details of the app by creator and name |
+| `algod`      | `AlgodClient`                                                                                | An algod instance                          |
 
 #### Returns
 
@@ -1780,10 +1780,10 @@ const client = algokit.getAppClientByCreatorAndName(
 
 #### Parameters
 
-| Name         | Type                                              | Description            |
-| :----------- | :------------------------------------------------ | :--------------------- |
-| `appDetails` | [`AppSpecAppDetailsById`](#appspecappdetailsbyid) | The details of the app |
-| `algod`      | `AlgodClient`                                     | An algod instance      |
+| Name         | Type                                                                 | Description            |
+| :----------- | :------------------------------------------------------------------- | :--------------------- |
+| `appDetails` | [`AppSpecAppDetailsById`](types_app_client.md#appspecappdetailsbyid) | The details of the app |
+| `algod`      | `AlgodClient`                                                        | An algod instance      |
 
 #### Returns
 
@@ -1820,7 +1820,7 @@ const client = algokit.getAppClientById(
 
 ### getAppDeploymentTransactionNote
 
-▸ **getAppDeploymentTransactionNote**(`metadata`): [`Arc2TransactionNote`](#arc2transactionnote)
+▸ **getAppDeploymentTransactionNote**(`metadata`): [`Arc2TransactionNote`](types_transaction.md#arc2transactionnote)
 
 #### Parameters
 
@@ -1830,7 +1830,7 @@ const client = algokit.getAppClientById(
 
 #### Returns
 
-[`Arc2TransactionNote`](#arc2transactionnote)
+[`Arc2TransactionNote`](types_transaction.md#arc2transactionnote)
 
 The transaction note as a utf-8 string
 
@@ -1881,11 +1881,11 @@ Returns the current global state values for the given app ID
 
 #### Parameters
 
-| Name      | Type                                                      | Description                                                                                                       |
-| :-------- | :-------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------- |
-| `appId`   | `number` \| `bigint`                                      | The ID of the app return global state for                                                                         |
-| `account` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | Either the string address of an account or an account object for the account to get local state for the given app |
-| `algod`   | `AlgodClient`                                             | An algod client instance                                                                                          |
+| Name      | Type                                                                          | Description                                                                                                       |
+| :-------- | :---------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------- |
+| `appId`   | `number` \| `bigint`                                                          | The ID of the app return global state for                                                                         |
+| `account` | `string` \| [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) | Either the string address of an account or an account object for the account to get local state for the given app |
+| `algod`   | `AlgodClient`                                                                 | An algod client instance                                                                                          |
 
 #### Returns
 
@@ -1911,9 +1911,9 @@ Returns the current global state values for the given app ID and account
 
 #### Parameters
 
-| Name                  | Type                                                     | Description              |
-| :-------------------- | :------------------------------------------------------- | :----------------------- |
-| `onCompletionAction?` | [`AppCallType`](#appcalltype) \| `OnApplicationComplete` | The on completion action |
+| Name                  | Type                                                                 | Description              |
+| :-------------------- | :------------------------------------------------------------------- | :----------------------- |
+| `onCompletionAction?` | [`AppCallType`](types_app.md#appcalltype) \| `OnApplicationComplete` | The on completion action |
 
 #### Returns
 
@@ -1971,9 +1971,9 @@ Returns the array of transactions currently present in the given `AtomicTransact
 
 #### Parameters
 
-| Name  | Type                                                                                                                                       | Description                       |
-| :---- | :----------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------- |
-| `box` | [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_appboxreference/) \| [`BoxIdentifier`](#boxidentifier) \| `BoxReference` | The box to return a reference for |
+| Name  | Type                                                                                                                                                   | Description                       |
+| :---- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------- |
+| `box` | [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_appboxreference/) \| [`BoxIdentifier`](types_app.md#boxidentifier) \| `BoxReference` | The box to return a reference for |
 
 #### Returns
 
@@ -2019,10 +2019,10 @@ Retrieve configurations from environment variables when defined or get defaults 
 
 #### Parameters
 
-| Name             | Type                                                      | Description                                                                                                                  |
-| :--------------- | :-------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
-| `creatorAccount` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | The account (with private key loaded) or string address of an account that is the creator of the apps you want to search for |
-| `indexer`        | `IndexerClient`                                           | An indexer client                                                                                                            |
+| Name             | Type                                                                          | Description                                                                                                                  |
+| :--------------- | :---------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
+| `creatorAccount` | `string` \| [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) | The account (with private key loaded) or string address of an account that is the creator of the apps you want to search for |
+| `indexer`        | `IndexerClient`                                                               | An indexer client                                                                                                            |
 
 #### Returns
 
@@ -2231,9 +2231,9 @@ If this is used via `mnemonicAccountFromEnvironment`, then you can even use the 
 
 #### Parameters
 
-| Name     | Type                                                      | Description          |
-| :------- | :-------------------------------------------------------- | :------------------- |
-| `sender` | `string` \| [`SendTransactionFrom`](#sendtransactionfrom) | A transaction sender |
+| Name     | Type                                                                          | Description          |
+| :------- | :---------------------------------------------------------------------------- | :------------------- |
+| `sender` | `string` \| [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) | A transaction sender |
 
 #### Returns
 
@@ -2260,9 +2260,9 @@ Returns the public address of the given transaction sender.
 
 #### Parameters
 
-| Name  | Type                                          |
-| :---- | :-------------------------------------------- |
-| `val` | [`SendTransactionFrom`](#sendtransactionfrom) |
+| Name  | Type                                                              |
+| :---- | :---------------------------------------------------------------- |
+| `val` | [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) |
 
 #### Returns
 
@@ -2360,7 +2360,7 @@ Returns suggested transaction parameters from algod unless some are already prov
 | Name             | Type                                                                                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                                                    |
 | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `transaction`    | `Transaction` \| [`TransactionToSign`](/reference/algokit-utils-ts/api/interfaces/types_transactiontransactiontosign/) \| `Promise`\<[`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/)\> \| `TransactionWithSigner` | One of: A TransactionWithSigner object (returned as is), a TransactionToSign object (signer is obtained from the signer property), a Transaction object (signer is extracted from the defaultSender parameter), an async SendTransactionResult returned by one of algokit utils' helpers (signer is obtained from the defaultSender parameter) |
-| `defaultSender?` | [`SendTransactionFrom`](#sendtransactionfrom)                                                                                                                                                                                                                                   | The default sender to be used to obtain a signer where the object provided to the transaction parameter does not include a signer.                                                                                                                                                                                                             |
+| `defaultSender?` | [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom)                                                                                                                                                                                                               | The default sender to be used to obtain a signer where the object provided to the transaction parameter does not include a signer.                                                                                                                                                                                                             |
 
 #### Returns
 
@@ -3002,7 +3002,7 @@ Signs and sends a group of [up to 16](https://dev.algorand.co/concepts/transacti
 | Name               | Type                                                                                                          | Description                                                                                                                                                                                                                                                                                  |
 | :----------------- | :------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `send`             | `Object`                                                                                                      | The details for the transaction to prepare/send, including: _ `transaction`: The unsigned transaction _ `from`: The account to sign the transaction with: either an account with private key loaded or a logic signature account \* `config`: The sending configuration for this transaction |
-| `send.from`        | [`SendTransactionFrom`](#sendtransactionfrom)                                                                 | -                                                                                                                                                                                                                                                                                            |
+| `send.from`        | [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom)                                             | -                                                                                                                                                                                                                                                                                            |
 | `send.sendParams?` | [`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/) | -                                                                                                                                                                                                                                                                                            |
 | `send.transaction` | `Transaction`                                                                                                 | -                                                                                                                                                                                                                                                                                            |
 | `algod`            | `AlgodClient`                                                                                                 | An algod client                                                                                                                                                                                                                                                                              |
@@ -3031,10 +3031,10 @@ Prepares a transaction for sending and then (if instructed) signs and sends the 
 
 #### Parameters
 
-| Name          | Type                                          | Description             |
-| :------------ | :-------------------------------------------- | :---------------------- |
-| `transaction` | `Transaction`                                 | The transaction to sign |
-| `signer`      | [`SendTransactionFrom`](#sendtransactionfrom) | The signer to sign      |
+| Name          | Type                                                              | Description             |
+| :------------ | :---------------------------------------------------------------- | :---------------------- |
+| `transaction` | `Transaction`                                                     | The transaction to sign |
+| `signer`      | [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom) | The signer to sign      |
 
 #### Returns
 
@@ -3207,7 +3207,7 @@ await algokit.transferAsset({ from, to, assetId, amount }, algod);
 
 ### updateApp
 
-▸ **updateApp**(`update`, `algod`): `Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`AppCallTransactionResult`](#appcalltransactionresult)\>
+▸ **updateApp**(`update`, `algod`): `Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`AppCallTransactionResult`](types_app.md#appcalltransactionresult)\>
 
 #### Parameters
 
@@ -3218,7 +3218,7 @@ await algokit.transferAsset({ from, to, assetId, amount }, algod);
 
 #### Returns
 
-`Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`AppCallTransactionResult`](#appcalltransactionresult)\>
+`Promise`\<`Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\> & [`AppCallTransactionResult`](types_app.md#appcalltransactionresult)\>
 
 The transaction send result and the compilation result
 

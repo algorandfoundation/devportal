@@ -12,9 +12,9 @@ Parameters for the `getTestAccount` function.
 
 ### Properties
 
-- [accountGetter](#accountgetter)
-- [initialFunds](#initialfunds)
-- [suppressLog](#suppresslog)
+- [accountGetter](types_testing.GetTestAccountParams.md#accountgetter)
+- [initialFunds](types_testing.GetTestAccountParams.md#initialfunds)
+- [suppressLog](types_testing.GetTestAccountParams.md#suppresslog)
 
 ## Properties
 

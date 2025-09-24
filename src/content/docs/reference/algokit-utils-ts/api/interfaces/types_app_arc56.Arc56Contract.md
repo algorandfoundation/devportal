@@ -12,21 +12,21 @@ Describes the entire contract. This interface is an extension of the interface d
 
 ### Properties
 
-- [arcs](#arcs)
-- [bareActions](#bareactions)
-- [byteCode](#bytecode)
-- [compilerInfo](#compilerinfo)
-- [desc](#desc)
-- [events](#events)
-- [methods](#methods)
-- [name](#name)
-- [networks](#networks)
-- [scratchVariables](#scratchvariables)
-- [source](#source)
-- [sourceInfo](#sourceinfo)
-- [state](#state)
-- [structs](#structs)
-- [templateVariables](#templatevariables)
+- [arcs](types_app_arc56.Arc56Contract.md#arcs)
+- [bareActions](types_app_arc56.Arc56Contract.md#bareactions)
+- [byteCode](types_app_arc56.Arc56Contract.md#bytecode)
+- [compilerInfo](types_app_arc56.Arc56Contract.md#compilerinfo)
+- [desc](types_app_arc56.Arc56Contract.md#desc)
+- [events](types_app_arc56.Arc56Contract.md#events)
+- [methods](types_app_arc56.Arc56Contract.md#methods)
+- [name](types_app_arc56.Arc56Contract.md#name)
+- [networks](types_app_arc56.Arc56Contract.md#networks)
+- [scratchVariables](types_app_arc56.Arc56Contract.md#scratchvariables)
+- [source](types_app_arc56.Arc56Contract.md#source)
+- [sourceInfo](types_app_arc56.Arc56Contract.md#sourceinfo)
+- [state](types_app_arc56.Arc56Contract.md#state)
+- [structs](types_app_arc56.Arc56Contract.md#structs)
+- [templateVariables](types_app_arc56.Arc56Contract.md#templatevariables)
 
 ## Properties
 
@@ -117,7 +117,7 @@ Optional, user-friendly description for the interface
 
 ### events
 
-• `Optional` **events**: [`Event`]()[]
+• `Optional` **events**: [`Event`](types_app_arc56.Event.md)[]
 
 ARC-28 events that MAY be emitted by this contract
 
@@ -129,7 +129,7 @@ ARC-28 events that MAY be emitted by this contract
 
 ### methods
 
-• **methods**: [`Method`]()[]
+• **methods**: [`Method`](types_app_arc56.Method.md)[]
 
 All of the methods that the contract implements
 
@@ -214,10 +214,10 @@ Information about the TEAL programs
 
 #### Type declaration
 
-| Name       | Type                    | Description                  |
-| :--------- | :---------------------- | :--------------------------- |
-| `approval` | [`ProgramSourceInfo`]() | Approval program information |
-| `clear`    | [`ProgramSourceInfo`]() | Clear program information    |
+| Name       | Type                                                        | Description                  |
+| :--------- | :---------------------------------------------------------- | :--------------------------- |
+| `approval` | [`ProgramSourceInfo`](types_app_arc56.ProgramSourceInfo.md) | Approval program information |
+| `clear`    | [`ProgramSourceInfo`](types_app_arc56.ProgramSourceInfo.md) | Clear program information    |
 
 #### Defined in
 
@@ -231,23 +231,23 @@ Information about the TEAL programs
 
 #### Type declaration
 
-| Name                  | Type                                                                                                                                                          | Description                                                                                                                                     |
-| :-------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `keys`                | \{ `box`: \{ `[name: string]`: [`StorageKey`](); } ; `global`: \{ `[name: string]`: [`StorageKey`](); } ; `local`: \{ `[name: string]`: [`StorageKey`](); } } | Mapping of human-readable names to StorageKey objects                                                                                           |
-| `keys.box`            | \{ `[name: string]`: [`StorageKey`](); }                                                                                                                      | -                                                                                                                                               |
-| `keys.global`         | \{ `[name: string]`: [`StorageKey`](); }                                                                                                                      | -                                                                                                                                               |
-| `keys.local`          | \{ `[name: string]`: [`StorageKey`](); }                                                                                                                      | -                                                                                                                                               |
-| `maps`                | \{ `box`: \{ `[name: string]`: [`StorageMap`](); } ; `global`: \{ `[name: string]`: [`StorageMap`](); } ; `local`: \{ `[name: string]`: [`StorageMap`](); } } | Mapping of human-readable names to StorageMap objects                                                                                           |
-| `maps.box`            | \{ `[name: string]`: [`StorageMap`](); }                                                                                                                      | -                                                                                                                                               |
-| `maps.global`         | \{ `[name: string]`: [`StorageMap`](); }                                                                                                                      | -                                                                                                                                               |
-| `maps.local`          | \{ `[name: string]`: [`StorageMap`](); }                                                                                                                      | -                                                                                                                                               |
-| `schema`              | \{ `global`: \{ `bytes`: `number` ; `ints`: `number` } ; `local`: \{ `bytes`: `number` ; `ints`: `number` } }                                                 | Defines the values that should be used for GlobalNumUint, GlobalNumByteSlice, LocalNumUint, and LocalNumByteSlice when creating the application |
-| `schema.global`       | \{ `bytes`: `number` ; `ints`: `number` }                                                                                                                     | -                                                                                                                                               |
-| `schema.global.bytes` | `number`                                                                                                                                                      | -                                                                                                                                               |
-| `schema.global.ints`  | `number`                                                                                                                                                      | -                                                                                                                                               |
-| `schema.local`        | \{ `bytes`: `number` ; `ints`: `number` }                                                                                                                     | -                                                                                                                                               |
-| `schema.local.bytes`  | `number`                                                                                                                                                      | -                                                                                                                                               |
-| `schema.local.ints`   | `number`                                                                                                                                                      | -                                                                                                                                               |
+| Name                  | Type                                                                                                                                                                                                                                                 | Description                                                                                                                                     |
+| :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `keys`                | \{ `box`: \{ `[name: string]`: [`StorageKey`](types_app_arc56.StorageKey.md); } ; `global`: \{ `[name: string]`: [`StorageKey`](types_app_arc56.StorageKey.md); } ; `local`: \{ `[name: string]`: [`StorageKey`](types_app_arc56.StorageKey.md); } } | Mapping of human-readable names to StorageKey objects                                                                                           |
+| `keys.box`            | \{ `[name: string]`: [`StorageKey`](types_app_arc56.StorageKey.md); }                                                                                                                                                                                | -                                                                                                                                               |
+| `keys.global`         | \{ `[name: string]`: [`StorageKey`](types_app_arc56.StorageKey.md); }                                                                                                                                                                                | -                                                                                                                                               |
+| `keys.local`          | \{ `[name: string]`: [`StorageKey`](types_app_arc56.StorageKey.md); }                                                                                                                                                                                | -                                                                                                                                               |
+| `maps`                | \{ `box`: \{ `[name: string]`: [`StorageMap`](types_app_arc56.StorageMap.md); } ; `global`: \{ `[name: string]`: [`StorageMap`](types_app_arc56.StorageMap.md); } ; `local`: \{ `[name: string]`: [`StorageMap`](types_app_arc56.StorageMap.md); } } | Mapping of human-readable names to StorageMap objects                                                                                           |
+| `maps.box`            | \{ `[name: string]`: [`StorageMap`](types_app_arc56.StorageMap.md); }                                                                                                                                                                                | -                                                                                                                                               |
+| `maps.global`         | \{ `[name: string]`: [`StorageMap`](types_app_arc56.StorageMap.md); }                                                                                                                                                                                | -                                                                                                                                               |
+| `maps.local`          | \{ `[name: string]`: [`StorageMap`](types_app_arc56.StorageMap.md); }                                                                                                                                                                                | -                                                                                                                                               |
+| `schema`              | \{ `global`: \{ `bytes`: `number` ; `ints`: `number` } ; `local`: \{ `bytes`: `number` ; `ints`: `number` } }                                                                                                                                        | Defines the values that should be used for GlobalNumUint, GlobalNumByteSlice, LocalNumUint, and LocalNumByteSlice when creating the application |
+| `schema.global`       | \{ `bytes`: `number` ; `ints`: `number` }                                                                                                                                                                                                            | -                                                                                                                                               |
+| `schema.global.bytes` | `number`                                                                                                                                                                                                                                             | -                                                                                                                                               |
+| `schema.global.ints`  | `number`                                                                                                                                                                                                                                             | -                                                                                                                                               |
+| `schema.local`        | \{ `bytes`: `number` ; `ints`: `number` }                                                                                                                                                                                                            | -                                                                                                                                               |
+| `schema.local.bytes`  | `number`                                                                                                                                                                                                                                             | -                                                                                                                                               |
+| `schema.local.ints`   | `number`                                                                                                                                                                                                                                             | -                                                                                                                                               |
 
 #### Defined in
 
@@ -263,7 +263,7 @@ Named structs used by the application. Each struct field appears in the same ord
 
 #### Index signature
 
-▪ [structName: [`StructName`](/reference/algokit-utils-ts/api/modules/types_app_arc56/#structname)]: [`StructField`]()[]
+▪ [structName: [`StructName`](/reference/algokit-utils-ts/api/modules/types_app_arc56/#structname)]: [`StructField`](types_app_arc56.StructField.md)[]
 
 #### Defined in
 

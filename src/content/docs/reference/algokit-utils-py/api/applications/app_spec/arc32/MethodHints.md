@@ -8,9 +8,9 @@ MethodHints provides hints to the caller about how to call the method
 
 #### read*only *: bool\_ _= False_
 
-#### structs _: dict[str, [StructArgDict](#algokit_utils.applications.app_spec.arc32.StructArgDict)]_
+#### structs _: dict[str, [StructArgDict](/reference/algokit-utils-py/api/StructArgDict#algokit_utils.applications.app_spec.arc32.StructArgDict)]_
 
-#### default*arguments *: dict[str, [DefaultArgumentDict](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]\_
+#### default*arguments *: dict[str, [DefaultArgumentDict](/reference/algokit-utils-py/api/DefaultArgumentDict#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]\_
 
 #### call*config *: MethodConfigDict\_
 

@@ -12,10 +12,10 @@ Describes a mapping of key-value pairs in storage
 
 ### Properties
 
-- [desc](#desc)
-- [keyType](#keytype)
-- [prefix](#prefix)
-- [valueType](#valuetype)
+- [desc](types_app_arc56.StorageMap.md#desc)
+- [keyType](types_app_arc56.StorageMap.md#keytype)
+- [prefix](types_app_arc56.StorageMap.md#prefix)
+- [valueType](types_app_arc56.StorageMap.md#valuetype)
 
 ## Properties
 

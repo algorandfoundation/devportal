@@ -13,34 +13,34 @@ Useful for automated tests.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](testing.TransactionLogger.md#constructor)
 
 ### Properties
 
-- [\_latestLastValidRound](#_latestlastvalidround)
-- [\_sentTransactionIds](#_senttransactionids)
+- [\_latestLastValidRound](testing.TransactionLogger.md#_latestlastvalidround)
+- [\_sentTransactionIds](testing.TransactionLogger.md#_senttransactionids)
 
 ### Accessors
 
-- [sentTransactionIds](#senttransactionids)
+- [sentTransactionIds](testing.TransactionLogger.md#senttransactionids)
 
 ### Methods
 
-- [\_pushTxn](#_pushtxn)
-- [capture](#capture)
-- [clear](#clear)
-- [logRawTransaction](#lograwtransaction)
-- [waitForIndexer](#waitforindexer)
+- [\_pushTxn](testing.TransactionLogger.md#_pushtxn)
+- [capture](testing.TransactionLogger.md#capture)
+- [clear](testing.TransactionLogger.md#clear)
+- [logRawTransaction](testing.TransactionLogger.md#lograwtransaction)
+- [waitForIndexer](testing.TransactionLogger.md#waitforindexer)
 
 ## Constructors
 
 ### constructor
 
-• **new TransactionLogger**(): [`TransactionLogger`]()
+• **new TransactionLogger**(): [`TransactionLogger`](testing.TransactionLogger.md)
 
 #### Returns
 
-[`TransactionLogger`]()
+[`TransactionLogger`](testing.TransactionLogger.md)
 
 ## Properties
 

@@ -10,9 +10,9 @@ The result of sending and confirming one or more transactions, but where there i
 
 ## Hierarchy
 
-- [`SendTransactionResult`]()
+- [`SendTransactionResult`](types_transaction.SendTransactionResult.md)
 
-- [`SendTransactionResults`]()
+- [`SendTransactionResults`](types_transaction.SendTransactionResults.md)
 
   ↳ **`ConfirmedTransactionResults`**
 
@@ -20,10 +20,10 @@ The result of sending and confirming one or more transactions, but where there i
 
 ### Properties
 
-- [confirmation](#confirmation)
-- [confirmations](#confirmations)
-- [transaction](#transaction)
-- [transactions](#transactions)
+- [confirmation](types_transaction.ConfirmedTransactionResults.md#confirmation)
+- [confirmations](types_transaction.ConfirmedTransactionResults.md#confirmations)
+- [transaction](types_transaction.ConfirmedTransactionResults.md#transaction)
+- [transactions](types_transaction.ConfirmedTransactionResults.md#transactions)
 
 ## Properties
 
@@ -35,7 +35,7 @@ The response from sending and waiting for the primary transaction
 
 #### Overrides
 
-[SendTransactionResult]().[confirmation](#confirmation)
+[SendTransactionResult](types_transaction.SendTransactionResult.md).[confirmation](types_transaction.SendTransactionResult.md#confirmation)
 
 #### Defined in
 
@@ -51,7 +51,7 @@ The response from sending and waiting for the transactions
 
 #### Overrides
 
-[SendTransactionResults]().[confirmations](#confirmations)
+[SendTransactionResults](types_transaction.SendTransactionResults.md).[confirmations](types_transaction.SendTransactionResults.md#confirmations)
 
 #### Defined in
 
@@ -67,7 +67,7 @@ The transaction
 
 #### Inherited from
 
-[SendTransactionResult]().[transaction](#transaction)
+[SendTransactionResult](types_transaction.SendTransactionResult.md).[transaction](types_transaction.SendTransactionResult.md#transaction)
 
 #### Defined in
 
@@ -83,7 +83,7 @@ The transactions that have been prepared and/or sent
 
 #### Inherited from
 
-[SendTransactionResults]().[transactions](#transactions)
+[SendTransactionResults](types_transaction.SendTransactionResults.md).[transactions](types_transaction.SendTransactionResults.md#transactions)
 
 #### Defined in
 

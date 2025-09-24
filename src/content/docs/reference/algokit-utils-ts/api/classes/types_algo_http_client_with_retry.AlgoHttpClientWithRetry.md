@@ -18,27 +18,27 @@ A HTTP Client that wraps the Algorand SDK HTTP Client with retries
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#constructor)
 
 ### Properties
 
-- [MAX_BACKOFF_MS](#max_backoff_ms)
-- [MAX_TRIES](#max_tries)
-- [RETRY_ERROR_CODES](#retry_error_codes)
-- [RETRY_STATUS_CODES](#retry_status_codes)
+- [MAX_BACKOFF_MS](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#max_backoff_ms)
+- [MAX_TRIES](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#max_tries)
+- [RETRY_ERROR_CODES](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#retry_error_codes)
+- [RETRY_STATUS_CODES](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#retry_status_codes)
 
 ### Methods
 
-- [callWithRetry](#callwithretry)
-- [delete](#delete)
-- [get](#get)
-- [post](#post)
+- [callWithRetry](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#callwithretry)
+- [delete](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#delete)
+- [get](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#get)
+- [post](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md#post)
 
 ## Constructors
 
 ### constructor
 
-• **new AlgoHttpClientWithRetry**(`tokenHeader`, `baseServer`, `port?`, `defaultHeaders?`): [`AlgoHttpClientWithRetry`]()
+• **new AlgoHttpClientWithRetry**(`tokenHeader`, `baseServer`, `port?`, `defaultHeaders?`): [`AlgoHttpClientWithRetry`](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md)
 
 #### Parameters
 
@@ -51,7 +51,7 @@ A HTTP Client that wraps the Algorand SDK HTTP Client with retries
 
 #### Returns
 
-[`AlgoHttpClientWithRetry`]()
+[`AlgoHttpClientWithRetry`](types_algo_http_client_with_retry.AlgoHttpClientWithRetry.md)
 
 #### Inherited from
 

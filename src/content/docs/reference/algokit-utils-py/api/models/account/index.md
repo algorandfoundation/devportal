@@ -4,12 +4,12 @@ title: algokit_utils.models.account
 
 ## Classes
 
-| [`TransactionSignerAccount`](#algokit_utils.models.account.TransactionSignerAccount) | A basic transaction signer account.                             |
-| ------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| [`SigningAccount`](#algokit_utils.models.account.SigningAccount)                     | Holds the private key and address for an account.               |
-| [`MultisigMetadata`](#algokit_utils.models.account.MultisigMetadata)                 | Metadata for a multisig account.                                |
-| [`MultiSigAccount`](#algokit_utils.models.account.MultiSigAccount)                   | Account wrapper that supports partial or full multisig signing. |
-| [`LogicSigAccount`](#algokit_utils.models.account.LogicSigAccount)                   | Account wrapper that supports logic sig signing.                |
+| [`TransactionSignerAccount`](/reference/algokit-utils-py/api/TransactionSignerAccount#algokit_utils.models.account.TransactionSignerAccount) | A basic transaction signer account.                             |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`SigningAccount`](/reference/algokit-utils-py/api/SigningAccount#algokit_utils.models.account.SigningAccount)                               | Holds the private key and address for an account.               |
+| [`MultisigMetadata`](/reference/algokit-utils-py/api/MultisigMetadata#algokit_utils.models.account.MultisigMetadata)                         | Metadata for a multisig account.                                |
+| [`MultiSigAccount`](/reference/algokit-utils-py/api/MultiSigAccount#algokit_utils.models.account.MultiSigAccount)                            | Account wrapper that supports partial or full multisig signing. |
+| [`LogicSigAccount`](/reference/algokit-utils-py/api/LogicSigAccount#algokit_utils.models.account.LogicSigAccount)                            | Account wrapper that supports logic sig signing.                |
 
 ## Module Contents
 

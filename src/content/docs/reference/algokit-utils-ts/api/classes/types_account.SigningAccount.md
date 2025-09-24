@@ -16,26 +16,26 @@ Account wrapper that supports a rekeyed account
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_account.SigningAccount.md#constructor)
 
 ### Properties
 
-- [\_account](#_account)
-- [\_sender](#_sender)
-- [\_signer](#_signer)
+- [\_account](types_account.SigningAccount.md#_account)
+- [\_sender](types_account.SigningAccount.md#_sender)
+- [\_signer](types_account.SigningAccount.md#_signer)
 
 ### Accessors
 
-- [addr](#addr)
-- [sender](#sender)
-- [signer](#signer)
-- [sk](#sk)
+- [addr](types_account.SigningAccount.md#addr)
+- [sender](types_account.SigningAccount.md#sender)
+- [signer](types_account.SigningAccount.md#signer)
+- [sk](types_account.SigningAccount.md#sk)
 
 ## Constructors
 
 ### constructor
 
-• **new SigningAccount**(`account`, `sender`): [`SigningAccount`]()
+• **new SigningAccount**(`account`, `sender`): [`SigningAccount`](types_account.SigningAccount.md)
 
 #### Parameters
 
@@ -46,7 +46,7 @@ Account wrapper that supports a rekeyed account
 
 #### Returns
 
-[`SigningAccount`]()
+[`SigningAccount`](types_account.SigningAccount.md)
 
 #### Defined in
 

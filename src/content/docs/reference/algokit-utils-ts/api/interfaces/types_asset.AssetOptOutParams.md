@@ -12,7 +12,7 @@ Parameters for `assetOptOut` call.
 
 ## Hierarchy
 
-- [`AssetOptInParams`]()
+- [`AssetOptInParams`](types_asset.AssetOptInParams.md)
 
   ↳ **`AssetOptOutParams`**
 
@@ -20,21 +20,21 @@ Parameters for `assetOptOut` call.
 
 ### Properties
 
-- [account](#account)
-- [assetCreatorAddress](#assetcreatoraddress)
-- [assetId](#assetid)
-- [atc](#atc)
-- [ensureZeroBalance](#ensurezerobalance)
-- [fee](#fee)
-- [lease](#lease)
-- [maxFee](#maxfee)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [note](#note)
-- [populateAppCallResources](#populateappcallresources)
-- [skipSending](#skipsending)
-- [skipWaiting](#skipwaiting)
-- [suppressLog](#suppresslog)
-- [transactionParams](#transactionparams)
+- [account](types_asset.AssetOptOutParams.md#account)
+- [assetCreatorAddress](types_asset.AssetOptOutParams.md#assetcreatoraddress)
+- [assetId](types_asset.AssetOptOutParams.md#assetid)
+- [atc](types_asset.AssetOptOutParams.md#atc)
+- [ensureZeroBalance](types_asset.AssetOptOutParams.md#ensurezerobalance)
+- [fee](types_asset.AssetOptOutParams.md#fee)
+- [lease](types_asset.AssetOptOutParams.md#lease)
+- [maxFee](types_asset.AssetOptOutParams.md#maxfee)
+- [maxRoundsToWaitForConfirmation](types_asset.AssetOptOutParams.md#maxroundstowaitforconfirmation)
+- [note](types_asset.AssetOptOutParams.md#note)
+- [populateAppCallResources](types_asset.AssetOptOutParams.md#populateappcallresources)
+- [skipSending](types_asset.AssetOptOutParams.md#skipsending)
+- [skipWaiting](types_asset.AssetOptOutParams.md#skipwaiting)
+- [suppressLog](types_asset.AssetOptOutParams.md#suppresslog)
+- [transactionParams](types_asset.AssetOptOutParams.md#transactionparams)
 
 ## Properties
 
@@ -46,7 +46,7 @@ The account to opt in/out for
 
 #### Inherited from
 
-[AssetOptInParams]().[account](#account)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[account](types_asset.AssetOptInParams.md#account)
 
 #### Defined in
 
@@ -74,7 +74,7 @@ The ID of the assets to opt in for / out of
 
 #### Inherited from
 
-[AssetOptInParams]().[assetId](#assetid)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[assetId](types_asset.AssetOptInParams.md#assetid)
 
 #### Defined in
 
@@ -90,7 +90,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[AssetOptInParams]().[atc](#atc)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[atc](types_asset.AssetOptInParams.md#atc)
 
 #### Defined in
 
@@ -118,7 +118,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 #### Inherited from
 
-[AssetOptInParams]().[fee](#fee)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[fee](types_asset.AssetOptInParams.md#fee)
 
 #### Defined in
 
@@ -134,7 +134,7 @@ An (optional) [transaction lease](https://dev.algorand.co/concepts/transactions/
 
 #### Inherited from
 
-[AssetOptInParams]().[lease](#lease)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[lease](types_asset.AssetOptInParams.md#lease)
 
 #### Defined in
 
@@ -150,7 +150,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 #### Inherited from
 
-[AssetOptInParams]().[maxFee](#maxfee)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[maxFee](types_asset.AssetOptInParams.md#maxfee)
 
 #### Defined in
 
@@ -166,7 +166,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[AssetOptInParams]().[maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[maxRoundsToWaitForConfirmation](types_asset.AssetOptInParams.md#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -182,7 +182,7 @@ The (optional) transaction note
 
 #### Inherited from
 
-[AssetOptInParams]().[note](#note)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[note](types_asset.AssetOptInParams.md#note)
 
 #### Defined in
 
@@ -198,7 +198,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[AssetOptInParams]().[populateAppCallResources](#populateappcallresources)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[populateAppCallResources](types_asset.AssetOptInParams.md#populateappcallresources)
 
 #### Defined in
 
@@ -215,7 +215,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[AssetOptInParams]().[skipSending](#skipsending)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[skipSending](types_asset.AssetOptInParams.md#skipsending)
 
 #### Defined in
 
@@ -231,7 +231,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[AssetOptInParams]().[skipWaiting](#skipwaiting)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[skipWaiting](types_asset.AssetOptInParams.md#skipwaiting)
 
 #### Defined in
 
@@ -247,7 +247,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[AssetOptInParams]().[suppressLog](#suppresslog)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[suppressLog](types_asset.AssetOptInParams.md#suppresslog)
 
 #### Defined in
 
@@ -263,7 +263,7 @@ Optional transaction parameters
 
 #### Inherited from
 
-[AssetOptInParams]().[transactionParams](#transactionparams)
+[AssetOptInParams](types_asset.AssetOptInParams.md).[transactionParams](types_asset.AssetOptInParams.md#transactionparams)
 
 #### Defined in
 

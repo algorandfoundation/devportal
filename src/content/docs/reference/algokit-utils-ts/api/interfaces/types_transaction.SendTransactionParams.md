@@ -12,32 +12,32 @@ The sending configuration for a transaction
 
 - **`SendTransactionParams`**
 
-  ↳ [`AppCallParams`]()
+  ↳ [`AppCallParams`](types_app.AppCallParams.md)
 
-  ↳ [`CreateAssetParams`]()
+  ↳ [`CreateAssetParams`](types_asset.CreateAssetParams.md)
 
-  ↳ [`AssetOptInParams`]()
+  ↳ [`AssetOptInParams`](types_asset.AssetOptInParams.md)
 
-  ↳ [`AlgoTransferParams`]()
+  ↳ [`AlgoTransferParams`](types_transfer.AlgoTransferParams.md)
 
-  ↳ [`AlgoRekeyParams`]()
+  ↳ [`AlgoRekeyParams`](types_transfer.AlgoRekeyParams.md)
 
-  ↳ [`EnsureFundedParams`]()
+  ↳ [`EnsureFundedParams`](types_transfer.EnsureFundedParams.md)
 
-  ↳ [`TransferAssetParams`]()
+  ↳ [`TransferAssetParams`](types_transfer.TransferAssetParams.md)
 
 ## Table of contents
 
 ### Properties
 
-- [atc](#atc)
-- [fee](#fee)
-- [maxFee](#maxfee)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [populateAppCallResources](#populateappcallresources)
-- [skipSending](#skipsending)
-- [skipWaiting](#skipwaiting)
-- [suppressLog](#suppresslog)
+- [atc](types_transaction.SendTransactionParams.md#atc)
+- [fee](types_transaction.SendTransactionParams.md#fee)
+- [maxFee](types_transaction.SendTransactionParams.md#maxfee)
+- [maxRoundsToWaitForConfirmation](types_transaction.SendTransactionParams.md#maxroundstowaitforconfirmation)
+- [populateAppCallResources](types_transaction.SendTransactionParams.md#populateappcallresources)
+- [skipSending](types_transaction.SendTransactionParams.md#skipsending)
+- [skipWaiting](types_transaction.SendTransactionParams.md#skipwaiting)
+- [suppressLog](types_transaction.SendTransactionParams.md#suppresslog)
 
 ## Properties
 

@@ -12,11 +12,11 @@ Details of the current network.
 
 ### Properties
 
-- [genesisHash](#genesishash)
-- [genesisId](#genesisid)
-- [isLocalNet](#islocalnet)
-- [isMainNet](#ismainnet)
-- [isTestNet](#istestnet)
+- [genesisHash](types_network_client.NetworkDetails.md#genesishash)
+- [genesisId](types_network_client.NetworkDetails.md#genesisid)
+- [isLocalNet](types_network_client.NetworkDetails.md#islocalnet)
+- [isMainNet](types_network_client.NetworkDetails.md#ismainnet)
+- [isTestNet](types_network_client.NetworkDetails.md#istestnet)
 
 ## Properties
 

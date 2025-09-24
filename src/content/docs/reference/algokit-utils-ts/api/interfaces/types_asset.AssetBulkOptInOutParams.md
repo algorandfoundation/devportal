@@ -14,13 +14,13 @@ Parameters for `assetBulkOptIn` / `assetBulkOptOut` call.
 
 ### Properties
 
-- [account](#account)
-- [assetIds](#assetids)
-- [maxFee](#maxfee)
-- [note](#note)
-- [suppressLog](#suppresslog)
-- [transactionParams](#transactionparams)
-- [validateBalances](#validatebalances)
+- [account](types_asset.AssetBulkOptInOutParams.md#account)
+- [assetIds](types_asset.AssetBulkOptInOutParams.md#assetids)
+- [maxFee](types_asset.AssetBulkOptInOutParams.md#maxfee)
+- [note](types_asset.AssetBulkOptInOutParams.md#note)
+- [suppressLog](types_asset.AssetBulkOptInOutParams.md#suppresslog)
+- [transactionParams](types_asset.AssetBulkOptInOutParams.md#transactionparams)
+- [validateBalances](types_asset.AssetBulkOptInOutParams.md#validatebalances)
 
 ## Properties
 

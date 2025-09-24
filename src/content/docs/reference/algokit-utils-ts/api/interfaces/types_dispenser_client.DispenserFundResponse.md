@@ -12,8 +12,8 @@ The TestNet Dispenser API response when funding.
 
 ### Properties
 
-- [amount](#amount)
-- [txId](#txid)
+- [amount](types_dispenser_client.DispenserFundResponse.md#amount)
+- [txId](types_dispenser_client.DispenserFundResponse.md#txid)
 
 ## Properties
 

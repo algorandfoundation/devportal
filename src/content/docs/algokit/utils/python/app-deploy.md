@@ -6,20 +6,20 @@ AlgoKit contains advanced smart contract deployment capabilities that allow you 
 
 It’s optional to use this functionality, since you can construct your own deployment logic using create / update / delete calls and your own mechanism to maintaining app metadata (like app IDs etc.), but this capability is an opinionated out-of-the-box solution that takes care of the heavy lifting for you.
 
-App deployment is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App management](app).
+App deployment is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App management](app.md).
 
 To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-py/blob/main/tests/test_deploy_scenarios.py).
 
 ## Smart contract development lifecycle
 
-The design behind the deployment capability is unique. The architecture design behind app deployment is articulated in an [architecture decision record](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/architecture-decisions/2023-01-12_smart-contract-deployment). While the implementation will naturally evolve over time and diverge from this record, the principles and design goals behind the design are comprehensively explained.
+The design behind the deployment capability is unique. The architecture design behind app deployment is articulated in an [architecture decision record](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/architecture-decisions/2023-01-12_smart-contract-deployment.md). While the implementation will naturally evolve over time and diverge from this record, the principles and design goals behind the design are comprehensively explained.
 
 Namely, it described the concept of a smart contract development lifecycle:
 
 1. Development
    1. **Write** smart contracts
    2. **Transpile** smart contracts with development-time parameters (code configuration) to TEAL Templates
-   3. **Verify** the TEAL Templates maintain [output stability](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/articles/output_stability) and any other static code quality checks
+   3. **Verify** the TEAL Templates maintain [output stability](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/articles/output_stability.md) and any other static code quality checks
 2. Deployment
    1. **Substitute** deploy-time parameters into TEAL Templates to create final TEAL code
    2. **Compile** the TEAL to create byte code using algod
@@ -28,12 +28,14 @@ Namely, it described the concept of a smart contract development lifecycle:
    1. **Validate** the deployed app via automated testing of the smart contracts to provide confidence in their correctness
    2. **Call** deployed smart contract with runtime parameters to utilise it
 
+![App deployment lifecycle](@assets/imports/algokit-utils-py/lifecycle-1758708906644.jpg)
+
 The App deployment capability provided by AlgoKit Utils helps implement **#2 Deployment**.
 
 Furthermore, the implementation contains the following implementation characteristics per the original architecture design:
 
 - Deploy-time parameters can be provided and substituted into a TEAL Template by convention (by replacing `TMPL_{KEY}`)
-- Contracts can be built by any smart contract framework that supports [ARC-56](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0056) and [ARC-32](https://github.com/algorandfoundation/ARCs/pull/150), which also means the deployment language can be different to the development language e.g. you can deploy a Python smart contract with TypeScript for instance
+- Contracts can be built by any smart contract framework that supports [ARC-56](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0056.md) and [ARC-32](https://github.com/algorandfoundation/ARCs/pull/150), which also means the deployment language can be different to the development language e.g. you can deploy a Python smart contract with TypeScript for instance
 - There is explicit control of the immutability (updatability / upgradeability) and permanence (deletability) of the smart contract, which can be varied per environment to allow for easier development and testing in non-MainNet environments (by replacing `TMPL_UPDATABLE` and `TMPL_DELETABLE` at deploy-time by convention, if present)
 - Contracts are resolvable by a string “name” for a given creator to allow automated determination of whether that contract had been deployed previously or not, but can also be resolved by ID instead
 
@@ -43,7 +45,7 @@ This design allows you to have the same deployment code across environments with
 
 The `AppDeployer` is a class that is used to manage app deployments and deployment metadata.
 
-To get an instance of `AppDeployer` you can use either [`AlgorandClient`](algorand-client) via `algorand.appDeployer` or instantiate it directly (passing in an [`AppManager`](app#appmanager), [`AlgorandClientTransactionSender`](algorand-client#sending-a-single-transaction) and optionally an indexer client instance):
+To get an instance of `AppDeployer` you can use either [`AlgorandClient`](algorand-client.md) via `algorand.appDeployer` or instantiate it directly (passing in an [`AppManager`](app.md#appmanager), [`AlgorandClientTransactionSender`](algorand-client.md#sending-a-single-transaction) and optionally an indexer client instance):
 
 ```python
 from algokit_utils.app_deployer import AppDeployer
@@ -53,7 +55,7 @@ app_deployer = AppDeployer(app_manager, transaction_sender, indexer)
 
 ## Deployment metadata
 
-When AlgoKit performs a deployment of an app it creates metadata to describe that deployment and includes this metadata in an [ARC-2](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002) transaction note on any creation and update transactions.
+When AlgoKit performs a deployment of an app it creates metadata to describe that deployment and includes this metadata in an [ARC-2](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md) transaction note on any creation and update transactions.
 
 The deployment metadata is defined in `AppDeployMetadata`, which is an object with:
 
@@ -156,9 +158,9 @@ It will automatically [add metadata to the transaction note of the create or upd
 The first parameter `deployment` is an `AppDeployParams`, which is an object with:
 
 - `metadata: AppDeployMetadata` - determines the [deployment metadata]() of the deployment
-- `create_params: AppCreateParams | CreateCallABI` - the parameters for an [app creation call](app) (raw parameters or ABI method call)
-- `update_params: AppUpdateParams | UpdateCallABI` - the parameters for an [app update call](app) (raw parameters or ABI method call) without the `app_id`, `approval_program`, or `clear_state_program` as these are handled by the deploy logic
-- `delete_params: AppDeleteParams | DeleteCallABI` - the parameters for an [app delete call](app) (raw parameters or ABI method call) without the `app_id` parameter
+- `create_params: AppCreateParams | CreateCallABI` - the parameters for an [app creation call](app.md) (raw parameters or ABI method call)
+- `update_params: AppUpdateParams | UpdateCallABI` - the parameters for an [app update call](app.md) (raw parameters or ABI method call) without the `app_id`, `approval_program`, or `clear_state_program` as these are handled by the deploy logic
+- `delete_params: AppDeleteParams | DeleteCallABI` - the parameters for an [app delete call](app.md) (raw parameters or ABI method call) without the `app_id` parameter
 - `deploy_time_params: TealTemplateParams | None` - optional parameters for [TEAL template substitution]()
   - `TealTemplateParams` is a dict that replaces `TMPL_{key}` with `value` (strings/Uint8Arrays are properly encoded)
 - `on_schema_break: OnSchemaBreak | str | None` - determines `OnSchemaBreak` if schema requirements increase (values: ‘replace’, ‘fail’, ‘append’)
@@ -248,11 +250,11 @@ The `deploy` call itself may do one of the following (which you can determine by
 - `OperationPerformed.REPLACE` - The smart contract app was deleted and created again (in an atomic transaction)
 - `OperationPerformed.NOTHING` - Nothing was done since it was detected the existing smart contract app deployment was up to date
 
-As well as the `operation_performed` parameter and the [optional compilation result](), the return value will have the [`ApplicationMetaData`](../autoapi/algokit_utils/applications/app_deployer/index#algokit_utils.applications.app_deployer.ApplicationMetaData) [fields]() present.
+As well as the `operation_performed` parameter and the [optional compilation result](), the return value will have the [`ApplicationMetaData`](/reference/algokit-utils-py/api/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationMetaData) [fields]() present.
 
 Based on the value of `operation_performed`, there will be other data available in the return value:
 
-- If `CREATE`, `UPDATE` or `REPLACE` then it will have the relevant [`SendAppTransactionResult`](../autoapi/algokit_utils/transactions/transaction_sender/index#algokit_utils.transactions.transaction_sender.SendAppTransactionResult) values:
+- If `CREATE`, `UPDATE` or `REPLACE` then it will have the relevant [`SendAppTransactionResult`](/reference/algokit-utils-py/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult) values:
   - `create_result` for create operations
   - `update_result` for update operations
 - If `REPLACE` then it will also have `delete_result` to capture the result of deleting the existing app

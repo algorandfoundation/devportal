@@ -13,15 +13,15 @@ https://dev.algorand.co/concepts/transactions/atomic-txn-groups/
 
 ### Properties
 
-- [sendParams](#sendparams)
-- [signer](#signer)
-- [transactions](#transactions)
+- [sendParams](types_transaction.TransactionGroupToSend.md#sendparams)
+- [signer](types_transaction.TransactionGroupToSend.md#signer)
+- [transactions](types_transaction.TransactionGroupToSend.md#transactions)
 
 ## Properties
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](types_transaction.SendTransactionParams.md), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
 
 Any parameters to control the semantics of the send to the network
 
@@ -45,7 +45,7 @@ Optional signer to pass in, required if at least one transaction provided is jus
 
 ### transactions
 
-• **transactions**: (`Transaction` \| [`TransactionToSign`]() \| `Promise`\<[`SendTransactionResult`]()\>)[]
+• **transactions**: (`Transaction` \| [`TransactionToSign`](types_transaction.TransactionToSign.md) \| `Promise`\<[`SendTransactionResult`](types_transaction.SendTransactionResult.md)\>)[]
 
 The list of transactions to send, which can either be a raw transaction (in which case `signer` is required),
 the async result of an AlgoKit utils method that returns a `SendTransactionResult` (saves unwrapping the promise, be sure to pass `skipSending: true`, `signer` is also required)

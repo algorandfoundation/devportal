@@ -12,57 +12,57 @@ A client that brokers easy access to Algorand functionality.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_algorand_client.AlgorandClient.md#constructor)
 
 ### Properties
 
-- [\_accountManager](#_accountmanager)
-- [\_appDeployer](#_appdeployer)
-- [\_appManager](#_appmanager)
-- [\_assetManager](#_assetmanager)
-- [\_cachedSuggestedParams](#_cachedsuggestedparams)
-- [\_cachedSuggestedParamsExpiry](#_cachedsuggestedparamsexpiry)
-- [\_cachedSuggestedParamsTimeout](#_cachedsuggestedparamstimeout)
-- [\_clientManager](#_clientmanager)
-- [\_defaultValidityWindow](#_defaultvaliditywindow)
-- [\_errorTransformers](#_errortransformers)
-- [\_transactionCreator](#_transactioncreator)
-- [\_transactionSender](#_transactionsender)
+- [\_accountManager](types_algorand_client.AlgorandClient.md#_accountmanager)
+- [\_appDeployer](types_algorand_client.AlgorandClient.md#_appdeployer)
+- [\_appManager](types_algorand_client.AlgorandClient.md#_appmanager)
+- [\_assetManager](types_algorand_client.AlgorandClient.md#_assetmanager)
+- [\_cachedSuggestedParams](types_algorand_client.AlgorandClient.md#_cachedsuggestedparams)
+- [\_cachedSuggestedParamsExpiry](types_algorand_client.AlgorandClient.md#_cachedsuggestedparamsexpiry)
+- [\_cachedSuggestedParamsTimeout](types_algorand_client.AlgorandClient.md#_cachedsuggestedparamstimeout)
+- [\_clientManager](types_algorand_client.AlgorandClient.md#_clientmanager)
+- [\_defaultValidityWindow](types_algorand_client.AlgorandClient.md#_defaultvaliditywindow)
+- [\_errorTransformers](types_algorand_client.AlgorandClient.md#_errortransformers)
+- [\_transactionCreator](types_algorand_client.AlgorandClient.md#_transactioncreator)
+- [\_transactionSender](types_algorand_client.AlgorandClient.md#_transactionsender)
 
 ### Accessors
 
-- [account](#account)
-- [app](#app)
-- [appDeployer](#appdeployer)
-- [asset](#asset)
-- [client](#client)
-- [createTransaction](#createtransaction)
-- [send](#send)
+- [account](types_algorand_client.AlgorandClient.md#account)
+- [app](types_algorand_client.AlgorandClient.md#app)
+- [appDeployer](types_algorand_client.AlgorandClient.md#appdeployer)
+- [asset](types_algorand_client.AlgorandClient.md#asset)
+- [client](types_algorand_client.AlgorandClient.md#client)
+- [createTransaction](types_algorand_client.AlgorandClient.md#createtransaction)
+- [send](types_algorand_client.AlgorandClient.md#send)
 
 ### Methods
 
-- [getSuggestedParams](#getsuggestedparams)
-- [newGroup](#newgroup)
-- [registerErrorTransformer](#registererrortransformer)
-- [setDefaultSigner](#setdefaultsigner)
-- [setDefaultValidityWindow](#setdefaultvaliditywindow)
-- [setSigner](#setsigner)
-- [setSignerFromAccount](#setsignerfromaccount)
-- [setSuggestedParamsCache](#setsuggestedparamscache)
-- [setSuggestedParamsCacheTimeout](#setsuggestedparamscachetimeout)
-- [unregisterErrorTransformer](#unregistererrortransformer)
-- [defaultLocalNet](#defaultlocalnet)
-- [fromClients](#fromclients)
-- [fromConfig](#fromconfig)
-- [fromEnvironment](#fromenvironment)
-- [mainNet](#mainnet)
-- [testNet](#testnet)
+- [getSuggestedParams](types_algorand_client.AlgorandClient.md#getsuggestedparams)
+- [newGroup](types_algorand_client.AlgorandClient.md#newgroup)
+- [registerErrorTransformer](types_algorand_client.AlgorandClient.md#registererrortransformer)
+- [setDefaultSigner](types_algorand_client.AlgorandClient.md#setdefaultsigner)
+- [setDefaultValidityWindow](types_algorand_client.AlgorandClient.md#setdefaultvaliditywindow)
+- [setSigner](types_algorand_client.AlgorandClient.md#setsigner)
+- [setSignerFromAccount](types_algorand_client.AlgorandClient.md#setsignerfromaccount)
+- [setSuggestedParamsCache](types_algorand_client.AlgorandClient.md#setsuggestedparamscache)
+- [setSuggestedParamsCacheTimeout](types_algorand_client.AlgorandClient.md#setsuggestedparamscachetimeout)
+- [unregisterErrorTransformer](types_algorand_client.AlgorandClient.md#unregistererrortransformer)
+- [defaultLocalNet](types_algorand_client.AlgorandClient.md#defaultlocalnet)
+- [fromClients](types_algorand_client.AlgorandClient.md#fromclients)
+- [fromConfig](types_algorand_client.AlgorandClient.md#fromconfig)
+- [fromEnvironment](types_algorand_client.AlgorandClient.md#fromenvironment)
+- [mainNet](types_algorand_client.AlgorandClient.md#mainnet)
+- [testNet](types_algorand_client.AlgorandClient.md#testnet)
 
 ## Constructors
 
 ### constructor
 
-• **new AlgorandClient**(`config`): [`AlgorandClient`]()
+• **new AlgorandClient**(`config`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 #### Parameters
 
@@ -72,7 +72,7 @@ A client that brokers easy access to Algorand functionality.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 #### Defined in
 
@@ -82,7 +82,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_accountManager
 
-• `Private` **\_accountManager**: [`AccountManager`]()
+• `Private` **\_accountManager**: [`AccountManager`](types_account_manager.AccountManager.md)
 
 #### Defined in
 
@@ -92,7 +92,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_appDeployer
 
-• `Private` **\_appDeployer**: [`AppDeployer`]()
+• `Private` **\_appDeployer**: [`AppDeployer`](types_app_deployer.AppDeployer.md)
 
 #### Defined in
 
@@ -102,7 +102,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_appManager
 
-• `Private` **\_appManager**: [`AppManager`]()
+• `Private` **\_appManager**: [`AppManager`](types_app_manager.AppManager.md)
 
 #### Defined in
 
@@ -112,7 +112,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_assetManager
 
-• `Private` **\_assetManager**: [`AssetManager`]()
+• `Private` **\_assetManager**: [`AssetManager`](types_asset_manager.AssetManager.md)
 
 #### Defined in
 
@@ -152,7 +152,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_clientManager
 
-• `Private` **\_clientManager**: [`ClientManager`]()
+• `Private` **\_clientManager**: [`ClientManager`](types_client_manager.ClientManager.md)
 
 #### Defined in
 
@@ -186,7 +186,7 @@ error transformers from the set.
 
 ### \_transactionCreator
 
-• `Private` **\_transactionCreator**: [`AlgorandClientTransactionCreator`]()
+• `Private` **\_transactionCreator**: [`AlgorandClientTransactionCreator`](types_algorand_client_transaction_creator.AlgorandClientTransactionCreator.md)
 
 #### Defined in
 
@@ -196,7 +196,7 @@ error transformers from the set.
 
 ### \_transactionSender
 
-• `Private` **\_transactionSender**: [`AlgorandClientTransactionSender`]()
+• `Private` **\_transactionSender**: [`AlgorandClientTransactionSender`](types_algorand_client_transaction_sender.AlgorandClientTransactionSender.md)
 
 #### Defined in
 
@@ -206,13 +206,13 @@ error transformers from the set.
 
 ### account
 
-• `get` **account**(): [`AccountManager`]()
+• `get` **account**(): [`AccountManager`](types_account_manager.AccountManager.md)
 
 Get or create accounts that can sign transactions.
 
 #### Returns
 
-[`AccountManager`]()
+[`AccountManager`](types_account_manager.AccountManager.md)
 
 The `AccountManager` instance.
 
@@ -230,13 +230,13 @@ const accountManager = AlgorandClient.mainNet().account;
 
 ### app
 
-• `get` **app**(): [`AppManager`]()
+• `get` **app**(): [`AppManager`](types_app_manager.AppManager.md)
 
 Methods for interacting with apps.
 
 #### Returns
 
-[`AppManager`]()
+[`AppManager`](types_app_manager.AppManager.md)
 
 The `AppManager` instance.
 
@@ -254,13 +254,13 @@ const appManager = AlgorandClient.mainNet().app;
 
 ### appDeployer
 
-• `get` **appDeployer**(): [`AppDeployer`]()
+• `get` **appDeployer**(): [`AppDeployer`](types_app_deployer.AppDeployer.md)
 
 Methods for deploying apps and managing app deployment metadata.
 
 #### Returns
 
-[`AppDeployer`]()
+[`AppDeployer`](types_app_deployer.AppDeployer.md)
 
 The `AppDeployer` instance.
 
@@ -278,13 +278,13 @@ const deployer = AlgorandClient.mainNet().appDeployer;
 
 ### asset
 
-• `get` **asset**(): [`AssetManager`]()
+• `get` **asset**(): [`AssetManager`](types_asset_manager.AssetManager.md)
 
 Methods for interacting with assets.
 
 #### Returns
 
-[`AssetManager`]()
+[`AssetManager`](types_asset_manager.AssetManager.md)
 
 The `AssetManager` instance.
 
@@ -302,13 +302,13 @@ const assetManager = AlgorandClient.mainNet().asset;
 
 ### client
 
-• `get` **client**(): [`ClientManager`]()
+• `get` **client**(): [`ClientManager`](types_client_manager.ClientManager.md)
 
 Get clients, including algosdk clients and app clients.
 
 #### Returns
 
-[`ClientManager`]()
+[`ClientManager`](types_client_manager.ClientManager.md)
 
 The `ClientManager` instance.
 
@@ -326,13 +326,13 @@ const clientManager = AlgorandClient.mainNet().client;
 
 ### createTransaction
 
-• `get` **createTransaction**(): [`AlgorandClientTransactionCreator`]()
+• `get` **createTransaction**(): [`AlgorandClientTransactionCreator`](types_algorand_client_transaction_creator.AlgorandClientTransactionCreator.md)
 
 Methods for creating a transaction.
 
 #### Returns
 
-[`AlgorandClientTransactionCreator`]()
+[`AlgorandClientTransactionCreator`](types_algorand_client_transaction_creator.AlgorandClientTransactionCreator.md)
 
 The `AlgorandClientTransactionCreator` instance.
 
@@ -354,13 +354,13 @@ const payment = await AlgorandClient.mainNet().createTransaction.payment({
 
 ### send
 
-• `get` **send**(): [`AlgorandClientTransactionSender`]()
+• `get` **send**(): [`AlgorandClientTransactionSender`](types_algorand_client_transaction_sender.AlgorandClientTransactionSender.md)
 
 Methods for sending a transaction.
 
 #### Returns
 
-[`AlgorandClientTransactionSender`]()
+[`AlgorandClientTransactionSender`](types_algorand_client_transaction_sender.AlgorandClientTransactionSender.md)
 
 The `AlgorandClientTransactionSender` instance.
 
@@ -406,13 +406,13 @@ const params = await AlgorandClient.mainNet().getSuggestedParams();
 
 ### newGroup
 
-▸ **newGroup**(): [`TransactionComposer`]()
+▸ **newGroup**(): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Start a new `TransactionComposer` transaction group
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 A new instance of `TransactionComposer`.
 
@@ -454,7 +454,7 @@ composed transaction groups made from `newGroup`
 
 ### setDefaultSigner
 
-▸ **setDefaultSigner**(`signer`): [`AlgorandClient`]()
+▸ **setDefaultSigner**(`signer`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Sets the default signer to use if no other signer is specified.
 
@@ -466,7 +466,7 @@ Sets the default signer to use if no other signer is specified.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -485,7 +485,7 @@ const algorand = AlgorandClient.mainNet().setDefaultSigner(signer);
 
 ### setDefaultValidityWindow
 
-▸ **setDefaultValidityWindow**(`validityWindow`): [`AlgorandClient`]()
+▸ **setDefaultValidityWindow**(`validityWindow`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Sets the default validity window for transactions.
 
@@ -497,7 +497,7 @@ Sets the default validity window for transactions.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -515,7 +515,7 @@ const algorand = AlgorandClient.mainNet().setDefaultValidityWindow(1000);
 
 ### setSigner
 
-▸ **setSigner**(`sender`, `signer`): [`AlgorandClient`]()
+▸ **setSigner**(`sender`, `signer`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Tracks the given signer against the given sender for later signing.
 
@@ -528,7 +528,7 @@ Tracks the given signer against the given sender for later signing.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -547,19 +547,19 @@ const algorand = AlgorandClient.mainNet().setSigner(signer.addr, signer.signer);
 
 ### setSignerFromAccount
 
-▸ **setSignerFromAccount**(`account`): [`AlgorandClient`]()
+▸ **setSignerFromAccount**(`account`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Tracks the given account (object that encapsulates an address and a signer) for later signing.
 
 #### Parameters
 
-| Name      | Type                                                                                                                                                                                               | Description                                                                                                                                                 |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `account` | [`MultisigAccount`]() \| `default` \| [`SigningAccount`]() \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount` | The account to register, which can be a `TransactionSignerAccount` or a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount` |
+| Name      | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 |
+| :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `account` | [`MultisigAccount`](types_account.MultisigAccount.md) \| `default` \| [`SigningAccount`](types_account.SigningAccount.md) \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount` | The account to register, which can be a `TransactionSignerAccount` or a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount` |
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -587,7 +587,7 @@ const accountManager = AlgorandClient.mainNet()
 
 ### setSuggestedParamsCache
 
-▸ **setSuggestedParamsCache**(`suggestedParams`, `until?`): [`AlgorandClient`]()
+▸ **setSuggestedParamsCache**(`suggestedParams`, `until?`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Sets a cache value to use for suggested transaction params.
 
@@ -600,7 +600,7 @@ Sets a cache value to use for suggested transaction params.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -621,7 +621,7 @@ const algorand = AlgorandClient.mainNet().setSuggestedParamsCache(
 
 ### setSuggestedParamsCacheTimeout
 
-▸ **setSuggestedParamsCacheTimeout**(`timeout`): [`AlgorandClient`]()
+▸ **setSuggestedParamsCacheTimeout**(`timeout`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Sets the timeout for caching suggested params.
 
@@ -633,7 +633,7 @@ Sets the timeout for caching suggested params.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -671,13 +671,13 @@ const algorand = AlgorandClient.mainNet().setSuggestedParamsCacheTimeout(10_000)
 
 ### defaultLocalNet
 
-▸ **defaultLocalNet**(): [`AlgorandClient`]()
+▸ **defaultLocalNet**(): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Creates an `AlgorandClient` pointing at default LocalNet ports and API token.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 An instance of the `AlgorandClient`.
 
@@ -695,7 +695,7 @@ const algorand = AlgorandClient.defaultLocalNet();
 
 ### fromClients
 
-▸ **fromClients**(`clients`): [`AlgorandClient`]()
+▸ **fromClients**(`clients`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Creates an `AlgorandClient` pointing to the given client(s).
 
@@ -707,7 +707,7 @@ Creates an `AlgorandClient` pointing to the given client(s).
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 An instance of the `AlgorandClient`.
 
@@ -725,7 +725,7 @@ const algorand = AlgorandClient.fromClients({ algod, indexer, kmd });
 
 ### fromConfig
 
-▸ **fromConfig**(`config`): [`AlgorandClient`]()
+▸ **fromConfig**(`config`): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Creates an `AlgorandClient` from the given config.
 
@@ -737,7 +737,7 @@ Creates an `AlgorandClient` from the given config.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 An instance of the `AlgorandClient`.
 
@@ -755,7 +755,7 @@ const client = AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConfig
 
 ### fromEnvironment
 
-▸ **fromEnvironment**(): [`AlgorandClient`]()
+▸ **fromEnvironment**(): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Creates an `AlgorandClient` loading the configuration from environment variables.
 
@@ -774,7 +774,7 @@ otherwise it will use the default LocalNet config unless it detects testnet or m
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 An instance of the `AlgorandClient`.
 
@@ -792,13 +792,13 @@ const client = AlgorandClient.fromEnvironment();
 
 ### mainNet
 
-▸ **mainNet**(): [`AlgorandClient`]()
+▸ **mainNet**(): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Creates an `AlgorandClient` pointing at MainNet using AlgoNode.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 An instance of the `AlgorandClient`.
 
@@ -816,13 +816,13 @@ const algorand = AlgorandClient.mainNet();
 
 ### testNet
 
-▸ **testNet**(): [`AlgorandClient`]()
+▸ **testNet**(): [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 Creates an `AlgorandClient` pointing at TestNet using AlgoNode.
 
 #### Returns
 
-[`AlgorandClient`]()
+[`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 An instance of the `AlgorandClient`.
 

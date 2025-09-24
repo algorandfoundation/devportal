@@ -12,7 +12,7 @@ The TestNet Dispenser API response when getting the current limit.
 
 ### Properties
 
-- [amount](#amount)
+- [amount](types_dispenser_client.DispenserLimitResponse.md#amount)
 
 ## Properties
 

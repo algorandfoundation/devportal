@@ -12,9 +12,9 @@ The name of a box storage box
 
 ### Properties
 
-- [name](#name)
-- [nameBase64](#namebase64)
-- [nameRaw](#nameraw)
+- [name](types_app.BoxName.md#name)
+- [nameBase64](types_app.BoxName.md#namebase64)
+- [nameRaw](types_app.BoxName.md#nameraw)
 
 ## Properties
 

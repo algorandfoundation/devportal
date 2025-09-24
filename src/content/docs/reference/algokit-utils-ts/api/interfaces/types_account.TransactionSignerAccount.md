@@ -12,8 +12,8 @@ A wrapper around `TransactionSigner` that also has the sender address.
 
 ### Properties
 
-- [addr](#addr)
-- [signer](#signer)
+- [addr](types_account.TransactionSignerAccount.md#addr)
+- [signer](types_account.TransactionSignerAccount.md#signer)
 
 ## Properties
 

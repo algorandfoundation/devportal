@@ -12,73 +12,73 @@ TransactionComposer helps you compose and execute transactions as a transaction 
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_composer.TransactionComposer.md#constructor)
 
 ### Properties
 
-- [algod](#algod)
-- [appManager](#appmanager)
-- [atc](#atc)
-- [defaultValidityWindow](#defaultvaliditywindow)
-- [defaultValidityWindowIsExplicit](#defaultvaliditywindowisexplicit)
-- [errorTransformers](#errortransformers)
-- [getSigner](#getsigner)
-- [getSuggestedParams](#getsuggestedparams)
-- [txnMaxFees](#txnmaxfees)
-- [txns](#txns)
-- [NULL_SIGNER](#null_signer)
+- [algod](types_composer.TransactionComposer.md#algod)
+- [appManager](types_composer.TransactionComposer.md#appmanager)
+- [atc](types_composer.TransactionComposer.md#atc)
+- [defaultValidityWindow](types_composer.TransactionComposer.md#defaultvaliditywindow)
+- [defaultValidityWindowIsExplicit](types_composer.TransactionComposer.md#defaultvaliditywindowisexplicit)
+- [errorTransformers](types_composer.TransactionComposer.md#errortransformers)
+- [getSigner](types_composer.TransactionComposer.md#getsigner)
+- [getSuggestedParams](types_composer.TransactionComposer.md#getsuggestedparams)
+- [txnMaxFees](types_composer.TransactionComposer.md#txnmaxfees)
+- [txns](types_composer.TransactionComposer.md#txns)
+- [NULL_SIGNER](types_composer.TransactionComposer.md#null_signer)
 
 ### Methods
 
-- [addAppCall](#addappcall)
-- [addAppCallMethodCall](#addappcallmethodcall)
-- [addAppCreate](#addappcreate)
-- [addAppCreateMethodCall](#addappcreatemethodcall)
-- [addAppDelete](#addappdelete)
-- [addAppDeleteMethodCall](#addappdeletemethodcall)
-- [addAppUpdate](#addappupdate)
-- [addAppUpdateMethodCall](#addappupdatemethodcall)
-- [addAssetConfig](#addassetconfig)
-- [addAssetCreate](#addassetcreate)
-- [addAssetDestroy](#addassetdestroy)
-- [addAssetFreeze](#addassetfreeze)
-- [addAssetOptIn](#addassetoptin)
-- [addAssetOptOut](#addassetoptout)
-- [addAssetTransfer](#addassettransfer)
-- [addAtc](#addatc)
-- [addOfflineKeyRegistration](#addofflinekeyregistration)
-- [addOnlineKeyRegistration](#addonlinekeyregistration)
-- [addPayment](#addpayment)
-- [addTransaction](#addtransaction)
-- [build](#build)
-- [buildAppCall](#buildappcall)
-- [buildAssetConfig](#buildassetconfig)
-- [buildAssetCreate](#buildassetcreate)
-- [buildAssetDestroy](#buildassetdestroy)
-- [buildAssetFreeze](#buildassetfreeze)
-- [buildAssetTransfer](#buildassettransfer)
-- [buildAtc](#buildatc)
-- [buildKeyReg](#buildkeyreg)
-- [buildMethodCall](#buildmethodcall)
-- [buildPayment](#buildpayment)
-- [buildTransactions](#buildtransactions)
-- [buildTxn](#buildtxn)
-- [buildTxnWithSigner](#buildtxnwithsigner)
-- [commonTxnBuildStep](#commontxnbuildstep)
-- [count](#count)
-- [execute](#execute)
-- [rebuild](#rebuild)
-- [registerErrorTransformer](#registererrortransformer)
-- [send](#send)
-- [simulate](#simulate)
-- [transformError](#transformerror)
-- [arc2Note](#arc2note)
+- [addAppCall](types_composer.TransactionComposer.md#addappcall)
+- [addAppCallMethodCall](types_composer.TransactionComposer.md#addappcallmethodcall)
+- [addAppCreate](types_composer.TransactionComposer.md#addappcreate)
+- [addAppCreateMethodCall](types_composer.TransactionComposer.md#addappcreatemethodcall)
+- [addAppDelete](types_composer.TransactionComposer.md#addappdelete)
+- [addAppDeleteMethodCall](types_composer.TransactionComposer.md#addappdeletemethodcall)
+- [addAppUpdate](types_composer.TransactionComposer.md#addappupdate)
+- [addAppUpdateMethodCall](types_composer.TransactionComposer.md#addappupdatemethodcall)
+- [addAssetConfig](types_composer.TransactionComposer.md#addassetconfig)
+- [addAssetCreate](types_composer.TransactionComposer.md#addassetcreate)
+- [addAssetDestroy](types_composer.TransactionComposer.md#addassetdestroy)
+- [addAssetFreeze](types_composer.TransactionComposer.md#addassetfreeze)
+- [addAssetOptIn](types_composer.TransactionComposer.md#addassetoptin)
+- [addAssetOptOut](types_composer.TransactionComposer.md#addassetoptout)
+- [addAssetTransfer](types_composer.TransactionComposer.md#addassettransfer)
+- [addAtc](types_composer.TransactionComposer.md#addatc)
+- [addOfflineKeyRegistration](types_composer.TransactionComposer.md#addofflinekeyregistration)
+- [addOnlineKeyRegistration](types_composer.TransactionComposer.md#addonlinekeyregistration)
+- [addPayment](types_composer.TransactionComposer.md#addpayment)
+- [addTransaction](types_composer.TransactionComposer.md#addtransaction)
+- [build](types_composer.TransactionComposer.md#build)
+- [buildAppCall](types_composer.TransactionComposer.md#buildappcall)
+- [buildAssetConfig](types_composer.TransactionComposer.md#buildassetconfig)
+- [buildAssetCreate](types_composer.TransactionComposer.md#buildassetcreate)
+- [buildAssetDestroy](types_composer.TransactionComposer.md#buildassetdestroy)
+- [buildAssetFreeze](types_composer.TransactionComposer.md#buildassetfreeze)
+- [buildAssetTransfer](types_composer.TransactionComposer.md#buildassettransfer)
+- [buildAtc](types_composer.TransactionComposer.md#buildatc)
+- [buildKeyReg](types_composer.TransactionComposer.md#buildkeyreg)
+- [buildMethodCall](types_composer.TransactionComposer.md#buildmethodcall)
+- [buildPayment](types_composer.TransactionComposer.md#buildpayment)
+- [buildTransactions](types_composer.TransactionComposer.md#buildtransactions)
+- [buildTxn](types_composer.TransactionComposer.md#buildtxn)
+- [buildTxnWithSigner](types_composer.TransactionComposer.md#buildtxnwithsigner)
+- [commonTxnBuildStep](types_composer.TransactionComposer.md#commontxnbuildstep)
+- [count](types_composer.TransactionComposer.md#count)
+- [execute](types_composer.TransactionComposer.md#execute)
+- [rebuild](types_composer.TransactionComposer.md#rebuild)
+- [registerErrorTransformer](types_composer.TransactionComposer.md#registererrortransformer)
+- [send](types_composer.TransactionComposer.md#send)
+- [simulate](types_composer.TransactionComposer.md#simulate)
+- [transformError](types_composer.TransactionComposer.md#transformerror)
+- [arc2Note](types_composer.TransactionComposer.md#arc2note)
 
 ## Constructors
 
 ### constructor
 
-• **new TransactionComposer**(`params`): [`TransactionComposer`]()
+• **new TransactionComposer**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Create a `TransactionComposer`.
 
@@ -90,7 +90,7 @@ Create a `TransactionComposer`.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The `TransactionComposer` instance
 
@@ -114,7 +114,7 @@ The algod client used by the composer.
 
 ### appManager
 
-• `Private` **appManager**: [`AppManager`]()
+• `Private` **appManager**: [`AppManager`](types_app_manager.AppManager.md)
 
 #### Defined in
 
@@ -216,7 +216,7 @@ An async function that will return suggested params for the transaction.
 
 ### txnMaxFees
 
-• `Private` **txnMaxFees**: `Map`\<`number`, [`AlgoAmount`]()\>
+• `Private` **txnMaxFees**: `Map`\<`number`, [`AlgoAmount`](types_amount.AlgoAmount.md)\>
 
 Map of transaction index in the atc to a max logical fee.
 This is set using the value of either maxFee or staticFee.
@@ -253,7 +253,7 @@ Signer used to represent a lack of signer
 
 ### addAppCall
 
-▸ **addAppCall**(`params`): [`TransactionComposer`]()
+▸ **addAppCall**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an application call transaction to the transaction group.
 
@@ -269,7 +269,7 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -311,7 +311,7 @@ composer.addAppCall({
 
 ### addAppCallMethodCall
 
-▸ **addAppCallMethodCall**(`params`): [`TransactionComposer`]()
+▸ **addAppCallMethodCall**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add a non-create/non-update ABI method application call transaction to the transaction group.
 
@@ -325,7 +325,7 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -379,7 +379,7 @@ composer.addAppCallMethodCall({
 
 ### addAppCreate
 
-▸ **addAppCreate**(`params`): [`TransactionComposer`]()
+▸ **addAppCreate**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an application create transaction to the transaction group.
 
@@ -393,16 +393,16 @@ Note: we recommend using app clients to make it easier to make app calls.
 | `params.accountReferences?`      | (`string` \| `Address`)[]                                                                                                                                                                      | Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                       |
 | `params.appReferences?`          | `bigint`[]                                                                                                                                                                                     | The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                     |
 | `params.approvalProgram`         | `string` \| `Uint8Array`                                                                                                                                                                       | The program to execute for all OnCompletes other than ClearState as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).                                                                                                                   |
-| `params.args?`                   | `Uint8Array`[]                                                                                                                                                                                 | Any [arguments to pass to the smart contract call](#argument-passing).                                                                                                                                                                                                                 |
+| `params.args?`                   | `Uint8Array`[]                                                                                                                                                                                 | Any [arguments to pass to the smart contract call](/concepts/smart-contracts/languages/teal/#argument-passing).                                                                                                                                                                        |
 | `params.assetReferences?`        | `bigint`[]                                                                                                                                                                                     | The ID of any assets to load to the [foreign assets array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                 |
 | `params.boxReferences?`          | ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] | Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). Either the name identifier (which will be set against app ID of `0` i.e. the current app), or a box identifier with the name identifier and app ID. |
 | `params.clearStateProgram`       | `string` \| `Uint8Array`                                                                                                                                                                       | The program to execute for ClearState OnComplete as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).                                                                                                                                   |
-| `params.extraFee?`               | [`AlgoAmount`]()                                                                                                                                                                               | The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.                                                                                                                                                                                  |
+| `params.extraFee?`               | [`AlgoAmount`](types_amount.AlgoAmount.md)                                                                                                                                                     | The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.                                                                                                                                                                                  |
 | `params.extraProgramPages?`      | `number`                                                                                                                                                                                       | Number of extra pages required for the programs. Defaults to the number needed for the programs in this call if not specified. This is immutable once the app is created.                                                                                                              |
 | `params.firstValidRound?`        | `bigint`                                                                                                                                                                                       | Set the first round this transaction is valid. If left undefined, the value from algod will be used. We recommend you only set this when you intentionally want this to be some time in the future.                                                                                    |
 | `params.lastValidRound?`         | `bigint`                                                                                                                                                                                       | The last round this transaction is valid. It is recommended to use `validityWindow` instead.                                                                                                                                                                                           |
 | `params.lease?`                  | `string` \| `Uint8Array`                                                                                                                                                                       | Prevent multiple transactions with the same lease being included within the validity window. A [lease](https://dev.algorand.co/concepts/transactions/leases) enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).                         |
-| `params.maxFee?`                 | [`AlgoAmount`]()                                                                                                                                                                               | Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.                                                                                                                                                  |
+| `params.maxFee?`                 | [`AlgoAmount`](types_amount.AlgoAmount.md)                                                                                                                                                     | Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.                                                                                                                                                  |
 | `params.note?`                   | `string` \| `Uint8Array`                                                                                                                                                                       | Note to attach to the transaction. Max of 1000 bytes.                                                                                                                                                                                                                                  |
 | `params.onComplete?`             | `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC`                                                                                                        | The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.                                                                                                                                                              |
 | `params.rekeyTo?`                | `string` \| `Address`                                                                                                                                                                          | Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying).                                                                   |
@@ -413,12 +413,12 @@ Note: we recommend using app clients to make it easier to make app calls.
 | `params.schema.localInts`        | `number`                                                                                                                                                                                       | The number of integers saved in local state.                                                                                                                                                                                                                                           |
 | `params.sender`                  | `string` \| `Address`                                                                                                                                                                          | The address of the account sending the transaction.                                                                                                                                                                                                                                    |
 | `params.signer?`                 | `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/)                                                         | The function used to sign transaction(s); if not specified then an attempt will be made to find a registered signer for the given `sender` or use a default signer (if configured).                                                                                                    |
-| `params.staticFee?`              | [`AlgoAmount`]()                                                                                                                                                                               | The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.                                                                                                                                                 |
+| `params.staticFee?`              | [`AlgoAmount`](types_amount.AlgoAmount.md)                                                                                                                                                     | The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.                                                                                                                                                 |
 | `params.validityWindow?`         | `number` \| `bigint`                                                                                                                                                                           | How many rounds the transaction should be valid for, if not specified then the registered default validity window will be used.                                                                                                                                                        |
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -479,7 +479,7 @@ composer.addAppCreate({
 
 ### addAppCreateMethodCall
 
-▸ **addAppCreateMethodCall**(`params`): [`TransactionComposer`]()
+▸ **addAppCreateMethodCall**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an ABI method create application call transaction to the transaction group.
 
@@ -493,7 +493,7 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -562,7 +562,7 @@ composer.addAppCreateMethodCall({
 
 ### addAppDelete
 
-▸ **addAppDelete**(`params`): [`TransactionComposer`]()
+▸ **addAppDelete**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an application delete transaction to the transaction group.
 
@@ -576,7 +576,7 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -618,7 +618,7 @@ composer.addAppDelete({
 
 ### addAppDeleteMethodCall
 
-▸ **addAppDeleteMethodCall**(`params`): [`TransactionComposer`]()
+▸ **addAppDeleteMethodCall**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an ABI method delete application call transaction to the transaction group.
 
@@ -632,7 +632,7 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -686,7 +686,7 @@ composer.addAppDeleteMethodCall({
 
 ### addAppUpdate
 
-▸ **addAppUpdate**(`params`): [`TransactionComposer`]()
+▸ **addAppUpdate**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an application update transaction to the transaction group.
 
@@ -701,26 +701,26 @@ Note: we recommend using app clients to make it easier to make app calls.
 | `params.appId`              | `bigint`                                                                                                                                                                                       | ID of the application; 0 if the application is being created.                                                                                                                                                                                                                          |
 | `params.appReferences?`     | `bigint`[]                                                                                                                                                                                     | The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                     |
 | `params.approvalProgram`    | `string` \| `Uint8Array`                                                                                                                                                                       | The program to execute for all OnCompletes other than ClearState as raw teal (string) or compiled teal (base 64 encoded as a byte array (Uint8Array))                                                                                                                                  |
-| `params.args?`              | `Uint8Array`[]                                                                                                                                                                                 | Any [arguments to pass to the smart contract call](#argument-passing).                                                                                                                                                                                                                 |
+| `params.args?`              | `Uint8Array`[]                                                                                                                                                                                 | Any [arguments to pass to the smart contract call](/concepts/smart-contracts/languages/teal/#argument-passing).                                                                                                                                                                        |
 | `params.assetReferences?`   | `bigint`[]                                                                                                                                                                                     | The ID of any assets to load to the [foreign assets array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).                                                                                                                                 |
 | `params.boxReferences?`     | ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] | Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays). Either the name identifier (which will be set against app ID of `0` i.e. the current app), or a box identifier with the name identifier and app ID. |
 | `params.clearStateProgram`  | `string` \| `Uint8Array`                                                                                                                                                                       | The program to execute for ClearState OnComplete as raw teal (string) or compiled teal (base 64 encoded as a byte array (Uint8Array))                                                                                                                                                  |
-| `params.extraFee?`          | [`AlgoAmount`]()                                                                                                                                                                               | The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.                                                                                                                                                                                  |
+| `params.extraFee?`          | [`AlgoAmount`](types_amount.AlgoAmount.md)                                                                                                                                                     | The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.                                                                                                                                                                                  |
 | `params.firstValidRound?`   | `bigint`                                                                                                                                                                                       | Set the first round this transaction is valid. If left undefined, the value from algod will be used. We recommend you only set this when you intentionally want this to be some time in the future.                                                                                    |
 | `params.lastValidRound?`    | `bigint`                                                                                                                                                                                       | The last round this transaction is valid. It is recommended to use `validityWindow` instead.                                                                                                                                                                                           |
 | `params.lease?`             | `string` \| `Uint8Array`                                                                                                                                                                       | Prevent multiple transactions with the same lease being included within the validity window. A [lease](https://dev.algorand.co/concepts/transactions/leases) enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).                         |
-| `params.maxFee?`            | [`AlgoAmount`]()                                                                                                                                                                               | Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.                                                                                                                                                  |
+| `params.maxFee?`            | [`AlgoAmount`](types_amount.AlgoAmount.md)                                                                                                                                                     | Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.                                                                                                                                                  |
 | `params.note?`              | `string` \| `Uint8Array`                                                                                                                                                                       | Note to attach to the transaction. Max of 1000 bytes.                                                                                                                                                                                                                                  |
 | `params.onComplete?`        | `UpdateApplicationOC`                                                                                                                                                                          | The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.                                                                                                                                                              |
 | `params.rekeyTo?`           | `string` \| `Address`                                                                                                                                                                          | Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying).                                                                   |
 | `params.sender`             | `string` \| `Address`                                                                                                                                                                          | The address of the account sending the transaction.                                                                                                                                                                                                                                    |
 | `params.signer?`            | `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/)                                                         | The function used to sign transaction(s); if not specified then an attempt will be made to find a registered signer for the given `sender` or use a default signer (if configured).                                                                                                    |
-| `params.staticFee?`         | [`AlgoAmount`]()                                                                                                                                                                               | The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.                                                                                                                                                 |
+| `params.staticFee?`         | [`AlgoAmount`](types_amount.AlgoAmount.md)                                                                                                                                                     | The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.                                                                                                                                                 |
 | `params.validityWindow?`    | `number` \| `bigint`                                                                                                                                                                           | How many rounds the transaction should be valid for, if not specified then the registered default validity window will be used.                                                                                                                                                        |
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -768,7 +768,7 @@ composer.addAppUpdate({
 
 ### addAppUpdateMethodCall
 
-▸ **addAppUpdateMethodCall**(`params`): [`TransactionComposer`]()
+▸ **addAppUpdateMethodCall**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an ABI method update application call transaction to the transaction group.
 
@@ -782,7 +782,7 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -844,7 +844,7 @@ composer.addAppUpdateMethodCall({
 
 ### addAssetConfig
 
-▸ **addAssetConfig**(`params`): [`TransactionComposer`]()
+▸ **addAssetConfig**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an asset config transaction to the transaction group.
 
@@ -856,7 +856,7 @@ Add an asset config transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -896,7 +896,7 @@ ___
 
 ### addAssetCreate
 
-▸ **addAssetCreate**(`params`): [`TransactionComposer`]()
+▸ **addAssetCreate**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an asset create transaction to the transaction group.
 
@@ -908,7 +908,7 @@ Add an asset create transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -954,7 +954,7 @@ ___
 
 ### addAssetDestroy
 
-▸ **addAssetDestroy**(`params`): [`TransactionComposer`]()
+▸ **addAssetDestroy**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an asset destroy transaction to the transaction group.
 
@@ -966,7 +966,7 @@ Add an asset destroy transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1003,7 +1003,7 @@ composer.addAssetDestroy({
 
 ### addAssetFreeze
 
-▸ **addAssetFreeze**(`params`): [`TransactionComposer`]()
+▸ **addAssetFreeze**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an asset freeze transaction to the transaction group.
 
@@ -1015,7 +1015,7 @@ Add an asset freeze transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1059,7 +1059,7 @@ composer.addAssetFreeze({
 
 ### addAssetOptIn
 
-▸ **addAssetOptIn**(`params`): [`TransactionComposer`]()
+▸ **addAssetOptIn**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an asset opt-in transaction to the transaction group.
 
@@ -1071,7 +1071,7 @@ Add an asset opt-in transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1108,7 +1108,7 @@ composer.addAssetOptIn({
 
 ### addAssetOptOut
 
-▸ **addAssetOptOut**(`params`): [`TransactionComposer`]()
+▸ **addAssetOptOut**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an asset opt-out transaction to the transaction group.
 
@@ -1120,7 +1120,7 @@ Add an asset opt-out transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1170,7 +1170,7 @@ composer.addAssetOptOut({
 
 ### addAssetTransfer
 
-▸ **addAssetTransfer**(`params`): [`TransactionComposer`]()
+▸ **addAssetTransfer**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an asset transfer transaction to the transaction group.
 
@@ -1182,7 +1182,7 @@ Add an asset transfer transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1229,7 +1229,7 @@ composer.addAssetTransfer({
 
 ### addAtc
 
-▸ **addAtc**(`atc`): [`TransactionComposer`]()
+▸ **addAtc**(`atc`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add the transactions within an `AtomicTransactionComposer` to the transaction group.
 
@@ -1241,7 +1241,7 @@ Add the transactions within an `AtomicTransactionComposer` to the transaction gr
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1264,7 +1264,7 @@ composer.addAtc(atc);
 
 ### addOfflineKeyRegistration
 
-▸ **addOfflineKeyRegistration**(`params`): [`TransactionComposer`]()
+▸ **addOfflineKeyRegistration**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an offline key registration transaction to the transaction group.
 
@@ -1276,7 +1276,7 @@ Add an offline key registration transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1316,7 +1316,7 @@ composer.addOfflineKeyRegistration({
 
 ### addOnlineKeyRegistration
 
-▸ **addOnlineKeyRegistration**(`params`): [`TransactionComposer`]()
+▸ **addOnlineKeyRegistration**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add an online key registration transaction to the transaction group.
 
@@ -1328,7 +1328,7 @@ Add an online key registration transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1380,7 +1380,7 @@ composer.addOnlineKeyRegistration({
 
 ### addPayment
 
-▸ **addPayment**(`params`): [`TransactionComposer`]()
+▸ **addPayment**(`params`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add a payment transaction to the transaction group.
 
@@ -1392,7 +1392,7 @@ Add a payment transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1436,7 +1436,7 @@ ___
 
 ### addTransaction
 
-▸ **addTransaction**(`transaction`, `signer?`): [`TransactionComposer`]()
+▸ **addTransaction**(`transaction`, `signer?`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Add a pre-built transaction to the transaction group.
 
@@ -1449,7 +1449,7 @@ Add a pre-built transaction to the transaction group.
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 
@@ -1500,10 +1500,10 @@ const { atc, transactions, methodCalls } = await composer.build();
 
 #### Parameters
 
-| Name              | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| :---------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params`          | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`]() ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`]() ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`]() ; `validityWindow?`: `number` \| `bigint` } \| [`AppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallparams) |
-| `suggestedParams` | `SuggestedParams`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Name              | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| :---------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`          | \{ `accountReferences?`: (`string` \| `Address`)[] ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`](types_amount.AlgoAmount.md) ; `extraProgramPages?`: `number` ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`](types_amount.AlgoAmount.md) ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `NoOpOC` \| `OptInOC` \| `CloseOutOC` \| `UpdateApplicationOC` \| `DeleteApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`](types_amount.AlgoAmount.md) ; `validityWindow?`: `number` \| `bigint` } \| \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `approvalProgram`: `string` \| `Uint8Array` ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier) \| [`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/))[] ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraFee?`: [`AlgoAmount`](types_amount.AlgoAmount.md) ; `firstValidRound?`: `bigint` ; `lastValidRound?`: `bigint` ; `lease?`: `string` \| `Uint8Array` ; `maxFee?`: [`AlgoAmount`](types_amount.AlgoAmount.md) ; `note?`: `string` \| `Uint8Array` ; `onComplete?`: `UpdateApplicationOC` ; `rekeyTo?`: `string` \| `Address` ; `sender`: `string` \| `Address` ; `signer?`: `TransactionSigner` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) ; `staticFee?`: [`AlgoAmount`](types_amount.AlgoAmount.md) ; `validityWindow?`: `number` \| `bigint` } \| [`AppCallParams`](/reference/algokit-utils-ts/api/modules/types_composer/#appcallparams) |
+| `suggestedParams` | `SuggestedParams`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 
 #### Returns
 
@@ -1879,7 +1879,7 @@ const { atc, transactions, methodCalls } = await composer.rebuild();
 
 ### registerErrorTransformer
 
-▸ **registerErrorTransformer**(`transformer`): [`TransactionComposer`]()
+▸ **registerErrorTransformer**(`transformer`): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 Register a function that will be used to transform an error caught when simulating or executing
 
@@ -1891,7 +1891,7 @@ Register a function that will be used to transform an error caught when simulati
 
 #### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 The composer so you can chain method calls
 

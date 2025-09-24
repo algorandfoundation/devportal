@@ -4,12 +4,12 @@ title: algokit_utils.models.amount
 
 ## Classes
 
-| [`AlgoAmount`](#algokit_utils.models.amount.AlgoAmount) | Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbers. |
-| ------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [`AlgoAmount`](/reference/algokit-utils-py/api/AlgoAmount#algokit_utils.models.amount.AlgoAmount) | Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbers. |
+| ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 
 ## Module Contents
 
-### algokit_utils.models.amount.algo(algo: int) → [AlgoAmount](#algokit_utils.models.amount.AlgoAmount)
+### algokit_utils.models.amount.algo(algo: int) → [AlgoAmount](/reference/algokit-utils-py/api/AlgoAmount#algokit_utils.models.amount.AlgoAmount)
 
 Create an AlgoAmount object representing the given number of Algo.
 
@@ -18,7 +18,7 @@ Create an AlgoAmount object representing the given number of Algo.
 - **Returns:**
   An AlgoAmount object representing the given number of Algo.
 
-### algokit_utils.models.amount.micro_algo(micro_algo: int) → [AlgoAmount](#algokit_utils.models.amount.AlgoAmount)
+### algokit_utils.models.amount.micro_algo(micro_algo: int) → [AlgoAmount](/reference/algokit-utils-py/api/AlgoAmount#algokit_utils.models.amount.AlgoAmount)
 
 Create an AlgoAmount object representing the given number of µAlgo.
 
@@ -29,7 +29,7 @@ Create an AlgoAmount object representing the given number of µAlgo.
 
 ### algokit_utils.models.amount.ALGORAND_MIN_TX_FEE
 
-### algokit_utils.models.amount.transaction_fees(number_of_transactions: int) → [AlgoAmount](#algokit_utils.models.amount.AlgoAmount)
+### algokit_utils.models.amount.transaction_fees(number_of_transactions: int) → [AlgoAmount](/reference/algokit-utils-py/api/AlgoAmount#algokit_utils.models.amount.AlgoAmount)
 
 Calculate the total transaction fees for a given number of transactions.
 

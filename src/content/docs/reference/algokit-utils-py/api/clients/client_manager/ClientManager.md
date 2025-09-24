@@ -2,7 +2,7 @@
 title: algokit_utils.clients.client_manager.ClientManager
 ---
 
-#### _class_ algokit_utils.clients.client_manager.ClientManager(clients_or_configs: [algokit_utils.models.network.AlgoClientConfigs](/reference/algokit-utils-py/api/models/network/algoclientconfigs/#algokit_utils.models.network.AlgoClientConfigs) | [AlgoSdkClients](#algokit_utils.clients.client_manager.AlgoSdkClients), algorand_client: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient))
+#### _class_ algokit_utils.clients.client_manager.ClientManager(clients_or_configs: [algokit_utils.models.network.AlgoClientConfigs](/reference/algokit-utils-py/api/models/network/algoclientconfigs/#algokit_utils.models.network.AlgoClientConfigs) | [AlgoSdkClients](/reference/algokit-utils-py/api/AlgoSdkClients#algokit_utils.clients.client_manager.AlgoSdkClients), algorand_client: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/algorand/algorandclient/#algokit_utils.algorand.AlgorandClient))
 
 Manager for Algorand SDK clients.
 
@@ -56,7 +56,7 @@ Returns an algosdk KMD API client.
 - **Returns:**
   KMD client instance
 
-#### network() → [NetworkDetail](#algokit_utils.clients.client_manager.NetworkDetail)
+#### network() → [NetworkDetail](/reference/algokit-utils-py/api/NetworkDetail#algokit_utils.clients.client_manager.NetworkDetail)
 
 Get details about the connected Algorand network.
 

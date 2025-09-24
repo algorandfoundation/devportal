@@ -12,7 +12,7 @@ title: types/async-event-emitter
 
 ### Type Aliases
 
-- [AsyncEventListener](#asynceventlistener)
+- [AsyncEventListener](types_async_event_emitter.md#asynceventlistener)
 
 ## Type Aliases
 

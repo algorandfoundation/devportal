@@ -12,9 +12,9 @@ Config for an Algorand SDK client.
 
 ### Properties
 
-- [port](#port)
-- [server](#server)
-- [token](#token)
+- [port](types_network_client.AlgoClientConfig.md#port)
+- [server](types_network_client.AlgoClientConfig.md#server)
+- [token](types_network_client.AlgoClientConfig.md#token)
 
 ## Properties
 

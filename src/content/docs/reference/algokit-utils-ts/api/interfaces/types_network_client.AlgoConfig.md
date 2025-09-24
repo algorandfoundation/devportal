@@ -12,15 +12,15 @@ Configuration for algod, indexer and kmd clients.
 
 ### Properties
 
-- [algodConfig](#algodconfig)
-- [indexerConfig](#indexerconfig)
-- [kmdConfig](#kmdconfig)
+- [algodConfig](types_network_client.AlgoConfig.md#algodconfig)
+- [indexerConfig](types_network_client.AlgoConfig.md#indexerconfig)
+- [kmdConfig](types_network_client.AlgoConfig.md#kmdconfig)
 
 ## Properties
 
 ### algodConfig
 
-• **algodConfig**: [`AlgoClientConfig`]()
+• **algodConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
 
 Algod client configuration
 
@@ -32,7 +32,7 @@ Algod client configuration
 
 ### indexerConfig
 
-• `Optional` **indexerConfig**: [`AlgoClientConfig`]()
+• `Optional` **indexerConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
 
 Indexer client configuration
 
@@ -44,7 +44,7 @@ Indexer client configuration
 
 ### kmdConfig
 
-• `Optional` **kmdConfig**: [`AlgoClientConfig`]()
+• `Optional` **kmdConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
 
 Kmd configuration
 

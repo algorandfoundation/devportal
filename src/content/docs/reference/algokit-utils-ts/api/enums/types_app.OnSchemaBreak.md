@@ -12,9 +12,9 @@ What action to perform when deploying an app and a breaking schema change is det
 
 ### Enumeration Members
 
-- [AppendApp](#appendapp)
-- [Fail](#fail)
-- [ReplaceApp](#replaceapp)
+- [AppendApp](types_app.OnSchemaBreak.md#appendapp)
+- [Fail](types_app.OnSchemaBreak.md#fail)
+- [ReplaceApp](types_app.OnSchemaBreak.md#replaceapp)
 
 ## Enumeration Members
 

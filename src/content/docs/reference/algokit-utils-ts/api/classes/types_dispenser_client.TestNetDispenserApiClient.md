@@ -43,30 +43,30 @@ If neither the environment variable 'ALGOKIT_DISPENSER_ACCESS_TOKEN' nor the aut
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_dispenser_client.TestNetDispenserApiClient.md#constructor)
 
 ### Properties
 
-- [\_authToken](#_authtoken)
-- [\_requestTimeout](#_requesttimeout)
+- [\_authToken](types_dispenser_client.TestNetDispenserApiClient.md#_authtoken)
+- [\_requestTimeout](types_dispenser_client.TestNetDispenserApiClient.md#_requesttimeout)
 
 ### Accessors
 
-- [authToken](#authtoken)
-- [requestTimeout](#requesttimeout)
+- [authToken](types_dispenser_client.TestNetDispenserApiClient.md#authtoken)
+- [requestTimeout](types_dispenser_client.TestNetDispenserApiClient.md#requesttimeout)
 
 ### Methods
 
-- [fund](#fund)
-- [getLimit](#getlimit)
-- [processDispenserRequest](#processdispenserrequest)
-- [refund](#refund)
+- [fund](types_dispenser_client.TestNetDispenserApiClient.md#fund)
+- [getLimit](types_dispenser_client.TestNetDispenserApiClient.md#getlimit)
+- [processDispenserRequest](types_dispenser_client.TestNetDispenserApiClient.md#processdispenserrequest)
+- [refund](types_dispenser_client.TestNetDispenserApiClient.md#refund)
 
 ## Constructors
 
 ### constructor
 
-• **new TestNetDispenserApiClient**(`params?`): [`TestNetDispenserApiClient`]()
+• **new TestNetDispenserApiClient**(`params?`): [`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
 
 #### Parameters
 
@@ -76,7 +76,7 @@ If neither the environment variable 'ALGOKIT_DISPENSER_ACCESS_TOKEN' nor the aut
 
 #### Returns
 
-[`TestNetDispenserApiClient`]()
+[`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
 
 #### Defined in
 

@@ -12,11 +12,11 @@ Information about a compiled teal program
 
 ### Properties
 
-- [compiled](#compiled)
-- [compiledBase64ToBytes](#compiledbase64tobytes)
-- [compiledHash](#compiledhash)
-- [sourceMap](#sourcemap)
-- [teal](#teal)
+- [compiled](types_app.CompiledTeal.md#compiled)
+- [compiledBase64ToBytes](types_app.CompiledTeal.md#compiledbase64tobytes)
+- [compiledHash](types_app.CompiledTeal.md#compiledhash)
+- [sourceMap](types_app.CompiledTeal.md#sourcemap)
+- [teal](types_app.CompiledTeal.md#teal)
 
 ## Properties
 

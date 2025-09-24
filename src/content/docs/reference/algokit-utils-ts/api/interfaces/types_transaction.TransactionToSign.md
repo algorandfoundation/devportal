@@ -12,8 +12,8 @@ Defines an unsigned transaction that will appear in a group of transactions alon
 
 ### Properties
 
-- [signer](#signer)
-- [transaction](#transaction)
+- [signer](types_transaction.TransactionToSign.md#signer)
+- [transaction](types_transaction.TransactionToSign.md#transaction)
 
 ## Properties
 

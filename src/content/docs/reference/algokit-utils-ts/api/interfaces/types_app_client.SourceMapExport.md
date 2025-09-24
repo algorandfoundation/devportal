@@ -10,10 +10,10 @@ title: SourceMapExport
 
 ### Properties
 
-- [mappings](#mappings)
-- [names](#names)
-- [sources](#sources)
-- [version](#version)
+- [mappings](types_app_client.SourceMapExport.md#mappings)
+- [names](types_app_client.SourceMapExport.md#names)
+- [sources](types_app_client.SourceMapExport.md#sources)
+- [version](types_app_client.SourceMapExport.md#version)
 
 ## Properties
 

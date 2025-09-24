@@ -18,31 +18,31 @@ Wraps key functionality around processing logic errors
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_logic_error.LogicError.md#constructor)
 
 ### Properties
 
-- [cause](#cause)
-- [led](#led)
-- [lines](#lines)
-- [message](#message)
-- [name](#name)
-- [program](#program)
-- [stack](#stack)
-- [teal_line](#teal_line)
-- [prepareStackTrace](#preparestacktrace)
-- [stackTraceLimit](#stacktracelimit)
+- [cause](types_logic_error.LogicError.md#cause)
+- [led](types_logic_error.LogicError.md#led)
+- [lines](types_logic_error.LogicError.md#lines)
+- [message](types_logic_error.LogicError.md#message)
+- [name](types_logic_error.LogicError.md#name)
+- [program](types_logic_error.LogicError.md#program)
+- [stack](types_logic_error.LogicError.md#stack)
+- [teal_line](types_logic_error.LogicError.md#teal_line)
+- [prepareStackTrace](types_logic_error.LogicError.md#preparestacktrace)
+- [stackTraceLimit](types_logic_error.LogicError.md#stacktracelimit)
 
 ### Methods
 
-- [captureStackTrace](#capturestacktrace)
-- [parseLogicError](#parselogicerror)
+- [captureStackTrace](types_logic_error.LogicError.md#capturestacktrace)
+- [parseLogicError](types_logic_error.LogicError.md#parselogicerror)
 
 ## Constructors
 
 ### constructor
 
-• **new LogicError**(`errorDetails`, `program`, `getLineForPc`): [`LogicError`]()
+• **new LogicError**(`errorDetails`, `program`, `getLineForPc`): [`LogicError`](types_logic_error.LogicError.md)
 
 Create a new logic error object.
 
@@ -56,7 +56,7 @@ Create a new logic error object.
 
 #### Returns
 
-[`LogicError`]()
+[`LogicError`](types_logic_error.LogicError.md)
 
 #### Overrides
 

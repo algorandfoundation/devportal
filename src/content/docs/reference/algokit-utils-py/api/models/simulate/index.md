@@ -4,5 +4,5 @@ title: algokit_utils.models.simulate
 
 ## Classes
 
-| [`SimulationTrace`](#algokit_utils.models.simulate.SimulationTrace) |     |
-| ------------------------------------------------------------------- | --- |
+| [`SimulationTrace`](/reference/algokit-utils-py/api/SimulationTrace#algokit_utils.models.simulate.SimulationTrace) |     |
+| ------------------------------------------------------------------------------------------------------------------ | --- |

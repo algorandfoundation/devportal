@@ -4,9 +4,9 @@ title: algokit_utils.config
 
 ## Classes
 
-| [`AlgoKitLogger`](#algokit_utils.config.AlgoKitLogger)     | Instances of the Logger class represent a single logging channel. A        |
-| ---------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [`UpdatableConfig`](#algokit_utils.config.UpdatableConfig) | Class to manage and update configuration settings for the AlgoKit project. |
+| [`AlgoKitLogger`](/reference/algokit-utils-py/api/AlgoKitLogger#algokit_utils.config.AlgoKitLogger)       | Instances of the Logger class represent a single logging channel. A        |
+| --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [`UpdatableConfig`](/reference/algokit-utils-py/api/UpdatableConfig#algokit_utils.config.UpdatableConfig) | Class to manage and update configuration settings for the AlgoKit project. |
 
 ## Module Contents
 

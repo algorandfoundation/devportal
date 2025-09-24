@@ -10,8 +10,8 @@ title: EventType
 
 ### Enumeration Members
 
-- [AppCompiled](#appcompiled)
-- [TxnGroupSimulated](#txngroupsimulated)
+- [AppCompiled](types_lifecycle_events.EventType.md#appcompiled)
+- [TxnGroupSimulated](types_lifecycle_events.EventType.md#txngroupsimulated)
 
 ## Enumeration Members
 

@@ -12,8 +12,8 @@ The rolled-up schema allocation specification for local and global state
 
 ### Properties
 
-- [global](#global)
-- [local](#local)
+- [global](types_app_spec.StateSchemaSpec.md#global)
+- [local](types_app_spec.StateSchemaSpec.md#local)
 
 ## Properties
 

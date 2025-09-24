@@ -14,15 +14,15 @@ The application metadata
 
 The operation performed
 
-#### create*result *: [SendAppCreateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult) | None\_ _= None_
+#### create*result *: [SendAppCreateFactoryTransactionResult](/reference/algokit-utils-py/api/SendAppCreateFactoryTransactionResult#algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult) | None\_ _= None_
 
 The create result
 
-#### update*result *: [SendAppUpdateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppUpdateFactoryTransactionResult) | None\_ _= None_
+#### update*result *: [SendAppUpdateFactoryTransactionResult](/reference/algokit-utils-py/api/SendAppUpdateFactoryTransactionResult#algokit_utils.applications.app_factory.SendAppUpdateFactoryTransactionResult) | None\_ _= None_
 
 The update result
 
-#### delete*result *: [SendAppFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppFactoryTransactionResult) | None\_ _= None_
+#### delete*result *: [SendAppFactoryTransactionResult](/reference/algokit-utils-py/api/SendAppFactoryTransactionResult#algokit_utils.applications.app_factory.SendAppFactoryTransactionResult) | None\_ _= None_
 
 The delete result
 

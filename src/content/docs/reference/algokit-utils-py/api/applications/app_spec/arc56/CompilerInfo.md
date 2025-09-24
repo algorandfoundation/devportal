@@ -6,11 +6,11 @@ title: algokit_utils.applications.app_spec.arc56.CompilerInfo
 
 Information about the compiler used.
 
-#### compiler _: [Compiler](#algokit_utils.applications.app_spec.arc56.Compiler)_
+#### compiler _: [Compiler](/reference/algokit-utils-py/api/Compiler#algokit_utils.applications.app_spec.arc56.Compiler)_
 
 The type of compiler used
 
-#### compiler*version *: [CompilerVersion](#algokit_utils.applications.app_spec.arc56.CompilerVersion)\_
+#### compiler*version *: [CompilerVersion](/reference/algokit-utils-py/api/CompilerVersion#algokit_utils.applications.app_spec.arc56.CompilerVersion)\_
 
 Version information for the compiler
 

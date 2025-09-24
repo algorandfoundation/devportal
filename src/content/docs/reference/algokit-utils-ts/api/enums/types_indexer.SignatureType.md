@@ -12,9 +12,9 @@ Type of signature used by an account
 
 ### Enumeration Members
 
-- [lsig](#lsig)
-- [msig](#msig)
-- [sig](#sig)
+- [lsig](types_indexer.SignatureType.md#lsig)
+- [msig](types_indexer.SignatureType.md#msig)
+- [sig](types_indexer.SignatureType.md#sig)
 
 ## Enumeration Members
 

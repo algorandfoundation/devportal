@@ -12,18 +12,18 @@ The result of preparing and/or sending multiple transactions
 
 - **`SendTransactionResults`**
 
-  ↳ [`AppCallTransactionResultOfType`]()
+  ↳ [`AppCallTransactionResultOfType`](types_app.AppCallTransactionResultOfType.md)
 
-  ↳ [`SendAtomicTransactionComposerResults`]()
+  ↳ [`SendAtomicTransactionComposerResults`](types_transaction.SendAtomicTransactionComposerResults.md)
 
-  ↳ [`ConfirmedTransactionResults`]()
+  ↳ [`ConfirmedTransactionResults`](types_transaction.ConfirmedTransactionResults.md)
 
 ## Table of contents
 
 ### Properties
 
-- [confirmations](#confirmations)
-- [transactions](#transactions)
+- [confirmations](types_transaction.SendTransactionResults.md#confirmations)
+- [transactions](types_transaction.SendTransactionResults.md#transactions)
 
 ## Properties
 

@@ -12,8 +12,8 @@ Additional context about the `AtomicTransactionComposer`.
 
 ### Properties
 
-- [maxFees](#maxfees)
-- [suggestedParams](#suggestedparams)
+- [maxFees](types_transaction.AdditionalAtomicTransactionComposerContext.md#maxfees)
+- [suggestedParams](types_transaction.AdditionalAtomicTransactionComposerContext.md#suggestedparams)
 
 ## Properties
 

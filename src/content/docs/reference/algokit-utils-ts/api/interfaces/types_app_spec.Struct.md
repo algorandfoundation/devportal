@@ -12,8 +12,8 @@ A user-defined struct/tuple type
 
 ### Properties
 
-- [elements](#elements)
-- [name](#name)
+- [elements](types_app_spec.Struct.md#elements)
+- [name](types_app_spec.Struct.md#name)
 
 ## Properties
 

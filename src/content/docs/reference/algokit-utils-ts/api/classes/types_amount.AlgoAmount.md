@@ -12,33 +12,33 @@ Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbe
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_amount.AlgoAmount.md#constructor)
 
 ### Properties
 
-- [amountInMicroAlgo](#amountinmicroalgo)
+- [amountInMicroAlgo](types_amount.AlgoAmount.md#amountinmicroalgo)
 
 ### Accessors
 
-- [algo](#algo)
-- [algos](#algos)
-- [microAlgo](#microalgo)
-- [microAlgos](#microalgos)
+- [algo](types_amount.AlgoAmount.md#algo)
+- [algos](types_amount.AlgoAmount.md#algos)
+- [microAlgo](types_amount.AlgoAmount.md#microalgo)
+- [microAlgos](types_amount.AlgoAmount.md#microalgos)
 
 ### Methods
 
-- [toString](#tostring)
-- [valueOf](#valueof)
-- [Algo](#algo-1)
-- [Algos](#algos-1)
-- [MicroAlgo](#microalgo-1)
-- [MicroAlgos](#microalgos-1)
+- [toString](types_amount.AlgoAmount.md#tostring)
+- [valueOf](types_amount.AlgoAmount.md#valueof)
+- [Algo](types_amount.AlgoAmount.md#algo-1)
+- [Algos](types_amount.AlgoAmount.md#algos-1)
+- [MicroAlgo](types_amount.AlgoAmount.md#microalgo-1)
+- [MicroAlgos](types_amount.AlgoAmount.md#microalgos-1)
 
 ## Constructors
 
 ### constructor
 
-• **new AlgoAmount**(`amount`): [`AlgoAmount`]()
+• **new AlgoAmount**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
 
 Create a new `AlgoAmount` instance.
 
@@ -50,7 +50,7 @@ Create a new `AlgoAmount` instance.
 
 #### Returns
 
-[`AlgoAmount`]()
+[`AlgoAmount`](types_amount.AlgoAmount.md)
 
 A new instance of `AlgoAmount` representing the specified amount.
 
@@ -174,7 +174,7 @@ the algos or microAlgos properties
 
 ### Algo
 
-▸ **Algo**(`amount`): [`AlgoAmount`]()
+▸ **Algo**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
 
 Create a `AlgoAmount` object representing the given number of Algo
 
@@ -186,7 +186,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 #### Returns
 
-[`AlgoAmount`]()
+[`AlgoAmount`](types_amount.AlgoAmount.md)
 
 #### Defined in
 
@@ -196,7 +196,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 ### Algos
 
-▸ **Algos**(`amount`): [`AlgoAmount`]()
+▸ **Algos**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
 
 Create a `AlgoAmount` object representing the given number of Algo
 
@@ -208,7 +208,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 #### Returns
 
-[`AlgoAmount`]()
+[`AlgoAmount`](types_amount.AlgoAmount.md)
 
 #### Defined in
 
@@ -218,7 +218,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 ### MicroAlgo
 
-▸ **MicroAlgo**(`amount`): [`AlgoAmount`]()
+▸ **MicroAlgo**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
 
 Create a `AlgoAmount` object representing the given number of µAlgo
 
@@ -230,7 +230,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 #### Returns
 
-[`AlgoAmount`]()
+[`AlgoAmount`](types_amount.AlgoAmount.md)
 
 #### Defined in
 
@@ -240,7 +240,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 ### MicroAlgos
 
-▸ **MicroAlgos**(`amount`): [`AlgoAmount`]()
+▸ **MicroAlgos**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
 
 Create a `AlgoAmount` object representing the given number of µAlgo
 
@@ -252,7 +252,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 #### Returns
 
-[`AlgoAmount`]()
+[`AlgoAmount`](types_amount.AlgoAmount.md)
 
 #### Defined in
 

@@ -8,15 +8,15 @@ title: types/logging
 
 ### Type Aliases
 
-- [Logger](#logger)
+- [Logger](types_logging.md#logger)
 
 ### Variables
 
-- [consoleLogger](#consolelogger)
-- [infoConsoleLogger](#infoconsolelogger)
-- [nullLogger](#nulllogger)
-- [verboseConsoleLogger](#verboseconsolelogger)
-- [warningConsoleLogger](#warningconsolelogger)
+- [consoleLogger](types_logging.md#consolelogger)
+- [infoConsoleLogger](types_logging.md#infoconsolelogger)
+- [nullLogger](types_logging.md#nulllogger)
+- [verboseConsoleLogger](types_logging.md#verboseconsolelogger)
+- [warningConsoleLogger](types_logging.md#warningconsolelogger)
 
 ## Type Aliases
 
@@ -44,7 +44,7 @@ General purpose logger type, compatible with Winston and others.
 
 ### consoleLogger
 
-• `Const` **consoleLogger**: [`Logger`](#logger)
+• `Const` **consoleLogger**: [`Logger`](types_logging.md#logger)
 
 A logger implementation that writes to console
 
@@ -56,7 +56,7 @@ A logger implementation that writes to console
 
 ### infoConsoleLogger
 
-• `Const` **infoConsoleLogger**: [`Logger`](#logger)
+• `Const` **infoConsoleLogger**: [`Logger`](types_logging.md#logger)
 
 #### Defined in
 
@@ -66,7 +66,7 @@ A logger implementation that writes to console
 
 ### nullLogger
 
-• `Const` **nullLogger**: [`Logger`](#logger)
+• `Const` **nullLogger**: [`Logger`](types_logging.md#logger)
 
 A logger implementation that does nothing
 
@@ -78,7 +78,7 @@ A logger implementation that does nothing
 
 ### verboseConsoleLogger
 
-• `Const` **verboseConsoleLogger**: [`Logger`](#logger)
+• `Const` **verboseConsoleLogger**: [`Logger`](types_logging.md#logger)
 
 #### Defined in
 
@@ -88,7 +88,7 @@ A logger implementation that does nothing
 
 ### warningConsoleLogger
 
-• `Const` **warningConsoleLogger**: [`Logger`](#logger)
+• `Const` **warningConsoleLogger**: [`Logger`](types_logging.md#logger)
 
 #### Defined in
 

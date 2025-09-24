@@ -12,10 +12,10 @@ Declared schema value specification
 
 ### Properties
 
-- [descr](#descr)
-- [key](#key)
-- [static](#static)
-- [type](#type)
+- [descr](types_app_spec.DeclaredSchemaValueSpec.md#descr)
+- [key](types_app_spec.DeclaredSchemaValueSpec.md#key)
+- [static](types_app_spec.DeclaredSchemaValueSpec.md#static)
+- [type](types_app_spec.DeclaredSchemaValueSpec.md#type)
 
 ## Properties
 

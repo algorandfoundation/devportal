@@ -29,34 +29,34 @@ title: types/app-client
 
 ### Type Aliases
 
-- [AppClientBareCallParams](#appclientbarecallparams)
-- [AppClientCallArgs](#appclientcallargs)
-- [AppClientCallParams](#appclientcallparams)
-- [AppClientCallRawArgs](#appclientcallrawargs)
-- [AppClientClearStateParams](#appclientclearstateparams)
-- [AppClientCreateOnComplete](#appclientcreateoncomplete)
-- [AppClientCreateParams](#appclientcreateparams)
-- [AppClientMethodCallParams](#appclientmethodcallparams)
-- [AppClientUpdateParams](#appclientupdateparams)
-- [AppDetails](#appdetails)
-- [AppDetailsBase](#appdetailsbase)
-- [AppSpecAppDetails](#appspecappdetails)
-- [AppSpecAppDetailsBase](#appspecappdetailsbase)
-- [AppSpecAppDetailsByCreatorAndName](#appspecappdetailsbycreatorandname)
-- [AppSpecAppDetailsById](#appspecappdetailsbyid)
-- [CallOnComplete](#calloncomplete)
-- [CloneAppClientParams](#cloneappclientparams)
-- [FundAppParams](#fundappparams)
-- [ResolveAppByCreatorAndName](#resolveappbycreatorandname)
-- [ResolveAppByCreatorAndNameBase](#resolveappbycreatorandnamebase)
-- [ResolveAppClientByCreatorAndName](#resolveappclientbycreatorandname)
-- [ResolveAppClientByNetwork](#resolveappclientbynetwork)
+- [AppClientBareCallParams](types_app_client.md#appclientbarecallparams)
+- [AppClientCallArgs](types_app_client.md#appclientcallargs)
+- [AppClientCallParams](types_app_client.md#appclientcallparams)
+- [AppClientCallRawArgs](types_app_client.md#appclientcallrawargs)
+- [AppClientClearStateParams](types_app_client.md#appclientclearstateparams)
+- [AppClientCreateOnComplete](types_app_client.md#appclientcreateoncomplete)
+- [AppClientCreateParams](types_app_client.md#appclientcreateparams)
+- [AppClientMethodCallParams](types_app_client.md#appclientmethodcallparams)
+- [AppClientUpdateParams](types_app_client.md#appclientupdateparams)
+- [AppDetails](types_app_client.md#appdetails)
+- [AppDetailsBase](types_app_client.md#appdetailsbase)
+- [AppSpecAppDetails](types_app_client.md#appspecappdetails)
+- [AppSpecAppDetailsBase](types_app_client.md#appspecappdetailsbase)
+- [AppSpecAppDetailsByCreatorAndName](types_app_client.md#appspecappdetailsbycreatorandname)
+- [AppSpecAppDetailsById](types_app_client.md#appspecappdetailsbyid)
+- [CallOnComplete](types_app_client.md#calloncomplete)
+- [CloneAppClientParams](types_app_client.md#cloneappclientparams)
+- [FundAppParams](types_app_client.md#fundappparams)
+- [ResolveAppByCreatorAndName](types_app_client.md#resolveappbycreatorandname)
+- [ResolveAppByCreatorAndNameBase](types_app_client.md#resolveappbycreatorandnamebase)
+- [ResolveAppClientByCreatorAndName](types_app_client.md#resolveappclientbycreatorandname)
+- [ResolveAppClientByNetwork](types_app_client.md#resolveappclientbynetwork)
 
 ## Type Aliases
 
 ### AppClientBareCallParams
 
-Ƭ **AppClientBareCallParams**: [`Expand`](#expand)\<`Omit`\<[`CommonAppCallParams`](#commonappcallparams), `"appId"` \| `"sender"` \| `"onComplete"`\> & \{ `sender?`: `Address` \| `string` }\>
+Ƭ **AppClientBareCallParams**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`CommonAppCallParams`](types_composer.md#commonappcallparams), `"appId"` \| `"sender"` \| `"onComplete"`\> & \{ `sender?`: `Address` \| `string` }\>
 
 AppClient common parameters for a bare app call
 
@@ -68,7 +68,7 @@ AppClient common parameters for a bare app call
 
 ### AppClientCallArgs
 
-Ƭ **AppClientCallArgs**: [`AppClientCallRawArgs`](#appclientcallrawargs) \| [`AppClientCallABIArgs`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallabiargs/)
+Ƭ **AppClientCallArgs**: [`AppClientCallRawArgs`](types_app_client.md#appclientcallrawargs) \| [`AppClientCallABIArgs`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallabiargs/)
 
 The arguments to pass to an Application Client smart contract call
 
@@ -80,7 +80,7 @@ The arguments to pass to an Application Client smart contract call
 
 ### AppClientCallParams
 
-Ƭ **AppClientCallParams**: [`AppClientCallArgs`](#appclientcallargs) & [`AppClientCallCoreParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallcoreparams/)
+Ƭ **AppClientCallParams**: [`AppClientCallArgs`](types_app_client.md#appclientcallargs) & [`AppClientCallCoreParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallcoreparams/)
 
 Parameters to construct a ApplicationClient contract call
 
@@ -102,7 +102,7 @@ Parameters to construct a ApplicationClient contract call
 
 ### AppClientClearStateParams
 
-Ƭ **AppClientClearStateParams**: [`AppClientCallRawArgs`](#appclientcallrawargs) & [`AppClientCallCoreParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallcoreparams/)
+Ƭ **AppClientClearStateParams**: [`AppClientCallRawArgs`](types_app_client.md#appclientcallrawargs) & [`AppClientCallCoreParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallcoreparams/)
 
 Parameters to construct a ApplicationClient clear state contract call
 
@@ -120,9 +120,9 @@ On-complete action parameter for creating a contract using ApplicationClient
 
 #### Type declaration
 
-| Name                | Type                                                                                                                                      | Description                                                             |
-| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------- |
-| `onCompleteAction?` | `Exclude`\<[`AppCallType`](#appcalltype), `"clear_state"`\> \| `Exclude`\<`OnApplicationComplete`, `OnApplicationComplete.ClearStateOC`\> | Override the on-completion action for the create call; defaults to NoOp |
+| Name                | Type                                                                                                                                                  | Description                                                             |
+| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------- |
+| `onCompleteAction?` | `Exclude`\<[`AppCallType`](types_app.md#appcalltype), `"clear_state"`\> \| `Exclude`\<`OnApplicationComplete`, `OnApplicationComplete.ClearStateOC`\> | Override the on-completion action for the create call; defaults to NoOp |
 
 #### Defined in
 
@@ -132,7 +132,7 @@ On-complete action parameter for creating a contract using ApplicationClient
 
 ### AppClientCreateParams
 
-Ƭ **AppClientCreateParams**: [`AppClientCallParams`](#appclientcallparams) & [`AppClientCompilationParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/) & [`AppClientCreateOnComplete`](#appclientcreateoncomplete) & \{ `schema?`: `Partial`\<[`AppStorageSchema`](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/)\> }
+Ƭ **AppClientCreateParams**: [`AppClientCallParams`](types_app_client.md#appclientcallparams) & [`AppClientCompilationParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/) & [`AppClientCreateOnComplete`](types_app_client.md#appclientcreateoncomplete) & \{ `schema?`: `Partial`\<[`AppStorageSchema`](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/)\> }
 
 Parameters for creating a contract using ApplicationClient
 
@@ -144,7 +144,7 @@ Parameters for creating a contract using ApplicationClient
 
 ### AppClientMethodCallParams
 
-Ƭ **AppClientMethodCallParams**: [`Expand`](#expand)\<`Omit`\<[`CommonAppCallParams`](#commonappcallparams), `"appId"` \| `"sender"` \| `"method"` \| `"args"`\> & \{ `args?`: (`ABIValue` \| [`ABIStruct`](#abistruct) \| [`AppMethodCallTransactionArgument`](#appmethodcalltransactionargument) \| `undefined`)[] ; `method`: `string` ; `sender?`: `Address` \| `string` }\>
+Ƭ **AppClientMethodCallParams**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`CommonAppCallParams`](types_composer.md#commonappcallparams), `"appId"` \| `"sender"` \| `"method"` \| `"args"`\> & \{ `args?`: (`ABIValue` \| [`ABIStruct`](types_app_arc56.md#abistruct) \| [`AppMethodCallTransactionArgument`](types_composer.md#appmethodcalltransactionargument) \| `undefined`)[] ; `method`: `string` ; `sender?`: `Address` \| `string` }\>
 
 AppClient common parameters for an ABI method call
 
@@ -156,7 +156,7 @@ AppClient common parameters for an ABI method call
 
 ### AppClientUpdateParams
 
-Ƭ **AppClientUpdateParams**: [`AppClientCallParams`](#appclientcallparams) & [`AppClientCompilationParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/)
+Ƭ **AppClientUpdateParams**: [`AppClientCallParams`](types_app_client.md#appclientcallparams) & [`AppClientCompilationParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/)
 
 Parameters for updating a contract using ApplicationClient
 
@@ -168,7 +168,7 @@ Parameters for updating a contract using ApplicationClient
 
 ### AppDetails
 
-Ƭ **AppDetails**: [`AppDetailsBase`](#appdetailsbase) & [`ResolveAppById`](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyid/) \| [`ResolveAppByCreatorAndName`](#resolveappbycreatorandname)
+Ƭ **AppDetails**: [`AppDetailsBase`](types_app_client.md#appdetailsbase) & [`ResolveAppById`](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyid/) \| [`ResolveAppByCreatorAndName`](types_app_client.md#resolveappbycreatorandname)
 
 The details of an AlgoKit Utils deployed app
 
@@ -190,7 +190,7 @@ The details of an AlgoKit Utils deployed app
 | :------------------ | :---------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `deployTimeParams?` | [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/) | Optionally provide any deploy-time parameters to replace in the TEAL code; if specified here will get used in calls to `deploy`, `create` and `update` unless overridden in those calls |
 | `params?`           | `SuggestedParams`                                                                               | Default suggested params object to use                                                                                                                                                  |
-| `sender?`           | [`SendTransactionFrom`](#sendtransactionfrom)                                                   | Default sender to use for transactions issued by this application client                                                                                                                |
+| `sender?`           | [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom)                               | Default sender to use for transactions issued by this application client                                                                                                                |
 
 #### Defined in
 
@@ -200,7 +200,7 @@ The details of an AlgoKit Utils deployed app
 
 ### AppSpecAppDetails
 
-Ƭ **AppSpecAppDetails**: [`AppSpecAppDetailsBase`](#appspecappdetailsbase) & [`AppDetails`](#appdetails)
+Ƭ **AppSpecAppDetails**: [`AppSpecAppDetailsBase`](types_app_client.md#appspecappdetailsbase) & [`AppDetails`](types_app_client.md#appdetails)
 
 The details of an ARC-0032 app spec specified, AlgoKit Utils deployed app
 
@@ -230,7 +230,7 @@ The details of an ARC-0032 app spec specified, AlgoKit Utils deployed app
 
 ### AppSpecAppDetailsByCreatorAndName
 
-Ƭ **AppSpecAppDetailsByCreatorAndName**: [`AppSpecAppDetailsBase`](#appspecappdetailsbase) & [`AppDetailsBase`](#appdetailsbase) & [`ResolveAppByCreatorAndNameBase`](#resolveappbycreatorandnamebase)
+Ƭ **AppSpecAppDetailsByCreatorAndName**: [`AppSpecAppDetailsBase`](types_app_client.md#appspecappdetailsbase) & [`AppDetailsBase`](types_app_client.md#appdetailsbase) & [`ResolveAppByCreatorAndNameBase`](types_app_client.md#resolveappbycreatorandnamebase)
 
 The details of an ARC-0032 app spec specified, AlgoKit Utils deployed app by creator and name
 
@@ -242,7 +242,7 @@ The details of an ARC-0032 app spec specified, AlgoKit Utils deployed app by cre
 
 ### AppSpecAppDetailsById
 
-Ƭ **AppSpecAppDetailsById**: [`AppSpecAppDetailsBase`](#appspecappdetailsbase) & [`AppDetailsBase`](#appdetailsbase) & [`ResolveAppByIdBase`](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/)
+Ƭ **AppSpecAppDetailsById**: [`AppSpecAppDetailsBase`](types_app_client.md#appspecappdetailsbase) & [`AppDetailsBase`](types_app_client.md#appdetailsbase) & [`ResolveAppByIdBase`](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/)
 
 The details of an ARC-0032 app spec specified, AlgoKit Utils deployed app by id
 
@@ -272,7 +272,7 @@ onComplete parameter for a non-update app call
 
 ### CloneAppClientParams
 
-Ƭ **CloneAppClientParams**: [`Expand`](#expand)\<`Partial`\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"`\>\>\>
+Ƭ **CloneAppClientParams**: [`Expand`](types_expand.md#expand)\<`Partial`\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"`\>\>\>
 
 Parameters to clone an app client
 
@@ -284,7 +284,7 @@ Parameters to clone an app client
 
 ### FundAppParams
 
-Ƭ **FundAppParams**: [`Expand`](#expand)\<`Omit`\<[`PaymentParams`](#paymentparams), `"receiver"` \| `"sender"`\> & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) & \{ `sender?`: `Address` \| `string` }\>
+Ƭ **FundAppParams**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`PaymentParams`](types_composer.md#paymentparams), `"receiver"` \| `"sender"`\> & [`SendParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/) & \{ `sender?`: `Address` \| `string` }\>
 
 Parameters for funding an app account
 
@@ -296,7 +296,7 @@ Parameters for funding an app account
 
 ### ResolveAppByCreatorAndName
 
-Ƭ **ResolveAppByCreatorAndName**: [`ResolveAppByCreatorAndNameBase`](#resolveappbycreatorandnamebase) & \{ `resolveBy`: `"creatorAndName"` }
+Ƭ **ResolveAppByCreatorAndName**: [`ResolveAppByCreatorAndNameBase`](types_app_client.md#resolveappbycreatorandnamebase) & \{ `resolveBy`: `"creatorAndName"` }
 
 Configuration to resolve app by creator and name `getCreatorAppsByName`
 
@@ -328,7 +328,7 @@ Configuration to resolve app by creator and name `getCreatorAppsByName`
 
 ### ResolveAppClientByCreatorAndName
 
-Ƭ **ResolveAppClientByCreatorAndName**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"appId"`\> & \{ `appLookupCache?`: [`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/) ; `creatorAddress`: `Address` \| `string` ; `ignoreCache?`: `boolean` }\>
+Ƭ **ResolveAppClientByCreatorAndName**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"appId"`\> & \{ `appLookupCache?`: [`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/) ; `creatorAddress`: `Address` \| `string` ; `ignoreCache?`: `boolean` }\>
 
 Resolve an app client instance by looking up an app created by the given creator with the given name
 
@@ -340,7 +340,7 @@ Resolve an app client instance by looking up an app created by the given creator
 
 ### ResolveAppClientByNetwork
 
-Ƭ **ResolveAppClientByNetwork**: [`Expand`](#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"appId"`\>\>
+Ƭ **ResolveAppClientByNetwork**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"appId"`\>\>
 
 Resolve an app client instance by looking up the current network.
 

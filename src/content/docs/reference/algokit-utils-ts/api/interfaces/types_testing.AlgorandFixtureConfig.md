@@ -10,7 +10,7 @@ Configuration for creating an Algorand testing fixture.
 
 ## Hierarchy
 
-- `Partial`\<[`AlgoConfig`]()\>
+- `Partial`\<[`AlgoConfig`](types_network_client.AlgoConfig.md)\>
 
   ↳ **`AlgorandFixtureConfig`**
 
@@ -18,14 +18,14 @@ Configuration for creating an Algorand testing fixture.
 
 ### Properties
 
-- [accountGetter](#accountgetter)
-- [algod](#algod)
-- [algodConfig](#algodconfig)
-- [indexer](#indexer)
-- [indexerConfig](#indexerconfig)
-- [kmd](#kmd)
-- [kmdConfig](#kmdconfig)
-- [testAccountFunding](#testaccountfunding)
+- [accountGetter](types_testing.AlgorandFixtureConfig.md#accountgetter)
+- [algod](types_testing.AlgorandFixtureConfig.md#algod)
+- [algodConfig](types_testing.AlgorandFixtureConfig.md#algodconfig)
+- [indexer](types_testing.AlgorandFixtureConfig.md#indexer)
+- [indexerConfig](types_testing.AlgorandFixtureConfig.md#indexerconfig)
+- [kmd](types_testing.AlgorandFixtureConfig.md#kmd)
+- [kmdConfig](types_testing.AlgorandFixtureConfig.md#kmdconfig)
+- [testAccountFunding](types_testing.AlgorandFixtureConfig.md#testaccountfunding)
 
 ## Properties
 
@@ -70,7 +70,7 @@ An optional algod client, if not specified then it will create one against `algo
 
 ### algodConfig
 
-• `Optional` **algodConfig**: [`AlgoClientConfig`]()
+• `Optional` **algodConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
 
 Algod client configuration
 
@@ -98,7 +98,7 @@ An optional indexer client, if not specified then it will create one against `in
 
 ### indexerConfig
 
-• `Optional` **indexerConfig**: [`AlgoClientConfig`]()
+• `Optional` **indexerConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
 
 Indexer client configuration
 
@@ -126,7 +126,7 @@ An optional kmd client, if not specified then it will create one against `kmdCon
 
 ### kmdConfig
 
-• `Optional` **kmdConfig**: [`AlgoClientConfig`]()
+• `Optional` **kmdConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
 
 Kmd configuration
 

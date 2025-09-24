@@ -18,7 +18,7 @@ Interface to identify a typed factory that can be used to create and deploy an a
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_client_manager.TypedAppFactory.md#constructor)
 
 ## Constructors
 
@@ -28,9 +28,9 @@ Interface to identify a typed factory that can be used to create and deploy an a
 
 #### Parameters
 
-| Name     | Type                                          |
-| :------- | :-------------------------------------------- |
-| `params` | `Omit`\<[`AppFactoryParams`](), `"appSpec"`\> |
+| Name     | Type                                                                               |
+| :------- | :--------------------------------------------------------------------------------- |
+| `params` | `Omit`\<[`AppFactoryParams`](types_app_factory.AppFactoryParams.md), `"appSpec"`\> |
 
 #### Returns
 
