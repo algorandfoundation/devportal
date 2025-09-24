@@ -1,8 +1,13 @@
 ---
-title: algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer
+title: send_atomic_transaction_composer
+sidebar:
+  label: send_atomic_transaction_composer
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
-#### algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer, algod: algosdk.v2client.algod.AlgodClient, \*, max_rounds_to_wait: int | None = 5, skip_waiting: bool = False, suppress_log: bool | None = None, populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: AdditionalAtcContext | None = None) → [SendAtomicTransactionComposerResults](/reference/algokit-utils-py/api/SendAtomicTransactionComposerResults#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+#### algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer, algod: algosdk.v2client.algod.AlgodClient, \*, max_rounds_to_wait: int | None = 5, skip_waiting: bool = False, suppress_log: bool | None = None, populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: AdditionalAtcContext | None = None) → [SendAtomicTransactionComposerResults](SendAtomicTransactionComposerResults.md#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
 
 Send an AtomicTransactionComposer transaction group.
 

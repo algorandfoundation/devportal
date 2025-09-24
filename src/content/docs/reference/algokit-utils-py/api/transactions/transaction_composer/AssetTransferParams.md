@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.AssetTransferParams
+title: AssetTransferParams
+sidebar:
+  label: AssetTransferParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_composer.AssetTransferParams

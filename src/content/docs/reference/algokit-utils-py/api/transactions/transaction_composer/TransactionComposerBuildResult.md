@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult
+title: TransactionComposerBuildResult
+sidebar:
+  label: TransactionComposerBuildResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult

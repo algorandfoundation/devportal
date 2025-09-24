@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.algorand.AlgorandClient
+title: AlgorandClient
+sidebar:
+  label: AlgorandClient
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.algorand.AlgorandClient(config: [algokit_utils.models.network.AlgoClientConfigs](/reference/algokit-utils-py/api/models/network/algoclientconfigs/#algokit_utils.models.network.AlgoClientConfigs) | [algokit_utils.clients.client_manager.AlgoSdkClients](/reference/algokit-utils-py/api/clients/client_manager/algosdkclients/#algokit_utils.clients.client_manager.AlgoSdkClients))

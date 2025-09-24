@@ -1,8 +1,11 @@
 ---
-title: algokit_utils.models.simulate
+title: models.simulate
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`SimulationTrace`](/reference/algokit-utils-py/api/SimulationTrace#algokit_utils.models.simulate.SimulationTrace) |     |
-| ------------------------------------------------------------------------------------------------------------------ | --- |
+| [`SimulationTrace`](SimulationTrace.md#algokit_utils.models.simulate.SimulationTrace) |     |
+| ------------------------------------------------------------------------------------- | --- |

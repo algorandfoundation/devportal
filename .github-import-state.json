@@ -24,8 +24,8 @@
     "algorandfoundation/algokit-cli@chore/content-fix": {
       "name": "AlgoKit CLI Docs",
       "repoId": "algorandfoundation/algokit-cli@chore/content-fix",
-      "lastCommitSha": "88060b88d47d97d33183b97ba53f9ff15bd305c4",
-      "lastImported": "2025-09-24T10:09:23.074Z",
+      "lastCommitSha": "40762f855a87326e16ce94e94673c7fefac5c025",
+      "lastImported": "2025-09-24T16:09:11.427Z",
       "ref": "chore/content-fix"
     },
     "algorandfoundation/algokit-utils-ts@chore/fix-docs": {
@@ -39,7 +39,7 @@
       "name": "AlgoKit Utils Python Docs",
       "repoId": "algorandfoundation/algokit-utils-py@chore/reference-docs",
       "lastCommitSha": "ec3856b55ba88bde87aa28b522280dfae537d0bf",
-      "lastImported": "2025-09-24T10:16:36.846Z",
+      "lastImported": "2025-09-24T15:39:47.356Z",
       "ref": "chore/reference-docs"
     }
   },

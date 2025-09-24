@@ -1,8 +1,11 @@
 ---
-title: algokit_utils.protocols
+title: protocols
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Submodules
 
-- [algokit_utils.protocols.account](/reference/algokit-utils-py/api/account/)
-- [algokit_utils.protocols.typed_clients](/reference/algokit-utils-py/api/typed_clients/)
+- [algokit_utils.protocols.account](account/)
+- [algokit_utils.protocols.typed_clients](typed_clients/)

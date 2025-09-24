@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.accounts.kmd_account_manager.KmdAccount
+title: KmdAccount
+sidebar:
+  label: KmdAccount
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.accounts.kmd_account_manager.KmdAccount(private_key: str, address: str | None = None)

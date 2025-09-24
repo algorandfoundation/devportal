@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.abi.ABIReturn
+title: ABIReturn
+sidebar:
+  label: ABIReturn
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.abi.ABIReturn(result: algosdk.atomic_transaction_composer.ABIResult)

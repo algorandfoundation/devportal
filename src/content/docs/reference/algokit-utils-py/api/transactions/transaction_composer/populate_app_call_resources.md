@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.populate_app_call_resources
+title: populate_app_call_resources
+sidebar:
+  label: populate_app_call_resources
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### algokit_utils.transactions.transaction_composer.populate_app_call_resources(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer, algod: algosdk.v2client.algod.AlgodClient) → algosdk.atomic_transaction_composer.AtomicTransactionComposer

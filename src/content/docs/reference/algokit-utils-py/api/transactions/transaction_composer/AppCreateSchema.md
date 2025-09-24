@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.AppCreateSchema
+title: AppCreateSchema
+sidebar:
+  label: AppCreateSchema
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_composer.AppCreateSchema

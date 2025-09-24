@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_client.AppClientCompilationResult
+title: AppClientCompilationResult
+sidebar:
+  label: AppClientCompilationResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_client.AppClientCompilationResult

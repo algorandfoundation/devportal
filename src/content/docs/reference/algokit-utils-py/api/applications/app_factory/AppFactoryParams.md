@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_factory.AppFactoryParams
+title: AppFactoryParams
+sidebar:
+  label: AppFactoryParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_factory.AppFactoryParams

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.clients.dispenser_api_client.DispenserFundResponse
+title: DispenserFundResponse
+sidebar:
+  label: DispenserFundResponse
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.clients.dispenser_api_client.DispenserFundResponse

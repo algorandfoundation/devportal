@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_client.CommonAppCallCreateParams
+title: CommonAppCallCreateParams
+sidebar:
+  label: CommonAppCallCreateParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_client.CommonAppCallCreateParams

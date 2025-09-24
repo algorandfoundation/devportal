@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator
+title: AlgorandClientTransactionCreator
+sidebar:
+  label: AlgorandClientTransactionCreator
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator(new_group: collections.abc.Callable[[], [algokit_utils.transactions.transaction_composer.TransactionComposer](/reference/algokit-utils-py/api/transactions/transaction_composer/transactioncomposer/#algokit_utils.transactions.transaction_composer.TransactionComposer)])

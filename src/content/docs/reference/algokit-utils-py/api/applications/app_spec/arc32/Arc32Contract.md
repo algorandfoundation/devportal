@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_spec.arc32.Arc32Contract
+title: Arc32Contract
+sidebar:
+  label: Arc32Contract
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc32.Arc32Contract
@@ -14,7 +19,7 @@ See <[https://github.com/algorandfoundation/ARCs/pull/150](https://github.com/al
 
 #### contract _: algosdk.abi.Contract_
 
-#### hints _: dict[str, [MethodHints](/reference/algokit-utils-py/api/MethodHints#algokit_utils.applications.app_spec.arc32.MethodHints)]_
+#### hints _: dict[str, [MethodHints](MethodHints.md#algokit_utils.applications.app_spec.arc32.MethodHints)]_
 
 #### schema _: StateDict_
 

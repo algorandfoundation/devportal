@@ -1,9 +1,12 @@
 ---
-title: algokit_utils.transactions
+title: transactions
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Submodules
 
-- [algokit_utils.transactions.transaction_composer](/reference/algokit-utils-py/api/transaction_composer/)
-- [algokit_utils.transactions.transaction_creator](/reference/algokit-utils-py/api/transaction_creator/)
-- [algokit_utils.transactions.transaction_sender](/reference/algokit-utils-py/api/transaction_sender/)
+- [algokit_utils.transactions.transaction_composer](transaction_composer/)
+- [algokit_utils.transactions.transaction_creator](transaction_creator/)
+- [algokit_utils.transactions.transaction_sender](transaction_sender/)

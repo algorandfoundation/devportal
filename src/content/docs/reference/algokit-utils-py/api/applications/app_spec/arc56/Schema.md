@@ -1,16 +1,21 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.Schema
+title: Schema
+sidebar:
+  label: Schema
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.Schema
 
 Application state schema.
 
-#### global*state *: [Global](/reference/algokit-utils-py/api/Global#algokit_utils.applications.app_spec.arc56.Global)\_
+#### global*state *: [Global](Global.md#algokit_utils.applications.app_spec.arc56.Global)\_
 
 The global state schema
 
-#### local*state *: [Local](/reference/algokit-utils-py/api/Local#algokit_utils.applications.app_spec.arc56.Local)\_
+#### local*state *: [Local](Local.md#algokit_utils.applications.app_spec.arc56.Local)\_
 
 The local state schema
 

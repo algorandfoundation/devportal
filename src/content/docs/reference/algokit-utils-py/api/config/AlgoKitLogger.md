@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.config.AlgoKitLogger
+title: AlgoKitLogger
+sidebar:
+  label: AlgoKitLogger
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.config.AlgoKitLogger(name: str = 'algokit-utils-py', level: int = logging.NOTSET)

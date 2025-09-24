@@ -1,8 +1,13 @@
 ---
-title: algokit_utils.models.account.MultiSigAccount
+title: MultiSigAccount
+sidebar:
+  label: MultiSigAccount
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
-#### _class_ algokit_utils.models.account.MultiSigAccount(multisig_params: [MultisigMetadata](/reference/algokit-utils-py/api/MultisigMetadata#algokit_utils.models.account.MultisigMetadata), signing_accounts: list[[SigningAccount](/reference/algokit-utils-py/api/SigningAccount#algokit_utils.models.account.SigningAccount)])
+#### _class_ algokit_utils.models.account.MultiSigAccount(multisig_params: [MultisigMetadata](MultisigMetadata.md#algokit_utils.models.account.MultisigMetadata), signing_accounts: list[[SigningAccount](SigningAccount.md#algokit_utils.models.account.SigningAccount)])
 
 Account wrapper that supports partial or full multisig signing.
 
@@ -19,14 +24,14 @@ Get the underlying algosdk.transaction.Multisig object instance.
 - **Returns:**
   The algosdk.transaction.Multisig object instance
 
-#### _property_ params _: [MultisigMetadata](/reference/algokit-utils-py/api/MultisigMetadata#algokit_utils.models.account.MultisigMetadata)_
+#### _property_ params _: [MultisigMetadata](MultisigMetadata.md#algokit_utils.models.account.MultisigMetadata)_
 
 Get the parameters for the multisig account.
 
 - **Returns:**
   The multisig account parameters
 
-#### _property_ signing*accounts *: list[[SigningAccount](/reference/algokit-utils-py/api/SigningAccount#algokit_utils.models.account.SigningAccount)]\_
+#### _property_ signing*accounts *: list[[SigningAccount](SigningAccount.md#algokit_utils.models.account.SigningAccount)]\_
 
 Get the list of accounts that are present to sign.
 

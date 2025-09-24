@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.protocols.account.TransactionSignerAccountProtocol
+title: TransactionSignerAccountProtocol
+sidebar:
+  label: TransactionSignerAccountProtocol
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.protocols.account.TransactionSignerAccountProtocol

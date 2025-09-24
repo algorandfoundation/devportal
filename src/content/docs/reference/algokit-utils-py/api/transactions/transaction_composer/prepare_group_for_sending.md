@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.prepare_group_for_sending
+title: prepare_group_for_sending
+sidebar:
+  label: prepare_group_for_sending
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### algokit_utils.transactions.transaction_composer.prepare_group_for_sending(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer, algod: algosdk.v2client.algod.AlgodClient, populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: AdditionalAtcContext | None = None) → algosdk.atomic_transaction_composer.AtomicTransactionComposer

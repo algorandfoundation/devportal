@@ -1,8 +1,13 @@
 ---
-title: algokit_utils.applications.abi.get_arc56_value
+title: get_arc56_value
+sidebar:
+  label: get_arc56_value
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
-#### algokit_utils.applications.abi.get_arc56_value(abi_return: [ABIReturn](/reference/algokit-utils-py/api/ABIReturn#algokit_utils.applications.abi.ABIReturn), method: [algokit_utils.applications.app_spec.arc56.Method](/reference/algokit-utils-py/api/applications/app_spec/arc56/method/#algokit_utils.applications.app_spec.arc56.Method) | algosdk.abi.method.Method, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/api/applications/app_spec/arc56/structfield/#algokit_utils.applications.app_spec.arc56.StructField)]]) → Arc56ReturnValueType
+#### algokit_utils.applications.abi.get_arc56_value(abi_return: [ABIReturn](ABIReturn.md#algokit_utils.applications.abi.ABIReturn), method: [algokit_utils.applications.app_spec.arc56.Method](/reference/algokit-utils-py/api/applications/app_spec/arc56/method/#algokit_utils.applications.app_spec.arc56.Method) | algosdk.abi.method.Method, structs: dict[str, list[[algokit_utils.applications.app_spec.arc56.StructField](/reference/algokit-utils-py/api/applications/app_spec/arc56/structfield/#algokit_utils.applications.app_spec.arc56.StructField)]]) → Arc56ReturnValueType
 
 Gets the ARC-56 formatted return value from an ABI return.
 

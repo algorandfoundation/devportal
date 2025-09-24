@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.application.AppInformation
+title: AppInformation
+sidebar:
+  label: AppInformation
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.application.AppInformation
@@ -24,7 +29,7 @@ The clear state program
 
 The creator of the application
 
-#### global*state *: dict[str, [AppState](/reference/algokit-utils-py/api/AppState#algokit_utils.models.application.AppState)]\_
+#### global*state *: dict[str, [AppState](AppState.md#algokit_utils.models.application.AppState)]\_
 
 The global state of the application
 

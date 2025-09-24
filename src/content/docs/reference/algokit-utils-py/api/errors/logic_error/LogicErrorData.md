@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.errors.logic_error.LogicErrorData
+title: LogicErrorData
+sidebar:
+  label: LogicErrorData
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.errors.logic_error.LogicErrorData

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.transaction.StringFormatArc2Note
+title: StringFormatArc2Note
+sidebar:
+  label: StringFormatArc2Note
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.transaction.StringFormatArc2Note

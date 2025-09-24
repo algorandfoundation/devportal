@@ -1,33 +1,36 @@
 ---
-title: algokit_utils.transactions.transaction_composer
+title: transactions.transaction_composer
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`PaymentParams`](/reference/algokit-utils-py/api/PaymentParams#algokit_utils.transactions.transaction_composer.PaymentParams)                                                                      | Parameters for a payment transaction.                                |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [`AssetCreateParams`](/reference/algokit-utils-py/api/AssetCreateParams#algokit_utils.transactions.transaction_composer.AssetCreateParams)                                                          | Parameters for creating a new asset.                                 |
-| [`AssetConfigParams`](/reference/algokit-utils-py/api/AssetConfigParams#algokit_utils.transactions.transaction_composer.AssetConfigParams)                                                          | Parameters for configuring an existing asset.                        |
-| [`AssetFreezeParams`](/reference/algokit-utils-py/api/AssetFreezeParams#algokit_utils.transactions.transaction_composer.AssetFreezeParams)                                                          | Parameters for freezing an asset.                                    |
-| [`AssetDestroyParams`](/reference/algokit-utils-py/api/AssetDestroyParams#algokit_utils.transactions.transaction_composer.AssetDestroyParams)                                                       | Parameters for destroying an asset.                                  |
-| [`OnlineKeyRegistrationParams`](/reference/algokit-utils-py/api/OnlineKeyRegistrationParams#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)                            | Parameters for online key registration.                              |
-| [`OfflineKeyRegistrationParams`](/reference/algokit-utils-py/api/OfflineKeyRegistrationParams#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)                         | Parameters for offline key registration.                             |
-| [`AssetTransferParams`](/reference/algokit-utils-py/api/AssetTransferParams#algokit_utils.transactions.transaction_composer.AssetTransferParams)                                                    | Parameters for transferring an asset.                                |
-| [`AssetOptInParams`](/reference/algokit-utils-py/api/AssetOptInParams#algokit_utils.transactions.transaction_composer.AssetOptInParams)                                                             | Parameters for opting into an asset.                                 |
-| [`AssetOptOutParams`](/reference/algokit-utils-py/api/AssetOptOutParams#algokit_utils.transactions.transaction_composer.AssetOptOutParams)                                                          | Parameters for opting out of an asset.                               |
-| [`AppCallParams`](/reference/algokit-utils-py/api/AppCallParams#algokit_utils.transactions.transaction_composer.AppCallParams)                                                                      | Parameters for calling an application.                               |
-| [`AppCreateSchema`](/reference/algokit-utils-py/api/AppCreateSchema#algokit_utils.transactions.transaction_composer.AppCreateSchema)                                                                | dict() -> new empty dictionary                                       |
-| [`AppCreateParams`](/reference/algokit-utils-py/api/AppCreateParams#algokit_utils.transactions.transaction_composer.AppCreateParams)                                                                | Parameters for creating an application.                              |
-| [`AppUpdateParams`](/reference/algokit-utils-py/api/AppUpdateParams#algokit_utils.transactions.transaction_composer.AppUpdateParams)                                                                | Parameters for updating an application.                              |
-| [`AppDeleteParams`](/reference/algokit-utils-py/api/AppDeleteParams#algokit_utils.transactions.transaction_composer.AppDeleteParams)                                                                | Parameters for deleting an application.                              |
-| [`AppCallMethodCallParams`](/reference/algokit-utils-py/api/AppCallMethodCallParams#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)                                        | Parameters for a regular ABI method call.                            |
-| [`AppCreateMethodCallParams`](/reference/algokit-utils-py/api/AppCreateMethodCallParams#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)                                  | Parameters for an ABI method call that creates an application.       |
-| [`AppUpdateMethodCallParams`](/reference/algokit-utils-py/api/AppUpdateMethodCallParams#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)                                  | Parameters for an ABI method call that updates an application.       |
-| [`AppDeleteMethodCallParams`](/reference/algokit-utils-py/api/AppDeleteMethodCallParams#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)                                  | Parameters for an ABI method call that deletes an application.       |
-| [`BuiltTransactions`](/reference/algokit-utils-py/api/BuiltTransactions#algokit_utils.transactions.transaction_composer.BuiltTransactions)                                                          | Set of transactions built by TransactionComposer.                    |
-| [`TransactionComposerBuildResult`](/reference/algokit-utils-py/api/TransactionComposerBuildResult#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)                   | Result of building transactions with TransactionComposer.            |
-| [`SendAtomicTransactionComposerResults`](/reference/algokit-utils-py/api/SendAtomicTransactionComposerResults#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults) | Results from sending an AtomicTransactionComposer transaction group. |
-| [`TransactionComposer`](/reference/algokit-utils-py/api/TransactionComposer#algokit_utils.transactions.transaction_composer.TransactionComposer)                                                    | A class for composing and managing Algorand transactions.            |
+| [`PaymentParams`](PaymentParams.md#algokit_utils.transactions.transaction_composer.PaymentParams)                                                                      | Parameters for a payment transaction.                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [`AssetCreateParams`](AssetCreateParams.md#algokit_utils.transactions.transaction_composer.AssetCreateParams)                                                          | Parameters for creating a new asset.                                 |
+| [`AssetConfigParams`](AssetConfigParams.md#algokit_utils.transactions.transaction_composer.AssetConfigParams)                                                          | Parameters for configuring an existing asset.                        |
+| [`AssetFreezeParams`](AssetFreezeParams.md#algokit_utils.transactions.transaction_composer.AssetFreezeParams)                                                          | Parameters for freezing an asset.                                    |
+| [`AssetDestroyParams`](AssetDestroyParams.md#algokit_utils.transactions.transaction_composer.AssetDestroyParams)                                                       | Parameters for destroying an asset.                                  |
+| [`OnlineKeyRegistrationParams`](OnlineKeyRegistrationParams.md#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)                            | Parameters for online key registration.                              |
+| [`OfflineKeyRegistrationParams`](OfflineKeyRegistrationParams.md#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)                         | Parameters for offline key registration.                             |
+| [`AssetTransferParams`](AssetTransferParams.md#algokit_utils.transactions.transaction_composer.AssetTransferParams)                                                    | Parameters for transferring an asset.                                |
+| [`AssetOptInParams`](AssetOptInParams.md#algokit_utils.transactions.transaction_composer.AssetOptInParams)                                                             | Parameters for opting into an asset.                                 |
+| [`AssetOptOutParams`](AssetOptOutParams.md#algokit_utils.transactions.transaction_composer.AssetOptOutParams)                                                          | Parameters for opting out of an asset.                               |
+| [`AppCallParams`](AppCallParams.md#algokit_utils.transactions.transaction_composer.AppCallParams)                                                                      | Parameters for calling an application.                               |
+| [`AppCreateSchema`](AppCreateSchema.md#algokit_utils.transactions.transaction_composer.AppCreateSchema)                                                                | dict() -> new empty dictionary                                       |
+| [`AppCreateParams`](AppCreateParams.md#algokit_utils.transactions.transaction_composer.AppCreateParams)                                                                | Parameters for creating an application.                              |
+| [`AppUpdateParams`](AppUpdateParams.md#algokit_utils.transactions.transaction_composer.AppUpdateParams)                                                                | Parameters for updating an application.                              |
+| [`AppDeleteParams`](AppDeleteParams.md#algokit_utils.transactions.transaction_composer.AppDeleteParams)                                                                | Parameters for deleting an application.                              |
+| [`AppCallMethodCallParams`](AppCallMethodCallParams.md#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)                                        | Parameters for a regular ABI method call.                            |
+| [`AppCreateMethodCallParams`](AppCreateMethodCallParams.md#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)                                  | Parameters for an ABI method call that creates an application.       |
+| [`AppUpdateMethodCallParams`](AppUpdateMethodCallParams.md#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)                                  | Parameters for an ABI method call that updates an application.       |
+| [`AppDeleteMethodCallParams`](AppDeleteMethodCallParams.md#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)                                  | Parameters for an ABI method call that deletes an application.       |
+| [`BuiltTransactions`](BuiltTransactions.md#algokit_utils.transactions.transaction_composer.BuiltTransactions)                                                          | Set of transactions built by TransactionComposer.                    |
+| [`TransactionComposerBuildResult`](TransactionComposerBuildResult.md#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)                   | Result of building transactions with TransactionComposer.            |
+| [`SendAtomicTransactionComposerResults`](SendAtomicTransactionComposerResults.md#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults) | Results from sending an AtomicTransactionComposer transaction group. |
+| [`TransactionComposer`](TransactionComposer.md#algokit_utils.transactions.transaction_composer.TransactionComposer)                                                    | A class for composing and managing Algorand transactions.            |
 
 ## Module Contents
 
@@ -68,7 +71,7 @@ Please note, that before calling .execute() on the returned ATC, you must call .
 - **Returns:**
   Modified AtomicTransactionComposer ready for sending
 
-### algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer, algod: algosdk.v2client.algod.AlgodClient, \*, max_rounds_to_wait: int | None = 5, skip_waiting: bool = False, suppress_log: bool | None = None, populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: AdditionalAtcContext | None = None) → [SendAtomicTransactionComposerResults](/reference/algokit-utils-py/api/SendAtomicTransactionComposerResults#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+### algokit_utils.transactions.transaction_composer.send_atomic_transaction_composer(atc: algosdk.atomic_transaction_composer.AtomicTransactionComposer, algod: algosdk.v2client.algod.AlgodClient, \*, max_rounds_to_wait: int | None = 5, skip_waiting: bool = False, suppress_log: bool | None = None, populate_app_call_resources: bool | None = None, cover_app_call_inner_transaction_fees: bool | None = None, additional_atc_context: AdditionalAtcContext | None = None) → [SendAtomicTransactionComposerResults](SendAtomicTransactionComposerResults.md#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
 
 Send an AtomicTransactionComposer transaction group.
 

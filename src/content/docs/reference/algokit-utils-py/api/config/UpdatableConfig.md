@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.config.UpdatableConfig
+title: UpdatableConfig
+sidebar:
+  label: UpdatableConfig
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.config.UpdatableConfig

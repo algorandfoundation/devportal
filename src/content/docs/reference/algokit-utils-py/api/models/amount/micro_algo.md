@@ -1,8 +1,13 @@
 ---
-title: algokit_utils.models.amount.micro_algo
+title: micro_algo
+sidebar:
+  label: micro_algo
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
-#### algokit_utils.models.amount.micro_algo(micro_algo: int) → [AlgoAmount](/reference/algokit-utils-py/api/AlgoAmount#AlgoAmount)
+#### algokit_utils.models.amount.micro_algo(micro_algo: int) → [AlgoAmount](AlgoAmount.md#AlgoAmount)
 
 Create an AlgoAmount object representing the given number of µAlgo.
 

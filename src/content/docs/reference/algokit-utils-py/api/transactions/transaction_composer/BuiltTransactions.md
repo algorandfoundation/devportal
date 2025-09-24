@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.BuiltTransactions
+title: BuiltTransactions
+sidebar:
+  label: BuiltTransactions
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_composer.BuiltTransactions

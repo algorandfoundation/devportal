@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.application.AppState
+title: AppState
+sidebar:
+  label: AppState
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.application.AppState

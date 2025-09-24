@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.assets.asset_manager.BulkAssetOptInOutResult
+title: BulkAssetOptInOutResult
+sidebar:
+  label: BulkAssetOptInOutResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.assets.asset_manager.BulkAssetOptInOutResult

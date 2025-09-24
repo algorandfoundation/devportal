@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.Source
+title: Source
+sidebar:
+  label: Source
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.Source

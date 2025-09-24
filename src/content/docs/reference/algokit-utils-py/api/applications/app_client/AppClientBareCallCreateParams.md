@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_client.AppClientBareCallCreateParams
+title: AppClientBareCallCreateParams
+sidebar:
+  label: AppClientBareCallCreateParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_client.AppClientBareCallCreateParams

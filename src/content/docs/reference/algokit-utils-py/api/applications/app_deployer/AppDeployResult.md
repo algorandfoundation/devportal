@@ -1,12 +1,17 @@
 ---
-title: algokit_utils.applications.app_deployer.AppDeployResult
+title: AppDeployResult
+sidebar:
+  label: AppDeployResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_deployer.AppDeployResult
 
 The result of a deployment
 
-#### app _: [ApplicationMetaData](/reference/algokit-utils-py/api/ApplicationMetaData#algokit_utils.applications.app_deployer.ApplicationMetaData)_
+#### app _: [ApplicationMetaData](ApplicationMetaData.md#algokit_utils.applications.app_deployer.ApplicationMetaData)_
 
 The application metadata
 

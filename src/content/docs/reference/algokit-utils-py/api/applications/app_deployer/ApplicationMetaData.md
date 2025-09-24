@@ -1,14 +1,19 @@
 ---
-title: algokit_utils.applications.app_deployer.ApplicationMetaData
+title: ApplicationMetaData
+sidebar:
+  label: ApplicationMetaData
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_deployer.ApplicationMetaData
 
 Complete metadata about a deployed app
 
-#### reference _: [ApplicationReference](/reference/algokit-utils-py/api/ApplicationReference#algokit_utils.applications.app_deployer.ApplicationReference)_
+#### reference _: [ApplicationReference](ApplicationReference.md#algokit_utils.applications.app_deployer.ApplicationReference)_
 
-#### deploy*metadata *: [AppDeploymentMetaData](/reference/algokit-utils-py/api/AppDeploymentMetaData#algokit_utils.applications.app_deployer.AppDeploymentMetaData)\_
+#### deploy*metadata *: [AppDeploymentMetaData](AppDeploymentMetaData.md#algokit_utils.applications.app_deployer.AppDeploymentMetaData)\_
 
 #### created*round *: int\_
 

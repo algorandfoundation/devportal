@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.transaction.JsonFormatArc2Note
+title: JsonFormatArc2Note
+sidebar:
+  label: JsonFormatArc2Note
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.transaction.JsonFormatArc2Note

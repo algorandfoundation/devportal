@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.simulate.SimulationTrace
+title: SimulationTrace
+sidebar:
+  label: SimulationTrace
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.simulate.SimulationTrace

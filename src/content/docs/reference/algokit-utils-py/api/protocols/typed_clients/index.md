@@ -1,9 +1,12 @@
 ---
-title: algokit_utils.protocols.typed_clients
+title: protocols.typed_clients
+sidebar:
+  label: Index
+  order: 0
 ---
 
 ## Classes
 
-| [`TypedAppClientProtocol`](/reference/algokit-utils-py/api/TypedAppClientProtocol#algokit_utils.protocols.typed_clients.TypedAppClientProtocol)    | Base class for protocol classes. |
-| -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| [`TypedAppFactoryProtocol`](/reference/algokit-utils-py/api/TypedAppFactoryProtocol#algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol) | Base class for protocol classes. |
+| [`TypedAppClientProtocol`](TypedAppClientProtocol.md#algokit_utils.protocols.typed_clients.TypedAppClientProtocol)    | Base class for protocol classes. |
+| --------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| [`TypedAppFactoryProtocol`](TypedAppFactoryProtocol.md#algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol) | Base class for protocol classes. |

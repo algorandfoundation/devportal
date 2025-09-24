@@ -1,8 +1,13 @@
 ---
-title: algokit_utils.applications.app_client.AppClient
+title: AppClient
+sidebar:
+  label: AppClient
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
-#### _class_ algokit_utils.applications.app_client.AppClient(params: [AppClientParams](/reference/algokit-utils-py/api/AppClientParams#algokit_utils.applications.app_client.AppClientParams))
+#### _class_ algokit_utils.applications.app_client.AppClient(params: [AppClientParams](AppClientParams.md#algokit_utils.applications.app_client.AppClientParams))
 
 A client for interacting with an Algorand smart contract application.
 
@@ -191,7 +196,7 @@ Create an AppClient instance from creator address and application name.
   ... )
   ```
 
-#### _static_ compile(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract), app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), compilation_params: [AppClientCompilationParams](/reference/algokit-utils-py/api/AppClientCompilationParams#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](/reference/algokit-utils-py/api/AppClientCompilationResult#algokit_utils.applications.app_client.AppClientCompilationResult)
+#### _static_ compile(app_spec: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract), app_manager: [algokit_utils.applications.app_manager.AppManager](/reference/algokit-utils-py/api/applications/app_manager/appmanager/#algokit_utils.applications.app_manager.AppManager), compilation_params: [AppClientCompilationParams](AppClientCompilationParams.md#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](AppClientCompilationResult.md#algokit_utils.applications.app_client.AppClientCompilationResult)
 
 Compile the application’s TEAL code.
 
@@ -204,7 +209,7 @@ Compile the application’s TEAL code.
 - **Raises:**
   **ValueError** – If attempting to compile without source or byte code
 
-#### compile_app(compilation_params: [AppClientCompilationParams](/reference/algokit-utils-py/api/AppClientCompilationParams#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](/reference/algokit-utils-py/api/AppClientCompilationResult#algokit_utils.applications.app_client.AppClientCompilationResult)
+#### compile_app(compilation_params: [AppClientCompilationParams](AppClientCompilationParams.md#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](AppClientCompilationResult.md#algokit_utils.applications.app_client.AppClientCompilationResult)
 
 Compile the application’s TEAL code.
 
@@ -334,7 +339,7 @@ Get multiple box values decoded according to an ABI type.
   >>> box_values = client.get_box_values_from_abi_type(abi_type)
   ```
 
-#### fund_app_account(params: [FundAppAccountParams](/reference/algokit-utils-py/api/FundAppAccountParams#algokit_utils.applications.app_client.FundAppAccountParams), send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/models/transaction/sendparams/#algokit_utils.models.transaction.SendParams) | None = None) → [algokit_utils.transactions.transaction_sender.SendSingleTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/sendsingletransactionresult/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### fund_app_account(params: [FundAppAccountParams](FundAppAccountParams.md#algokit_utils.applications.app_client.FundAppAccountParams), send_params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/models/transaction/sendparams/#algokit_utils.models.transaction.SendParams) | None = None) → [algokit_utils.transactions.transaction_sender.SendSingleTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/sendsingletransactionresult/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Fund the application’s account.
 

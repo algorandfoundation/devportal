@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.models.application.AppSourceMaps
+title: AppSourceMaps
+sidebar:
+  label: AppSourceMaps
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.application.AppSourceMaps

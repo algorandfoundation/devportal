@@ -1,8 +1,13 @@
 ---
-title: algokit_utils.models.amount.algo
+title: algo
+sidebar:
+  label: algo
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
-#### algokit_utils.models.amount.algo(algo: int) → [AlgoAmount](/reference/algokit-utils-py/api/AlgoAmount#AlgoAmount)
+#### algokit_utils.models.amount.algo(algo: int) → [AlgoAmount](AlgoAmount.md#AlgoAmount)
 
 Create an AlgoAmount object representing the given number of Algo.
 

@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams
+title: AppCreateMethodCallParams
+sidebar:
+  label: AppCreateMethodCallParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams
@@ -16,7 +21,7 @@ The program to execute for all OnCompletes other than ClearState
 
 The program to execute for ClearState OnComplete
 
-#### schema _: [AppCreateSchema](/reference/algokit-utils-py/api/AppCreateSchema#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None_ _= None_
+#### schema _: [AppCreateSchema](AppCreateSchema.md#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None_ _= None_
 
 The state schema for the app, defaults to None
 

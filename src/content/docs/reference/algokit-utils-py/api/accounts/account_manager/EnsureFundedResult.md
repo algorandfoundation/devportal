@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.accounts.account_manager.EnsureFundedResult
+title: EnsureFundedResult
+sidebar:
+  label: EnsureFundedResult
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.accounts.account_manager.EnsureFundedResult

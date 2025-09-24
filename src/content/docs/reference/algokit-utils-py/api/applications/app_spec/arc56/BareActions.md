@@ -1,16 +1,21 @@
 ---
-title: algokit_utils.applications.app_spec.arc56.BareActions
+title: BareActions
+sidebar:
+  label: BareActions
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_spec.arc56.BareActions
 
 Represents bare call and create actions for an application.
 
-#### call _: list[[CallEnum](/reference/algokit-utils-py/api/CallEnum#algokit_utils.applications.app_spec.arc56.CallEnum)]_
+#### call _: list[[CallEnum](CallEnum.md#algokit_utils.applications.app_spec.arc56.CallEnum)]_
 
 The list of allowed call actions
 
-#### create _: list[[CreateEnum](/reference/algokit-utils-py/api/CreateEnum#algokit_utils.applications.app_spec.arc56.CreateEnum)]_
+#### create _: list[[CreateEnum](CreateEnum.md#algokit_utils.applications.app_spec.arc56.CreateEnum)]_
 
 The list of allowed create actions
 

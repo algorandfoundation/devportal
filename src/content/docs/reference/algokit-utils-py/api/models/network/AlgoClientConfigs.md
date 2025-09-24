@@ -1,11 +1,16 @@
 ---
-title: algokit_utils.models.network.AlgoClientConfigs
+title: AlgoClientConfigs
+sidebar:
+  label: AlgoClientConfigs
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.models.network.AlgoClientConfigs
 
-#### algod*config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/AlgoClientNetworkConfig#algokit_utils.models.network.AlgoClientNetworkConfig)\_
+#### algod*config *: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig)\_
 
-#### indexer*config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/AlgoClientNetworkConfig#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
+#### indexer*config *: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
 
-#### kmd*config *: [AlgoClientNetworkConfig](/reference/algokit-utils-py/api/AlgoClientNetworkConfig#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
+#### kmd*config *: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_

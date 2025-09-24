@@ -1,14 +1,16 @@
 import type { ImportOptions } from '@larkiny/astro-github-loader';
 import {
-  createStarlightLinkMappings,
+  generateStarlightLinkMappings,
   generateLinkMappings,
 } from '../transforms/links.js';
 import {
   convertH1ToTitle,
   convertH1ToTitleMatch,
-  createConditionalTransform,
+  conditionalTransform,
   matchesPath,
   removeH1,
+  extractH1ToSidebarAndTitle,
+  createContentBasedFrontmatterTransform,
 } from '../transforms/common.js';
 import { createFrontmatterTransform } from '../transforms/frontmatter.js';
 
@@ -48,7 +50,7 @@ export const utilsTypescriptConfig: ImportOptions = {
       basePath: IMPORT_API_PATH_TS,
       pathMappings: API_PATH_MAPPINGS_TS,
       transforms: [
-        createConditionalTransform(
+        conditionalTransform(
           path => matchesPath(`${SOURCE_API_PATH_TS}README.md`, path),
           removeH1,
           createFrontmatterTransform({
@@ -60,7 +62,7 @@ export const utilsTypescriptConfig: ImportOptions = {
             preserveExisting: false,
           }),
         ),
-        createConditionalTransform(
+        conditionalTransform(
           path =>
             matchesPath(
               `${SOURCE_API_PATH_TS}{classes,enums,interfaces,modules}/**/*.md`,
@@ -76,21 +78,11 @@ export const utilsTypescriptConfig: ImportOptions = {
   linkTransform: {
     stripPrefixes: ['src/content/docs'],
     linkMappings: [
-      ...createStarlightLinkMappings(),
+      ...generateStarlightLinkMappings(),
       ...generateLinkMappings(GUIDES_PATH_MAPPINGS_TS),
       ...generateLinkMappings(API_PATH_MAPPINGS_TS, {
         crossSectionPath: '/reference/algokit-utils-ts/api',
       }),
-
-      // Context-aware handling of relative links from API files
-      // TODO: Commented out - was breaking all relative links in API docs
-      // {
-      //   contextFilter: context => context.sourcePath.startsWith('docs/code/'),
-      //   relativeLinks: true,
-      //   pattern: /.*/,
-      //   replacement: '',
-      //   global: false,
-      // },
     ],
   },
   enabled: true,
@@ -108,7 +100,6 @@ const GUIDES_PATH_MAPPINGS_PY = {
 };
 const API_PATH_MAPPINGS_PY = {
   'docs/markdown/autoapi/algokit_utils/': '',
-  'docs/markdown/autoapi/algokit_utils/index.md': 'overview.md',
 };
 
 /**
@@ -129,7 +120,7 @@ export const utilsPythonConfig: ImportOptions = {
       pathMappings: GUIDES_PATH_MAPPINGS_PY,
       transforms: [
         convertH1ToTitle,
-        createConditionalTransform(
+        conditionalTransform(
           path => matchesPath(`docs/markdown/index.md`, path),
           removeH1,
           createFrontmatterTransform({
@@ -141,7 +132,7 @@ export const utilsPythonConfig: ImportOptions = {
             preserveExisting: false,
           }),
         ),
-        createConditionalTransform(
+        conditionalTransform(
           path => matchesPath(`docs/markdown/v3-migration-guide.md`, path),
           removeH1,
           createFrontmatterTransform({
@@ -160,9 +151,30 @@ export const utilsPythonConfig: ImportOptions = {
       basePath: IMPORT_API_PATH_PY,
       pathMappings: API_PATH_MAPPINGS_PY,
       transforms: [
-        createConditionalTransform(
-          path => matchesPath(`${SOURCE_API_PATH_PY}**/*.md`, path),
-          convertH1ToTitleMatch(/[^.]*$/),
+        conditionalTransform(
+          path => matchesPath(`${SOURCE_API_PATH_PY}**/!(index).md`, path),
+          extractH1ToSidebarAndTitle(/\.([^.]+)$/),
+          createFrontmatterTransform({
+            frontmatter: {
+              tableOfContents: {
+                maxHeadingLevel: 4,
+                minHeadingLevel: 4,
+              },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+        ),
+        conditionalTransform(
+          path => matchesPath(`${SOURCE_API_PATH_PY}**/index.md`, path),
+          convertH1ToTitleMatch(/^algokit_utils\.(.+)$/),
+          createFrontmatterTransform({
+            frontmatter: {
+              sidebar: { label: 'Index', order: 0 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
         ),
       ],
     },
@@ -170,26 +182,11 @@ export const utilsPythonConfig: ImportOptions = {
   linkTransform: {
     stripPrefixes: ['src/content/docs'],
     linkMappings: [
-      ...createStarlightLinkMappings(),
+      ...generateStarlightLinkMappings(),
       ...generateLinkMappings(GUIDES_PATH_MAPPINGS_PY),
       ...generateLinkMappings(API_PATH_MAPPINGS_PY, {
         crossSectionPath: '/reference/algokit-utils-py/api',
       }),
-      {
-        contextFilter: context =>
-          context.sourcePath.startsWith('docs/markdown/autoapi/algokit_utils/'),
-        relativeLinks: true,
-        pattern: /.*/,
-        replacement: (match: string, anchor: string, context: any) => {
-          // Transform relative path to absolute path within the API reference
-          const relativePath = match.replace(/\.md$/, '');
-          const finalPath = `/reference/algokit-utils-py/api/${relativePath}`;
-
-          // Use pathToStarlightUrl to handle index files and trailing slashes properly
-          return finalPath.replace(/\/index$/, '/');
-        },
-        global: false,
-      },
     ],
   },
   enabled: true,

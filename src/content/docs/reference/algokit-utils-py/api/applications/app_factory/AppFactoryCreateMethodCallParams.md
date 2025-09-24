@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_factory.AppFactoryCreateMethodCallParams
+title: AppFactoryCreateMethodCallParams
+sidebar:
+  label: AppFactoryCreateMethodCallParams
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### _class_ algokit_utils.applications.app_factory.AppFactoryCreateMethodCallParams

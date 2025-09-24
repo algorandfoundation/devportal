@@ -3,7 +3,7 @@ import type { LinkMapping } from '@larkiny/astro-github-loader';
 /**
  * Helper function to create common link mappings for this project
  */
-export function createCommonLinkMappings(): LinkMapping[] {
+export function generateCommonLinkMappings(): LinkMapping[] {
   return [
     // Strip /index.md for Starlight routing (global - applies to all links)
     {
@@ -13,7 +13,6 @@ export function createCommonLinkMappings(): LinkMapping[] {
         return match.replace('/index.md', '');
       },
       global: true,
-      description: 'Strip /index.md for Starlight routing',
     },
 
     // Handle README.md -> overview (non-global - only unresolved links)
@@ -23,7 +22,6 @@ export function createCommonLinkMappings(): LinkMapping[] {
         return match.replace('/README.md', '/overview');
       },
       global: false,
-      description: 'Transform README.md to overview',
     },
   ];
 }
@@ -31,7 +29,7 @@ export function createCommonLinkMappings(): LinkMapping[] {
 /**
  * Helper function to create Starlight-specific link mappings for this project
  */
-export function createStarlightLinkMappings(): LinkMapping[] {
+export function generateStarlightLinkMappings(): LinkMapping[] {
   return [
     // Strip /index.md and /index (Starlight treats these specially)
     // Example: 'modules/index.md#some-anchor' -> 'modules/#some-anchor'
@@ -85,7 +83,7 @@ export function generateLinkMappings(
     crossSectionPath?: string;
     /** Whether all mappings should be global (default: true) */
     global?: boolean;
-  }
+  },
 ): LinkMapping[] {
   const { crossSectionPath, global = true } = options || {};
 
@@ -100,12 +98,14 @@ export function generateLinkMappings(
           let finalPath: string;
           if (crossSectionPath) {
             // Cross-section reference with absolute path
-            finalPath = targetPath === ''
-              ? `${crossSectionPath}/${relativePath}`
-              : `${crossSectionPath}/${targetPath}${relativePath}`;
+            finalPath =
+              targetPath === ''
+                ? `${crossSectionPath}/${relativePath}`
+                : `${crossSectionPath}/${targetPath}${relativePath}`;
           } else {
             // Same section, relative path
-            finalPath = targetPath === '' ? relativePath : `${targetPath}${relativePath}`;
+            finalPath =
+              targetPath === '' ? relativePath : `${targetPath}${relativePath}`;
           }
 
           // Convert to Starlight-compatible URL

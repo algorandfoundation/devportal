@@ -1,5 +1,10 @@
 ---
-title: algokit_utils.applications.app_client.get_constant_block_offset
+title: get_constant_block_offset
+sidebar:
+  label: get_constant_block_offset
+tableOfContents:
+  maxHeadingLevel: 4
+  minHeadingLevel: 4
 ---
 
 #### algokit_utils.applications.app_client.get_constant_block_offset(program: bytes) → int
