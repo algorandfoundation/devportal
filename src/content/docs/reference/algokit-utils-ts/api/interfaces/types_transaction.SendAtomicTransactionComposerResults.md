@@ -10,7 +10,7 @@ The result of preparing and/or sending multiple transactions using an `AtomicTra
 
 ## Hierarchy
 
-- [`SendTransactionResults`]()
+- [`SendTransactionResults`](types_transaction.SendTransactionResults.md)
 
   ↳ **`SendAtomicTransactionComposerResults`**
 
@@ -18,11 +18,11 @@ The result of preparing and/or sending multiple transactions using an `AtomicTra
 
 ### Properties
 
-- [confirmations](#confirmations)
-- [groupId](#groupid)
-- [returns](#returns)
-- [transactions](#transactions)
-- [txIds](#txids)
+- [confirmations](types_transaction.SendAtomicTransactionComposerResults.md#confirmations)
+- [groupId](types_transaction.SendAtomicTransactionComposerResults.md#groupid)
+- [returns](types_transaction.SendAtomicTransactionComposerResults.md#returns)
+- [transactions](types_transaction.SendAtomicTransactionComposerResults.md#transactions)
+- [txIds](types_transaction.SendAtomicTransactionComposerResults.md#txids)
 
 ## Properties
 
@@ -35,7 +35,7 @@ the index of the confirmation will match the index of the underlying transaction
 
 #### Overrides
 
-[SendTransactionResults]().[confirmations](#confirmations)
+[SendTransactionResults](types_transaction.SendTransactionResults.md).[confirmations](types_transaction.SendTransactionResults.md#confirmations)
 
 #### Defined in
 
@@ -75,7 +75,7 @@ The transactions that have been prepared and/or sent
 
 #### Inherited from
 
-[SendTransactionResults]().[transactions](#transactions)
+[SendTransactionResults](types_transaction.SendTransactionResults.md).[transactions](types_transaction.SendTransactionResults.md#transactions)
 
 #### Defined in
 

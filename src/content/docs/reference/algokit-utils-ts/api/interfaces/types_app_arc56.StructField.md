@@ -12,8 +12,8 @@ Information about a single field in a struct
 
 ### Properties
 
-- [name](#name)
-- [type](#type)
+- [name](types_app_arc56.StructField.md#name)
+- [type](types_app_arc56.StructField.md#type)
 
 ## Properties
 
@@ -31,7 +31,7 @@ The name of the struct field
 
 ### type
 
-• **type**: `string` \| [`StructField`]()[]
+• **type**: `string` \| [`StructField`](types_app_arc56.StructField.md)[]
 
 The type of the struct field's value
 

@@ -12,8 +12,8 @@ The TEAL source of a contract
 
 ### Properties
 
-- [approval](#approval)
-- [clear](#clear)
+- [approval](types_app_spec.AppSources.md#approval)
+- [clear](types_app_spec.AppSources.md#clear)
 
 ## Properties
 

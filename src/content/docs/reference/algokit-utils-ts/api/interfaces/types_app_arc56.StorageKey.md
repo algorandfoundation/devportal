@@ -12,10 +12,10 @@ Describes a single key in app storage
 
 ### Properties
 
-- [desc](#desc)
-- [key](#key)
-- [keyType](#keytype)
-- [valueType](#valuetype)
+- [desc](types_app_arc56.StorageKey.md#desc)
+- [key](types_app_arc56.StorageKey.md#key)
+- [keyType](types_app_arc56.StorageKey.md#keytype)
+- [valueType](types_app_arc56.StorageKey.md#valuetype)
 
 ## Properties
 

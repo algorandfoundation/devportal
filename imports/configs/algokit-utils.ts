@@ -83,13 +83,14 @@ export const utilsTypescriptConfig: ImportOptions = {
       }),
 
       // Context-aware handling of relative links from API files
-      {
-        contextFilter: context => context.sourcePath.startsWith('docs/code/'),
-        relativeLinks: true,
-        pattern: /.*/,
-        replacement: '',
-        global: false,
-      },
+      // TODO: Commented out - was breaking all relative links in API docs
+      // {
+      //   contextFilter: context => context.sourcePath.startsWith('docs/code/'),
+      //   relativeLinks: true,
+      //   pattern: /.*/,
+      //   replacement: '',
+      //   global: false,
+      // },
     ],
   },
   enabled: true,

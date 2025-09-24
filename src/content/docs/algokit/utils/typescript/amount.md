@@ -6,7 +6,7 @@ Algo amount handling is one of the core capabilities provided by AlgoKit Utils. 
 
 Any AlgoKit Utils function that needs an Algo amount will take an `AlgoAmount` object, which ensures that there is never any confusion about what value is being passed around. Whenever an AlgoKit Utils function calls into an underlying algosdk function, or if you need to take an `AlgoAmount` and pass it into an underlying algosdk function (per the [modularity principle](/algokit/utils/typescript/overview/#core-principles)) you can safely and explicitly convert to microAlgo or Algo.
 
-To see some usage examples check out the [automated tests](../../src/types/amount.spec.ts). Alternatively, you see the [reference documentation](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) for `AlgoAmount`.
+To see some usage examples check out the [automated tests](src/types/amount.spec.ts). Alternatively, you see the [reference documentation](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) for `AlgoAmount`.
 
 ## `AlgoAmount`
 

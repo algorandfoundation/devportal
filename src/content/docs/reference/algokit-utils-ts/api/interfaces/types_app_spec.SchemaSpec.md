@@ -12,14 +12,14 @@ The schema for global and local storage
 
 ### Properties
 
-- [global](#global)
-- [local](#local)
+- [global](types_app_spec.SchemaSpec.md#global)
+- [local](types_app_spec.SchemaSpec.md#local)
 
 ## Properties
 
 ### global
 
-• **global**: [`Schema`]()
+• **global**: [`Schema`](types_app_spec.Schema.md)
 
 The global storage schema
 
@@ -31,7 +31,7 @@ The global storage schema
 
 ### local
 
-• **local**: [`Schema`]()
+• **local**: [`Schema`](types_app_spec.Schema.md)
 
 The local storage schema
 

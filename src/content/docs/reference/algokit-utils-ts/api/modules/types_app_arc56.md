@@ -22,25 +22,25 @@ title: types/app-arc56
 
 ### Type Aliases
 
-- [ABIStruct](#abistruct)
-- [ABIType](#abitype)
-- [AVMBytes](#avmbytes)
-- [AVMString](#avmstring)
-- [AVMType](#avmtype)
-- [AVMUint64](#avmuint64)
-- [Arc56MethodArg](#arc56methodarg)
-- [Arc56MethodReturnType](#arc56methodreturntype)
-- [StructName](#structname)
+- [ABIStruct](types_app_arc56.md#abistruct)
+- [ABIType](types_app_arc56.md#abitype)
+- [AVMBytes](types_app_arc56.md#avmbytes)
+- [AVMString](types_app_arc56.md#avmstring)
+- [AVMType](types_app_arc56.md#avmtype)
+- [AVMUint64](types_app_arc56.md#avmuint64)
+- [Arc56MethodArg](types_app_arc56.md#arc56methodarg)
+- [Arc56MethodReturnType](types_app_arc56.md#arc56methodreturntype)
+- [StructName](types_app_arc56.md#structname)
 
 ### Functions
 
-- [getABIDecodedValue](#getabidecodedvalue)
-- [getABIEncodedValue](#getabiencodedvalue)
-- [getABIStructFromABITuple](#getabistructfromabituple)
-- [getABITupleFromABIStruct](#getabituplefromabistruct)
-- [getABITupleTypeFromABIStructDefinition](#getabitupletypefromabistructdefinition)
-- [getArc56Method](#getarc56method)
-- [getArc56ReturnValue](#getarc56returnvalue)
+- [getABIDecodedValue](types_app_arc56.md#getabidecodedvalue)
+- [getABIEncodedValue](types_app_arc56.md#getabiencodedvalue)
+- [getABIStructFromABITuple](types_app_arc56.md#getabistructfromabituple)
+- [getABITupleFromABIStruct](types_app_arc56.md#getabituplefromabistruct)
+- [getABITupleTypeFromABIStructDefinition](types_app_arc56.md#getabitupletypefromabistructdefinition)
+- [getArc56Method](types_app_arc56.md#getarc56method)
+- [getArc56ReturnValue](types_app_arc56.md#getarc56returnvalue)
 
 ## Type Aliases
 
@@ -52,7 +52,7 @@ Decoded ARC-56 struct as a struct rather than a tuple.
 
 #### Index signature
 
-▪ [key: `string`]: [`ABIStruct`](#abistruct) \| `algosdk.ABIValue`
+▪ [key: `string`]: [`ABIStruct`](types_app_arc56.md#abistruct) \| `algosdk.ABIValue`
 
 #### Defined in
 
@@ -98,7 +98,7 @@ A utf-8 string without the length prefix that is specified in ARC-4
 
 ### AVMType
 
-Ƭ **AVMType**: [`AVMBytes`](#avmbytes) \| [`AVMString`](#avmstring) \| [`AVMUint64`](#avmuint64)
+Ƭ **AVMType**: [`AVMBytes`](types_app_arc56.md#avmbytes) \| [`AVMString`](types_app_arc56.md#avmstring) \| [`AVMUint64`](types_app_arc56.md#avmuint64)
 
 A native AVM type
 
@@ -122,7 +122,7 @@ A 64-bit unsigned integer
 
 ### Arc56MethodArg
 
-Ƭ **Arc56MethodArg**: [`Expand`](#expand)\<`Omit`\<[`Method`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/)[`"args"`][`number`], `"type"`\> & \{ `type`: `algosdk.ABIArgumentType` }\>
+Ƭ **Arc56MethodArg**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`Method`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/)[`"args"`][`number`], `"type"`\> & \{ `type`: `algosdk.ABIArgumentType` }\>
 
 Type to describe an argument within an `Arc56Method`.
 
@@ -134,7 +134,7 @@ Type to describe an argument within an `Arc56Method`.
 
 ### Arc56MethodReturnType
 
-Ƭ **Arc56MethodReturnType**: [`Expand`](#expand)\<`Omit`\<[`Method`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/)[``"returns"``], `"type"`\> & \{ `type`: `algosdk.ABIReturnType` }\>
+Ƭ **Arc56MethodReturnType**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`Method`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/)[``"returns"``], `"type"`\> & \{ `type`: `algosdk.ABIReturnType` }\>
 
 Type to describe a return type within an `Arc56Method`.
 
@@ -158,7 +158,7 @@ The name of a defined struct
 
 ### getABIDecodedValue
 
-▸ **getABIDecodedValue**(`value`, `type`, `structs`): `algosdk.ABIValue` \| [`ABIStruct`](#abistruct)
+▸ **getABIDecodedValue**(`value`, `type`, `structs`): `algosdk.ABIValue` \| [`ABIStruct`](types_app_arc56.md#abistruct)
 
 Returns the decoded ABI value (or struct for a struct type)
 for the given raw Algorand value given an ARC-56 type and defined ARC-56 structs.
@@ -173,7 +173,7 @@ for the given raw Algorand value given an ARC-56 type and defined ARC-56 structs
 
 #### Returns
 
-`algosdk.ABIValue` \| [`ABIStruct`](#abistruct)
+`algosdk.ABIValue` \| [`ABIStruct`](types_app_arc56.md#abistruct)
 
 The decoded ABI value or struct
 
@@ -193,7 +193,7 @@ Returns the ABI-encoded value for the given value.
 
 | Name      | Type                                                                                                            | Description                                                                                                       |
 | :-------- | :-------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------- |
-| `value`   | `ABIValue` \| [`ABIStruct`](#abistruct)                                                                         | The value to encode either already in encoded binary form (`Uint8Array`), a decoded ABI value or an ARC-56 struct |
+| `value`   | `ABIValue` \| [`ABIStruct`](types_app_arc56.md#abistruct)                                                       | The value to encode either already in encoded binary form (`Uint8Array`), a decoded ABI value or an ARC-56 struct |
 | `type`    | `string`                                                                                                        | The ARC-56 type - either an ABI Type string or a struct name                                                      |
 | `structs` | `Record`\<`string`, [`StructField`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56structfield/)[]\> | The defined ARC-56 structs                                                                                        |
 
@@ -217,9 +217,9 @@ Converts a decoded ABI tuple as a struct.
 
 #### Type parameters
 
-| Name      | Type                                                            |
-| :-------- | :-------------------------------------------------------------- |
-| `TReturn` | extends [`ABIStruct`](#abistruct) = `Record`\<`string`, `any`\> |
+| Name      | Type                                                                              |
+| :-------- | :-------------------------------------------------------------------------------- |
+| `TReturn` | extends [`ABIStruct`](types_app_arc56.md#abistruct) = `Record`\<`string`, `any`\> |
 
 #### Parameters
 
@@ -251,7 +251,7 @@ Converts an ARC-56 struct as an ABI tuple.
 
 | Name           | Type                                                                                                            | Description                               |
 | :------------- | :-------------------------------------------------------------------------------------------------------------- | :---------------------------------------- |
-| `struct`       | [`ABIStruct`](#abistruct)                                                                                       | The struct to convert                     |
+| `struct`       | [`ABIStruct`](types_app_arc56.md#abistruct)                                                                     | The struct to convert                     |
 | `structFields` | [`StructField`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56structfield/)[]                       | The struct fields from an ARC-56 app spec |
 | `structs`      | `Record`\<`string`, [`StructField`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56structfield/)[]\> | -                                         |
 
@@ -325,15 +325,15 @@ Checks for decode errors on the AppCallTransactionResult and maps the return val
 
 #### Type parameters
 
-| Name      | Type                                                           |
-| :-------- | :------------------------------------------------------------- |
-| `TReturn` | extends `undefined` \| `ABIValue` \| [`ABIStruct`](#abistruct) |
+| Name      | Type                                                                             |
+| :-------- | :------------------------------------------------------------------------------- |
+| `TReturn` | extends `undefined` \| `ABIValue` \| [`ABIStruct`](types_app_arc56.md#abistruct) |
 
 #### Parameters
 
 | Name          | Type                                                                                                                                                                  | Description                         |
 | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------- |
-| `returnValue` | `undefined` \| [`ABIReturn`](#abireturn)                                                                                                                              | The smart contract response         |
+| `returnValue` | `undefined` \| [`ABIReturn`](types_app.md#abireturn)                                                                                                                  | The smart contract response         |
 | `method`      | [`Method`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/) \| [`Arc56Method`](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/) | The method that was called          |
 | `structs`     | `Record`\<`string`, [`StructField`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56structfield/)[]\>                                                       | The struct fields from the app spec |
 

@@ -12,7 +12,7 @@ Parameters for `transferAlgos` call.
 
 ## Hierarchy
 
-- [`SendTransactionParams`]()
+- [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
 
   ↳ **`AlgoTransferParams`**
 
@@ -20,20 +20,20 @@ Parameters for `transferAlgos` call.
 
 ### Properties
 
-- [amount](#amount)
-- [atc](#atc)
-- [fee](#fee)
-- [from](#from)
-- [lease](#lease)
-- [maxFee](#maxfee)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [note](#note)
-- [populateAppCallResources](#populateappcallresources)
-- [skipSending](#skipsending)
-- [skipWaiting](#skipwaiting)
-- [suppressLog](#suppresslog)
-- [to](#to)
-- [transactionParams](#transactionparams)
+- [amount](types_transfer.AlgoTransferParams.md#amount)
+- [atc](types_transfer.AlgoTransferParams.md#atc)
+- [fee](types_transfer.AlgoTransferParams.md#fee)
+- [from](types_transfer.AlgoTransferParams.md#from)
+- [lease](types_transfer.AlgoTransferParams.md#lease)
+- [maxFee](types_transfer.AlgoTransferParams.md#maxfee)
+- [maxRoundsToWaitForConfirmation](types_transfer.AlgoTransferParams.md#maxroundstowaitforconfirmation)
+- [note](types_transfer.AlgoTransferParams.md#note)
+- [populateAppCallResources](types_transfer.AlgoTransferParams.md#populateappcallresources)
+- [skipSending](types_transfer.AlgoTransferParams.md#skipsending)
+- [skipWaiting](types_transfer.AlgoTransferParams.md#skipwaiting)
+- [suppressLog](types_transfer.AlgoTransferParams.md#suppresslog)
+- [to](types_transfer.AlgoTransferParams.md#to)
+- [transactionParams](types_transfer.AlgoTransferParams.md#transactionparams)
 
 ## Properties
 
@@ -57,7 +57,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[SendTransactionParams]().[atc](#atc)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[atc](types_transaction.SendTransactionParams.md#atc)
 
 #### Defined in
 
@@ -73,7 +73,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 #### Inherited from
 
-[SendTransactionParams]().[fee](#fee)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[fee](types_transaction.SendTransactionParams.md#fee)
 
 #### Defined in
 
@@ -113,7 +113,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 #### Inherited from
 
-[SendTransactionParams]().[maxFee](#maxfee)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxFee](types_transaction.SendTransactionParams.md#maxfee)
 
 #### Defined in
 
@@ -129,7 +129,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[SendTransactionParams]().[maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxRoundsToWaitForConfirmation](types_transaction.SendTransactionParams.md#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -157,7 +157,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendTransactionParams]().[populateAppCallResources](#populateappcallresources)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[populateAppCallResources](types_transaction.SendTransactionParams.md#populateappcallresources)
 
 #### Defined in
 
@@ -174,7 +174,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[SendTransactionParams]().[skipSending](#skipsending)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipSending](types_transaction.SendTransactionParams.md#skipsending)
 
 #### Defined in
 
@@ -190,7 +190,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[SendTransactionParams]().[skipWaiting](#skipwaiting)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipWaiting](types_transaction.SendTransactionParams.md#skipwaiting)
 
 #### Defined in
 
@@ -206,7 +206,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendTransactionParams]().[suppressLog](#suppresslog)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[suppressLog](types_transaction.SendTransactionParams.md#suppresslog)
 
 #### Defined in
 

@@ -19,58 +19,58 @@ Application client - a class that wraps an ARC-0032 app spec and provides high p
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_app_client.ApplicationClient.md#constructor)
 
 ### Properties
 
-- [\_appAddress](#_appaddress)
-- [\_appId](#_appid)
-- [\_appName](#_appname)
-- [\_approvalSourceMap](#_approvalsourcemap)
-- [\_clearSourceMap](#_clearsourcemap)
-- [\_creator](#_creator)
-- [algod](#algod)
-- [appSpec](#appspec)
-- [deployTimeParams](#deploytimeparams)
-- [existingDeployments](#existingdeployments)
-- [indexer](#indexer)
-- [params](#params)
-- [sender](#sender)
+- [\_appAddress](types_app_client.ApplicationClient.md#_appaddress)
+- [\_appId](types_app_client.ApplicationClient.md#_appid)
+- [\_appName](types_app_client.ApplicationClient.md#_appname)
+- [\_approvalSourceMap](types_app_client.ApplicationClient.md#_approvalsourcemap)
+- [\_clearSourceMap](types_app_client.ApplicationClient.md#_clearsourcemap)
+- [\_creator](types_app_client.ApplicationClient.md#_creator)
+- [algod](types_app_client.ApplicationClient.md#algod)
+- [appSpec](types_app_client.ApplicationClient.md#appspec)
+- [deployTimeParams](types_app_client.ApplicationClient.md#deploytimeparams)
+- [existingDeployments](types_app_client.ApplicationClient.md#existingdeployments)
+- [indexer](types_app_client.ApplicationClient.md#indexer)
+- [params](types_app_client.ApplicationClient.md#params)
+- [sender](types_app_client.ApplicationClient.md#sender)
 
 ### Methods
 
-- [call](#call)
-- [callOfType](#calloftype)
-- [clearState](#clearstate)
-- [closeOut](#closeout)
-- [compile](#compile)
-- [create](#create)
-- [delete](#delete)
-- [deploy](#deploy)
-- [exportSourceMaps](#exportsourcemaps)
-- [exposeLogicError](#exposelogicerror)
-- [fundAppAccount](#fundappaccount)
-- [getABIMethod](#getabimethod)
-- [getABIMethodParams](#getabimethodparams)
-- [getABIMethodSignature](#getabimethodsignature)
-- [getAppReference](#getappreference)
-- [getBoxNames](#getboxnames)
-- [getBoxValue](#getboxvalue)
-- [getBoxValueFromABIType](#getboxvaluefromabitype)
-- [getBoxValues](#getboxvalues)
-- [getBoxValuesFromABIType](#getboxvaluesfromabitype)
-- [getCallArgs](#getcallargs)
-- [getGlobalState](#getglobalstate)
-- [getLocalState](#getlocalstate)
-- [importSourceMaps](#importsourcemaps)
-- [optIn](#optin)
-- [update](#update)
+- [call](types_app_client.ApplicationClient.md#call)
+- [callOfType](types_app_client.ApplicationClient.md#calloftype)
+- [clearState](types_app_client.ApplicationClient.md#clearstate)
+- [closeOut](types_app_client.ApplicationClient.md#closeout)
+- [compile](types_app_client.ApplicationClient.md#compile)
+- [create](types_app_client.ApplicationClient.md#create)
+- [delete](types_app_client.ApplicationClient.md#delete)
+- [deploy](types_app_client.ApplicationClient.md#deploy)
+- [exportSourceMaps](types_app_client.ApplicationClient.md#exportsourcemaps)
+- [exposeLogicError](types_app_client.ApplicationClient.md#exposelogicerror)
+- [fundAppAccount](types_app_client.ApplicationClient.md#fundappaccount)
+- [getABIMethod](types_app_client.ApplicationClient.md#getabimethod)
+- [getABIMethodParams](types_app_client.ApplicationClient.md#getabimethodparams)
+- [getABIMethodSignature](types_app_client.ApplicationClient.md#getabimethodsignature)
+- [getAppReference](types_app_client.ApplicationClient.md#getappreference)
+- [getBoxNames](types_app_client.ApplicationClient.md#getboxnames)
+- [getBoxValue](types_app_client.ApplicationClient.md#getboxvalue)
+- [getBoxValueFromABIType](types_app_client.ApplicationClient.md#getboxvaluefromabitype)
+- [getBoxValues](types_app_client.ApplicationClient.md#getboxvalues)
+- [getBoxValuesFromABIType](types_app_client.ApplicationClient.md#getboxvaluesfromabitype)
+- [getCallArgs](types_app_client.ApplicationClient.md#getcallargs)
+- [getGlobalState](types_app_client.ApplicationClient.md#getglobalstate)
+- [getLocalState](types_app_client.ApplicationClient.md#getlocalstate)
+- [importSourceMaps](types_app_client.ApplicationClient.md#importsourcemaps)
+- [optIn](types_app_client.ApplicationClient.md#optin)
+- [update](types_app_client.ApplicationClient.md#update)
 
 ## Constructors
 
 ### constructor
 
-• **new ApplicationClient**(`appDetails`, `algod`): [`ApplicationClient`]()
+• **new ApplicationClient**(`appDetails`, `algod`): [`ApplicationClient`](types_app_client.ApplicationClient.md)
 
 #### Parameters
 
@@ -81,7 +81,7 @@ Application client - a class that wraps an ARC-0032 app spec and provides high p
 
 #### Returns
 
-[`ApplicationClient`]()
+[`ApplicationClient`](types_app_client.ApplicationClient.md)
 
 **`Deprecated`**
 
@@ -512,9 +512,9 @@ Funds Algo into the app account for this app.
 
 #### Parameters
 
-| Name   | Type                                                                                                                           | Description                                          |
-| :----- | :----------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
-| `fund` | [`AlgoAmount`]() \| [`FundAppAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientfundappaccountparams/) | The parameters for the funding or the funding amount |
+| Name   | Type                                                                                                                                                     | Description                                          |
+| :----- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
+| `fund` | [`AlgoAmount`](types_amount.AlgoAmount.md) \| [`FundAppAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientfundappaccountparams/) | The parameters for the funding or the funding amount |
 
 #### Returns
 

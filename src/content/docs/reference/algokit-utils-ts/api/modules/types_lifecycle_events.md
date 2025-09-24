@@ -12,7 +12,7 @@ title: types/lifecycle-events
 
 ### Type Aliases
 
-- [EventDataMap](#eventdatamap)
+- [EventDataMap](types_lifecycle_events.md#eventdatamap)
 
 ## Type Aliases
 

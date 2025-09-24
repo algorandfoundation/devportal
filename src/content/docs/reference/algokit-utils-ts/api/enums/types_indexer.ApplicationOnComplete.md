@@ -12,12 +12,12 @@ Defines the what additional actions occur with the transaction https://dev.algor
 
 ### Enumeration Members
 
-- [clear](#clear)
-- [closeout](#closeout)
-- [delete](#delete)
-- [noop](#noop)
-- [optin](#optin)
-- [update](#update)
+- [clear](types_indexer.ApplicationOnComplete.md#clear)
+- [closeout](types_indexer.ApplicationOnComplete.md#closeout)
+- [delete](types_indexer.ApplicationOnComplete.md#delete)
+- [noop](types_indexer.ApplicationOnComplete.md#noop)
+- [optin](types_indexer.ApplicationOnComplete.md#optin)
+- [update](types_indexer.ApplicationOnComplete.md#update)
 
 ## Enumeration Members
 

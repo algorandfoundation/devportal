@@ -4,11 +4,11 @@ title: algokit_utils.models.state
 
 ## Classes
 
-| [`BoxName`](#algokit_utils.models.state.BoxName)           | The name of the box                                                   |
-| ---------------------------------------------------------- | --------------------------------------------------------------------- |
-| [`BoxValue`](#algokit_utils.models.state.BoxValue)         | The value of the box                                                  |
-| [`DataTypeFlag`](#algokit_utils.models.state.DataTypeFlag) | Enum where members are also (and must be) ints                        |
-| [`BoxReference`](#algokit_utils.models.state.BoxReference) | Represents a box reference with a foreign app index and the box name. |
+| [`BoxName`](/reference/algokit-utils-py/api/BoxName#algokit_utils.models.state.BoxName)                | The name of the box                                                   |
+| ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| [`BoxValue`](/reference/algokit-utils-py/api/BoxValue#algokit_utils.models.state.BoxValue)             | The value of the box                                                  |
+| [`DataTypeFlag`](/reference/algokit-utils-py/api/DataTypeFlag#algokit_utils.models.state.DataTypeFlag) | Enum where members are also (and must be) ints                        |
+| [`BoxReference`](/reference/algokit-utils-py/api/BoxReference#algokit_utils.models.state.BoxReference) | Represents a box reference with a foreign app index and the box name. |
 
 ## Module Contents
 

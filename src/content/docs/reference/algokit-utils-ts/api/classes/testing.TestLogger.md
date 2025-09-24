@@ -17,32 +17,32 @@ This is useful for automated testing.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](testing.TestLogger.md#constructor)
 
 ### Properties
 
-- [logs](#logs)
-- [originalLogger](#originallogger)
+- [logs](testing.TestLogger.md#logs)
+- [originalLogger](testing.TestLogger.md#originallogger)
 
 ### Accessors
 
-- [capturedLogs](#capturedlogs)
+- [capturedLogs](testing.TestLogger.md#capturedlogs)
 
 ### Methods
 
-- [clear](#clear)
-- [debug](#debug)
-- [error](#error)
-- [getLogSnapshot](#getlogsnapshot)
-- [info](#info)
-- [verbose](#verbose)
-- [warn](#warn)
+- [clear](testing.TestLogger.md#clear)
+- [debug](testing.TestLogger.md#debug)
+- [error](testing.TestLogger.md#error)
+- [getLogSnapshot](testing.TestLogger.md#getlogsnapshot)
+- [info](testing.TestLogger.md#info)
+- [verbose](testing.TestLogger.md#verbose)
+- [warn](testing.TestLogger.md#warn)
 
 ## Constructors
 
 ### constructor
 
-• **new TestLogger**(`originalLogger?`): [`TestLogger`]()
+• **new TestLogger**(`originalLogger?`): [`TestLogger`](testing.TestLogger.md)
 
 Create a new test logger that wraps the given logger if provided.
 
@@ -54,7 +54,7 @@ Create a new test logger that wraps the given logger if provided.
 
 #### Returns
 
-[`TestLogger`]()
+[`TestLogger`](testing.TestLogger.md)
 
 #### Defined in
 

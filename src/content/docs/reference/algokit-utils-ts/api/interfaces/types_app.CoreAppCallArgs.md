@@ -12,18 +12,18 @@ Common app call arguments for ABI and non-ABI (raw) calls
 
 - **`CoreAppCallArgs`**
 
-  ↳ [`RawAppCallArgs`]()
+  ↳ [`RawAppCallArgs`](types_app.RawAppCallArgs.md)
 
 ## Table of contents
 
 ### Properties
 
-- [accounts](#accounts)
-- [apps](#apps)
-- [assets](#assets)
-- [boxes](#boxes)
-- [lease](#lease)
-- [rekeyTo](#rekeyto)
+- [accounts](types_app.CoreAppCallArgs.md#accounts)
+- [apps](types_app.CoreAppCallArgs.md#apps)
+- [assets](types_app.CoreAppCallArgs.md#assets)
+- [boxes](types_app.CoreAppCallArgs.md#boxes)
+- [lease](types_app.CoreAppCallArgs.md#lease)
+- [rekeyTo](types_app.CoreAppCallArgs.md#rekeyto)
 
 ## Properties
 
@@ -65,7 +65,7 @@ IDs of any assets to load into the foreignAssets array
 
 ### boxes
 
-• `Optional` **boxes**: ([`BoxReference`]() \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
+• `Optional` **boxes**: ([`BoxReference`](types_app.BoxReference.md) \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
 
 Any box references to load
 

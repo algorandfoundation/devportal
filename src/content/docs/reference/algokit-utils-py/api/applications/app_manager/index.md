@@ -4,8 +4,8 @@ title: algokit_utils.applications.app_manager
 
 ## Classes
 
-| [`AppManager`](#algokit_utils.applications.app_manager.AppManager) | A manager class for interacting with Algorand applications. |
-| ------------------------------------------------------------------ | ----------------------------------------------------------- |
+| [`AppManager`](/reference/algokit-utils-py/api/AppManager#algokit_utils.applications.app_manager.AppManager) | A manager class for interacting with Algorand applications. |
+| ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- |
 
 ## Module Contents
 

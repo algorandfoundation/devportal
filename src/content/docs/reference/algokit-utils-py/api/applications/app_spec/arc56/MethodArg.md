@@ -10,7 +10,7 @@ Method argument information.
 
 The type of the argument
 
-#### default*value *: [DefaultValue](#algokit_utils.applications.app_spec.arc56.DefaultValue) | None\_ _= None_
+#### default*value *: [DefaultValue](/reference/algokit-utils-py/api/DefaultValue#algokit_utils.applications.app_spec.arc56.DefaultValue) | None\_ _= None_
 
 The optional default value
 

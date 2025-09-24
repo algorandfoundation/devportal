@@ -10,7 +10,7 @@ App call args with non-ABI (raw) values (minus some processing like encoding str
 
 ## Hierarchy
 
-- [`CoreAppCallArgs`]()
+- [`CoreAppCallArgs`](types_app.CoreAppCallArgs.md)
 
   ↳ **`RawAppCallArgs`**
 
@@ -18,14 +18,14 @@ App call args with non-ABI (raw) values (minus some processing like encoding str
 
 ### Properties
 
-- [accounts](#accounts)
-- [appArgs](#appargs)
-- [apps](#apps)
-- [assets](#assets)
-- [boxes](#boxes)
-- [lease](#lease)
-- [method](#method)
-- [rekeyTo](#rekeyto)
+- [accounts](types_app.RawAppCallArgs.md#accounts)
+- [appArgs](types_app.RawAppCallArgs.md#appargs)
+- [apps](types_app.RawAppCallArgs.md#apps)
+- [assets](types_app.RawAppCallArgs.md#assets)
+- [boxes](types_app.RawAppCallArgs.md#boxes)
+- [lease](types_app.RawAppCallArgs.md#lease)
+- [method](types_app.RawAppCallArgs.md#method)
+- [rekeyTo](types_app.RawAppCallArgs.md#rekeyto)
 
 ## Properties
 
@@ -37,7 +37,7 @@ The address of any accounts to load in
 
 #### Inherited from
 
-[CoreAppCallArgs]().[accounts](#accounts)
+[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[accounts](types_app.CoreAppCallArgs.md#accounts)
 
 #### Defined in
 
@@ -65,7 +65,7 @@ IDs of any apps to load into the foreignApps array
 
 #### Inherited from
 
-[CoreAppCallArgs]().[apps](#apps)
+[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[apps](types_app.CoreAppCallArgs.md#apps)
 
 #### Defined in
 
@@ -81,7 +81,7 @@ IDs of any assets to load into the foreignAssets array
 
 #### Inherited from
 
-[CoreAppCallArgs]().[assets](#assets)
+[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[assets](types_app.CoreAppCallArgs.md#assets)
 
 #### Defined in
 
@@ -91,13 +91,13 @@ IDs of any assets to load into the foreignAssets array
 
 ### boxes
 
-• `Optional` **boxes**: ([`BoxReference`]() \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
+• `Optional` **boxes**: ([`BoxReference`](types_app.BoxReference.md) \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
 
 Any box references to load
 
 #### Inherited from
 
-[CoreAppCallArgs]().[boxes](#boxes)
+[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[boxes](types_app.CoreAppCallArgs.md#boxes)
 
 #### Defined in
 
@@ -113,7 +113,7 @@ The optional lease for the transaction
 
 #### Inherited from
 
-[CoreAppCallArgs]().[lease](#lease)
+[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[lease](types_app.CoreAppCallArgs.md#lease)
 
 #### Defined in
 
@@ -143,7 +143,7 @@ Optional account / account address that should be authorised to transact on beha
 
 #### Inherited from
 
-[CoreAppCallArgs]().[rekeyTo](#rekeyto)
+[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[rekeyTo](types_app.CoreAppCallArgs.md#rekeyto)
 
 #### Defined in
 

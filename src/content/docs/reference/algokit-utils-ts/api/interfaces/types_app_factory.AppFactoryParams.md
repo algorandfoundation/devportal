@@ -12,15 +12,15 @@ Parameters to create an app client
 
 ### Properties
 
-- [algorand](#algorand)
-- [appName](#appname)
-- [appSpec](#appspec)
-- [defaultSender](#defaultsender)
-- [defaultSigner](#defaultsigner)
-- [deletable](#deletable)
-- [deployTimeParams](#deploytimeparams)
-- [updatable](#updatable)
-- [version](#version)
+- [algorand](types_app_factory.AppFactoryParams.md#algorand)
+- [appName](types_app_factory.AppFactoryParams.md#appname)
+- [appSpec](types_app_factory.AppFactoryParams.md#appspec)
+- [defaultSender](types_app_factory.AppFactoryParams.md#defaultsender)
+- [defaultSigner](types_app_factory.AppFactoryParams.md#defaultsigner)
+- [deletable](types_app_factory.AppFactoryParams.md#deletable)
+- [deployTimeParams](types_app_factory.AppFactoryParams.md#deploytimeparams)
+- [updatable](types_app_factory.AppFactoryParams.md#updatable)
+- [version](types_app_factory.AppFactoryParams.md#version)
 
 ## Properties
 
@@ -51,7 +51,7 @@ Defaults to the ARC-32/ARC-56 app spec name.
 
 ### appSpec
 
-• **appSpec**: `string` \| [`Arc56Contract`]() \| [`AppSpec`]()
+• **appSpec**: `string` \| [`Arc56Contract`](types_app_arc56.Arc56Contract.md) \| [`AppSpec`](types_app_spec.AppSpec.md)
 
 The ARC-56 or ARC-32 application spec as either:
 
@@ -107,7 +107,7 @@ for each call.
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`]()
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](types_app.TealTemplateParams.md)
 
 Optional deploy-time TEAL template replacement parameters.
 If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls.

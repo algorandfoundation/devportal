@@ -24,7 +24,7 @@ The clear state program
 
 The creator of the application
 
-#### global*state *: dict[str, [AppState](#algokit_utils.models.application.AppState)]\_
+#### global*state *: dict[str, [AppState](/reference/algokit-utils-py/api/AppState#algokit_utils.models.application.AppState)]\_
 
 The global state of the application
 

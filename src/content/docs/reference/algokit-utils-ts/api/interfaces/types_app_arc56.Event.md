@@ -12,9 +12,9 @@ ARC-28 event
 
 ### Properties
 
-- [args](#args)
-- [desc](#desc)
-- [name](#name)
+- [args](types_app_arc56.Event.md#args)
+- [desc](types_app_arc56.Event.md#desc)
+- [name](types_app_arc56.Event.md#name)
 
 ## Properties
 

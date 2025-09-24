@@ -2,7 +2,7 @@
 title: algokit_utils.models.amount.micro_algo
 ---
 
-#### algokit_utils.models.amount.micro_algo(micro_algo: int) → [AlgoAmount](#AlgoAmount)
+#### algokit_utils.models.amount.micro_algo(micro_algo: int) → [AlgoAmount](/reference/algokit-utils-py/api/AlgoAmount#AlgoAmount)
 
 Create an AlgoAmount object representing the given number of µAlgo.
 

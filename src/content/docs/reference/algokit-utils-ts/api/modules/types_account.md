@@ -18,12 +18,12 @@ title: types/account
 
 ### Type Aliases
 
-- [AccountAssetInformation](#accountassetinformation)
-- [AccountInformation](#accountinformation)
+- [AccountAssetInformation](types_account.md#accountassetinformation)
+- [AccountInformation](types_account.md#accountinformation)
 
 ### Variables
 
-- [DISPENSER_ACCOUNT](#dispenser_account)
+- [DISPENSER_ACCOUNT](types_account.md#dispenser_account)
 
 ## Type Aliases
 

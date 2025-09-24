@@ -12,7 +12,7 @@ Parameters for `createAsset` call.
 
 ## Hierarchy
 
-- [`SendTransactionParams`]()
+- [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
 
   ↳ **`CreateAssetParams`**
 
@@ -20,29 +20,29 @@ Parameters for `createAsset` call.
 
 ### Properties
 
-- [atc](#atc)
-- [clawbackAccount](#clawbackaccount)
-- [creator](#creator)
-- [decimals](#decimals)
-- [fee](#fee)
-- [freezeAccount](#freezeaccount)
-- [frozenByDefault](#frozenbydefault)
-- [lease](#lease)
-- [manager](#manager)
-- [maxFee](#maxfee)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [metadataHash](#metadatahash)
-- [name](#name)
-- [note](#note)
-- [populateAppCallResources](#populateappcallresources)
-- [reserveAccount](#reserveaccount)
-- [skipSending](#skipsending)
-- [skipWaiting](#skipwaiting)
-- [suppressLog](#suppresslog)
-- [total](#total)
-- [transactionParams](#transactionparams)
-- [unit](#unit)
-- [url](#url)
+- [atc](types_asset.CreateAssetParams.md#atc)
+- [clawbackAccount](types_asset.CreateAssetParams.md#clawbackaccount)
+- [creator](types_asset.CreateAssetParams.md#creator)
+- [decimals](types_asset.CreateAssetParams.md#decimals)
+- [fee](types_asset.CreateAssetParams.md#fee)
+- [freezeAccount](types_asset.CreateAssetParams.md#freezeaccount)
+- [frozenByDefault](types_asset.CreateAssetParams.md#frozenbydefault)
+- [lease](types_asset.CreateAssetParams.md#lease)
+- [manager](types_asset.CreateAssetParams.md#manager)
+- [maxFee](types_asset.CreateAssetParams.md#maxfee)
+- [maxRoundsToWaitForConfirmation](types_asset.CreateAssetParams.md#maxroundstowaitforconfirmation)
+- [metadataHash](types_asset.CreateAssetParams.md#metadatahash)
+- [name](types_asset.CreateAssetParams.md#name)
+- [note](types_asset.CreateAssetParams.md#note)
+- [populateAppCallResources](types_asset.CreateAssetParams.md#populateappcallresources)
+- [reserveAccount](types_asset.CreateAssetParams.md#reserveaccount)
+- [skipSending](types_asset.CreateAssetParams.md#skipsending)
+- [skipWaiting](types_asset.CreateAssetParams.md#skipwaiting)
+- [suppressLog](types_asset.CreateAssetParams.md#suppresslog)
+- [total](types_asset.CreateAssetParams.md#total)
+- [transactionParams](types_asset.CreateAssetParams.md#transactionparams)
+- [unit](types_asset.CreateAssetParams.md#unit)
+- [url](types_asset.CreateAssetParams.md#url)
 
 ## Properties
 
@@ -54,7 +54,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[SendTransactionParams]().[atc](#atc)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[atc](types_transaction.SendTransactionParams.md#atc)
 
 #### Defined in
 
@@ -114,7 +114,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 #### Inherited from
 
-[SendTransactionParams]().[fee](#fee)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[fee](types_transaction.SendTransactionParams.md#fee)
 
 #### Defined in
 
@@ -180,7 +180,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 #### Inherited from
 
-[SendTransactionParams]().[maxFee](#maxfee)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxFee](types_transaction.SendTransactionParams.md#maxfee)
 
 #### Defined in
 
@@ -196,7 +196,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[SendTransactionParams]().[maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxRoundsToWaitForConfirmation](types_transaction.SendTransactionParams.md#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -249,7 +249,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendTransactionParams]().[populateAppCallResources](#populateappcallresources)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[populateAppCallResources](types_transaction.SendTransactionParams.md#populateappcallresources)
 
 #### Defined in
 
@@ -281,7 +281,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[SendTransactionParams]().[skipSending](#skipsending)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipSending](types_transaction.SendTransactionParams.md#skipsending)
 
 #### Defined in
 
@@ -297,7 +297,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[SendTransactionParams]().[skipWaiting](#skipwaiting)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipWaiting](types_transaction.SendTransactionParams.md#skipwaiting)
 
 #### Defined in
 
@@ -313,7 +313,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendTransactionParams]().[suppressLog](#suppresslog)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[suppressLog](types_transaction.SendTransactionParams.md#suppresslog)
 
 #### Defined in
 

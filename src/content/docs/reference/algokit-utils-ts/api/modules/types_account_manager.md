@@ -16,7 +16,7 @@ title: types/account-manager
 
 ### Functions
 
-- [getAccountTransactionSigner](#getaccounttransactionsigner)
+- [getAccountTransactionSigner](types_account_manager.md#getaccounttransactionsigner)
 
 ## Functions
 

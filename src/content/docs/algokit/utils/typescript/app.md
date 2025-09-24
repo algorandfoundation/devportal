@@ -308,7 +308,7 @@ await algorand.send.appCallMethodCall({
 
 To access local state you can use the following method from an [`AppManager`](#appmanager) instance:
 
-- [`algorand.app.getLocalState(appId, address)`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getlocalstate) - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
+- [`algorand.app.getGlobalState(appId)`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getglobalstate) - Returns the current global state for the given app ID decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
 
 ```typescript
 const globalState = await algorand.app.getGlobalState(12345n);
@@ -347,12 +347,12 @@ const localState = await algorand.app.getLocalState(12345n, 'ACCOUNTADDRESS');
 
 To access and parse box values and names for an app you can use the following methods from an [`AppManager`](#appmanager) instance:
 
-- [`algorand.app.getBoxNames(appId: bigint)`](../code/modules/#getboxnames) - Returns the current [box names](#boxname) for the given app ID
-- [`algorand.app.getBoxValue(appId: bigint, boxName: BoxIdentifier)`](../code/modules/#getboxvalue) - Returns the binary value of the given box name for the given app ID
+- [`algorand.app.getBoxNames(appId: bigint)`](/reference/algokit-utils-ts/api/modules/#getboxnames) - Returns the current [box names](#boxname) for the given app ID
+- [`algorand.app.getBoxValue(appId: bigint, boxName: BoxIdentifier)`](/reference/algokit-utils-ts/api/modules/#getboxvalue) - Returns the binary value of the given box name for the given app ID
 - [`algorand.app.getBoxValues(appId: bigint, boxNames: BoxIdentifier[])`](../code/modules/index.md#getboxvalues) - Returns the binary values of the given box names for the given app ID
-- [`algorand.app.getBoxValueFromABIType(request: {appId: bigint, boxName: BoxIdentifier, type: algosdk.ABIType}})`](../code/modules/#getboxvaluefromabitype) - Returns the parsed ABI value of the given box name for the given app ID for the provided ABI type
+- [`algorand.app.getBoxValueFromABIType(request: {appId: bigint, boxName: BoxIdentifier, type: algosdk.ABIType}})`](/reference/algokit-utils-ts/api/modules/#getboxvaluefromabitype) - Returns the parsed ABI value of the given box name for the given app ID for the provided ABI type
 - [`algorand.app.getBoxValuesFromABIType(request: {appId: bigint, boxNames: BoxIdentifier[], type: algosdk.ABIType})`](../code/modules/index.md#getboxvaluesfromabitype) - Returns the parsed ABI values of the given box names for the given app ID for the provided ABI type
-- [`AppManager.getBoxReference(boxId)`](../code/modules/#getboxreference) - Returns a `algosdk.BoxReference` representation of the given [box identifier / reference](#box-references), which is useful when constructing a raw `algosdk.Transaction`
+- [`AppManager.getBoxReference(boxId)`](/reference/algokit-utils-ts/api/modules/#getboxreference) - Returns a `algosdk.BoxReference` representation of the given [box identifier / reference](#box-references), which is useful when constructing a raw `algosdk.Transaction`
 
 ```typescript
 const appId = 12345n;

@@ -13,37 +13,37 @@ that makes it easier to get and manage accounts using KMD.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_kmd_account_manager.KmdAccountManager.md#constructor)
 
 ### Properties
 
-- [\_clientManager](#_clientmanager)
-- [\_kmd](#_kmd)
+- [\_clientManager](types_kmd_account_manager.KmdAccountManager.md#_clientmanager)
+- [\_kmd](types_kmd_account_manager.KmdAccountManager.md#_kmd)
 
 ### Methods
 
-- [getLocalNetDispenserAccount](#getlocalnetdispenseraccount)
-- [getOrCreateWalletAccount](#getorcreatewalletaccount)
-- [getWalletAccount](#getwalletaccount)
-- [kmd](#kmd)
+- [getLocalNetDispenserAccount](types_kmd_account_manager.KmdAccountManager.md#getlocalnetdispenseraccount)
+- [getOrCreateWalletAccount](types_kmd_account_manager.KmdAccountManager.md#getorcreatewalletaccount)
+- [getWalletAccount](types_kmd_account_manager.KmdAccountManager.md#getwalletaccount)
+- [kmd](types_kmd_account_manager.KmdAccountManager.md#kmd)
 
 ## Constructors
 
 ### constructor
 
-• **new KmdAccountManager**(`clientManager`): [`KmdAccountManager`]()
+• **new KmdAccountManager**(`clientManager`): [`KmdAccountManager`](types_kmd_account_manager.KmdAccountManager.md)
 
 Create a new KMD manager.
 
 #### Parameters
 
-| Name            | Type                | Description                                             |
-| :-------------- | :------------------ | :------------------------------------------------------ |
-| `clientManager` | [`ClientManager`]() | A ClientManager client to use for algod and kmd clients |
+| Name            | Type                                                     | Description                                             |
+| :-------------- | :------------------------------------------------------- | :------------------------------------------------------ |
+| `clientManager` | [`ClientManager`](types_client_manager.ClientManager.md) | A ClientManager client to use for algod and kmd clients |
 
 #### Returns
 
-[`KmdAccountManager`]()
+[`KmdAccountManager`](types_kmd_account_manager.KmdAccountManager.md)
 
 #### Defined in
 
@@ -53,7 +53,7 @@ Create a new KMD manager.
 
 ### \_clientManager
 
-• `Private` **\_clientManager**: `Omit`\<[`ClientManager`](), `"kmd"`\>
+• `Private` **\_clientManager**: `Omit`\<[`ClientManager`](types_client_manager.ClientManager.md), `"kmd"`\>
 
 #### Defined in
 
@@ -73,13 +73,13 @@ Create a new KMD manager.
 
 ### getLocalNetDispenserAccount
 
-▸ **getLocalNetDispenserAccount**(): `Promise`\<[`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`]() }\>
+▸ **getLocalNetDispenserAccount**(): `Promise`\<[`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](types_account.SigningAccount.md) }\>
 
 Returns an Algorand account with private key loaded for the default LocalNet dispenser account (that can be used to fund other accounts).
 
 #### Returns
 
-`Promise`\<[`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`]() }\>
+`Promise`\<[`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](types_account.SigningAccount.md) }\>
 
 The default LocalNet dispenser account
 
@@ -97,7 +97,7 @@ const dispenser = await kmdAccountManager.getLocalNetDispenserAccount();
 
 ### getOrCreateWalletAccount
 
-▸ **getOrCreateWalletAccount**(`name`, `fundWith?`): `Promise`\<[`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`]() }\>
+▸ **getOrCreateWalletAccount**(`name`, `fundWith?`): `Promise`\<[`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](types_account.SigningAccount.md) }\>
 
 Gets an account with private key loaded from a KMD wallet of the given name, or alternatively creates one with funds in it via a KMD wallet of the given name.
 
@@ -109,14 +109,14 @@ If this is used via `mnemonicAccountFromEnvironment`, then you can even use the 
 
 #### Parameters
 
-| Name        | Type             | Description                                                                                                                                 |
-| :---------- | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| `name`      | `string`         | The name of the wallet to retrieve / create                                                                                                 |
-| `fundWith?` | [`AlgoAmount`]() | The number of Algo to fund the account with when it gets created, if not specified then 1000 ALGO will be funded from the dispenser account |
+| Name        | Type                                       | Description                                                                                                                                 |
+| :---------- | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`      | `string`                                   | The name of the wallet to retrieve / create                                                                                                 |
+| `fundWith?` | [`AlgoAmount`](types_amount.AlgoAmount.md) | The number of Algo to fund the account with when it gets created, if not specified then 1000 ALGO will be funded from the dispenser account |
 
 #### Returns
 
-`Promise`\<[`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`]() }\>
+`Promise`\<[`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](types_account.SigningAccount.md) }\>
 
 An Algorand account with private key loaded - either one that already existed in the given KMD wallet, or a new one that is funded for you
 
@@ -138,7 +138,7 @@ const existingAccount = await kmdAccountManager.getOrCreateWalletAccount('accoun
 
 ### getWalletAccount
 
-▸ **getWalletAccount**(`walletName`, `predicate?`, `sender?`): `Promise`\<`undefined` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`]() }\>
+▸ **getWalletAccount**(`walletName`, `predicate?`, `sender?`): `Promise`\<`undefined` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](types_account.SigningAccount.md) }\>
 
 Returns an Algorand signing account with private key loaded from the given KMD wallet (identified by name).
 
@@ -152,7 +152,7 @@ Returns an Algorand signing account with private key loaded from the given KMD w
 
 #### Returns
 
-`Promise`\<`undefined` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`]() }\>
+`Promise`\<`undefined` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](types_account.SigningAccount.md) }\>
 
 The signing account (with private key loaded) or undefined if no matching wallet or account was found
 

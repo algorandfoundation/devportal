@@ -2,24 +2,24 @@
 title: 'Namespace: indexer'
 ---
 
-[@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [index]() / indexer
+[@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [index](index.md) / indexer
 
-[index]().indexer
+[index](index.md).indexer
 
 ## Table of contents
 
 ### Type Aliases
 
-- [SearchForTransactions](#searchfortransactions)
+- [SearchForTransactions](index.indexer.md#searchfortransactions)
 
 ### Functions
 
-- [executePaginatedRequest](#executepaginatedrequest)
-- [lookupAccountByAddress](#lookupaccountbyaddress)
-- [lookupAccountCreatedApplicationByAddress](#lookupaccountcreatedapplicationbyaddress)
-- [lookupAssetHoldings](#lookupassetholdings)
-- [lookupTransactionById](#lookuptransactionbyid)
-- [searchTransactions](#searchtransactions)
+- [executePaginatedRequest](index.indexer.md#executepaginatedrequest)
+- [lookupAccountByAddress](index.indexer.md#lookupaccountbyaddress)
+- [lookupAccountCreatedApplicationByAddress](index.indexer.md#lookupaccountcreatedapplicationbyaddress)
+- [lookupAssetHoldings](index.indexer.md#lookupassetholdings)
+- [lookupTransactionById](index.indexer.md#lookuptransactionbyid)
+- [searchTransactions](index.indexer.md#searchtransactions)
 
 ## Type Aliases
 

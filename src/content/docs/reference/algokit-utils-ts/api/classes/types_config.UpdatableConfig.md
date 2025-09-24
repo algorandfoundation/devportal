@@ -16,38 +16,38 @@ Updatable AlgoKit config
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_config.UpdatableConfig.md#constructor)
 
 ### Properties
 
-- [config](#config)
+- [config](types_config.UpdatableConfig.md#config)
 
 ### Accessors
 
-- [debug](#debug)
-- [events](#events)
-- [logger](#logger)
-- [maxSearchDepth](#maxsearchdepth)
-- [populateAppCallResources](#populateappcallresources)
-- [projectRoot](#projectroot)
-- [traceAll](#traceall)
-- [traceBufferSizeMb](#tracebuffersizemb)
+- [debug](types_config.UpdatableConfig.md#debug)
+- [events](types_config.UpdatableConfig.md#events)
+- [logger](types_config.UpdatableConfig.md#logger)
+- [maxSearchDepth](types_config.UpdatableConfig.md#maxsearchdepth)
+- [populateAppCallResources](types_config.UpdatableConfig.md#populateappcallresources)
+- [projectRoot](types_config.UpdatableConfig.md#projectroot)
+- [traceAll](types_config.UpdatableConfig.md#traceall)
+- [traceBufferSizeMb](types_config.UpdatableConfig.md#tracebuffersizemb)
 
 ### Methods
 
-- [configure](#configure)
-- [getLogger](#getlogger)
-- [withDebug](#withdebug)
+- [configure](types_config.UpdatableConfig.md#configure)
+- [getLogger](types_config.UpdatableConfig.md#getlogger)
+- [withDebug](types_config.UpdatableConfig.md#withdebug)
 
 ## Constructors
 
 ### constructor
 
-• **new UpdatableConfig**(): [`UpdatableConfig`]()
+• **new UpdatableConfig**(): [`UpdatableConfig`](types_config.UpdatableConfig.md)
 
 #### Returns
 
-[`UpdatableConfig`]()
+[`UpdatableConfig`](types_config.UpdatableConfig.md)
 
 #### Defined in
 
@@ -85,11 +85,11 @@ Readonly.debug
 
 ### events
 
-• `get` **events**(): [`AsyncEventEmitter`]()
+• `get` **events**(): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
 
 #### Returns
 
-[`AsyncEventEmitter`]()
+[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
 
 #### Implementation of
 

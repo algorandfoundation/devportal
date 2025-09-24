@@ -6,7 +6,7 @@ Client management is one of the core capabilities provided by AlgoKit Utils. It 
 
 Any AlgoKit Utils function that needs one of these clients will take the underlying algosdk classes (`algosdk.Algodv2`, `algosdk.Indexer`, `algosdk.Kmd`) so inline with the [Modularity](/algokit/utils/typescript/overview/#core-principles) principle you can use existing logic to get instances of these clients without needing to use the Client management capability if you prefer, including use of libraries like [useWallet](https://github.com/TxnLab/use-wallet) that have their own configuration mechanism.
 
-To see some usage examples check out the [automated tests](../../src/types/client-manager.spec.ts).
+To see some usage examples check out the [automated tests](src/types/client-manager.spec.ts).
 
 ## `ClientManager`
 

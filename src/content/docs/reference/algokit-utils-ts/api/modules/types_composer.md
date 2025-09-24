@@ -16,45 +16,45 @@ title: types/composer
 
 ### Type Aliases
 
-- [AppCallMethodCall](#appcallmethodcall)
-- [AppCallParams](#appcallparams)
-- [AppCreateMethodCall](#appcreatemethodcall)
-- [AppCreateParams](#appcreateparams)
-- [AppDeleteMethodCall](#appdeletemethodcall)
-- [AppDeleteParams](#appdeleteparams)
-- [AppMethodCall](#appmethodcall)
-- [AppMethodCallParams](#appmethodcallparams)
-- [AppMethodCallTransactionArgument](#appmethodcalltransactionargument)
-- [AppUpdateMethodCall](#appupdatemethodcall)
-- [AppUpdateParams](#appupdateparams)
-- [AssetConfigParams](#assetconfigparams)
-- [AssetCreateParams](#assetcreateparams)
-- [AssetDestroyParams](#assetdestroyparams)
-- [AssetFreezeParams](#assetfreezeparams)
-- [AssetOptInParams](#assetoptinparams)
-- [AssetOptOutParams](#assetoptoutparams)
-- [AssetTransferParams](#assettransferparams)
-- [CommonAppCallParams](#commonappcallparams)
-- [CommonTransactionParams](#commontransactionparams)
-- [ErrorTransformer](#errortransformer)
-- [OfflineKeyRegistrationParams](#offlinekeyregistrationparams)
-- [OnlineKeyRegistrationParams](#onlinekeyregistrationparams)
-- [PaymentParams](#paymentparams)
-- [RawSimulateOptions](#rawsimulateoptions)
-- [SimulateOptions](#simulateoptions)
-- [SkipSignaturesSimulateOptions](#skipsignaturessimulateoptions)
-- [TransactionComposerParams](#transactioncomposerparams)
-- [Txn](#txn)
+- [AppCallMethodCall](types_composer.md#appcallmethodcall)
+- [AppCallParams](types_composer.md#appcallparams)
+- [AppCreateMethodCall](types_composer.md#appcreatemethodcall)
+- [AppCreateParams](types_composer.md#appcreateparams)
+- [AppDeleteMethodCall](types_composer.md#appdeletemethodcall)
+- [AppDeleteParams](types_composer.md#appdeleteparams)
+- [AppMethodCall](types_composer.md#appmethodcall)
+- [AppMethodCallParams](types_composer.md#appmethodcallparams)
+- [AppMethodCallTransactionArgument](types_composer.md#appmethodcalltransactionargument)
+- [AppUpdateMethodCall](types_composer.md#appupdatemethodcall)
+- [AppUpdateParams](types_composer.md#appupdateparams)
+- [AssetConfigParams](types_composer.md#assetconfigparams)
+- [AssetCreateParams](types_composer.md#assetcreateparams)
+- [AssetDestroyParams](types_composer.md#assetdestroyparams)
+- [AssetFreezeParams](types_composer.md#assetfreezeparams)
+- [AssetOptInParams](types_composer.md#assetoptinparams)
+- [AssetOptOutParams](types_composer.md#assetoptoutparams)
+- [AssetTransferParams](types_composer.md#assettransferparams)
+- [CommonAppCallParams](types_composer.md#commonappcallparams)
+- [CommonTransactionParams](types_composer.md#commontransactionparams)
+- [ErrorTransformer](types_composer.md#errortransformer)
+- [OfflineKeyRegistrationParams](types_composer.md#offlinekeyregistrationparams)
+- [OnlineKeyRegistrationParams](types_composer.md#onlinekeyregistrationparams)
+- [PaymentParams](types_composer.md#paymentparams)
+- [RawSimulateOptions](types_composer.md#rawsimulateoptions)
+- [SimulateOptions](types_composer.md#simulateoptions)
+- [SkipSignaturesSimulateOptions](types_composer.md#skipsignaturessimulateoptions)
+- [TransactionComposerParams](types_composer.md#transactioncomposerparams)
+- [Txn](types_composer.md#txn)
 
 ### Variables
 
-- [MAX_TRANSACTION_GROUP_SIZE](#max_transaction_group_size)
+- [MAX_TRANSACTION_GROUP_SIZE](types_composer.md#max_transaction_group_size)
 
 ## Type Aliases
 
 ### AppCallMethodCall
 
-Ƭ **AppCallMethodCall**: [`AppMethodCall`](#appmethodcall)\<[`AppMethodCallParams`](#appmethodcallparams)\>
+Ƭ **AppCallMethodCall**: [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppMethodCallParams`](types_composer.md#appmethodcallparams)\>
 
 Parameters to define an ABI method call transaction.
 
@@ -66,7 +66,7 @@ Parameters to define an ABI method call transaction.
 
 ### AppCallParams
 
-Ƭ **AppCallParams**: [`CommonAppCallParams`](#commonappcallparams) & \{ `onComplete?`: `Exclude`\<`algosdk.OnApplicationComplete`, `algosdk.OnApplicationComplete.UpdateApplicationOC`\> }
+Ƭ **AppCallParams**: [`CommonAppCallParams`](types_composer.md#commonappcallparams) & \{ `onComplete?`: `Exclude`\<`algosdk.OnApplicationComplete`, `algosdk.OnApplicationComplete.UpdateApplicationOC`\> }
 
 Parameters to define an application call transaction.
 
@@ -78,7 +78,7 @@ Parameters to define an application call transaction.
 
 ### AppCreateMethodCall
 
-Ƭ **AppCreateMethodCall**: [`AppMethodCall`](#appmethodcall)\<[`AppCreateParams`](#appcreateparams)\>
+Ƭ **AppCreateMethodCall**: [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppCreateParams`](types_composer.md#appcreateparams)\>
 
 Parameters to define an ABI method call create transaction.
 
@@ -90,7 +90,7 @@ Parameters to define an ABI method call create transaction.
 
 ### AppCreateParams
 
-Ƭ **AppCreateParams**: [`Expand`](#expand)\<`Omit`\<[`CommonAppCallParams`](#commonappcallparams), `"appId"`\> & \{ `approvalProgram`: `string` \| `Uint8Array` ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraProgramPages?`: `number` ; `onComplete?`: `Exclude`\<`algosdk.OnApplicationComplete`, `algosdk.OnApplicationComplete.ClearStateOC`\> ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } }\>
+Ƭ **AppCreateParams**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`CommonAppCallParams`](types_composer.md#commonappcallparams), `"appId"`\> & \{ `approvalProgram`: `string` \| `Uint8Array` ; `clearStateProgram`: `string` \| `Uint8Array` ; `extraProgramPages?`: `number` ; `onComplete?`: `Exclude`\<`algosdk.OnApplicationComplete`, `algosdk.OnApplicationComplete.ClearStateOC`\> ; `schema?`: \{ `globalByteSlices`: `number` ; `globalInts`: `number` ; `localByteSlices`: `number` ; `localInts`: `number` } }\>
 
 Parameters to define an app create transaction
 
@@ -102,7 +102,7 @@ Parameters to define an app create transaction
 
 ### AppDeleteMethodCall
 
-Ƭ **AppDeleteMethodCall**: [`AppMethodCall`](#appmethodcall)\<[`AppDeleteParams`](#appdeleteparams)\>
+Ƭ **AppDeleteMethodCall**: [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppDeleteParams`](types_composer.md#appdeleteparams)\>
 
 Parameters to define an ABI method call delete transaction.
 
@@ -114,7 +114,7 @@ Parameters to define an ABI method call delete transaction.
 
 ### AppDeleteParams
 
-Ƭ **AppDeleteParams**: [`CommonAppCallParams`](#commonappcallparams) & \{ `onComplete?`: `algosdk.OnApplicationComplete.DeleteApplicationOC` }
+Ƭ **AppDeleteParams**: [`CommonAppCallParams`](types_composer.md#commonappcallparams) & \{ `onComplete?`: `algosdk.OnApplicationComplete.DeleteApplicationOC` }
 
 Parameters to define an application delete call transaction.
 
@@ -126,7 +126,7 @@ Parameters to define an application delete call transaction.
 
 ### AppMethodCall
 
-Ƭ **AppMethodCall**\<`T`\>: [`Expand`](#expand)\<`Omit`\<`T`, `"args"`\>\> & \{ `args?`: (`algosdk.ABIValue` \| `TransactionWithSigner` \| `Transaction` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](#appmethodcall)\<[`AppCreateParams`](#appcreateparams)\> \| [`AppMethodCall`](#appmethodcall)\<[`AppUpdateParams`](#appupdateparams)\> \| [`AppMethodCall`](#appmethodcall)\<[`AppMethodCallParams`](#appmethodcallparams)\> \| `undefined`)[] ; `method`: `algosdk.ABIMethod` }
+Ƭ **AppMethodCall**\<`T`\>: [`Expand`](types_expand.md#expand)\<`Omit`\<`T`, `"args"`\>\> & \{ `args?`: (`algosdk.ABIValue` \| `TransactionWithSigner` \| `Transaction` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppCreateParams`](types_composer.md#appcreateparams)\> \| [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppUpdateParams`](types_composer.md#appupdateparams)\> \| [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppMethodCallParams`](types_composer.md#appmethodcallparams)\> \| `undefined`)[] ; `method`: `algosdk.ABIMethod` }
 
 Parameters to define an ABI method call.
 
@@ -144,7 +144,7 @@ Parameters to define an ABI method call.
 
 ### AppMethodCallParams
 
-Ƭ **AppMethodCallParams**: [`CommonAppCallParams`](#commonappcallparams) & \{ `onComplete?`: `Exclude`\<`algosdk.OnApplicationComplete`, `algosdk.OnApplicationComplete.UpdateApplicationOC` \| `algosdk.OnApplicationComplete.ClearStateOC`\> }
+Ƭ **AppMethodCallParams**: [`CommonAppCallParams`](types_composer.md#commonappcallparams) & \{ `onComplete?`: `Exclude`\<`algosdk.OnApplicationComplete`, `algosdk.OnApplicationComplete.UpdateApplicationOC` \| `algosdk.OnApplicationComplete.ClearStateOC`\> }
 
 Common parameters to define an ABI method call transaction.
 
@@ -156,7 +156,7 @@ Common parameters to define an ABI method call transaction.
 
 ### AppMethodCallTransactionArgument
 
-Ƭ **AppMethodCallTransactionArgument**: `TransactionWithSigner` \| `Transaction` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](#appmethodcall)\<[`AppCreateParams`](#appcreateparams)\> \| [`AppMethodCall`](#appmethodcall)\<[`AppUpdateParams`](#appupdateparams)\> \| [`AppMethodCall`](#appmethodcall)\<[`AppMethodCallParams`](#appmethodcallparams)\>
+Ƭ **AppMethodCallTransactionArgument**: `TransactionWithSigner` \| `Transaction` \| `Promise`\<`Transaction`\> \| [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppCreateParams`](types_composer.md#appcreateparams)\> \| [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppUpdateParams`](types_composer.md#appupdateparams)\> \| [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppMethodCallParams`](types_composer.md#appmethodcallparams)\>
 
 Types that can be used to define a transaction argument for an ABI call transaction.
 
@@ -168,7 +168,7 @@ Types that can be used to define a transaction argument for an ABI call transact
 
 ### AppUpdateMethodCall
 
-Ƭ **AppUpdateMethodCall**: [`AppMethodCall`](#appmethodcall)\<[`AppUpdateParams`](#appupdateparams)\>
+Ƭ **AppUpdateMethodCall**: [`AppMethodCall`](types_composer.md#appmethodcall)\<[`AppUpdateParams`](types_composer.md#appupdateparams)\>
 
 Parameters to define an ABI method call update transaction.
 
@@ -180,7 +180,7 @@ Parameters to define an ABI method call update transaction.
 
 ### AppUpdateParams
 
-Ƭ **AppUpdateParams**: [`Expand`](#expand)\<[`CommonAppCallParams`](#commonappcallparams) & \{ `approvalProgram`: `string` \| `Uint8Array` ; `clearStateProgram`: `string` \| `Uint8Array` ; `onComplete?`: `algosdk.OnApplicationComplete.UpdateApplicationOC` }\>
+Ƭ **AppUpdateParams**: [`Expand`](types_expand.md#expand)\<[`CommonAppCallParams`](types_composer.md#commonappcallparams) & \{ `approvalProgram`: `string` \| `Uint8Array` ; `clearStateProgram`: `string` \| `Uint8Array` ; `onComplete?`: `algosdk.OnApplicationComplete.UpdateApplicationOC` }\>
 
 Parameters to define an app update transaction
 
@@ -192,7 +192,7 @@ Parameters to define an app update transaction
 
 ### AssetConfigParams
 
-Ƭ **AssetConfigParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `assetId`: `bigint` ; `clawback?`: `string` \| `Address` ; `freeze?`: `string` \| `Address` ; `manager`: `string` \| `Address` \| `undefined` ; `reserve?`: `string` \| `Address` }
+Ƭ **AssetConfigParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `assetId`: `bigint` ; `clawback?`: `string` \| `Address` ; `freeze?`: `string` \| `Address` ; `manager`: `string` \| `Address` \| `undefined` ; `reserve?`: `string` \| `Address` }
 
 Parameters to define an asset reconfiguration transaction.
 
@@ -208,7 +208,7 @@ all fields are immutable from that point forward.
 
 ### AssetCreateParams
 
-Ƭ **AssetCreateParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `assetName?`: `string` ; `clawback?`: `string` \| `Address` ; `decimals?`: `number` ; `defaultFrozen?`: `boolean` ; `freeze?`: `string` \| `Address` ; `manager?`: `string` \| `Address` ; `metadataHash?`: `string` \| `Uint8Array` ; `reserve?`: `string` \| `Address` ; `total`: `bigint` ; `unitName?`: `string` ; `url?`: `string` }
+Ƭ **AssetCreateParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `assetName?`: `string` ; `clawback?`: `string` \| `Address` ; `decimals?`: `number` ; `defaultFrozen?`: `boolean` ; `freeze?`: `string` \| `Address` ; `manager?`: `string` \| `Address` ; `metadataHash?`: `string` \| `Uint8Array` ; `reserve?`: `string` \| `Address` ; `total`: `bigint` ; `unitName?`: `string` ; `url?`: `string` }
 
 Parameters to define an asset create transaction.
 
@@ -222,7 +222,7 @@ The account that sends this transaction will automatically be opted in to the as
 
 ### AssetDestroyParams
 
-Ƭ **AssetDestroyParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `assetId`: `bigint` }
+Ƭ **AssetDestroyParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `assetId`: `bigint` }
 
 Parameters to define an asset destroy transaction.
 
@@ -236,7 +236,7 @@ Created assets can be destroyed only by the asset manager account. All of the as
 
 ### AssetFreezeParams
 
-Ƭ **AssetFreezeParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `account`: `string` \| `Address` ; `assetId`: `bigint` ; `frozen`: `boolean` }
+Ƭ **AssetFreezeParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `account`: `string` \| `Address` ; `assetId`: `bigint` ; `frozen`: `boolean` }
 
 Parameters to define an asset freeze transaction.
 
@@ -248,7 +248,7 @@ Parameters to define an asset freeze transaction.
 
 ### AssetOptInParams
 
-Ƭ **AssetOptInParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `assetId`: `bigint` }
+Ƭ **AssetOptInParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `assetId`: `bigint` }
 
 Parameters to define an asset opt-in transaction.
 
@@ -260,7 +260,7 @@ Parameters to define an asset opt-in transaction.
 
 ### AssetOptOutParams
 
-Ƭ **AssetOptOutParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `assetId`: `bigint` ; `creator`: `string` \| `Address` }
+Ƭ **AssetOptOutParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `assetId`: `bigint` ; `creator`: `string` \| `Address` }
 
 Parameters to define an asset opt-out transaction.
 
@@ -272,7 +272,7 @@ Parameters to define an asset opt-out transaction.
 
 ### AssetTransferParams
 
-Ƭ **AssetTransferParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `amount`: `bigint` ; `assetId`: `bigint` ; `clawbackTarget?`: `string` \| `Address` ; `closeAssetTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address` }
+Ƭ **AssetTransferParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `amount`: `bigint` ; `assetId`: `bigint` ; `clawbackTarget?`: `string` \| `Address` ; `closeAssetTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address` }
 
 Parameters to define an asset transfer transaction.
 
@@ -284,7 +284,7 @@ Parameters to define an asset transfer transaction.
 
 ### CommonAppCallParams
 
-Ƭ **CommonAppCallParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/) \| [`BoxIdentifier`](#boxidentifier))[] ; `onComplete?`: `algosdk.OnApplicationComplete` }
+Ƭ **CommonAppCallParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `accountReferences?`: (`string` \| `Address`)[] ; `appId`: `bigint` ; `appReferences?`: `bigint`[] ; `args?`: `Uint8Array`[] ; `assetReferences?`: `bigint`[] ; `boxReferences?`: ([`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/) \| [`BoxIdentifier`](types_app_manager.md#boxidentifier))[] ; `onComplete?`: `algosdk.OnApplicationComplete` }
 
 Common parameters for defining an application call transaction.
 
@@ -353,7 +353,7 @@ and return the input error if it cannot or should not transform it.
 
 ### OfflineKeyRegistrationParams
 
-Ƭ **OfflineKeyRegistrationParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `preventAccountFromEverParticipatingAgain?`: `boolean` }
+Ƭ **OfflineKeyRegistrationParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `preventAccountFromEverParticipatingAgain?`: `boolean` }
 
 Parameters to define an offline key registration transaction.
 
@@ -365,7 +365,7 @@ Parameters to define an offline key registration transaction.
 
 ### OnlineKeyRegistrationParams
 
-Ƭ **OnlineKeyRegistrationParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `selectionKey`: `Uint8Array` ; `stateProofKey?`: `Uint8Array` ; `voteFirst`: `bigint` ; `voteKey`: `Uint8Array` ; `voteKeyDilution`: `bigint` ; `voteLast`: `bigint` }
+Ƭ **OnlineKeyRegistrationParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `selectionKey`: `Uint8Array` ; `stateProofKey?`: `Uint8Array` ; `voteFirst`: `bigint` ; `voteKey`: `Uint8Array` ; `voteKeyDilution`: `bigint` ; `voteLast`: `bigint` }
 
 Parameters to define an online key registration transaction.
 
@@ -377,7 +377,7 @@ Parameters to define an online key registration transaction.
 
 ### PaymentParams
 
-Ƭ **PaymentParams**: [`CommonTransactionParams`](#commontransactionparams) & \{ `amount`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `closeRemainderTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address` }
+Ƭ **PaymentParams**: [`CommonTransactionParams`](types_composer.md#commontransactionparams) & \{ `amount`: [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) ; `closeRemainderTo?`: `string` \| `Address` ; `receiver`: `string` \| `Address` }
 
 Parameters to define a payment transaction.
 
@@ -389,7 +389,7 @@ Parameters to define a payment transaction.
 
 ### RawSimulateOptions
 
-Ƭ **RawSimulateOptions**: [`Expand`](#expand)\<`Omit`\<`ConstructorParameters`\<typeof `modelsv2.SimulateRequest`\>[``0``], `"txnGroups"`\>\>
+Ƭ **RawSimulateOptions**: [`Expand`](types_expand.md#expand)\<`Omit`\<`ConstructorParameters`\<typeof `modelsv2.SimulateRequest`\>[``0``], `"txnGroups"`\>\>
 
 The raw API options to control a simulate request.
 See algod API docs for more information: https://dev.algorand.co/reference/rest-apis/algod/#simulatetransaction
@@ -402,7 +402,7 @@ See algod API docs for more information: https://dev.algorand.co/reference/rest-
 
 ### SimulateOptions
 
-Ƭ **SimulateOptions**: [`Expand`](#expand)\<`Partial`\<[`SkipSignaturesSimulateOptions`](#skipsignaturessimulateoptions)\> & [`RawSimulateOptions`](#rawsimulateoptions)\>
+Ƭ **SimulateOptions**: [`Expand`](types_expand.md#expand)\<`Partial`\<[`SkipSignaturesSimulateOptions`](types_composer.md#skipsignaturessimulateoptions)\> & [`RawSimulateOptions`](types_composer.md#rawsimulateoptions)\>
 
 All options to control a simulate request
 
@@ -414,7 +414,7 @@ All options to control a simulate request
 
 ### SkipSignaturesSimulateOptions
 
-Ƭ **SkipSignaturesSimulateOptions**: [`Expand`](#expand)\<`Omit`\<[`RawSimulateOptions`](#rawsimulateoptions), `"fixSigners"` \| `"allowEmptySignatures"`\> & \{ `skipSignatures`: `boolean` }\>
+Ƭ **SkipSignaturesSimulateOptions**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`RawSimulateOptions`](types_composer.md#rawsimulateoptions), `"fixSigners"` \| `"allowEmptySignatures"`\> & \{ `skipSignatures`: `boolean` }\>
 
 Options to control a simulate request, that does not require transaction signing
 
@@ -437,7 +437,7 @@ Parameters to create an `TransactionComposer`.
 | `algod`                  | `algosdk.Algodv2`                                                                    | The algod client to use to get suggestedParams and send the transaction group                                                                               |
 | `appManager?`            | [`AppManager`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/) | An existing `AppManager` to use to manage app compilation and cache compilation results. If not specified then an ephemeral one will be created.            |
 | `defaultValidityWindow?` | `bigint`                                                                             | How many rounds a transaction should be valid for by default; if not specified then will be 10 rounds (or 1000 rounds if issuing transactions to LocalNet). |
-| `errorTransformers?`     | [`ErrorTransformer`](#errortransformer)[]                                            | An array of error transformers to use when an error is caught in simulate or execute callbacks can later be registered with `registerErrorTransformer`      |
+| `errorTransformers?`     | [`ErrorTransformer`](types_composer.md#errortransformer)[]                           | An array of error transformers to use when an error is caught in simulate or execute callbacks can later be registered with `registerErrorTransformer`      |
 | `getSigner`              | (`address`: `string` \| `Address`) => `algosdk.TransactionSigner`                    | -                                                                                                                                                           |
 | `getSuggestedParams?`    | () => `Promise`\<`algosdk.SuggestedParams`\>                                         | -                                                                                                                                                           |
 
@@ -449,7 +449,7 @@ Parameters to create an `TransactionComposer`.
 
 ### Txn
 
-Ƭ **Txn**: [`PaymentParams`](#paymentparams) & \{ `type`: `"pay"` } \| [`AssetCreateParams`](#assetcreateparams) & \{ `type`: `"assetCreate"` } \| [`AssetConfigParams`](#assetconfigparams) & \{ `type`: `"assetConfig"` } \| [`AssetFreezeParams`](#assetfreezeparams) & \{ `type`: `"assetFreeze"` } \| [`AssetDestroyParams`](#assetdestroyparams) & \{ `type`: `"assetDestroy"` } \| [`AssetTransferParams`](#assettransferparams) & \{ `type`: `"assetTransfer"` } \| [`AssetOptInParams`](#assetoptinparams) & \{ `type`: `"assetOptIn"` } \| [`AssetOptOutParams`](#assetoptoutparams) & \{ `type`: `"assetOptOut"` } \| [`AppCallParams`](#appcallparams) \| [`AppCreateParams`](#appcreateparams) \| [`AppUpdateParams`](#appupdateparams) & \{ `type`: `"appCall"` } \| [`OnlineKeyRegistrationParams`](#onlinekeyregistrationparams) \| [`OfflineKeyRegistrationParams`](#offlinekeyregistrationparams) & \{ `type`: `"keyReg"` } \| `algosdk.TransactionWithSigner` & \{ `type`: `"txnWithSigner"` } \| \{ `atc`: `algosdk.AtomicTransactionComposer` ; `type`: `"atc"` } \| [`AppCallMethodCall`](#appcallmethodcall) \| [`AppCreateMethodCall`](#appcreatemethodcall) \| [`AppUpdateMethodCall`](#appupdatemethodcall) & \{ `type`: `"methodCall"` }
+Ƭ **Txn**: [`PaymentParams`](types_composer.md#paymentparams) & \{ `type`: `"pay"` } \| [`AssetCreateParams`](types_composer.md#assetcreateparams) & \{ `type`: `"assetCreate"` } \| [`AssetConfigParams`](types_composer.md#assetconfigparams) & \{ `type`: `"assetConfig"` } \| [`AssetFreezeParams`](types_composer.md#assetfreezeparams) & \{ `type`: `"assetFreeze"` } \| [`AssetDestroyParams`](types_composer.md#assetdestroyparams) & \{ `type`: `"assetDestroy"` } \| [`AssetTransferParams`](types_composer.md#assettransferparams) & \{ `type`: `"assetTransfer"` } \| [`AssetOptInParams`](types_composer.md#assetoptinparams) & \{ `type`: `"assetOptIn"` } \| [`AssetOptOutParams`](types_composer.md#assetoptoutparams) & \{ `type`: `"assetOptOut"` } \| [`AppCallParams`](types_composer.md#appcallparams) \| [`AppCreateParams`](types_composer.md#appcreateparams) \| [`AppUpdateParams`](types_composer.md#appupdateparams) & \{ `type`: `"appCall"` } \| [`OnlineKeyRegistrationParams`](types_composer.md#onlinekeyregistrationparams) \| [`OfflineKeyRegistrationParams`](types_composer.md#offlinekeyregistrationparams) & \{ `type`: `"keyReg"` } \| `algosdk.TransactionWithSigner` & \{ `type`: `"txnWithSigner"` } \| \{ `atc`: `algosdk.AtomicTransactionComposer` ; `type`: `"atc"` } \| [`AppCallMethodCall`](types_composer.md#appcallmethodcall) \| [`AppCreateMethodCall`](types_composer.md#appcreatemethodcall) \| [`AppUpdateMethodCall`](types_composer.md#appupdatemethodcall) & \{ `type`: `"methodCall"` }
 
 #### Defined in
 

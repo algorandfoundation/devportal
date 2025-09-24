@@ -16,9 +16,9 @@ Default request timeout is 15 seconds. Modify by passing request_timeout to the 
 
 #### request*timeout *= 15\_
 
-#### fund(address: str, amount: int) → [DispenserFundResponse](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)
+#### fund(address: str, amount: int) → [DispenserFundResponse](/reference/algokit-utils-py/api/DispenserFundResponse#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)
 
-#### fund(address: str, amount: int, asset_id: int | None = None) → [DispenserFundResponse](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)
+#### fund(address: str, amount: int, asset_id: int | None = None) → [DispenserFundResponse](/reference/algokit-utils-py/api/DispenserFundResponse#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)
 
 Fund an account with Algos from the dispenser API
 
@@ -40,6 +40,6 @@ Fund an account with Algos from the dispenser API
 
 Register a refund for a transaction with the dispenser API
 
-#### get_limit(address: str) → [DispenserLimitResponse](#algokit_utils.clients.dispenser_api_client.DispenserLimitResponse)
+#### get_limit(address: str) → [DispenserLimitResponse](/reference/algokit-utils-py/api/DispenserLimitResponse#algokit_utils.clients.dispenser_api_client.DispenserLimitResponse)
 
 Get current limit for an account with Algos from the dispenser API

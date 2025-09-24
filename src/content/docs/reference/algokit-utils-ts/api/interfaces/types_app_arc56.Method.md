@@ -12,14 +12,14 @@ Describes a method in the contract. This interface is an extension of the interf
 
 ### Properties
 
-- [actions](#actions)
-- [args](#args)
-- [desc](#desc)
-- [events](#events)
-- [name](#name)
-- [readonly](#readonly)
-- [recommendations](#recommendations)
-- [returns](#returns)
+- [actions](types_app_arc56.Method.md#actions)
+- [args](types_app_arc56.Method.md#args)
+- [desc](types_app_arc56.Method.md#desc)
+- [events](types_app_arc56.Method.md#events)
+- [name](types_app_arc56.Method.md#name)
+- [readonly](types_app_arc56.Method.md#readonly)
+- [recommendations](types_app_arc56.Method.md#recommendations)
+- [returns](types_app_arc56.Method.md#returns)
 
 ## Properties
 
@@ -68,7 +68,7 @@ Optional, user-friendly description for the method
 
 ### events
 
-• `Optional` **events**: [`Event`]()[]
+• `Optional` **events**: [`Event`](types_app_arc56.Event.md)[]
 
 ARC-28 events that MAY be emitted by this method
 

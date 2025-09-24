@@ -12,9 +12,9 @@ Represents the data for a single TEAL source
 
 ### Properties
 
-- [appName](#appname)
-- [compiledTeal](#compiledteal)
-- [fileName](#filename)
+- [appName](types_debugging.TealSourceDebugEventData.md#appname)
+- [compiledTeal](types_debugging.TealSourceDebugEventData.md#compiledteal)
+- [fileName](types_debugging.TealSourceDebugEventData.md#filename)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The name of the application
 
 ### compiledTeal
 
-• **compiledTeal**: [`CompiledTeal`]()
+• **compiledTeal**: [`CompiledTeal`](types_app.CompiledTeal.md)
 
 The compiled TEAL code
 

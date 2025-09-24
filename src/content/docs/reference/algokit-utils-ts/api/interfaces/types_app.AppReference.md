@@ -12,14 +12,14 @@ Information about an Algorand app
 
 - **`AppReference`**
 
-  ↳ [`AppMetadata`]()
+  ↳ [`AppMetadata`](types_app.AppMetadata.md)
 
 ## Table of contents
 
 ### Properties
 
-- [appAddress](#appaddress)
-- [appId](#appid)
+- [appAddress](types_app.AppReference.md#appaddress)
+- [appId](types_app.AppReference.md#appid)
 
 ## Properties
 

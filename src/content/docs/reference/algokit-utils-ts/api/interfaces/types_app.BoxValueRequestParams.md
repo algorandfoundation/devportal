@@ -15,9 +15,9 @@ Parameters to get and decode a box value as an ABI type.
 
 ### Properties
 
-- [appId](#appid)
-- [boxName](#boxname)
-- [type](#type)
+- [appId](types_app.BoxValueRequestParams.md#appid)
+- [boxName](types_app.BoxValueRequestParams.md#boxname)
+- [type](types_app.BoxValueRequestParams.md#type)
 
 ## Properties
 
@@ -35,7 +35,7 @@ The ID of the app return box names for
 
 ### boxName
 
-• **boxName**: `string` \| `Uint8Array` \| [`BoxName`]()
+• **boxName**: `string` \| `Uint8Array` \| [`BoxName`](types_app.BoxName.md)
 
 The name of the box to return either as a string, binary array or `BoxName`
 

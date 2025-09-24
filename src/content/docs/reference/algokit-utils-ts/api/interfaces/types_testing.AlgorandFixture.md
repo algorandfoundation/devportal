@@ -12,13 +12,13 @@ An Algorand automated testing fixture
 
 ### Properties
 
-- [beforeEach](#beforeeach)
-- [newScope](#newscope)
+- [beforeEach](types_testing.AlgorandFixture.md#beforeeach)
+- [newScope](types_testing.AlgorandFixture.md#newscope)
 
 ### Accessors
 
-- [algorand](#algorand)
-- [context](#context)
+- [algorand](types_testing.AlgorandFixture.md#algorand)
+- [context](types_testing.AlgorandFixture.md#context)
 
 ## Properties
 
@@ -119,7 +119,7 @@ Retrieve an `AlgorandClient` loaded with the current context, including testAcco
 
 ### context
 
-• `get` **context**(): [`AlgorandTestAutomationContext`]()
+• `get` **context**(): [`AlgorandTestAutomationContext`](types_testing.AlgorandTestAutomationContext.md)
 
 Retrieve the current context.
 Useful with destructuring.
@@ -128,7 +128,7 @@ If you haven't called `newScope` then this will throw an error.
 
 #### Returns
 
-[`AlgorandTestAutomationContext`]()
+[`AlgorandTestAutomationContext`](types_testing.AlgorandTestAutomationContext.md)
 
 **`Example`**
 

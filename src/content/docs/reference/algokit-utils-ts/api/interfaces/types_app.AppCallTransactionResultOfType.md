@@ -16,9 +16,9 @@ The result of preparing and/or sending multiple transactions
 
 ## Hierarchy
 
-- [`SendTransactionResults`]()
+- [`SendTransactionResults`](types_transaction.SendTransactionResults.md)
 
-- [`SendTransactionResult`]()
+- [`SendTransactionResult`](types_transaction.SendTransactionResult.md)
 
   ↳ **`AppCallTransactionResultOfType`**
 
@@ -26,11 +26,11 @@ The result of preparing and/or sending multiple transactions
 
 ### Properties
 
-- [confirmation](#confirmation)
-- [confirmations](#confirmations)
-- [return](#return)
-- [transaction](#transaction)
-- [transactions](#transactions)
+- [confirmation](types_app.AppCallTransactionResultOfType.md#confirmation)
+- [confirmations](types_app.AppCallTransactionResultOfType.md#confirmations)
+- [return](types_app.AppCallTransactionResultOfType.md#return)
+- [transaction](types_app.AppCallTransactionResultOfType.md#transaction)
+- [transactions](types_app.AppCallTransactionResultOfType.md#transactions)
 
 ## Properties
 
@@ -42,7 +42,7 @@ The response if the transaction was sent and waited for
 
 #### Inherited from
 
-[SendTransactionResult]().[confirmation](#confirmation)
+[SendTransactionResult](types_transaction.SendTransactionResult.md).[confirmation](types_transaction.SendTransactionResult.md#confirmation)
 
 #### Defined in
 
@@ -59,7 +59,7 @@ the index of the confirmation will match the index of the underlying transaction
 
 #### Inherited from
 
-[SendTransactionResults]().[confirmations](#confirmations)
+[SendTransactionResults](types_transaction.SendTransactionResults.md).[confirmations](types_transaction.SendTransactionResults.md#confirmations)
 
 #### Defined in
 
@@ -87,7 +87,7 @@ The transaction
 
 #### Inherited from
 
-[SendTransactionResult]().[transaction](#transaction)
+[SendTransactionResult](types_transaction.SendTransactionResult.md).[transaction](types_transaction.SendTransactionResult.md#transaction)
 
 #### Defined in
 
@@ -103,7 +103,7 @@ The transactions that have been prepared and/or sent
 
 #### Inherited from
 
-[SendTransactionResults]().[transactions](#transactions)
+[SendTransactionResults](types_transaction.SendTransactionResults.md).[transactions](types_transaction.SendTransactionResults.md#transactions)
 
 #### Defined in
 

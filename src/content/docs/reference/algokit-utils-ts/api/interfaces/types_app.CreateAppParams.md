@@ -22,22 +22,22 @@ Parameters that are passed in when creating an app.
 
 ### Properties
 
-- [approvalProgram](#approvalprogram)
-- [args](#args)
-- [atc](#atc)
-- [clearStateProgram](#clearstateprogram)
-- [fee](#fee)
-- [from](#from)
-- [maxFee](#maxfee)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [note](#note)
-- [onCompleteAction](#oncompleteaction)
-- [populateAppCallResources](#populateappcallresources)
-- [schema](#schema)
-- [skipSending](#skipsending)
-- [skipWaiting](#skipwaiting)
-- [suppressLog](#suppresslog)
-- [transactionParams](#transactionparams)
+- [approvalProgram](types_app.CreateAppParams.md#approvalprogram)
+- [args](types_app.CreateAppParams.md#args)
+- [atc](types_app.CreateAppParams.md#atc)
+- [clearStateProgram](types_app.CreateAppParams.md#clearstateprogram)
+- [fee](types_app.CreateAppParams.md#fee)
+- [from](types_app.CreateAppParams.md#from)
+- [maxFee](types_app.CreateAppParams.md#maxfee)
+- [maxRoundsToWaitForConfirmation](types_app.CreateAppParams.md#maxroundstowaitforconfirmation)
+- [note](types_app.CreateAppParams.md#note)
+- [onCompleteAction](types_app.CreateAppParams.md#oncompleteaction)
+- [populateAppCallResources](types_app.CreateAppParams.md#populateappcallresources)
+- [schema](types_app.CreateAppParams.md#schema)
+- [skipSending](types_app.CreateAppParams.md#skipsending)
+- [skipWaiting](types_app.CreateAppParams.md#skipwaiting)
+- [suppressLog](types_app.CreateAppParams.md#suppresslog)
+- [transactionParams](types_app.CreateAppParams.md#transactionparams)
 
 ## Properties
 
@@ -215,7 +215,7 @@ CreateOrUpdateAppParams.populateAppCallResources
 
 ### schema
 
-• **schema**: [`AppStorageSchema`]()
+• **schema**: [`AppStorageSchema`](types_app.AppStorageSchema.md)
 
 The storage schema to request for the created app
 

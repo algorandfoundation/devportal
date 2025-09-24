@@ -12,8 +12,8 @@ A grouping of the app ID and name identifier to reference an app box.
 
 ### Properties
 
-- [appId](#appid)
-- [name](#name)
+- [appId](types_app_manager.BoxReference.md#appid)
+- [name](types_app_manager.BoxReference.md#name)
 
 ## Properties
 

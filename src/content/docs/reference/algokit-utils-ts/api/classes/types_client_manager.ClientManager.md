@@ -12,57 +12,57 @@ Exposes access to various API clients.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_client_manager.ClientManager.md#constructor)
 
 ### Properties
 
-- [\_algod](#_algod)
-- [\_algorand](#_algorand)
-- [\_getNetworkPromise](#_getnetworkpromise)
-- [\_indexer](#_indexer)
-- [\_kmd](#_kmd)
+- [\_algod](types_client_manager.ClientManager.md#_algod)
+- [\_algorand](types_client_manager.ClientManager.md#_algorand)
+- [\_getNetworkPromise](types_client_manager.ClientManager.md#_getnetworkpromise)
+- [\_indexer](types_client_manager.ClientManager.md#_indexer)
+- [\_kmd](types_client_manager.ClientManager.md#_kmd)
 
 ### Accessors
 
-- [algod](#algod)
-- [indexer](#indexer)
-- [indexerIfPresent](#indexerifpresent)
-- [kmd](#kmd)
+- [algod](types_client_manager.ClientManager.md#algod)
+- [indexer](types_client_manager.ClientManager.md#indexer)
+- [indexerIfPresent](types_client_manager.ClientManager.md#indexerifpresent)
+- [kmd](types_client_manager.ClientManager.md#kmd)
 
 ### Methods
 
-- [getAppClientByCreatorAndName](#getappclientbycreatorandname)
-- [getAppClientById](#getappclientbyid)
-- [getAppClientByNetwork](#getappclientbynetwork)
-- [getAppFactory](#getappfactory)
-- [getTestNetDispenser](#gettestnetdispenser)
-- [getTestNetDispenserFromEnvironment](#gettestnetdispenserfromenvironment)
-- [getTypedAppClientByCreatorAndName](#gettypedappclientbycreatorandname)
-- [getTypedAppClientById](#gettypedappclientbyid)
-- [getTypedAppClientByNetwork](#gettypedappclientbynetwork)
-- [getTypedAppFactory](#gettypedappfactory)
-- [isLocalNet](#islocalnet)
-- [isMainNet](#ismainnet)
-- [isTestNet](#istestnet)
-- [network](#network)
-- [genesisIdIsLocalNet](#genesisidislocalnet)
-- [getAlgoNodeConfig](#getalgonodeconfig)
-- [getAlgodClient](#getalgodclient)
-- [getAlgodClientFromEnvironment](#getalgodclientfromenvironment)
-- [getAlgodConfigFromEnvironment](#getalgodconfigfromenvironment)
-- [getConfigFromEnvironmentOrLocalNet](#getconfigfromenvironmentorlocalnet)
-- [getDefaultLocalNetConfig](#getdefaultlocalnetconfig)
-- [getIndexerClient](#getindexerclient)
-- [getIndexerClientFromEnvironment](#getindexerclientfromenvironment)
-- [getIndexerConfigFromEnvironment](#getindexerconfigfromenvironment)
-- [getKmdClient](#getkmdclient)
-- [getKmdClientFromEnvironment](#getkmdclientfromenvironment)
+- [getAppClientByCreatorAndName](types_client_manager.ClientManager.md#getappclientbycreatorandname)
+- [getAppClientById](types_client_manager.ClientManager.md#getappclientbyid)
+- [getAppClientByNetwork](types_client_manager.ClientManager.md#getappclientbynetwork)
+- [getAppFactory](types_client_manager.ClientManager.md#getappfactory)
+- [getTestNetDispenser](types_client_manager.ClientManager.md#gettestnetdispenser)
+- [getTestNetDispenserFromEnvironment](types_client_manager.ClientManager.md#gettestnetdispenserfromenvironment)
+- [getTypedAppClientByCreatorAndName](types_client_manager.ClientManager.md#gettypedappclientbycreatorandname)
+- [getTypedAppClientById](types_client_manager.ClientManager.md#gettypedappclientbyid)
+- [getTypedAppClientByNetwork](types_client_manager.ClientManager.md#gettypedappclientbynetwork)
+- [getTypedAppFactory](types_client_manager.ClientManager.md#gettypedappfactory)
+- [isLocalNet](types_client_manager.ClientManager.md#islocalnet)
+- [isMainNet](types_client_manager.ClientManager.md#ismainnet)
+- [isTestNet](types_client_manager.ClientManager.md#istestnet)
+- [network](types_client_manager.ClientManager.md#network)
+- [genesisIdIsLocalNet](types_client_manager.ClientManager.md#genesisidislocalnet)
+- [getAlgoNodeConfig](types_client_manager.ClientManager.md#getalgonodeconfig)
+- [getAlgodClient](types_client_manager.ClientManager.md#getalgodclient)
+- [getAlgodClientFromEnvironment](types_client_manager.ClientManager.md#getalgodclientfromenvironment)
+- [getAlgodConfigFromEnvironment](types_client_manager.ClientManager.md#getalgodconfigfromenvironment)
+- [getConfigFromEnvironmentOrLocalNet](types_client_manager.ClientManager.md#getconfigfromenvironmentorlocalnet)
+- [getDefaultLocalNetConfig](types_client_manager.ClientManager.md#getdefaultlocalnetconfig)
+- [getIndexerClient](types_client_manager.ClientManager.md#getindexerclient)
+- [getIndexerClientFromEnvironment](types_client_manager.ClientManager.md#getindexerclientfromenvironment)
+- [getIndexerConfigFromEnvironment](types_client_manager.ClientManager.md#getindexerconfigfromenvironment)
+- [getKmdClient](types_client_manager.ClientManager.md#getkmdclient)
+- [getKmdClientFromEnvironment](types_client_manager.ClientManager.md#getkmdclientfromenvironment)
 
 ## Constructors
 
 ### constructor
 
-• **new ClientManager**(`clientsOrConfig`, `algorandClient?`): [`ClientManager`]()
+• **new ClientManager**(`clientsOrConfig`, `algorandClient?`): [`ClientManager`](types_client_manager.ClientManager.md)
 
 algosdk clients or config for interacting with the official Algorand APIs.
 
@@ -71,11 +71,11 @@ algosdk clients or config for interacting with the official Algorand APIs.
 | Name              | Type                                                                                                                                                                                             | Description                  |
 | :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------- |
 | `clientsOrConfig` | [`AlgoConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoconfig/) \| [`AlgoSdkClients`](/reference/algokit-utils-ts/api/interfaces/types_client_manageralgosdkclients/) | The clients or config to use |
-| `algorandClient?` | [`AlgorandClient`]()                                                                                                                                                                             | -                            |
+| `algorandClient?` | [`AlgorandClient`](types_algorand_client.AlgorandClient.md)                                                                                                                                      | -                            |
 
 #### Returns
 
-[`ClientManager`]()
+[`ClientManager`](types_client_manager.ClientManager.md)
 
 **`Example`**
 
@@ -123,7 +123,7 @@ const clientManager = new ClientManager({ algodConfig, indexerConfig, kmdConfig 
 
 ### \_algorand
 
-• `Private` `Optional` **\_algorand**: [`AlgorandClient`]()
+• `Private` `Optional` **\_algorand**: [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
 
 #### Defined in
 
@@ -243,7 +243,7 @@ Error if no KMD client is configured
 
 ### getAppClientByCreatorAndName
 
-▸ **getAppClientByCreatorAndName**(`params`): `Promise`\<[`AppClient`]()\>
+▸ **getAppClientByCreatorAndName**(`params`): `Promise`\<[`AppClient`](types_app_client.AppClient.md)\>
 
 Returns a new `AppClient` client for managing calls and state for an ARC-32/ARC-56 app.
 This method resolves the app ID by looking up the creator address and name
@@ -266,7 +266,7 @@ using AlgoKit app deployment semantics (i.e. looking for the app creation transa
 
 #### Returns
 
-`Promise`\<[`AppClient`]()\>
+`Promise`\<[`AppClient`](types_app_client.AppClient.md)\>
 
 The `AppClient` instance
 
@@ -288,7 +288,7 @@ const appClient = clientManager.getAppClientByCreatorAndName({
 
 ### getAppClientById
 
-▸ **getAppClientById**(`params`): [`AppClient`]()
+▸ **getAppClientById**(`params`): [`AppClient`](types_app_client.AppClient.md)
 
 Returns a new `AppClient` client for managing calls and state for an ARC-32/ARC-56 app.
 
@@ -307,7 +307,7 @@ Returns a new `AppClient` client for managing calls and state for an ARC-32/ARC-
 
 #### Returns
 
-[`AppClient`]()
+[`AppClient`](types_app_client.AppClient.md)
 
 The `AppClient` instance
 
@@ -328,7 +328,7 @@ const appClient = clientManager.getAppClientById({
 
 ### getAppClientByNetwork
 
-▸ **getAppClientByNetwork**(`params`): `Promise`\<[`AppClient`]()\>
+▸ **getAppClientByNetwork**(`params`): `Promise`\<[`AppClient`](types_app_client.AppClient.md)\>
 
 Returns a new `AppClient` client for managing calls and state for an ARC-56 app.
 This method resolves the app ID for the current network based on
@@ -350,7 +350,7 @@ If no IDs are in the app spec or the network isn't recognised, an error is throw
 
 #### Returns
 
-`Promise`\<[`AppClient`]()\>
+`Promise`\<[`AppClient`](types_app_client.AppClient.md)\>
 
 The `AppClient` instance
 
@@ -371,7 +371,7 @@ const appClient = clientManager.getAppClientByNetwork({
 
 ### getAppFactory
 
-▸ **getAppFactory**(`params`): [`AppFactory`]()
+▸ **getAppFactory**(`params`): [`AppFactory`](types_app_factory.AppFactory.md)
 
 Returns a new `AppFactory` client
 
@@ -391,7 +391,7 @@ Returns a new `AppFactory` client
 
 #### Returns
 
-[`AppFactory`]()
+[`AppFactory`](types_app_factory.AppFactory.md)
 
 The `AppFactory` instance
 
@@ -425,7 +425,7 @@ const factory = clientManager.getAppFactory({
 
 ### getTestNetDispenser
 
-▸ **getTestNetDispenser**(`params`): [`TestNetDispenserApiClient`]()
+▸ **getTestNetDispenser**(`params`): [`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
 
 Returns a TestNet Dispenser API client.
 
@@ -439,7 +439,7 @@ Refer to [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/tes
 
 #### Returns
 
-[`TestNetDispenserApiClient`]()
+[`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
 
 An instance of the TestNetDispenserApiClient class.
 
@@ -460,7 +460,7 @@ const client = clientManager.getTestNetDispenser({
 
 ### getTestNetDispenserFromEnvironment
 
-▸ **getTestNetDispenserFromEnvironment**(`params?`): [`TestNetDispenserApiClient`]()
+▸ **getTestNetDispenserFromEnvironment**(`params?`): [`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
 
 Returns a TestNet Dispenser API client, loading the auth token from `process.env.ALGOKIT_DISPENSER_ACCESS_TOKEN`.
 
@@ -474,7 +474,7 @@ Refer to [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/tes
 
 #### Returns
 
-[`TestNetDispenserApiClient`]()
+[`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
 
 An instance of the TestNetDispenserApiClient class.
 

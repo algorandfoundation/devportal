@@ -16,14 +16,14 @@ title: AppClientCallABIArgs
 
 ### Properties
 
-- [accounts](#accounts)
-- [apps](#apps)
-- [assets](#assets)
-- [boxes](#boxes)
-- [lease](#lease)
-- [method](#method)
-- [methodArgs](#methodargs)
-- [rekeyTo](#rekeyto)
+- [accounts](types_app_client.AppClientCallABIArgs.md#accounts)
+- [apps](types_app_client.AppClientCallABIArgs.md#apps)
+- [assets](types_app_client.AppClientCallABIArgs.md#assets)
+- [boxes](types_app_client.AppClientCallABIArgs.md#boxes)
+- [lease](types_app_client.AppClientCallABIArgs.md#lease)
+- [method](types_app_client.AppClientCallABIArgs.md#method)
+- [methodArgs](types_app_client.AppClientCallABIArgs.md#methodargs)
+- [rekeyTo](types_app_client.AppClientCallABIArgs.md#rekeyto)
 
 ## Properties
 
@@ -77,7 +77,7 @@ Omit.assets
 
 ### boxes
 
-• `Optional` **boxes**: ([`BoxReference`]() \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
+• `Optional` **boxes**: ([`BoxReference`](types_app.BoxReference.md) \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
 
 Any box references to load
 

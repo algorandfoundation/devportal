@@ -12,11 +12,11 @@ Parameters representing the storage schema of an app.
 
 ### Properties
 
-- [extraPages](#extrapages)
-- [globalByteSlices](#globalbyteslices)
-- [globalInts](#globalints)
-- [localByteSlices](#localbyteslices)
-- [localInts](#localints)
+- [extraPages](types_app.AppStorageSchema.md#extrapages)
+- [globalByteSlices](types_app.AppStorageSchema.md#globalbyteslices)
+- [globalInts](types_app.AppStorageSchema.md#globalints)
+- [localByteSlices](types_app.AppStorageSchema.md#localbyteslices)
+- [localInts](types_app.AppStorageSchema.md#localints)
 
 ## Properties
 

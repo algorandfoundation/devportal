@@ -18,7 +18,7 @@ The optional list of applications
 
 The optional list of assets
 
-#### boxes _: [Boxes](#algokit_utils.applications.app_spec.arc56.Boxes) | None_ _= None_
+#### boxes _: [Boxes](/reference/algokit-utils-py/api/Boxes#algokit_utils.applications.app_spec.arc56.Boxes) | None_ _= None_
 
 The optional box storage requirements
 

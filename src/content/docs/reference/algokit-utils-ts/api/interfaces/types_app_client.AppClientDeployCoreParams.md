@@ -12,19 +12,19 @@ Core parameters to pass into ApplicationClient.deploy
 
 - **`AppClientDeployCoreParams`**
 
-  ↳ [`AppClientDeployParams`]()
+  ↳ [`AppClientDeployParams`](types_app_client.AppClientDeployParams.md)
 
 ## Table of contents
 
 ### Properties
 
-- [allowDelete](#allowdelete)
-- [allowUpdate](#allowupdate)
-- [onSchemaBreak](#onschemabreak)
-- [onUpdate](#onupdate)
-- [sendParams](#sendparams)
-- [sender](#sender)
-- [version](#version)
+- [allowDelete](types_app_client.AppClientDeployCoreParams.md#allowdelete)
+- [allowUpdate](types_app_client.AppClientDeployCoreParams.md#allowupdate)
+- [onSchemaBreak](types_app_client.AppClientDeployCoreParams.md#onschemabreak)
+- [onUpdate](types_app_client.AppClientDeployCoreParams.md#onupdate)
+- [sendParams](types_app_client.AppClientDeployCoreParams.md#sendparams)
+- [sender](types_app_client.AppClientDeployCoreParams.md#sender)
+- [version](types_app_client.AppClientDeployCoreParams.md#version)
 
 ## Properties
 
@@ -80,7 +80,7 @@ What action to perform if a TEAL update is detected
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](), `"skipSending"` \| `"skipWaiting"`\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](types_transaction.SendTransactionParams.md), `"skipSending"` \| `"skipWaiting"`\>
 
 Parameters to control transaction sending
 

@@ -12,29 +12,29 @@ Parameters for `assetOptIn` call.
 
 ## Hierarchy
 
-- [`SendTransactionParams`]()
+- [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
 
   ↳ **`AssetOptInParams`**
 
-  ↳↳ [`AssetOptOutParams`]()
+  ↳↳ [`AssetOptOutParams`](types_asset.AssetOptOutParams.md)
 
 ## Table of contents
 
 ### Properties
 
-- [account](#account)
-- [assetId](#assetid)
-- [atc](#atc)
-- [fee](#fee)
-- [lease](#lease)
-- [maxFee](#maxfee)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [note](#note)
-- [populateAppCallResources](#populateappcallresources)
-- [skipSending](#skipsending)
-- [skipWaiting](#skipwaiting)
-- [suppressLog](#suppresslog)
-- [transactionParams](#transactionparams)
+- [account](types_asset.AssetOptInParams.md#account)
+- [assetId](types_asset.AssetOptInParams.md#assetid)
+- [atc](types_asset.AssetOptInParams.md#atc)
+- [fee](types_asset.AssetOptInParams.md#fee)
+- [lease](types_asset.AssetOptInParams.md#lease)
+- [maxFee](types_asset.AssetOptInParams.md#maxfee)
+- [maxRoundsToWaitForConfirmation](types_asset.AssetOptInParams.md#maxroundstowaitforconfirmation)
+- [note](types_asset.AssetOptInParams.md#note)
+- [populateAppCallResources](types_asset.AssetOptInParams.md#populateappcallresources)
+- [skipSending](types_asset.AssetOptInParams.md#skipsending)
+- [skipWaiting](types_asset.AssetOptInParams.md#skipwaiting)
+- [suppressLog](types_asset.AssetOptInParams.md#suppresslog)
+- [transactionParams](types_asset.AssetOptInParams.md#transactionparams)
 
 ## Properties
 
@@ -70,7 +70,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[SendTransactionParams]().[atc](#atc)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[atc](types_transaction.SendTransactionParams.md#atc)
 
 #### Defined in
 
@@ -86,7 +86,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 #### Inherited from
 
-[SendTransactionParams]().[fee](#fee)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[fee](types_transaction.SendTransactionParams.md#fee)
 
 #### Defined in
 
@@ -114,7 +114,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 #### Inherited from
 
-[SendTransactionParams]().[maxFee](#maxfee)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxFee](types_transaction.SendTransactionParams.md#maxfee)
 
 #### Defined in
 
@@ -130,7 +130,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[SendTransactionParams]().[maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxRoundsToWaitForConfirmation](types_transaction.SendTransactionParams.md#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -158,7 +158,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendTransactionParams]().[populateAppCallResources](#populateappcallresources)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[populateAppCallResources](types_transaction.SendTransactionParams.md#populateappcallresources)
 
 #### Defined in
 
@@ -175,7 +175,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[SendTransactionParams]().[skipSending](#skipsending)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipSending](types_transaction.SendTransactionParams.md#skipsending)
 
 #### Defined in
 
@@ -191,7 +191,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[SendTransactionParams]().[skipWaiting](#skipwaiting)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipWaiting](types_transaction.SendTransactionParams.md#skipwaiting)
 
 #### Defined in
 
@@ -207,7 +207,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendTransactionParams]().[suppressLog](#suppresslog)
+[SendTransactionParams](types_transaction.SendTransactionParams.md).[suppressLog](types_transaction.SendTransactionParams.md#suppresslog)
 
 #### Defined in
 

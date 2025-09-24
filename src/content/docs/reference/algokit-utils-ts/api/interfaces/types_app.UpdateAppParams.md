@@ -22,21 +22,21 @@ Parameters that are passed in when updating an app.
 
 ### Properties
 
-- [appId](#appid)
-- [approvalProgram](#approvalprogram)
-- [args](#args)
-- [atc](#atc)
-- [clearStateProgram](#clearstateprogram)
-- [fee](#fee)
-- [from](#from)
-- [maxFee](#maxfee)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [note](#note)
-- [populateAppCallResources](#populateappcallresources)
-- [skipSending](#skipsending)
-- [skipWaiting](#skipwaiting)
-- [suppressLog](#suppresslog)
-- [transactionParams](#transactionparams)
+- [appId](types_app.UpdateAppParams.md#appid)
+- [approvalProgram](types_app.UpdateAppParams.md#approvalprogram)
+- [args](types_app.UpdateAppParams.md#args)
+- [atc](types_app.UpdateAppParams.md#atc)
+- [clearStateProgram](types_app.UpdateAppParams.md#clearstateprogram)
+- [fee](types_app.UpdateAppParams.md#fee)
+- [from](types_app.UpdateAppParams.md#from)
+- [maxFee](types_app.UpdateAppParams.md#maxfee)
+- [maxRoundsToWaitForConfirmation](types_app.UpdateAppParams.md#maxroundstowaitforconfirmation)
+- [note](types_app.UpdateAppParams.md#note)
+- [populateAppCallResources](types_app.UpdateAppParams.md#populateappcallresources)
+- [skipSending](types_app.UpdateAppParams.md#skipsending)
+- [skipWaiting](types_app.UpdateAppParams.md#skipwaiting)
+- [suppressLog](types_app.UpdateAppParams.md#suppresslog)
+- [transactionParams](types_app.UpdateAppParams.md#transactionparams)
 
 ## Properties
 

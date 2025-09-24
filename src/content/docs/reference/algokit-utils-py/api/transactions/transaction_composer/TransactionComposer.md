@@ -41,7 +41,7 @@ Add a raw transaction to the composer.
   >>> composer.add_transaction(transaction)
   ```
 
-#### add_payment(params: [PaymentParams](#algokit_utils.transactions.transaction_composer.PaymentParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_payment(params: [PaymentParams](/reference/algokit-utils-py/api/PaymentParams#algokit_utils.transactions.transaction_composer.PaymentParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add a payment transaction.
 
@@ -61,7 +61,7 @@ Add a payment transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_asset_create(params: [AssetCreateParams](#algokit_utils.transactions.transaction_composer.AssetCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_create(params: [AssetCreateParams](/reference/algokit-utils-py/api/AssetCreateParams#algokit_utils.transactions.transaction_composer.AssetCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset creation transaction.
 
@@ -87,7 +87,7 @@ Add an asset creation transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_asset_config(params: [AssetConfigParams](#algokit_utils.transactions.transaction_composer.AssetConfigParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_config(params: [AssetConfigParams](/reference/algokit-utils-py/api/AssetConfigParams#algokit_utils.transactions.transaction_composer.AssetConfigParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset configuration transaction.
 
@@ -109,7 +109,7 @@ Add an asset configuration transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_asset_freeze(params: [AssetFreezeParams](#algokit_utils.transactions.transaction_composer.AssetFreezeParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_freeze(params: [AssetFreezeParams](/reference/algokit-utils-py/api/AssetFreezeParams#algokit_utils.transactions.transaction_composer.AssetFreezeParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset freeze transaction.
 
@@ -129,7 +129,7 @@ Add an asset freeze transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_asset_destroy(params: [AssetDestroyParams](#algokit_utils.transactions.transaction_composer.AssetDestroyParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_destroy(params: [AssetDestroyParams](/reference/algokit-utils-py/api/AssetDestroyParams#algokit_utils.transactions.transaction_composer.AssetDestroyParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset destruction transaction.
 
@@ -146,7 +146,7 @@ Add an asset destruction transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_asset_transfer(params: [AssetTransferParams](#algokit_utils.transactions.transaction_composer.AssetTransferParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_transfer(params: [AssetTransferParams](/reference/algokit-utils-py/api/AssetTransferParams#algokit_utils.transactions.transaction_composer.AssetTransferParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset transfer transaction.
 
@@ -167,7 +167,7 @@ Add an asset transfer transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_asset_opt_in(params: [AssetOptInParams](#algokit_utils.transactions.transaction_composer.AssetOptInParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_opt_in(params: [AssetOptInParams](/reference/algokit-utils-py/api/AssetOptInParams#algokit_utils.transactions.transaction_composer.AssetOptInParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset opt-in transaction.
 
@@ -185,7 +185,7 @@ Add an asset opt-in transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_asset_opt_out(params: [AssetOptOutParams](#algokit_utils.transactions.transaction_composer.AssetOptOutParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_opt_out(params: [AssetOptOutParams](/reference/algokit-utils-py/api/AssetOptOutParams#algokit_utils.transactions.transaction_composer.AssetOptOutParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an asset opt-out transaction.
 
@@ -203,7 +203,7 @@ Add an asset opt-out transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_app_create(params: [AppCreateParams](#algokit_utils.transactions.transaction_composer.AppCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_create(params: [AppCreateParams](/reference/algokit-utils-py/api/AppCreateParams#algokit_utils.transactions.transaction_composer.AppCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application creation transaction.
 
@@ -230,7 +230,7 @@ Add an application creation transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_app_update(params: [AppUpdateParams](#algokit_utils.transactions.transaction_composer.AppUpdateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_update(params: [AppUpdateParams](/reference/algokit-utils-py/api/AppUpdateParams#algokit_utils.transactions.transaction_composer.AppUpdateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application update transaction.
 
@@ -255,7 +255,7 @@ Add an application update transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_app_delete(params: [AppDeleteParams](#algokit_utils.transactions.transaction_composer.AppDeleteParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_delete(params: [AppDeleteParams](/reference/algokit-utils-py/api/AppDeleteParams#algokit_utils.transactions.transaction_composer.AppDeleteParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application deletion transaction.
 
@@ -278,7 +278,7 @@ Add an application deletion transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_app_call(params: [AppCallParams](#algokit_utils.transactions.transaction_composer.AppCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_call(params: [AppCallParams](/reference/algokit-utils-py/api/AppCallParams#algokit_utils.transactions.transaction_composer.AppCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application call transaction.
 
@@ -300,7 +300,7 @@ Add an application call transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_app_create_method_call(params: [AppCreateMethodCallParams](#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_create_method_call(params: [AppCreateMethodCallParams](/reference/algokit-utils-py/api/AppCreateMethodCallParams#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application creation method call transaction.
 
@@ -363,7 +363,7 @@ Add an application creation method call transaction.
   ... )
   ```
 
-#### add_app_update_method_call(params: [AppUpdateMethodCallParams](#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_update_method_call(params: [AppUpdateMethodCallParams](/reference/algokit-utils-py/api/AppUpdateMethodCallParams#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application update method call transaction.
 
@@ -372,7 +372,7 @@ Add an application update method call transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_app_delete_method_call(params: [AppDeleteMethodCallParams](#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_delete_method_call(params: [AppDeleteMethodCallParams](/reference/algokit-utils-py/api/AppDeleteMethodCallParams#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application deletion method call transaction.
 
@@ -381,7 +381,7 @@ Add an application deletion method call transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_app_call_method_call(params: [AppCallMethodCallParams](#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_call_method_call(params: [AppCallMethodCallParams](/reference/algokit-utils-py/api/AppCallMethodCallParams#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an application call method call transaction.
 
@@ -390,7 +390,7 @@ Add an application call method call transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_online_key_registration(params: [OnlineKeyRegistrationParams](#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_online_key_registration(params: [OnlineKeyRegistrationParams](/reference/algokit-utils-py/api/OnlineKeyRegistrationParams#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an online key registration transaction.
 
@@ -399,7 +399,7 @@ Add an online key registration transaction.
 - **Returns:**
   The transaction composer instance for chaining
 
-#### add_offline_key_registration(params: [OfflineKeyRegistrationParams](#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_offline_key_registration(params: [OfflineKeyRegistrationParams](/reference/algokit-utils-py/api/OfflineKeyRegistrationParams#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Add an offline key registration transaction.
 
@@ -430,30 +430,30 @@ Get the total number of transactions.
 - **Returns:**
   The number of transactions
 
-#### build() → [TransactionComposerBuildResult](#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)
+#### build() → [TransactionComposerBuildResult](/reference/algokit-utils-py/api/TransactionComposerBuildResult#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)
 
 Build the transaction group.
 
 - **Returns:**
   The built transaction group result
 
-#### rebuild() → [TransactionComposerBuildResult](#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)
+#### rebuild() → [TransactionComposerBuildResult](/reference/algokit-utils-py/api/TransactionComposerBuildResult#algokit_utils.transactions.transaction_composer.TransactionComposerBuildResult)
 
 Rebuild the transaction group from scratch.
 
 - **Returns:**
   The rebuilt transaction group result
 
-#### build_transactions() → [BuiltTransactions](#algokit_utils.transactions.transaction_composer.BuiltTransactions)
+#### build_transactions() → [BuiltTransactions](/reference/algokit-utils-py/api/BuiltTransactions#algokit_utils.transactions.transaction_composer.BuiltTransactions)
 
 Build and return the transactions without executing them.
 
 - **Returns:**
   The built transactions result
 
-#### execute(\*, max_rounds_to_wait: int | None = None) → [SendAtomicTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+#### execute(\*, max_rounds_to_wait: int | None = None) → [SendAtomicTransactionComposerResults](/reference/algokit-utils-py/api/SendAtomicTransactionComposerResults#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
 
-#### send(params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/models/transaction/sendparams/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAtomicTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+#### send(params: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/models/transaction/sendparams/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAtomicTransactionComposerResults](/reference/algokit-utils-py/api/SendAtomicTransactionComposerResults#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
 
 Send the transaction group to the network.
 
@@ -464,7 +464,7 @@ Send the transaction group to the network.
 - **Raises:**
   **self.\_transform_error** – If the transaction fails (may be transformed by error transformers)
 
-#### simulate(allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None, skip_signatures: bool | None = None) → [SendAtomicTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
+#### simulate(allow_more_logs: bool | None = None, allow_empty_signatures: bool | None = None, allow_unnamed_resources: bool | None = None, extra_opcode_budget: int | None = None, exec_trace_config: algosdk.v2client.models.SimulateTraceConfig | None = None, simulation_round: int | None = None, skip_signatures: bool | None = None) → [SendAtomicTransactionComposerResults](/reference/algokit-utils-py/api/SendAtomicTransactionComposerResults#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults)
 
 Simulate transaction group execution with configurable validation rules.
 

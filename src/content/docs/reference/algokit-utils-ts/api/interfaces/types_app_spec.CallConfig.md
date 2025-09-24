@@ -12,11 +12,11 @@ Call configuration for a method
 
 ### Properties
 
-- [close_out](#close_out)
-- [delete_application](#delete_application)
-- [no_op](#no_op)
-- [opt_in](#opt_in)
-- [update_application](#update_application)
+- [close_out](types_app_spec.CallConfig.md#close_out)
+- [delete_application](types_app_spec.CallConfig.md#delete_application)
+- [no_op](types_app_spec.CallConfig.md#no_op)
+- [opt_in](types_app_spec.CallConfig.md#opt_in)
+- [update_application](types_app_spec.CallConfig.md#update_application)
 
 ## Properties
 

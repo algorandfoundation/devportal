@@ -12,38 +12,38 @@ Allows management of asset information.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_asset_manager.AssetManager.md#constructor)
 
 ### Properties
 
-- [\_algod](#_algod)
-- [\_newGroup](#_newgroup)
+- [\_algod](types_asset_manager.AssetManager.md#_algod)
+- [\_newGroup](types_asset_manager.AssetManager.md#_newgroup)
 
 ### Methods
 
-- [bulkOptIn](#bulkoptin)
-- [bulkOptOut](#bulkoptout)
-- [getAccountInformation](#getaccountinformation)
-- [getById](#getbyid)
+- [bulkOptIn](types_asset_manager.AssetManager.md#bulkoptin)
+- [bulkOptOut](types_asset_manager.AssetManager.md#bulkoptout)
+- [getAccountInformation](types_asset_manager.AssetManager.md#getaccountinformation)
+- [getById](types_asset_manager.AssetManager.md#getbyid)
 
 ## Constructors
 
 ### constructor
 
-• **new AssetManager**(`algod`, `newGroup`): [`AssetManager`]()
+• **new AssetManager**(`algod`, `newGroup`): [`AssetManager`](types_asset_manager.AssetManager.md)
 
 Create a new asset manager.
 
 #### Parameters
 
-| Name       | Type                            | Description                                                           |
-| :--------- | :------------------------------ | :-------------------------------------------------------------------- |
-| `algod`    | `AlgodClient`                   | An algod client                                                       |
-| `newGroup` | () => [`TransactionComposer`]() | A function that creates a new `TransactionComposer` transaction group |
+| Name       | Type                                                                 | Description                                                           |
+| :--------- | :------------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| `algod`    | `AlgodClient`                                                        | An algod client                                                       |
+| `newGroup` | () => [`TransactionComposer`](types_composer.TransactionComposer.md) | A function that creates a new `TransactionComposer` transaction group |
 
 #### Returns
 
-[`AssetManager`]()
+[`AssetManager`](types_asset_manager.AssetManager.md)
 
 **`Example`**
 
@@ -69,15 +69,15 @@ const assetManager = new AssetManager(algod, () => new TransactionComposer({algo
 
 ### \_newGroup
 
-• `Private` **\_newGroup**: () => [`TransactionComposer`]()
+• `Private` **\_newGroup**: () => [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 #### Type declaration
 
-▸ (): [`TransactionComposer`]()
+▸ (): [`TransactionComposer`](types_composer.TransactionComposer.md)
 
 ##### Returns
 
-[`TransactionComposer`]()
+[`TransactionComposer`](types_composer.TransactionComposer.md)
 
 #### Defined in
 

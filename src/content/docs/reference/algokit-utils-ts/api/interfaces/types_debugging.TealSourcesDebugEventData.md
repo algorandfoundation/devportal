@@ -12,13 +12,13 @@ Represents the data for multiple TEAL sources debug events emitted whenever an a
 
 ### Properties
 
-- [sources](#sources)
+- [sources](types_debugging.TealSourcesDebugEventData.md#sources)
 
 ## Properties
 
 ### sources
 
-• **sources**: [`TealSourceDebugEventData`]()[]
+• **sources**: [`TealSourceDebugEventData`](types_debugging.TealSourceDebugEventData.md)[]
 
 An array of TEAL source debug event data
 

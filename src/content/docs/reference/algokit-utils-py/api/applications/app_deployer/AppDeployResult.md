@@ -6,7 +6,7 @@ title: algokit_utils.applications.app_deployer.AppDeployResult
 
 The result of a deployment
 
-#### app _: [ApplicationMetaData](#algokit_utils.applications.app_deployer.ApplicationMetaData)_
+#### app _: [ApplicationMetaData](/reference/algokit-utils-py/api/ApplicationMetaData#algokit_utils.applications.app_deployer.ApplicationMetaData)_
 
 The application metadata
 

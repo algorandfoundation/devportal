@@ -21,18 +21,18 @@ title: types/app-spec
 
 ### Type Aliases
 
-- [ABIType](#abitype)
-- [AVMType](#avmtype)
-- [CallConfigValue](#callconfigvalue)
-- [DefaultArgument](#defaultargument)
-- [FieldName](#fieldname)
-- [HintSpec](#hintspec)
-- [StateSchema](#stateschema)
-- [StructElement](#structelement)
+- [ABIType](types_app_spec.md#abitype)
+- [AVMType](types_app_spec.md#avmtype)
+- [CallConfigValue](types_app_spec.md#callconfigvalue)
+- [DefaultArgument](types_app_spec.md#defaultargument)
+- [FieldName](types_app_spec.md#fieldname)
+- [HintSpec](types_app_spec.md#hintspec)
+- [StateSchema](types_app_spec.md#stateschema)
+- [StructElement](types_app_spec.md#structelement)
 
 ### Functions
 
-- [arc32ToArc56](#arc32toarc56)
+- [arc32ToArc56](types_app_spec.md#arc32toarc56)
 
 ## Type Aliases
 
@@ -134,7 +134,7 @@ Schema spec summary for global or local storage
 
 ### StructElement
 
-Ƭ **StructElement**: [[`FieldName`](#fieldname), [`ABIType`](#abitype)]
+Ƭ **StructElement**: [[`FieldName`](types_app_spec.md#fieldname), [`ABIType`](types_app_spec.md#abitype)]
 
 The elements of the struct/tuple: `FieldName`, `ABIType`
 

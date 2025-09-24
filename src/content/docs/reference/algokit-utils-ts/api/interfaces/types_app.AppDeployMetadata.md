@@ -12,18 +12,18 @@ The payload of the metadata to add to the transaction note when deploying an app
 
 - **`AppDeployMetadata`**
 
-  ↳ [`AppMetadata`]()
+  ↳ [`AppMetadata`](types_app_deployer.AppMetadata.md)
 
-  ↳ [`AppMetadata`]()
+  ↳ [`AppMetadata`](types_app.AppMetadata.md)
 
 ## Table of contents
 
 ### Properties
 
-- [deletable](#deletable)
-- [name](#name)
-- [updatable](#updatable)
-- [version](#version)
+- [deletable](types_app.AppDeployMetadata.md#deletable)
+- [name](types_app.AppDeployMetadata.md#name)
+- [updatable](types_app.AppDeployMetadata.md#updatable)
+- [version](types_app.AppDeployMetadata.md#version)
 
 ## Properties
 

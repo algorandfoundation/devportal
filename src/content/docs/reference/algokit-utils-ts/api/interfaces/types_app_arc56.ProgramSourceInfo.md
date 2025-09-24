@@ -10,8 +10,8 @@ title: ProgramSourceInfo
 
 ### Properties
 
-- [pcOffsetMethod](#pcoffsetmethod)
-- [sourceInfo](#sourceinfo)
+- [pcOffsetMethod](types_app_arc56.ProgramSourceInfo.md#pcoffsetmethod)
+- [sourceInfo](types_app_arc56.ProgramSourceInfo.md#sourceinfo)
 
 ## Properties
 

@@ -16,7 +16,7 @@ The program to execute for all OnCompletes other than ClearState
 
 The program to execute for ClearState OnComplete
 
-#### schema _: [AppCreateSchema](#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None_ _= None_
+#### schema _: [AppCreateSchema](/reference/algokit-utils-py/api/AppCreateSchema#algokit_utils.transactions.transaction_composer.AppCreateSchema) | None_ _= None_
 
 The state schema for the app, defaults to None
 

@@ -12,42 +12,42 @@ Account wrapper that supports partial or full multisig signing.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_account.MultisigAccount.md#constructor)
 
 ### Properties
 
-- [\_addr](#_addr)
-- [\_params](#_params)
-- [\_signer](#_signer)
-- [\_signingAccounts](#_signingaccounts)
+- [\_addr](types_account.MultisigAccount.md#_addr)
+- [\_params](types_account.MultisigAccount.md#_params)
+- [\_signer](types_account.MultisigAccount.md#_signer)
+- [\_signingAccounts](types_account.MultisigAccount.md#_signingaccounts)
 
 ### Accessors
 
-- [addr](#addr)
-- [params](#params)
-- [signer](#signer)
-- [signingAccounts](#signingaccounts)
+- [addr](types_account.MultisigAccount.md#addr)
+- [params](types_account.MultisigAccount.md#params)
+- [signer](types_account.MultisigAccount.md#signer)
+- [signingAccounts](types_account.MultisigAccount.md#signingaccounts)
 
 ### Methods
 
-- [sign](#sign)
+- [sign](types_account.MultisigAccount.md#sign)
 
 ## Constructors
 
 ### constructor
 
-• **new MultisigAccount**(`multisigParams`, `signingAccounts`): [`MultisigAccount`]()
+• **new MultisigAccount**(`multisigParams`, `signingAccounts`): [`MultisigAccount`](types_account.MultisigAccount.md)
 
 #### Parameters
 
-| Name              | Type                                  |
-| :---------------- | :------------------------------------ |
-| `multisigParams`  | `MultisigMetadata`                    |
-| `signingAccounts` | (`default` \| [`SigningAccount`]())[] |
+| Name              | Type                                                                 |
+| :---------------- | :------------------------------------------------------------------- |
+| `multisigParams`  | `MultisigMetadata`                                                   |
+| `signingAccounts` | (`default` \| [`SigningAccount`](types_account.SigningAccount.md))[] |
 
 #### Returns
 
-[`MultisigAccount`]()
+[`MultisigAccount`](types_account.MultisigAccount.md)
 
 #### Defined in
 
@@ -87,7 +87,7 @@ Account wrapper that supports partial or full multisig signing.
 
 ### \_signingAccounts
 
-• **\_signingAccounts**: (`default` \| [`SigningAccount`]())[]
+• **\_signingAccounts**: (`default` \| [`SigningAccount`](types_account.SigningAccount.md))[]
 
 #### Defined in
 
@@ -145,13 +145,13 @@ The transaction signer for the multisig account
 
 ### signingAccounts
 
-• `get` **signingAccounts**(): readonly (`default` \| [`SigningAccount`]())[]
+• `get` **signingAccounts**(): readonly (`default` \| [`SigningAccount`](types_account.SigningAccount.md))[]
 
 The list of accounts that are present to sign
 
 #### Returns
 
-readonly (`default` \| [`SigningAccount`]())[]
+readonly (`default` \| [`SigningAccount`](types_account.SigningAccount.md))[]
 
 #### Defined in
 

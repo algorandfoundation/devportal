@@ -22,17 +22,17 @@ title: types/transaction
 
 ### Type Aliases
 
-- [Arc2TransactionNote](#arc2transactionnote)
-- [SendSingleTransactionResult](#sendsingletransactionresult)
-- [SendTransactionFrom](#sendtransactionfrom)
-- [TransactionNote](#transactionnote)
-- [TransactionNoteData](#transactionnotedata)
+- [Arc2TransactionNote](types_transaction.md#arc2transactionnote)
+- [SendSingleTransactionResult](types_transaction.md#sendsingletransactionresult)
+- [SendTransactionFrom](types_transaction.md#sendtransactionfrom)
+- [TransactionNote](types_transaction.md#transactionnote)
+- [TransactionNoteData](types_transaction.md#transactionnotedata)
 
 ## Type Aliases
 
 ### Arc2TransactionNote
 
-Ƭ **Arc2TransactionNote**: \{ `dAppName`: `string` ; `data`: `string` ; `format`: `"m"` \| `"b"` \| `"u"` } \| \{ `dAppName`: `string` ; `data`: [`TransactionNoteData`](#transactionnotedata) ; `format`: `"j"` }
+Ƭ **Arc2TransactionNote**: \{ `dAppName`: `string` ; `data`: `string` ; `format`: `"m"` \| `"b"` \| `"u"` } \| \{ `dAppName`: `string` ; `data`: [`TransactionNoteData`](types_transaction.md#transactionnotedata) ; `format`: `"j"` }
 
 ARC-0002 compatible transaction note components https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md
 
@@ -44,7 +44,7 @@ ARC-0002 compatible transaction note components https://github.com/algorandfound
 
 ### SendSingleTransactionResult
 
-Ƭ **SendSingleTransactionResult**: [`Expand`](#expand)\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/)\>
+Ƭ **SendSingleTransactionResult**: [`Expand`](types_expand.md#expand)\<[`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/)\>
 
 Result from sending a single transaction.
 
@@ -77,7 +77,7 @@ many types of accounts, including:
 
 ### TransactionNote
 
-Ƭ **TransactionNote**: `Uint8Array` \| [`TransactionNoteData`](#transactionnotedata) \| [`Arc2TransactionNote`](#arc2transactionnote)
+Ƭ **TransactionNote**: `Uint8Array` \| [`TransactionNoteData`](types_transaction.md#transactionnotedata) \| [`Arc2TransactionNote`](types_transaction.md#arc2transactionnote)
 
 #### Defined in
 

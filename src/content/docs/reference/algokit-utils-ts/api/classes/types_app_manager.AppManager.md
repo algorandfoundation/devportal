@@ -12,38 +12,38 @@ Allows management of application information.
 
 ### Constructors
 
-- [constructor](#constructor)
+- [constructor](types_app_manager.AppManager.md#constructor)
 
 ### Properties
 
-- [\_algod](#_algod)
-- [\_compilationResults](#_compilationresults)
+- [\_algod](types_app_manager.AppManager.md#_algod)
+- [\_compilationResults](types_app_manager.AppManager.md#_compilationresults)
 
 ### Methods
 
-- [compileTeal](#compileteal)
-- [compileTealTemplate](#compiletealtemplate)
-- [getBoxNames](#getboxnames)
-- [getBoxValue](#getboxvalue)
-- [getBoxValueFromABIType](#getboxvaluefromabitype)
-- [getBoxValues](#getboxvalues)
-- [getBoxValuesFromABIType](#getboxvaluesfromabitype)
-- [getById](#getbyid)
-- [getCompilationResult](#getcompilationresult)
-- [getGlobalState](#getglobalstate)
-- [getLocalState](#getlocalstate)
-- [decodeAppState](#decodeappstate)
-- [getABIReturn](#getabireturn)
-- [getBoxReference](#getboxreference)
-- [replaceTealTemplateDeployTimeControlParams](#replacetealtemplatedeploytimecontrolparams)
-- [replaceTealTemplateParams](#replacetealtemplateparams)
-- [stripTealComments](#striptealcomments)
+- [compileTeal](types_app_manager.AppManager.md#compileteal)
+- [compileTealTemplate](types_app_manager.AppManager.md#compiletealtemplate)
+- [getBoxNames](types_app_manager.AppManager.md#getboxnames)
+- [getBoxValue](types_app_manager.AppManager.md#getboxvalue)
+- [getBoxValueFromABIType](types_app_manager.AppManager.md#getboxvaluefromabitype)
+- [getBoxValues](types_app_manager.AppManager.md#getboxvalues)
+- [getBoxValuesFromABIType](types_app_manager.AppManager.md#getboxvaluesfromabitype)
+- [getById](types_app_manager.AppManager.md#getbyid)
+- [getCompilationResult](types_app_manager.AppManager.md#getcompilationresult)
+- [getGlobalState](types_app_manager.AppManager.md#getglobalstate)
+- [getLocalState](types_app_manager.AppManager.md#getlocalstate)
+- [decodeAppState](types_app_manager.AppManager.md#decodeappstate)
+- [getABIReturn](types_app_manager.AppManager.md#getabireturn)
+- [getBoxReference](types_app_manager.AppManager.md#getboxreference)
+- [replaceTealTemplateDeployTimeControlParams](types_app_manager.AppManager.md#replacetealtemplatedeploytimecontrolparams)
+- [replaceTealTemplateParams](types_app_manager.AppManager.md#replacetealtemplateparams)
+- [stripTealComments](types_app_manager.AppManager.md#striptealcomments)
 
 ## Constructors
 
 ### constructor
 
-• **new AppManager**(`algod`): [`AppManager`]()
+• **new AppManager**(`algod`): [`AppManager`](types_app_manager.AppManager.md)
 
 Creates an `AppManager`
 
@@ -55,7 +55,7 @@ Creates an `AppManager`
 
 #### Returns
 
-[`AppManager`]()
+[`AppManager`](types_app_manager.AppManager.md)
 
 #### Defined in
 

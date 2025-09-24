@@ -12,8 +12,8 @@ Result from performing an ensureFunded call.
 
 ### Properties
 
-- [amountFunded](#amountfunded)
-- [transactionId](#transactionid)
+- [amountFunded](types_account_manager.EnsureFundedResult.md#amountfunded)
+- [transactionId](types_account_manager.EnsureFundedResult.md#transactionid)
 
 ## Properties
 

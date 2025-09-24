@@ -10,9 +10,9 @@ The metadata that can be collected about a deployed app
 
 ## Hierarchy
 
-- [`AppReference`]()
+- [`AppReference`](types_app.AppReference.md)
 
-- [`AppDeployMetadata`]()
+- [`AppDeployMetadata`](types_app.AppDeployMetadata.md)
 
   ↳ **`AppMetadata`**
 
@@ -20,16 +20,16 @@ The metadata that can be collected about a deployed app
 
 ### Properties
 
-- [appAddress](#appaddress)
-- [appId](#appid)
-- [createdMetadata](#createdmetadata)
-- [createdRound](#createdround)
-- [deletable](#deletable)
-- [deleted](#deleted)
-- [name](#name)
-- [updatable](#updatable)
-- [updatedRound](#updatedround)
-- [version](#version)
+- [appAddress](types_app.AppMetadata.md#appaddress)
+- [appId](types_app.AppMetadata.md#appid)
+- [createdMetadata](types_app.AppMetadata.md#createdmetadata)
+- [createdRound](types_app.AppMetadata.md#createdround)
+- [deletable](types_app.AppMetadata.md#deletable)
+- [deleted](types_app.AppMetadata.md#deleted)
+- [name](types_app.AppMetadata.md#name)
+- [updatable](types_app.AppMetadata.md#updatable)
+- [updatedRound](types_app.AppMetadata.md#updatedround)
+- [version](types_app.AppMetadata.md#version)
 
 ## Properties
 
@@ -41,7 +41,7 @@ The Algorand address of the account associated with the app
 
 #### Inherited from
 
-[AppReference]().[appAddress](#appaddress)
+[AppReference](types_app.AppReference.md).[appAddress](types_app.AppReference.md#appaddress)
 
 #### Defined in
 
@@ -57,7 +57,7 @@ The id of the app
 
 #### Inherited from
 
-[AppReference]().[appId](#appid)
+[AppReference](types_app.AppReference.md).[appId](types_app.AppReference.md#appid)
 
 #### Defined in
 
@@ -67,7 +67,7 @@ The id of the app
 
 ### createdMetadata
 
-• **createdMetadata**: [`AppDeployMetadata`]()
+• **createdMetadata**: [`AppDeployMetadata`](types_app.AppDeployMetadata.md)
 
 The metadata when the app was created
 
@@ -97,7 +97,7 @@ Whether or not the app is deletable / permanent / unspecified
 
 #### Inherited from
 
-[AppDeployMetadata]().[deletable](#deletable)
+[AppDeployMetadata](types_app.AppDeployMetadata.md).[deletable](types_app.AppDeployMetadata.md#deletable)
 
 #### Defined in
 
@@ -125,7 +125,7 @@ The unique name identifier of the app within the creator account
 
 #### Inherited from
 
-[AppDeployMetadata]().[name](#name)
+[AppDeployMetadata](types_app.AppDeployMetadata.md).[name](types_app.AppDeployMetadata.md#name)
 
 #### Defined in
 
@@ -141,7 +141,7 @@ Whether or not the app is updatable / immutable / unspecified
 
 #### Inherited from
 
-[AppDeployMetadata]().[updatable](#updatable)
+[AppDeployMetadata](types_app.AppDeployMetadata.md).[updatable](types_app.AppDeployMetadata.md#updatable)
 
 #### Defined in
 
@@ -169,7 +169,7 @@ The version of app that is / will be deployed
 
 #### Inherited from
 
-[AppDeployMetadata]().[version](#version)
+[AppDeployMetadata](types_app.AppDeployMetadata.md).[version](types_app.AppDeployMetadata.md#version)
 
 #### Defined in
 

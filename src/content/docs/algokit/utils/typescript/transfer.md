@@ -4,7 +4,7 @@ title: Algo transfers (payments)
 
 Algo transfers, or [payments](https://dev.algorand.co/concepts/transactions/types/#payment-transaction), is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [Algo amount handling](/algokit/utils/typescript/amount/) and [Transaction management](/algokit/utils/typescript/transaction/). It allows you to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding.
 
-To see some usage examples check out the [automated tests](../../src/types/algorand-client.transfer.spec.ts).
+To see some usage examples check out the [automated tests](src/types/algorand-client.transfer.spec.ts).
 
 ## `payment`
 

@@ -12,8 +12,8 @@ Individual result from performing a bulk opt-in or bulk opt-out for an account a
 
 ### Properties
 
-- [assetId](#assetid)
-- [transactionId](#transactionid)
+- [assetId](types_asset_manager.BulkAssetOptInOutResult.md#assetid)
+- [transactionId](types_asset_manager.BulkAssetOptInOutResult.md#transactionid)
 
 ## Properties
 

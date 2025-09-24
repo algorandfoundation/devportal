@@ -14,16 +14,16 @@ with random values in the log snapshot, but rather will get substituted with pre
 
 ### Properties
 
-- [accounts](#accounts)
-- [apps](#apps)
-- [filterPredicate](#filterpredicate)
-- [transactions](#transactions)
+- [accounts](types_testing.LogSnapshotConfig.md#accounts)
+- [apps](types_testing.LogSnapshotConfig.md#apps)
+- [filterPredicate](types_testing.LogSnapshotConfig.md#filterpredicate)
+- [transactions](types_testing.LogSnapshotConfig.md#transactions)
 
 ## Properties
 
 ### accounts
 
-• `Optional` **accounts**: (`string` \| [`MultisigAccount`](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/) \| `Address` \| [`TransactionSignerAccount`]() \| `LogicSigAccount`)[]
+• `Optional` **accounts**: (`string` \| [`MultisigAccount`](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/) \| `Address` \| [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md) \| `LogicSigAccount`)[]
 
 Any accounts/addresses to replace the address for predictably
 

@@ -12,14 +12,14 @@ The result of compiling the approval and clear state TEAL programs for an app
 
 ### Properties
 
-- [compiledApproval](#compiledapproval)
-- [compiledClear](#compiledclear)
+- [compiledApproval](types_app.AppCompilationResult.md#compiledapproval)
+- [compiledClear](types_app.AppCompilationResult.md#compiledclear)
 
 ## Properties
 
 ### compiledApproval
 
-• **compiledApproval**: [`CompiledTeal`]()
+• **compiledApproval**: [`CompiledTeal`](types_app.CompiledTeal.md)
 
 The result of compiling the approval program
 
@@ -31,7 +31,7 @@ The result of compiling the approval program
 
 ### compiledClear
 
-• **compiledClear**: [`CompiledTeal`]()
+• **compiledClear**: [`CompiledTeal`](types_app.CompiledTeal.md)
 
 The result of compiling the clear state program
 

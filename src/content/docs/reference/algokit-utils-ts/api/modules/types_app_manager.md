@@ -19,7 +19,7 @@ title: types/app-manager
 
 ### Type Aliases
 
-- [BoxIdentifier](#boxidentifier)
+- [BoxIdentifier](types_app_manager.md#boxidentifier)
 
 ## Type Aliases
 

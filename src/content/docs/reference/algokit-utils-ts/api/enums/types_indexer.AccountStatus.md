@@ -12,9 +12,9 @@ Delegation status of the account
 
 ### Enumeration Members
 
-- [NotParticipating](#notparticipating)
-- [Offline](#offline)
-- [Online](#online)
+- [NotParticipating](types_indexer.AccountStatus.md#notparticipating)
+- [Offline](types_indexer.AccountStatus.md#offline)
+- [Online](types_indexer.AccountStatus.md#online)
 
 ## Enumeration Members
 

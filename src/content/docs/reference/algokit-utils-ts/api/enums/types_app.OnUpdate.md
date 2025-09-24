@@ -12,10 +12,10 @@ What action to perform when deploying an app and an update is detected in the TE
 
 ### Enumeration Members
 
-- [AppendApp](#appendapp)
-- [Fail](#fail)
-- [ReplaceApp](#replaceapp)
-- [UpdateApp](#updateapp)
+- [AppendApp](types_app.OnUpdate.md#appendapp)
+- [Fail](types_app.OnUpdate.md#fail)
+- [ReplaceApp](types_app.OnUpdate.md#replaceapp)
+- [UpdateApp](types_app.OnUpdate.md#updateapp)
 
 ## Enumeration Members
 

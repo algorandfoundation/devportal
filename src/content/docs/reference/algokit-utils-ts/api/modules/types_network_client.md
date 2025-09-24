@@ -14,7 +14,7 @@ title: types/network-client
 
 ### Functions
 
-- [genesisIdIsLocalNet](#genesisidislocalnet)
+- [genesisIdIsLocalNet](types_network_client.md#genesisidislocalnet)
 
 ## Functions
 

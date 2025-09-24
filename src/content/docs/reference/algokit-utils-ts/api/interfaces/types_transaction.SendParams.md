@@ -12,16 +12,16 @@ Parameters to configure transaction sending.
 
 - **`SendParams`**
 
-  ↳ [`AtomicTransactionComposerToSend`]()
+  ↳ [`AtomicTransactionComposerToSend`](types_transaction.AtomicTransactionComposerToSend.md)
 
 ## Table of contents
 
 ### Properties
 
-- [coverAppCallInnerTransactionFees](#coverappcallinnertransactionfees)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [populateAppCallResources](#populateappcallresources)
-- [suppressLog](#suppresslog)
+- [coverAppCallInnerTransactionFees](types_transaction.SendParams.md#coverappcallinnertransactionfees)
+- [maxRoundsToWaitForConfirmation](types_transaction.SendParams.md#maxroundstowaitforconfirmation)
+- [populateAppCallResources](types_transaction.SendParams.md#populateappcallresources)
+- [suppressLog](types_transaction.SendParams.md#suppresslog)
 
 ## Properties
 

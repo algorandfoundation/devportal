@@ -15,10 +15,10 @@ Config for an account config
 
 ### Properties
 
-- [accountMnemonic](#accountmnemonic)
-- [accountName](#accountname)
-- [senderAddress](#senderaddress)
-- [senderMnemonic](#sendermnemonic)
+- [accountMnemonic](types_account.AccountConfig.md#accountmnemonic)
+- [accountName](types_account.AccountConfig.md#accountname)
+- [senderAddress](types_account.AccountConfig.md#senderaddress)
+- [senderMnemonic](types_account.AccountConfig.md#sendermnemonic)
 
 ## Properties
 

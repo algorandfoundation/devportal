@@ -12,17 +12,17 @@ Call interface parameters to pass into ApplicationClient.deploy
 
 - **`AppClientDeployCallInterfaceParams`**
 
-  ↳ [`AppClientDeployParams`]()
+  ↳ [`AppClientDeployParams`](types_app_client.AppClientDeployParams.md)
 
 ## Table of contents
 
 ### Properties
 
-- [createArgs](#createargs)
-- [createOnCompleteAction](#createoncompleteaction)
-- [deleteArgs](#deleteargs)
-- [deployTimeParams](#deploytimeparams)
-- [updateArgs](#updateargs)
+- [createArgs](types_app_client.AppClientDeployCallInterfaceParams.md#createargs)
+- [createOnCompleteAction](types_app_client.AppClientDeployCallInterfaceParams.md#createoncompleteaction)
+- [deleteArgs](types_app_client.AppClientDeployCallInterfaceParams.md#deleteargs)
+- [deployTimeParams](types_app_client.AppClientDeployCallInterfaceParams.md#deploytimeparams)
+- [updateArgs](types_app_client.AppClientDeployCallInterfaceParams.md#updateargs)
 
 ## Properties
 
@@ -64,7 +64,7 @@ Any args to pass to any delete transaction that is issued as part of deployment
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`]()
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](types_app.TealTemplateParams.md)
 
 Any deploy-time parameters to replace in the TEAL code
 

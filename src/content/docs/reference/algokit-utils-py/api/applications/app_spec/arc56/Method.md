@@ -6,11 +6,11 @@ title: algokit_utils.applications.app_spec.arc56.Method
 
 Method information.
 
-#### actions _: [Actions](#algokit_utils.applications.app_spec.arc56.Actions)_
+#### actions _: [Actions](/reference/algokit-utils-py/api/Actions#algokit_utils.applications.app_spec.arc56.Actions)_
 
 The allowed actions
 
-#### args _: list[[MethodArg](#algokit_utils.applications.app_spec.arc56.MethodArg)]_
+#### args _: list[[MethodArg](/reference/algokit-utils-py/api/MethodArg#algokit_utils.applications.app_spec.arc56.MethodArg)]_
 
 The method arguments
 
@@ -18,7 +18,7 @@ The method arguments
 
 The method name
 
-#### returns _: [Returns](#algokit_utils.applications.app_spec.arc56.Returns)_
+#### returns _: [Returns](/reference/algokit-utils-py/api/Returns#algokit_utils.applications.app_spec.arc56.Returns)_
 
 The return information
 
@@ -26,7 +26,7 @@ The return information
 
 The optional description
 
-#### events _: list[[Event](#algokit_utils.applications.app_spec.arc56.Event)] | None_ _= None_
+#### events _: list[[Event](/reference/algokit-utils-py/api/Event#algokit_utils.applications.app_spec.arc56.Event)] | None_ _= None_
 
 The optional list of events
 
@@ -34,7 +34,7 @@ The optional list of events
 
 The optional readonly flag
 
-#### recommendations _: [Recommendations](#algokit_utils.applications.app_spec.arc56.Recommendations) | None_ _= None_
+#### recommendations _: [Recommendations](/reference/algokit-utils-py/api/Recommendations#algokit_utils.applications.app_spec.arc56.Recommendations) | None_ _= None_
 
 The optional execution recommendations
 

@@ -12,9 +12,9 @@ Parameters to get and decode a box value as an ABI type.
 
 ### Properties
 
-- [appId](#appid)
-- [boxNames](#boxnames)
-- [type](#type)
+- [appId](types_app_manager.BoxValuesRequestParams.md#appid)
+- [boxNames](types_app_manager.BoxValuesRequestParams.md#boxnames)
+- [type](types_app_manager.BoxValuesRequestParams.md#type)
 
 ## Properties
 

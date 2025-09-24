@@ -12,16 +12,16 @@ Hint information for a given method call to allow client generation
 
 ### Properties
 
-- [call_config](#call_config)
-- [default_arguments](#default_arguments)
-- [read_only](#read_only)
-- [structs](#structs)
+- [call_config](types_app_spec.Hint.md#call_config)
+- [default_arguments](types_app_spec.Hint.md#default_arguments)
+- [read_only](types_app_spec.Hint.md#read_only)
+- [structs](types_app_spec.Hint.md#structs)
 
 ## Properties
 
 ### call_config
 
-• **call_config**: [`CallConfig`]()
+• **call_config**: [`CallConfig`](types_app_spec.CallConfig.md)
 
 #### Defined in
 
@@ -51,7 +51,7 @@ Hint information for a given method call to allow client generation
 
 ### structs
 
-• `Optional` **structs**: `Record`\<`string`, [`Struct`]()\>
+• `Optional` **structs**: `Record`\<`string`, [`Struct`](types_app_spec.Struct.md)\>
 
 Any user-defined struct/tuple types used in the method call, keyed by parameter name or `output` for return type
 

@@ -30,7 +30,7 @@ const composerFromConstructorWithOptionalParams = new TransactionComposer({
 
 To construct a transaction you need to add it to the composer, passing in the relevant [params object](/reference/algokit-utils-ts/api/modules/types_composer/#type-aliases) for that transaction. Params are normal JavaScript objects and all of them extend the [common call parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters).
 
-The [methods to construct a transaction](../code/classes/types_composer.default.md#methods) are all named `add{TransactionType}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
+The [methods to construct a transaction](/reference/algokit-utils-ts/api/classes/types_composertransactioncomposer/#methods) are all named `add{TransactionType}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
 
 For example:
 

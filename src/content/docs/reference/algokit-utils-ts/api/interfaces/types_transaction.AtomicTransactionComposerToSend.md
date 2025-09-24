@@ -10,7 +10,7 @@ An `AtomicTransactionComposer` with transactions to send.
 
 ## Hierarchy
 
-- [`SendParams`]()
+- [`SendParams`](types_transaction.SendParams.md)
 
   ↳ **`AtomicTransactionComposerToSend`**
 
@@ -18,19 +18,19 @@ An `AtomicTransactionComposer` with transactions to send.
 
 ### Properties
 
-- [additionalAtcContext](#additionalatccontext)
-- [atc](#atc)
-- [coverAppCallInnerTransactionFees](#coverappcallinnertransactionfees)
-- [maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
-- [populateAppCallResources](#populateappcallresources)
-- [sendParams](#sendparams)
-- [suppressLog](#suppresslog)
+- [additionalAtcContext](types_transaction.AtomicTransactionComposerToSend.md#additionalatccontext)
+- [atc](types_transaction.AtomicTransactionComposerToSend.md#atc)
+- [coverAppCallInnerTransactionFees](types_transaction.AtomicTransactionComposerToSend.md#coverappcallinnertransactionfees)
+- [maxRoundsToWaitForConfirmation](types_transaction.AtomicTransactionComposerToSend.md#maxroundstowaitforconfirmation)
+- [populateAppCallResources](types_transaction.AtomicTransactionComposerToSend.md#populateappcallresources)
+- [sendParams](types_transaction.AtomicTransactionComposerToSend.md#sendparams)
+- [suppressLog](types_transaction.AtomicTransactionComposerToSend.md#suppresslog)
 
 ## Properties
 
 ### additionalAtcContext
 
-• `Optional` **additionalAtcContext**: [`AdditionalAtomicTransactionComposerContext`]()
+• `Optional` **additionalAtcContext**: [`AdditionalAtomicTransactionComposerContext`](types_transaction.AdditionalAtomicTransactionComposerContext.md)
 
 Additional `AtomicTransactionComposer` context used when building the transaction group that is sent.
 This additional context is used and must be supplied when coverAppCallInnerTransactionFees is set to true.
@@ -61,7 +61,7 @@ Whether to use simulate to automatically calculate required app call inner trans
 
 #### Inherited from
 
-[SendParams]().[coverAppCallInnerTransactionFees](#coverappcallinnertransactionfees)
+[SendParams](types_transaction.SendParams.md).[coverAppCallInnerTransactionFees](types_transaction.SendParams.md#coverappcallinnertransactionfees)
 
 #### Defined in
 
@@ -77,7 +77,7 @@ The number of rounds to wait for confirmation. By default until the latest lastV
 
 #### Inherited from
 
-[SendParams]().[maxRoundsToWaitForConfirmation](#maxroundstowaitforconfirmation)
+[SendParams](types_transaction.SendParams.md).[maxRoundsToWaitForConfirmation](types_transaction.SendParams.md#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -93,7 +93,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendParams]().[populateAppCallResources](#populateappcallresources)
+[SendParams](types_transaction.SendParams.md).[populateAppCallResources](types_transaction.SendParams.md#populateappcallresources)
 
 #### Defined in
 
@@ -103,7 +103,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](types_transaction.SendTransactionParams.md), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
 
 **`Deprecated`**
 
@@ -124,7 +124,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendParams]().[suppressLog](#suppresslog)
+[SendParams](types_transaction.SendParams.md).[suppressLog](types_transaction.SendParams.md#suppresslog)
 
 #### Defined in
 

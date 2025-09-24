@@ -10,12 +10,12 @@ title: AlgoKitLogCaptureFixture
 
 ### Properties
 
-- [afterEach](#aftereach)
-- [beforeEach](#beforeeach)
+- [afterEach](types_testing.AlgoKitLogCaptureFixture.md#aftereach)
+- [beforeEach](types_testing.AlgoKitLogCaptureFixture.md#beforeeach)
 
 ### Accessors
 
-- [testLogger](#testlogger)
+- [testLogger](types_testing.AlgoKitLogCaptureFixture.md#testlogger)
 
 ## Properties
 

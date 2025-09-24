@@ -10,7 +10,7 @@ Configuration to resolve app by ID
 
 ## Hierarchy
 
-- [`ResolveAppByIdBase`]()
+- [`ResolveAppByIdBase`](types_app_client.ResolveAppByIdBase.md)
 
   ↳ **`ResolveAppById`**
 
@@ -18,9 +18,9 @@ Configuration to resolve app by ID
 
 ### Properties
 
-- [id](#id)
-- [name](#name)
-- [resolveBy](#resolveby)
+- [id](types_app_client.ResolveAppById.md#id)
+- [name](types_app_client.ResolveAppById.md#name)
+- [resolveBy](types_app_client.ResolveAppById.md#resolveby)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The id of an existing app to call using this client, or 0 if the app hasn't been
 
 #### Inherited from
 
-[ResolveAppByIdBase]().[id](#id)
+[ResolveAppByIdBase](types_app_client.ResolveAppByIdBase.md).[id](types_app_client.ResolveAppByIdBase.md#id)
 
 #### Defined in
 
@@ -48,7 +48,7 @@ The optional name to use to mark the app when deploying `ApplicationClient.deplo
 
 #### Inherited from
 
-[ResolveAppByIdBase]().[name](#name)
+[ResolveAppByIdBase](types_app_client.ResolveAppByIdBase.md).[name](types_app_client.ResolveAppByIdBase.md#name)
 
 #### Defined in
 
