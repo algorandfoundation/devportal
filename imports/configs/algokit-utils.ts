@@ -1,8 +1,5 @@
 import type { ImportOptions } from '@larkiny/astro-github-loader';
-import {
-  generateStarlightLinkMappings,
-  generateLinkMappings,
-} from '../transforms/links.js';
+import { generateStarlightLinkMappings } from '../transforms/links.js';
 import {
   convertH1ToTitle,
   convertH1ToTitleMatch,
@@ -14,18 +11,6 @@ import {
 } from '../transforms/common.js';
 import { createFrontmatterTransform } from '../transforms/frontmatter.js';
 
-const SOURCE_GUIDES_PATH_TS = 'docs/capabilities/';
-const SOURCE_API_PATH_TS = 'docs/code/';
-const IMPORT_API_PATH_TS = 'src/content/docs/reference/algokit-utils-ts/api';
-
-// Path mappings to restructure imported files
-const GUIDES_PATH_MAPPINGS_TS = {
-  'docs/capabilities/': '',
-  'docs/README.md': 'overview.md',
-};
-const API_PATH_MAPPINGS_TS = {
-  'docs/code/': '',
-};
 
 /**
  * Imports documentation from algokit-utils-ts
@@ -42,16 +27,24 @@ export const utilsTypescriptConfig: ImportOptions = {
       pattern:
         'docs/{capabilities/**/*.md,README.md,v7-migration.md,v8-migration.md}',
       basePath: 'src/content/docs/algokit/utils/typescript',
-      pathMappings: GUIDES_PATH_MAPPINGS_TS,
+      pathMappings: {
+        'docs/capabilities/': '',
+        'docs/README.md': 'overview.md',
+      },
       transforms: [convertH1ToTitle],
     },
     {
-      pattern: `${SOURCE_API_PATH_TS}**/*`,
-      basePath: IMPORT_API_PATH_TS,
-      pathMappings: API_PATH_MAPPINGS_TS,
+      pattern: 'docs/code/**/*',
+      basePath: 'src/content/docs/reference/algokit-utils-ts/api',
+      pathMappings: {
+        'docs/code/': {
+          target: '',
+          crossSectionPath: '/reference/algokit-utils-ts/api',
+        },
+      },
       transforms: [
         conditionalTransform(
-          path => matchesPath(`${SOURCE_API_PATH_TS}README.md`, path),
+          path => matchesPath('docs/code/README.md', path),
           removeH1,
           createFrontmatterTransform({
             frontmatter: {
@@ -65,7 +58,7 @@ export const utilsTypescriptConfig: ImportOptions = {
         conditionalTransform(
           path =>
             matchesPath(
-              `${SOURCE_API_PATH_TS}{classes,enums,interfaces,modules}/**/*.md`,
+              'docs/code/{classes,enums,interfaces,modules}/**/*.md',
               path,
             ),
           convertH1ToTitleMatch(
@@ -77,30 +70,11 @@ export const utilsTypescriptConfig: ImportOptions = {
   ],
   linkTransform: {
     stripPrefixes: ['src/content/docs'],
-    linkMappings: [
-      ...generateStarlightLinkMappings(),
-      ...generateLinkMappings(GUIDES_PATH_MAPPINGS_TS),
-      ...generateLinkMappings(API_PATH_MAPPINGS_TS, {
-        crossSectionPath: '/reference/algokit-utils-ts/api',
-      }),
-    ],
+    linkMappings: [...generateStarlightLinkMappings()],
   },
   enabled: true,
 };
 
-const SOURCE_GUIDES_PATH_PY = 'docs/markdown/capabilities/';
-const SOURCE_API_PATH_PY = 'docs/markdown/autoapi/algokit_utils/';
-const IMPORT_API_PATH_PY = 'src/content/docs/reference/algokit-utils-py/api';
-
-// Path mappings to restructure imported files
-const GUIDES_PATH_MAPPINGS_PY = {
-  'docs/markdown/capabilities/': '',
-  'docs/markdown/index.md': 'overview.md',
-  'docs/markdown/v3-migration-guide.md': 'v3-migration-guide.md',
-};
-const API_PATH_MAPPINGS_PY = {
-  'docs/markdown/autoapi/algokit_utils/': '',
-};
 
 /**
  * Imports documentation from algokit-utils-py
@@ -117,7 +91,11 @@ export const utilsPythonConfig: ImportOptions = {
       pattern:
         'docs/markdown/{capabilities/**/*.md,index.md,v3-migration-guide.md}',
       basePath: 'src/content/docs/algokit/utils/python',
-      pathMappings: GUIDES_PATH_MAPPINGS_PY,
+      pathMappings: {
+        'docs/markdown/capabilities/': '',
+        'docs/markdown/index.md': 'overview.md',
+        'docs/markdown/v3-migration-guide.md': 'v3-migration-guide.md',
+      },
       transforms: [
         convertH1ToTitle,
         conditionalTransform(
@@ -147,12 +125,17 @@ export const utilsPythonConfig: ImportOptions = {
       ],
     },
     {
-      pattern: `${SOURCE_API_PATH_PY}**/*`,
-      basePath: IMPORT_API_PATH_PY,
-      pathMappings: API_PATH_MAPPINGS_PY,
+      pattern: 'docs/markdown/autoapi/algokit_utils/**/*',
+      basePath: 'src/content/docs/reference/algokit-utils-py/api',
+      pathMappings: {
+        'docs/markdown/autoapi/algokit_utils/': {
+          target: '',
+          crossSectionPath: '/reference/algokit-utils-py/api',
+        },
+      },
       transforms: [
         conditionalTransform(
-          path => matchesPath(`${SOURCE_API_PATH_PY}**/!(index).md`, path),
+          path => matchesPath('docs/markdown/autoapi/algokit_utils/**/!(index).md', path),
           extractH1ToSidebarAndTitle(/\.([^.]+)$/),
           createFrontmatterTransform({
             frontmatter: {
@@ -166,7 +149,7 @@ export const utilsPythonConfig: ImportOptions = {
           }),
         ),
         conditionalTransform(
-          path => matchesPath(`${SOURCE_API_PATH_PY}**/index.md`, path),
+          path => matchesPath('docs/markdown/autoapi/algokit_utils/**/index.md', path),
           convertH1ToTitleMatch(/^algokit_utils\.(.+)$/),
           createFrontmatterTransform({
             frontmatter: {
@@ -181,13 +164,7 @@ export const utilsPythonConfig: ImportOptions = {
   ],
   linkTransform: {
     stripPrefixes: ['src/content/docs'],
-    linkMappings: [
-      ...generateStarlightLinkMappings(),
-      ...generateLinkMappings(GUIDES_PATH_MAPPINGS_PY),
-      ...generateLinkMappings(API_PATH_MAPPINGS_PY, {
-        crossSectionPath: '/reference/algokit-utils-py/api',
-      }),
-    ],
+    linkMappings: [...generateStarlightLinkMappings()],
   },
   enabled: true,
 };
