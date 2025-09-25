@@ -1,6 +1,12 @@
-#!/usr/bin/env node
-
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync, unlinkSync } from 'fs';
+import {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  statSync,
+  unlinkSync,
+} from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { load as yamlLoad } from 'js-yaml';
@@ -11,9 +17,52 @@ const PROJECT_ROOT = join(__dirname, '..');
 const CONTENT_DOCS_PATH = join(PROJECT_ROOT, 'src/content/docs');
 const CONFIG_FILE = join(PROJECT_ROOT, 'auto-sidebar-config.yml');
 
-// Parse command line arguments
-const args = process.argv.slice(2);
-const options = {
+interface Options {
+  update: boolean;
+  overwrite: boolean;
+  clean: boolean;
+  dryRun: boolean;
+  help: boolean;
+}
+
+interface SidebarConfig {
+  folder: string;
+  content: string;
+}
+
+interface ConfigFile {
+  configs?: SidebarConfig[];
+}
+
+interface OperationResult {
+  success: boolean;
+  action:
+    | 'create'
+    | 'update'
+    | 'overwrite'
+    | 'skip'
+    | 'delete'
+    | 'error'
+    | 'skipped';
+  reason?: string;
+}
+
+interface ResultsSummary {
+  create: number;
+  update: number;
+  overwrite: number;
+  skip: number;
+  delete: number;
+  error: number;
+}
+
+interface CleanResults {
+  delete: number;
+  error: number;
+}
+
+const args: string[] = process.argv.slice(2);
+const options: Options = {
   update: args.includes('--update'),
   overwrite: args.includes('--overwrite'),
   clean: args.includes('--clean'),
@@ -21,11 +70,11 @@ const options = {
   help: args.includes('--help') || args.includes('-h'),
 };
 
-function showHelp() {
+function showHelp(): void {
   console.log(`
 Starlight Auto-Sidebar Meta File Manager
 
-Usage: node scripts/manage-sidebar-meta.js [options]
+Usage: npx tsx scripts/manage-sidebar-meta.ts [options]
 
 Options:
   --update      Update existing _meta.yml files, create if missing
@@ -37,42 +86,40 @@ Options:
 Default behavior: Create _meta.yml files only if they don't exist
 
 Examples:
-  node scripts/manage-sidebar-meta.js                    # Create missing files
-  node scripts/manage-sidebar-meta.js --update           # Update existing + create missing
-  node scripts/manage-sidebar-meta.js --overwrite        # Replace all files
-  node scripts/manage-sidebar-meta.js --clean --dry-run  # Preview cleanup
+  npx tsx scripts/manage-sidebar-meta.ts                    # Create missing files
+  npx tsx scripts/manage-sidebar-meta.ts --update           # Update existing + create missing
+  npx tsx scripts/manage-sidebar-meta.ts --overwrite        # Replace all files
+  npx tsx scripts/manage-sidebar-meta.ts --clean --dry-run  # Preview cleanup
 `);
 }
 
-function loadConfig() {
+function loadConfig(): SidebarConfig[] {
   try {
-    const configContent = readFileSync(CONFIG_FILE, 'utf8');
-    const yamlConfig = yamlLoad(configContent);
+    const configContent: string = readFileSync(CONFIG_FILE, 'utf8');
+    const yamlConfig = yamlLoad(configContent) as ConfigFile;
     return yamlConfig.configs || [];
   } catch (error) {
-    console.error(
-      `❌ Error loading config file ${CONFIG_FILE}:`,
-      error.message,
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    console.error(`❌ Error loading config file ${CONFIG_FILE}:`, errorMessage);
     process.exit(1);
   }
 }
 
-function generateMetaContent(config) {
-  // Return the content directly as provided in the YAML config
+function generateMetaContent(config: SidebarConfig): string {
   return config.content.trim();
 }
 
-function getFolderPath(folder) {
+function getFolderPath(folder: string): string {
   return join(CONTENT_DOCS_PATH, folder);
 }
 
-function getMetaFilePath(folder) {
+function getMetaFilePath(folder: string): string {
   return join(getFolderPath(folder), '_meta.yml');
 }
 
-function validateFolderExists(folder) {
-  const folderPath = getFolderPath(folder);
+function validateFolderExists(folder: string): boolean {
+  const folderPath: string = getFolderPath(folder);
   if (!existsSync(folderPath)) {
     console.warn(`⚠️  Folder does not exist: ${folder}`);
     return false;
@@ -80,14 +127,14 @@ function validateFolderExists(folder) {
   return true;
 }
 
-function findAllMetaFiles(dir) {
-  const metaFiles = [];
+function findAllMetaFiles(dir: string): string[] {
+  const metaFiles: string[] = [];
 
   try {
-    const items = readdirSync(dir);
+    const items: string[] = readdirSync(dir);
 
     for (const item of items) {
-      const fullPath = join(dir, item);
+      const fullPath: string = join(dir, item);
       const stat = statSync(fullPath);
 
       if (stat.isDirectory()) {
@@ -104,13 +151,16 @@ function findAllMetaFiles(dir) {
   return metaFiles;
 }
 
-function cleanAllMetaFiles(options) {
-  const metaFiles = findAllMetaFiles(CONTENT_DOCS_PATH);
-  const results = { delete: 0, error: 0 };
+function cleanAllMetaFiles(options: Options): CleanResults {
+  const metaFiles: string[] = findAllMetaFiles(CONTENT_DOCS_PATH);
+  const results: CleanResults = { delete: 0, error: 0 };
 
   for (const metaFilePath of metaFiles) {
     // Get relative path for display
-    const relativePath = metaFilePath.replace(CONTENT_DOCS_PATH + '/', '');
+    const relativePath: string = metaFilePath.replace(
+      CONTENT_DOCS_PATH + '/',
+      '',
+    );
 
     try {
       if (!options.dryRun) {
@@ -119,19 +169,24 @@ function cleanAllMetaFiles(options) {
       results.delete++;
       console.log(`✅ Deleted: ${relativePath}`);
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       results.error++;
-      console.log(`❌ Error deleting: ${relativePath} (${error.message})`);
+      console.log(`❌ Error deleting: ${relativePath} (${errorMessage})`);
     }
   }
 
   return results;
 }
 
-function createMetaFile(config, options) {
+function createMetaFile(
+  config: SidebarConfig,
+  options: Options,
+): OperationResult {
   const { folder } = config;
-  const folderPath = getFolderPath(folder);
-  const metaFilePath = getMetaFilePath(folder);
-  const metaContent = generateMetaContent(config);
+  const folderPath: string = getFolderPath(folder);
+  const metaFilePath: string = getMetaFilePath(folder);
+  const metaContent: string = generateMetaContent(config);
 
   // Check if folder exists
   if (!validateFolderExists(folder)) {
@@ -143,9 +198,9 @@ function createMetaFile(config, options) {
   }
 
   // Check if file exists and determine action
-  const fileExists = existsSync(metaFilePath);
-  let action = 'create';
-  let shouldWrite = true;
+  const fileExists: boolean = existsSync(metaFilePath);
+  let action: 'create' | 'update' | 'overwrite' | 'skip' = 'create';
+  let shouldWrite: boolean = true;
 
   if (fileExists) {
     if (!options.update && !options.overwrite) {
@@ -170,14 +225,16 @@ function createMetaFile(config, options) {
 
       writeFileSync(metaFilePath, metaContent, 'utf8');
     } catch (error) {
-      return { success: false, action, reason: error.message };
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      return { success: false, action, reason: errorMessage };
     }
   }
 
   return { success: true, action };
 }
 
-function main() {
+function main(): void {
   if (options.help) {
     showHelp();
     return;
@@ -192,14 +249,17 @@ function main() {
   // Handle clean mode separately
   if (options.clean) {
     console.log('🧹 Cleaning all _meta.yml files from src/content/docs/\n');
-    const cleanResults = cleanAllMetaFiles(options);
+    const cleanResults: CleanResults = cleanAllMetaFiles(options);
 
     console.log('\n📊 Summary:');
-    if (cleanResults.delete > 0) console.log(`   delete: ${cleanResults.delete}`);
+    if (cleanResults.delete > 0)
+      console.log(`   delete: ${cleanResults.delete}`);
     if (cleanResults.error > 0) console.log(`   error: ${cleanResults.error}`);
 
     if (cleanResults.error > 0) {
-      console.log('\n❌ Some operations failed. Check the output above for details.');
+      console.log(
+        '\n❌ Some operations failed. Check the output above for details.',
+      );
       process.exit(1);
     } else {
       console.log('\n✅ All operations completed successfully!');
@@ -208,12 +268,12 @@ function main() {
   }
 
   // Load configuration for non-clean operations
-  const config = loadConfig();
+  const config: SidebarConfig[] = loadConfig();
   console.log(
     `📋 Loaded ${config.length} sidebar configurations from ${CONFIG_FILE}\n`,
   );
 
-  const results = {
+  const results: ResultsSummary = {
     create: 0,
     update: 0,
     overwrite: 0,
@@ -225,23 +285,28 @@ function main() {
   // Process each configuration
   for (const itemConfig of config) {
     const { folder } = itemConfig;
-    const result = createMetaFile(itemConfig, options);
+    const result: OperationResult = createMetaFile(itemConfig, options);
 
-    results[result.success ? result.action : 'error']++;
+    if (result.success && result.action !== 'skipped') {
+      results[result.action as keyof ResultsSummary]++;
+    } else if (!result.success) {
+      results.error++;
+    }
 
     // Log result
-    const icon = result.success ? '✅' : '❌';
-    const actionText =
+    const icon: string = result.success ? '✅' : '❌';
+    const actionText: string =
       {
         create: 'Created',
         update: 'Updated',
         overwrite: 'Overwritten',
         skip: 'Skipped',
+        skipped: 'Skipped',
         delete: 'Deleted',
         error: 'Error',
       }[result.action] || result.action;
 
-    const reasonText = result.reason ? ` (${result.reason})` : '';
+    const reasonText: string = result.reason ? ` (${result.reason})` : '';
     console.log(`${icon} ${actionText}: ${folder}${reasonText}`);
   }
 

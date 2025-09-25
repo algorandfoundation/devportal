@@ -32,10 +32,10 @@
     "clean:utils-ts": "rm -rf src/content/docs/algokit/utils/typescript src/content/docs/reference/algokit-utils-ts/api src/assets/imports/algokit-utils-ts .astro",
     "clean:utils-py": "rm -rf src/content/docs/algokit/utils/python src/content/docs/reference/algokit-utils-py/api src/assets/imports/algokit-utils-py .astro",
     "_section:sidebar": "====================== Sidebar Scripts ======================",
-    "sidebar:generate": "npx tsx scripts/manage-sidebar-meta.js --clean && npx tsx scripts/manage-sidebar-meta.js",
-    "sidebar:update": "npx tsx scripts/manage-sidebar-meta.js --update",
-    "sidebar:overwrite": "npx tsx scripts/manage-sidebar-meta.js --overwrite",
-    "sidebar:preview": "npx tsx scripts/manage-sidebar-meta.js --dry-run"
+    "sidebar:generate": "npx tsx scripts/manage-sidebar-meta.ts --clean && npx tsx scripts/manage-sidebar-meta.ts",
+    "sidebar:update": "npx tsx scripts/manage-sidebar-meta.ts --update",
+    "sidebar:overwrite": "npx tsx scripts/manage-sidebar-meta.ts --overwrite",
+    "sidebar:preview": "npx tsx scripts/manage-sidebar-meta.ts --dry-run"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
