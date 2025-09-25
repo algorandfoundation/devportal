@@ -1,8 +1,5 @@
 import type { ImportOptions } from '@larkiny/astro-github-loader';
-import {
-  generateStarlightLinkMappings,
-  generateLinkMappings,
-} from '../transforms/links.js';
+import { generateStarlightLinkMappings } from '../transforms/links.js';
 import {
   convertH1ToTitle,
   conditionalTransform,
@@ -10,13 +7,6 @@ import {
   createRemoveContentUpToHeading,
 } from '../transforms/common.js';
 import { createFrontmatterTransform } from '../transforms/frontmatter.js';
-
-// Path mappings to restructure imported files
-const CLI_PATH_MAPPINGS = {
-  'docs/features/': '',
-  'docs/algokit.md': 'overview.md',
-  'docs/cli/index.md': 'index.md',
-};
 
 /**
  * Import configuration for algokit-cli repository
@@ -33,7 +23,11 @@ export const algokitCLIConfig: ImportOptions = {
     {
       pattern: 'docs/{features/**/*.md,algokit.md}',
       basePath: 'src/content/docs/algokit/cli',
-      pathMappings: CLI_PATH_MAPPINGS,
+      pathMappings: {
+        'docs/features/': '',
+        'docs/algokit.md': 'overview.md',
+        'docs/cli/index.md': 'index.md',
+      },
       transforms: [
         conditionalTransform(
           path => matchesPath('docs/algokit.md', path),
@@ -51,7 +45,9 @@ export const algokitCLIConfig: ImportOptions = {
     {
       pattern: 'docs/cli/index.md',
       basePath: 'src/content/docs/reference/algokit-cli/',
-      pathMappings: CLI_PATH_MAPPINGS,
+      pathMappings: {
+        'docs/cli/index.md': 'index.md',
+      },
       transforms: [createRemoveContentUpToHeading(/^# algokit$/m)],
     },
   ],
@@ -60,7 +56,6 @@ export const algokitCLIConfig: ImportOptions = {
     stripPrefixes: ['src/content/docs'],
     linkMappings: [
       ...generateStarlightLinkMappings(),
-      ...generateLinkMappings(CLI_PATH_MAPPINGS),
       // Map unresolved CLI links to reference section
       {
         pattern: /^\.\.\/cli\/?$/,

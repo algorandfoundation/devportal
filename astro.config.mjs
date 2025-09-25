@@ -466,7 +466,7 @@ export default defineConfig({
                 },
                 {
                   label: 'Project',
-                  collapsed: false,
+                  collapsed: true,
                   items: [
                     {
                       label: 'Overview',
@@ -496,7 +496,7 @@ export default defineConfig({
                 },
                 {
                   label: 'Tasks',
-                  collapsed: false,
+                  collapsed: true,
                   items: [
                     {
                       label: 'Overview',
@@ -2296,6 +2296,7 @@ export default defineConfig({
             },
             {
               label: 'AlgoKit CLI',
+              collapsed: true,
               items: [
                 {
                   label: 'Command Reference',
