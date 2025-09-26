@@ -42,10 +42,6 @@ jobs:
       - name: Setup submodules
         run: git submodule update --init
 
-      - name: Setup .npmrc for GitHub Packages
-        run: |
-          echo "@larkiny:registry=https://npm.pkg.github.com" > .npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.TEMP_PACKAGES_TOKEN }}" >> .npmrc
 
       - name: Install dependencies
         run: pnpm install
@@ -53,7 +49,6 @@ jobs:
       - name: Build the project
         run: pnpm run build
         env:
-          TEMP_PACKAGES_TOKEN: ${{ secrets.TEMP_PACKAGES_TOKEN }}
           TSTRUCT_TOKEN: ${{ secrets.TSTRUCT_TOKEN }}
           PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
 
