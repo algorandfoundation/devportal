@@ -1,18 +1,6 @@
-[submodule "imports/repos/nodekit"]
-	path = imports/repos/nodekit
-	url = https://github.com/algorandfoundation/nodekit
-	branch = main
 [submodule "imports/repos/puya"]
 	path = imports/repos/puya
 	url = https://github.com/algorandfoundation/puya
-	branch = main
-[submodule "imports/repos/algokit-utils-ts"]
-	path = imports/repos/algokit-utils-ts
-	url = https://github.com/algorandfoundation/algokit-utils-ts
-	branch = main
-[submodule "imports/repos/algokit-utils-py"]
-	path = imports/repos/algokit-utils-py
-	url = https://github.com/algorandfoundation/algokit-utils-py
 	branch = main
 [submodule "imports/repos/py-algorand-sdk"]
 	path = imports/repos/py-algorand-sdk
@@ -70,7 +58,3 @@
 	path = imports/repos/algokit-client-generator-ts
 	url = https://github.com/algorandfoundation/algokit-client-generator-ts.git
 	branch = main
-[submodule "imports/repos/arcs"]
-	path = imports/repos/arcs
-	url = https://github.com/algorandfoundation/ARCs
-	branch = devportal

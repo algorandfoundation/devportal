@@ -26,25 +26,25 @@ AlgoKit CLI is a powerful set of command line tools for Algorand developers. Its
 
 Here is the list of commands that you can use with AlgoKit CLI.
 
-- [Bootstrap](/algokit/algokit-cli/project/bootstrap) - Bootstrap AlgoKit project dependencies
-- [Compile](/algokit/algokit-cli/compile) - Compile Algorand Python code
-- [Completions](/algokit/algokit-cli/completions) - Install shell completions for AlgoKit
-- [Deploy](/algokit/algokit-cli/project/deploy) - Deploy your smart contracts effortlessly to various networks
-- [Dispenser](/algokit/algokit-cli/dispenser) - Fund your TestNet account with ALGOs from the AlgoKit TestNet Dispenser
-- [Doctor](/algokit/algokit-cli/doctor) - Check AlgoKit installation and dependencies
-- [Explore](/algokit/algokit-cli/explore) - Explore Algorand Blockchains using lora
-- [Generate](/algokit/algokit-cli/generate) - Generate code for an Algorand project
-- [Goal](/algokit/algokit-cli/goal) - Run the Algorand goal CLI against the AlgoKit Sandbox
-- [Init](/algokit/algokit-cli/init) - Quickly initialize new projects using official Algorand Templates or community provided templates
-- [LocalNet](/algokit/algokit-cli/localnet) - Manage a locally sandboxed private Algorand network
-- [Project](/algokit/algokit-cli/project) - Perform a variety of AlgoKit project workspace related operations like bootstrapping development environment, deploying smart contracts, running custom commands, and more
-- [Task](/algokit/algokit-cli/tasks) - Perform a variety of useful operations like signing & sending transactions, minting ASAs, creating vanity address, and more, on the Algorand blockchain
+- [Bootstrap](/algokit/cli/project/bootstrap) - Bootstrap AlgoKit project dependencies
+- [Compile](/algokit/cli/compile) - Compile Algorand Python code
+- [Completions](/algokit/cli/completions) - Install shell completions for AlgoKit
+- [Deploy](/algokit/cli/project/deploy) - Deploy your smart contracts effortlessly to various networks
+- [Dispenser](/algokit/cli/dispenser) - Fund your TestNet account with ALGOs from the AlgoKit TestNet Dispenser
+- [Doctor](/algokit/cli/doctor) - Check AlgoKit installation and dependencies
+- [Explore](/algokit/cli/explore) - Explore Algorand Blockchains using lora
+- [Generate](/algokit/cli/generate) - Generate code for an Algorand project
+- [Goal](/algokit/cli/goal) - Run the Algorand goal CLI against the AlgoKit Sandbox
+- [Init](/algokit/cli/init) - Quickly initialize new projects using official Algorand Templates or community provided templates
+- [LocalNet](/algokit/cli/localnet) - Manage a locally sandboxed private Algorand network
+- [Project](/algokit/cli/project) - Perform a variety of AlgoKit project workspace related operations like bootstrapping development environment, deploying smart contracts, running custom commands, and more
+- [Task](/algokit/cli/tasks) - Perform a variety of useful operations like signing & sending transactions, minting ASAs, creating vanity address, and more, on the Algorand blockchain
 
 To learn more about AlgoKit CLI, refer to the following resources:
 
 <LinkCard
   title='AlgoKit CLI Documentation'
-  href='/algokit/algokit-cli/overview'
+  href='/reference/algokit-cli/'
   description='Learn more about using and configuring AlgoKit CLI'
 />
 <LinkCard
@@ -159,7 +159,7 @@ To learn more about AlgoKit Localnet, refer to the following resources:
 
 <LinkCard
   title='AlgoKit Localnet Documentation'
-  href='/algokit/algokit-cli/localnet'
+  href='/algokit/cli/localnet'
   description='Learn more about using and configuring AlgoKit Localnet'
 />
 <LinkCard
@@ -257,3 +257,206 @@ While AlgoKit as a _collection_ was bumped to Version 3.0 on March 26, 2025, it 
 | TypeScript Smart Contract Project Template | algokit-typescript-template     | <Badge text="0.3.1" variant="success" />      |
 | React Vite Frontend Project Template       | algokit-react-frontend-template | <Badge text="1.1.1" variant="success" />      |
 | Fullstack Project Template                 | algokit-fullstack-template      | <Badge text="2.1.4" variant="success" />      |
+
+## Install
+
+:::note
+Refer to [Troubleshooting](#troubleshooting) for more details on mitigation of known edge cases when installing AlgoKit.
+:::
+
+### Prerequisites
+
+The installation pre-requisites change depending on the method you use to install. Please refer to [Installation Methods](#installation-methods).
+
+Depending on the features you choose to leverage from the AlgoKit CLI, additional dependencies may be required.
+The AlgoKit CLI will tell you if you are missing one for a given command. These optional dependencies are:
+
+- **Git**: Essential for creating and updating projects from templates. Installation guide available at [Git Installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+- **Docker**: Necessary for running the AlgoKit LocalNet environment. Docker Compose version 2.5.0 or higher is required. See [Docker Installation](https://docs.docker.com/get-docker/).
+- **Python**: For those installing the AlgoKit CLI via `pipx` or building contracts using Algorand Python. **Minimum required version is Python 3.12+ when working with Algorand Python**. See [Python Installation](https://www.python.org/downloads/).
+- **Node.js**: For those working on frontend templates or building contracts using Algorand TypeScript or TEALScript. **Minimum required versions are Node.js `v22` and npm `v10`**. See [Node.js Installation](https://nodejs.org/en/download/).
+
+:::note
+If you have previously installed AlgoKit using `pipx` and would like to switch to a different installation method, please ensure that
+you first uninstall the existing version by running `pipx uninstall algokit`. Once uninstalled, you can follow the installation instructions for your preferred platform.
+:::
+
+### Cross-platform installation
+
+AlgoKit can be installed using OS specific package managers, or using the python tool [pipx](https://pypa.github.io/pipx/).
+See below for specific installation instructions.
+
+#### Installation Methods
+
+- [Windows](#install-algokit-on-windows)
+- [Mac](#install-algokit-on-mac)
+- [Linux](#install-algokit-on-linux)
+- [Universal via pipx](#install-algokit-with-pipx-on-any-os)
+
+### Install AlgoKit on Windows
+
+:::note
+AlgoKit is supported on Windows 10 1709 (build 16299) and later.
+We only publish an x64 binary, however it also runs on ARM devices by default using the built in x64 emulation feature.
+:::
+
+1. Ensure prerequisites are installed
+
+   - [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/) (should be installed by default on recent Windows 10 or later)
+   - [Git](https://github.com/git-guides/install-git#install-git-on-windows) (or `winget install git.git`)
+   - [Docker](https://docs.docker.com/desktop/install/windows-install/) (or `winget install docker.dockerdesktop`)
+     :::note
+     See [our LocalNet documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/localnet.md#prerequisites) for more tips on installing Docker on Windows
+     :::
+   - [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+
+2. Install using winget
+
+   ```shell
+   winget install algokit
+   ```
+
+3. [Verify installation](#verify-installation)
+
+#### Maintenance
+
+Some useful commands for updating or removing AlgoKit in the future.
+
+- To update AlgoKit: `winget upgrade algokit`
+- To remove AlgoKit: `winget uninstall algokit`
+
+### Install AlgoKit on Mac
+
+:::note
+AlgoKit is supported on macOS Big Sur (11) and later for both x64 and ARM (Apple Silicon)
+:::
+
+1. Ensure prerequisites are installed
+
+- [Homebrew](https://docs.brew.sh/Installation)
+- [Git](https://github.com/git-guides/install-git#install-git-on-mac) (should already be available if `brew` is installed)
+- [Docker](https://docs.docker.com/desktop/install/mac-install/), (or `brew install --cask docker`)
+  :::note
+  Docker requires MacOS 11+
+  :::
+
+1. Install using Homebrew
+
+   ```shell
+   brew install algorandfoundation/tap/algokit
+   ```
+
+2. Restart the terminal to ensure AlgoKit is available on the path
+3. [Verify installation](#verify-installation)
+
+#### Maintenance
+
+Some useful commands for updating or removing AlgoKit in the future.
+
+- To update AlgoKit: `brew upgrade algokit`
+- To remove AlgoKit: `brew uninstall algokit`
+
+### Install AlgoKit on Linux
+
+:::note
+AlgoKit is compatible with Ubuntu 16.04 and later, Debian, RedHat, and any distribution that supports [Snap](https://snapcraft.io/docs/installing-snapd), but it is only supported on x64 architecture; ARM is not supported.
+:::
+
+1. Ensure prerequisites are installed
+
+- [Snap](https://snapcraft.io/docs/installing-snapd) (should be installed by default on Ubuntu 16.04.4 LTS (Xenial Xerus) or later)
+- [Git](https://github.com/git-guides/install-git#install-git-on-linux)
+- [Docker](https://docs.docker.com/desktop/install/linux-install/)
+
+1. Install using snap
+
+   ```shell
+   sudo snap install algokit --classic
+   ```
+
+   > For detailed guidelines per each supported linux distro, refer to [Snap Store](https://snapcraft.io/algokit).
+
+2. [Verify installation](#verify-installation)
+
+#### Maintenance
+
+Some useful commands for updating or removing AlgoKit in the future.
+
+- To update AlgoKit: `snap refresh algokit`
+- To remove AlgoKit: `snap remove --purge algokit`
+
+### Install AlgoKit with pipx on any OS
+
+1. Ensure desired prerequisites are installed
+
+- [Python 3.10+](https://www.python.org/downloads/)
+- [pipx](https://pypa.github.io/pipx/installation/)
+- [Git](https://github.com/git-guides/install-git)
+- [Docker](https://docs.docker.com/get-docker/)
+
+1. Install using pipx
+
+   ```shell
+   pipx install algokit
+   ```
+
+2. Restart the terminal to ensure AlgoKit is available on the path
+3. [Verify installation](#verify-installation)
+
+#### Maintenance
+
+Some useful commands for updating or removing AlgoKit in the future.
+
+- To update AlgoKit: `pipx upgrade algokit`
+- To remove AlgoKit: `pipx uninstall algokit`
+
+### Verify installation
+
+Verify AlgoKit is installed correctly by running `algokit --version` and you should see output similar to:
+
+```
+algokit, version 1.0.1
+```
+
+:::note
+If you get receive one of the following errors:
+
+- `command not found: algokit` (bash/zsh)
+- `The term 'algokit' is not recognized as the name of a cmdlet, function, script file, or operable program.` (PowerShell)
+
+Then ensure that `algokit` is available on the PATH by running `pipx ensurepath` and restarting the terminal.
+:::
+
+It is also recommended that you run `algokit doctor` to verify there are no issues in your local environment and to diagnose any problems if you do have difficulties running AlgoKit. The output of this command will look similar to:
+
+```
+timestamp: 2023-03-27T01:23:45+00:00
+AlgoKit: 1.0.1
+AlgoKit Python: 3.11.1 (main, Dec 23 2022, 09:28:24) [Clang 14.0.0 (clang-1400.0.29.202)] (location: /Users/algokit/.local/pipx/venvs/algokit)
+OS: macOS-13.1-arm64-arm-64bit
+docker: 20.10.21
+docker compose: 2.13.0
+git: 2.37.1
+python: 3.10.9 (location:  /opt/homebrew/bin/python)
+python3: 3.10.9 (location:  /opt/homebrew/bin/python3)
+pipx: 1.1.0
+poetry: 1.3.2
+node: 18.12.1
+npm: 8.19.2
+brew: 3.6.18
+
+If you are experiencing a problem with AlgoKit, feel free to submit an issue via:
+https://github.com/algorandfoundation/algokit-cli/issues/new
+Please include this output, if you want to populate this message in your clipboard, run `algokit doctor -c`
+```
+
+Per the above output, the doctor command output is a helpful tool if you need to ask for support or [raise an issue](https://github.com/algorandfoundation/algokit-cli/issues/new).
+
+### Troubleshooting
+
+This section addresses specific edge cases and issues that some users might encounter when interacting with the CLI. The following table provides solutions to known edge cases:
+
+| Issue Description                                                                                                                                   | OS(s) with observed behaviour                             | Steps to mitigate                                                                                                                                                                                                                                                                                                                      | References                                                        |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| This scenario may arise if installed `python` was build without `--with-ssl` flag enabled, causing pip to fail when trying to install dependencies. | Debian 12                                                 | Run `sudo apt-get install -y libssl-dev` to install the required openssl dependency. Afterwards, ensure to reinstall python with `--with-ssl` flag enabled. This includes options like [building python from source code](https://medium.com/@enahwe/how-to-06bc8a042345) or using tools like [pyenv](https://github.com/pyenv/pyenv). | [GitHub Issue](https://github.com/actions/setup-python/issues/93) |
+| `poetry install` invoked directly or via `algokit project bootstrap all` fails on `Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE)`.      | `MacOS` >=14 using `python` 3.13 installed via `homebrew` | Install dependencies deprecated in `3.13` and latest MacOS versions via `brew install pkg-config`, delete the virtual environment folder and retry the `poetry install` command invocation.                                                                                                                                            | N/A                                                               |

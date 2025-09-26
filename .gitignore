@@ -2,8 +2,12 @@ package-lock.json
 
 # build output
 dist/
+
 # generated types
 .astro/
+
+# local env files
+.npmrc
 
 # dependencies
 node_modules/

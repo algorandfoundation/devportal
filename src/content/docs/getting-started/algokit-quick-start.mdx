@@ -210,7 +210,7 @@ algokit, version 2.6.0
 
 When building smart contracts, it is recommended to build and test on a local Algorand blockchain running on your computer first. Deploying and calling smart contracts on mainnet (the live public blockchain for production) costs real money. Deploying on testnet (a replica of mainnet for testing) can be cumbersome. Therefore, it is recommended to first test on the local blockchain. Once everything works, move to testnet for final testing, and then deploy to mainnet to launch your application.
 
-AlgoKit supports using a [local version of the Algorand blockchain](/algokit/algokit-cli/localnet). To start an instance of this LocalNet first open **Docker Desktop** on your computer and then run the following command from the terminal:
+AlgoKit supports using a [local version of the Algorand blockchain](/algokit/cli/localnet). To start an instance of this LocalNet first open **Docker Desktop** on your computer and then run the following command from the terminal:
 
 ```shell showLineNumbers=false frame=none
 algokit localnet start
@@ -352,7 +352,7 @@ This guide will walk you through using either the **TypeScript** or **Python** s
 
         <Figure src={algokit_v3_artifacts} alt='AlgoKit Starter Artifacts' width='400' />
 
-        These artifacts can be used by tools like [Lora](https://lora.algokit.io/localnet) and [goal](/algokit/algokit-cli/goal) to deploy your smart contract to various Algorand networks.
+        These artifacts can be used by tools like [Lora](https://lora.algokit.io/localnet) and [goal](/algokit/cli/goal) to deploy your smart contract to various Algorand networks.
     </TabItem>
     <TabItem label="Python" icon="seti:python">
         Once the starter project is created, you will notice in the `smart_contracts/hello_world` folder a file named `deploy_config.py` which is a simple example of using AlgoKit to deploy the `HelloWorld` smart contract in `contract.py` on the Local Algorand blockchain started earlier and then call the `hello` method.
@@ -387,7 +387,7 @@ This guide will walk you through using either the **TypeScript** or **Python** s
 
         <Figure src={algokit_v2_artifacts} alt='AlgoKit Starter Artifacts' width='400' />
 
-        These artifacts can be used by tools like [Lora](https://lora.algokit.io/localnet) and [goal](/algokit/algokit-cli/goal) to deploy your smart contract to various Algorand networks.
+        These artifacts can be used by tools like [Lora](https://lora.algokit.io/localnet) and [goal](/algokit/cli/goal) to deploy your smart contract to various Algorand networks.
     </TabItem>
 
 </Tabs>

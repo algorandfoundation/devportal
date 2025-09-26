@@ -12,34 +12,34 @@ title: "algopy.arc4"
 
 ## Classes
 
-| [`ARC4Client`](#algopy.arc4.ARC4Client)     | Used to provide typed method signatures for ARC4 contracts                                                                                                                                                                     |
-|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`ARC4Contract`](#algopy.arc4.ARC4Contract) | The base class for a contract that conforms to the [ARC4 ABI specification](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0004.md). Most contracts<br/>should inherit from this class or a superclass thereof. |
-| [`Address`](#algopy.arc4.Address)           | An alias for an array containing 32 bytes representing an Algorand address                                                                                                                                                     |
-| [`BigUFixedNxM`](#algopy.arc4.BigUFixedNxM) | An ARC4 UFixed representing a decimal with the number of bits and precision specified.                                                                                                                                         |
-| [`BigUIntN`](#algopy.arc4.BigUIntN)         | An ARC4 UInt consisting of the number of bits specified.                                                                                                                                                                       |
-| [`Bool`](#algopy.arc4.Bool)                 | An ARC4 encoded bool. The most significant bit is `1` for `True` and `0` for `False`                                                                                                                                           |
-| [`Byte`](#algopy.arc4.Byte)                 | An ARC4 alias for a UInt8                                                                                                                                                                                                      |
-| [`DynamicArray`](#algopy.arc4.DynamicArray) | A dynamically sized ARC4 Array of the specified type                                                                                                                                                                           |
-| [`DynamicBytes`](#algopy.arc4.DynamicBytes) | A variable sized array of bytes                                                                                                                                                                                                |
-| [`StaticArray`](#algopy.arc4.StaticArray)   | A fixed length ARC4 Array of the specified type and length                                                                                                                                                                     |
-| [`String`](#algopy.arc4.String)             | An ARC4 sequence of bytes containing a UTF8 string.                                                                                                                                                                            |
-| [`Struct`](#algopy.arc4.Struct)             | Base class for ARC4 Struct types. ARC4 Structs are named tuples. The class keyword `frozen`<br/>can be used to indicate if a struct can be mutated.                                                                            |
-| [`Tuple`](#algopy.arc4.Tuple)               | An ARC4 ABI tuple, containing other ARC4 ABI types. ARC4 Tuples are immutable statically<br/>sized arrays of mixed item types. Item types can be specified via generic parameters or<br/>inferred from constructor parameters. |
-| [`UFixedNxM`](#algopy.arc4.UFixedNxM)       | An ARC4 UFixed representing a decimal with the number of bits and precision specified.                                                                                                                                         |
-| [`UIntN`](#algopy.arc4.UIntN)               | An ARC4 UInt consisting of the number of bits specified (big-endian encoded).                                                                                                                                                  |
+| [`ARC4Client`](#algopy.arc4.ARC4Client)     | Used to provide typed method signatures for ARC4 contracts                                                                                                        |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`ARC4Contract`](#algopy.arc4.ARC4Contract) | A contract that conforms to the ARC4 ABI specification, functions decorated with<br/>`@abimethod` or `@baremethod` will form the public interface of the contract |
+| [`Address`](#algopy.arc4.Address)           | An alias for an array containing 32 bytes representing an Algorand address                                                                                        |
+| [`BigUFixedNxM`](#algopy.arc4.BigUFixedNxM) | An ARC4 UFixed representing a decimal with the number of bits and precision specified.                                                                            |
+| [`BigUIntN`](#algopy.arc4.BigUIntN)         | An ARC4 UInt consisting of the number of bits specified.                                                                                                          |
+| [`Bool`](#algopy.arc4.Bool)                 | An ARC4 encoded bool                                                                                                                                              |
+| [`Byte`](#algopy.arc4.Byte)                 | An ARC4 alias for a UInt8                                                                                                                                         |
+| [`DynamicArray`](#algopy.arc4.DynamicArray) | A dynamically sized ARC4 Array of the specified type                                                                                                              |
+| [`DynamicBytes`](#algopy.arc4.DynamicBytes) | A variable sized array of bytes                                                                                                                                   |
+| [`StaticArray`](#algopy.arc4.StaticArray)   | A fixed length ARC4 Array of the specified type and length                                                                                                        |
+| [`String`](#algopy.arc4.String)             | An ARC4 sequence of bytes containing a UTF8 string                                                                                                                |
+| [`Struct`](#algopy.arc4.Struct)             | Base class for ARC4 Struct types                                                                                                                                  |
+| [`Tuple`](#algopy.arc4.Tuple)               | An ARC4 ABI tuple, containing other ARC4 ABI types                                                                                                                |
+| [`UFixedNxM`](#algopy.arc4.UFixedNxM)       | An ARC4 UFixed representing a decimal with the number of bits and precision specified.                                                                            |
+| [`UIntN`](#algopy.arc4.UIntN)               | An ARC4 UInt consisting of the number of bits specified.                                                                                                          |
 
 <a id="functions"></a>
 
 ## Functions
 
-| [`abimethod`](#algopy.arc4.abimethod)           | Decorator that indicates a method is an ARC4 ABI method. If the method should not be externally<br/>callable, use [`algopy.subroutine()`](algopy.mdx#algopy.subroutine) instead.   |
-|-------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [`arc4_create`](#algopy.arc4.arc4_create)       | Provides a typesafe and convenient way of creating an ARC4Contract via an inner transaction                                                                                        |
-| [`arc4_signature`](#algopy.arc4.arc4_signature) | Returns the ARC4 encoded method selector for the specified signature                                                                                                               |
-| [`arc4_update`](#algopy.arc4.arc4_update)       | Provides a typesafe and convenient way of updating an ARC4Contract via an inner transaction                                                                                        |
-| [`baremethod`](#algopy.arc4.baremethod)         | Decorator that indicates a method is an ARC4 bare method.                                                                                                                          |
-| [`emit`](#algopy.arc4.emit)                     | Emit an ARC-28 event for the provided event signature or name, and provided args.                                                                                                  |
+| [`abimethod`](#algopy.arc4.abimethod)           | Decorator that indicates a method is an ARC4 ABI method.                                    |
+|-------------------------------------------------|---------------------------------------------------------------------------------------------|
+| [`arc4_create`](#algopy.arc4.arc4_create)       | Provides a typesafe and convenient way of creating an ARC4Contract via an inner transaction |
+| [`arc4_signature`](#algopy.arc4.arc4_signature) | Returns the ARC4 encoded method selector for the specified signature or abi method          |
+| [`arc4_update`](#algopy.arc4.arc4_update)       | Provides a typesafe and convenient way of updating an ARC4Contract via an inner transaction |
+| [`baremethod`](#algopy.arc4.baremethod)         | Decorator that indicates a method is an ARC4 bare method.                                   |
+| [`emit`](#algopy.arc4.emit)                     | Emit an ARC-28 event for the provided event signature or name, and provided args.           |
 
 <a id="data"></a>
 
@@ -73,24 +73,13 @@ Used to provide typed method signatures for ARC4 contracts
 
 ARC4Contract
 
-The base class for a contract that conforms to the [ARC4 ABI specification](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0004.md). Most contracts
-should inherit from this class or a superclass thereof.
+A contract that conforms to the ARC4 ABI specification, functions decorated with
+`@abimethod` or `@baremethod` will form the public interface of the contract
 
-```python
-class HelloWorldContract(ARC4Contract):
-    # ...
-```
+The approval_program will be implemented by the compiler, and route application args
+according to the ARC4 ABI specification
 
-Functions decorated with [`algopy.arc4.abimethod()`](#algopy.arc4.abimethod) or [`algopy.arc4.baremethod()`](#algopy.arc4.baremethod) will form the public
-interface of the contract.
-
-The [`algopy.arc4.ARC4Contract.approval_program()`](#algopy.arc4.ARC4Contract.approval_program) will be implemented by the compiler, and route application args
-according to the ARC4 ABI specification.
-
-The [`algopy.arc4.ARC4Contract.clear_state_program()`](#algopy.arc4.ARC4Contract.clear_state_program) will by default return True, but can be overridden
-
-The Puya compiler will generate ARC32 and ARC56 application specifications for the contract
-automatically.
+The clear_state_program will by default return True, but can be overridden
 
 <a id="algopy.arc4.ARC4Contract.__init_subclass__"></a>
 
@@ -148,8 +137,8 @@ Defaults to value provided supplied on command line (which defaults to current m
 
 approval_program() → bool
 
-The approval program for the ARC4Contract is implemented by the compile in
-accordance with ARC4
+Represents the program called for all transactions
+where `OnCompletion` != `ClearState`
 
 <a id="algopy.arc4.ARC4Contract.clear_state_program"></a>
 
@@ -157,12 +146,7 @@ accordance with ARC4
 
 clear_state_program() → [algopy.UInt64](algopy.mdx#algopy.UInt64) | bool
 
-The clear_state_program contains the logic when the `OnCompletion` is `ClearState`.
-
-The default implementation simply returns True, but this can be overridden.
-
-ClearState transactions always clear local state of the sender. Documentation on
-`ClearState` behavior should be read before implementing this method: https://developer.algorand.org/docs/get-details/dapps/smart-contracts/frontend/apps/#clear-state
+Represents the program called when `OnCompletion` == `ClearState`
 
 <a id="algopy.arc4.Address"></a>
 
@@ -447,7 +431,7 @@ Return the BigUInt representation of the value after ARC4 decoding
 
 Bool(value: bool = False, /)
 
-An ARC4 encoded bool. The most significant bit is `1` for `True` and `0` for `False`
+An ARC4 encoded bool
 
 ## Initialization
 
@@ -605,13 +589,6 @@ DynamicArray(\*items: algopy.arc4._TArrayItem)
 
 A dynamically sized ARC4 Array of the specified type
 
-```python
-import typing as t
-from algopy import arc4
-
-UInt64Array: t.TypeAlias = arc4.DynamicArray[arc4.UInt64]
-```
-
 ## Initialization
 
 Initializes a new array with items provided
@@ -620,7 +597,7 @@ Initializes a new array with items provided
 
 ### \_\_add_\_
 
-__add__(other: [algopy.arc4.DynamicArray](#algopy.arc4.DynamicArray)[algopy.arc4._TArrayItem] | [algopy.arc4.StaticArray](#algopy.arc4.StaticArray)[algopy.arc4._TArrayItem, algopy.arc4._TArrayLength] | tuple[algopy.arc4._TArrayItem, ...]) → [algopy.arc4.DynamicArray](#algopy.arc4.DynamicArray)[algopy.arc4._TArrayItem]
+__add__(other: collections.abc.Iterable[algopy.arc4._TArrayItem]) → [algopy.arc4.DynamicArray](#algopy.arc4.DynamicArray)[algopy.arc4._TArrayItem]
 
 Concat two arrays together, returning a new array
 
@@ -692,7 +669,7 @@ Create a copy of this array
 
 ### extend
 
-extend(other: [algopy.arc4.DynamicArray](#algopy.arc4.DynamicArray)[algopy.arc4._TArrayItem] | [algopy.arc4.StaticArray](#algopy.arc4.StaticArray)[algopy.arc4._TArrayItem, algopy.arc4._TArrayLength] | tuple[algopy.arc4._TArrayItem, ...], /) → None
+extend(other: collections.abc.Iterable[algopy.arc4._TArrayItem], /) → None
 
 Extend this array with the contents of another array
 
@@ -740,7 +717,7 @@ A variable sized array of bytes
 
 ### \_\_add_\_
 
-__add__(other: [algopy.arc4.DynamicArray](#algopy.arc4.DynamicArray)[algopy.arc4._TArrayItem] | [algopy.arc4.StaticArray](#algopy.arc4.StaticArray)[algopy.arc4._TArrayItem, algopy.arc4._TArrayLength] | tuple[algopy.arc4._TArrayItem, ...]) → [algopy.arc4.DynamicArray](#algopy.arc4.DynamicArray)[algopy.arc4._TArrayItem]
+__add__(other: collections.abc.Iterable[algopy.arc4._TArrayItem]) → [algopy.arc4.DynamicArray](#algopy.arc4.DynamicArray)[algopy.arc4._TArrayItem]
 
 Concat two arrays together, returning a new array
 
@@ -812,7 +789,7 @@ Create a copy of this array
 
 ### extend
 
-extend(other: [algopy.arc4.DynamicArray](#algopy.arc4.DynamicArray)[algopy.arc4._TArrayItem] | [algopy.arc4.StaticArray](#algopy.arc4.StaticArray)[algopy.arc4._TArrayItem, algopy.arc4._TArrayLength] | tuple[algopy.arc4._TArrayItem, ...], /) → None
+extend(other: collections.abc.Iterable[algopy.arc4._TArrayItem], /) → None
 
 Extend this array with the contents of another array
 
@@ -863,13 +840,6 @@ Remove and return the last item of this array
 StaticArray
 
 A fixed length ARC4 Array of the specified type and length
-
-```python
-import typing as t
-from algopy import arc4
-
-FourBytes: t.TypeAlias = arc4.StaticArray[arc4.Byte, t.Literal[4]]
-```
 
 <a id="algopy.arc4.StaticArray.__getitem__"></a>
 
@@ -949,9 +919,7 @@ Returns the current length of the array
 
 String(value: [algopy.String](algopy.mdx#algopy.String) | str = '', /)
 
-An ARC4 sequence of bytes containing a UTF8 string.
-
-The length is the number of bytes, NOT the number of characters
+An ARC4 sequence of bytes containing a UTF8 string
 
 ## Initialization
 
@@ -1009,24 +977,7 @@ Return the String representation of the UTF8 string after ARC4 decoding
 
 Struct
 
-Base class for ARC4 Struct types. ARC4 Structs are named tuples. The class keyword `frozen`
-can be used to indicate if a struct can be mutated.
-
-Items can be accessed and mutated via names instead of indexes. Structs do not have a `.native`
-property, but a NamedTuple can be used in ABI methods are will be encoded/decode to an ARC4
-struct automatically.
-
-```python
-import typing
-
-from algopy import arc4
-
-Decimal: typing.TypeAlias = arc4.UFixedNxM[typing.Literal[64], typing.Literal[9]]
-
-class Vector(arc4.Struct, kw_only=True, frozen=True):
-    x: Decimal
-    y: Decimal
-```
+Base class for ARC4 Struct types
 
 <a id="algopy.arc4.Struct.bytes"></a>
 
@@ -1066,9 +1017,7 @@ Load an ABI type from application logs, checking for the ABI return prefix `0x15
 
 Tuple(items: tuple[Unpack[algopy.arc4._TTuple]], /)
 
-An ARC4 ABI tuple, containing other ARC4 ABI types. ARC4 Tuples are immutable statically
-sized arrays of mixed item types. Item types can be specified via generic parameters or
-inferred from constructor parameters.
+An ARC4 ABI tuple, containing other ARC4 ABI types
 
 ## Initialization
 
@@ -1353,13 +1302,6 @@ An ARC4 UFixed representing a decimal with the number of bits and precision spec
 
 Max size: 64 bits
 
-```python
-import typing as t
-from algopy import arc4
-
-Decimal: t.TypeAlias = arc4.UFixedNxM[t.Literal[64], t.Literal[10]]
-```
-
 ## Initialization
 
 Construct an instance of UFixedNxM where value (v) is determined from the original
@@ -1481,19 +1423,7 @@ An ARC4 UInt8
 
 UIntN(value: [algopy.BigUInt](algopy.mdx#algopy.BigUInt) | [algopy.UInt64](algopy.mdx#algopy.UInt64) | int = 0, /)
 
-An ARC4 UInt consisting of the number of bits specified (big-endian encoded).
-
-Common bit sizes have also been aliased under     [`algopy.arc4.UInt8`](#algopy.arc4.UInt8), [`algopy.arc4.UInt16`](#algopy.arc4.UInt16) etc.
-
-A uint of any size between 8 and 512 bits (in intervals of 8bits) can be created using a
-generic parameter. It can be helpful to define your own alias for this type.
-
-```python
-import typing as t
-from algopy import arc4
-
-UInt40: t.TypeAlias = arc4.UIntN[t.Literal[40]]
-```
+An ARC4 UInt consisting of the number of bits specified.
 
 Max Size: 64 bits
 
@@ -1602,7 +1532,7 @@ def abi_call(
     self,
     method: Callable[..., _TABIResult_co] | str,
     /,
-    *args: _TABIArg,
+    *args: object,
     app_id: algopy.Application | algopy.UInt64 | int = ...,
     on_completion: algopy.OnCompleteAction = ...,
     approval_program: algopy.Bytes | bytes | tuple[algopy.Bytes, ...] = ...,
@@ -1680,34 +1610,19 @@ txn = abi_call(HelloWorldContract.no_return, arc4.String("World"), app=...)
 
 ## algopy.arc4.abimethod
 
-abimethod(\*, name: str = ..., create: Literal[allow, require, disallow] = 'disallow', allow_actions: collections.abc.Sequence[[algopy.OnCompleteAction](algopy.mdx#algopy.OnCompleteAction) | Literal[NoOp, OptIn, CloseOut, UpdateApplication, DeleteApplication]] = ('NoOp',), readonly: bool = False, default_args: collections.abc.Mapping[str, str | algopy.arc4._ReadOnlyNoArgsMethod] = ...) → collections.abc.Callable[[collections.abc.Callable[algopy.arc4._P, algopy.arc4._R]], collections.abc.Callable[algopy.arc4._P, algopy.arc4._R]]
+abimethod(\*, name: str = ..., create: Literal[allow, require, disallow] = 'disallow', allow_actions: collections.abc.Sequence[[algopy.OnCompleteAction](algopy.mdx#algopy.OnCompleteAction) | Literal[NoOp, OptIn, CloseOut, UpdateApplication, DeleteApplication]] = ('NoOp',), readonly: bool = False, default_args: collections.abc.Mapping[str, str | algopy.arc4._ReadOnlyNoArgsMethod | object] = ...) → collections.abc.Callable[[collections.abc.Callable[algopy.arc4._P, algopy.arc4._R]], collections.abc.Callable[algopy.arc4._P, algopy.arc4._R]]
 
-Decorator that indicates a method is an ARC4 ABI method. If the method should not be externally
-callable, use [`algopy.subroutine()`](algopy.mdx#algopy.subroutine) instead.
-
-Method docstrings will be used when outputting ARC-32 or ARC-56 application specifications,
-the following docstrings styles are supported ReST, Google, Numpydoc-style and Epydoc.
-
-```python
-from algopy import ARC4Contract, subroutine, arc4
-
-
-class HelloWorldContract(ARC4Contract):
-    @arc4.abimethod(create=False, allow_actions=["NoOp", "OptIn"], name="external_name")
-    def hello(self, name: arc4.String) -> arc4.String:
-        return self.internal_method() + name
-
-    @subroutine
-    def internal_method(self) -> arc4.String:
-        return arc4.String("Hello, ")
-```
+Decorator that indicates a method is an ARC4 ABI method.
 
 :arg name: Name component of the ABI method selector. Defaults to using the function name.
 :arg create: Controls the validation of the Application ID. “require” means it must be zero,
 “disallow” requires it must be non-zero, and “allow” disables the validation.
 :arg allow_actions: A sequence of allowed On-Completion Actions to validate against.
 :arg readonly: If True, then this method can be used via dry-run / simulate.
-:arg default_args: Default argument sources for clients to use.
+:arg default_args: Default argument sources for clients to use. For dynamic defaults, this can
+be the name of, or reference to a method member, or the name of a storage
+member. For static defaults, this can be any expression which evaluates to
+a compile time constant of the exact same type as the parameter.
 
 <a id="algopy.arc4.arc4_create"></a>
 
@@ -1732,9 +1647,9 @@ If not specified will be inferred from Algorand Python method where possible
 
 ## algopy.arc4.arc4_signature
 
-arc4_signature(signature: str, /) → [algopy.Bytes](algopy.mdx#algopy.Bytes)
+arc4_signature(signature: str | collections.abc.Callable[algopy.arc4._P, algopy.arc4._R], /) → [algopy.Bytes](algopy.mdx#algopy.Bytes)
 
-Returns the ARC4 encoded method selector for the specified signature
+Returns the ARC4 encoded method selector for the specified signature or abi method
 
 <a id="algopy.arc4.arc4_update"></a>
 

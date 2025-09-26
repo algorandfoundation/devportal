@@ -1,0 +1,100 @@
+---
+/* Client-side filters for the opcodes list */
+---
+
+<div
+  class='op-filters'
+  style='margin:1rem 0;display:flex;gap:.75rem;align-items:end;flex-wrap:wrap'
+>
+  <label style='display:grid;gap:.25rem'>
+    <span style='font-weight:600'>Availability</span>
+    <select id='f-version'><option value=''>All</option></select>
+  </label>
+  <label style='display:grid;gap:.25rem'>
+    <span style='font-weight:600'>Group</span>
+    <select id='f-group'><option value=''>All</option></select>
+  </label>
+  <button id='f-reset' type='button'>Reset</button>
+</div>
+
+<script is:inline>
+  // Run after the DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const $ = (s, el = document) => el.querySelector(s);
+    const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+
+    const verSel = $('#f-version');
+    const grpSel = $('#f-group');
+    const resetBtn = $('#f-reset');
+
+    // Each opcode is wrapped in a container with data attributes
+    const sections = $$('.opcode-section');
+
+    // Build option lists from the DOM
+    const versions = new Set();
+    const groups = new Set();
+    for (const sec of sections) {
+      const v = sec.dataset.version;
+      if (v) versions.add(v);
+      for (const g of (sec.dataset.groups || '')
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean))
+        groups.add(g);
+    }
+    [...versions]
+      .sort((a, b) => parseInt(a.slice(1)) - parseInt(b.slice(1)))
+      .forEach(v => {
+        const o = document.createElement('option');
+        o.value = v;
+        o.textContent = v;
+        verSel.append(o);
+      });
+    [...groups]
+      .sort((a, b) => a.localeCompare(b))
+      .forEach(g => {
+        const o = document.createElement('option');
+        o.value = g;
+        o.textContent = g;
+        grpSel.append(o);
+      });
+
+    function previousH3(el) {
+      let n = el.previousElementSibling;
+      while (n && n.tagName !== 'H3') n = n.previousElementSibling;
+      return n || null;
+    }
+
+    function applyFilters() {
+      const v = verSel.value;
+      const g = grpSel.value;
+      for (const sec of sections) {
+        const vOk = !v || sec.dataset.version === v;
+        const gOk =
+          !g ||
+          (sec.dataset.groups || '')
+            .split(',')
+            .map(s => s.trim())
+            .includes(g);
+        const show = vOk && gOk;
+
+        // toggle the content container
+        sec.hidden = !show;
+
+        // toggle the heading just before the container
+        const h2 = previousH3(sec);
+        if (h2) h2.hidden = !show;
+      }
+    }
+
+    verSel.addEventListener('change', applyFilters);
+    grpSel.addEventListener('change', applyFilters);
+    resetBtn.addEventListener('click', () => {
+      verSel.value = '';
+      grpSel.value = '';
+      applyFilters();
+    });
+
+    applyFilters();
+  });
+</script>

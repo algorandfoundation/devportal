@@ -915,7 +915,8 @@ Lookup account information.
           "local-state-schema": {
             "num-byte-slice": 0,
             "num-uint": 0
-          }
+          },
+          "version": 0
         }
       }
     ],
@@ -1032,6 +1033,7 @@ Status Code **200**
 |»»»» global-state|[[TealKeyValue](#schematealkeyvalue)]|false|none|Represents a key-value store for use in an application.|
 |»»»» global-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
 |»»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»»» version|integer|false|none|the number of updates to the application programs|
 |»» created-assets|[[Asset](#schemaasset)]|false|none|parameters of assets created by this account.<br><br>Note: the raw account uses `map[int] -> Asset` for this type.|
 |»»» created-at-round|integer|false|none|Round during which this asset was created.|
 |»»» deleted|boolean|false|none|Whether or not this asset is currently deleted.|
@@ -1303,7 +1305,8 @@ Lookup an account's created application parameters, optionally for a specific ID
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -1347,6 +1350,7 @@ Status Code **200**
 |»»»» num-byte-slice|integer|true|none|number of byte slices.|
 |»»»» num-uint|integer|true|none|number of uints.|
 |»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»» version|integer|false|none|the number of updates to the application programs|
 |» current-round|integer|true|none|Round at which the results were computed.|
 |» next-token|string|false|none|Used for pagination, when making another request provide this token with the next parameter.|
 
@@ -1832,6 +1836,25 @@ Lookup account transactions. Transactions are returned newest to oldest.
   "transactions": [
     {
       "application-transaction": {
+        "access": [
+          {
+            "address": "string",
+            "application-id": 0,
+            "asset-id": 0,
+            "box": {
+              "app": 0,
+              "name": "string"
+            },
+            "holding": {
+              "address": "string",
+              "asset": 0
+            },
+            "local": {
+              "address": "string",
+              "app": 0
+            }
+          }
+        ],
         "accounts": [
           "string"
         ],
@@ -1840,6 +1863,12 @@ Lookup account transactions. Transactions are returned newest to oldest.
         ],
         "application-id": 0,
         "approval-program": "string",
+        "box-references": [
+          {
+            "app": 0,
+            "name": "string"
+          }
+        ],
         "clear-state-program": "string",
         "extra-program-pages": 0,
         "foreign-apps": [
@@ -1856,7 +1885,8 @@ Lookup account transactions. Transactions are returned newest to oldest.
           "num-byte-slice": 0,
           "num-uint": 0
         },
-        "on-completion": "noop"
+        "on-completion": "noop",
+        "reject-version": 0
       },
       "asset-config-transaction": {
         "asset-id": 0,
@@ -1977,6 +2007,16 @@ Lookup account transactions. Transactions are returned newest to oldest.
             "string"
           ],
           "logic": "string",
+          "logic-multisig-signature": {
+            "subsignature": [
+              {
+                "public-key": "string",
+                "signature": "string"
+              }
+            ],
+            "threshold": 0,
+            "version": 0
+          },
           "multisig-signature": {
             "subsignature": [
               {
@@ -2086,10 +2126,24 @@ Status Code **200**
 |» next-token|string|false|none|Used for pagination, when making another request provide this token with the next parameter.|
 |» transactions|[[Transaction](#schematransaction)]|true|none|[Contains all fields common to all transactions and serves as an envelope to all transactions type. Represents both regular and inner transactions.<br><br>Definition:<br>data/transactions/signedtxn.go : SignedTxn<br>data/transactions/transaction.go : Transaction<br>]|
 |»» application-transaction|[TransactionApplication](#schematransactionapplication)|false|none|Fields for application transactions.<br><br>Definition:<br>data/transactions/application.go : ApplicationCallTxnFields|
+|»»» access|[[ResourceRef](#schemaresourceref)]|false|none|\[al\] Access unifies `accounts`, `foreign-apps`, `foreign-assets`, and `box-references` under a single list. If access is non-empty, these lists must be empty. If access is empty, those lists may be non-empty.|
+|»»»» address|string|false|none|\[d\] Account whose balance record is accessible by the executing ApprovalProgram or ClearStateProgram.|
+|»»»» application-id|integer|false|none|\[p\] Application id whose GlobalState may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»» asset-id|integer|false|none|\[s\] Asset whose AssetParams may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»» box|[BoxReference](#schemaboxreference)|false|none|BoxReference names a box by its name and the application ID it belongs to.|
+|»»»»» app|integer|true|none|Application ID to which the box belongs, or zero if referring to the called application.|
+|»»»»» name|string(byte)|true|none|Base64 encoded box name|
+|»»»» holding|[HoldingRef](#schemaholdingref)|false|none|HoldingRef names a holding by referring to an Address and Asset it belongs to.|
+|»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»» asset|integer|true|none|\[s\] Asset ID for asset in access list.|
+|»»»» local|[LocalsRef](#schemalocalsref)|false|none|LocalsRef names a local state by referring to an Address and App it belongs to.|
+|»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»» app|integer|true|none|\[p\] Application ID for app in access list, or zero if referring to the called application.|
 |»»» accounts|[string]|false|none|\[apat\] List of accounts in addition to the sender that may be accessed from the application's approval-program and clear-state-program.|
 |»»» application-args|[string]|false|none|\[apaa\] transaction specific arguments accessed from the application's approval-program and clear-state-program.|
 |»»» application-id|integer|true|none|\[apid\] ID of the application being configured or empty if creating.|
 |»»» approval-program|string(byte)|false|none|\[apap\] Logic executed for every application transaction, except when on-completion is set to "clear". It can read and write global state for the application, as well as account-specific local state. Approval programs may reject the transaction.|
+|»»» box-references|[[BoxReference](#schemaboxreference)]|false|none|\[apbx\] the boxes that can be accessed by this transaction (and others in the same group).|
 |»»» clear-state-program|string(byte)|false|none|\[apsu\] Logic executed for application transactions with on-completion set to "clear". It can read and write global state for the application, as well as account-specific local state. Clear state programs cannot reject the transaction.|
 |»»» extra-program-pages|integer|false|none|\[epp\] specifies the additional app program len requested in pages.|
 |»»» foreign-apps|[integer]|false|none|\[apfa\] Lists the applications in addition to the application-id whose global states may be accessed by this application's approval-program and clear-state-program. The access is read-only.|
@@ -2099,6 +2153,7 @@ Status Code **200**
 |»»»» num-uint|integer|true|none|Maximum number of TEAL uints that may be stored in the key/value store.|
 |»»» local-state-schema|[StateSchema](#schemastateschema)|false|none|Represents a \[apls\] local-state or \[apgs\] global-state schema. These schemas determine how much storage may be used in a local-state or global-state for an application. The more space used, the larger minimum balance must be maintained in the account holding the data.|
 |»»» on-completion|[OnCompletion](#schemaoncompletion)|true|none|\[apan\] defines the what additional actions occur with the transaction.<br><br>Valid types:<br>* noop<br>* optin<br>* closeout<br>* clear<br>* update<br>* update<br>* delete|
+|»»» reject-version|integer|false|none|\[aprv\] the lowest application version for which this transaction should immediately fail. 0 indicates that no version check should be performed.|
 |»» asset-config-transaction|[TransactionAssetConfig](#schematransactionassetconfig)|false|none|Fields for asset allocation, re-configuration, and destruction.<br><br><br>A zero value for asset-id indicates asset creation.<br>A zero value for the params indicates asset destruction.<br><br>Definition:<br>data/transactions/asset.go : AssetConfigTxnFields|
 |»»» asset-id|integer|false|none|\[xaid\] ID of the asset being configured or empty if creating.|
 |»»» params|[AssetParams](#schemaassetparams)|false|none|AssetParams specifies the parameters for an asset.<br><br>\[apar\] when part of an AssetConfig transaction.<br><br>Definition:<br>data/transactions/asset.go : AssetParams|
@@ -2188,14 +2243,15 @@ Status Code **200**
 |»»» logicsig|[TransactionSignatureLogicsig](#schematransactionsignaturelogicsig)|false|none|\[lsig\] Programatic transaction signature.<br><br>Definition:<br>data/transactions/logicsig.go|
 |»»»» args|[string]|false|none|\[arg\] Logic arguments, base64 encoded.|
 |»»»» logic|string(byte)|true|none|\[l\] Program signed by a signature or multi signature, or hashed to be the address of ana ccount. Base64 encoded TEAL program.|
-|»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»»» logic-multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»»» subsignature|[[TransactionSignatureMultisigSubsignature](#schematransactionsignaturemultisigsubsignature)]|false|none|\[subsig\] holds pairs of public key and signatures.|
 |»»»»»» public-key|string(byte)|false|none|\[pk\]|
 |»»»»»» signature|string(byte)|false|none|\[s\]|
 |»»»»» threshold|integer|false|none|\[thr\]|
 |»»»»» version|integer|false|none|\[v\]|
+|»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»» signature|string(byte)|false|none|\[sig\] ed25519 signature.|
-|»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»» sig|string(byte)|false|none|\[sig\] Standard ed25519 signature.|
 |»» state-proof-transaction|[TransactionStateProof](#schematransactionstateproof)|false|none|Fields for a state proof transaction. <br><br>Definition:<br>data/transactions/stateproof.go : StateProofTxnFields|
 |»»» message|[IndexerStateProofMessage](#schemaindexerstateproofmessage)|false|none|none|
@@ -2661,7 +2717,8 @@ Lookup application.
       "local-state-schema": {
         "num-byte-slice": 0,
         "num-uint": 0
-      }
+      },
+      "version": 0
     }
   },
   "current-round": 0
@@ -2702,6 +2759,7 @@ Status Code **200**
 |»»»» num-byte-slice|integer|true|none|number of byte slices.|
 |»»»» num-uint|integer|true|none|number of uints.|
 |»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»» version|integer|false|none|the number of updates to the application programs|
 |» current-round|integer|true|none|Round at which the results were computed.|
 
 Status Code **404**
@@ -3598,6 +3656,25 @@ Lookup transactions for an asset. Transactions are returned oldest to newest.
   "transactions": [
     {
       "application-transaction": {
+        "access": [
+          {
+            "address": "string",
+            "application-id": 0,
+            "asset-id": 0,
+            "box": {
+              "app": 0,
+              "name": "string"
+            },
+            "holding": {
+              "address": "string",
+              "asset": 0
+            },
+            "local": {
+              "address": "string",
+              "app": 0
+            }
+          }
+        ],
         "accounts": [
           "string"
         ],
@@ -3606,6 +3683,12 @@ Lookup transactions for an asset. Transactions are returned oldest to newest.
         ],
         "application-id": 0,
         "approval-program": "string",
+        "box-references": [
+          {
+            "app": 0,
+            "name": "string"
+          }
+        ],
         "clear-state-program": "string",
         "extra-program-pages": 0,
         "foreign-apps": [
@@ -3622,7 +3705,8 @@ Lookup transactions for an asset. Transactions are returned oldest to newest.
           "num-byte-slice": 0,
           "num-uint": 0
         },
-        "on-completion": "noop"
+        "on-completion": "noop",
+        "reject-version": 0
       },
       "asset-config-transaction": {
         "asset-id": 0,
@@ -3743,6 +3827,16 @@ Lookup transactions for an asset. Transactions are returned oldest to newest.
             "string"
           ],
           "logic": "string",
+          "logic-multisig-signature": {
+            "subsignature": [
+              {
+                "public-key": "string",
+                "signature": "string"
+              }
+            ],
+            "threshold": 0,
+            "version": 0
+          },
           "multisig-signature": {
             "subsignature": [
               {
@@ -3852,10 +3946,24 @@ Status Code **200**
 |» next-token|string|false|none|Used for pagination, when making another request provide this token with the next parameter.|
 |» transactions|[[Transaction](#schematransaction)]|true|none|[Contains all fields common to all transactions and serves as an envelope to all transactions type. Represents both regular and inner transactions.<br><br>Definition:<br>data/transactions/signedtxn.go : SignedTxn<br>data/transactions/transaction.go : Transaction<br>]|
 |»» application-transaction|[TransactionApplication](#schematransactionapplication)|false|none|Fields for application transactions.<br><br>Definition:<br>data/transactions/application.go : ApplicationCallTxnFields|
+|»»» access|[[ResourceRef](#schemaresourceref)]|false|none|\[al\] Access unifies `accounts`, `foreign-apps`, `foreign-assets`, and `box-references` under a single list. If access is non-empty, these lists must be empty. If access is empty, those lists may be non-empty.|
+|»»»» address|string|false|none|\[d\] Account whose balance record is accessible by the executing ApprovalProgram or ClearStateProgram.|
+|»»»» application-id|integer|false|none|\[p\] Application id whose GlobalState may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»» asset-id|integer|false|none|\[s\] Asset whose AssetParams may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»» box|[BoxReference](#schemaboxreference)|false|none|BoxReference names a box by its name and the application ID it belongs to.|
+|»»»»» app|integer|true|none|Application ID to which the box belongs, or zero if referring to the called application.|
+|»»»»» name|string(byte)|true|none|Base64 encoded box name|
+|»»»» holding|[HoldingRef](#schemaholdingref)|false|none|HoldingRef names a holding by referring to an Address and Asset it belongs to.|
+|»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»» asset|integer|true|none|\[s\] Asset ID for asset in access list.|
+|»»»» local|[LocalsRef](#schemalocalsref)|false|none|LocalsRef names a local state by referring to an Address and App it belongs to.|
+|»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»» app|integer|true|none|\[p\] Application ID for app in access list, or zero if referring to the called application.|
 |»»» accounts|[string]|false|none|\[apat\] List of accounts in addition to the sender that may be accessed from the application's approval-program and clear-state-program.|
 |»»» application-args|[string]|false|none|\[apaa\] transaction specific arguments accessed from the application's approval-program and clear-state-program.|
 |»»» application-id|integer|true|none|\[apid\] ID of the application being configured or empty if creating.|
 |»»» approval-program|string(byte)|false|none|\[apap\] Logic executed for every application transaction, except when on-completion is set to "clear". It can read and write global state for the application, as well as account-specific local state. Approval programs may reject the transaction.|
+|»»» box-references|[[BoxReference](#schemaboxreference)]|false|none|\[apbx\] the boxes that can be accessed by this transaction (and others in the same group).|
 |»»» clear-state-program|string(byte)|false|none|\[apsu\] Logic executed for application transactions with on-completion set to "clear". It can read and write global state for the application, as well as account-specific local state. Clear state programs cannot reject the transaction.|
 |»»» extra-program-pages|integer|false|none|\[epp\] specifies the additional app program len requested in pages.|
 |»»» foreign-apps|[integer]|false|none|\[apfa\] Lists the applications in addition to the application-id whose global states may be accessed by this application's approval-program and clear-state-program. The access is read-only.|
@@ -3865,6 +3973,7 @@ Status Code **200**
 |»»»» num-uint|integer|true|none|Maximum number of TEAL uints that may be stored in the key/value store.|
 |»»» local-state-schema|[StateSchema](#schemastateschema)|false|none|Represents a \[apls\] local-state or \[apgs\] global-state schema. These schemas determine how much storage may be used in a local-state or global-state for an application. The more space used, the larger minimum balance must be maintained in the account holding the data.|
 |»»» on-completion|[OnCompletion](#schemaoncompletion)|true|none|\[apan\] defines the what additional actions occur with the transaction.<br><br>Valid types:<br>* noop<br>* optin<br>* closeout<br>* clear<br>* update<br>* update<br>* delete|
+|»»» reject-version|integer|false|none|\[aprv\] the lowest application version for which this transaction should immediately fail. 0 indicates that no version check should be performed.|
 |»» asset-config-transaction|[TransactionAssetConfig](#schematransactionassetconfig)|false|none|Fields for asset allocation, re-configuration, and destruction.<br><br><br>A zero value for asset-id indicates asset creation.<br>A zero value for the params indicates asset destruction.<br><br>Definition:<br>data/transactions/asset.go : AssetConfigTxnFields|
 |»»» asset-id|integer|false|none|\[xaid\] ID of the asset being configured or empty if creating.|
 |»»» params|[AssetParams](#schemaassetparams)|false|none|AssetParams specifies the parameters for an asset.<br><br>\[apar\] when part of an AssetConfig transaction.<br><br>Definition:<br>data/transactions/asset.go : AssetParams|
@@ -3954,14 +4063,15 @@ Status Code **200**
 |»»» logicsig|[TransactionSignatureLogicsig](#schematransactionsignaturelogicsig)|false|none|\[lsig\] Programatic transaction signature.<br><br>Definition:<br>data/transactions/logicsig.go|
 |»»»» args|[string]|false|none|\[arg\] Logic arguments, base64 encoded.|
 |»»»» logic|string(byte)|true|none|\[l\] Program signed by a signature or multi signature, or hashed to be the address of ana ccount. Base64 encoded TEAL program.|
-|»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»»» logic-multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»»» subsignature|[[TransactionSignatureMultisigSubsignature](#schematransactionsignaturemultisigsubsignature)]|false|none|\[subsig\] holds pairs of public key and signatures.|
 |»»»»»» public-key|string(byte)|false|none|\[pk\]|
 |»»»»»» signature|string(byte)|false|none|\[s\]|
 |»»»»» threshold|integer|false|none|\[thr\]|
 |»»»»» version|integer|false|none|\[v\]|
+|»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»» signature|string(byte)|false|none|\[sig\] ed25519 signature.|
-|»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»» sig|string(byte)|false|none|\[sig\] Standard ed25519 signature.|
 |»» state-proof-transaction|[TransactionStateProof](#schematransactionstateproof)|false|none|Fields for a state proof transaction. <br><br>Definition:<br>data/transactions/stateproof.go : StateProofTxnFields|
 |»»» message|[IndexerStateProofMessage](#schemaindexerstateproofmessage)|false|none|none|
@@ -4207,6 +4317,7 @@ Lookup block.
     ]
   },
   "previous-block-hash": "string",
+  "previous-block-hash-512": "string",
   "proposer": "string",
   "proposer-payout": 0,
   "rewards": {
@@ -4231,6 +4342,25 @@ Lookup block.
   "transactions": [
     {
       "application-transaction": {
+        "access": [
+          {
+            "address": "string",
+            "application-id": 0,
+            "asset-id": 0,
+            "box": {
+              "app": 0,
+              "name": "string"
+            },
+            "holding": {
+              "address": "string",
+              "asset": 0
+            },
+            "local": {
+              "address": "string",
+              "app": 0
+            }
+          }
+        ],
         "accounts": [
           "string"
         ],
@@ -4239,6 +4369,12 @@ Lookup block.
         ],
         "application-id": 0,
         "approval-program": "string",
+        "box-references": [
+          {
+            "app": 0,
+            "name": "string"
+          }
+        ],
         "clear-state-program": "string",
         "extra-program-pages": 0,
         "foreign-apps": [
@@ -4255,7 +4391,8 @@ Lookup block.
           "num-byte-slice": 0,
           "num-uint": 0
         },
-        "on-completion": "noop"
+        "on-completion": "noop",
+        "reject-version": 0
       },
       "asset-config-transaction": {
         "asset-id": 0,
@@ -4376,6 +4513,16 @@ Lookup block.
             "string"
           ],
           "logic": "string",
+          "logic-multisig-signature": {
+            "subsignature": [
+              {
+                "public-key": "string",
+                "signature": "string"
+              }
+            ],
+            "threshold": 0,
+            "version": 0
+          },
           "multisig-signature": {
             "subsignature": [
               {
@@ -4466,6 +4613,7 @@ Lookup block.
   ],
   "transactions-root": "string",
   "transactions-root-sha256": "string",
+  "transactions-root-sha512": "string",
   "txn-counter": 0,
   "upgrade-state": {
     "current-protocol": "string",
@@ -4671,6 +4819,25 @@ Lookup a single transaction.
   "current-round": 0,
   "transaction": {
     "application-transaction": {
+      "access": [
+        {
+          "address": "string",
+          "application-id": 0,
+          "asset-id": 0,
+          "box": {
+            "app": 0,
+            "name": "string"
+          },
+          "holding": {
+            "address": "string",
+            "asset": 0
+          },
+          "local": {
+            "address": "string",
+            "app": 0
+          }
+        }
+      ],
       "accounts": [
         "string"
       ],
@@ -4679,6 +4846,12 @@ Lookup a single transaction.
       ],
       "application-id": 0,
       "approval-program": "string",
+      "box-references": [
+        {
+          "app": 0,
+          "name": "string"
+        }
+      ],
       "clear-state-program": "string",
       "extra-program-pages": 0,
       "foreign-apps": [
@@ -4695,7 +4868,8 @@ Lookup a single transaction.
         "num-byte-slice": 0,
         "num-uint": 0
       },
-      "on-completion": "noop"
+      "on-completion": "noop",
+      "reject-version": 0
     },
     "asset-config-transaction": {
       "asset-id": 0,
@@ -4816,6 +4990,16 @@ Lookup a single transaction.
           "string"
         ],
         "logic": "string",
+        "logic-multisig-signature": {
+          "subsignature": [
+            {
+              "public-key": "string",
+              "signature": "string"
+            }
+          ],
+          "threshold": 0,
+          "version": 0
+        },
         "multisig-signature": {
           "subsignature": [
             {
@@ -4928,10 +5112,24 @@ Status Code **200**
 |» current-round|integer|true|none|Round at which the results were computed.|
 |» transaction|[Transaction](#schematransaction)|true|none|Contains all fields common to all transactions and serves as an envelope to all transactions type. Represents both regular and inner transactions.<br><br>Definition:<br>data/transactions/signedtxn.go : SignedTxn<br>data/transactions/transaction.go : Transaction|
 |»» application-transaction|[TransactionApplication](#schematransactionapplication)|false|none|Fields for application transactions.<br><br>Definition:<br>data/transactions/application.go : ApplicationCallTxnFields|
+|»»» access|[[ResourceRef](#schemaresourceref)]|false|none|\[al\] Access unifies `accounts`, `foreign-apps`, `foreign-assets`, and `box-references` under a single list. If access is non-empty, these lists must be empty. If access is empty, those lists may be non-empty.|
+|»»»» address|string|false|none|\[d\] Account whose balance record is accessible by the executing ApprovalProgram or ClearStateProgram.|
+|»»»» application-id|integer|false|none|\[p\] Application id whose GlobalState may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»» asset-id|integer|false|none|\[s\] Asset whose AssetParams may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»» box|[BoxReference](#schemaboxreference)|false|none|BoxReference names a box by its name and the application ID it belongs to.|
+|»»»»» app|integer|true|none|Application ID to which the box belongs, or zero if referring to the called application.|
+|»»»»» name|string(byte)|true|none|Base64 encoded box name|
+|»»»» holding|[HoldingRef](#schemaholdingref)|false|none|HoldingRef names a holding by referring to an Address and Asset it belongs to.|
+|»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»» asset|integer|true|none|\[s\] Asset ID for asset in access list.|
+|»»»» local|[LocalsRef](#schemalocalsref)|false|none|LocalsRef names a local state by referring to an Address and App it belongs to.|
+|»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»» app|integer|true|none|\[p\] Application ID for app in access list, or zero if referring to the called application.|
 |»»» accounts|[string]|false|none|\[apat\] List of accounts in addition to the sender that may be accessed from the application's approval-program and clear-state-program.|
 |»»» application-args|[string]|false|none|\[apaa\] transaction specific arguments accessed from the application's approval-program and clear-state-program.|
 |»»» application-id|integer|true|none|\[apid\] ID of the application being configured or empty if creating.|
 |»»» approval-program|string(byte)|false|none|\[apap\] Logic executed for every application transaction, except when on-completion is set to "clear". It can read and write global state for the application, as well as account-specific local state. Approval programs may reject the transaction.|
+|»»» box-references|[[BoxReference](#schemaboxreference)]|false|none|\[apbx\] the boxes that can be accessed by this transaction (and others in the same group).|
 |»»» clear-state-program|string(byte)|false|none|\[apsu\] Logic executed for application transactions with on-completion set to "clear". It can read and write global state for the application, as well as account-specific local state. Clear state programs cannot reject the transaction.|
 |»»» extra-program-pages|integer|false|none|\[epp\] specifies the additional app program len requested in pages.|
 |»»» foreign-apps|[integer]|false|none|\[apfa\] Lists the applications in addition to the application-id whose global states may be accessed by this application's approval-program and clear-state-program. The access is read-only.|
@@ -4941,6 +5139,7 @@ Status Code **200**
 |»»»» num-uint|integer|true|none|Maximum number of TEAL uints that may be stored in the key/value store.|
 |»»» local-state-schema|[StateSchema](#schemastateschema)|false|none|Represents a \[apls\] local-state or \[apgs\] global-state schema. These schemas determine how much storage may be used in a local-state or global-state for an application. The more space used, the larger minimum balance must be maintained in the account holding the data.|
 |»»» on-completion|[OnCompletion](#schemaoncompletion)|true|none|\[apan\] defines the what additional actions occur with the transaction.<br><br>Valid types:<br>* noop<br>* optin<br>* closeout<br>* clear<br>* update<br>* update<br>* delete|
+|»»» reject-version|integer|false|none|\[aprv\] the lowest application version for which this transaction should immediately fail. 0 indicates that no version check should be performed.|
 |»» asset-config-transaction|[TransactionAssetConfig](#schematransactionassetconfig)|false|none|Fields for asset allocation, re-configuration, and destruction.<br><br><br>A zero value for asset-id indicates asset creation.<br>A zero value for the params indicates asset destruction.<br><br>Definition:<br>data/transactions/asset.go : AssetConfigTxnFields|
 |»»» asset-id|integer|false|none|\[xaid\] ID of the asset being configured or empty if creating.|
 |»»» params|[AssetParams](#schemaassetparams)|false|none|AssetParams specifies the parameters for an asset.<br><br>\[apar\] when part of an AssetConfig transaction.<br><br>Definition:<br>data/transactions/asset.go : AssetParams|
@@ -5030,14 +5229,15 @@ Status Code **200**
 |»»» logicsig|[TransactionSignatureLogicsig](#schematransactionsignaturelogicsig)|false|none|\[lsig\] Programatic transaction signature.<br><br>Definition:<br>data/transactions/logicsig.go|
 |»»»» args|[string]|false|none|\[arg\] Logic arguments, base64 encoded.|
 |»»»» logic|string(byte)|true|none|\[l\] Program signed by a signature or multi signature, or hashed to be the address of ana ccount. Base64 encoded TEAL program.|
-|»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»»» logic-multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»»» subsignature|[[TransactionSignatureMultisigSubsignature](#schematransactionsignaturemultisigsubsignature)]|false|none|\[subsig\] holds pairs of public key and signatures.|
 |»»»»»» public-key|string(byte)|false|none|\[pk\]|
 |»»»»»» signature|string(byte)|false|none|\[s\]|
 |»»»»» threshold|integer|false|none|\[thr\]|
 |»»»»» version|integer|false|none|\[v\]|
+|»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»» signature|string(byte)|false|none|\[sig\] ed25519 signature.|
-|»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»» sig|string(byte)|false|none|\[sig\] Standard ed25519 signature.|
 |»» state-proof-transaction|[TransactionStateProof](#schematransactionstateproof)|false|none|Fields for a state proof transaction. <br><br>Definition:<br>data/transactions/stateproof.go : StateProofTxnFields|
 |»»» message|[IndexerStateProofMessage](#schemaindexerstateproofmessage)|false|none|none|
@@ -5201,7 +5401,8 @@ This operation does not require authentication
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -5411,7 +5612,8 @@ Application state delta.
     "local-state-schema": {
       "num-byte-slice": 0,
       "num-uint": 0
-    }
+    },
+    "version": 0
   }
 }
 
@@ -5532,7 +5734,8 @@ Stores the global information associated with an application.
   "local-state-schema": {
     "num-byte-slice": 0,
     "num-uint": 0
-  }
+  },
+  "version": 0
 }
 
 ```
@@ -5550,6 +5753,7 @@ Stores the global information associated with an application.
 |global-state|[TealKeyValueStore](#schematealkeyvaluestore)|false|none|Represents a key-value store for use in an application.|
 |global-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
 |local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|version|integer|false|none|the number of updates to the application programs|
 
 
 ### ApplicationStateSchema
@@ -5738,6 +5942,7 @@ data/transactions/asset.go : AssetParams
     ]
   },
   "previous-block-hash": "string",
+  "previous-block-hash-512": "string",
   "proposer": "string",
   "proposer-payout": 0,
   "rewards": {
@@ -5762,6 +5967,25 @@ data/transactions/asset.go : AssetParams
   "transactions": [
     {
       "application-transaction": {
+        "access": [
+          {
+            "address": "string",
+            "application-id": 0,
+            "asset-id": 0,
+            "box": {
+              "app": 0,
+              "name": "string"
+            },
+            "holding": {
+              "address": "string",
+              "asset": 0
+            },
+            "local": {
+              "address": "string",
+              "app": 0
+            }
+          }
+        ],
         "accounts": [
           "string"
         ],
@@ -5770,6 +5994,12 @@ data/transactions/asset.go : AssetParams
         ],
         "application-id": 0,
         "approval-program": "string",
+        "box-references": [
+          {
+            "app": 0,
+            "name": "string"
+          }
+        ],
         "clear-state-program": "string",
         "extra-program-pages": 0,
         "foreign-apps": [
@@ -5786,7 +6016,8 @@ data/transactions/asset.go : AssetParams
           "num-byte-slice": 0,
           "num-uint": 0
         },
-        "on-completion": "noop"
+        "on-completion": "noop",
+        "reject-version": 0
       },
       "asset-config-transaction": {
         "asset-id": 0,
@@ -5907,6 +6138,16 @@ data/transactions/asset.go : AssetParams
             "string"
           ],
           "logic": "string",
+          "logic-multisig-signature": {
+            "subsignature": [
+              {
+                "public-key": "string",
+                "signature": "string"
+              }
+            ],
+            "threshold": 0,
+            "version": 0
+          },
           "multisig-signature": {
             "subsignature": [
               {
@@ -5997,6 +6238,7 @@ data/transactions/asset.go : AssetParams
   ],
   "transactions-root": "string",
   "transactions-root-sha256": "string",
+  "transactions-root-sha512": "string",
   "txn-counter": 0,
   "upgrade-state": {
     "current-protocol": "string",
@@ -6029,6 +6271,7 @@ data/bookkeeping/block.go : Block
 |genesis-id|string|true|none|\[gen\] ID to which this block belongs.|
 |participation-updates|[ParticipationUpdates](#schemaparticipationupdates)|false|none|Participation account data that needs to be checked/acted on by the network.|
 |previous-block-hash|string(byte)|true|none|\[prev\] Previous block hash.|
+|previous-block-hash-512|string(byte)|false|none|\[prev512\] Previous block hash, using SHA-512.|
 |proposer|string|false|none|the proposer of this block.|
 |proposer-payout|integer|false|none|the actual amount transferred to the proposer from the fee sink.|
 |rewards|[BlockRewards](#schemablockrewards)|false|none|Fields relating to rewards,|
@@ -6039,6 +6282,7 @@ data/bookkeeping/block.go : Block
 |transactions|[[Transaction](#schematransaction)]|false|none|\[txns\] list of transactions corresponding to a given round.|
 |transactions-root|string(byte)|true|none|\[txn\] TransactionsRoot authenticates the set of transactions appearing in the block. More specifically, it's the root of a merkle tree whose leaves are the block's Txids, in lexicographic order. For the empty block, it's 0. Note that the TxnRoot does not authenticate the signatures on the transactions, only the transactions themselves. Two blocks with the same transactions but in a different order and with different signatures will have the same TxnRoot.|
 |transactions-root-sha256|string(byte)|true|none|\[txn256\] TransactionsRootSHA256 is an auxiliary TransactionRoot, built using a vector commitment instead of a merkle tree, and SHA256 hash function instead of the default SHA512_256. This commitment can be used on environments where only the SHA256 function exists.|
+|transactions-root-sha512|string(byte)|false|none|\[txn512\] TransactionsRootSHA512 is an auxiliary TransactionRoot, built using a vector commitment instead of a merkle tree, and SHA512 hash function instead of the default SHA512_256.|
 |txn-counter|integer|false|none|\[tc\] TxnCounter counts the number of transactions committed in the ledger, from the time at which support for this feature was introduced.<br><br>Specifically, TxnCounter is the number of the next transaction that will be committed after this block.  It is 0 when no transactions have ever been committed (since TxnCounter started being supported).|
 |upgrade-state|[BlockUpgradeState](#schemablockupgradestate)|false|none|Fields relating to a protocol upgrade.|
 |upgrade-vote|[BlockUpgradeVote](#schemablockupgradevote)|false|none|Fields relating to voting for a protocol upgrade.|
@@ -6182,6 +6426,31 @@ Box descriptor describes an app box without a value.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|name|string(byte)|true|none|Base64 encoded box name|
+
+
+### BoxReference
+<!-- backwards compatibility -->
+<a id="schemaboxreference"></a>
+<a id="schema_BoxReference"></a>
+<a id="tocSboxreference"></a>
+<a id="tocsboxreference"></a>
+
+```json
+{
+  "app": 0,
+  "name": "string"
+}
+
+```
+
+BoxReference names a box by its name and the application ID it belongs to.
+
+#### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|app|integer|true|none|Application ID to which the box belongs, or zero if referring to the called application.|
 |name|string(byte)|true|none|Base64 encoded box name|
 
 
@@ -6360,6 +6629,31 @@ A health check response.
 |version|string|true|none|Current version.|
 
 
+### HoldingRef
+<!-- backwards compatibility -->
+<a id="schemaholdingref"></a>
+<a id="schema_HoldingRef"></a>
+<a id="tocSholdingref"></a>
+<a id="tocsholdingref"></a>
+
+```json
+{
+  "address": "string",
+  "asset": 0
+}
+
+```
+
+HoldingRef names a holding by referring to an Address and Asset it belongs to.
+
+#### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|asset|integer|true|none|\[s\] Asset ID for asset in access list.|
+
+
 ### IndexerStateProofMessage
 <!-- backwards compatibility -->
 <a id="schemaindexerstateproofmessage"></a>
@@ -6387,6 +6681,31 @@ A health check response.
 |latest-attested-round|integer|false|none|\[l\]|
 |ln-proven-weight|integer|false|none|\[P\]|
 |voters-commitment|string(byte)|false|none|\[v\]|
+
+
+### LocalsRef
+<!-- backwards compatibility -->
+<a id="schemalocalsref"></a>
+<a id="schema_LocalsRef"></a>
+<a id="tocSlocalsref"></a>
+<a id="tocslocalsref"></a>
+
+```json
+{
+  "address": "string",
+  "app": 0
+}
+
+```
+
+LocalsRef names a local state by referring to an Address and App it belongs to.
+
+#### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|app|integer|true|none|\[p\] Application ID for app in access list, or zero if referring to the called application.|
 
 
 ### MerkleArrayProof
@@ -6519,6 +6838,48 @@ Participation account data that needs to be checked/acted on by the network.
 |---|---|---|---|---|
 |absent-participation-accounts|[string]|false|none|\[partupabs\] a list of online accounts that need to be suspended.|
 |expired-participation-accounts|[string]|false|none|\[partupdrmv\] a list of online accounts that needs to be converted to offline since their participation key expired.|
+
+
+### ResourceRef
+<!-- backwards compatibility -->
+<a id="schemaresourceref"></a>
+<a id="schema_ResourceRef"></a>
+<a id="tocSresourceref"></a>
+<a id="tocsresourceref"></a>
+
+```json
+{
+  "address": "string",
+  "application-id": 0,
+  "asset-id": 0,
+  "box": {
+    "app": 0,
+    "name": "string"
+  },
+  "holding": {
+    "address": "string",
+    "asset": 0
+  },
+  "local": {
+    "address": "string",
+    "app": 0
+  }
+}
+
+```
+
+ResourceRef names a single resource. Only one of the fields should be set.
+
+#### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|address|string|false|none|\[d\] Account whose balance record is accessible by the executing ApprovalProgram or ClearStateProgram.|
+|application-id|integer|false|none|\[p\] Application id whose GlobalState may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|asset-id|integer|false|none|\[s\] Asset whose AssetParams may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|box|[BoxReference](#schemaboxreference)|false|none|BoxReference names a box by its name and the application ID it belongs to.|
+|holding|[HoldingRef](#schemaholdingref)|false|none|HoldingRef names a holding by referring to an Address and Asset it belongs to.|
+|local|[LocalsRef](#schemalocalsref)|false|none|LocalsRef names a local state by referring to an Address and App it belongs to.|
 
 
 ### StateDelta
@@ -6950,6 +7311,25 @@ Represents a TEAL value.
 ```json
 {
   "application-transaction": {
+    "access": [
+      {
+        "address": "string",
+        "application-id": 0,
+        "asset-id": 0,
+        "box": {
+          "app": 0,
+          "name": "string"
+        },
+        "holding": {
+          "address": "string",
+          "asset": 0
+        },
+        "local": {
+          "address": "string",
+          "app": 0
+        }
+      }
+    ],
     "accounts": [
       "string"
     ],
@@ -6958,6 +7338,12 @@ Represents a TEAL value.
     ],
     "application-id": 0,
     "approval-program": "string",
+    "box-references": [
+      {
+        "app": 0,
+        "name": "string"
+      }
+    ],
     "clear-state-program": "string",
     "extra-program-pages": 0,
     "foreign-apps": [
@@ -6974,7 +7360,8 @@ Represents a TEAL value.
       "num-byte-slice": 0,
       "num-uint": 0
     },
-    "on-completion": "noop"
+    "on-completion": "noop",
+    "reject-version": 0
   },
   "asset-config-transaction": {
     "asset-id": 0,
@@ -7047,6 +7434,25 @@ Represents a TEAL value.
   "inner-txns": [
     {
       "application-transaction": {
+        "access": [
+          {
+            "address": "string",
+            "application-id": 0,
+            "asset-id": 0,
+            "box": {
+              "app": 0,
+              "name": "string"
+            },
+            "holding": {
+              "address": "string",
+              "asset": 0
+            },
+            "local": {
+              "address": "string",
+              "app": 0
+            }
+          }
+        ],
         "accounts": [
           "string"
         ],
@@ -7055,6 +7461,12 @@ Represents a TEAL value.
         ],
         "application-id": 0,
         "approval-program": "string",
+        "box-references": [
+          {
+            "app": 0,
+            "name": "string"
+          }
+        ],
         "clear-state-program": "string",
         "extra-program-pages": 0,
         "foreign-apps": [
@@ -7071,7 +7483,8 @@ Represents a TEAL value.
           "num-byte-slice": 0,
           "num-uint": 0
         },
-        "on-completion": "noop"
+        "on-completion": "noop",
+        "reject-version": 0
       },
       "asset-config-transaction": {
         "asset-id": 0,
@@ -7190,6 +7603,16 @@ Represents a TEAL value.
             "string"
           ],
           "logic": "string",
+          "logic-multisig-signature": {
+            "subsignature": [
+              {
+                "public-key": "string",
+                "signature": "string"
+              }
+            ],
+            "threshold": 0,
+            "version": 0
+          },
           "multisig-signature": {
             "subsignature": [
               {
@@ -7326,6 +7749,16 @@ Represents a TEAL value.
         "string"
       ],
       "logic": "string",
+      "logic-multisig-signature": {
+        "subsignature": [
+          {
+            "public-key": "string",
+            "signature": "string"
+          }
+        ],
+        "threshold": 0,
+        "version": 0
+      },
       "multisig-signature": {
         "subsignature": [
           {
@@ -7489,6 +7922,25 @@ data/transactions/transaction.go : Transaction
 
 ```json
 {
+  "access": [
+    {
+      "address": "string",
+      "application-id": 0,
+      "asset-id": 0,
+      "box": {
+        "app": 0,
+        "name": "string"
+      },
+      "holding": {
+        "address": "string",
+        "asset": 0
+      },
+      "local": {
+        "address": "string",
+        "app": 0
+      }
+    }
+  ],
   "accounts": [
     "string"
   ],
@@ -7497,6 +7949,12 @@ data/transactions/transaction.go : Transaction
   ],
   "application-id": 0,
   "approval-program": "string",
+  "box-references": [
+    {
+      "app": 0,
+      "name": "string"
+    }
+  ],
   "clear-state-program": "string",
   "extra-program-pages": 0,
   "foreign-apps": [
@@ -7513,7 +7971,8 @@ data/transactions/transaction.go : Transaction
     "num-byte-slice": 0,
     "num-uint": 0
   },
-  "on-completion": "noop"
+  "on-completion": "noop",
+  "reject-version": 0
 }
 
 ```
@@ -7527,10 +7986,12 @@ data/transactions/application.go : ApplicationCallTxnFields
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
+|access|[[ResourceRef](#schemaresourceref)]|false|none|\[al\] Access unifies `accounts`, `foreign-apps`, `foreign-assets`, and `box-references` under a single list. If access is non-empty, these lists must be empty. If access is empty, those lists may be non-empty.|
 |accounts|[string]|false|none|\[apat\] List of accounts in addition to the sender that may be accessed from the application's approval-program and clear-state-program.|
 |application-args|[string]|false|none|\[apaa\] transaction specific arguments accessed from the application's approval-program and clear-state-program.|
 |application-id|integer|true|none|\[apid\] ID of the application being configured or empty if creating.|
 |approval-program|string(byte)|false|none|\[apap\] Logic executed for every application transaction, except when on-completion is set to "clear". It can read and write global state for the application, as well as account-specific local state. Approval programs may reject the transaction.|
+|box-references|[[BoxReference](#schemaboxreference)]|false|none|\[apbx\] the boxes that can be accessed by this transaction (and others in the same group).|
 |clear-state-program|string(byte)|false|none|\[apsu\] Logic executed for application transactions with on-completion set to "clear". It can read and write global state for the application, as well as account-specific local state. Clear state programs cannot reject the transaction.|
 |extra-program-pages|integer|false|none|\[epp\] specifies the additional app program len requested in pages.|
 |foreign-apps|[integer]|false|none|\[apfa\] Lists the applications in addition to the application-id whose global states may be accessed by this application's approval-program and clear-state-program. The access is read-only.|
@@ -7538,6 +7999,7 @@ data/transactions/application.go : ApplicationCallTxnFields
 |global-state-schema|[StateSchema](#schemastateschema)|false|none|Represents a \[apls\] local-state or \[apgs\] global-state schema. These schemas determine how much storage may be used in a local-state or global-state for an application. The more space used, the larger minimum balance must be maintained in the account holding the data.|
 |local-state-schema|[StateSchema](#schemastateschema)|false|none|Represents a \[apls\] local-state or \[apgs\] global-state schema. These schemas determine how much storage may be used in a local-state or global-state for an application. The more space used, the larger minimum balance must be maintained in the account holding the data.|
 |on-completion|[OnCompletion](#schemaoncompletion)|true|none|\[apan\] defines the what additional actions occur with the transaction.<br><br>Valid types:<br>* noop<br>* optin<br>* closeout<br>* clear<br>* update<br>* update<br>* delete|
+|reject-version|integer|false|none|\[aprv\] the lowest application version for which this transaction should immediately fail. 0 indicates that no version check should be performed.|
 
 
 ### TransactionAssetConfig
@@ -7777,6 +8239,16 @@ data/transactions/payment.go : PaymentTxnFields
       "string"
     ],
     "logic": "string",
+    "logic-multisig-signature": {
+      "subsignature": [
+        {
+          "public-key": "string",
+          "signature": "string"
+        }
+      ],
+      "threshold": 0,
+      "version": 0
+    },
     "multisig-signature": {
       "subsignature": [
         {
@@ -7811,7 +8283,7 @@ Validation signature associated with some data. Only one of the signatures shoul
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |logicsig|[TransactionSignatureLogicsig](#schematransactionsignaturelogicsig)|false|none|\[lsig\] Programatic transaction signature.<br><br>Definition:<br>data/transactions/logicsig.go|
-|multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |sig|string(byte)|false|none|\[sig\] Standard ed25519 signature.|
 
 
@@ -7828,6 +8300,16 @@ Validation signature associated with some data. Only one of the signatures shoul
     "string"
   ],
   "logic": "string",
+  "logic-multisig-signature": {
+    "subsignature": [
+      {
+        "public-key": "string",
+        "signature": "string"
+      }
+    ],
+    "threshold": 0,
+    "version": 0
+  },
   "multisig-signature": {
     "subsignature": [
       {
@@ -7854,7 +8336,8 @@ data/transactions/logicsig.go
 |---|---|---|---|---|
 |args|[string]|false|none|\[arg\] Logic arguments, base64 encoded.|
 |logic|string(byte)|true|none|\[l\] Program signed by a signature or multi signature, or hashed to be the address of ana ccount. Base64 encoded TEAL program.|
-|multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|logic-multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |signature|string(byte)|false|none|\[sig\] ed25519 signature.|
 
 
@@ -7879,7 +8362,7 @@ data/transactions/logicsig.go
 
 ```
 
-\[msig\] structure holding multiple subsignatures.
+structure holding multiple subsignatures.
 
 Definition:
 crypto/multisig.go : MultisigSig
@@ -8259,7 +8742,8 @@ Search for accounts.
             "local-state-schema": {
               "num-byte-slice": 0,
               "num-uint": 0
-            }
+            },
+            "version": 0
           }
         }
       ],
@@ -8377,6 +8861,7 @@ Status Code **200**
 |»»»» global-state|[[TealKeyValue](#schematealkeyvalue)]|false|none|Represents a key-value store for use in an application.|
 |»»»» global-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
 |»»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»»» version|integer|false|none|the number of updates to the application programs|
 |»» created-assets|[[Asset](#schemaasset)]|false|none|parameters of assets created by this account.<br><br>Note: the raw account uses `map[int] -> Asset` for this type.|
 |»»» created-at-round|integer|false|none|Round during which this asset was created.|
 |»»» deleted|boolean|false|none|Whether or not this asset is currently deleted.|
@@ -8859,7 +9344,8 @@ Search for applications
         "local-state-schema": {
           "num-byte-slice": 0,
           "num-uint": 0
-        }
+        },
+        "version": 0
       }
     }
   ],
@@ -8901,6 +9387,7 @@ Status Code **200**
 |»»»» num-byte-slice|integer|true|none|number of byte slices.|
 |»»»» num-uint|integer|true|none|number of uints.|
 |»»» local-state-schema|[ApplicationStateSchema](#schemaapplicationstateschema)|false|none|Specifies maximums on the number of each type that may be stored.|
+|»»» version|integer|false|none|the number of updates to the application programs|
 |» current-round|integer|true|none|Round at which the results were computed.|
 |» next-token|string|false|none|Used for pagination, when making another request provide this token with the next parameter.|
 
@@ -9346,6 +9833,7 @@ Search for block headers. Block headers are returned in ascending round order. T
         ]
       },
       "previous-block-hash": "string",
+      "previous-block-hash-512": "string",
       "proposer": "string",
       "proposer-payout": 0,
       "rewards": {
@@ -9370,6 +9858,25 @@ Search for block headers. Block headers are returned in ascending round order. T
       "transactions": [
         {
           "application-transaction": {
+            "access": [
+              {
+                "address": "string",
+                "application-id": 0,
+                "asset-id": 0,
+                "box": {
+                  "app": 0,
+                  "name": "string"
+                },
+                "holding": {
+                  "address": "string",
+                  "asset": 0
+                },
+                "local": {
+                  "address": "string",
+                  "app": 0
+                }
+              }
+            ],
             "accounts": [
               "string"
             ],
@@ -9378,6 +9885,12 @@ Search for block headers. Block headers are returned in ascending round order. T
             ],
             "application-id": 0,
             "approval-program": "string",
+            "box-references": [
+              {
+                "app": 0,
+                "name": "string"
+              }
+            ],
             "clear-state-program": "string",
             "extra-program-pages": 0,
             "foreign-apps": [
@@ -9394,7 +9907,8 @@ Search for block headers. Block headers are returned in ascending round order. T
               "num-byte-slice": 0,
               "num-uint": 0
             },
-            "on-completion": "noop"
+            "on-completion": "noop",
+            "reject-version": 0
           },
           "asset-config-transaction": {
             "asset-id": 0,
@@ -9515,6 +10029,16 @@ Search for block headers. Block headers are returned in ascending round order. T
                 "string"
               ],
               "logic": "string",
+              "logic-multisig-signature": {
+                "subsignature": [
+                  {
+                    "public-key": "string",
+                    "signature": "string"
+                  }
+                ],
+                "threshold": 0,
+                "version": 0
+              },
               "multisig-signature": {
                 "subsignature": [
                   {
@@ -9593,6 +10117,7 @@ Search for block headers. Block headers are returned in ascending round order. T
       ],
       "transactions-root": "string",
       "transactions-root-sha256": "string",
+      "transactions-root-sha512": "string",
       "txn-counter": 0,
       "upgrade-state": {
         "current-protocol": "string",
@@ -9636,6 +10161,7 @@ Status Code **200**
 |»»» absent-participation-accounts|[string]|false|none|\[partupabs\] a list of online accounts that need to be suspended.|
 |»»» expired-participation-accounts|[string]|false|none|\[partupdrmv\] a list of online accounts that needs to be converted to offline since their participation key expired.|
 |»» previous-block-hash|string(byte)|true|none|\[prev\] Previous block hash.|
+|»» previous-block-hash-512|string(byte)|false|none|\[prev512\] Previous block hash, using SHA-512.|
 |»» proposer|string|false|none|the proposer of this block.|
 |»» proposer-payout|integer|false|none|the actual amount transferred to the proposer from the fee sink.|
 |»» rewards|[BlockRewards](#schemablockrewards)|false|none|Fields relating to rewards,|
@@ -9655,10 +10181,24 @@ Status Code **200**
 |»» timestamp|integer|true|none|\[ts\] Block creation timestamp in seconds since eposh|
 |»» transactions|[[Transaction](#schematransaction)]|false|none|\[txns\] list of transactions corresponding to a given round.|
 |»»» application-transaction|[TransactionApplication](#schematransactionapplication)|false|none|Fields for application transactions.<br><br>Definition:<br>data/transactions/application.go : ApplicationCallTxnFields|
+|»»»» access|[[ResourceRef](#schemaresourceref)]|false|none|\[al\] Access unifies `accounts`, `foreign-apps`, `foreign-assets`, and `box-references` under a single list. If access is non-empty, these lists must be empty. If access is empty, those lists may be non-empty.|
+|»»»»» address|string|false|none|\[d\] Account whose balance record is accessible by the executing ApprovalProgram or ClearStateProgram.|
+|»»»»» application-id|integer|false|none|\[p\] Application id whose GlobalState may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»»» asset-id|integer|false|none|\[s\] Asset whose AssetParams may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»»» box|[BoxReference](#schemaboxreference)|false|none|BoxReference names a box by its name and the application ID it belongs to.|
+|»»»»»» app|integer|true|none|Application ID to which the box belongs, or zero if referring to the called application.|
+|»»»»»» name|string(byte)|true|none|Base64 encoded box name|
+|»»»»» holding|[HoldingRef](#schemaholdingref)|false|none|HoldingRef names a holding by referring to an Address and Asset it belongs to.|
+|»»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»»» asset|integer|true|none|\[s\] Asset ID for asset in access list.|
+|»»»»» local|[LocalsRef](#schemalocalsref)|false|none|LocalsRef names a local state by referring to an Address and App it belongs to.|
+|»»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»»» app|integer|true|none|\[p\] Application ID for app in access list, or zero if referring to the called application.|
 |»»»» accounts|[string]|false|none|\[apat\] List of accounts in addition to the sender that may be accessed from the application's approval-program and clear-state-program.|
 |»»»» application-args|[string]|false|none|\[apaa\] transaction specific arguments accessed from the application's approval-program and clear-state-program.|
 |»»»» application-id|integer|true|none|\[apid\] ID of the application being configured or empty if creating.|
 |»»»» approval-program|string(byte)|false|none|\[apap\] Logic executed for every application transaction, except when on-completion is set to "clear". It can read and write global state for the application, as well as account-specific local state. Approval programs may reject the transaction.|
+|»»»» box-references|[[BoxReference](#schemaboxreference)]|false|none|\[apbx\] the boxes that can be accessed by this transaction (and others in the same group).|
 |»»»» clear-state-program|string(byte)|false|none|\[apsu\] Logic executed for application transactions with on-completion set to "clear". It can read and write global state for the application, as well as account-specific local state. Clear state programs cannot reject the transaction.|
 |»»»» extra-program-pages|integer|false|none|\[epp\] specifies the additional app program len requested in pages.|
 |»»»» foreign-apps|[integer]|false|none|\[apfa\] Lists the applications in addition to the application-id whose global states may be accessed by this application's approval-program and clear-state-program. The access is read-only.|
@@ -9668,6 +10208,7 @@ Status Code **200**
 |»»»»» num-uint|integer|true|none|Maximum number of TEAL uints that may be stored in the key/value store.|
 |»»»» local-state-schema|[StateSchema](#schemastateschema)|false|none|Represents a \[apls\] local-state or \[apgs\] global-state schema. These schemas determine how much storage may be used in a local-state or global-state for an application. The more space used, the larger minimum balance must be maintained in the account holding the data.|
 |»»»» on-completion|[OnCompletion](#schemaoncompletion)|true|none|\[apan\] defines the what additional actions occur with the transaction.<br><br>Valid types:<br>* noop<br>* optin<br>* closeout<br>* clear<br>* update<br>* update<br>* delete|
+|»»»» reject-version|integer|false|none|\[aprv\] the lowest application version for which this transaction should immediately fail. 0 indicates that no version check should be performed.|
 |»»» asset-config-transaction|[TransactionAssetConfig](#schematransactionassetconfig)|false|none|Fields for asset allocation, re-configuration, and destruction.<br><br><br>A zero value for asset-id indicates asset creation.<br>A zero value for the params indicates asset destruction.<br><br>Definition:<br>data/transactions/asset.go : AssetConfigTxnFields|
 |»»»» asset-id|integer|false|none|\[xaid\] ID of the asset being configured or empty if creating.|
 |»»»» params|[AssetParams](#schemaassetparams)|false|none|AssetParams specifies the parameters for an asset.<br><br>\[apar\] when part of an AssetConfig transaction.<br><br>Definition:<br>data/transactions/asset.go : AssetParams|
@@ -9757,14 +10298,15 @@ Status Code **200**
 |»»»» logicsig|[TransactionSignatureLogicsig](#schematransactionsignaturelogicsig)|false|none|\[lsig\] Programatic transaction signature.<br><br>Definition:<br>data/transactions/logicsig.go|
 |»»»»» args|[string]|false|none|\[arg\] Logic arguments, base64 encoded.|
 |»»»»» logic|string(byte)|true|none|\[l\] Program signed by a signature or multi signature, or hashed to be the address of ana ccount. Base64 encoded TEAL program.|
-|»»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»»»» logic-multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»»»» subsignature|[[TransactionSignatureMultisigSubsignature](#schematransactionsignaturemultisigsubsignature)]|false|none|\[subsig\] holds pairs of public key and signatures.|
 |»»»»»»» public-key|string(byte)|false|none|\[pk\]|
 |»»»»»»» signature|string(byte)|false|none|\[s\]|
 |»»»»»» threshold|integer|false|none|\[thr\]|
 |»»»»»» version|integer|false|none|\[v\]|
+|»»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»»» signature|string(byte)|false|none|\[sig\] ed25519 signature.|
-|»»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»» sig|string(byte)|false|none|\[sig\] Standard ed25519 signature.|
 |»»» state-proof-transaction|[TransactionStateProof](#schematransactionstateproof)|false|none|Fields for a state proof transaction. <br><br>Definition:<br>data/transactions/stateproof.go : StateProofTxnFields|
 |»»»» message|[IndexerStateProofMessage](#schemaindexerstateproofmessage)|false|none|none|
@@ -9802,6 +10344,7 @@ Status Code **200**
 |»»» tx-type|string|true|none|\[type\] Indicates what type of transaction this is. Different types have different fields.<br><br>Valid types, and where their fields are stored:<br>* \[pay\] payment-transaction<br>* \[keyreg\] keyreg-transaction<br>* \[acfg\] asset-config-transaction<br>* \[axfer\] asset-transfer-transaction<br>* \[afrz\] asset-freeze-transaction<br>* \[appl\] application-transaction<br>* \[stpf\] state-proof-transaction<br>* \[hb\] heartbeat-transaction|
 |»» transactions-root|string(byte)|true|none|\[txn\] TransactionsRoot authenticates the set of transactions appearing in the block. More specifically, it's the root of a merkle tree whose leaves are the block's Txids, in lexicographic order. For the empty block, it's 0. Note that the TxnRoot does not authenticate the signatures on the transactions, only the transactions themselves. Two blocks with the same transactions but in a different order and with different signatures will have the same TxnRoot.|
 |»» transactions-root-sha256|string(byte)|true|none|\[txn256\] TransactionsRootSHA256 is an auxiliary TransactionRoot, built using a vector commitment instead of a merkle tree, and SHA256 hash function instead of the default SHA512_256. This commitment can be used on environments where only the SHA256 function exists.|
+|»» transactions-root-sha512|string(byte)|false|none|\[txn512\] TransactionsRootSHA512 is an auxiliary TransactionRoot, built using a vector commitment instead of a merkle tree, and SHA512 hash function instead of the default SHA512_256.|
 |»» txn-counter|integer|false|none|\[tc\] TxnCounter counts the number of transactions committed in the ledger, from the time at which support for this feature was introduced.<br><br>Specifically, TxnCounter is the number of the next transaction that will be committed after this block.  It is 0 when no transactions have ever been committed (since TxnCounter started being supported).|
 |»» upgrade-state|[BlockUpgradeState](#schemablockupgradestate)|false|none|Fields relating to a protocol upgrade.|
 |»»» current-protocol|string|true|none|\[proto\] The current protocol version.|
@@ -10008,6 +10551,7 @@ Search for transactions. Transactions are returned oldest to newest unless the a
 |note-prefix|query|string|false|Specifies a prefix which must be contained in the note field.|
 |tx-type|query|string|false|none|
 |sig-type|query|string|false|SigType filters just results using the specified type of signature:|
+|group-id|query|string|false|Lookup transactions by group ID. This field must be base64-encoded, and afterwards, base64 characters that are URL-unsafe (i.e. =, /, +) must be URL-encoded|
 |txid|query|string|false|Lookup the specific transaction by ID.|
 |round|query|integer|false|Include results for the specified round.|
 |min-round|query|integer|false|Include results at or after the specified min-round.|
@@ -10060,6 +10604,25 @@ Search for transactions. Transactions are returned oldest to newest unless the a
   "transactions": [
     {
       "application-transaction": {
+        "access": [
+          {
+            "address": "string",
+            "application-id": 0,
+            "asset-id": 0,
+            "box": {
+              "app": 0,
+              "name": "string"
+            },
+            "holding": {
+              "address": "string",
+              "asset": 0
+            },
+            "local": {
+              "address": "string",
+              "app": 0
+            }
+          }
+        ],
         "accounts": [
           "string"
         ],
@@ -10068,6 +10631,12 @@ Search for transactions. Transactions are returned oldest to newest unless the a
         ],
         "application-id": 0,
         "approval-program": "string",
+        "box-references": [
+          {
+            "app": 0,
+            "name": "string"
+          }
+        ],
         "clear-state-program": "string",
         "extra-program-pages": 0,
         "foreign-apps": [
@@ -10084,7 +10653,8 @@ Search for transactions. Transactions are returned oldest to newest unless the a
           "num-byte-slice": 0,
           "num-uint": 0
         },
-        "on-completion": "noop"
+        "on-completion": "noop",
+        "reject-version": 0
       },
       "asset-config-transaction": {
         "asset-id": 0,
@@ -10205,6 +10775,16 @@ Search for transactions. Transactions are returned oldest to newest unless the a
             "string"
           ],
           "logic": "string",
+          "logic-multisig-signature": {
+            "subsignature": [
+              {
+                "public-key": "string",
+                "signature": "string"
+              }
+            ],
+            "threshold": 0,
+            "version": 0
+          },
           "multisig-signature": {
             "subsignature": [
               {
@@ -10314,10 +10894,24 @@ Status Code **200**
 |» next-token|string|false|none|Used for pagination, when making another request provide this token with the next parameter.|
 |» transactions|[[Transaction](#schematransaction)]|true|none|[Contains all fields common to all transactions and serves as an envelope to all transactions type. Represents both regular and inner transactions.<br><br>Definition:<br>data/transactions/signedtxn.go : SignedTxn<br>data/transactions/transaction.go : Transaction<br>]|
 |»» application-transaction|[TransactionApplication](#schematransactionapplication)|false|none|Fields for application transactions.<br><br>Definition:<br>data/transactions/application.go : ApplicationCallTxnFields|
+|»»» access|[[ResourceRef](#schemaresourceref)]|false|none|\[al\] Access unifies `accounts`, `foreign-apps`, `foreign-assets`, and `box-references` under a single list. If access is non-empty, these lists must be empty. If access is empty, those lists may be non-empty.|
+|»»»» address|string|false|none|\[d\] Account whose balance record is accessible by the executing ApprovalProgram or ClearStateProgram.|
+|»»»» application-id|integer|false|none|\[p\] Application id whose GlobalState may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»» asset-id|integer|false|none|\[s\] Asset whose AssetParams may be read by the executing<br> ApprovalProgram or ClearStateProgram.|
+|»»»» box|[BoxReference](#schemaboxreference)|false|none|BoxReference names a box by its name and the application ID it belongs to.|
+|»»»»» app|integer|true|none|Application ID to which the box belongs, or zero if referring to the called application.|
+|»»»»» name|string(byte)|true|none|Base64 encoded box name|
+|»»»» holding|[HoldingRef](#schemaholdingref)|false|none|HoldingRef names a holding by referring to an Address and Asset it belongs to.|
+|»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»» asset|integer|true|none|\[s\] Asset ID for asset in access list.|
+|»»»» local|[LocalsRef](#schemalocalsref)|false|none|LocalsRef names a local state by referring to an Address and App it belongs to.|
+|»»»»» address|string|true|none|\[d\] Address in access list, or the sender of the transaction.|
+|»»»»» app|integer|true|none|\[p\] Application ID for app in access list, or zero if referring to the called application.|
 |»»» accounts|[string]|false|none|\[apat\] List of accounts in addition to the sender that may be accessed from the application's approval-program and clear-state-program.|
 |»»» application-args|[string]|false|none|\[apaa\] transaction specific arguments accessed from the application's approval-program and clear-state-program.|
 |»»» application-id|integer|true|none|\[apid\] ID of the application being configured or empty if creating.|
 |»»» approval-program|string(byte)|false|none|\[apap\] Logic executed for every application transaction, except when on-completion is set to "clear". It can read and write global state for the application, as well as account-specific local state. Approval programs may reject the transaction.|
+|»»» box-references|[[BoxReference](#schemaboxreference)]|false|none|\[apbx\] the boxes that can be accessed by this transaction (and others in the same group).|
 |»»» clear-state-program|string(byte)|false|none|\[apsu\] Logic executed for application transactions with on-completion set to "clear". It can read and write global state for the application, as well as account-specific local state. Clear state programs cannot reject the transaction.|
 |»»» extra-program-pages|integer|false|none|\[epp\] specifies the additional app program len requested in pages.|
 |»»» foreign-apps|[integer]|false|none|\[apfa\] Lists the applications in addition to the application-id whose global states may be accessed by this application's approval-program and clear-state-program. The access is read-only.|
@@ -10327,6 +10921,7 @@ Status Code **200**
 |»»»» num-uint|integer|true|none|Maximum number of TEAL uints that may be stored in the key/value store.|
 |»»» local-state-schema|[StateSchema](#schemastateschema)|false|none|Represents a \[apls\] local-state or \[apgs\] global-state schema. These schemas determine how much storage may be used in a local-state or global-state for an application. The more space used, the larger minimum balance must be maintained in the account holding the data.|
 |»»» on-completion|[OnCompletion](#schemaoncompletion)|true|none|\[apan\] defines the what additional actions occur with the transaction.<br><br>Valid types:<br>* noop<br>* optin<br>* closeout<br>* clear<br>* update<br>* update<br>* delete|
+|»»» reject-version|integer|false|none|\[aprv\] the lowest application version for which this transaction should immediately fail. 0 indicates that no version check should be performed.|
 |»» asset-config-transaction|[TransactionAssetConfig](#schematransactionassetconfig)|false|none|Fields for asset allocation, re-configuration, and destruction.<br><br><br>A zero value for asset-id indicates asset creation.<br>A zero value for the params indicates asset destruction.<br><br>Definition:<br>data/transactions/asset.go : AssetConfigTxnFields|
 |»»» asset-id|integer|false|none|\[xaid\] ID of the asset being configured or empty if creating.|
 |»»» params|[AssetParams](#schemaassetparams)|false|none|AssetParams specifies the parameters for an asset.<br><br>\[apar\] when part of an AssetConfig transaction.<br><br>Definition:<br>data/transactions/asset.go : AssetParams|
@@ -10416,14 +11011,15 @@ Status Code **200**
 |»»» logicsig|[TransactionSignatureLogicsig](#schematransactionsignaturelogicsig)|false|none|\[lsig\] Programatic transaction signature.<br><br>Definition:<br>data/transactions/logicsig.go|
 |»»»» args|[string]|false|none|\[arg\] Logic arguments, base64 encoded.|
 |»»»» logic|string(byte)|true|none|\[l\] Program signed by a signature or multi signature, or hashed to be the address of ana ccount. Base64 encoded TEAL program.|
-|»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»»» logic-multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»»» subsignature|[[TransactionSignatureMultisigSubsignature](#schematransactionsignaturemultisigsubsignature)]|false|none|\[subsig\] holds pairs of public key and signatures.|
 |»»»»»» public-key|string(byte)|false|none|\[pk\]|
 |»»»»»» signature|string(byte)|false|none|\[s\]|
 |»»»»» threshold|integer|false|none|\[thr\]|
 |»»»»» version|integer|false|none|\[v\]|
+|»»»» multisig-signature|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»»» signature|string(byte)|false|none|\[sig\] ed25519 signature.|
-|»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|\[msig\] structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
+|»»» multisig|[TransactionSignatureMultisig](#schematransactionsignaturemultisig)|false|none|structure holding multiple subsignatures.<br><br>Definition:<br>crypto/multisig.go : MultisigSig|
 |»»» sig|string(byte)|false|none|\[sig\] Standard ed25519 signature.|
 |»» state-proof-transaction|[TransactionStateProof](#schematransactionstateproof)|false|none|Fields for a state proof transaction. <br><br>Definition:<br>data/transactions/stateproof.go : StateProofTxnFields|
 |»»» message|[IndexerStateProofMessage](#schemaindexerstateproofmessage)|false|none|none|

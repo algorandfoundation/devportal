@@ -9,11 +9,11 @@ The TestNet Dispenser Client is a utility for interacting with the AlgoKit TestN
 To create a Dispenser Client, you need to provide an authorization token. This can be done in two ways:
 
 1. Pass the token directly to the client constructor as `authToken`.
-2. Set the token as an environment variable `ALGOKIT_DISPENSER_ACCESS_TOKEN` (see [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api#error-handling) on how to obtain the token).
+2. Set the token as an environment variable `ALGOKIT_DISPENSER_ACCESS_TOKEN` (see [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md#error-handling) on how to obtain the token).
 
 If both methods are used, the constructor argument takes precedence.
 
-The recommended way to get a TestNet dispenser API client is [via `ClientManager`](./client):
+The recommended way to get a TestNet dispenser API client is [via `ClientManager`](/algokit/utils/typescript/client/):
 
 ```typescript
 // With auth token
@@ -86,4 +86,4 @@ The `limit` method returns a `DispenserLimitResponse` object, which contains the
 
 ## Error Handling
 
-If an error occurs while making a request to the dispenser API, an exception will be raised with a message indicating the type of error. Refer to [Error Handling docs](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api#error-handling) for details on how you can handle each individual error `code`.
+If an error occurs while making a request to the dispenser API, an exception will be raised with a message indicating the type of error. Refer to [Error Handling docs](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md#error-handling) for details on how you can handle each individual error `code`.
