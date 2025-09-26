@@ -19,8 +19,9 @@ import {
   utilsPythonConfig,
 } from '../../imports/configs/index.js';
 
-const IMPORT_REMOTE = process.env.IMPORT_GITHUB === 'true';
-const IS_DRY_RUN = process.env.IMPORT_DRY_RUN === 'true';
+const IMPORT_GITHUB = process.env.IMPORT_GITHUB === 'true';
+const IMPORT_DRY_RUN = process.env.IMPORT_DRY_RUN === 'true';
+const FORCE_IMPORT = process.env.FORCE_IMPORT === 'true';
 const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
 
 // List of remote content configs to import
@@ -39,7 +40,7 @@ export const collections = {
       load: async context => {
         await docsLoader().load(context);
 
-        if (IMPORT_REMOTE) {
+        if (IMPORT_GITHUB) {
           console.log('🔄 Importing content from GitHub repositories...');
 
           for (const config of REMOTE_CONTENT) {
@@ -50,8 +51,9 @@ export const collections = {
               await githubLoader({
                 octokit: GITHUB_API_CLIENT,
                 configs: [config],
-                clear: config.clear,
-                dryRun: IS_DRY_RUN,
+                clear: false,
+                dryRun: IMPORT_DRY_RUN,
+                force: FORCE_IMPORT,
               }).load(context as LoaderContext);
               console.log(`✅ ${config.name} loaded successfully`);
             } catch (error) {
