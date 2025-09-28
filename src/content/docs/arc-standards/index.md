@@ -350,6 +350,11 @@ Welcome to the Algorand ARCs (Algorand Request for Comments) page. Here you'll f
     </thead>
     <tbody>
       <tr>
+    <td><a href="/arc-standards/arc-0060/" style='display: block; text-decoration: none; color: inherit;'>60</a></td>
+    <td><a href="/arc-standards/arc-0060/" style='display: block; text-decoration: none; color: inherit;'>Algorand Wallet Arbitrary Signing API</a></td>
+    <td><a href="/arc-standards/arc-0060/" style='display: block; text-decoration: none; color: inherit;'>API function for signing data</a></td>
+  </tr>
+      <tr>
     <td><a href="/arc-standards/arc-0087/" style='display: block; text-decoration: none; color: inherit;'>87</a></td>
     <td><a href="/arc-standards/arc-0087/" style='display: block; text-decoration: none; color: inherit;'>Key Name Specification</a></td>
     <td><a href="/arc-standards/arc-0087/" style='display: block; text-decoration: none; color: inherit;'>A system for addressable values</a></td>
