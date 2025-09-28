@@ -9,7 +9,7 @@ tableOfContents:
 
 #### _class_ algokit_utils.clients.dispenser_api_client.DispenserFundResponse
 
-#### tx_id _: str_
+#### tx*id *: str\_
 
 The transaction ID of the funded transaction
 

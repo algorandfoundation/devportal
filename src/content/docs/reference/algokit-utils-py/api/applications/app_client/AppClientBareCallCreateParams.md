@@ -13,6 +13,6 @@ Bases: `CommonAppCallCreateParams`
 
 Parameters for creating application with bare call.
 
-#### on_complete _: CreateOnComplete | None_ _= None_
+#### on*complete *: CreateOnComplete | None\_ _= None_
 
 Optional on complete action

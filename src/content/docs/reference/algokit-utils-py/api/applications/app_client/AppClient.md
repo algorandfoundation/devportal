@@ -45,28 +45,28 @@ Get the Algorand client instance.
 - **Returns:**
   The Algorand client used by this app client
 
-#### _property_ app_id _: int_
+#### _property_ app*id *: int\_
 
 Get the application ID.
 
 - **Returns:**
   The ID of the Algorand application
 
-#### _property_ app_address _: str_
+#### _property_ app*address *: str\_
 
 Get the application’s Algorand address.
 
 - **Returns:**
   The Algorand address associated with this application
 
-#### _property_ app_name _: str_
+#### _property_ app*name *: str\_
 
 Get the application name.
 
 - **Returns:**
   The name of the application
 
-#### _property_ app_spec _: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract)_
+#### _property_ app*spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/arc56contract/#algokit_utils.applications.app_spec.arc56.Arc56Contract)\_
 
 Get the application specification.
 
@@ -108,7 +108,7 @@ Get the transaction sender.
 - **Returns:**
   The transaction sender for this application
 
-#### _property_ create_transaction _: \_TransactionCreator_
+#### _property_ create*transaction *: \_TransactionCreator\_
 
 Get the transaction creator.
 

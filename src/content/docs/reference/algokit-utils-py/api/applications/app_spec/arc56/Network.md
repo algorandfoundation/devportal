@@ -11,7 +11,7 @@ tableOfContents:
 
 Network-specific application information.
 
-#### app_id _: int_
+#### app*id *: int\_
 
 The application ID on the network
 

@@ -15,12 +15,12 @@ Base class for transaction results.
 
 Represents the result of sending a single transaction.
 
-#### app_id _: int_
+#### app*id *: int\_
 
-#### app_address _: str_
+#### app*address *: str\_
 
-#### compiled_approval _: Any | None_ _= None_
+#### compiled*approval *: Any | None\_ _= None_
 
-#### compiled_clear _: Any | None_ _= None_
+#### compiled*clear *: Any | None\_ _= None_
 
-#### abi_return _: ABIReturnT | None_ _= None_
+#### abi*return *: ABIReturnT | None\_ _= None_

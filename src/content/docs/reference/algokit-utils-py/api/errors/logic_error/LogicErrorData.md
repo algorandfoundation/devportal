@@ -21,6 +21,7 @@ dict(iterable) -> new dictionary initialized as if via:
 for k, v in iterable:
 
 {' '}
+
 <br />> d[k] = v
 
 dict(
@@ -32,7 +33,7 @@ dict(
 kwargs) -> new dictionary initialized with the name=value pairs
 : in the keyword argument list. For example: dict(one=1, two=2)
 
-#### transaction_id _: str_
+#### transaction*id *: str\_
 
 #### message _: str_
 

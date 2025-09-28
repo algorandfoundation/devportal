@@ -11,7 +11,7 @@ tableOfContents:
 
 Represents compiler version information.
 
-#### commit_hash _: str | None_ _= None_
+#### commit*hash *: str | None\_ _= None_
 
 The git commit hash of the compiler
 

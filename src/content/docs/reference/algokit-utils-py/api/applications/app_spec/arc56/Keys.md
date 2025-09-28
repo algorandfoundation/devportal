@@ -15,11 +15,11 @@ Storage keys for different storage types.
 
 The box storage keys
 
-#### global_state _: dict[str, [StorageKey](StorageKey.md#algokit_utils.applications.app_spec.arc56.StorageKey)]_
+#### global*state *: dict[str, [StorageKey](StorageKey.md#algokit_utils.applications.app_spec.arc56.StorageKey)]\_
 
 The global state storage keys
 
-#### local_state _: dict[str, [StorageKey](StorageKey.md#algokit_utils.applications.app_spec.arc56.StorageKey)]_
+#### local*state *: dict[str, [StorageKey](StorageKey.md#algokit_utils.applications.app_spec.arc56.StorageKey)]\_
 
 The local state storage keys
 

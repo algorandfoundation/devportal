@@ -15,10 +15,10 @@ Result from performing a bulk opt-in or bulk opt-out for an account against a se
   - **asset_id** – The ID of the asset opted into / out of
   - **transaction_id** – The transaction ID of the resulting opt in / out
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the asset opted into / out of
 
-#### transaction_id _: str_
+#### transaction*id *: str\_
 
 The transaction ID of the resulting opt in / out

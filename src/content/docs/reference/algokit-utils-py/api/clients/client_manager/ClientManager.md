@@ -45,7 +45,7 @@ Returns an algosdk Indexer API client.
 - **Returns:**
   Indexer client instance
 
-#### _property_ indexer_if_present _: algosdk.v2client.indexer.IndexerClient | None_
+#### _property_ indexer*if_present *: algosdk.v2client.indexer.IndexerClient | None\_
 
 Returns the Indexer client if configured, otherwise None.
 

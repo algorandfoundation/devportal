@@ -11,7 +11,7 @@ tableOfContents:
 
 Schema for application creation.
 
-#### extra_program_pages _: int | None_ _= None_
+#### extra*program_pages *: int | None\_ _= None_
 
 Optional number of extra program pages
 

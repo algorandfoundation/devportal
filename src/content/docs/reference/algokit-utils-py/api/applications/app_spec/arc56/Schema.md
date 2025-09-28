@@ -11,11 +11,11 @@ tableOfContents:
 
 Application state schema.
 
-#### global_state _: [Global](Global.md#algokit_utils.applications.app_spec.arc56.Global)_
+#### global*state *: [Global](Global.md#algokit_utils.applications.app_spec.arc56.Global)\_
 
 The global state schema
 
-#### local_state _: [Local](Local.md#algokit_utils.applications.app_spec.arc56.Local)_
+#### local*state *: [Local](Local.md#algokit_utils.applications.app_spec.arc56.Local)\_
 
 The local state schema
 

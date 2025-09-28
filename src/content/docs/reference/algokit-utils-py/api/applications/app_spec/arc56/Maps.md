@@ -15,11 +15,11 @@ Storage maps for different storage types.
 
 The box storage maps
 
-#### global_state _: dict[str, [StorageMap](StorageMap.md#algokit_utils.applications.app_spec.arc56.StorageMap)]_
+#### global*state *: dict[str, [StorageMap](StorageMap.md#algokit_utils.applications.app_spec.arc56.StorageMap)]\_
 
 The global state storage maps
 
-#### local_state _: dict[str, [StorageMap](StorageMap.md#algokit_utils.applications.app_spec.arc56.StorageMap)]_
+#### local*state *: dict[str, [StorageMap](StorageMap.md#algokit_utils.applications.app_spec.arc56.StorageMap)]\_
 
 The local state storage maps
 

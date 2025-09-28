@@ -11,7 +11,7 @@ tableOfContents:
 
 Information about an account’s holding of a particular asset.
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the asset
 

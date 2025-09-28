@@ -11,11 +11,11 @@ tableOfContents:
 
 Program source information.
 
-#### pc_offset_method _: [PcOffsetMethod](PcOffsetMethod.md#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)_
+#### pc*offset_method *: [PcOffsetMethod](PcOffsetMethod.md#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)\_
 
 The PC offset method
 
-#### source_info _: list[[SourceInfo](SourceInfo.md#algokit_utils.applications.app_spec.arc56.SourceInfo)]_
+#### source*info *: list[[SourceInfo](SourceInfo.md#algokit_utils.applications.app_spec.arc56.SourceInfo)]\_
 
 The list of source info entries
 

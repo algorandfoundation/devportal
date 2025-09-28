@@ -13,9 +13,9 @@ ARC-0032 application specification
 
 See <[https://github.com/algorandfoundation/ARCs/pull/150](https://github.com/algorandfoundation/ARCs/pull/150)>
 
-#### approval_program _: str_
+#### approval*program *: str\_
 
-#### clear_program _: str_
+#### clear*program *: str\_
 
 #### contract _: algosdk.abi.Contract_
 
@@ -23,11 +23,11 @@ See <[https://github.com/algorandfoundation/ARCs/pull/150](https://github.com/al
 
 #### schema _: StateDict_
 
-#### global_state_schema _: algosdk.transaction.StateSchema_
+#### global*state_schema *: algosdk.transaction.StateSchema\_
 
-#### local_state_schema _: algosdk.transaction.StateSchema_
+#### local*state_schema *: algosdk.transaction.StateSchema\_
 
-#### bare_call_config _: MethodConfigDict_
+#### bare*call_config *: MethodConfigDict\_
 
 #### dictify() → dict
 

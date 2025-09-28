@@ -13,11 +13,11 @@ Bases: `_CommonTxnParams`
 
 Parameters for creating an application.
 
-#### approval_program _: str | bytes_
+#### approval*program *: str | bytes\_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear_state_program _: str | bytes_
+#### clear*state_program *: str | bytes\_
 
 The program to execute for ClearState OnComplete
 
@@ -25,7 +25,7 @@ The program to execute for ClearState OnComplete
 
 The state schema for the app, defaults to None
 
-#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
+#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
 
 The OnComplete action, defaults to None
 
@@ -33,22 +33,22 @@ The OnComplete action, defaults to None
 
 Application arguments, defaults to None
 
-#### account_references _: list[str] | None_ _= None_
+#### account*references *: list[str] | None\_ _= None_
 
 Account references, defaults to None
 
-#### app_references _: list[int] | None_ _= None_
+#### app*references *: list[int] | None\_ _= None_
 
 App references, defaults to None
 
-#### asset_references _: list[int] | None_ _= None_
+#### asset*references *: list[int] | None\_ _= None_
 
 Asset references, defaults to None
 
-#### box_references _: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None_ _= None_
+#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
 
 Box references, defaults to None
 
-#### extra_program_pages _: int | None_ _= None_
+#### extra*program_pages *: int | None\_ _= None_
 
 Number of extra pages required for the programs, defaults to None

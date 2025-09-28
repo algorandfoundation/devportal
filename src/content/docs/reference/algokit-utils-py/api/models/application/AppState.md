@@ -9,19 +9,19 @@ tableOfContents:
 
 #### _class_ algokit_utils.models.application.AppState
 
-#### key_raw _: bytes_
+#### key*raw *: bytes\_
 
 The key of the state as raw bytes
 
-#### key_base64 _: str_
+#### key*base64 *: str\_
 
 The key of the state
 
-#### value_raw _: bytes | None_
+#### value*raw *: bytes | None\_
 
 The value of the state as raw bytes
 
-#### value_base64 _: str | None_
+#### value*base64 *: str | None\_
 
 The value of the state as base64 encoded string
 

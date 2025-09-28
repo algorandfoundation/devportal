@@ -15,7 +15,7 @@ Source code location information.
 
 The list of program counter values
 
-#### error_message _: str | None_ _= None_
+#### error*message *: str | None\_ _= None_
 
 The optional error message
 

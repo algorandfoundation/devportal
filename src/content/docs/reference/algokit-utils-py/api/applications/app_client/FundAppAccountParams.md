@@ -17,6 +17,6 @@ Parameters for funding an application’s account.
 
 Amount to fund
 
-#### close_remainder_to _: str | None_ _= None_
+#### close*remainder_to *: str | None\_ _= None_
 
 Optional address to close remainder to

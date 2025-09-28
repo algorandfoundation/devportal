@@ -12,10 +12,10 @@ sidebar:
 
 ## Module Contents
 
-### algokit_utils.applications.app_manager.UPDATABLE_TEMPLATE_NAME _= 'TMPL_UPDATABLE'_
+### algokit*utils.applications.app_manager.UPDATABLE_TEMPLATE_NAME *= 'TMPL*UPDATABLE'*
 
 The name of the TEAL template variable for deploy-time immutability control.
 
-### algokit_utils.applications.app_manager.DELETABLE_TEMPLATE_NAME _= 'TMPL_DELETABLE'_
+### algokit*utils.applications.app_manager.DELETABLE_TEMPLATE_NAME *= 'TMPL*DELETABLE'*
 
 The name of the TEAL template variable for deploy-time permanence control.

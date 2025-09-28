@@ -9,10 +9,10 @@ tableOfContents:
 
 #### _class_ algokit_utils.models.simulate.SimulationTrace
 
-#### app_budget_added _: int | None_
+#### app*budget_added *: int | None\_
 
-#### app_budget_consumed _: int | None_
+#### app*budget_consumed *: int | None\_
 
-#### failure_message _: str | None_
+#### failure*message *: str | None\_
 
-#### exec_trace _: dict[str, object]_
+#### exec*trace *: dict[str, object]\_
