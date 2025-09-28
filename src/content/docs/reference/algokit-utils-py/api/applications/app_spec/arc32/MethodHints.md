@@ -11,13 +11,13 @@ tableOfContents:
 
 MethodHints provides hints to the caller about how to call the method
 
-#### read*only *: bool\_ _= False_
+#### read_only _: bool_ _= False_
 
 #### structs _: dict[str, [StructArgDict](StructArgDict.md#algokit_utils.applications.app_spec.arc32.StructArgDict)]_
 
-#### default*arguments *: dict[str, [DefaultArgumentDict](DefaultArgumentDict.md#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]\_
+#### default_arguments _: dict[str, [DefaultArgumentDict](DefaultArgumentDict.md#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]_
 
-#### call*config *: MethodConfigDict\_
+#### call_config _: MethodConfigDict_
 
 #### empty() → bool
 

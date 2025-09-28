@@ -13,7 +13,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for transferring an asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 
@@ -25,10 +25,10 @@ The amount of the asset to transfer (smallest divisible unit)
 
 The account to send the asset to
 
-#### clawback*target *: str | None\_ _= None_
+#### clawback_target _: str | None_ _= None_
 
 The account to take the asset from, defaults to None
 
-#### close*asset_to *: str | None\_ _= None_
+#### close_asset_to _: str | None_ _= None_
 
 The account to close the asset to, defaults to None

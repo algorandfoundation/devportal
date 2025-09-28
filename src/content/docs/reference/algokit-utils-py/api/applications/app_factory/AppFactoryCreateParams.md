@@ -13,6 +13,6 @@ Bases: [`algokit_utils.applications.app_client.AppClientBareCallCreateParams`](/
 
 Parameters for creating application with bare call.
 
-#### on*complete *: algokit*utils.applications.app_client.CreateOnComplete | None* _= None_
+#### on_complete _: algokit_utils.applications.app_client.CreateOnComplete | None_ _= None_
 
 Optional on complete action

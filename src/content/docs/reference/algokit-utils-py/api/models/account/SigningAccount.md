@@ -13,7 +13,7 @@ Holds the private key and address for an account.
 
 Provides access to the account’s private key, address, public key and transaction signer.
 
-#### private*key *: str\_
+#### private_key _: str_
 
 Base64 encoded private key
 
@@ -21,7 +21,7 @@ Base64 encoded private key
 
 Address for this account
 
-#### _property_ public*key *: bytes\_
+#### _property_ public_key _: bytes_
 
 The public key for this account.
 

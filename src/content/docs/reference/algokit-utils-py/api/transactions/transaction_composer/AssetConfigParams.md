@@ -13,7 +13,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for configuring an existing asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 

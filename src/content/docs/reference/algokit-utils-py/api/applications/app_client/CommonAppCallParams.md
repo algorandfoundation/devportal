@@ -11,23 +11,23 @@ tableOfContents:
 
 Common configuration for app call transaction parameters
 
-#### account*references *: list[str] | None\_ _= None_
+#### account_references _: list[str] | None_ _= None_
 
 List of account addresses to reference
 
-#### app*references *: list[int] | None\_ _= None_
+#### app_references _: list[int] | None_ _= None_
 
 List of app IDs to reference
 
-#### asset*references *: list[int] | None\_ _= None_
+#### asset_references _: list[int] | None_ _= None_
 
 List of asset IDs to reference
 
-#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
+#### box_references _: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None_ _= None_
 
 List of box references to include
 
-#### extra*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
+#### extra_fee _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None_ _= None_
 
 Additional fee to add to transaction
 
@@ -35,7 +35,7 @@ Additional fee to add to transaction
 
 Transaction lease value
 
-#### max*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
+#### max_fee _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None_ _= None_
 
 Maximum fee allowed for transaction
 
@@ -43,7 +43,7 @@ Maximum fee allowed for transaction
 
 Custom note for the transaction
 
-#### rekey*to *: str | None\_ _= None_
+#### rekey_to _: str | None_ _= None_
 
 Address to rekey account to
 
@@ -55,22 +55,22 @@ Sender address override
 
 Custom transaction signer
 
-#### static*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
+#### static_fee _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount) | None_ _= None_
 
 Fixed fee for transaction
 
-#### validity*window *: int | None\_ _= None_
+#### validity_window _: int | None_ _= None_
 
 Number of rounds valid
 
-#### first*valid_round *: int | None\_ _= None_
+#### first_valid_round _: int | None_ _= None_
 
 First valid round number
 
-#### last*valid_round *: int | None\_ _= None_
+#### last_valid_round _: int | None_ _= None_
 
 Last valid round number
 
-#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 Optional on complete action

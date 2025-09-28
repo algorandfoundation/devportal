@@ -13,11 +13,11 @@ Bases: `_BaseAppMethodCall`
 
 Parameters for an ABI method call that creates an application.
 
-#### approval*program *: str | bytes\_
+#### approval_program _: str | bytes_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear*state_program *: str | bytes\_
+#### clear_state_program _: str | bytes_
 
 The program to execute for ClearState OnComplete
 
@@ -25,10 +25,10 @@ The program to execute for ClearState OnComplete
 
 The state schema for the app, defaults to None
 
-#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 The OnComplete action (cannot be ClearState), defaults to None
 
-#### extra*program_pages *: int | None\_ _= None_
+#### extra_program_pages _: int | None_ _= None_
 
 Number of extra pages required for the programs, defaults to None

@@ -11,11 +11,11 @@ tableOfContents:
 
 Storage map information.
 
-#### key*type *: str\_
+#### key_type _: str_
 
 The type of the map keys
 
-#### value*type *: str\_
+#### value_type _: str_
 
 The type of the map values
 

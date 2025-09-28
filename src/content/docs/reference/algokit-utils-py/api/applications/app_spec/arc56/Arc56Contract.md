@@ -17,7 +17,7 @@ See [https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0056.md](http
 
 The list of supported ARC version numbers
 
-#### bare*actions *: [BareActions](BareActions.md#algokit_utils.applications.app_spec.arc56.BareActions)\_
+#### bare_actions _: [BareActions](BareActions.md#algokit_utils.applications.app_spec.arc56.BareActions)_
 
 The bare call and create actions
 
@@ -37,11 +37,11 @@ The contract state information
 
 The contract struct definitions
 
-#### byte*code *: [ByteCode](ByteCode.md#algokit_utils.applications.app_spec.arc56.ByteCode) | None\_ _= None_
+#### byte_code _: [ByteCode](ByteCode.md#algokit_utils.applications.app_spec.arc56.ByteCode) | None_ _= None_
 
 The optional bytecode for approval and clear programs
 
-#### compiler*info *: [CompilerInfo](CompilerInfo.md#algokit_utils.applications.app_spec.arc56.CompilerInfo) | None\_ _= None_
+#### compiler_info _: [CompilerInfo](CompilerInfo.md#algokit_utils.applications.app_spec.arc56.CompilerInfo) | None_ _= None_
 
 The optional compiler information
 
@@ -57,7 +57,7 @@ The optional list of contract events
 
 The optional network deployment information
 
-#### scratch*variables *: dict[str, [ScratchVariables](ScratchVariables.md#algokit_utils.applications.app_spec.arc56.ScratchVariables)] | None\_ _= None_
+#### scratch_variables _: dict[str, [ScratchVariables](ScratchVariables.md#algokit_utils.applications.app_spec.arc56.ScratchVariables)] | None_ _= None_
 
 The optional scratch variable information
 
@@ -65,11 +65,11 @@ The optional scratch variable information
 
 The optional source code
 
-#### source*info *: [SourceInfoModel](SourceInfoModel.md#algokit_utils.applications.app_spec.arc56.SourceInfoModel) | None\_ _= None_
+#### source_info _: [SourceInfoModel](SourceInfoModel.md#algokit_utils.applications.app_spec.arc56.SourceInfoModel) | None_ _= None_
 
 The optional source code information
 
-#### template*variables *: dict[str, [TemplateVariables](TemplateVariables.md#algokit_utils.applications.app_spec.arc56.TemplateVariables)] | None\_ _= None_
+#### template_variables _: dict[str, [TemplateVariables](TemplateVariables.md#algokit_utils.applications.app_spec.arc56.TemplateVariables)] | None_ _= None_
 
 The optional template variable information
 

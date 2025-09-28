@@ -13,26 +13,26 @@ Bases: `_CommonTxnParams`
 
 Parameters for online key registration.
 
-#### vote*key *: str\_
+#### vote_key _: str_
 
 The root participation public key
 
-#### selection*key *: str\_
+#### selection_key _: str_
 
 The VRF public key
 
-#### vote*first *: int\_
+#### vote_first _: int_
 
 The first round that the participation key is valid
 
-#### vote*last *: int\_
+#### vote_last _: int_
 
 The last round that the participation key is valid
 
-#### vote*key_dilution *: int\_
+#### vote_key_dilution _: int_
 
 The dilution for the 2-level participation key
 
-#### state*proof_key *: bytes | None\_ _= None_
+#### state_proof_key _: bytes | None_ _= None_
 
 The 64 byte state proof public key commitment, defaults to None

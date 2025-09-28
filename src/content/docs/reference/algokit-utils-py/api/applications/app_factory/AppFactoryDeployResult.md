@@ -15,19 +15,19 @@ Result from deploying an application via AppFactory
 
 The application metadata
 
-#### operation*performed *: algokit*utils.applications.app_deployer.OperationPerformed*
+#### operation_performed _: algokit_utils.applications.app_deployer.OperationPerformed_
 
 The operation performed
 
-#### create*result *: [SendAppCreateFactoryTransactionResult](SendAppCreateFactoryTransactionResult.md#algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult) | None\_ _= None_
+#### create_result _: [SendAppCreateFactoryTransactionResult](SendAppCreateFactoryTransactionResult.md#algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult) | None_ _= None_
 
 The create result
 
-#### update*result *: [SendAppUpdateFactoryTransactionResult](SendAppUpdateFactoryTransactionResult.md#algokit_utils.applications.app_factory.SendAppUpdateFactoryTransactionResult) | None\_ _= None_
+#### update_result _: [SendAppUpdateFactoryTransactionResult](SendAppUpdateFactoryTransactionResult.md#algokit_utils.applications.app_factory.SendAppUpdateFactoryTransactionResult) | None_ _= None_
 
 The update result
 
-#### delete*result *: [SendAppFactoryTransactionResult](SendAppFactoryTransactionResult.md#algokit_utils.applications.app_factory.SendAppFactoryTransactionResult) | None\_ _= None_
+#### delete_result _: [SendAppFactoryTransactionResult](SendAppFactoryTransactionResult.md#algokit_utils.applications.app_factory.SendAppFactoryTransactionResult) | None_ _= None_
 
 The delete result
 

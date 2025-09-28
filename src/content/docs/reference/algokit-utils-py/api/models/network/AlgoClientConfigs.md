@@ -9,8 +9,8 @@ tableOfContents:
 
 #### _class_ algokit_utils.models.network.AlgoClientConfigs
 
-#### algod*config *: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig)\_
+#### algod_config _: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig)_
 
-#### indexer*config *: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
+#### indexer_config _: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig) | None_
 
-#### kmd*config *: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig) | None\_
+#### kmd_config _: [AlgoClientNetworkConfig](AlgoClientNetworkConfig.md#algokit_utils.models.network.AlgoClientNetworkConfig) | None_

@@ -11,10 +11,10 @@ tableOfContents:
 
 The source maps for the application
 
-#### approval*source_map *: algosdk.source*map.SourceMap | None* _= None_
+#### approval_source_map _: algosdk.source_map.SourceMap | None_ _= None_
 
 The source map for the approval program
 
-#### clear*source_map *: algosdk.source*map.SourceMap | None* _= None_
+#### clear_source_map _: algosdk.source_map.SourceMap | None_ _= None_
 
 The source map for the clear state program

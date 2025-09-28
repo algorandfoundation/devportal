@@ -11,6 +11,6 @@ tableOfContents:
 
 Information about an Algorand app
 
-#### app*id *: int\_
+#### app_id _: int_
 
-#### app*address *: str\_
+#### app_address _: str_

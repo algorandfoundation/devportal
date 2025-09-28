@@ -13,10 +13,10 @@ Bases: `_BaseAppMethodCall`
 
 Parameters for a regular ABI method call.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
-#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 The OnComplete action, defaults to None

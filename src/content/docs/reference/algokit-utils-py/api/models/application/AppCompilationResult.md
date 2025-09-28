@@ -11,10 +11,10 @@ tableOfContents:
 
 The compiled teal code
 
-#### compiled*approval *: [CompiledTeal](CompiledTeal.md#algokit_utils.models.application.CompiledTeal)\_
+#### compiled_approval _: [CompiledTeal](CompiledTeal.md#algokit_utils.models.application.CompiledTeal)_
 
 The compiled approval program
 
-#### compiled*clear *: [CompiledTeal](CompiledTeal.md#algokit_utils.models.application.CompiledTeal)\_
+#### compiled_clear _: [CompiledTeal](CompiledTeal.md#algokit_utils.models.application.CompiledTeal)_
 
 The compiled clear state program

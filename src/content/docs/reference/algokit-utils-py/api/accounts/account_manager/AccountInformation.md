@@ -21,15 +21,15 @@ The account’s address
 
 The account’s current balance
 
-#### amount*without_pending_rewards *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount)\_
+#### amount_without_pending_rewards _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount)_
 
 The account’s balance without the pending rewards
 
-#### min*balance *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount)\_
+#### min_balance _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount)_
 
 The account’s minimum required balance
 
-#### pending*rewards *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount)\_
+#### pending_rewards _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/algoamount/#algokit_utils.models.amount.AlgoAmount)_
 
 The amount of pending rewards
 
@@ -45,39 +45,39 @@ The round for which this information is relevant
 
 The account’s status (e.g., ‘Offline’, ‘Online’)
 
-#### total*apps_opted_in *: int | None\_ _= None_
+#### total_apps_opted_in _: int | None_ _= None_
 
 Number of applications this account has opted into
 
-#### total*assets_opted_in *: int | None\_ _= None_
+#### total_assets_opted_in _: int | None_ _= None_
 
 Number of assets this account has opted into
 
-#### total*box_bytes *: int | None\_ _= None_
+#### total_box_bytes _: int | None_ _= None_
 
 Total number of box bytes used by this account
 
-#### total*boxes *: int | None\_ _= None_
+#### total_boxes _: int | None_ _= None_
 
 Total number of boxes used by this account
 
-#### total*created_apps *: int | None\_ _= None_
+#### total_created_apps _: int | None_ _= None_
 
 Number of applications created by this account
 
-#### total*created_assets *: int | None\_ _= None_
+#### total_created_assets _: int | None_ _= None_
 
 Number of assets created by this account
 
-#### apps*local_state *: list[dict] | None\_ _= None_
+#### apps_local_state _: list[dict] | None_ _= None_
 
 Local state of applications this account has opted into
 
-#### apps*total_extra_pages *: int | None\_ _= None_
+#### apps_total_extra_pages _: int | None_ _= None_
 
 Number of extra pages allocated to applications
 
-#### apps*total_schema *: dict | None\_ _= None_
+#### apps_total_schema _: dict | None_ _= None_
 
 Total schema for all applications
 
@@ -85,23 +85,23 @@ Total schema for all applications
 
 Assets held by this account
 
-#### auth*addr *: str | None\_ _= None_
+#### auth_addr _: str | None_ _= None_
 
 If rekeyed, the authorized address
 
-#### closed*at_round *: int | None\_ _= None_
+#### closed_at_round _: int | None_ _= None_
 
 Round when this account was closed
 
-#### created*apps *: list[dict] | None\_ _= None_
+#### created_apps _: list[dict] | None_ _= None_
 
 Applications created by this account
 
-#### created*assets *: list[dict] | None\_ _= None_
+#### created_assets _: list[dict] | None_ _= None_
 
 Assets created by this account
 
-#### created*at_round *: int | None\_ _= None_
+#### created_at_round _: int | None_ _= None_
 
 Round when this account was created
 
@@ -109,15 +109,15 @@ Round when this account was created
 
 Whether this account is deleted
 
-#### incentive*eligible *: bool | None\_ _= None_
+#### incentive_eligible _: bool | None_ _= None_
 
 Whether this account is eligible for incentives
 
-#### last*heartbeat *: int | None\_ _= None_
+#### last_heartbeat _: int | None_ _= None_
 
 Last heartbeat round for this account
 
-#### last*proposed *: int | None\_ _= None_
+#### last_proposed _: int | None_ _= None_
 
 Last round this account proposed a block
 
@@ -125,10 +125,10 @@ Last round this account proposed a block
 
 Participation information for this account
 
-#### reward*base *: int | None\_ _= None_
+#### reward_base _: int | None_ _= None_
 
 Base reward for this account
 
-#### sig*type *: str | None\_ _= None_
+#### sig_type _: str | None_ _= None_
 
 Signature type for this account

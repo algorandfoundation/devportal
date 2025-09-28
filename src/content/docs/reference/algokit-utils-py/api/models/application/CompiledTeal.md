@@ -19,12 +19,12 @@ The teal code
 
 The compiled teal code
 
-#### compiled*hash *: str\_
+#### compiled_hash _: str_
 
 The compiled hash
 
-#### compiled*base64_to_bytes *: bytes\_
+#### compiled_base64_to_bytes _: bytes_
 
 The compiled base64 to bytes
 
-#### source*map *: algosdk.source*map.SourceMap | None*
+#### source_map _: algosdk.source_map.SourceMap | None_

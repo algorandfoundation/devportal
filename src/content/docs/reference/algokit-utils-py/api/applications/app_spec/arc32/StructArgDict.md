@@ -21,7 +21,6 @@ dict(iterable) -> new dictionary initialized as if via:
 for k, v in iterable:
 
 {' '}
-
 <br />> d[k] = v
 
 dict(

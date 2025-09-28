@@ -13,14 +13,14 @@ Bases: `str`, `enum.Enum`
 
 Enum representing different call types for application transactions.
 
-#### CLEAR*STATE *= 'ClearState'\_
+#### CLEAR_STATE _= 'ClearState'_
 
-#### CLOSE*OUT *= 'CloseOut'\_
+#### CLOSE_OUT _= 'CloseOut'_
 
-#### DELETE*APPLICATION *= 'DeleteApplication'\_
+#### DELETE_APPLICATION _= 'DeleteApplication'_
 
-#### NO*OP *= 'NoOp'\_
+#### NO_OP _= 'NoOp'_
 
-#### OPT*IN *= 'OptIn'\_
+#### OPT_IN _= 'OptIn'_
 
-#### UPDATE*APPLICATION *= 'UpdateApplication'\_
+#### UPDATE_APPLICATION _= 'UpdateApplication'_

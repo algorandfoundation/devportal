@@ -21,7 +21,6 @@ dict(iterable) -> new dictionary initialized as if via:
 for k, v in iterable:
 
 {' '}
-
 <br />> d[k] = v
 
 dict(
@@ -33,18 +32,18 @@ dict(
 kwargs) -> new dictionary initialized with the name=value pairs
 : in the keyword argument list. For example: dict(one=1, two=2)
 
-#### global*ints *: int\_
+#### global_ints _: int_
 
 The number of global ints in the schema
 
-#### global*byte_slices *: int\_
+#### global_byte_slices _: int_
 
 The number of global byte slices in the schema
 
-#### local*ints *: int\_
+#### local_ints _: int_
 
 The number of local ints in the schema
 
-#### local*byte_slices *: int\_
+#### local_byte_slices _: int_
 
 The number of local byte slices in the schema

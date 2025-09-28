@@ -15,11 +15,11 @@ Box storage requirements.
 
 The box key
 
-#### read*bytes *: int\_
+#### read_bytes _: int_
 
 The number of bytes to read
 
-#### write*bytes *: int\_
+#### write_bytes _: int_
 
 The number of bytes to write
 

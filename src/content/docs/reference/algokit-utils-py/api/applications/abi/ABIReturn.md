@@ -13,7 +13,7 @@ Represents the return value from an ABI method call.
 
 Wraps the raw return value and decoded value along with any decode errors.
 
-#### raw*value *: bytes | None\_ _= None_
+#### raw_value _: bytes | None_ _= None_
 
 The raw return value from the method call
 
@@ -25,15 +25,15 @@ The decoded return value from the method call
 
 The ABI method definition
 
-#### decode*error *: Exception | None\_ _= None_
+#### decode_error _: Exception | None_ _= None_
 
 The exception that occurred during decoding, if any
 
-#### tx*info *: dict[str, Any] | None\_ _= None_
+#### tx_info _: dict[str, Any] | None_ _= None_
 
 The transaction info for the method call from raw algosdk ABIResult
 
-#### _property_ is*success *: bool\_
+#### _property_ is_success _: bool_
 
 Returns True if the ABI call was successful (no decode error)
 

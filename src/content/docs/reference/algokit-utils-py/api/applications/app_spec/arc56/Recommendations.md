@@ -27,7 +27,7 @@ The optional list of assets
 
 The optional box storage requirements
 
-#### inner*transaction_count *: int | None\_ _= None_
+#### inner_transaction_count _: int | None_ _= None_
 
 The optional inner transaction count
 

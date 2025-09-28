@@ -13,7 +13,7 @@ Bases: `Exception`
 
 Common base class for all non-exit exceptions.
 
-#### logic*error *= None\_
+#### logic_error _= None_
 
 #### logic_error_str
 

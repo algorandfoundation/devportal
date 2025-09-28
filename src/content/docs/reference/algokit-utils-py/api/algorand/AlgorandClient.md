@@ -172,7 +172,7 @@ Get or create applications.
   >>> appManager = AlgorandClient.mainnet().app
   ```
 
-#### _property_ app*deployer *: [algokit_utils.applications.app_deployer.AppDeployer](/reference/algokit-utils-py/api/applications/app_deployer/appdeployer/#algokit_utils.applications.app_deployer.AppDeployer)\_
+#### _property_ app_deployer _: [algokit_utils.applications.app_deployer.AppDeployer](/reference/algokit-utils-py/api/applications/app_deployer/appdeployer/#algokit_utils.applications.app_deployer.AppDeployer)_
 
 Get or create applications.
 
@@ -195,7 +195,7 @@ Methods for sending a transaction and waiting for confirmation
   >>> ))
   ```
 
-#### _property_ create*transaction *: [algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator](/reference/algokit-utils-py/api/transactions/transaction_creator/algorandclienttransactioncreator/#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)\_
+#### _property_ create_transaction _: [algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator](/reference/algokit-utils-py/api/transactions/transaction_creator/algorandclienttransactioncreator/#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)_
 
 Methods for building transactions
 

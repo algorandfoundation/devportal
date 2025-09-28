@@ -15,6 +15,6 @@ Result of creating a new ASA (Algorand Standard Asset).
 
 Contains the asset ID of the newly created asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the newly created asset

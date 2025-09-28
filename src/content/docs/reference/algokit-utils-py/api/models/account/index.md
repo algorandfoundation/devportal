@@ -16,4 +16,4 @@ sidebar:
 
 ## Module Contents
 
-### algokit*utils.models.account.DISPENSER_ACCOUNT_NAME *= 'DISPENSER'\_
+### algokit_utils.models.account.DISPENSER_ACCOUNT_NAME _= 'DISPENSER'_

@@ -21,15 +21,15 @@ The last transaction
 
 The last confirmation
 
-#### group*id *: str\_
+#### group_id _: str_
 
 The group ID
 
-#### tx*id *: str | None\_ _= None_
+#### tx_id _: str | None_ _= None_
 
 The transaction ID
 
-#### tx*ids *: list[str]\_
+#### tx_ids _: list[str]_
 
 The full array of transaction IDs
 

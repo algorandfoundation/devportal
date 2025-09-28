@@ -13,18 +13,18 @@ Bases: `_BaseAppMethodCall`
 
 Parameters for an ABI method call that updates an application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
-#### approval*program *: str | bytes\_
+#### approval_program _: str | bytes_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear*state_program *: str | bytes\_
+#### clear_state_program _: str | bytes_
 
 The program to execute for ClearState OnComplete
 
-#### on*complete *: algosdk.transaction.OnComplete\_
+#### on_complete _: algosdk.transaction.OnComplete_
 
 The OnComplete action

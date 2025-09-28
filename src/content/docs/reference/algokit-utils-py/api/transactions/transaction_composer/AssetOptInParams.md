@@ -13,6 +13,6 @@ Bases: `_CommonTxnParams`
 
 Parameters for opting into an asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset

@@ -13,10 +13,10 @@ Bases: `_BaseAppMethodCall`
 
 Parameters for an ABI method call that deletes an application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
-#### on*complete *: algosdk.transaction.OnComplete\_
+#### on_complete _: algosdk.transaction.OnComplete_
 
 The OnComplete action

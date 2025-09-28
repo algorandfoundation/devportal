@@ -15,7 +15,7 @@ Set of transactions built by TransactionComposer.
 
 The built transactions
 
-#### method*calls *: dict[int, algosdk.abi.Method]\_
+#### method_calls _: dict[int, algosdk.abi.Method]_
 
 Map of transaction index to ABI method
 

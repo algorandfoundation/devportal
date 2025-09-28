@@ -13,15 +13,15 @@ Bases: `_CommonTxnParams`
 
 Parameters for updating an application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
-#### approval*program *: str | bytes\_
+#### approval_program _: str | bytes_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear*state_program *: str | bytes\_
+#### clear_state_program _: str | bytes_
 
 The program to execute for ClearState OnComplete
 
@@ -29,22 +29,22 @@ The program to execute for ClearState OnComplete
 
 Application arguments, defaults to None
 
-#### account*references *: list[str] | None\_ _= None_
+#### account_references _: list[str] | None_ _= None_
 
 Account references, defaults to None
 
-#### app*references *: list[int] | None\_ _= None_
+#### app_references _: list[int] | None_ _= None_
 
 App references, defaults to None
 
-#### asset*references *: list[int] | None\_ _= None_
+#### asset_references _: list[int] | None_ _= None_
 
 Asset references, defaults to None
 
-#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
+#### box_references _: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/boxreference/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None_ _= None_
 
 Box references, defaults to None
 
-#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 The OnComplete action, defaults to None

@@ -15,6 +15,6 @@ Result of an application transaction.
 
 Contains the ABI return value if applicable.
 
-#### abi*return *: ABIReturnT | None\_ _= None_
+#### abi_return _: ABIReturnT | None_ _= None_
 
 The ABI return value if applicable

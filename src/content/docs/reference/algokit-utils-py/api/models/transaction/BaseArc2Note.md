@@ -13,4 +13,4 @@ Bases: `TypedDict`
 
 Base ARC-0002 transaction note structure
 
-#### dapp*name *: str\_
+#### dapp_name _: str_

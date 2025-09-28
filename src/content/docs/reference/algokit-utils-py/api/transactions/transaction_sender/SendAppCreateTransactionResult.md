@@ -15,10 +15,10 @@ Result of creating a new application.
 
 Contains the app ID and address of the newly created application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the newly created application
 
-#### app*address *: str\_
+#### app_address _: str_
 
 The address of the newly created application

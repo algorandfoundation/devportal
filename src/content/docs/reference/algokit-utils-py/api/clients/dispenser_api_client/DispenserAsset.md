@@ -9,7 +9,7 @@ tableOfContents:
 
 #### _class_ algokit_utils.clients.dispenser_api_client.DispenserAsset
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 

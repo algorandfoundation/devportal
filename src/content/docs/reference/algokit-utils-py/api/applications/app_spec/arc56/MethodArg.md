@@ -15,7 +15,7 @@ Method argument information.
 
 The type of the argument
 
-#### default*value *: [DefaultValue](DefaultValue.md#algokit_utils.applications.app_spec.arc56.DefaultValue) | None\_ _= None_
+#### default_value _: [DefaultValue](DefaultValue.md#algokit_utils.applications.app_spec.arc56.DefaultValue) | None_ _= None_
 
 The optional default value
 

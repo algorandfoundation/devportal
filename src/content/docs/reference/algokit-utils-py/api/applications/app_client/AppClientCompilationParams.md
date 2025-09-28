@@ -18,7 +18,7 @@ Parameters for compiling an application’s TEAL code.
   - **updatable** – Optional flag indicating if app should be updatable
   - **deletable** – Optional flag indicating if app should be deletable
 
-#### deploy*time_params *: algokit*utils.models.state.TealTemplateParams | None*
+#### deploy_time_params _: algokit_utils.models.state.TealTemplateParams | None_
 
 #### updatable _: bool | None_
 
