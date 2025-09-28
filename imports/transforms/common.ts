@@ -21,16 +21,20 @@ import {
 
 /**
  * Creates a conditional transform that only applies when a condition is met
- * @param condition - Function that determines if the transform should be applied
+ * @param condition - Glob pattern string or function that determines if the transform should be applied
  * @param transforms - Transform functions to apply in sequence when condition is true
  * @returns Transform function that conditionally applies the given transforms
  */
 export function conditionalTransform(
-  condition: (path: string) => boolean,
+  condition: string | ((path: string) => boolean),
   ...transforms: TransformFunction[]
 ): TransformFunction {
+  const conditionFn = typeof condition === 'string'
+    ? (path: string) => matchesPath(condition, path)
+    : condition;
+
   return (content: string, context) => {
-    if (condition(context.path)) {
+    if (conditionFn(context.path)) {
       // Apply all transforms in sequence
       return transforms.reduce((currentContent, transform) => {
         return transform(currentContent, context);
