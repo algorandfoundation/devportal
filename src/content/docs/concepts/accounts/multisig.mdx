@@ -22,20 +22,20 @@ multisignature accounts can perform the same operations as standard accounts, in
 
 Some important characteristics to understand:
 
-- The order of addresses matters when creating the multisignature account (Address A, B, C creates a different multisignature address than B, A, C)
-- However, the order of signatures doesn't matter when signing a transaction
-- Multisignature accounts cannot nest other multisignature accounts
-- You must [send Algos](/concepts/accounts/funding) to the multisignature address to initialize its state on the blockchain, just like with any other account
+- The order of addresses matters when creating the multisignature account. Using addresses `[A, B, C]` creates a different multisignature address than `[B, A, C]`.
+- However, the order of signatures does not matter when signing a transaction.
+- Multisignature accounts cannot nest other multisignature accounts. In other words, a multisignature account cannot include another multisignature account as one of its participant addresses.
+- You must [send Algos](/concepts/accounts/funding) to the multisignature address to initialize its state on the ledger, just like with any other account.
 
 ## Benefits & Implications of Using Multisig Accounts
 
-| **When to Use**                                                                                                                                      | **When Not to Use**                                                                                                                                      |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Enhanced Security:** Requires multiple signatures for transactions, adding an extra layer of protection against compromise of a single key         | **Added Complexity:** Requires coordination among multiple signers for every transaction                                                                 |
-| **Customizable Authorization:** The number of required signatures can be adjusted to fit different security models (e.g., 2-of-3, 3-of-5, etc.)      | **Key Management:** All signers must securely manage their private keys to maintain the security of the multisig account                                 |
-| **Distributed Key Storage:** Signing keys can be stored separately and generated through different methods (kmd, standalone accounts, or a mix)      | **Transaction Size:** Multisig transactions are larger than single-signature transactions, resulting in slightly higher transaction fees                 |
-| **Governance Mechanisms:** Enables cryptographically secure governance structures where a subset of authorized users must approve actions            | **Not Always Necessary:** For simple use cases where security and governance are not critical concerns, a single-signature account may be more practical |
-| **Integration with Smart Contracts:** Can be paired with Algorand Smart Contracts for complex governance models requiring specific signature subsets |                                                                                                                                                          |
+| **Benefits**                                                                                                                                                             | **Implications**                                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Enhanced Security:** Requires multiple signatures for transactions, adding an extra layer of protection against compromise of a single key                             | **Added Complexity:** Requires coordination among multiple signers for every transaction                                                                 |
+| **Customizable Authorization:** The number of required signatures can be adjusted at creation time to fit different security models (e.g., 2-of-3, 3-of-5, 5-of-5, etc.) | **Key Management:** All signers must securely manage their private keys to maintain the security of the multisig account                                 |
+| **Distributed Key Storage:** Signing keys can be stored separately and generated through different methods (kmd, standalone accounts, or a mix)                          | **Transaction Size:** Multisig transactions are larger than single-signature transactions, which could result in slightly higher transaction fees        |
+| **Governance Mechanisms:** Enables cryptographically secure governance structures where a subset of authorized users must approve actions                                | **Not Always Necessary:** For simple use cases where security and governance are not critical concerns, a single-signature account may be more practical |
+| **Integration with Smart Contracts:** Can be paired with Algorand Smart Contracts for complex governance models requiring specific signature subsets                     | **Cryptographic Best Practices** Keys used as signers in critical multisig accounts should be used exclusively for this purpose.                         |
 
 ## How to Generate a Multisignature Account
 
