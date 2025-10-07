@@ -5524,6 +5524,55 @@ Fails if A or B is not in G.<br />A and/or B are allowed to be the point at infi
 
 </div>
 
+### falcon_verify
+
+<div class="opcode-section"
+     data-name="falcon_verify"
+     data-version="v12"
+     data-groups="Cryptography">
+
+    <details>
+    <summary>
+      <table class='opcode-table'>
+        <thead>
+          <tr>
+            <th>Bytecode</th>
+            <th>Stack Input</th>
+            <th>Stack Output</th>
+            <th>Size</th>
+            <th>Availability</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0x85</td>
+            <td>[]byte,[1232]byte,[1793]byte</td>
+            <td>bool</td>
+            <td>1</td>
+            <td>v12</td>
+            <td>1700</td>
+          </tr>
+        </tbody>
+      </table>
+  </summary>
+
+    :::note[Details]
+
+    <span class="opcode-detail-caption">Description</span>
+    for (data A, compressed-format signature B, pubkey C) verify the signature of data against the pubkey =&gt; &#123;0 or 1&#125;
+
+
+    <span class='opcode-detail-caption'>Groups</span>
+    `Cryptography`
+
+
+    :::
+
+  </details>
+
+</div>
+
 ### frame_bury
 
 <div class="opcode-section"

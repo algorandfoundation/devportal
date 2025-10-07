@@ -97,7 +97,8 @@ async function main() {
   const [tplSrc, dataSrc] = await Promise.all([readFile(templatePath, 'utf8'), readFile(dataPath, 'utf8')]);
 
   const template = Handlebars.compile(tplSrc, { noEscape: true });
-  const opcodes = JSON.parse(dataSrc);
+  const data = JSON.parse(dataSrc);
+  const opcodes = data.Ops;
   opcodes.sort((a, b) => a.Name.localeCompare(b.Name));
 
   const page = template({ opcodes });
