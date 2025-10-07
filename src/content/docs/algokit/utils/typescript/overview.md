@@ -48,7 +48,7 @@ To use this library simply include the following at the top of your file:
 import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils';
 ```
 
-As well as `AlgorandClient` and `Config`, you can use intellisense to auto-complete the various types that you can import within the `{}` in your favourite Integrated Development Environment (IDE), or you can refer to the [reference documentation](./code/modules/index).
+As well as `AlgorandClient` and `Config`, you can use intellisense to auto-complete the various types that you can import within the `{}` in your favourite Integrated Development Environment (IDE), or you can refer to the [reference documentation](/reference/algokit-utils-ts/api/modules/).
 
 > [!WARNING]
 > Previous versions of AlgoKit Utils encouraged you to include an import that looks like this (note the subtle difference of the extra `* as algokit`):
@@ -59,9 +59,9 @@ As well as `AlgorandClient` and `Config`, you can use intellisense to auto-compl
 >
 > This version will still work until at least v9, but it exposes an older, function-based interface to the functionality that is deprecated. The new way to use AlgoKit Utils is via the `AlgorandClient` class, which is easier, simpler and more convenient to use and has powerful new features.
 >
-> If you are migrating from the old functions to the new ones then you can follow the [migration guide](v7-migration).
+> If you are migrating from the old functions to the new ones then you can follow the [migration guide](v7-migration.md).
 
-The main entrypoint to the bulk of the functionality is the `AlgorandClient` class, most of the time you can get started by typing `AlgorandClient.` and choosing one of the static initialisation methods to create an [Algorand client](/algokit/utils/typescript/algorand-client), e.g.:
+The main entrypoint to the bulk of the functionality is the `AlgorandClient` class, most of the time you can get started by typing `AlgorandClient.` and choosing one of the static initialisation methods to create an [Algorand client](/algokit/utils/typescript/algorand-client/), e.g.:
 
 ```typescript
 // Point to the network configured through environment variables or
@@ -100,7 +100,7 @@ Or, you can generally get away with just importing the `algorandFixture` since i
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
-To see how to use it consult the [testing capability page](/algokit/utils/typescript/testing) or to see what's available look at the [reference documentation](./code/modules/testing).
+To see how to use it consult the [testing capability page](capabilities/testing.md) or to see what's available look at the [reference documentation](/reference/algokit-utils-ts/api/modules/testing/).
 
 ## Types
 
@@ -110,7 +110,7 @@ If you want to extend or pass around any of the types the various functions take
 import {<type>} from '@algorandfoundation/types/<module>'
 ```
 
-Where `<type>` would be replaced with the type and `<module>` would be replaced with the module. You can use intellisense to discover the modules and types in your favourite IDE, or you can explore the [types modules in the reference documentation](./code/README#modules).
+Where `<type>` would be replaced with the type and `<module>` would be replaced with the module. You can use intellisense to discover the modules and types in your favourite IDE, or you can explore the [types modules in the reference documentation](/reference/algokit-utils-ts/api/readme/#modules).
 
 # Config and logging
 
@@ -120,7 +120,7 @@ To configure the AlgoKit Utils library you can make use of the `Config` object, 
 
 AlgoKit has an in-built logging abstraction that allows the library to issue log messages without coupling the library to a particular logging library. This means you can access the AlgoKit Utils logs within your existing logging library if you have one.
 
-To do this you need to create a logging translator that exposes the following interface ([`Logger`](./code/modules/types_logging#logger)):
+To do this you need to create a logging translator that exposes the following interface ([`Logger`](/reference/algokit-utils-ts/api/modules/types_logging/#logger)):
 
 ```typescript
 export type Logger = {
@@ -134,7 +134,7 @@ export type Logger = {
 
 Note: this interface type is directly compatible with [Winston](https://github.com/winstonjs/winston) so you should be able to pass AlgoKit a Winston logger.
 
-By default, the [`consoleLogger`](./code/modules/types_logging#consolelogger) is set as the logger, which will send log messages to the various `console.*` methods for all logs apart from verbose logs. There is also a [`nullLogger`](./code/modules/types_logging#nulllogger) if you want to disable logging, or various leveled console loggers: [`verboseConsoleLogger`](./code/modules/types_logging#verboseconsolelogger) (also outputs verbose logs), [`infoConsoleLogger`](./code/modules/types_logging#infoconsolelogger) (only outputs info, warning and error logs), [`warningConsoleLogger`](./code/modules/types_logging#warningconsolelogger) (only outputs warning and error logs).
+By default, the [`consoleLogger`](/reference/algokit-utils-ts/api/modules/types_logging/#consolelogger) is set as the logger, which will send log messages to the various `console.*` methods for all logs apart from verbose logs. There is also a [`nullLogger`](/reference/algokit-utils-ts/api/modules/types_logging/#nulllogger) if you want to disable logging, or various leveled console loggers: [`verboseConsoleLogger`](/reference/algokit-utils-ts/api/modules/types_logging/#verboseconsolelogger) (also outputs verbose logs), [`infoConsoleLogger`](/reference/algokit-utils-ts/api/modules/types_logging/#infoconsolelogger) (only outputs info, warning and error logs), [`warningConsoleLogger`](/reference/algokit-utils-ts/api/modules/types_logging/#warningconsolelogger) (only outputs warning and error logs).
 
 If you want to override the logger you can use the following:
 
@@ -142,7 +142,7 @@ If you want to override the logger you can use the following:
 Config.configure({ logger: myLogger });
 ```
 
-To retrieve the current debug state you can use [`Config.logger`](./code/interfaces/types_config.Config). To get a logger that is optionally set to the null logger based on a boolean flag you can use the [`Config.getLogger(useNullLogger)`](./code/classes/types_config.UpdatableConfig#getlogger) function.
+To retrieve the current debug state you can use [`Config.logger`](/reference/algokit-utils-ts/api/interfaces/types_configconfig/). To get a logger that is optionally set to the null logger based on a boolean flag you can use the [`Config.getLogger(useNullLogger)`](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#getlogger) function.
 
 ## Debug mode
 
@@ -152,11 +152,11 @@ To turn on debug mode you can use the following:
 Config.configure({ debug: true });
 ```
 
-To retrieve the current debug state you can use [`Config.debug`](./code/interfaces/types_config.Config).
+To retrieve the current debug state you can use [`Config.debug`](/reference/algokit-utils-ts/api/interfaces/types_configconfig/).
 
-This will turn on things like automatic tracing, more verbose logging and [advanced debugging](/algokit/utils/typescript/debugging). It's likely this option will result in extra HTTP calls to algod so worth being careful when it's turned on.
+This will turn on things like automatic tracing, more verbose logging and [advanced debugging](/algokit/utils/typescript/debugging/). It's likely this option will result in extra HTTP calls to algod so worth being careful when it's turned on.
 
-If you want to temporarily turn it on you can use the [`withDebug`](./code/classes/types_config.UpdatableConfig#withdebug) function:
+If you want to temporarily turn it on you can use the [`withDebug`](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#withdebug) function:
 
 ```typescript
 Config.withDebug(() => {
@@ -168,22 +168,22 @@ Config.withDebug(() => {
 
 The library helps you interact with and develop against the Algorand blockchain with a series of end-to-end capabilities as described below:
 
-- [**AlgorandClient**](/algokit/utils/typescript/algorand-client) - The key entrypoint to the AlgoKit Utils functionality
+- [**AlgorandClient**](/algokit/utils/typescript/algorand-client/) - The key entrypoint to the AlgoKit Utils functionality
 - **Core capabilities**
-  - [**Client management**](/algokit/utils/typescript/client) - Creation of (auto-retry) algod, indexer and kmd clients against various networks resolved from environment or specified configuration, and creation of other API clients (e.g. TestNet Dispenser API and app clients)
-  - [**Account management**](/algokit/utils/typescript/account) - Creation, use, and management of accounts including mnemonic, rekeyed, multisig, transaction signer ([useWallet](https://github.com/TxnLab/use-wallet) for dApps and Atomic Transaction Composer compatible signers), idempotent KMD accounts and environment variable injected
-  - [**Algo amount handling**](/algokit/utils/typescript/amount) - Reliable, explicit, and terse specification of microAlgo and Algo amounts and safe conversion between them
-  - [**Transaction management**](/algokit/utils/typescript/transaction) - Ability to construct, simulate and send transactions with consistent and highly configurable semantics, including configurable control of transaction notes, logging, fees, validity, signing, and sending behaviour
+  - [**Client management**](/algokit/utils/typescript/client/) - Creation of (auto-retry) algod, indexer and kmd clients against various networks resolved from environment or specified configuration, and creation of other API clients (e.g. TestNet Dispenser API and app clients)
+  - [**Account management**](/algokit/utils/typescript/account/) - Creation, use, and management of accounts including mnemonic, rekeyed, multisig, transaction signer ([useWallet](https://github.com/TxnLab/use-wallet) for dApps and Atomic Transaction Composer compatible signers), idempotent KMD accounts and environment variable injected
+  - [**Algo amount handling**](/algokit/utils/typescript/amount/) - Reliable, explicit, and terse specification of microAlgo and Algo amounts and safe conversion between them
+  - [**Transaction management**](/algokit/utils/typescript/transaction/) - Ability to construct, simulate and send transactions with consistent and highly configurable semantics, including configurable control of transaction notes, logging, fees, validity, signing, and sending behaviour
 - **Higher-order use cases**
-  - [**Asset management**](/algokit/utils/typescript/asset) - Creation, transfer, destroying, opting in and out and managing Algorand Standard Assets
-  - [**Typed application clients**](/algokit/utils/typescript/typed-app-clients) - Type-safe application clients that are [generated](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate#1-typed-clients) from ARC-56 or ARC-32 application spec files and allow you to intuitively and productively interact with a deployed app, which is the recommended way of interacting with apps and builds on top of the following capabilities:
-    - [**ARC-56 / ARC-32 App client and App factory**](/algokit/utils/typescript/app-client) - Builds on top of the App management and App deployment capabilities (below) to provide a high productivity application client that works with ARC-56 and ARC-32 application spec defined smart contracts
-    - [**App management**](/algokit/utils/typescript/app) - Creation, updating, deleting, calling (ABI and otherwise) smart contract apps and the metadata associated with them (including state and boxes)
-    - [**App deployment**](/algokit/utils/typescript/app-deploy) - Idempotent (safely retryable) deployment of an app, including deploy-time immutability and permanence control and TEAL template substitution
-  - [**Algo transfers (payments)**](/algokit/utils/typescript/transfer) - Ability to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding
-  - [**Automated testing**](/algokit/utils/typescript/testing) - Terse, robust automated testing primitives that work across any testing framework (including jest and vitest) to facilitate fixture management, quickly generating isolated and funded test accounts, transaction logging, indexer wait management and log capture
-  - [**Indexer lookups / searching**](/algokit/utils/typescript/indexer) - Type-safe indexer API wrappers (no `Record<string, any>` pain from the SDK client), including automatic pagination control
+  - [**Asset management**](/algokit/utils/typescript/asset/) - Creation, transfer, destroying, opting in and out and managing Algorand Standard Assets
+  - [**Typed application clients**](/algokit/utils/typescript/typed-app-clients/) - Type-safe application clients that are [generated](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate.md#1-typed-clients) from ARC-56 or ARC-32 application spec files and allow you to intuitively and productively interact with a deployed app, which is the recommended way of interacting with apps and builds on top of the following capabilities:
+    - [**ARC-56 / ARC-32 App client and App factory**](/algokit/utils/typescript/app-client/) - Builds on top of the App management and App deployment capabilities (below) to provide a high productivity application client that works with ARC-56 and ARC-32 application spec defined smart contracts
+    - [**App management**](/algokit/utils/typescript/app/) - Creation, updating, deleting, calling (ABI and otherwise) smart contract apps and the metadata associated with them (including state and boxes)
+    - [**App deployment**](/algokit/utils/typescript/app-deploy/) - Idempotent (safely retryable) deployment of an app, including deploy-time immutability and permanence control and TEAL template substitution
+  - [**Algo transfers (payments)**](/algokit/utils/typescript/transfer/) - Ability to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding
+  - [**Automated testing**](/algokit/utils/typescript/testing/) - Terse, robust automated testing primitives that work across any testing framework (including jest and vitest) to facilitate fixture management, quickly generating isolated and funded test accounts, transaction logging, indexer wait management and log capture
+  - [**Indexer lookups / searching**](/algokit/utils/typescript/indexer/) - Type-safe indexer API wrappers (no `Record<string, any>` pain from the SDK client), including automatic pagination control
 
 # Reference documentation
 
-We have [auto-generated reference documentation for the code](./code/README).
+We have [auto-generated reference documentation for the code](/reference/algokit-utils-ts/api/readme/).

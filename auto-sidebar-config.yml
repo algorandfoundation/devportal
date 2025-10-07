@@ -1,0 +1,24 @@
+# Starlight Auto-Sidebar Configuration
+# Each entry defines a folder and its _meta.yml content
+
+configs:
+  - folder: algokit/cli
+    content: |
+      collapsed: true
+      cascade:
+        - collapsed
+  - folder: reference/algokit-utils-ts/api
+    content: |
+      collapsed: true
+      cascade:
+        - collapsed
+  - folder: reference/algokit-utils-py/api
+    content: |
+      collapsed: true
+      cascade:
+        - collapsed
+  - folder: reference/algorand-typescript/API Reference
+    content: |
+      collapsed: true
+      cascade:
+        - collapsed

@@ -1,0 +1,47 @@
+{
+  "imports": {
+    "algorandfoundation/nodekit@main": {
+      "name": "NodeKit Command Reference",
+      "repoId": "algorandfoundation/nodekit@main",
+      "lastCommitSha": "aa66ae32c4aca54f4c711dc5876c59a5f8d570b5",
+      "lastImported": "2025-10-07T10:55:45.223Z",
+      "ref": "main"
+    },
+    "algorandfoundation/algokit-cli@main": {
+      "name": "AlgoKit CLI Docs (features)",
+      "repoId": "algorandfoundation/algokit-cli@main",
+      "lastCommitSha": "a42cb0ba115faa2a078d38fe7ccb64d6086758d6",
+      "lastImported": "2025-09-22T09:41:16.492Z",
+      "ref": "main"
+    },
+    "algorandfoundation/arcs@devportal": {
+      "name": "ARC Standards",
+      "repoId": "algorandfoundation/arcs@devportal",
+      "lastCommitSha": "2008c8be5cabfa3f35e5ba905dfb480df67f290b",
+      "lastImported": "2025-10-07T10:55:43.311Z",
+      "ref": "devportal"
+    },
+    "algorandfoundation/algokit-cli@chore/content-fix": {
+      "name": "AlgoKit CLI Docs",
+      "repoId": "algorandfoundation/algokit-cli@chore/content-fix",
+      "lastCommitSha": "40762f855a87326e16ce94e94673c7fefac5c025",
+      "lastImported": "2025-09-28T12:28:51.535Z",
+      "ref": "chore/content-fix"
+    },
+    "algorandfoundation/algokit-utils-ts@chore/fix-docs": {
+      "name": "AlgoKit Utils TS Docs",
+      "repoId": "algorandfoundation/algokit-utils-ts@chore/fix-docs",
+      "lastCommitSha": "44369ef738406062d14080e5ca6b45871dcde5af",
+      "lastImported": "2025-09-28T12:31:39.523Z",
+      "ref": "chore/fix-docs"
+    },
+    "algorandfoundation/algokit-utils-py@chore/reference-docs": {
+      "name": "AlgoKit Utils Python Docs",
+      "repoId": "algorandfoundation/algokit-utils-py@chore/reference-docs",
+      "lastCommitSha": "ec3856b55ba88bde87aa28b522280dfae537d0bf",
+      "lastImported": "2025-09-28T12:36:01.329Z",
+      "ref": "chore/reference-docs"
+    }
+  },
+  "lastChecked": "2025-09-25T10:01:53.956Z"
+}

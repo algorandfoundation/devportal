@@ -6,10 +6,11 @@ import rehypeExternalLinks from 'rehype-external-links';
 import { resolve } from 'path';
 import starlightImageZoom from 'starlight-image-zoom';
 import starlightLinksValidator from 'starlight-links-validator';
-import starlightTypeDoc from 'starlight-typedoc';
 import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-links';
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
+import starlightAutoSidebar from 'starlight-auto-sidebar';
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   site: 'https://dev.algorand.co',
@@ -24,13 +25,16 @@ export default defineConfig({
         starlightImageZoom(),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
-          exclude: ['**[FUTURELINK]*', '**/reference/**'],
-        }),
-        starlightTypeDoc({
-          entryPoints: ['./imports/repos/algokit-utils-ts/src/index.ts'],
-          tsconfig: './imports/repos/algokit-utils-ts/tsconfig.json',
-          output: 'reference/algokit-utils-ts/API Reference',
-          exclude: ['**[FUTURELINK]*'],
+          errorOnInvalidHashes: false,
+          exclude: [
+            '**[FUTURELINK]*',
+            '**/reference/algokit-utils-py/**',
+            '**/reference/algorand-python/**',
+            '**/reference/algorand-teal/**',
+            '**/reference/algorand-typescript/**',
+            '**/reference/rest-api/**',
+            '**/reference/sdk/**',
+          ],
         }),
         starlightLlmsTxt({
           minify: {
@@ -64,6 +68,7 @@ export default defineConfig({
             },
           ],
         }),
+        starlightAutoSidebar(),
       ],
       head: [
         {
@@ -395,6 +400,10 @@ export default defineConfig({
                   label: 'Networks',
                   link: 'concepts/protocol/networks',
                 },
+                {
+                  label: 'Randomness',
+                  link: 'concepts/protocol/randomness',
+                },
               ],
             },
           ],
@@ -413,125 +422,125 @@ export default defineConfig({
               items: [
                 {
                   label: 'Overview',
-                  link: 'algokit/algokit-cli/overview',
+                  link: 'algokit/cli/overview',
                 },
                 {
                   label: 'Compile',
-                  link: 'algokit/algokit-cli/compile',
+                  link: 'algokit/cli/compile',
                 },
                 {
                   label: 'Completions',
-                  link: 'algokit/algokit-cli/completions',
+                  link: 'algokit/cli/completions',
                 },
                 {
                   label: 'Config',
-                  link: 'algokit/algokit-cli/config',
+                  link: 'algokit/cli/config',
                 },
                 {
                   label: 'TestNet Dispenser',
-                  link: 'algokit/algokit-cli/dispenser',
+                  link: 'algokit/cli/dispenser',
                 },
                 {
                   label: 'Doctor',
-                  link: 'algokit/algokit-cli/doctor',
+                  link: 'algokit/cli/doctor',
                 },
                 {
                   label: 'Explore',
-                  link: 'algokit/algokit-cli/explore',
+                  link: 'algokit/cli/explore',
                 },
                 {
                   label: 'Generate',
-                  link: 'algokit/algokit-cli/generate',
+                  link: 'algokit/cli/generate',
                 },
                 {
                   label: 'Goal',
-                  link: 'algokit/algokit-cli/goal',
+                  link: 'algokit/cli/goal',
                 },
                 {
                   label: 'Init',
-                  link: 'algokit/algokit-cli/init',
+                  link: 'algokit/cli/init',
                 },
                 {
                   label: 'Localnet',
-                  link: 'algokit/algokit-cli/localnet',
+                  link: 'algokit/cli/localnet',
                 },
                 {
                   label: 'Project',
-                  collapsed: false,
+                  collapsed: true,
                   items: [
                     {
                       label: 'Overview',
-                      link: 'algokit/algokit-cli/project',
+                      link: 'algokit/cli/project',
                     },
                     {
                       label: 'Bootstrap',
-                      link: 'algokit/algokit-cli/project/bootstrap',
+                      link: 'algokit/cli/project/bootstrap',
                     },
                     {
                       label: 'Deploy',
-                      link: 'algokit/algokit-cli/project/deploy',
+                      link: 'algokit/cli/project/deploy',
                     },
                     {
                       label: 'Link',
-                      link: 'algokit/algokit-cli/project/link',
+                      link: 'algokit/cli/project/link',
                     },
                     {
                       label: 'List',
-                      link: 'algokit/algokit-cli/project/list',
+                      link: 'algokit/cli/project/list',
                     },
                     {
                       label: 'Run',
-                      link: 'algokit/algokit-cli/project/run',
+                      link: 'algokit/cli/project/run',
                     },
                   ],
                 },
                 {
                   label: 'Tasks',
-                  collapsed: false,
+                  collapsed: true,
                   items: [
                     {
                       label: 'Overview',
-                      link: 'algokit/algokit-cli/tasks',
+                      link: 'algokit/cli/tasks',
                     },
                     {
                       label: 'Analyze',
-                      link: 'algokit/algokit-cli/tasks/analyze',
+                      link: 'algokit/cli/tasks/analyze',
                     },
                     {
                       label: 'IPFS',
-                      link: 'algokit/algokit-cli/tasks/ipfs',
+                      link: 'algokit/cli/tasks/ipfs',
                     },
                     {
                       label: 'Mint',
-                      link: 'algokit/algokit-cli/tasks/mint',
+                      link: 'algokit/cli/tasks/mint',
                     },
                     {
                       label: 'NFD Lookup',
-                      link: 'algokit/algokit-cli/tasks/nfd',
+                      link: 'algokit/cli/tasks/nfd',
                     },
                     {
                       label: 'Asset opt-(in|out)',
-                      link: 'algokit/algokit-cli/tasks/opt',
+                      link: 'algokit/cli/tasks/opt',
                     },
                     {
                       label: 'Send',
-                      link: 'algokit/algokit-cli/tasks/send',
+                      link: 'algokit/cli/tasks/send',
                     },
                     {
                       label: 'Sign',
-                      link: 'algokit/algokit-cli/tasks/sign',
+                      link: 'algokit/cli/tasks/sign',
                     },
                     {
                       label: 'Transfer',
-                      link: 'algokit/algokit-cli/tasks/transfer',
+                      link: 'algokit/cli/tasks/transfer',
                     },
                     {
                       label: 'Vanity Address',
-                      link: 'algokit/algokit-cli/tasks/vanity_address',
+                      link: 'algokit/cli/tasks/vanity_address',
                     },
                     {
                       label: 'Wallet',
-                      link: 'algokit/algokit-cli/tasks/wallet',
+                      link: 'algokit/cli/tasks/wallet',
                     },
                   ],
                 },
@@ -647,6 +656,14 @@ export default defineConfig({
                     {
                       label: 'Typed Clients',
                       link: 'algokit/utils/typescript/typed-app-clients',
+                    },
+                    {
+                      label: 'v7 Migration Guide',
+                      link: 'algokit/utils/typescript/v7-migration',
+                    },
+                    {
+                      label: 'v8 Migration Guide',
+                      link: 'algokit/utils/typescript/v8-migration',
                     },
                   ],
                 },
@@ -2278,81 +2295,24 @@ export default defineConfig({
               ],
             },
             {
+              label: 'AlgoKit CLI',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Command Reference',
+                  link: 'reference/algokit-cli',
+                },
+              ],
+            },
+            {
               label: 'AlgoKit Utils (Python)',
               collapsed: true,
               items: [
                 {
                   label: 'API Reference',
-                  items: [
-                    {
-                      label: 'algokit_utils._debugging',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils__debugging',
-                    },
-                    {
-                      label: 'algokit_utils._ensure_funded',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils__ensure_funded',
-                    },
-                    {
-                      label: 'algokit_utils._transfer',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils__transfer',
-                    },
-                    {
-                      label: 'algokit_utils.account',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_account',
-                    },
-                    {
-                      label: 'algokit_utils._debugging',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils__debugging',
-                    },
-                    {
-                      label: 'algokit_utils.application_client',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_application_client',
-                    },
-                    {
-                      label: 'algokit_utils.application_specification',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_application_specification',
-                    },
-                    {
-                      label: 'algokit_utils.asset',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_asset',
-                    },
-                    {
-                      label: 'algokit_utils.common',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_common',
-                    },
-                    {
-                      label: 'algokit_utils.config',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_config',
-                    },
-                    {
-                      label: 'algokit_utils.deploy',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_deploy',
-                    },
-                    {
-                      label: 'algokit_utils.dispenser_api',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_dispenser_api',
-                    },
-                    {
-                      label: 'algokit_utils.logic_error',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_logic_error',
-                    },
-                    {
-                      label: 'algokit_utils.models',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_models',
-                    },
-                    {
-                      label: 'algokit_utils.network_clients',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils_network_clients',
-                    },
-                    {
-                      label: 'algokit_utils',
-                      link: 'reference/algokit-utils-py/api-reference/algokit_utils/algokit_utils',
-                    },
-                  ],
-                },
-                {
-                  label: 'Overview',
-                  link: 'reference/algokit-utils-py/overview',
+                  autogenerate: {
+                    directory: 'reference/algokit-utils-py/api',
+                  },
                 },
               ],
             },
@@ -2362,499 +2322,9 @@ export default defineConfig({
               items: [
                 {
                   label: 'API Reference',
-                  collapsed: false,
-                  items: [
-                    {
-                      label: 'classes',
-                      items: [
-                        {
-                          label: 'AlgorandClient',
-                          link: 'reference/algokit-utils-ts/api-reference/classes/algorandclient',
-                        },
-                      ],
-                    },
-                    {
-                      label: 'enumerations',
-                      items: [
-                        {
-                          label: 'EventType',
-                          link: 'reference/algokit-utils-ts/api-reference/enumerations/eventtype',
-                        },
-                      ],
-                    },
-                    {
-                      label: 'functions',
-                      items: [
-                        {
-                          label: 'algo',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/algo',
-                        },
-                        {
-                          label: 'algos',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/algos',
-                        },
-                        {
-                          label: 'assetBulkOptIn',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/assetbulkoptin',
-                        },
-                        {
-                          label: 'assetBulkOptOut',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/assetbulkoptout',
-                        },
-                        {
-                          label: 'assetOptIn',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/assetoptin',
-                        },
-                        {
-                          label: 'assetOptOut',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/assetoptout',
-                        },
-                        {
-                          label: 'callApp',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/callapp',
-                        },
-                        {
-                          label: 'capTransactionFee',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/captransactionfee',
-                        },
-                        {
-                          label: 'compileTeal',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/compileteal',
-                        },
-                        {
-                          label: 'controlFees',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/controlfees',
-                        },
-                        {
-                          label: 'createApp',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/createapp',
-                        },
-                        {
-                          label: 'createAsset',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/createasset',
-                        },
-                        {
-                          label: 'decodeAppState',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/decodeappstate',
-                        },
-                        {
-                          label: 'deployApp',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/deployapp',
-                        },
-                        {
-                          label: 'encodeLease',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/encodelease',
-                        },
-                        {
-                          label: 'ensureFunded',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/encodetransactionnote',
-                        },
-                        {
-                          label: 'getABIMethodSignature',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getabimethodsignature',
-                        },
-                        {
-                          label: 'getABIReturn',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getabireturn',
-                        },
-                        {
-                          label: 'getAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getaccount',
-                        },
-                        {
-                          label: 'getAccountAddressAsString',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getaccountaddressasstring',
-                        },
-                        {
-                          label: 'getAccountAddressAsUint8Array',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getaccountaddressasuint8array',
-                        },
-                        {
-                          label: 'getAccountAssetInformation',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getaccountassetinformation',
-                        },
-                        {
-                          label: 'getAlgodConfigFromEnvironment',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getalgodconfigfromenvironment',
-                        },
-                        {
-                          label: 'getAlgoIndexerClient',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getalgoindexerclient',
-                        },
-                        {
-                          label: 'getAlgoNodeConfig',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getalgonodeconfig',
-                        },
-                        {
-                          label: 'getAppArgsForABICall',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappargsforabicall',
-                        },
-                        {
-                          label: 'getAppArgsForTransaction',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappargsfortransaction',
-                        },
-                        {
-                          label: 'getAppBoxNames',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappboxnames',
-                        },
-                        {
-                          label: 'getAppBoxValue',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappboxvalue',
-                        },
-                        {
-                          label: 'getAppBoxValueFromABIType',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappboxvaluefromabitype',
-                        },
-                        {
-                          label: 'getAppBoxValues',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappboxvalues',
-                        },
-                        {
-                          label: 'getAppBoxValuesFromABIType',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappboxvaluesfromabitype',
-                        },
-                        {
-                          label: 'getAppById',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappbyid',
-                        },
-                        {
-                          label: 'getAppClient',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappclient',
-                        },
-                        {
-                          label: 'getAppClientByCreatorAndName',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappclientbycreatorandname',
-                        },
-                        {
-                          label: 'getAppClientById',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappclientbyid',
-                        },
-                        {
-                          label: 'getAppDeploymentTransactionNote',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappdeploymenttransactionnote',
-                        },
-                        {
-                          label: 'getAppGlobalState',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getappglobalstate',
-                        },
-                        {
-                          label: 'getAppLocalState',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getapplocalstate',
-                        },
-                        {
-                          label: 'getAppOnCompleteAction',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getapponcompleteaction',
-                        },
-                        {
-                          label: 'getAtomicTransactionComposerTransactions',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getatomictransactioncomposertransactions',
-                        },
-                        {
-                          label: 'getBoxReference',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getboxreference',
-                        },
-                        {
-                          label: 'getConfigFromEnvOrDefaults',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getconfigfromenvordefaults',
-                        },
-                        {
-                          label: 'getCreatorAppsByName',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getcreatorappsbyname',
-                        },
-                        {
-                          label: 'getDefaultLocalNetConfig',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getdefaultlocalnetconfig',
-                        },
-                        {
-                          label: 'getDispenserAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getdispenseraccount',
-                        },
-                        {
-                          label: 'getIndexerConfigFromEnvironment',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getindexerconfigfromenvironment',
-                        },
-                        {
-                          label: 'getKmdWalletAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getkmdwalletaccount',
-                        },
-                        {
-                          label: 'getLocalNetDispenserAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getlocalnetdispenseraccount',
-                        },
-                        {
-                          label: 'getOrCreateKmdWalletAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getorcreatekmdwalletaccount',
-                        },
-                        {
-                          label: 'getSenderAddress',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getsenderaddress',
-                        },
-                        {
-                          label: 'getSenderTransactionSigner',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/getsendertransactionsigner',
-                        },
-                        {
-                          label: 'getTestNetDispenserApiClient',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/gettestnetdispenserapiclient',
-                        },
-                        {
-                          label: 'getTransactionParams',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/gettransactionparams',
-                        },
-                        {
-                          label: 'getTransactionWithSigner',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/gettransactionwithsigner',
-                        },
-                        {
-                          label: 'isLocalNet',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/islocalnet',
-                        },
-                        {
-                          label: 'isMainNet',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/ismainnet',
-                        },
-                        {
-                          label: 'isSchemaIsBroken',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/isschemaisbroken',
-                        },
-                        {
-                          label: 'isTestNet',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/istestnet',
-                        },
-                        {
-                          label: 'microAlgo',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/microalgo',
-                        },
-                        {
-                          label: 'microAlgos',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/microalgos',
-                        },
-                        {
-                          label: 'mnemonicAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/mnemonicaccount',
-                        },
-                        {
-                          label: 'mnemonicAccountFromEnvironment',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/mnemonicaccountfromenvironment',
-                        },
-                        {
-                          label: 'multisigAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/multisigaccount',
-                        },
-                        {
-                          label: 'performAtomicTransactionComposerSimulate',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/performatomictransactioncomposersimulate',
-                        },
-                        {
-                          label: 'performTemplateSubstitution',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/performtemplatesubstitution',
-                        },
-                        {
-                          label: 'performTemplateSubstitutionAndCompile',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/performtemplatesubstitutionandcompile',
-                        },
-                        {
-                          label: 'persistSourceMaps',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/persistsourcemaps',
-                        },
-                        {
-                          label: 'populateAppCallResources',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/populateappcallresources',
-                        },
-                        {
-                          label: 'randomAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/randomaccount',
-                        },
-                        {
-                          label: 'relayAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/relayaccount',
-                        },
-                        {
-                          label: 'rekeyedAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/rekeyedaccount',
-                        },
-                        {
-                          label: 'replaceDeployTimeControlParams',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/replacedeploytimecontrolparams',
-                        },
-                        {
-                          label: 'sendAtomicTransactionComposer',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/sendatomictransactioncomposer',
-                        },
-                        {
-                          label: 'sendGroupOfTransactions',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/sendgroupoftransactions',
-                        },
-                        {
-                          label: 'sendTransaction',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/sendtransaction',
-                        },
-                        {
-                          label: 'signTransaction',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/signtransaction',
-                        },
-                        {
-                          label: 'stripTealComments',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/striptealcomments',
-                        },
-                        {
-                          label: 'transactionFees',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/transactionfees',
-                        },
-                        {
-                          label: 'transactionSignerAccount',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/transactionsigneraccount',
-                        },
-                        {
-                          label: 'transferAlgos',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/transferalgos',
-                        },
-                        {
-                          label: 'transferAsset',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/transferasset',
-                        },
-                        {
-                          label: 'updateApp',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/updateapp',
-                        },
-                        {
-                          label: 'waitForConfirmation',
-                          link: 'reference/algokit-utils-ts/api-reference/functions/waitforconfirmation',
-                        },
-                      ],
-                    },
-                    {
-                      label: 'interfaces',
-                      items: [
-                        {
-                          label: 'AVMTracesEventData',
-                          link: 'reference/algokit-utils-ts/api-reference/interfaces/avmtraceseventdata',
-                        },
-                        {
-                          label: 'TealSourceDebugEventData',
-                          link: 'reference/algokit-utils-ts/api-reference/interfaces/tealsourcedebugeventdata',
-                        },
-                        {
-                          label: 'TealSourcesDebugEventData',
-                          link: 'reference/algokit-utils-ts/api-reference/interfaces/tealsourcesdebugeventdata',
-                        },
-                      ],
-                    },
-                    {
-                      label: 'namespaces',
-                      items: [
-                        {
-                          label: 'indexer',
-                          items: [
-                            {
-                              label: 'functions',
-                              items: [
-                                {
-                                  label: 'executePaginatedRequest',
-                                  link: 'reference/algokit-utils-ts/api-reference/namespaces/indexer/functions/executepaginatedrequest',
-                                },
-                                {
-                                  label: 'lookupAccountByAddress',
-                                  link: 'reference/algokit-utils-ts/api-reference/namespaces/indexer/functions/lookupaccountbyaddress',
-                                },
-                                {
-                                  label: 'lookupAccountCreatedApplicationByAddress',
-                                  link: 'reference/algokit-utils-ts/api-reference/namespaces/indexer/functions/lookupaccountcreatedapplicationbyaddress',
-                                },
-                                {
-                                  label: 'lookupAssetHoldings',
-                                  link: 'reference/algokit-utils-ts/api-reference/namespaces/indexer/functions/lookupassetholdings',
-                                },
-                                {
-                                  label: 'lookupTransactionById',
-                                  link: 'reference/algokit-utils-ts/api-reference/namespaces/indexer/functions/lookuptransactionbyid',
-                                },
-                                {
-                                  label: 'searchTransactions',
-                                  link: 'reference/algokit-utils-ts/api-reference/namespaces/indexer/functions/searchtransactions',
-                                },
-                              ],
-                            },
-                            {
-                              label: 'type-aliases',
-                              items: [
-                                {
-                                  label: 'SearchForTransactions',
-                                  link: 'reference/algokit-utils-ts/api-reference/namespaces/indexer/type-aliases/searchfortransactions',
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    {
-                      label: 'type-aliases',
-                      items: [
-                        {
-                          label: 'AccountInformation',
-                          link: 'reference/algokit-utils-ts/api-reference/type-aliases/accountinformation',
-                        },
-                        {
-                          label: 'EventDataMap',
-                          link: 'reference/algokit-utils-ts/api-reference/type-aliases/eventdatamap',
-                        },
-                        {
-                          label: 'NumberConverter',
-                          link: 'reference/algokit-utils-ts/api-reference/type-aliases/numberconverter',
-                        },
-                      ],
-                    },
-                    {
-                      label: 'variables',
-                      items: [
-                        {
-                          label: 'ALGOKIT_DIR',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/algokit_dir',
-                        },
-                        {
-                          label: 'ALGORAND_MIN_TX_FEE',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/algorand_min_tx_fee',
-                        },
-                        {
-                          label: 'Config',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/config',
-                        },
-                        {
-                          label: 'DEFAULT_MAX_SEARCH_DEPTH',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/default_max_search_depth',
-                        },
-                        {
-                          label: 'MAX_APP_CALL_ACCOUNT_REFERENCES',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/max_app_call_account_references',
-                        },
-                        {
-                          label: 'MAX_APP_CALL_FOREIGN_REFERENCES',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/max_app_call_foreign_references',
-                        },
-                        {
-                          label: 'MAX_TRANSACTION_GROUP_SIZE',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/max_transaction_group_size',
-                        },
-                        {
-                          label: 'SOURCES_DIR',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/sources_dir',
-                        },
-                        {
-                          label: 'TEAL_FILE_EXT',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/teal_file_ext',
-                        },
-                        {
-                          label: 'TEAL_SOURCEMAP_EXT',
-                          link: 'reference/algokit-utils-ts/api-reference/variables/teal_sourcemap_ext',
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  label: 'Overview',
-                  link: 'reference/algokit-utils-ts/overview',
+                  autogenerate: {
+                    directory: 'reference/algokit-utils-ts/api',
+                  },
                 },
               ],
             },
@@ -2863,7 +2333,7 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
-                  label: 'Opcodes List',
+                  label: 'AVM Opcodes',
                   link: 'reference/algorand-teal/opcodes',
                 },
               ],
@@ -2912,9 +2382,17 @@ export default defineConfig({
         {
           label: 'Additional Resources',
           collapsed: true,
-          autogenerate: {
-            directory: 'resources',
-          },
+          items: [
+            {
+              label: 'Overview',
+              link: 'resources/overview',
+            },
+            {
+              label: 'Algorand Specifications',
+              link: 'https://specs.algorand.co',
+              attrs: { target: '_blank', rel: 'noopener' },
+            },
+          ],
         },
       ],
     }),
@@ -2937,6 +2415,7 @@ export default defineConfig({
         '@assets': resolve('./src/assets'),
         '@images': resolve('./src/assets/images'),
         '@diagrams': resolve('./src/assets/diagrams/svg'),
+        '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
       },
     },
     plugins: [tailwindcss()],

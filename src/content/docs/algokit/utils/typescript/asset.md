@@ -4,13 +4,13 @@ title: Assets
 
 The Algorand Standard Asset (asset) management functions include creating, opting in and transferring assets, which are fundamental to asset interaction in a blockchain environment.
 
-To see some usage examples check out the [automated tests](../../src/types/algorand-client.asset.spec.ts).
+To see some usage examples check out the [automated tests](src/types/algorand-client.asset.spec.ts).
 
 ## `AssetManager`
 
-The `AssetManager` is a class that is used to manage asset information.
+The [`AssetManager`](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/) is a class that is used to manage asset information.
 
-To get an instance of `AssetManager`, you can use either [`AlgorandClient`](./algorand-client) via `algorand.asset` or instantiate it directly:
+To get an instance of `AssetManager`, you can use either [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) via `algorand.asset` or instantiate it directly:
 
 ```typescript
 import { AssetManager } from '@algorandfoundation/algokit-utils/types/asset-manager'
@@ -21,9 +21,9 @@ const assetManager = new AssetManager(algod, () => new TransactionComposer({algo
 
 ## Creation
 
-To create an asset you can use `algorand.send.assetCreate(params)` (immediately send a single asset creation transaction), `algorand.createTransaction.assetCreate(params)` (construct an asset creation transaction), or `algorand.newGroup().addAssetCreate(params)` (add asset creation to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To create an asset you can use `algorand.send.assetCreate(params)` (immediately send a single asset creation transaction), `algorand.createTransaction.assetCreate(params)` (construct an asset creation transaction), or `algorand.newGroup().addAssetCreate(params)` (add asset creation to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying an asset creation transaction is `AssetCreateParams`, which has the following parameters in addition to the [common transaction parameters](./algorand-client#transaction-parameters):
+The base type for specifying an asset creation transaction is [`AssetCreateParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetcreateparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `total: bigint` - The total amount of the smallest divisible (decimal) unit to create. For example, if `decimals` is, say, 2, then for every 100 `total` there would be 1 whole unit. This field can only be specified upon asset creation.
 - `decimals: number` - The amount of decimal places the asset should have. If unspecified then the asset will be in whole units (i.e. `0`). If 0, the asset is not divisible. If 1, the base unit of the asset is in tenths, and so on up to 19 decimal places. This field can only be specified upon asset creation.
@@ -33,7 +33,7 @@ The base type for specifying an asset creation transaction is `AssetCreateParams
 - `metadataHash?: string | Uint8Array` - 32-byte hash of some metadata that is relevant to your asset and/or asset holders. The format of this metadata is up to the application. This field can only be specified upon asset creation.
 - `defaultFrozen?: boolean` - Whether to freeze holdings for this asset by default. Defaults to `false`. If `true` then for anyone apart from the creator to hold the asset it needs to be unfrozen using an asset freeze transaction from the `freeze` account, which must be set on creation. This field can only be specified upon asset creation.
 - `manager?: string` - The address of the optional account that can manage the configuration of the asset and destroy it. The configuration fields it can change are `manager`, `reserve`, `clawback`, and `freeze`. If not set (`undefined` or `""`) at asset creation or subsequently set to empty by the `manager` the asset becomes permanently immutable.
-- `reserveAccount?: string` - The address of the optional account that holds the reserve (uncirculated supply) units of the asset. This address has no specific authority in the protocol itself and is informational only. Some standards like [ARC-19](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0019) rely on this field to hold meaningful data. It can be used in the case where you want to signal to holders of your asset that the uncirculated units of the asset reside in an account that is different from the default creator account. If not set (`undefined` or `""`) at asset creation or subsequently set to empty by the manager the field is permanently empty.
+- `reserveAccount?: string` - The address of the optional account that holds the reserve (uncirculated supply) units of the asset. This address has no specific authority in the protocol itself and is informational only. Some standards like [ARC-19](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0019.md) rely on this field to hold meaningful data. It can be used in the case where you want to signal to holders of your asset that the uncirculated units of the asset reside in an account that is different from the default creator account. If not set (`undefined` or `""`) at asset creation or subsequently set to empty by the manager the field is permanently empty.
 - `freezeAccount?: string` - The address of the optional account that can be used to freeze or unfreeze holdings of this asset for any account. If empty, freezing is not permitted. If not set (`undefined` or `""`) at asset creation or subsequently set to empty by the manager the field is permanently empty.
 - `clawbackAccount?: string` - The address of the optional account that can clawback holdings of this asset from any account. **This field should be used with caution** as the clawback account has the ability to **unconditionally take assets from any account**. If empty, clawback is not permitted. If not set (`undefined` or `""`) at asset creation or subsequently set to empty by the manager the field is permanently empty.
 
@@ -84,13 +84,13 @@ If you have a `manager` address set on an asset, that address can send a reconfi
 > [!WARNING]
 > If you issue a reconfigure transaction and don't set the _existing_ values for any of the below fields then that field will be permanently set to empty.
 
-To reconfigure an asset you can use `algorand.send.assetConfig(params)` (immediately send a single asset config transaction), `algorand.createTransaction.assetConfig(params)` (construct an asset config transaction), or `algorand.newGroup().addAssetConfig(params)` (add asset config to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To reconfigure an asset you can use `algorand.send.assetConfig(params)` (immediately send a single asset config transaction), `algorand.createTransaction.assetConfig(params)` (construct an asset config transaction), or `algorand.newGroup().addAssetConfig(params)` (add asset config to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying an asset creation transaction is `AssetConfigParams`, which has the following parameters in addition to the [common transaction parameters](./algorand-client#transaction-parameters):
+The base type for specifying an asset creation transaction is [`AssetConfigParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetconfigparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `assetId: bigint` - ID of the asset to reconfigure
 - `manager: string | undefined` - The address of the optional account that can manage the configuration of the asset and destroy it. The configuration fields it can change are `manager`, `reserve`, `clawback`, and `freeze`. If not set (`undefined` or `""`) the asset will become permanently immutable.
-- `reserve?: string` - The address of the optional account that holds the reserve (uncirculated supply) units of the asset. This address has no specific authority in the protocol itself and is informational only. Some standards like [ARC-19](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0019) rely on this field to hold meaningful data. It can be used in the case where you want to signal to holders of your asset that the uncirculated units of the asset reside in an account that is different from the default creator account. If not set (`undefined` or `""`) the field will become permanently empty.
+- `reserve?: string` - The address of the optional account that holds the reserve (uncirculated supply) units of the asset. This address has no specific authority in the protocol itself and is informational only. Some standards like [ARC-19](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0019.md) rely on this field to hold meaningful data. It can be used in the case where you want to signal to holders of your asset that the uncirculated units of the asset reside in an account that is different from the default creator account. If not set (`undefined` or `""`) the field will become permanently empty.
 - `freeze?: string` - The address of the optional account that can be used to freeze or unfreeze holdings of this asset for any account. If empty, freezing is not permitted. If not set (`undefined` or `""`) the field will become permanently empty.
 - `clawback?: string` - The address of the optional account that can clawback holdings of this asset from any account. **This field should be used with caution** as the clawback account has the ability to **unconditionally take assets from any account**. If empty, clawback is not permitted. If not set (`undefined` or `""`) the field will become permanently empty.
 
@@ -135,11 +135,11 @@ await algorand.send.assetConfig({
 
 ## Transfer
 
-To transfer unit(s) of an asset between accounts you can use `algorand.send.assetTransfer(params)` (immediately send a single asset transfer transaction), `algorand.createTransaction.assetTransfer(params)` (construct an asset transfer transaction), or `algorand.newGroup().addAssetTransfer(params)` (add asset transfer to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To transfer unit(s) of an asset between accounts you can use `algorand.send.assetTransfer(params)` (immediately send a single asset transfer transaction), `algorand.createTransaction.assetTransfer(params)` (construct an asset transfer transaction), or `algorand.newGroup().addAssetTransfer(params)` (add asset transfer to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
 **Note:** For an account to receive an asset it needs to have [opted-in](#opt-inout).
 
-The base type for specifying an asset transfer transaction is `AssetTransferParams`, which has the following parameters in addition to the [common transaction parameters](./algorand-client#transaction-parameters):
+The base type for specifying an asset transfer transaction is [`AssetTransferParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assettransferparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `assetId: bigint` - ID of the asset to transfer.
 - `amount: bigint` - Amount of the asset to transfer (in smallest divisible (decimal) units).
@@ -195,9 +195,9 @@ AlgoKit Utils gives you functions that allow you to do opt-ins and opt-outs in b
 
 ### `assetOptIn`
 
-To opt-in to an asset you can use `algorand.send.assetOptIn(params)` (immediately send a single asset opt-in transaction), `algorand.createTransaction.assetOptIn(params)` (construct an asset opt-in transaction), or `algorand.newGroup().addAssetOptIn(params)` (add asset opt-in to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To opt-in to an asset you can use `algorand.send.assetOptIn(params)` (immediately send a single asset opt-in transaction), `algorand.createTransaction.assetOptIn(params)` (construct an asset opt-in transaction), or `algorand.newGroup().addAssetOptIn(params)` (add asset opt-in to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying an asset opt-in transaction is `AssetOptInParams`, which has the following parameters in addition to the [common transaction parameters](./algorand-client#transaction-parameters):
+The base type for specifying an asset opt-in transaction is [`AssetOptInParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetoptinparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `assetId: bigint` - The ID of the asset that will be opted-in to
 
@@ -232,9 +232,9 @@ await algorand.send.assetOptIn({
 
 ### `assetOptOut`
 
-To opt-out to an asset you can use `algorand.send.assetOptOut(params)` (immediately send a single asset opt-out transaction), `algorand.createTransaction.assetOptOut(params)` (construct an asset opt-out transaction), or `algorand.newGroup().addAssetOptOut(params)` (add asset opt-out to a group of transactions) per [`AlgorandClient`](./algorand-client) [transaction semantics](./algorand-client#creating-and-issuing-transactions).
+To opt-out to an asset you can use `algorand.send.assetOptOut(params)` (immediately send a single asset opt-out transaction), `algorand.createTransaction.assetOptOut(params)` (construct an asset opt-out transaction), or `algorand.newGroup().addAssetOptOut(params)` (add asset opt-out to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying an asset opt-out transaction is `AssetOptOutParams`, which has the following parameters in addition to the [common transaction parameters](./algorand-client#transaction-parameters):
+The base type for specifying an asset opt-out transaction is [`AssetOptOutParams`](/reference/algokit-utils-ts/api/modules/types_composer/#assetoptoutparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `assetId: bigint` - The ID of the asset that will be opted-out of
 - `creator: string` - The address of the asset creator account to close the asset position to (any remaining asset units will be sent to this account).
@@ -292,7 +292,7 @@ await algorand.send.assetOptOut({
 
 ### `asset.bulkOptIn`
 
-The `asset.bulkOptIn` function facilitates the opt-in process for an account to multiple assets, allowing the account to receive and hold those assets.
+The [`asset.bulkOptIn`](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#bulkoptin) function facilitates the opt-in process for an account to multiple assets, allowing the account to receive and hold those assets.
 
 ```typescript
 // Basic example
@@ -309,7 +309,7 @@ algorand.asset.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n], {
 
 ### `asset.bulkOptOut`
 
-The `asset.bulkOptOut` function facilitates the opt-out process for an account from multiple assets, permitting the account to discontinue holding a group of assets.
+The [`asset.bulkOptOut`](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#bulkoptout) function facilitates the opt-out process for an account from multiple assets, permitting the account to discontinue holding a group of assets.
 
 ```typescript
 // Basic example

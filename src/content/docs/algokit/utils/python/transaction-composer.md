@@ -330,6 +330,148 @@ result = app_client_1.algorand
 
 This feature should efficiently calculate the minimum fee needed to execute an app call transaction with inners, however we always recommend testing your specific scenario behaves as expected before releasing.
 
+## Error Transformers
+
+Error transformers provide a powerful mechanism for enhancing error messages and debugging information when transactions fail. They allow you to register custom functions that can transform generic blockchain errors into more meaningful, application-specific error messages.
+
+### How Error Transformers Work
+
+Error transformers are functions that take an `Exception` as input and return either a transformed `Exception` or the original exception unchanged. They are called in sequence during transaction simulation or sending when errors occur, allowing for a chain of transformations.
+
+```python
+from typing import Exception
+
+def my_error_transformer(error: Exception) -> Exception:
+    """Transform generic errors into more meaningful ones."""
+    if "asset missing" in str(error).lower():
+        return Exception("Asset not found: Please check the asset ID")
+    return error  # Return unchanged if not applicable
+```
+
+### Registering Error Transformers
+
+Error transformers can be registered at two levels:
+
+#### 1. AlgorandClient Level (Global)
+
+Register error transformers globally to apply to all transaction groups created from this client:
+
+```python
+from algokit_utils import AlgorandClient
+
+algorand = AlgorandClient.default_localnet()
+
+# Register a global error transformer
+algorand.register_error_transformer(my_error_transformer)
+
+# All transaction groups from this client will use the transformer
+result = algorand.new_group().add_payment(payment_params).send()
+
+# Unregister if needed
+algorand.unregister_error_transformer(my_error_transformer)
+```
+
+#### 2. TransactionComposer Level (Per Group)
+
+Register error transformers for a specific transaction group:
+
+```python
+# Register transformer for this specific group
+composer = algorand.new_group()
+composer.register_error_transformer(my_error_transformer)
+
+result = composer.add_payment(payment_params).send()
+```
+
+### Error Transformer Chain
+
+Multiple error transformers can be registered and they will be called in the order they were registered:
+
+```python
+def transformer_1(error: Exception) -> Exception:
+    if "missing from" in str(error):
+        return Exception("ASSET MISSING???")
+    return error
+
+def transformer_2(error: Exception) -> Exception:
+    if str(error) == "ASSET MISSING???":
+        return Exception("ASSET MISSING: Check your asset configuration")
+    return error
+
+# Register multiple transformers
+algorand.register_error_transformer(transformer_1)
+algorand.register_error_transformer(transformer_2)
+
+# They will be applied in sequence: error -> transformer_1 -> transformer_2
+```
+
+### App Client Integration
+
+The `AppClient` automatically registers error transformers to provide enhanced debugging for application-specific logic errors. These transformers:
+
+- Parse logic errors from the blockchain
+- Apply source map information when available
+- Filter errors to only handle those relevant to the specific application
+- For new applications (app_id=0), compare program bytecode to ensure error handling is applied to the correct application
+
+```python
+from algokit_utils import AppClient
+
+# Error transformer is automatically registered
+app_client = AppClient(
+    app_spec=app_spec,
+    app_id=123,  # Existing app
+    algorand=algorand
+)
+
+# App-specific logic errors will be enhanced with source maps and debugging info
+try:
+    result = app_client.send.call("my_method", args=[])
+except LogicError as e:
+    # Enhanced error with source information
+    print(f"Logic error at PC {e.pc}: {e.message}")
+    print(f"Source trace:\n{e.trace()}")
+```
+
+### Best Practices
+
+1. **Keep transformers focused**: Each transformer should handle a specific type of error or transformation.
+2. **Return original on no match**: Always return the original error if your transformer doesn’t apply:
+   ```python
+   def my_transformer(error: Exception) -> Exception:
+       if not should_handle(error):
+           return error  # Important: return unchanged
+       return transform_error(error)
+   ```
+3. **Chain appropriately**: Register transformers in logical order, from most specific to most general.
+4. **Handle exceptions**: Ensure your transformer doesn’t raise exceptions:
+   ```python
+   def safe_transformer(error: Exception) -> Exception:
+       try:
+           return transform_error(error)
+       except Exception:
+           return error  # Fallback to original
+   ```
+5. **Use type information**: Consider the error type when transforming:
+   ```python
+   def typed_transformer(error: Exception) -> Exception:
+       if isinstance(error, AlgodHTTPError):
+           return handle_algod_error(error)
+       elif isinstance(error, LogicError):
+           return enhance_logic_error(error)
+       return error
+   ```
+
+### Error Types
+
+Common error types you might encounter and transform:
+
+- **`AlgodHTTPError`**: Network or node-related errors
+- **`LogicError`**: Smart contract logic errors (automatically handled by AppClient)
+- **Generic `Exception`**: General transaction or validation errors
+
+Error transformers work with both `send()` and `simulate()` operations, providing consistent error enhancement across all transaction execution paths.
+
 #### Read-only calls
 
 When invoking a readonly method, the transaction is simulated rather than being fully processed by the network. This allows users to call these methods without paying a fee.
