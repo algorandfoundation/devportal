@@ -3,8 +3,8 @@
     "algorandfoundation/nodekit@main": {
       "name": "NodeKit Command Reference",
       "repoId": "algorandfoundation/nodekit@main",
-      "lastCommitSha": "fa69d7d6f7b95bb123b70f95e7e81fc54c7cfccb",
-      "lastImported": "2025-09-28T12:28:22.436Z",
+      "lastCommitSha": "aa66ae32c4aca54f4c711dc5876c59a5f8d570b5",
+      "lastImported": "2025-10-07T10:55:45.223Z",
       "ref": "main"
     },
     "algorandfoundation/algokit-cli@main": {
@@ -17,8 +17,8 @@
     "algorandfoundation/arcs@devportal": {
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "1cde30fdb7e5b8f94a50c63f56e09e06854b23c3",
-      "lastImported": "2025-09-28T12:28:20.755Z",
+      "lastCommitSha": "2008c8be5cabfa3f35e5ba905dfb480df67f290b",
+      "lastImported": "2025-10-07T10:55:43.311Z",
       "ref": "devportal"
     },
     "algorandfoundation/algokit-cli@chore/content-fix": {
