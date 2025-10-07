@@ -22,6 +22,11 @@ We maintain ARCs as text files in a versioned repository. Their revision history
 
 This URI specification represents a standardized way for applications and websites to send requests and information through deeplinks, QR codes, etc. It is heavily based on Bitcoin’s <a href="https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki">BIP-0021</a> and should be seen as derivative of it. The decision to base it on BIP-0021 was made to make it easy and compatible as possible for any other application.
 
+### ARC 65 - AVM Run Time Errors In Program
+
+This document introduces a convention for rising informative run time errors on
+the Algorand Virtual Machine (AVM) directly from the program bytecode.
+
 ### ARC 78 - URI scheme, keyreg Transactions extension
 
 This URI specification represents an extension to the base Algorand URI encoding standard ([ARC-26](/arc-standards/arc-0026)) that specifies encoding of key registration transactions through deeplinks, QR codes, etc.
@@ -36,6 +41,14 @@ This URI specification proposes an extension to the base Algorand URI encoding s
 This URI specification defines a standardized method for querying application and asset data on Algorand.
 It enables applications, websites, and QR code implementations to construct URIs that allow users to retrieve data such as application state and asset metadata in a structured format.
 This specification is inspired by [ARC-26](/arc-standards/arc-0026) and follows similar principles, with adjustments specific to read-only queries for applications and assets.
+
+### ARC 83 - xGov Council - Application Process
+
+The goal of this ARC is to clearly define the process for running for an xGov Council seat.
+
+### ARC 86 - xGov status and voting power
+
+This ARC defines the Expert Governor (xGov) status and voting power in the Algorand Expert Governance.
 
 ## Asa ARCs
 
@@ -78,6 +91,12 @@ suggested.
 
 The goal of these conventions is to make it simpler to display the properties of a given ASA. This ARC differs from [ARC-3](/arc-standards/arc-0003) by focusing on optimization for fetching of digital media, as well as the use of onchain metadata. Furthermore, since asset configuration transactions are used to store the metadata, this ARC can be applied to existing ASAs.
 While mutability helps with backwards compatibility and other use cases, like leveling up an RPG character, some use cases call for immutability. In these cases, the ASA manager MAY remove the manager address, after which point the Algorand network won't allow anyone to send asset configuration transactions for the ASA. This effectively makes the latest valid [ARC-69](/arc-standards/arc-0069) metadata immutable.
+
+### ARC 71 - Non-Transferable ASA
+
+The goal is to make it simpler for block explorers, wallets, exchanges, marketplaces, and more generally, client software to identify & interact with a Non-transferable ASA (NTA).
+This defines an interface extending [ARC-3](/arc-standards/arc-0003) & [ARC-69](/arc-standards/arc-0069) non fungible ASA to create Non-transferable ASA. Before issuance, both parties (issuer and receiver), have to agree on who has (if any) the authorization to burn this ASA.
+> This spec is compatible with [ARC-19](/arc-standards/arc-0019) to create an updatable Non-transferable ASA.
 
 ## Application ARCs
 
@@ -137,6 +156,10 @@ An Application is partially defined by it's [methods](/arc-standards/arc-0004) b
 
 This ARC provides TEAL which would deploy a application that can be used for burning Algorand Standard Assets. The goal is to have the apps deployed on the public networks using this TEAL to provide a standardized burn address and app ID.
 
+### ARC 56 - Extended App Description
+
+This ARC takes the existing JSON description of a contract as described in [ARC-4](/arc-standards/arc-0004) and adds more fields for the purpose of client interaction
+
 ### ARC 72 - Algorand Smart Contract NFT Specification
 
 This specifies an interface for non-fungible tokens (NFTs) to be implemented on Algorand as smart contracts.
@@ -185,6 +208,16 @@ This is because this ARC-5 does not provide the same security guarantees as ARC-
 WalletConnect https://walletconnect.com/ is an open protocol to communicate securely between mobile wallets and decentralized applications (dApps) using QR code scanning (desktop) or deep linking (mobile). It’s main use case allows users to sign transactions on web apps using a mobile wallet.
 This document aims to establish a standard API for using the WalletConnect v1 protocol on Algorand, leveraging the existing transaction signing APIs defined in [ARC-1](/arc-standards/arc-0001).
 
+### ARC 27 - Provider Message Schema
+
+Building off of the work of the previous ARCs relating to; provider transaction signing ([ARC-0005][arc-0005]), provider address discovery ([ARC-0006][arc-0006]), provider transaction network posting ([ARC-0007][arc-0007]) and provider transaction signing & posting ([ARC-0008][arc-0008]), this proposal aims to comprehensively outline a common message schema between clients and providers.
+Furthermore, this proposal extends the aforementioned methods to encompass new functionality such as:
+* Extending the message structure to target specific networks, thereby supporting multiple AVM (Algorand Virtual Machine) chains.
+* Adding a new method that disables clients on providers.
+* Adding a new method to discover provider capabilities, such as what networks and methods are supported.
+This proposal serves as a formalization of the message schema and leaves the implementation details to the prerogative of the clients and providers.
+<sup>[Back to top ^][top]</sup>
+
 ### ARC 35 - Algorand Offline Wallet Backup Protocol
 
 This document outlines the high-level requirements for a wallet-agnostic backup protocol that can be used across all wallets on the Algorand ecosystem.
@@ -202,4 +235,8 @@ This ARC proposes the utilization of on-chain smart contracts to facilitate the 
 The goal of this standard is to establish a standard in the Algorand ecosystem by which ASAs can be sent to an intended receiver even if their account is not opted in to the ASA.
 A wallet custodied by an application will be used to custody assets on behalf of a given user, with only that user being able to withdraw assets. A master application will be used to map inbox addresses to user address. This master application can route ASAs to users performing whatever actions are necessary.
 If integrated into ecosystem technologies including wallets, explorers, and dApps, this standard can provide enhanced capabilities around ASAs which are otherwise strictly bound at the protocol level to require opting in to be received.
+
+### ARC 60 - Algorand Wallet Arbitrary Signing API
+
+This ARC proposes a standard for arbitrary data signing. It is designed to be a simple and flexible standard that can be used in a wide variety of applications.
 
