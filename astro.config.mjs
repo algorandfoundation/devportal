@@ -2382,9 +2382,17 @@ export default defineConfig({
         {
           label: 'Additional Resources',
           collapsed: true,
-          autogenerate: {
-            directory: 'resources',
-          },
+          items: [
+            {
+              label: 'Overview',
+              link: 'resources/overview',
+            },
+            {
+              label: 'Algorand Specifications',
+              link: 'https://specs.algorand.co',
+              attrs: { target: '_blank', rel: 'noopener' },
+            },
+          ],
         },
       ],
     }),
