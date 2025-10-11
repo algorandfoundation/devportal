@@ -8,6 +8,10 @@ import RemoteCode from '/src/components/RemoteCode.astro';
 
 Algorand smart contracts do not have default access to the entire blockchain ledger. Therefore, when a smart contract method needs to access resources such as accounts, assets (ASA), other applications (smart contracts), or box references, these must be provided through the reference array during invocation. This page explains what reference arrays are, why they are necessary, the different ways to provide them, and includes a series of code examples.
 
+:::note
+Starting with AVM v12, an alternative called the Access List is available, which differs from traditional reference arrays (sometimes called resource lists) by being mutually exclusive, requiring explicit resource listing instead of cross-product access, and allowing up to 16 entries for more flexibility. For details, see the [Access List section](#access-list-a-mutually-exclusive-alternative-to-reference-arrays).
+:::
+
 ## Resource Availability
 
 When smart contracts are executed, they may require data stored within the blockchain ledger for evaluation. For this data (resource) to be accessible to the smart contract, it must be made available. When you say, 'A resource is available to the smart contract,' it means that the reference array, referencing the resource, was provided during the invocation and execution of a smart contract method that requires access to that resource.
@@ -651,3 +655,159 @@ Here are two different ways you can provide the box reference when calling a con
     />
   </TabItem>
 </Tabs>
+
+## Access List: A Mutually Exclusive Alternative to Reference Arrays
+
+Starting with AVM v12 in consensus v41, the Access List, `txn.Access` or `al`, provides a more flexible way to specify resources. It serves as a mutually exclusive alternative to the traditional reference arrays: Accounts, Assets, Applications, Boxes. You cannot use both in the same transaction. Providing an Access List means no foreign arrays are used, and vice versa.
+
+### Key Features
+
+- **Simple Resources**:
+
+  - Address (`d`): References an account (e.g., for balance checks).
+  - Asset (`s`): References an ASA (e.g., for params like total supply).
+  - App (`p`): References another application (e.g., for global state reads).
+
+- **Complex Resources** (for sublist access):
+
+  - Holding (`h`): Explicitly references an account's holding of a specific asset (account + asset ID).
+  - Locals (`l`): References an account's local state for a specific app (account + app ID).
+  - Box (`b`): References a box with an app index and box name (e.g., for reading/writing box data).
+
+- **Empty BoxRefs**: Use `{}` for boxes where the App ID is unknown or defaults to the current app.
+
+- **Limits**: Up to 16 entries via consensus parameter `MaxAppAccess`, higher than the 8 total for foreign references.
+
+- **Cross-Product vs. Explicit Access**: Traditional foreign arrays enable "cross-product" access (e.g., all combinations of listed accounts and assets for holdings). Access Lists require explicit listing of each needed resource (e.g., specify each holding individually), but allow more granular control and higher limits without combinatorial explosion.
+
+## Access List Examples
+
+These examples show how to structure the `al` (Access List) field in an application transaction JSON. In practice, the SDKs set these fields for you.
+
+:::note
+High-level examples for integrating Access Lists in languages like TypeScript and Python are coming soon. In the meantime, refer to low-level transaction structures.
+:::
+
+### Simple Resources
+
+#### Address Reference
+
+This references a single account, e.g., for balance checks.
+
+```json showLineNumbers=false frame=none
+{
+  "al": [
+    {
+      "d": "BOBBYB3QD5QGQ27EBYHHUT7J76EWXKFOSF2NNYYYI6EOAQ5D3M2YW2UGEA"
+    }
+  ]
+}
+```
+
+#### Asset Reference
+
+This references a single ASA, e.g., for params like total supply.
+
+```json showLineNumbers=false frame=none
+{
+  "al": [
+    {
+      "s": 1010
+    }
+  ]
+}
+```
+
+#### Application Reference
+
+This references another application, e.g., for global state reads.
+
+```json showLineNumbers=false frame=none
+{
+  "al": [
+    {
+      "p": 1042
+    }
+  ]
+}
+```
+
+### Complex Resources
+
+#### Holding Reference
+
+This explicitly references an account's holding of a specific asset. Requires including the address and asset.
+
+```json showLineNumbers=false frame=none
+{
+  "al": [
+    {
+      "d": "BOBBYB3QD5QGQ27EBYHHUT7J76EWXKFOSF2NNYYYI6EOAQ5D3M2YW2UGEA"
+    },
+    {
+      "s": 1010
+    },
+    {
+      "h": {
+        "d": 1,
+        "s": 2
+      }
+    }
+  ]
+}
+```
+
+Explanation: The holding (`h`) points to the 1st address (`d:1`) and 2nd asset (`s:2`) in the list.
+
+#### Locals Reference
+
+This references an account's local state for a specific app. Requires including the app and address.
+
+```json showLineNumbers=false frame=none
+{
+  "al": [
+    {
+      "p": 1042
+    },
+    {
+      "d": "BOBBYB3QD5QGQ27EBYHHUT7J76EWXKFOSF2NNYYYI6EOAQ5D3M2YW2UGEA"
+    },
+    {
+      "l": {
+        "d": 2,
+        "p": 1
+      }
+    }
+  ]
+}
+```
+
+#### Box Reference
+
+This references a box with an app index and box name.
+
+```json showLineNumbers=false frame=none
+{
+  "al": [
+    {
+      "p": 1042
+    },
+    {
+      "b": {
+        "i": 1,
+        "n": "Ym94TmFtZQ=="
+      }
+    }
+  ]
+}
+```
+
+### Empty BoxRefs
+
+This provides extra budget without specifying a particular box.
+
+```json showLineNumbers=false frame=none
+{
+  "al": [{}]
+}
+```

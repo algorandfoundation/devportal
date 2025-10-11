@@ -63,29 +63,37 @@ Protocol parameters are constants that define the limits and requirements of the
 
 ## Smart Contract Parameters
 
-| Name                                                               | Value      | Variable                 | Note                                                              |
-| ------------------------------------------------------------------ | ---------- | ------------------------ | ----------------------------------------------------------------- |
-| Page size of compiled approval + clear TEAL code                   | 2048 bytes | MaxAppProgramLen         | by default, each application has a single page                    |
-| Max extra app pages                                                | 3          | MaxExtraAppProgramPages  | an application can "pay" for additional pages via minimum balance |
-| Max cost of approval TEAL code                                     | 700        | MaxAppProgramCost        |                                                                   |
-| Max cost of clear TEAL code                                        | 700        | MaxAppProgramCost        |                                                                   |
-| Max number of scratch variables                                    | 256        |                          |                                                                   |
-| Max depth of stack                                                 | 1000       | MaxStackDepth            |                                                                   |
-| Max number of arguments                                            | 16         | MaxAppArgs               |                                                                   |
-| Max combined size of arguments                                     | 2048 bytes | MaxAppTotalArgLen        |                                                                   |
-| Max number of global state keys                                    | 64         | MaxGlobalSchemaEntries   |                                                                   |
-| Max number of local state keys                                     | 16         | MaxLocalSchemaEntries    |                                                                   |
-| Max number of log messages                                         | 32         | MaxLogCalls              |                                                                   |
-| Max size of log messages                                           | 1024       | MaxLogSize               |                                                                   |
-| Max key size                                                       | 64 bytes   | MaxAppKeyLen             |                                                                   |
-| Max []byte value size                                              | 128 bytes  | MaxAppBytesValueLen      |                                                                   |
-| Max key + value size                                               | 128 bytes  | MaxAppSumKeyValueLens    |                                                                   |
-| Max number of foreign accounts                                     | 4          | MaxAppTxnAccounts        |                                                                   |
-| Max number of foreign ASAs                                         | 8          | MaxAppTxnForeignAssets   |                                                                   |
-| Max number of foreign applications                                 | 8          | MaxAppTxnForeignApps     |                                                                   |
-| Max number of foreign accounts + ASAs + applications + box storage | 8          | MaxAppTotalTxnReferences |                                                                   |
-| Max number of created applications                                 | Unlimited  | MaxAppsCreated           |                                                                   |
-| Max number of opt-in applications                                  | Unlimited  | MaxAppsOptedIn           |                                                                   |
+| Name                                                               | Value             | Variable                 | Note                                                              |
+| ------------------------------------------------------------------ | ----------------- | ------------------------ | ----------------------------------------------------------------- |
+| Current Max AVM/TEAL Version                                       | 12                | LogicSigVersion          | Available in consensus v41/AVM v12                                |
+| Page size of compiled approval + clear TEAL code                   | 2048 bytes        | MaxAppProgramLen         | by default, each application has a single page                    |
+| Max extra app pages                                                | 3                 | MaxExtraAppProgramPages  | an application can "pay" for additional pages via minimum balance |
+| Max cost of approval TEAL code                                     | 700               | MaxAppProgramCost        |                                                                   |
+| Max cost of clear TEAL code                                        | 700               | MaxAppProgramCost        |                                                                   |
+| Max number of scratch variables                                    | 256               |                          |                                                                   |
+| Max depth of stack                                                 | 1000              | MaxStackDepth            |                                                                   |
+| Max number of arguments                                            | 16                | MaxAppArgs               |                                                                   |
+| Max combined size of arguments                                     | 2048 bytes        | MaxAppTotalArgLen        |                                                                   |
+| Max number of global state keys                                    | 64                | MaxGlobalSchemaEntries   |                                                                   |
+| Max number of local state keys                                     | 16                | MaxLocalSchemaEntries    |                                                                   |
+| Max number of log messages                                         | 32                | MaxLogCalls              |                                                                   |
+| Max size of log messages                                           | 1024              | MaxLogSize               |                                                                   |
+| Max key size                                                       | 64 bytes          | MaxAppKeyLen             |                                                                   |
+| Max []byte value size                                              | 128 bytes         | MaxAppBytesValueLen      |                                                                   |
+| Max key + value size                                               | 128 bytes         | MaxAppSumKeyValueLens    |                                                                   |
+| Max number of foreign accounts                                     | 8                 | MaxAppTxnAccounts        |                                                                   |
+| Max number of access list entries                                  | 16                | MaxAppAccess             |                                                                   |
+| Max number of foreign ASAs                                         | 8                 | MaxAppTxnForeignAssets   |                                                                   |
+| Max number of foreign applications                                 | 8                 | MaxAppTxnForeignApps     |                                                                   |
+| Max number of foreign accounts + ASAs + applications + box storage | 8                 | MaxAppTotalTxnReferences |                                                                   |
+| Max number of created applications                                 | Unlimited         | MaxAppsCreated           |                                                                   |
+| Max number of opt-in applications                                  | Unlimited         | MaxAppsOptedIn           |                                                                   |
+| App Version                                                        | Auto-incrementing | AppVersion               | Incremented each time approval or clear program changes           |
+| Reject Version                                                     | uint64            | RejectVersion            | Application version for which the txn must reject                 |
+
+:::note
+In consensus v41 and AVM v12, the `txn.Access` list provides access to additional resources (up to 16) beyond the foreign references limited by `MaxAppTotalTxnReferences=8`. Foreign references are shared among accounts, ASAs, applications, and box storage, while the access list allows for more flexible and granular resource access.
+:::
 
 ## Box Parameters
 
