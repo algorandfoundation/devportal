@@ -684,6 +684,10 @@ Starting with AVM v12 in consensus v41, the Access List, `txn.Access` or `al`, p
 
 These examples show how to structure the `al` (Access List) field in an application transaction JSON. In practice, the SDKs set these fields for you.
 
+:::note
+High-level examples for integrating Access Lists in languages like TypeScript and Python are coming soon. In the meantime, refer to low-level transaction structures.
+:::
+
 ### Simple Resources
 
 #### Address Reference
@@ -807,7 +811,3 @@ This provides extra budget without specifying a particular box.
   "al": [{}]
 }
 ```
-
-:::note
-High-level examples for integrating Access Lists in languages like TypeScript and Python are coming soon. In the meantime, refer to low-level transaction structures.
-:::
