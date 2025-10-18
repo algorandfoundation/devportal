@@ -51,42 +51,43 @@ Given an address `4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4`, e
 <Tabs syncKey="lang">
 	<TabItem label="Python" icon="seti:python">
 		```python
-        address = "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4"
-        pk = encoding.decode_address(address)
-        addr = encoding.encode_address(pk)
+      address = "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4"
+      pk = encoding.decode_address(address)
+      addr = encoding.encode_address(pk)
 
-        assert addr == address
-        ```
+      assert addr == address
+    ```
         [Snippet Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L8-L13)
-    </TabItem>
-    <TabItem label="JavaScript" icon="seti:javascript">
-        ```javascript
-        const address = '4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4';
-        const pk = algosdk.decodeAddress(address);
-        const addr = algosdk.encodeAddress(pk.publicKey);
-        console.log(address, addr);
-        ```
-        [Snippet Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L16-L20)
-    </TabItem>
-    <TabItem label="Go" icon="seti:go">
-    	```go
-        address := "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4"
-        pk, _ := types.DecodeAddress(address)
-        addr := pk.String()
-        ```
-        [Snippet Source](https://github.com/algorand/go-algorand-sdk/blob/examples/examples/codec/main.go#L69-L72)
-    </TabItem>
-    <TabItem label="Java" icon="seti:java">
-    	```java
-        String addrAsStr = "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4";
-        // Instantiate a new Address object with string
-        Address addr = new Address(addrAsStr);
-        // Or with the bytes
-        Address addrAgain = new Address(addr.getBytes());
-        assert addrAgain.equals(addr);
-        ```
-        [Snippet Source](https://github.com/algorand/java-algorand-sdk/blob/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java#L26-L32)
-    </TabItem>
+
+  </TabItem>
+  <TabItem label="JavaScript" icon="seti:javascript">
+      ```javascript
+      const address = '4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4';
+      const pk = algosdk.decodeAddress(address);
+      const addr = algosdk.encodeAddress(pk.publicKey);
+      console.log(address, addr);
+      ```
+      [Snippet Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L16-L20)
+  </TabItem>
+  <TabItem label="Go" icon="seti:go">
+    ```go
+      address := "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4"
+      pk, _ := types.DecodeAddress(address)
+      addr := pk.String()
+      ```
+      [Snippet Source](https://github.com/algorand/go-algorand-sdk/blob/examples/examples/codec/main.go#L69-L72)
+  </TabItem>
+  <TabItem label="Java" icon="seti:java">
+    ```java
+      String addrAsStr = "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4";
+      // Instantiate a new Address object with string
+      Address addr = new Address(addrAsStr);
+      // Or with the bytes
+      Address addrAgain = new Address(addr.getBytes());
+      assert addrAgain.equals(addr);
+      ```
+      [Snippet Source](https://github.com/algorand/java-algorand-sdk/blob/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java#L26-L32)
+  </TabItem>
 
 </Tabs>
 
@@ -100,26 +101,39 @@ Given a base64 encoded byte array `SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0` it may 
 
 <Tabs syncKey='lang'>
   <TabItem label='Python' icon='seti:python'>
-    ```python encoded_str = "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0" decoded_str =
-    base64.b64decode(encoded_str).decode("utf-8") print(decoded_str) ``` [Snippet
-    Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L24-L27)
+
+    ```python
+      encoded_str = "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0" decoded_str =
+      base64.b64decode(encoded_str).decode("utf-8") print(decoded_str)
+    ```
+    [Snippet Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L24-L27)
+
   </TabItem>
   <TabItem label='JavaScript' icon='seti:javascript'>
-    ```javascript const b64Encoded = 'SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0'; const b64Decoded =
-    Buffer.from(b64Encoded, 'base64').toString(); console.log(b64Encoded, b64Decoded); ``` [Snippet
-    Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L23-L26)
+  
+    ```javascript 
+      const b64Encoded = 'SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0'; const b64Decoded =
+      Buffer.from(b64Encoded, 'base64').toString(); console.log(b64Encoded, b64Decoded); 
+    ``` 
+    [Snippet Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L23-L26)
   </TabItem>
   <TabItem label='Go' icon='seti:go'>
-    ```go encoded := "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0" decoded, _ :=
-    base64.StdEncoding.DecodeString(encoded) reencoded := base64.StdEncoding.EncodeToString(decoded)
-    ``` [Snippet
-    Source](https://github.com/algorand/go-algorand-sdk/blob/examples/examples/codec/main.go#L84-L87)
+
+    ```go
+      encoded := "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0" decoded, _ :=
+      base64.StdEncoding.DecodeString(encoded) reencoded := base64.StdEncoding.EncodeToString(decoded)
+    ```
+    [Snippet Source](https://github.com/algorand/go-algorand-sdk/blob/examples/examples/codec/main.go#L84-L87)
+
   </TabItem>
   <TabItem label='Java' icon='seti:java'>
-    ```java String encodedStr = "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0"; byte[] decodedBytes =
-    Encoder.decodeFromBase64(encodedStr); String reEncodedStr =
-    Encoder.encodeToBase64(decodedBytes); assert encodedStr.equals(reEncodedStr); ``` [Snippet
-    Source](https://github.com/algorand/java-algorand-sdk/blob/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java#L35-L39)
+  
+    ```java 
+      String encodedStr = "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0"; byte[] decodedBytes =
+      Encoder.decodeFromBase64(encodedStr); String reEncodedStr =
+      Encoder.encodeToBase64(decodedBytes); assert encodedStr.equals(reEncodedStr); 
+    ``` 
+    [Snippet Source](https://github.com/algorand/java-algorand-sdk/blob/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java#L35-L39)
   </TabItem>
 </Tabs>
 
