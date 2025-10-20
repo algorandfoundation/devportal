@@ -49,7 +49,6 @@ export async function getSelectedCode(
   );
 
   if (occurrenceIndexes.length !== 2) {
-    console.log(code);
     throw new Error(
       `Error: Pattern "${pattern}" must occur exactly twice. Found: ${occurrenceIndexes.length}`,
     );
