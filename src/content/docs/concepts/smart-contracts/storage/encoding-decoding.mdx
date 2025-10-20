@@ -5,6 +5,7 @@ description: Essential data encodings for Algorand smart contracts, ensuring con
 
 import { Code } from '@astrojs/starlight/components';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
+import RemoteCode from '/src/components/RemoteCode.astro';
 
 Consistent data representation is crucial when interacting with Algorand smart contracts. This section explains the fundamental concepts of encoding and decoding information so that on-chain logic and off-chain applications remain compatible. By following these guidelines, developers can ensure reliable data handling and a seamless flow of information throughout the development lifecycle.
 
@@ -50,43 +51,41 @@ Given an address `4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4`, e
 
 <Tabs syncKey="lang">
 	<TabItem label="Python" icon="seti:python">
-		```python
-      address = "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4"
-      pk = encoding.decode_address(address)
-      addr = encoding.encode_address(pk)
-
-      assert addr == address
-    ```
-        [Snippet Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L8-L13)
+    <RemoteCode
+          src='https://raw.githubusercontent.com/algorand/py-algorand-sdk/refs/heads/examples/examples/codec.py'
+          snippet='CODEC_ADDRESS'
+          lang='python'
+          title='Encoding-Decoding-Address'
+          frame='none'
+      />
 
   </TabItem>
   <TabItem label="JavaScript" icon="seti:javascript">
-      ```javascript
-      const address = '4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4';
-      const pk = algosdk.decodeAddress(address);
-      const addr = algosdk.encodeAddress(pk.publicKey);
-      console.log(address, addr);
-      ```
-      [Snippet Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L16-L20)
+    <RemoteCode
+          src='https://raw.githubusercontent.com/algorand/js-algorand-sdk/refs/heads/main/examples/codec.ts'
+          snippet='CODEC_ADDRESS'
+          lang='js'
+          title='Encoding-Decoding-Address'
+          frame='none'
+      />
   </TabItem>
   <TabItem label="Go" icon="seti:go">
-    ```go
-      address := "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4"
-      pk, _ := types.DecodeAddress(address)
-      addr := pk.String()
-      ```
-      [Snippet Source](https://github.com/algorand/go-algorand-sdk/blob/examples/examples/codec/main.go#L69-L72)
+    <RemoteCode
+        src='https://raw.githubusercontent.com/algorand/go-algorand-sdk/refs/heads/examples/examples/codec/main.go'
+        snippet='CODEC_ADDRESS'
+        lang='go'
+        title='Encoding-Decoding-Address'
+        frame='none'
+      />
   </TabItem>
   <TabItem label="Java" icon="seti:java">
-    ```java
-      String addrAsStr = "4H5UNRBJ2Q6JENAXQ6HNTGKLKINP4J4VTQBEPK5F3I6RDICMZBPGNH6KD4";
-      // Instantiate a new Address object with string
-      Address addr = new Address(addrAsStr);
-      // Or with the bytes
-      Address addrAgain = new Address(addr.getBytes());
-      assert addrAgain.equals(addr);
-      ```
-      [Snippet Source](https://github.com/algorand/java-algorand-sdk/blob/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java#L26-L32)
+    <RemoteCode
+      src='https://raw.githubusercontent.com/algorand/java-algorand-sdk/refs/heads/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java'
+      snippet='CODEC_ADDRESS'
+      lang='java'
+      title='Encoding-Decoding-Address'
+      frame='none'
+    />
   </TabItem>
 
 </Tabs>
@@ -101,39 +100,42 @@ Given a base64 encoded byte array `SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0` it may 
 
 <Tabs syncKey='lang'>
   <TabItem label='Python' icon='seti:python'>
-
-    ```python
-      encoded_str = "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0" decoded_str =
-      base64.b64decode(encoded_str).decode("utf-8") print(decoded_str)
-    ```
-    [Snippet Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L24-L27)
-
+    <RemoteCode
+            src='https://raw.githubusercontent.com/algorand/py-algorand-sdk/refs/heads/examples/examples/codec.py'
+            snippet='CODEC_BASE64'
+            lang='python'
+            title='Encoding-Decoding-Address'
+            frame='none'
+      />
   </TabItem>
   <TabItem label='JavaScript' icon='seti:javascript'>
-  
-    ```javascript 
-      const b64Encoded = 'SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0'; const b64Decoded =
-      Buffer.from(b64Encoded, 'base64').toString(); console.log(b64Encoded, b64Decoded); 
-    ``` 
-    [Snippet Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L23-L26)
+     <RemoteCode
+            src='https://raw.githubusercontent.com/algorand/js-algorand-sdk/refs/heads/main/examples/codec.ts'
+            snippet='CODEC_BASE64'
+            lang='js'
+            title='Encoding-Decoding-Address'
+            frame='none'
+      />
   </TabItem>
   <TabItem label='Go' icon='seti:go'>
-
-    ```go
-      encoded := "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0" decoded, _ :=
-      base64.StdEncoding.DecodeString(encoded) reencoded := base64.StdEncoding.EncodeToString(decoded)
-    ```
-    [Snippet Source](https://github.com/algorand/go-algorand-sdk/blob/examples/examples/codec/main.go#L84-L87)
+    <RemoteCode
+            src='https://raw.githubusercontent.com/algorand/go-algorand-sdk/refs/heads/examples/examples/codec/main.go'
+            snippet='CODEC_BASE64'
+            lang='go'
+            title='Encoding-Decoding-Address'
+            frame='none'
+      />
 
   </TabItem>
   <TabItem label='Java' icon='seti:java'>
+    <RemoteCode
+            src='https://raw.githubusercontent.com/algorand/java-algorand-sdk/refs/heads/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java'
+            snippet='CODEC_BASE64'
+            lang='java'
+            title='Encoding-Decoding-Address'
+            frame='none'
+      />
   
-    ```java 
-      String encodedStr = "SGksIEknbSBkZWNvZGVkIGZyb20gYmFzZTY0"; byte[] decodedBytes =
-      Encoder.decodeFromBase64(encodedStr); String reEncodedStr =
-      Encoder.encodeToBase64(decodedBytes); assert encodedStr.equals(reEncodedStr); 
-    ``` 
-    [Snippet Source](https://github.com/algorand/java-algorand-sdk/blob/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java#L35-L39)
   </TabItem>
 </Tabs>
 
@@ -145,47 +147,45 @@ _Example:_
 
 Given an integer `1337`, you may encode it as:
 
-<Tabs syncKey="lang">
-	<TabItem label="Python" icon="seti:python">
-		```python
-        val = 1337
-        encoded_uint = val.to_bytes(8, "big")
-        decoded_uint = int.from_bytes(encoded_uint, byteorder="big")
-        assert decoded_uint == val
-        ```
-        [Snippet Source](https://github.com/algorand/py-algorand-sdk/blob/examples/examples/codec.py#L30-L34)
-	</TabItem>
-	<TabItem label="JavaScript" icon="seti:javascript">
-        ```javascript
-        const int = 1337;
-        const encoded = algosdk.encodeUint64(int);
-        const safeDecoded = algosdk.decodeUint64(encoded, 'safe');
-        const mixedDecoded = algosdk.decodeUint64(encoded, 'bigint');
-        console.log(int, encoded, safeDecoded, mixedDecoded);
-        ```
-        [Snippet Source](https://github.com/algorand/js-algorand-sdk/blob/examples/examples/codec.ts#L29-L34)
-	</TabItem>
-    <TabItem label="Go" icon="seti:go">
-		```go
-        val := 1337
-        encodedInt := make([]byte, 8)
-        binary.BigEndian.PutUint64(encodedInt, uint64(val))
+<Tabs syncKey='lang'>
+  <TabItem label='Python' icon='seti:python'>
+    <RemoteCode
+            src='https://raw.githubusercontent.com/algorand/py-algorand-sdk/refs/heads/examples/examples/codec.py'
+            snippet='CODEC_UINT64'
+            lang='python'
+            title='Encoding-Decoding-Address'
+            frame='none'
+      />
+  </TabItem>
+  <TabItem label='JavaScript' icon='seti:javascript'>
+     <RemoteCode
+            src='https://raw.githubusercontent.com/algorand/js-algorand-sdk/refs/heads/main/examples/codec.ts'
+            snippet='CODEC_UINT64'
+            lang='js'
+            title='Encoding-Decoding-Address'
+            frame='none'
+      />
+  </TabItem>
+  <TabItem label='Go' icon='seti:go'>
+    <RemoteCode
+            src='https://raw.githubusercontent.com/algorand/go-algorand-sdk/refs/heads/examples/examples/codec/main.go'
+            snippet='CODEC_UINT64'
+            lang='go'
+            title='Encoding-Decoding-Address'
+            frame='none'
+      />
 
-        decodedInt := binary.BigEndian.Uint64(encodedInt)
-        // decodedInt == val
-        ```
-        [Snippet Source](https://github.com/algorand/go-algorand-sdk/blob/examples/examples/codec/main.go#L91-L97)
-    </TabItem>
-    <TabItem label="Java" icon="seti:java">
-    	```java
-        BigInteger val = BigInteger.valueOf(1337);
-        byte[] encodedVal = Encoder.encodeUint64(val);
-        BigInteger decodedVal = Encoder.decodeUint64(encodedVal);
-        assert val.equals(decodedVal);
-        ```
-        [Snippet Source](https://github.com/algorand/java-algorand-sdk/blob/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java#L42-L46)
-    </TabItem>
-
+  </TabItem>
+  <TabItem label='Java' icon='seti:java'>
+    <RemoteCode
+            src='https://raw.githubusercontent.com/algorand/java-algorand-sdk/refs/heads/examples/examples/src/main/java/com/algorand/examples/CodecExamples.java'
+            snippet='CODEC_UINT64'
+            lang='java'
+            title='Encoding-Decoding-Address'
+            frame='none'
+      />
+  
+  </TabItem>
 </Tabs>
 
 ## Working with Encoded Structures
