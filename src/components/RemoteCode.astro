@@ -9,7 +9,14 @@ const codeResult = await getSelectedCode(src, snippet);
 const githubUrl = `${codeResult.githubUrl}#L${codeResult.line}`;
 ---
 
-<div class='flex justify-end'>
+<Code
+  code={codeResult.content}
+  lang={lang}
+  title={title}
+  frame={frame}
+  mark={mark}
+/>
+<div class='flex justify-start'>
   <LinkButton
     href={githubUrl}
     variant='minimal'
@@ -22,10 +29,3 @@ const githubUrl = `${codeResult.githubUrl}#L${codeResult.line}`;
     Source
   </LinkButton>
 </div>
-<Code
-  code={codeResult.content}
-  lang={lang}
-  title={title}
-  frame={frame}
-  mark={mark}
-/>
