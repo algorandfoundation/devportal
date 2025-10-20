@@ -26,6 +26,21 @@ import OpcodeFilters from '../../../../components/OpcodeFilters.astro';
     {{/if}}
     - **Groups:** {{groupList Groups}}
 
+    {{#if DocExtra}}
+    <span class="opcode-detail-caption">Notes</span>
+    {{{mdxParagraphs DocExtra}}}
+    {{/if}}
+
+    {{#if ArgEnum}}
+    <span class="opcode-detail-caption">Field Reference</span>
+    {{{fieldTable ArgEnum ArgEnumTypes}}}
+    {{/if}}
+
+    {{#if ImmediateNote}}
+    <span class="opcode-detail-caption">Immediate Parameters</span>
+    {{{immediateTable ImmediateNote}}}
+    {{/if}}
+
 </div>
 
 {{/each}}
