@@ -2,8 +2,8 @@
 
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
+@import '@astrojs/starlight-tailwind';
 
-@plugin '@astrojs/starlight-tailwind';
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
@@ -183,7 +183,6 @@ header.header {
   --sl-color-gray-6: #001324;
   --sl-color-black: #001324;
   --sl-color-banner-bg: #17cac6 !important;
-  /* --sl-color-banner-text: #dfe1e5; */
   --sl-color-text-accent: #17cac6;
   --sl-color-accent-medium: #5cdad7;
 }
@@ -202,7 +201,7 @@ header.header {
   --sl-color-gray-7: #f6f6f6;
   --sl-color-black: #f6f6f6;
   --sl-color-banner-bg: #2d2df1 !important;
-  /* --sl-color-banner-text: #dfe1e5; */
+  --sl-color-text-accent: #2d2df1;
   --sl-color-accent-medium: #c7d6ff;
 }
 
