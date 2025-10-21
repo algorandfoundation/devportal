@@ -351,6 +351,10 @@ div.opcode-section table {
   font-size: 0.8rem !important;
 }
 
+div.opcode-section table td {
+  padding: 0.1rem 0.5rem;
+}
+
 .opcode-detail-caption {
   display: block;
   font-weight: bold;
