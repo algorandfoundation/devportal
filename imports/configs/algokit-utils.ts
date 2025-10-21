@@ -81,7 +81,7 @@ export const utilsPythonConfig: ImportOptions = {
   name: 'AlgoKit Utils Python Docs',
   owner: 'algorandfoundation',
   repo: 'algokit-utils-py',
-  ref: 'chore/reference-docs',
+  ref: 'main',
   assetsPath: 'src/assets/imports/algokit-utils-py',
   assetsBaseUrl: '@assets/imports/algokit-utils-py',
   includes: [
