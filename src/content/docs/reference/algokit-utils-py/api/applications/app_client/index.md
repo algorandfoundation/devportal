@@ -53,19 +53,19 @@ Result of compiling an application’s TEAL code.
 
 Contains the compiled approval and clear state programs along with optional compilation artifacts.
 
-#### approval_program _: bytes_
+#### approval*program *: bytes\_
 
 The compiled approval program bytes
 
-#### clear_state_program _: bytes_
+#### clear*state_program *: bytes\_
 
 The compiled clear state program bytes
 
-#### compiled_approval _: [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/api/models/application/#algokit_utils.models.application.CompiledTeal) | None_ _= None_
+#### compiled*approval *: [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/api/models/application/#algokit_utils.models.application.CompiledTeal) | None\_ _= None_
 
 Optional compilation artifacts for approval program
 
-#### compiled_clear _: [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/api/models/application/#algokit_utils.models.application.CompiledTeal) | None_ _= None_
+#### compiled*clear *: [algokit_utils.models.application.CompiledTeal](/reference/algokit-utils-py/api/models/application/#algokit_utils.models.application.CompiledTeal) | None\_ _= None_
 
 Optional compilation artifacts for clear state program
 
@@ -80,7 +80,7 @@ Parameters for compiling an application’s TEAL code.
   - **updatable** – Optional flag indicating if app should be updatable
   - **deletable** – Optional flag indicating if app should be deletable
 
-#### deploy_time_params _: algokit_utils.models.state.TealTemplateParams | None_
+#### deploy*time_params *: algokit*utils.models.state.TealTemplateParams | None*
 
 #### updatable _: bool | None_
 
@@ -90,23 +90,23 @@ Parameters for compiling an application’s TEAL code.
 
 Common configuration for app call transaction parameters
 
-#### account_references _: list[str] | None_ _= None_
+#### account*references *: list[str] | None\_ _= None_
 
 List of account addresses to reference
 
-#### app_references _: list[int] | None_ _= None_
+#### app*references *: list[int] | None\_ _= None_
 
 List of app IDs to reference
 
-#### asset_references _: list[int] | None_ _= None_
+#### asset*references *: list[int] | None\_ _= None_
 
 List of asset IDs to reference
 
-#### box_references _: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None_ _= None_
+#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
 
 List of box references to include
 
-#### extra_fee _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/#algokit_utils.models.amount.AlgoAmount) | None_ _= None_
+#### extra*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
 
 Additional fee to add to transaction
 
@@ -114,7 +114,7 @@ Additional fee to add to transaction
 
 Transaction lease value
 
-#### max_fee _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/#algokit_utils.models.amount.AlgoAmount) | None_ _= None_
+#### max*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
 
 Maximum fee allowed for transaction
 
@@ -122,7 +122,7 @@ Maximum fee allowed for transaction
 
 Custom note for the transaction
 
-#### rekey_to _: str | None_ _= None_
+#### rekey*to *: str | None\_ _= None_
 
 Address to rekey account to
 
@@ -134,23 +134,23 @@ Sender address override
 
 Custom transaction signer
 
-#### static_fee _: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/#algokit_utils.models.amount.AlgoAmount) | None_ _= None_
+#### static*fee *: [algokit_utils.models.amount.AlgoAmount](/reference/algokit-utils-py/api/models/amount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
 
 Fixed fee for transaction
 
-#### validity_window _: int | None_ _= None_
+#### validity*window *: int | None\_ _= None_
 
 Number of rounds valid
 
-#### first_valid_round _: int | None_ _= None_
+#### first*valid_round *: int | None\_ _= None_
 
 First valid round number
 
-#### last_valid_round _: int | None_ _= None_
+#### last*valid_round *: int | None\_ _= None_
 
 Last valid round number
 
-#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
+#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
 
 Optional on complete action
 
@@ -158,7 +158,7 @@ Optional on complete action
 
 Schema for application creation.
 
-#### extra_program_pages _: int | None_ _= None_
+#### extra*program_pages *: int | None\_ _= None_
 
 Optional number of extra program pages
 
@@ -172,7 +172,7 @@ Bases: [`AppClientCreateSchema`](#algokit_utils.applications.app_client.AppClien
 
 Common configuration for app create call transaction parameters.
 
-#### on_complete _: CreateOnComplete | None_ _= None_
+#### on*complete *: CreateOnComplete | None\_ _= None_
 
 Optional on complete action
 
@@ -186,7 +186,7 @@ Parameters for funding an application’s account.
 
 Amount to fund
 
-#### close_remainder_to _: str | None_ _= None_
+#### close*remainder_to *: str | None\_ _= None_
 
 Optional address to close remainder to
 
@@ -206,7 +206,7 @@ Bases: [`CommonAppCallCreateParams`](#algokit_utils.applications.app_client.Comm
 
 Parameters for creating application with bare call.
 
-#### on_complete _: CreateOnComplete | None_ _= None_
+#### on*complete *: CreateOnComplete | None\_ _= None_
 
 Optional on complete action
 
@@ -236,7 +236,7 @@ Bases: [`AppClientCreateSchema`](#algokit_utils.applications.app_client.AppClien
 
 Parameters for creating application with method call
 
-#### on_complete _: CreateOnComplete | None_ _= None_
+#### on*complete *: CreateOnComplete | None\_ _= None_
 
 Optional on complete action
 
@@ -244,7 +244,7 @@ Optional on complete action
 
 Full parameters for creating an app client
 
-#### app_spec _: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/api/applications/app_spec/arc32/#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str_
+#### app*spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | [algokit_utils.applications.app_spec.arc32.Arc32Contract](/reference/algokit-utils-py/api/applications/app_spec/arc32/#algokit_utils.applications.app_spec.arc32.Arc32Contract) | str\_
 
 The application specification
 
@@ -252,27 +252,27 @@ The application specification
 
 The Algorand client
 
-#### app_id _: int_
+#### app*id *: int\_
 
 The application ID
 
-#### app_name _: str | None_ _= None_
+#### app*name *: str | None\_ _= None_
 
 The application name
 
-#### default_sender _: str | None_ _= None_
+#### default*sender *: str | None\_ _= None_
 
 The default sender address
 
-#### default_signer _: algosdk.atomic_transaction_composer.TransactionSigner | None_ _= None_
+#### default*signer *: algosdk.atomic*transaction_composer.TransactionSigner | None* _= None_
 
 The default transaction signer
 
-#### approval_source_map _: algosdk.source_map.SourceMap | None_ _= None_
+#### approval*source_map *: algosdk.source*map.SourceMap | None* _= None_
 
 The approval source map
 
-#### clear_source_map _: algosdk.source_map.SourceMap | None_ _= None_
+#### clear*source_map *: algosdk.source*map.SourceMap | None* _= None_
 
 The clear source map
 
@@ -314,28 +314,28 @@ Get the Algorand client instance.
 - **Returns:**
   The Algorand client used by this app client
 
-#### _property_ app_id _: int_
+#### _property_ app*id *: int\_
 
 Get the application ID.
 
 - **Returns:**
   The ID of the Algorand application
 
-#### _property_ app_address _: str_
+#### _property_ app*address *: str\_
 
 Get the application’s Algorand address.
 
 - **Returns:**
   The Algorand address associated with this application
 
-#### _property_ app_name _: str_
+#### _property_ app*name *: str\_
 
 Get the application name.
 
 - **Returns:**
   The name of the application
 
-#### _property_ app_spec _: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/#algokit_utils.applications.app_spec.arc56.Arc56Contract)_
+#### _property_ app*spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/#algokit_utils.applications.app_spec.arc56.Arc56Contract)\_
 
 Get the application specification.
 
@@ -377,7 +377,7 @@ Get the transaction sender.
 - **Returns:**
   The transaction sender for this application
 
-#### _property_ create_transaction _: \_TransactionCreator_
+#### _property_ create*transaction *: \_TransactionCreator\_
 
 Get the transaction creator.
 

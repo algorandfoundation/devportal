@@ -19,7 +19,7 @@ sidebar:
 
 Information about an account’s holding of a particular asset.
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the asset
 
@@ -39,7 +39,7 @@ The round this information was retrieved at
 
 Information about an Algorand Standard Asset (ASA).
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the asset
 
@@ -55,7 +55,7 @@ The total amount of the smallest divisible units that were created of the asset
 
 The amount of decimal places the asset was created with
 
-#### default_frozen _: bool | None_ _= None_
+#### default*frozen *: bool | None\_ _= None_
 
 Whether the asset was frozen by default for all accounts, defaults to None
 
@@ -79,19 +79,19 @@ defaults to None
 The address of the optional account that can clawback holdings of this asset from any account,
 defaults to None
 
-#### unit_name _: str | None_ _= None_
+#### unit*name *: str | None\_ _= None_
 
 The optional name of the unit of this asset (e.g. ticker name), defaults to None
 
-#### unit_name_b64 _: bytes | None_ _= None_
+#### unit*name_b64 *: bytes | None\_ _= None_
 
 The optional name of the unit of this asset as bytes, defaults to None
 
-#### asset_name _: str | None_ _= None_
+#### asset*name *: str | None\_ _= None_
 
 The optional name of the asset, defaults to None
 
-#### asset_name_b64 _: bytes | None_ _= None_
+#### asset*name_b64 *: bytes | None\_ _= None_
 
 The optional name of the asset as bytes, defaults to None
 
@@ -99,11 +99,11 @@ The optional name of the asset as bytes, defaults to None
 
 The optional URL where more information about the asset can be retrieved, defaults to None
 
-#### url_b64 _: bytes | None_ _= None_
+#### url*b64 *: bytes | None\_ _= None_
 
 The optional URL where more information about the asset can be retrieved as bytes, defaults to None
 
-#### metadata_hash _: bytes | None_ _= None_
+#### metadata*hash *: bytes | None\_ _= None_
 
 The 32-byte hash of some metadata that is relevant to the asset and/or asset holders, defaults to None
 
@@ -115,11 +115,11 @@ Result from performing a bulk opt-in or bulk opt-out for an account against a se
   - **asset_id** – The ID of the asset opted into / out of
   - **transaction_id** – The transaction ID of the resulting opt in / out
 
-#### asset_id _: int_
+#### asset*id *: int\_
 
 The ID of the asset opted into / out of
 
-#### transaction_id _: str_
+#### transaction*id *: str\_
 
 The transaction ID of the resulting opt in / out
 
