@@ -287,7 +287,7 @@ For example:
 ```
 
 ```ts
-  @abimethod({ validateEncoding: "unsafe-disabled" })  
+  @abimethod({ validateEncoding: "unsafe-disabled" })
   staticValue(staticBytes: StaticBytes<32>): uint64 {
     const array: [StaticBytes<32>, uint64] = [
       // ⚠️ VULNERABLE: If static_bytes is more than 32 bytes,
@@ -330,7 +330,7 @@ For example:
 ```ts
   evenNumbers = GlobalState<uint64[]>();
 
-  @abimethod({ validateEncoding: "unsafe-disabled" })  
+  @abimethod({ validateEncoding: "unsafe-disabled" })
   storeNumbers(numbers: uint64[]) {
     // If the ABI prefix for numbers is more than the actual amount of numbers, this will panic
     // If the ABI prefix for numbers is less than the actual amount of numbers, not all numbers will be validated
