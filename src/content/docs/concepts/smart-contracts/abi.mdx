@@ -265,26 +265,43 @@ A full example of a contract json file might look like:
 
 There are three main categories of ABI types:
 
-* Fixed-length types
-* Dynamic arrays
-* Dynamic tuples
+- Fixed-length types
+- Dynamic arrays
+- Dynamic tuples
 
 The implications of validation vary between each type which is detailed below. In summary, invalid encodings of ARC4 values can lead to critical security issues.
 
 ### Fixed-Length Types
 
-If a fixed-length type is longer or shorter than it should be, this can lead to unintended memory access. For example, a StaticBytes<32> should always be 32 bytes, but if it’s longer it can be used to overwrite other values in an array. 
+If a fixed-length type is longer or shorter than it should be, this can lead to unintended memory access. For example, a StaticBytes\<32> should always be 32 bytes, but if it’s longer it can be used to overwrite other values in an array.
 
 For example:
 
-TODO(joe-p): Python example
+```py
+from algopy import arc4, UInt64
+from typing import Literal
+
+# Type alias for a 32-byte static array
+StaticBytes32 = arc4.StaticArray[arc4.Byte, Literal[32]]
+
+SUPER_IMPORTANT_VALUE = 42
+
+@abimethod(validate_encoding="unsafe_disabled")
+class VulnerableContract(arc4.ARC4Contract):
+    @arc4.abimethod
+    def static_value(self, static_bytes: StaticBytes32) -> arc4.UInt64:
+        # ⚠️ VULNERABLE: If static_bytes is more than 32 bytes,
+        # it will overflow into SUPER_IMPORTANT_VALUE
+        array = arc4.Tuple((static_bytes.copy(), arc4.UInt64(SUPER_IMPORTANT_VALUE)))
+        return array[1]
+```
 
 ```ts
-  // TODO(joe-p): determine the name
-  @abimethod({ unsafeDisableValidation: true })  
+  @abimethod({ validateEncoding: "unsafe-disabled" })  
   staticValue(staticBytes: StaticBytes<32>): uint64 {
     const array: [StaticBytes<32>, uint64] = [
-      // If staticBytes is more than 40 bytes, it will overflow into the uint64
+      // ⚠️ VULNERABLE: If static_bytes is more than 32 bytes,
+      // it will overflow into SUPER_IMPORTANT_VALUE
       staticBytes,
       SUPER_IMPORTANT_VALUE,
     ];
@@ -295,17 +312,36 @@ TODO(joe-p): Python example
 
 ### Dynamic Arrays
 
-ABI arrays are always prefixed with their length. For example, the ABI encoding of `0xdeadbeef` as `byte[]` is `0x0004deadbeef` because `0xdeadbeef` is 4 bytes long. If the ABI length prefix is longer than the actual value this can lead to an AVM panic when trying to access out-of-bounds memory. If the ABI length prefix is shorter than the actual length this can lead to unintended behavior in contract logic. 
+ABI arrays are always prefixed with their length. For example, the ABI encoding of `0xdeadbeef` as `byte[]` is `0x0004deadbeef` because `0xdeadbeef` is 4 bytes long. If the ABI length prefix is longer than the actual value this can lead to an AVM panic when trying to access out-of-bounds memory. If the ABI length prefix is shorter than the actual length this can lead to unintended behavior in contract logic.
 
 For example:
 
-TODO(joe-p): Python example
+```py
+class HiddenValues(ARC4Contract):
+    even_numbers: GlobalState[DynamicArray[UInt64]]
+
+    def __init__(self) -> None:
+        self.even_numbers = GlobalState(DynamicArray[UInt64])
+
+    @abimethod()
+    def store_numbers(self, numbers: DynamicArray[UInt64]) -> None:
+        # If the ABI prefix for numbers is more than the actual amount of numbers, this will panic
+        # If the ABI prefix for numbers is less than the actual amount of numbers, not all numbers will be validated
+        for num in numbers:
+            assert num % 2 == 0, "Only even numbers are allowed"
+        self.even_numbers.value = numbers.copy()
+
+    @abimethod()
+    def get_even_number(self, index: UInt64) -> UInt64:
+        # If the index is larger than what was given as the ABI prefix, this may potentially return an odd number that
+        # bypassed the validation in storeNumbers
+        return self.even_numbers.value[index]
+```
 
 ```ts
   evenNumbers = GlobalState<uint64[]>();
 
-  // TODO(joe-p): determine the name
-  @abimethod({ unsafeDisableValidation: true })  
+  @abimethod({ validateEncoding: "unsafe-disabled" })  
   storeNumbers(numbers: uint64[]) {
     // If the ABI prefix for numbers is more than the actual amount of numbers, this will panic
     // If the ABI prefix for numbers is less than the actual amount of numbers, not all numbers will be validated
@@ -325,7 +361,6 @@ TODO(joe-p): Python example
 
 ### Dynamic Tuples
 
-Tuples with dynamically sized elements are encoded with two sections of a byte array. The head which contains offsets into the byte array where the values live and the tail which includes the actual value. For example, `[0xdead, 0xbeef]`  encoded as `(byte[], byte[])` is `0x000400080002dead0002beef` because `0x0002dead` starts at byte 4 and `0x0002beef` starts at byte 8. If the offsets are larger than the byte length the AVM can panic. Offsets that point to the incorrect byteoffset can lead to unintended behavior in contract logic. 
+Tuples with dynamically sized elements are encoded with two sections of a byte array. The head which contains offsets into the byte array where the values live and the tail which includes the actual value. For example, `[0xdead, 0xbeef]` encoded as `(byte[], byte[])` is `0x000400080002dead0002beef` because `0x0002dead` starts at byte 4 and `0x0002beef` starts at byte 8. If the offsets are larger than the byte length the AVM can panic. Offsets that point to the incorrect byte offset can lead to unintended behavior in contract logic.
 
-Most high-level languages, such as the ones that use the Puya compiler, will always use the head offsets to extract values from the tuple. This means that incorrect head offsets will lead to panics when attempting to use those values thus not allowing unintended memory access. Caution and understanding should still be taken when not validation types because this is not guranteed to always be the case.
-
+Most high-level languages, such as the ones that use the Puya compiler, will always use the head offsets to extract values from the tuple. This means that incorrect head offsets will lead to panics when attempting to use those values thus not allowing unintended memory access. Caution and understanding should still be taken when not validation types because this is not guaranteed to always be the case.
