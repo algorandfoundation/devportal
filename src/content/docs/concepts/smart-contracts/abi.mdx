@@ -278,18 +278,8 @@ If a fixed-length type is longer or shorter than it should be, this can lead to 
 For example:
 
 ```py
-from algopy import arc4, UInt64
-from typing import Literal
-
-# Type alias for a 32-byte static array
-StaticBytes32 = arc4.StaticArray[arc4.Byte, Literal[32]]
-
-SUPER_IMPORTANT_VALUE = 42
-
-@abimethod(validate_encoding="unsafe_disabled")
-class VulnerableContract(arc4.ARC4Contract):
-    @arc4.abimethod
-    def static_value(self, static_bytes: StaticBytes32) -> arc4.UInt64:
+    @abimethod(validate_encoding="unsafe_disabled")
+    def static_value(self, static_bytes: arc4.StaticArray[arc4.Byte, Literal[32]]) -> arc4.UInt64:
         # ⚠️ VULNERABLE: If static_bytes is more than 32 bytes,
         # it will overflow into SUPER_IMPORTANT_VALUE
         array = arc4.Tuple((static_bytes.copy(), arc4.UInt64(SUPER_IMPORTANT_VALUE)))
@@ -317,13 +307,12 @@ ABI arrays are always prefixed with their length. For example, the ABI encoding 
 For example:
 
 ```py
-class HiddenValues(ARC4Contract):
     even_numbers: GlobalState[DynamicArray[UInt64]]
 
     def __init__(self) -> None:
         self.even_numbers = GlobalState(DynamicArray[UInt64])
 
-    @abimethod()
+    @abimethod(validate_encoding="unsafe_disabled")
     def store_numbers(self, numbers: DynamicArray[UInt64]) -> None:
         # If the ABI prefix for numbers is more than the actual amount of numbers, this will panic
         # If the ABI prefix for numbers is less than the actual amount of numbers, not all numbers will be validated
