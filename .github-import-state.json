@@ -41,6 +41,13 @@
       "lastCommitSha": "ec3856b55ba88bde87aa28b522280dfae537d0bf",
       "lastImported": "2025-09-28T12:36:01.329Z",
       "ref": "chore/reference-docs"
+    },
+    "algorandfoundation/algokit-utils-py@docs-refinement": {
+      "name": "AlgoKit Utils Python Docs",
+      "repoId": "algorandfoundation/algokit-utils-py@docs-refinement",
+      "lastCommitSha": "e9c8566576a5a177c8286c88fa32c0b4cdcb8ae3",
+      "lastImported": "2025-10-21T13:21:33.769Z",
+      "ref": "docs-refinement"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"
