@@ -7,6 +7,15 @@
   style='margin:1rem 0;display:flex;gap:.75rem;align-items:end;flex-wrap:wrap'
 >
   <label style='display:grid;gap:.25rem'>
+    <span style='font-weight:600'>Name</span>
+    <input
+      id='f-name'
+      type='text'
+      placeholder='Filter by opcode...'
+      style='padding:.375rem .5rem;border:1px solid var(--sl-color-gray-4);border-radius:.25rem;background:var(--sl-color-black);color:var(--sl-color-white);height:2.25rem;box-sizing:border-box'
+    />
+  </label>
+  <label style='display:grid;gap:.25rem'>
     <span style='font-weight:600'>Availability</span>
     <select id='f-version'><option value=''>All</option></select>
   </label>
@@ -23,6 +32,7 @@
     const $ = (s, el = document) => el.querySelector(s);
     const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
 
+    const nameInput = $('#f-name');
     const verSel = $('#f-version');
     const grpSel = $('#f-group');
     const resetBtn = $('#f-reset');
@@ -66,9 +76,12 @@
     }
 
     function applyFilters() {
+      const name = nameInput.value.toLowerCase().trim();
       const v = verSel.value;
       const g = grpSel.value;
       for (const sec of sections) {
+        const nameOk =
+          !name || (sec.dataset.name || '').toLowerCase().includes(name);
         const vOk = !v || sec.dataset.version === v;
         const gOk =
           !g ||
@@ -76,7 +89,7 @@
             .split(',')
             .map(s => s.trim())
             .includes(g);
-        const show = vOk && gOk;
+        const show = nameOk && vOk && gOk;
 
         // toggle the content container
         sec.hidden = !show;
@@ -87,9 +100,11 @@
       }
     }
 
+    nameInput.addEventListener('input', applyFilters);
     verSel.addEventListener('change', applyFilters);
     grpSel.addEventListener('change', applyFilters);
     resetBtn.addEventListener('click', () => {
+      nameInput.value = '';
       verSel.value = '';
       grpSel.value = '';
       applyFilters();

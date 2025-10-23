@@ -43,6 +43,22 @@ Handlebars.registerHelper('immediateTable', (arr) => {
   return new Handlebars.SafeString(html);
 });
 
+// Field index/name/type table (Index, Name, Type columns)
+Handlebars.registerHelper('fieldTable', (names, types) => {
+  if (!Array.isArray(names) || names.length === 0) return '';
+  const rows = names
+    .map((name, idx) => {
+      const type = Array.isArray(types) && idx < types.length ? types[idx] : '-';
+      return `<tr><td>${idx}</td><td>${htmlEscape(name ?? '-')}</td><td>${htmlEscape(type ?? '-')}</td></tr>`;
+    })
+    .join('');
+  const html = `<table>
+  <thead><tr><th>Index</th><th>Name</th><th>Type</th></tr></thead>
+  <tbody>${rows}</tbody>
+</table>`;
+  return new Handlebars.SafeString(html);
+});
+
 // For data attributes
 Handlebars.registerHelper('csv', (arr) => {
   if (!Array.isArray(arr) || arr.length === 0) return '';

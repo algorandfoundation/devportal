@@ -7,5 +7,17 @@ sidebar:
 
 ## Classes
 
-| [`SimulationTrace`](SimulationTrace.md#algokit_utils.models.simulate.SimulationTrace) |     |
-| ------------------------------------------------------------------------------------- | --- |
+| [`SimulationTrace`](#algokit_utils.models.simulate.SimulationTrace) |     |
+| ------------------------------------------------------------------- | --- |
+
+## Module Contents
+
+### _class_ algokit_utils.models.simulate.SimulationTrace
+
+#### app*budget_added *: int | None\_
+
+#### app*budget_consumed *: int | None\_
+
+#### failure*message *: str | None\_
+
+#### exec*trace *: dict[str, object]\_

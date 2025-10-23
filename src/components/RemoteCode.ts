@@ -34,7 +34,7 @@ export async function getSelectedCode(
     };
   }
 
-  const pattern = `^ *(//|#) example: ${snippet}$`;
+  const pattern = `^\\s*(//|#) example: ${snippet}$`;
   const regex = new RegExp(pattern, 'g');
   const codeLines = code.split('\n');
 
@@ -56,13 +56,43 @@ export async function getSelectedCode(
 
   const [startIndex, endIndex] = occurrenceIndexes;
   lineNumber = startIndex + 1; // First line after the starting comment
-  const selectedContent = codeLines.slice(startIndex + 1, endIndex).join('\n');
+  const selectedLines = codeLines.slice(startIndex + 1, endIndex);
+  const selectedContent = dedentCode(selectedLines);
 
   return {
     content: selectedContent,
     line: lineNumber,
     githubUrl,
   };
+}
+
+/**
+ * Removes common leading whitespace from code lines.
+ * @param lines - Array of code lines to dedent
+ * @returns Dedented code as a single string
+ */
+function dedentCode(lines: string[]): string {
+  if (lines.length === 0) return '';
+
+  // Find the minimum indentation among non-empty lines
+  const minIndent = lines.reduce((min, line) => {
+    if (line.trim().length === 0) return min; // Skip empty lines
+    const leadingWhitespace = line.match(/^\s*/)?.[0].length ?? 0;
+    return Math.min(min, leadingWhitespace);
+  }, Infinity);
+
+  // If no non-empty lines or no indentation, return as-is
+  if (minIndent === Infinity || minIndent === 0) {
+    return lines.join('\n');
+  }
+
+  // Remove the common leading whitespace from each line
+  const dedentedLines = lines.map(line => {
+    if (line.trim().length === 0) return line; // Preserve empty lines
+    return line.slice(minIndent);
+  });
+
+  return dedentedLines.join('\n');
 }
 
 async function getCode(src: string): Promise<string> {

@@ -2,8 +2,8 @@
 
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
+@import '@astrojs/starlight-tailwind';
 
-@plugin '@astrojs/starlight-tailwind';
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
@@ -78,30 +78,6 @@ pre,
 code {
   padding: 0.2rem 0.4rem;
   border-radius: 0.2rem;
-}
-
-table.reference-table td:first-child,
-table.reference-table code {
-  @apply text-xs;
-  white-space: nowrap;
-}
-
-.opcode-table {
-  width: 100%;
-  table-layout: fixed;
-}
-
-.opcode-table th,
-.opcode-table td {
-  width: 1% !important; /* Forces equal distribution */
-  min-width: 0 !important;
-  max-width: none !important;
-  text-align: center !important;
-}
-.opcode-detail-caption {
-  display: block;
-  font-weight: bold;
-  margin-top: 0.5rem;
 }
 
 :root[data-theme='dark'] {
@@ -207,7 +183,6 @@ header.header {
   --sl-color-gray-6: #001324;
   --sl-color-black: #001324;
   --sl-color-banner-bg: #17cac6 !important;
-  /* --sl-color-banner-text: #dfe1e5; */
   --sl-color-text-accent: #17cac6;
   --sl-color-accent-medium: #5cdad7;
 }
@@ -226,7 +201,7 @@ header.header {
   --sl-color-gray-7: #f6f6f6;
   --sl-color-black: #f6f6f6;
   --sl-color-banner-bg: #2d2df1 !important;
-  /* --sl-color-banner-text: #dfe1e5; */
+  --sl-color-text-accent: #2d2df1;
   --sl-color-accent-medium: #c7d6ff;
 }
 
@@ -362,10 +337,25 @@ div.opcode-section p.starlight-aside__title {
   display: none;
 }
 
+div.opcode-section {
+  border-bottom: solid 1px var(--sl-color-gray-4);
+  padding-bottom: 1rem;
+}
+
 div.opcode-section aside {
   font-size: 0.8rem !important;
 }
 
-div.opcode-section table.opcode-table {
+div.opcode-section table {
   font-size: 0.8rem !important;
+}
+
+div.opcode-section table td {
+  padding: 0.1rem 0.5rem;
+}
+
+.opcode-detail-caption {
+  display: block;
+  font-weight: bold;
+  margin-top: 0.5rem;
 }

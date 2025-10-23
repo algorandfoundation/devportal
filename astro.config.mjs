@@ -126,12 +126,12 @@ export default defineConfig({
         alt: 'Algorand Developer Portal',
         replacesTitle: true,
       },
-      social: {
-        github: 'https://github.com/algorandfoundation/devportal',
-        discord: 'https://discord.gg/algorand',
-        'x.com': 'https://x.com/algodevs',
-        youtube: 'https://www.youtube.com/@algodevs',
-      },
+      social: [
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/algorandfoundation/devportal' },
+        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/algorand' },
+        { icon: 'x.com', label: 'X', href: 'https://x.com/algodevs' },
+        { icon: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@algodevs' },
+      ],
       favicon: '/favicon.png',
       customCss: ['/src/styles/global.css'],
       sidebar: [
@@ -2418,6 +2418,13 @@ export default defineConfig({
         '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
       },
     },
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss({
+        content: ['./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}'],
+      }),
+    ],
+    ssr: {
+      noExternal: ['@astrojs/starlight-tailwind'],
+    },
   },
 });
