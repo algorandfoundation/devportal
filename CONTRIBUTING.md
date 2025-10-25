@@ -51,5 +51,4 @@ Ensure the following acceptance criteria are met before submitting a PR:
 
 ### Publishing [TBD]
 
-Currently only `staging` is being used to produce a GithubPage.
-This may change to preview based deployments with a provider like Cloudflare
+Production deployment from `main-dist` branch to CloudFlare Pages. PRs can be previewed in CF Pages as well.

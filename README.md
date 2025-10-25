@@ -19,9 +19,9 @@ The official Algorand Developer Portal - a comprehensive documentation site for 
 
 Before you begin, ensure you have the following installed:
 
-- **[Node.js](https://nodejs.org/en)** (>= 20.0) - JavaScript runtime
-- **[pnpm](https://pnpm.io)** (^10.6.3) - Fast, disk space efficient package manager
-- **[Python](https://www.python.org/)** (>= 3.12) - Required for importing Python documentation
+- **[Node.js](https://nodejs.org/en)** - JavaScript runtime
+- **[pnpm](https://pnpm.io)** - Fast, disk space efficient package manager
+- **[Python](https://www.python.org/)** - Required for importing Python documentation
 - **[Poetry](https://python-poetry.org/)** - Python dependency management
 - **[D2](https://github.com/terrastruct/d2/blob/master/docs/INSTALL.md)** - Diagram scripting language for generating diagrams
 
@@ -39,6 +39,14 @@ Before you begin, ensure you have the following installed:
    ```bash
    pnpm install
    ```
+
+   Install the D2 diagram binary
+
+   ```bash
+   brew install d2
+   ```
+
+   See d2 [docs](https://github.com/terrastruct/d2/blob/master/docs/INSTALL.md) for other installation options.
 
 3. **Initialize submodules and import content**
 
@@ -96,36 +104,36 @@ Before you begin, ensure you have the following installed:
 
 ### Core Framework
 
-- **[Astro](https://astro.build)** (^5.14.4) - Modern static site builder
-- **[@astrojs/starlight](https://starlight.astro.build/)** (^0.36.0) - Documentation framework built on Astro
-- **[React](https://react.dev/)** (^19.1.1) - UI component library for interactive elements
+- **[Astro](https://astro.build)** - Modern static site builder
+- **[@astrojs/starlight](https://starlight.astro.build/)** - Documentation framework built on Astro
+- **[React](https://react.dev/)** - UI component library for interactive elements
 
 ### Styling
 
-- **[Tailwind CSS](https://tailwindcss.com/)** (^4.0.14) - Utility-first CSS framework
-- **[@astrojs/starlight-tailwind](https://www.npmjs.com/package/@astrojs/starlight-tailwind)** (^4.0.1) - Tailwind integration for Starlight
-- **[@catppuccin/vscode](https://www.npmjs.com/package/@catppuccin/vscode)** (^3.15.1) - Code theme
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[@astrojs/starlight-tailwind](https://www.npmjs.com/package/@astrojs/starlight-tailwind)** - Tailwind integration for Starlight
+- **[@catppuccin/vscode](https://www.npmjs.com/package/@catppuccin/vscode)** - Code theme
 
 ### Content & Documentation
 
-- **[@larkiny/astro-github-loader](https://www.npmjs.com/package/@larkiny/astro-github-loader)** (^0.10.1) - Import documentation from GitHub repositories
-- **[starlight-typedoc](https://www.npmjs.com/package/starlight-typedoc)** (^0.17.0) - Generate API docs from TypeScript
-- **[starlight-openapi](https://www.npmjs.com/package/starlight-openapi)** (^0.14.1) - OpenAPI/Swagger documentation
-- **[starlight-auto-sidebar](https://www.npmjs.com/package/starlight-auto-sidebar)** (^0.1.2) - Automatic sidebar generation
-- **[astro-d2](https://www.npmjs.com/package/astro-d2)** (^0.3.0) - D2 diagram integration
+- **[@larkiny/astro-github-loader](https://www.npmjs.com/package/@larkiny/astro-github-loader)** - Import documentation from GitHub repositories
+- **[starlight-typedoc](https://www.npmjs.com/package/starlight-typedoc)** - Generate API docs from TypeScript
+- **[starlight-openapi](https://www.npmjs.com/package/starlight-openapi)** - OpenAPI/Swagger documentation
+- **[starlight-auto-sidebar](https://www.npmjs.com/package/starlight-auto-sidebar)** - Automatic sidebar generation
+- **[astro-d2](https://www.npmjs.com/package/astro-d2)** - D2 diagram integration
 
 ### Utilities
 
-- **[octokit](https://github.com/octokit/octokit.js)** (^5.0.4) - GitHub API client
-- **[marked](https://marked.js.org/)** (^13.0.1) - Markdown parser
-- **[js-yaml](https://www.npmjs.com/package/js-yaml)** (^4.1.0) - YAML parser
-- **[sharp](https://sharp.pixelplumbing.com/)** (^0.33.5) - Image processing
+- **[octokit](https://github.com/octokit/octokit.js)** - GitHub API client
+- **[marked](https://marked.js.org/)** - Markdown parser
+- **[js-yaml](https://www.npmjs.com/package/js-yaml)** - YAML parser
+- **[sharp](https://sharp.pixelplumbing.com/)** - Image processing
 
 ### Development Tools
 
-- **[TypeScript](https://www.typescriptlang.org/)** (^5.5.2) - Type-safe JavaScript
-- **[ESLint](https://eslint.org/)** (^9.10.0) - Code linting
-- **[Prettier](https://prettier.io/)** (^3.3.3) - Code formatting
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
+- **[ESLint](https://eslint.org/)** - Code linting
+- **[Prettier](https://prettier.io/)** - Code formatting
 
 ## Available Commands
 
@@ -149,10 +157,9 @@ All commands are run from the root of the project:
 
 ### Content Generation
 
-| Command                         | Description                             |
-| ------------------------------- | --------------------------------------- |
-| `pnpm run generate-opcode-list` | Generate Algorand opcodes documentation |
-| `pnpm run generate-diagrams`    | Generate D2 diagrams from source files  |
+| Command                          | Description                             |
+| -------------------------------- | --------------------------------------- |
+| `pnpm run generate-opcode-list`  | Generate Algorand opcodes documentation |
 
 ### Content Import (Legacy submodules approach; will be phased out)
 
@@ -216,9 +223,6 @@ IMPORT_GITHUB=true          # Enable GitHub content import
 IMPORT_DRY_RUN=false        # Preview imports without writing
 FORCE_IMPORT=false          # Force re-import ignoring cache
 
-# Build configuration
-TSTRUCT_TOKEN=your_token    # TypeStruct API token (if applicable)
-PUBLIC_GTM_ID=your_gtm_id   # Google Tag Manager ID
 ```
 
 ### Astro Configuration

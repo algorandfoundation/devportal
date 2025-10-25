@@ -11,7 +11,6 @@ import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
-import { fileURLToPath, URL } from 'node:url';
 
 const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -2431,7 +2430,6 @@ export default defineConfig({
       ],
     }),
     icon(),
-    // https://astro-d2.vercel.app/configuration
     d2({
       sketch: true,
       layout: 'dagre',
@@ -2449,7 +2447,7 @@ export default defineConfig({
         '@assets': resolve('./src/assets'),
         '@images': resolve('./src/assets/images'),
         '@diagrams': resolve('./src/assets/diagrams/svg'),
-        '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
+        '@components': resolve('./src/components'),
       },
     },
     plugins: [
