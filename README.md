@@ -28,22 +28,26 @@ Before you begin, ensure you have the following installed:
 ## Quick Start
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/algorandfoundation/devportal.git
    cd devportal
    ```
 
 2. **Install dependencies**
+
    ```bash
    pnpm install
    ```
 
 3. **Initialize submodules and import content**
+
    ```bash
    pnpm run import
    ```
 
 4. **Start the development server**
+
    ```bash
    pnpm run dev
    ```
@@ -93,16 +97,19 @@ Before you begin, ensure you have the following installed:
 ## Key Dependencies
 
 ### Core Framework
+
 - **[Astro](https://astro.build)** (^5.14.4) - Modern static site builder
 - **[@astrojs/starlight](https://starlight.astro.build/)** (^0.36.0) - Documentation framework built on Astro
 - **[React](https://react.dev/)** (^19.1.1) - UI component library for interactive elements
 
 ### Styling
+
 - **[Tailwind CSS](https://tailwindcss.com/)** (^4.0.14) - Utility-first CSS framework
 - **[@astrojs/starlight-tailwind](https://www.npmjs.com/package/@astrojs/starlight-tailwind)** (^4.0.1) - Tailwind integration for Starlight
 - **[@catppuccin/vscode](https://www.npmjs.com/package/@catppuccin/vscode)** (^3.15.1) - Code theme
 
 ### Content & Documentation
+
 - **[@larkiny/astro-github-loader](https://www.npmjs.com/package/@larkiny/astro-github-loader)** (^0.10.1) - Import documentation from GitHub repositories
 - **[starlight-typedoc](https://www.npmjs.com/package/starlight-typedoc)** (^0.17.0) - Generate API docs from TypeScript
 - **[starlight-openapi](https://www.npmjs.com/package/starlight-openapi)** (^0.14.1) - OpenAPI/Swagger documentation
@@ -110,12 +117,14 @@ Before you begin, ensure you have the following installed:
 - **[astro-d2](https://www.npmjs.com/package/astro-d2)** (^0.3.0) - D2 diagram integration
 
 ### Utilities
+
 - **[octokit](https://github.com/octokit/octokit.js)** (^5.0.4) - GitHub API client
 - **[marked](https://marked.js.org/)** (^13.0.1) - Markdown parser
 - **[js-yaml](https://www.npmjs.com/package/js-yaml)** (^4.1.0) - YAML parser
 - **[sharp](https://sharp.pixelplumbing.com/)** (^0.33.5) - Image processing
 
 ### Development Tools
+
 - **[TypeScript](https://www.typescriptlang.org/)** (^5.5.2) - Type-safe JavaScript
 - **[ESLint](https://eslint.org/)** (^9.10.0) - Code linting
 - **[Prettier](https://prettier.io/)** (^3.3.3) - Code formatting
@@ -126,72 +135,74 @@ All commands are run from the root of the project:
 
 ### Development
 
-| Command | Description |
-|---------|-------------|
-| `pnpm run dev` | Start local dev server at `localhost:4321` |
-| `pnpm run start` | Alias for `pnpm run dev` |
-| `pnpm run build` | Build production site to `./dist/` |
-| `pnpm run preview` | Preview production build locally |
+| Command            | Description                                |
+| ------------------ | ------------------------------------------ |
+| `pnpm run dev`     | Start local dev server at `localhost:4321` |
+| `pnpm run start`   | Alias for `pnpm run dev`                   |
+| `pnpm run build`   | Build production site to `./dist/`         |
+| `pnpm run preview` | Preview production build locally           |
 
 ### Code Quality
 
-| Command | Description |
-|---------|-------------|
-| `pnpm run lint` | Run ESLint, Prettier, and Astro checks |
-| `pnpm run lint:fix` | Fix linting issues automatically |
+| Command             | Description                            |
+| ------------------- | -------------------------------------- |
+| `pnpm run lint`     | Run ESLint, Prettier, and Astro checks |
+| `pnpm run lint:fix` | Fix linting issues automatically       |
 
 ### Content Generation
 
-| Command | Description |
-|---------|-------------|
-| `pnpm run generate-opcode-list` | Generate Algorand opcodes documentation |
-| `pnpm run generate-diagrams` | Generate D2 diagrams from source files |
-| `pnpm run generate-openapi-docs` | Generate OpenAPI documentation |
+| Command                          | Description                             |
+| -------------------------------- | --------------------------------------- |
+| `pnpm run generate-opcode-list`  | Generate Algorand opcodes documentation |
+| `pnpm run generate-diagrams`     | Generate D2 diagrams from source files  |
+| `pnpm run generate-openapi-docs` | Generate OpenAPI documentation          |
 
-### Content Import (Legacy - Submodules)
+### Content Import (Legacy submodules approach; will be phased out)
 
-| Command | Description |
-|---------|-------------|
-| `pnpm run init:submodules` | Initialize git submodules |
-| `pnpm run import:poetry` | Install Python dependencies via Poetry |
-| `pnpm run import:algorand-python` | Import Algorand Python documentation |
+| Command                               | Description                              |
+| ------------------------------------- | ---------------------------------------- |
+| `pnpm run init:submodules`            | Initialize git submodules                |
+| `pnpm run import:poetry`              | Install Python dependencies via Poetry   |
+| `pnpm run import:algorand-python`     | Import Algorand Python documentation     |
 | `pnpm run import:algorand-typescript` | Import Algorand TypeScript documentation |
-| `pnpm run import` | Run all legacy import steps |
+| `pnpm run import`                     | Run all legacy import steps              |
 
 ### Content Import (GitHub Loader)
 
-| Command | Description |
-|---------|-------------|
-| `pnpm run import:dry-run` | Preview GitHub content imports without making changes |
-| `pnpm run import:all` | Import all content from GitHub, regenerate sidebar, and fix linting |
-| `pnpm run import:force` | Force re-import all content, ignoring cache |
+| Command                   | Description                                                         |
+| ------------------------- | ------------------------------------------------------------------- |
+| `pnpm run import:dry-run` | Preview GitHub content imports without making changes               |
+| `pnpm run import:all`     | Import all content from GitHub, regenerate sidebar, and fix linting |
+| `pnpm run import:force`   | Force re-import all content, ignoring cache                         |
 
-### Content Cleanup
+### Imported Content Cleanup
 
-| Command | Description |
-|---------|-------------|
-| `pnpm run clean:all` | Remove all imported content |
-| `pnpm run clean:arcs` | Remove ARC standards content |
-| `pnpm run clean:nodekit` | Remove NodeKit documentation |
-| `pnpm run clean:cli` | Remove AlgoKit CLI documentation |
+| Command                   | Description                          |
+| ------------------------- | ------------------------------------ |
+| `pnpm run clean:all`      | Remove all imported content          |
+| `pnpm run clean:arcs`     | Remove ARC standards content         |
+| `pnpm run clean:nodekit`  | Remove NodeKit documentation         |
+| `pnpm run clean:cli`      | Remove AlgoKit CLI documentation     |
 | `pnpm run clean:utils-ts` | Remove AlgoKit Utils TypeScript docs |
-| `pnpm run clean:utils-py` | Remove AlgoKit Utils Python docs |
+| `pnpm run clean:utils-py` | Remove AlgoKit Utils Python docs     |
 
-### Sidebar Management
+### Auto-Sidebar Management
 
-| Command | Description |
-|---------|-------------|
-| `pnpm run sidebar:generate` | Clean and regenerate sidebar metadata |
-| `pnpm run sidebar:update` | Update existing sidebar metadata |
-| `pnpm run sidebar:overwrite` | Overwrite all sidebar metadata |
-| `pnpm run sidebar:preview` | Preview sidebar changes without writing |
+The `starlight-auto-sidebar` plugin enables you to customize the order and appearance of auto-generated sidebar entries, including cascading frontmatter configuration to files within a folder. The following commands enable you to quickly generate the `_meta.yml` files from the config defined in `auto-sidebar-config.yml`.
+
+| Command                      | Description                             |
+| ---------------------------- | --------------------------------------- |
+| `pnpm run sidebar:generate`  | Clean and regenerate sidebar metadata   |
+| `pnpm run sidebar:update`    | Update existing sidebar metadata        |
+| `pnpm run sidebar:overwrite` | Overwrite all sidebar metadata          |
+| `pnpm run sidebar:preview`   | Preview sidebar changes without writing |
 
 ### Astro CLI
 
-| Command | Description |
-|---------|-------------|
-| `pnpm run astro ...` | Run Astro CLI commands (e.g., `astro add`) |
-| `pnpm run astro -- --help` | Get help for Astro CLI |
+| Command                    | Description                                |
+| -------------------------- | ------------------------------------------ |
+| `pnpm run astro ...`       | Run Astro CLI commands (e.g., `astro add`) |
+| `pnpm run astro -- --help` | Get help for Astro CLI                     |
 
 ## Configuration
 
@@ -200,7 +211,7 @@ All commands are run from the root of the project:
 Create a `.env` file in the root directory:
 
 ```bash
-# GitHub API token for importing documentation (required for import:all)
+# GitHub API token for importing documentation (only needed if you are importing updated reference docs)
 GITHUB_TOKEN=your_github_token_here
 
 # Import configuration
@@ -235,6 +246,7 @@ Customize Tailwind in `tailwind.config.mjs`. Additional custom styles can be add
 4. Front matter is used for page metadata
 
 Example:
+
 ```markdown
 ---
 title: Your Page Title
@@ -252,7 +264,7 @@ Your content here...
 
 ### Importing External Documentation
 
-The project uses `@larkiny/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`.
+The project uses `@larkiny/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`. See the package [documentation](https://github.com/larkiny/starlight-github-loader/blob/main/packages/astro-github-loader/README.md) for details on how to configure external documentation imports.
 
 ## Contributing
 
@@ -274,8 +286,8 @@ This project adheres to the [Contributor Covenant Code of Conduct](code_of_condu
 
 - [Starlight Documentation](https://starlight.astro.build/)
 - [Astro Documentation](https://docs.astro.build)
-- [Algorand Developer Portal](https://developer.algorand.org)
-- [Algorand Foundation](https://algorand.foundation)
+- [Algorand Developer Portal](https://dev.algorand.co)
+- [Algorand Foundation](https://algorand.co)
 
 ## License
 
