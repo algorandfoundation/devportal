@@ -10,6 +10,11 @@ import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-lin
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
+import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
+
+const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
+const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
+const kmdAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 
 export default defineConfig({
   site: 'https://dev.algorand.co',
@@ -67,6 +72,41 @@ export default defineConfig({
           ],
         }),
         starlightAutoSidebar(),
+        starlightOpenAPI([
+          {
+            base: 'reference/rest-api/algod',
+            schema:
+              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/master/daemon/algod/api/algod.oas3.yml',
+            sidebar: {
+              label: 'algod',
+              group: algodAPIDocsSidebarGroup,
+              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
+              tags: { sort: 'alphabetical' },
+            },
+          },
+          {
+            base: 'reference/rest-api/indexer',
+            schema:
+              'https://raw.githubusercontent.com/algorand/indexer/refs/heads/main/api/indexer.oas3.yml',
+            sidebar: {
+              label: 'indexer',
+              group: indexerAPIDocsSidebarGroup,
+              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
+              tags: { sort: 'alphabetical' },
+            },
+          },
+          {
+            base: 'reference/rest-api/kmd',
+            schema:
+              'https://raw.githubusercontent.com/algorand/go-algorand/ad578576ab5f5bfe58a590164903617ecef379e4/daemon/kmd/api/swagger.json',
+            sidebar: {
+              label: 'kmd',
+              group: kmdAPIDocsSidebarGroup,
+              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
+              tags: { sort: 'alphabetical' },
+            },
+          },
+        ]),
       ],
       head: [
         {
@@ -2358,18 +2398,9 @@ export default defineConfig({
                   label: 'Overview',
                   link: 'reference/rest-api/overview',
                 },
-                {
-                  label: 'algod',
-                  link: 'reference/rest-api/algod',
-                },
-                {
-                  label: 'indexer',
-                  link: 'reference/rest-api/indexer',
-                },
-                {
-                  label: 'kmd',
-                  link: 'reference/rest-api/kmd',
-                },
+                algodAPIDocsSidebarGroup,
+                indexerAPIDocsSidebarGroup,
+                kmdAPIDocsSidebarGroup,
               ],
             },
             {
