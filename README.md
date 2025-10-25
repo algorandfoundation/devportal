@@ -72,8 +72,6 @@ Before you begin, ensure you have the following installed:
 ├── public/                # Static assets (favicons, etc.)
 ├── scripts/               # Build and utility scripts
 │   ├── generate-opcode-list.js    # Generate Algorand opcodes list
-│   ├── generate-diagrams.ts       # Generate D2 diagrams
-│   ├── generate-openapi-docs.js   # Generate API docs
 │   └── manage-sidebar-meta.js     # Sidebar management
 ├── src/
 │   ├── assets/            # Images and media files
@@ -151,11 +149,10 @@ All commands are run from the root of the project:
 
 ### Content Generation
 
-| Command                          | Description                             |
-| -------------------------------- | --------------------------------------- |
-| `pnpm run generate-opcode-list`  | Generate Algorand opcodes documentation |
-| `pnpm run generate-diagrams`     | Generate D2 diagrams from source files  |
-| `pnpm run generate-openapi-docs` | Generate OpenAPI documentation          |
+| Command                         | Description                             |
+| ------------------------------- | --------------------------------------- |
+| `pnpm run generate-opcode-list` | Generate Algorand opcodes documentation |
+| `pnpm run generate-diagrams`    | Generate D2 diagrams from source files  |
 
 ### Content Import (Legacy submodules approach; will be phased out)
 
