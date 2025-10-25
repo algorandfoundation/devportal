@@ -28,7 +28,7 @@ Namely, it described the concept of a smart contract development lifecycle:
    1. **Validate** the deployed app via automated testing of the smart contracts to provide confidence in their correctness
    2. **Call** deployed smart contract with runtime parameters to utilise it
 
-![App deployment lifecycle](@assets/imports/algokit-utils-py/lifecycle-1761052876305.jpg)
+![App deployment lifecycle](@assets/imports/algokit-utils-py/lifecycle-1761396641185.jpg)
 
 The App deployment capability provided by AlgoKit Utils helps implement **#2 Deployment**.
 

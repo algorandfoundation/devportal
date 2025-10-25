@@ -1,81 +1,282 @@
-# Developer Portal
+# Algorand Developer Portal
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
+The official Algorand Developer Portal - a comprehensive documentation site for Algorand blockchain developers.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Project Structure](#project-structure)
+- [Key Dependencies](#key-dependencies)
+- [Available Commands](#available-commands)
+- [Configuration](#configuration)
+- [Content Management](#content-management)
+- [Contributing](#contributing)
 
 ## Prerequisites
 
-- [node.js](https://nodejs.org/en)
-- [d2lang](https://github.com/terrastruct/d2/blob/master/docs/INSTALL.md)
-- [pnpm](https://pnpm.io)
+Before you begin, ensure you have the following installed:
 
-## Project setup
+- **[Node.js](https://nodejs.org/en)** (>= 20.0) - JavaScript runtime
+- **[pnpm](https://pnpm.io)** (^10.6.3) - Fast, disk space efficient package manager
+- **[Python](https://www.python.org/)** (>= 3.12) - Required for importing Python documentation
+- **[Poetry](https://python-poetry.org/)** - Python dependency management
+- **[D2](https://github.com/terrastruct/d2/blob/master/docs/INSTALL.md)** - Diagram scripting language for generating diagrams
 
-- run `git clone` in your terminal to clone this repo
-- run `pnpm run import:all` to fetch the latest submodules
-- run `pnpm install` in your terminal to install all dependencies
-- run `pnpm run dev` in your terminal to start a local developer environment
+## Quick Start
 
-See how to submit changes in the [CONTRIBUTING](./CONTRIBUTING.md) guide.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/algorandfoundation/devportal.git
+   cd devportal
+   ```
 
-## Information Architecture
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
 
-All the documentation is stored under `./src/content/docs/`:
+3. **Initialize submodules and import content**
+   ```bash
+   pnpm run import
+   ```
 
-The sidebar menu configuration can be found at `./astro.config.mjs`
+4. **Start the development server**
+   ```bash
+   pnpm run dev
+   ```
 
-## Stack related stuff (Astro + Starlight)
+   The site will be available at `http://localhost:4321`
 
-### 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+## Project Structure
 
 ```
 .
-├── public/
+├── .github/
+│   └── workflows/          # CI/CD workflows
+├── examples/               # Code examples
+│   ├── algokit/           # AlgoKit examples
+│   └── smart-contracts/   # Smart contract examples
+├── imports/               # External content import system
+│   ├── build/             # Build scripts for imported content
+│   ├── configs/           # Import configurations
+│   ├── repos/             # Git submodules for external repos
+│   ├── scripts/           # Import automation scripts
+│   └── transforms/        # Content transformation utilities
+├── public/                # Static assets (favicons, etc.)
+├── scripts/               # Build and utility scripts
+│   ├── generate-opcode-list.js    # Generate Algorand opcodes list
+│   ├── generate-diagrams.ts       # Generate D2 diagrams
+│   ├── generate-openapi-docs.js   # Generate API docs
+│   └── manage-sidebar-meta.js     # Sidebar management
 ├── src/
-│   ├── assets/
+│   ├── assets/            # Images and media files
+│   │   └── imports/       # Imported assets from external repos
+│   ├── components/        # Reusable Astro/React components
 │   ├── content/
-│   │   ├── docs/
-│   │   └── config.ts
-│   └── env.d.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+│   │   ├── docs/          # Documentation markdown files
+│   │   └── config.ts      # Content collections configuration
+│   ├── icons/             # Custom SVG icons
+│   ├── styles/
+│   │   └── global.css     # Global styles and Tailwind customizations
+│   └── utils/             # Utility functions
+├── templates/             # Handlebars templates for generated content
+├── astro.config.mjs       # Astro configuration
+├── ec.config.mjs          # Editorial comments configuration
+├── package.json           # Project dependencies and scripts
+├── tailwind.config.mjs    # Tailwind CSS configuration
+└── tsconfig.json          # TypeScript configuration
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+## Key Dependencies
 
-### Images/Assets
+### Core Framework
+- **[Astro](https://astro.build)** (^5.14.4) - Modern static site builder
+- **[@astrojs/starlight](https://starlight.astro.build/)** (^0.36.0) - Documentation framework built on Astro
+- **[React](https://react.dev/)** (^19.1.1) - UI component library for interactive elements
 
-Images can be added to `src/assets/images` and embedded in Markdown with a relative link.
+### Styling
+- **[Tailwind CSS](https://tailwindcss.com/)** (^4.0.14) - Utility-first CSS framework
+- **[@astrojs/starlight-tailwind](https://www.npmjs.com/package/@astrojs/starlight-tailwind)** (^4.0.1) - Tailwind integration for Starlight
+- **[@catppuccin/vscode](https://www.npmjs.com/package/@catppuccin/vscode)** (^3.15.1) - Code theme
 
-You can use the alias `@images` to simplify the image paths, e.g., `@images/smart-contract-workflow.png`
+### Content & Documentation
+- **[@larkiny/astro-github-loader](https://www.npmjs.com/package/@larkiny/astro-github-loader)** (^0.10.1) - Import documentation from GitHub repositories
+- **[starlight-typedoc](https://www.npmjs.com/package/starlight-typedoc)** (^0.17.0) - Generate API docs from TypeScript
+- **[starlight-openapi](https://www.npmjs.com/package/starlight-openapi)** (^0.14.1) - OpenAPI/Swagger documentation
+- **[starlight-auto-sidebar](https://www.npmjs.com/package/starlight-auto-sidebar)** (^0.1.2) - Automatic sidebar generation
+- **[astro-d2](https://www.npmjs.com/package/astro-d2)** (^0.3.0) - D2 diagram integration
 
-SVG icons must go into `src/icons` to be used with the `astro-icon` component. The built-in Starlight icon component does not support custom local icons. You can also specify the ID of any icon in the Iconify collection. [See usage guide here](https://github.com/natemoo-re/astro-icon?tab=readme-ov-file#iconify-icons).
+### Utilities
+- **[octokit](https://github.com/octokit/octokit.js)** (^5.0.4) - GitHub API client
+- **[marked](https://marked.js.org/)** (^13.0.1) - Markdown parser
+- **[js-yaml](https://www.npmjs.com/package/js-yaml)** (^4.1.0) - YAML parser
+- **[sharp](https://sharp.pixelplumbing.com/)** (^0.33.5) - Image processing
 
-Static assets, like favicons, can be placed in the `public/` directory.
+### Development Tools
+- **[TypeScript](https://www.typescriptlang.org/)** (^5.5.2) - Type-safe JavaScript
+- **[ESLint](https://eslint.org/)** (^9.10.0) - Code linting
+- **[Prettier](https://prettier.io/)** (^3.3.3) - Code formatting
 
-### CSS
+## Available Commands
 
-We are using the Tailwind CSS plugin for Starlight. You can define custom variables in the `./tailwind.config.mjs` file.
+All commands are run from the root of the project:
 
-To add/modify custom CSS styles, see the `./src/styles/global.css` file.
+### Development
 
-### 🧞 Commands
+| Command | Description |
+|---------|-------------|
+| `pnpm run dev` | Start local dev server at `localhost:4321` |
+| `pnpm run start` | Alias for `pnpm run dev` |
+| `pnpm run build` | Build production site to `./dist/` |
+| `pnpm run preview` | Preview production build locally |
 
-All commands are run from the root of the project, from a terminal:
+### Code Quality
 
-| Command                    | Action                                           |
-| :------------------------- | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm run dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm run build`           | Build your production site to `./dist/`          |
-| `pnpm run preview`         | Preview your build locally, before deploying     |
-| `pnpm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm run astro -- --help` | Get help using the Astro CLI                     |
+| Command | Description |
+|---------|-------------|
+| `pnpm run lint` | Run ESLint, Prettier, and Astro checks |
+| `pnpm run lint:fix` | Fix linting issues automatically |
 
-### Useful Links
+### Content Generation
 
-- [Starlight’s docs](https://starlight.astro.build/)
-- [Astro documentation](https://docs.astro.build)
+| Command | Description |
+|---------|-------------|
+| `pnpm run generate-opcode-list` | Generate Algorand opcodes documentation |
+| `pnpm run generate-diagrams` | Generate D2 diagrams from source files |
+| `pnpm run generate-openapi-docs` | Generate OpenAPI documentation |
+
+### Content Import (Legacy - Submodules)
+
+| Command | Description |
+|---------|-------------|
+| `pnpm run init:submodules` | Initialize git submodules |
+| `pnpm run import:poetry` | Install Python dependencies via Poetry |
+| `pnpm run import:algorand-python` | Import Algorand Python documentation |
+| `pnpm run import:algorand-typescript` | Import Algorand TypeScript documentation |
+| `pnpm run import` | Run all legacy import steps |
+
+### Content Import (GitHub Loader)
+
+| Command | Description |
+|---------|-------------|
+| `pnpm run import:dry-run` | Preview GitHub content imports without making changes |
+| `pnpm run import:all` | Import all content from GitHub, regenerate sidebar, and fix linting |
+| `pnpm run import:force` | Force re-import all content, ignoring cache |
+
+### Content Cleanup
+
+| Command | Description |
+|---------|-------------|
+| `pnpm run clean:all` | Remove all imported content |
+| `pnpm run clean:arcs` | Remove ARC standards content |
+| `pnpm run clean:nodekit` | Remove NodeKit documentation |
+| `pnpm run clean:cli` | Remove AlgoKit CLI documentation |
+| `pnpm run clean:utils-ts` | Remove AlgoKit Utils TypeScript docs |
+| `pnpm run clean:utils-py` | Remove AlgoKit Utils Python docs |
+
+### Sidebar Management
+
+| Command | Description |
+|---------|-------------|
+| `pnpm run sidebar:generate` | Clean and regenerate sidebar metadata |
+| `pnpm run sidebar:update` | Update existing sidebar metadata |
+| `pnpm run sidebar:overwrite` | Overwrite all sidebar metadata |
+| `pnpm run sidebar:preview` | Preview sidebar changes without writing |
+
+### Astro CLI
+
+| Command | Description |
+|---------|-------------|
+| `pnpm run astro ...` | Run Astro CLI commands (e.g., `astro add`) |
+| `pnpm run astro -- --help` | Get help for Astro CLI |
+
+## Configuration
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```bash
+# GitHub API token for importing documentation (required for import:all)
+GITHUB_TOKEN=your_github_token_here
+
+# Import configuration
+IMPORT_GITHUB=true          # Enable GitHub content import
+IMPORT_DRY_RUN=false        # Preview imports without writing
+FORCE_IMPORT=false          # Force re-import ignoring cache
+
+# Build configuration
+TSTRUCT_TOKEN=your_token    # TypeStruct API token (if applicable)
+PUBLIC_GTM_ID=your_gtm_id   # Google Tag Manager ID
+```
+
+### Astro Configuration
+
+The main Astro configuration is in `astro.config.mjs`. Key configurations include:
+
+- **Starlight settings** - Site title, sidebar, social links
+- **Content collections** - Documentation structure
+- **Integrations** - React, Tailwind, D2, OpenAPI, etc.
+
+### Tailwind Configuration
+
+Customize Tailwind in `tailwind.config.mjs`. Additional custom styles can be added to `src/styles/global.css`.
+
+## Content Management
+
+### Writing Documentation
+
+1. Documentation files are stored in `src/content/docs/`
+2. Use `.md` or `.mdx` format
+3. Files are automatically routed based on their path
+4. Front matter is used for page metadata
+
+Example:
+```markdown
+---
+title: Your Page Title
+description: Page description for SEO
+---
+
+Your content here...
+```
+
+### Images and Assets
+
+- **Images**: Place in `src/assets/` and reference with relative paths
+- **Icons**: SVG icons go in `src/icons/` for use with `astro-icon`
+- **Static assets**: Place in `public/` directory (e.g., favicons)
+
+### Importing External Documentation
+
+The project uses `@larkiny/astro-github-loader` to import documentation from external repositories. Configure imports in `imports/configs/`.
+
+## Contributing
+
+See the [CONTRIBUTING.md](./CONTRIBUTING.md) guide for detailed information on how to submit changes.
+
+### Development Workflow
+
+1. Create a feature branch
+2. Make your changes
+3. Run `pnpm run lint:fix` to ensure code quality
+4. Test locally with `pnpm run build`
+5. Submit a pull request
+
+### Code of Conduct
+
+This project adheres to the [Contributor Covenant Code of Conduct](code_of_conduct.md).
+
+## Useful Links
+
+- [Starlight Documentation](https://starlight.astro.build/)
+- [Astro Documentation](https://docs.astro.build)
+- [Algorand Developer Portal](https://developer.algorand.org)
+- [Algorand Foundation](https://algorand.foundation)
+
+## License
+
+See [LICENSE](./LICENSE) for more information.
