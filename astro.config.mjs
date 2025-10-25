@@ -28,7 +28,6 @@ export default defineConfig({
           errorOnInvalidHashes: false,
           exclude: [
             '**[FUTURELINK]*',
-            '**/reference/algokit-utils-py/**',
             '**/reference/algorand-python/**',
             '**/reference/algorand-teal/**',
             '**/reference/algorand-typescript/**',
@@ -127,7 +126,11 @@ export default defineConfig({
         replacesTitle: true,
       },
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/algorandfoundation/devportal' },
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/algorandfoundation/devportal',
+        },
         { icon: 'discord', label: 'Discord', href: 'https://discord.gg/algorand' },
         { icon: 'x.com', label: 'X', href: 'https://x.com/algodevs' },
         { icon: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@algodevs' },
