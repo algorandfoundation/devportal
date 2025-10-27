@@ -1,0 +1,111 @@
+---
+title: Disclosure of Vulnerabilities in Puya Smart Contract Compiler
+---
+
+This disclosure report contains technical details of two vulnerabilities in the Puya smart contract compiler.
+
+**Date reported:** October 10, 2025
+
+**Affected Versions:**
+
+- PuyaPy: Versions `<5.3.2` and `<4.11.0` for the 4.x major version
+- Puya-TS: Versions `<1.0.0-alpha.96` or `<1.0.0-beta.74`
+
+### Summary of Vulnerability
+
+Two separate vulnerabilities that could affect smart contracts were discovered in the Puya smart contract compiler:
+
+1. **Missing Assert:** An optimization bug affecting the Puya compiler for Algorand Python & Algorand TypeScript in a narrow version window could remove a final assert before a return.
+2. **ARC-4 Encoding Length Check:** A class of bugs where ARC-4 Application Binary Interface (ABI) values were not always validated by default, and this behavior was not clearly documented.
+
+Smart contract developers should use the resources in the **Steps to Reproduce** section below to assess their smart contract code for potential vulnerabilities and take immediate corrective action if any are discovered.
+
+### Impact
+
+Any smart contract written in Algorand Python or Algorand TypeScript and compiled with a vulnerable version of the Puya compiler could potentially suffer from insecure TEAL code in certain scenarios. Smart contract developers should review their code following the guidance in the **Steps to Reproduce** section to assess if contracts were compiled with affected versions of Puya and, if so, review the code carefully to identify conditions for which the smart contract may have vulnerabilities in the compiled TEAL.
+
+As of the publication date, no direct impacts have been reported from the ecosystem.
+
+### Technical Details
+
+#### Discovery
+
+On October 10, 2025, the Algorand Foundation received a report that a smart contract compiled with Puya was not checking ABI method arguments in the compiled TEAL code. Upon investigation by the engineering team, this was confirmed to be true and the full extent of missing validations was determined. In this process, the second missing assert vulnerability was also identified.
+
+Further investigation found that multiple other Algorand smart contract languages, such as PyTeal, TEALScript, and Tealish, also did partial or no validation of ABI values, with varying degrees of documentation about compiler behavior in this regard.
+
+#### Root Cause
+
+The “missing assert” bug was caused by a human error in coding a peephole optimization in the compiler, and the error was not caught by a second reviewer.
+
+The ARC-4 encoding length check vulnerability can be traced to insufficient documentation of the lack of validation, which was the Puya compiler's default behavior by design.
+
+#### Remediation
+
+Going forward, Puya’s design will be secure-by-default, and security recommendations in the specs will be normative. Automatic validation will be applied during the compilation process unless the developer explicitly chooses to disable this behavior with a compiler flag. Additionally, an enhancement enables developers to apply ABI validations selectively to individual methods by using a new decorator.
+
+### Strategic Mitigation Initiatives
+
+The Algorand Foundation engineering team has implemented multiple strategic prevention measures to prevent future issues. These include strengthening regression tests for the Puya compiler, implementing clearer warnings when automatic validation is disabled, and improving release processes to require additional reviewers through standard operating procedures and automated CI/CD controls.
+
+### Steps to Reproduce
+
+Two detailed guides for understanding each type of vulnerability and assessing if it may affect contracts compiled with affected version of Puya have been published on GitHub:
+
+- [Missing Assert guide](https://github.com/algorandfoundation/puya/blob/main/security/002-missing-assert.md)
+- [ARC-4 Encoding Length Check guide](https://github.com/algorandfoundation/puya/blob/main/security/001-arc4-encoding.md)
+
+### Fixes / Patches Available
+
+The fix for both issues is available in the following package versions:
+PuyaPy: Versions `≥5.3.2` or `≥4.11.0` for the 4.x major version
+Puya-TS: Versions `≥1.0.0-alpha.96` or `≥1.0.0-beta.74`
+
+Upgrade Puya, recompile all contracts, and verify the ARC-56 JSON shows Puya `≥4.11.0` or `≥5.3.2`. Developers are strongly encouraged to create tests to verify that oversized inputs are rejected and that any missing asserts are working.
+
+All projects are advised to avoid older versions:
+
+- PuyaPy: Versions `<5.3.2` and `<4.11.0` for the 4.x major version
+- Puya-TS: Versions `<1.0.0-alpha.96` or `<1.0.0-beta.74`
+
+### Additional Information
+
+The ARC-4 Encoding Length Check vulnerability can also affect other high-level smart contract languages:
+PyTeal does not perform validation by default. Apply the recommendations for manual validation found in the PyTeal Documentation.
+TEALScript does not perform validation automatically for dynamic tuples or ABI return values, but does for static method arguments.
+Tealish supports fixed-size structs, but the compiler does not check them automatically. This behavior, however, is documented in the language guide.
+
+Developers should also review any smart contracts written directly in TEAL to ensure the appropriate checks are performed around ABI values.
+
+### Acknowledgements
+
+Thanks to Folks Finance for discovering the vulnerabilities and reporting them responsibly.
+
+Additionally, thanks to the Algorand Foundation Engineering team and MakerX for their swift and thorough response to the issues and assistance in reviewing smart contracts for various applications.
+
+And, as always, thanks to the global Algorand community of validators, developers, and contributors who keep the network running, safe, and secure.
+
+### References
+
+The GitHub repositories for Puya can be found at:
+
+- Puya compiler back end and Algorand Python front end: https://github.com/algorandfoundation/puya
+- Puya-TS front end for Algorand TypeScript: https://github.com/algorandfoundation/puya-ts
+
+### Contact
+
+For technical assistance related to the vulnerabilities, please contact the Developer Relations team at devrel@algorand.foundation.
+
+To report further issues, please contact security@algorand.foundation.
+
+For general discussion of the bulletin, please join the [Algorand Discord](https://discord.gg/algorand) server.
+
+### Incident Response Timeline
+
+| Key Actions                     | Date             | Description                                                                                                        |
+| ------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ |
+| ABI validation issue discovered | October 10, 2025 | Algorand Foundation received the initial report about issues with ABI value validation in Puya-compiled contracts. |
+| Missing assert issue discovered | October 12, 2025 | Algorand Foundation received the second report of a missing assert bug in Puya.                                    |
+| Mitigation communications       | October 21, 2025 | Vulnerabilities and remediation actions were communicated privately to key ecosystem protocols to mitigate risk.   |
+| Affected versions unpublished   | October 27, 2025 | Vulnerable versions of Puya were taken down from PyPI and NPM (5.0.0, 5.0.1 puyapy, puya-ts betas not affected)    |
+| All fixes released              | October 24, 2025 | Fixed versions of Puya for Python and TypeScript were published.                                                   |
