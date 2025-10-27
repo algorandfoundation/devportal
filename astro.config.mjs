@@ -10,7 +10,6 @@ import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-lin
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
-import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   site: 'https://dev.algorand.co',
@@ -28,7 +27,6 @@ export default defineConfig({
           errorOnInvalidHashes: false,
           exclude: [
             '**[FUTURELINK]*',
-            '**/reference/algokit-utils-py/**',
             '**/reference/algorand-python/**',
             '**/reference/algorand-teal/**',
             '**/reference/algorand-typescript/**',
@@ -127,7 +125,11 @@ export default defineConfig({
         replacesTitle: true,
       },
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/algorandfoundation/devportal' },
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/algorandfoundation/devportal',
+        },
         { icon: 'discord', label: 'Discord', href: 'https://discord.gg/algorand' },
         { icon: 'x.com', label: 'X', href: 'https://x.com/algodevs' },
         { icon: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@algodevs' },
@@ -2380,6 +2382,14 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Bulletins',
+          collapsed: true,
+
+          autogenerate: {
+            directory: 'bulletins',
+          },
+        },
+        {
           label: 'Additional Resources',
           collapsed: true,
           items: [
@@ -2397,7 +2407,6 @@ export default defineConfig({
       ],
     }),
     icon(),
-    // https://astro-d2.vercel.app/configuration
     d2({
       sketch: true,
       layout: 'dagre',
@@ -2415,7 +2424,7 @@ export default defineConfig({
         '@assets': resolve('./src/assets'),
         '@images': resolve('./src/assets/images'),
         '@diagrams': resolve('./src/assets/diagrams/svg'),
-        '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
+        '@components': resolve('./src/components'),
       },
     },
     plugins: [
