@@ -2382,6 +2382,14 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Bulletins',
+          collapsed: true,
+
+          autogenerate: {
+            directory: 'bulletins',
+          },
+        },
+        {
           label: 'Additional Resources',
           collapsed: true,
           items: [
