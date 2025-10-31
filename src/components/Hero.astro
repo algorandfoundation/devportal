@@ -2,7 +2,8 @@
 import HomepageHero from './homepage/HomepageHero.astro';
 import Default from '@astrojs/starlight/components/Hero.astro';
 
-const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+// Check if this is the homepage by checking for empty slug
+const isHomepage = Astro.locals.starlightRoute?.slug === '';
 ---
 
 {
