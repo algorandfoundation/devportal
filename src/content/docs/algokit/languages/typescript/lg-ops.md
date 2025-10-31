@@ -2,7 +2,7 @@
 title: AVM Operations
 ---
 
-Algorand TypeScript allows you to express [every op code the AVM has available](https://dev.algorand.co/reference/algorand-teal/opcodes/) excluding those that manipulate the stack or control execution as these would interfere with the compiler. These are all exported from the [ops module](api/op/README). It is possible to import ops individually or via the entire namespace.
+Algorand TypeScript allows you to express [every op code the AVM has available](https://dev.algorand.co/reference/algorand-teal/opcodes/), excluding those that manipulate the stack or control execution, as these would interfere with the compiler. These are all exported from the [ops module](modules/op.html). It is possible to import ops individually or via the entire namespace.
 
 ```ts
 // Import op from module root
@@ -27,7 +27,7 @@ class MyContract extends Contract {
 
 ## Txn, Global, and other Enums
 
-Many of the AVM ops which take an enum argument have been abstracted into a static type with a property or function per enum member
+Many of the AVM ops that take an enum argument have been abstracted into a static type with a property or function per enum member.
 
 ```ts
 import { Contract, Global, log, Txn } from '@algorandfoundation/algorand-typescript';
