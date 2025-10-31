@@ -17,6 +17,7 @@ import {
   algokitCLIConfig,
   utilsTypescriptConfig,
   utilsPythonConfig,
+  puyaTsConfig,
 } from '../../imports/configs/index.js';
 
 const IMPORT_GITHUB = process.env.IMPORT_GITHUB === 'true';
@@ -31,6 +32,7 @@ const REMOTE_CONTENT: ImportOptions[] = [
   algokitCLIConfig,
   utilsTypescriptConfig,
   utilsPythonConfig,
+  puyaTsConfig,
 ];
 
 export const collections = {

@@ -67,6 +67,7 @@ jobs:
         run: |
           echo "::set-output name=pr_id::${{ github.event.pull_request.number }}"
           echo "::set-output name=pr_title::${{ github.event.pull_request.title }}"
+          echo "::set-output name=pr_url::${{ github.event.pull_request.html_url }}"
 
       - name: Post to Slack
         id: slack
@@ -77,6 +78,7 @@ jobs:
             {
               "pr_id": "${{ steps.pr_info.outputs.pr_id }}",
               "pr_title": "${{ steps.pr_info.outputs.pr_title }}",
+              "pr_url": "${{ steps.pr_info.outputs.pr_url }}",
               "preview_url": "${{ steps.deploy.outputs.deployment-url }}"
             }
         env:

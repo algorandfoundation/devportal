@@ -33,7 +33,7 @@ importers:
         specifier: ^3.15.1
         version: 3.15.1
       '@larkiny/astro-github-loader':
-        specifier: ^0.11.0
+        specifier: ^0.11.1
         version: 0.11.1(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
       '@tailwindcss/vite':
         specifier: ^4.0.14
