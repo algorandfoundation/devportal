@@ -99,8 +99,8 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0(@astrojs/starlight@0.36.0(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
       starlight-openapi:
-        specifier: ^0.14.1
-        version: 0.14.4(@astrojs/markdown-remark@6.3.8)(@astrojs/starlight@0.36.0(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))(openapi-types@12.1.3)
+        specifier: ^0.21.1
+        version: 0.21.1(@astrojs/markdown-remark@6.3.8)(@astrojs/starlight@0.36.0(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))(openapi-types@12.1.3)
       starlight-typedoc:
         specifier: ^0.17.0
         version: 0.17.0(@astrojs/starlight@0.36.0(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))(typedoc-plugin-markdown@4.4.1(typedoc@0.27.6(typescript@5.5.2)))(typedoc@0.27.6(typescript@5.5.2))
@@ -184,8 +184,9 @@ packages:
   '@antfu/utils@0.7.10':
     resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
 
-  '@apidevtools/swagger-methods@3.0.2':
-    resolution: {integrity: sha512-QAkD5kK2b1WfjDS/UQn/qQkbwF31uqRjPTrsCs5ZG9BQGAkjwvqGFjjPqAuzac/IYzpPtRzjCP1WrTuAIjMrXg==}
+  '@apidevtools/json-schema-ref-parser@13.0.5':
+    resolution: {integrity: sha512-xfh4xVJD62gG6spIc7lwxoWT+l16nZu1ELyU8FkjaP/oD2yP09EvLAU6KhtudN9aML2Khhs9pY6Slr7KGTES3w==}
+    engines: {node: '>= 16'}
 
   '@astrojs/check@0.9.4':
     resolution: {integrity: sha512-IOheHwCtpUfvogHHsvu0AbeRZEnjJg3MopdLddkJE70mULItS/Vh37BHcI00mcOJcH1vhD3odbpvWokpxam7xA==}
@@ -280,10 +281,6 @@ packages:
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/code-frame@7.26.2':
-    resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
     engines: {node: '>=6.9.0'}
@@ -369,10 +366,6 @@ packages:
 
   '@babel/helper-validator-identifier@7.24.7':
     resolution: {integrity: sha512-rR+PBcQ1SMQDDyF6X0wxtG8QyLCgUB0eRAGguqRLfkCA87l7yAP7ehq8SNj96OOGTO8OBV70KhuFYcIkHXOg0w==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/helper-validator-identifier@7.25.9':
-    resolution: {integrity: sha512-Ed61U6XJc3CVRfkERJWDz4dJwKe7iLmmJsbOGu9wSloNSFttHV0I8g6UAgb7qnK5ly5bGLPd4oXZlxCdANBOWQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-validator-identifier@7.27.1':
@@ -1123,9 +1116,6 @@ packages:
   '@jridgewell/trace-mapping@0.3.30':
     resolution: {integrity: sha512-GQ7Nw5G2lTu/BtHTKfXhKHok2WGetd4XYcVKGx00SjAk8GMwgJM3zr6zORiPGuOE+/vkc90KtTosSSvaCjKb2Q==}
 
-  '@jsdevtools/ono@7.1.3':
-    resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
-
   '@larkiny/astro-github-loader@0.11.1':
     resolution: {integrity: sha512-u92VxEk6Rx530Jjr4yeiLR7xNy6nxw2YZITx2nF77qRPIRUIoctLqfkrQSn0NmJ122ZQltKxUylrK/hNZjbF8A==}
     peerDependencies:
@@ -1300,13 +1290,9 @@ packages:
     peerDependencies:
       ajv: 4.11.8 - 8
 
-  '@readme/json-schema-ref-parser@1.2.0':
-    resolution: {integrity: sha512-Bt3QVovFSua4QmHa65EHUmh2xS0XJ3rgTEUPH998f4OW4VVJke3BuS16f+kM0ZLOGdvIrzrPRqwihuv5BAjtrA==}
-    deprecated: This package is no longer maintained. Please use `@apidevtools/json-schema-ref-parser` instead.
-
-  '@readme/openapi-parser@2.7.0':
-    resolution: {integrity: sha512-P8WSr8WTOxilnT89tcCRKWYsG/II4sAwt1a/DIWub8xTtkrG9cCBBy/IUcvc5X8oGWN82MwcTA3uEkDrXZd/7A==}
-    engines: {node: '>=18'}
+  '@readme/openapi-parser@4.1.2':
+    resolution: {integrity: sha512-lAFH88r/CHs5VZDUocEda0OSMSQsr6801sziIjOKyVA+0hSFN+BPuelPF5XvkMROHecnPd+XEJN1iNQqCgER/g==}
+    engines: {node: '>=20'}
     peerDependencies:
       openapi-types: '>=7'
 
@@ -4248,13 +4234,13 @@ packages:
       '@astrojs/starlight': '>=0.31'
       astro: ^5.1.6
 
-  starlight-openapi@0.14.4:
-    resolution: {integrity: sha512-aTcvDGLmCfrWs6TZhU5GUi86Yli7SIe9T1WCb70ARj06/M+1hx1t4PkIzRtD7uLewC5NWLqWLnO1ZZCJUL0cXA==}
+  starlight-openapi@0.21.1:
+    resolution: {integrity: sha512-hHefUWQuLz26Fc8B0XOrdxOnOmJkKzyAssqEfDSZTC76GH05eT5/fCuJ76lq9N3uEjHmCKb6vWPlr7EbLbJQEg==}
     engines: {node: '>=18.17.1'}
     peerDependencies:
       '@astrojs/markdown-remark': '>=6.0.1'
-      '@astrojs/starlight': '>=0.30.0'
-      astro: '>=5.1.5'
+      '@astrojs/starlight': '>=0.34.0'
+      astro: '>=5.5.0'
 
   starlight-typedoc@0.17.0:
     resolution: {integrity: sha512-7ARUGo45ZWfAF5UI5HLLmLFGlMYdWW27Xfqcm4PBgcjZaGnEeEayqbusqc+5qAX46R5gzJ9ei8fxfMKZWMtgqg==}
@@ -4992,7 +4978,10 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@apidevtools/swagger-methods@3.0.2': {}
+  '@apidevtools/json-schema-ref-parser@13.0.5':
+    dependencies:
+      '@types/json-schema': 7.0.15
+      js-yaml: 4.1.0
 
   '@astrojs/check@0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.5.2)':
     dependencies:
@@ -5232,12 +5221,6 @@ snapshots:
       '@babel/highlight': 7.24.7
       picocolors: 1.1.0
 
-  '@babel/code-frame@7.26.2':
-    dependencies:
-      '@babel/helper-validator-identifier': 7.25.9
-      js-tokens: 4.0.0
-      picocolors: 1.1.1
-
   '@babel/code-frame@7.27.1':
     dependencies:
       '@babel/helper-validator-identifier': 7.27.1
@@ -5376,8 +5359,6 @@ snapshots:
   '@babel/helper-string-parser@7.27.1': {}
 
   '@babel/helper-validator-identifier@7.24.7': {}
-
-  '@babel/helper-validator-identifier@7.25.9': {}
 
   '@babel/helper-validator-identifier@7.27.1': {}
 
@@ -5971,8 +5952,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jsdevtools/ono@7.1.3': {}
-
   '@larkiny/astro-github-loader@0.11.1(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))':
     dependencies:
       '@octokit/auth-app': 8.1.1
@@ -6235,23 +6214,14 @@ snapshots:
       leven: 3.1.0
       picocolors: 1.1.1
 
-  '@readme/json-schema-ref-parser@1.2.0':
+  '@readme/openapi-parser@4.1.2(openapi-types@12.1.3)':
     dependencies:
-      '@jsdevtools/ono': 7.1.3
-      '@types/json-schema': 7.0.15
-      call-me-maybe: 1.0.2
-      js-yaml: 4.1.0
-
-  '@readme/openapi-parser@2.7.0(openapi-types@12.1.3)':
-    dependencies:
-      '@apidevtools/swagger-methods': 3.0.2
-      '@jsdevtools/ono': 7.1.3
+      '@apidevtools/json-schema-ref-parser': 13.0.5
       '@readme/better-ajv-errors': 2.3.2(ajv@8.17.1)
-      '@readme/json-schema-ref-parser': 1.2.0
       '@readme/openapi-schemas': 3.1.0
+      '@types/json-schema': 7.0.15
       ajv: 8.17.1
       ajv-draft-04: 1.0.0(ajv@8.17.1)
-      call-me-maybe: 1.0.2
       openapi-types: 12.1.3
 
   '@readme/openapi-schemas@3.1.0': {}
@@ -7028,7 +6998,7 @@ snapshots:
 
   better-ajv-errors@0.6.7(ajv@5.5.2):
     dependencies:
-      '@babel/code-frame': 7.26.2
+      '@babel/code-frame': 7.27.1
       '@babel/runtime': 7.26.9
       ajv: 5.5.2
       chalk: 2.4.2
@@ -9947,11 +9917,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  starlight-openapi@0.14.4(@astrojs/markdown-remark@6.3.8)(@astrojs/starlight@0.36.0(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))(openapi-types@12.1.3):
+  starlight-openapi@0.21.1(@astrojs/markdown-remark@6.3.8)(@astrojs/starlight@0.36.0(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)))(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))(openapi-types@12.1.3):
     dependencies:
       '@astrojs/markdown-remark': 6.3.8
       '@astrojs/starlight': 0.36.0(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
-      '@readme/openapi-parser': 2.7.0(openapi-types@12.1.3)
+      '@readme/openapi-parser': 4.1.2(openapi-types@12.1.3)
       astro: 5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0)
       github-slugger: 2.0.0
       url-template: 3.1.1
