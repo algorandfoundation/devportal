@@ -17,7 +17,7 @@ configs:
       collapsed: true
       cascade:
         - collapsed
-  - folder: reference/algorand-typescript/API Reference
+  - folder: reference/algorand-typescript/api
     content: |
       collapsed: true
       cascade:

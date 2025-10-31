@@ -375,3 +375,24 @@ export function createRemoveLineContaining(
     return combineFrontmatterAndContent(parsed.data, cleanedContent);
   };
 }
+
+/**
+ * Creates a transform function that performs a search and replace on content
+ * @param search - String or RegExp to search for
+ * @param replace - Replacement string (can use $1, $2, etc. for regex capture groups)
+ * @returns Transform function that replaces matching text
+ */
+export function createReplace(
+  search: string | RegExp,
+  replace: string,
+): TransformFunction {
+  return (content, _context) => {
+    // Parse existing frontmatter first
+    const parsed = parseFrontmatter(content);
+
+    // Perform the search and replace on the content body
+    const replacedContent = parsed.content.replace(search, replace);
+
+    return combineFrontmatterAndContent(parsed.data, replacedContent);
+  };
+}

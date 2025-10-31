@@ -1,15 +1,16 @@
 ---
 title: AbiCallResponse
 type: doc
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [arc4](/reference/algorand-typescript/api/arc4/readme/) / AbiCallResponse
+[Algorand TypeScript](docs/_md/modules) / [arc4](docs/_md/arc4/README) / AbiCallResponse
 
 > **AbiCallResponse**\<`TMethod`\> = `TMethod` _extends_ [`InstanceMethod`](/reference/algorand-typescript/api/arc4/-internal-/type-aliases/instancemethod/)\<[`Contract`](/reference/algorand-typescript/api/arc4/classes/contract/), infer TParams, infer TResult\> ? [`TypedApplicationCallResponse`](TypedApplicationCallResponse)\<`TResult`\> : [`TypedApplicationCallResponse`](TypedApplicationCallResponse)\<`unknown`\>
 

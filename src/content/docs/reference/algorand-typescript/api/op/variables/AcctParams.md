@@ -1,15 +1,16 @@
 ---
 title: AcctParams
 type: doc
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [op](/reference/algorand-typescript/api/op/readme/) / AcctParams
+[Algorand TypeScript](docs/_md/modules) / [op](docs/_md/op/README) / AcctParams
 
 > `const` **AcctParams**: `object`
 

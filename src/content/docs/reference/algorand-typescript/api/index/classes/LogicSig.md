@@ -1,15 +1,16 @@
 ---
 title: LogicSig
 type: class
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [index](/reference/algorand-typescript/api/index/readme/) / LogicSig
+[Algorand TypeScript](docs/_md/modules) / [index](docs/_md/index/README) / LogicSig
 
 Defined in: [logic-sig.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L7)
 

@@ -1,15 +1,16 @@
 ---
 title: ApplicationCallInnerTxn
 type: interface
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [itxn](/reference/algorand-typescript/api/itxn/readme/) / [itxn](/reference/algorand-typescript/api/itxn/namespaces/itxn/readme/) / ApplicationCallInnerTxn
+[Algorand TypeScript](docs/_md/modules) / [itxn](docs/_md/itxn/README) / [itxn](/reference/algorand-typescript/api/itxn/namespaces/itxn/readme/) / ApplicationCallInnerTxn
 
 Defined in: [itxn.ts:417](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L417)
 

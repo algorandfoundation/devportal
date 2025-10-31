@@ -1,15 +1,16 @@
 ---
 title: sumhash512
 type: function
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [op](/reference/algorand-typescript/api/op/readme/) / sumhash512
+[Algorand TypeScript](docs/_md/modules) / [op](docs/_md/op/README) / sumhash512
 
 > **sumhash512**(`a`): [`bytes`](/reference/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>
 

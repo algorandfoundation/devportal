@@ -1,15 +1,16 @@
 ---
 title: NTuple
 type: doc
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [index](/reference/algorand-typescript/api/index/readme/) / NTuple
+[Algorand TypeScript](docs/_md/modules) / [index](docs/_md/index/README) / NTuple
 
 > **NTuple**\<`T`, `N`\> = `N` _extends_ `N` ? `number` _extends_ `N` ? `T`[] : [`_TupleOf`](/reference/algorand-typescript/api/index/-internal-/type-aliases/tupleof/)\<`T`, `N`, readonly \[\]\> : `never`
 

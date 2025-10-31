@@ -4,7 +4,7 @@ import {
   createRemoveLineContaining,
   conditionalTransform,
   removeH1,
-  convertH1ToTitleMatch,
+  createReplace,
 } from '../transforms/common.js';
 import { createFrontmatterTransform } from '../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../transforms/links.js';
@@ -39,18 +39,43 @@ export const puyaTsConfig: ImportOptions = {
       ],
     },
     {
-      pattern: 'docs/_md/**/!(_media)/*.md',
+      pattern: 'docs/_md/{!(modules).md,**/!(_media|documents)/*.md}',
       basePath: 'src/content/docs/reference/algorand-typescript/api',
       transforms: [
         conditionalTransform(
           'docs/_md/**/README.md',
           createFrontmatterTransform({
             frontmatter: {
-              title: 'Index',
+              title: 'Overview',
             },
             mode: 'merge',
             preserveExisting: false,
           }),
+        ),
+        conditionalTransform(
+          'docs/_md/README.md',
+          createFrontmatterTransform({
+            frontmatter: {
+              sidebar: { order: 0 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+          createRemoveLineContaining(
+            '- [CLI Guide](documents/Compiler-CLI-Guide.md)',
+          ),
+          createRemoveLineContaining(
+            '- [Reference Docs](documents/Reference-docs.md)',
+          ),
+          createRemoveLineContaining('**Algorand TypeScript**'),
+          createReplace(
+            '(documents/Algorand-TypeScript-Language-Guide.md)',
+            '(/algokit/languages/typescript/language-guide)',
+          ),
+          createReplace(
+            '(documents/Algorand-TypeScript-Migration-Guides.md)',
+            '(/algokit/languages/typescript/migration-guides)',
+          ),
         ),
         removeH1,
       ],

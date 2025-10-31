@@ -1,15 +1,16 @@
 ---
 title: encodeArc4
 type: function
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [arc4](/reference/algorand-typescript/api/arc4/readme/) / encodeArc4
+[Algorand TypeScript](docs/_md/modules) / [arc4](docs/_md/arc4/README) / encodeArc4
 
 > **encodeArc4**\<`T`\>(`value`): [`bytes`](/reference/algorand-typescript/api/index/type-aliases/bytes/)
 

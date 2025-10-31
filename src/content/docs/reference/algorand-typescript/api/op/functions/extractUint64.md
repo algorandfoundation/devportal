@@ -1,15 +1,16 @@
 ---
 title: extractUint64
 type: function
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [op](/reference/algorand-typescript/api/op/readme/) / extractUint64
+[Algorand TypeScript](docs/_md/modules) / [op](docs/_md/op/README) / extractUint64
 
 > **extractUint64**(`a`, `b`): [`uint64`](/reference/algorand-typescript/api/index/type-aliases/uint64/)
 

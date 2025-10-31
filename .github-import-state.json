@@ -45,8 +45,8 @@
     "algorandfoundation/puya-ts@devportal": {
       "name": "Algorand Typescript",
       "repoId": "algorandfoundation/puya-ts@devportal",
-      "lastCommitSha": "ba39079b8058a2776a4b4e2a94232c991ddccaef",
-      "lastImported": "2025-10-31T09:10:26.629Z",
+      "lastCommitSha": "e47bd211ffe3de89a8ee6818ee9849b32802dc2f",
+      "lastImported": "2025-10-31T11:01:46.827Z",
       "ref": "devportal"
     }
   },

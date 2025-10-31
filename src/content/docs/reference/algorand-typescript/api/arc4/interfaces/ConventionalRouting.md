@@ -1,15 +1,16 @@
 ---
 title: ConventionalRouting
 type: interface
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [arc4](/reference/algorand-typescript/api/arc4/readme/) / ConventionalRouting
+[Algorand TypeScript](docs/_md/modules) / [arc4](docs/_md/arc4/README) / ConventionalRouting
 
 Defined in: [arc4/index.ts:31](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L31)
 

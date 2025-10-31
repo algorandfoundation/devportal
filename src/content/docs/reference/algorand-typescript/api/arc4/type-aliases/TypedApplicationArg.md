@@ -1,15 +1,16 @@
 ---
 title: TypedApplicationArg
 type: doc
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [arc4](/reference/algorand-typescript/api/arc4/readme/) / TypedApplicationArg
+[Algorand TypeScript](docs/_md/modules) / [arc4](docs/_md/arc4/README) / TypedApplicationArg
 
 > **TypedApplicationArg**\<`TArg`\> = `TArg` _extends_ [`Transaction`](/reference/algorand-typescript/api/gtxn/namespaces/gtxn/type-aliases/transaction/) ? [`GtxnToItxnFields`](GtxnToItxnFields)\<`TArg`\> : `TArg`
 

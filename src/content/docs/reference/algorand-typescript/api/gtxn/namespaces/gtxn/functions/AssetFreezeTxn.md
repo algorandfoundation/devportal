@@ -1,15 +1,16 @@
 ---
 title: AssetFreezeTxn
 type: function
+version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](docs/_md/README)
+[**Algorand TypeScript**](/reference/algorand-typescript/api/readme/)
 
 ---
 
-[Algorand TypeScript](docs/_md/modules) / [gtxn](/reference/algorand-typescript/api/gtxn/readme/) / [gtxn](/reference/algorand-typescript/api/gtxn/namespaces/gtxn/readme/) / AssetFreezeTxn
+[Algorand TypeScript](docs/_md/modules) / [gtxn](docs/_md/gtxn/README) / [gtxn](/reference/algorand-typescript/api/gtxn/namespaces/gtxn/readme/) / AssetFreezeTxn
 
 > **AssetFreezeTxn**(`n`): [`AssetFreezeTxn`](/reference/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetfreezetxn/)
 
