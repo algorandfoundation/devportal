@@ -2,14 +2,13 @@
 title: Storage
 ---
 
-Algorand smart contracts have [three different types of on-chain storage](https://dev.algorand.co/concepts/smart-contracts/storage/overview/)
-they can utilise: [Global storage](#global-storage), [Local storage](#local-storage), and [Box Storage](#box-storage). They also have access to a transient form of storage in [Scratch space](#scratch-storage).
+Algorand smart contracts can utilise [three different types of on-chain storage](https://dev.algorand.co/concepts/smart-contracts/storage/overview/): [Global storage](#global-storage), [Local storage](#local-storage), and [Box Storage](#box-storage). They also have access to a transient form of storage in [Scratch space](#scratch-storage).
 
 ## Global storage
 
-Global or Application storage is a key/value store of `bytes` or `uint64` values stored against a smart contract application. The number of values used must be declared when the application is first created and will affect the [minimum balance requirement](https://dev.algorand.co/concepts/smart-contracts/costs-constraints/#mbr) for the application. For ARC4 contracts this information is captured in the ARC32 and ARC56 specification files and automatically included in deployments.
+Global or Application storage is a key/value store of `bytes` or `uint64` values stored against a smart contract application. The number of values used must be declared when the application is first created and will affect the [minimum balance requirement](https://dev.algorand.co/concepts/smart-contracts/costs-constraints/#mbr) for the application. For ARC4 contracts, this information is captured in the ARC32 and ARC56 specification files and automatically included in deployments.
 
-Global storage values are declared using the [GlobalState](api/index/functions/GlobalState) function to create a [GlobalState](api/index/type-aliases/GlobalState) proxy object.
+Global storage values are declared using the [GlobalState](functions/index.GlobalState.html) function to create a [GlobalState](types/index.GlobalState.html) proxy object.
 
 ```ts
 import {
@@ -41,7 +40,7 @@ class DynamicAccessContract extends Contract {
 
 ## Local storage
 
-Local or Account storage is a key/value store of `bytes` or `uint64` stored against a smart contract application _and_ a single account which has opted into that contract. The number of values used must be declared when the application is first created and will affect the minimum balance requirement of an account which opts in to the contract. For ARC4 contracts this information is captured in the ARC32 and ARC56 specification files and automatically included in deployments.
+Local or Account storage is a key/value store of `bytes` or `uint64` stored against a smart contract application _and_ a single account which has opted into that contract. The number of values used must be declared when the application is first created and will affect the minimum balance requirement of an account which opts into the contract. For ARC4 contracts, this information is captured in the ARC32 and ARC56 specification files and automatically included in deployments.
 
 ```ts
 import type { bytes, uint64 } from '@algorandfoundation/algorand-typescript';
@@ -90,35 +89,24 @@ export class LocalStateDemo extends Contract {
 
 ## Box storage
 
-We provide 3 different types for accessing box storage: [Box](./api/index/functions/Box), [BoxMap](./api/index/functions/BoxMap), and [BoxRef](./api/index/functions/BoxRef). We also expose raw operations via the [AVM ops](./lg-ops) module.
+We provide two different types for accessing box storage: [Box](functions/index.Box.html) and [BoxMap](functions/index.BoxMap.html). We also expose raw operations via the [AVM ops](/algokit/languages/typescript/lg-ops/) module.
 
 Before using box storage, be sure to familiarise yourself with the [requirements and restrictions](https://dev.algorand.co/concepts/smart-contracts/storage/box/) of the underlying API.
 
-The `Box` type provides an abstraction over storing a single value in a single box. A box can be declared as a class field (in which case the key must be a compile time constant); or as a local variable within any
-subroutine. `Box` proxy instances can be passed around like any other value.
+The `Box` type provides an abstraction over storing a single value in a single box. A box can be declared as a class field (in which case the key must be a compile-time constant), or as a local variable within any subroutine. `Box` proxy instances can be passed around like any other value.
 
 `BoxMap` is similar to the `Box` type, but allows for grouping a set of boxes with a common key and content type.
-A `keyPrefix` is specified when the `BoxMap` is created and the item key can be a `Bytes` value, or anything that can be converted to `Bytes`. The final box name is the combination of `keyPrefix + key`.
-
-`BoxRef` is a specialised type for interacting with boxes which contain binary data. In addition to being able to set and read the box value, there are operations for extracting and replacing just a portion of the box data which
-is useful for minimizing the amount of reads and writes required, but also allows you to interact with byte arrays which are longer than the AVM can support (currently 4096).
+A `keyPrefix` is specified when the `BoxMap` is created and the item key can be a `Bytes` value, or anything that can be converted to `Bytes`. The final box name is the combination of `keyPrefix + key`. The `BoxMap` proxy is a function which takes a `key` argument and returns you a `Box` proxy object for that item.
 
 ```ts
 import type { Account, uint64 } from '@algorandfoundation/algorand-typescript';
-import {
-  Box,
-  BoxMap,
-  BoxRef,
-  Contract,
-  Txn,
-  assert,
-} from '@algorandfoundation/algorand-typescript';
+import { Box, BoxMap, Contract, Txn, assert } from '@algorandfoundation/algorand-typescript';
 import { bzero } from '@algorandfoundation/algorand-typescript/op';
 
 export class BoxContract extends Contract {
   boxOne = Box<string>({ key: 'one' });
   boxMapTwo = BoxMap<Account, uint64>({ keyPrefix: 'two' });
-  boxRefThree = BoxRef({ key: 'three' });
+  boxRefThree = Box<bytes>({ key: 'three' });
 
   test(): void {
     if (!this.boxOne.exists) {
@@ -141,9 +129,9 @@ export class BoxContract extends Contract {
 
 ## Scratch storage
 
-Scratch storage persists for the lifetime of a group transaction and can be used to pass values between multiple calls and/or applications in the same group. Scratch storage for logic signatures is separate from that of the application calls and logic signatures do not have access to the scratch space of other transactions in the group.
+Scratch storage persists for the lifetime of a group transaction and can be used to pass values between multiple calls and/or applications in the same group. Scratch storage for logic signatures is separate from that of the application calls, and logic signatures do not have access to the scratch space of other transactions in the group.
 
-Values can be written to scratch space using the `Scratch.store(...)` method and read from using `Scratch.loadUint64(...)` or `Scratch.loadBytes(...)` methods. These all take a scratch slot number between 0 and 255 inclusive and that scratch slot must be explicitly reserved by the contract using the `contract` options decorator.
+Values can be written to scratch space using the `Scratch.store(...)` method and read from using `Scratch.loadUint64(...)` or `Scratch.loadBytes(...)` methods. These all take a scratch slot number between 0 and 255 inclusive, and that scratch slot must be explicitly reserved by the contract using the `contract` options decorator.
 
 ```ts
 import { assert, BaseContract, Bytes, contract } from '@algorandfoundation/algorand-typescript';
@@ -168,7 +156,7 @@ export class ReserveScratchAlgo extends BaseContract {
 }
 ```
 
-Scratch space can be read from group transactions using the `gloadUint64` and `gloadBytes` ops. These ops take the group index of the target transaction, and a scratch slot number.
+Scratch space can be read from group transactions using the `gloadUint64` and `gloadBytes` ops. These ops take the group index of the target transaction and a scratch slot number.
 
 ```ts
 import { gloadBytes, gloadUint64 } from '@algorandfoundation/algorand-typescript/op';

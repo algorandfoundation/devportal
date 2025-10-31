@@ -354,3 +354,24 @@ export function createRemoveContentUpToHeading(
     return combineFrontmatterAndContent(parsed.data, cleanedContent);
   };
 }
+
+/**
+ * Creates a transform function that removes any line containing the specified text
+ * @param searchText - Text to search for in each line (case-sensitive)
+ * @returns Transform function that removes matching lines
+ */
+export function createRemoveLineContaining(
+  searchText: string,
+): TransformFunction {
+  return (content, _context) => {
+    // Parse existing frontmatter first
+    const parsed = parseFrontmatter(content);
+
+    // Split content into lines and filter out lines containing the search text
+    const lines = parsed.content.split('\n');
+    const filteredLines = lines.filter(line => !line.includes(searchText));
+    const cleanedContent = filteredLines.join('\n').trim();
+
+    return combineFrontmatterAndContent(parsed.data, cleanedContent);
+  };
+}

@@ -4,7 +4,7 @@
       "name": "NodeKit Command Reference",
       "repoId": "algorandfoundation/nodekit@main",
       "lastCommitSha": "aa66ae32c4aca54f4c711dc5876c59a5f8d570b5",
-      "lastImported": "2025-10-07T10:55:45.223Z",
+      "lastImported": "2025-10-30T20:07:05.167Z",
       "ref": "main"
     },
     "algorandfoundation/algokit-cli@main": {
@@ -18,14 +18,14 @@
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
       "lastCommitSha": "2008c8be5cabfa3f35e5ba905dfb480df67f290b",
-      "lastImported": "2025-10-07T10:55:43.311Z",
+      "lastImported": "2025-10-30T20:07:03.863Z",
       "ref": "devportal"
     },
     "algorandfoundation/algokit-cli@chore/content-fix": {
       "name": "AlgoKit CLI Docs",
       "repoId": "algorandfoundation/algokit-cli@chore/content-fix",
       "lastCommitSha": "40762f855a87326e16ce94e94673c7fefac5c025",
-      "lastImported": "2025-09-28T12:28:51.535Z",
+      "lastImported": "2025-10-30T20:07:11.453Z",
       "ref": "chore/content-fix"
     },
     "algorandfoundation/algokit-utils-ts@chore/fix-docs": {
@@ -41,6 +41,13 @@
       "lastCommitSha": "97fb35c271555ec58ccbaec3851ee32382c6ec68",
       "lastImported": "2025-10-25T12:50:45.443Z",
       "ref": "main"
+    },
+    "algorandfoundation/puya-ts@devportal": {
+      "name": "Algorand Typescript",
+      "repoId": "algorandfoundation/puya-ts@devportal",
+      "lastCommitSha": "ba39079b8058a2776a4b4e2a94232c991ddccaef",
+      "lastImported": "2025-10-31T09:10:26.629Z",
+      "ref": "devportal"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"

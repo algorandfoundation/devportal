@@ -752,6 +752,10 @@ export default defineConfig({
                       link: 'algokit/languages/typescript/overview',
                     },
                     {
+                      label: 'Language Guide',
+                      link: 'algokit/languages/typescript/language-guide',
+                    },
+                    {
                       label: 'Program Structure',
                       link: 'algokit/languages/typescript/lg-program-structure',
                     },
@@ -769,7 +773,11 @@ export default defineConfig({
                     },
                     {
                       label: 'Guiding Principles',
-                      link: 'algokit/languages/typescript/lg-guiding-principles',
+                      link: 'algokit/languages/typescript/guiding-principles',
+                    },
+                    {
+                      label: 'Migration Guides',
+                      link: 'algokit/languages/typescript/migration-guides',
                     },
                   ],
                 },
