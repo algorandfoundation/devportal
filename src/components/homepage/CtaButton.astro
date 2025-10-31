@@ -17,9 +17,9 @@ const { label, url, classList, alt } = Astro.props;
   class:list={[
     'cta-button inline-flex items-center gap-x-[11px] h-16',
     alt
-      ? 'bg-algo-lavender-400! dark:bg-white! text-[20px]! py-[11px]! px-[30px]!'
-      : 'bg-algo-lavender-200! dark:bg-algo-teal-400! text-[18px]! py-[9px]! px-[25px]!',
-    'text-white! dark:text-algo-navy! rounded-[16px]! font-bold leading-none border-transparent! mx-0!',
+      ? '!bg-algo-lavender-400 dark:!bg-white !text-[20px] !py-[11px] !px-[30px]'
+      : '!bg-algo-lavender-200 dark:!bg-algo-teal-400 !text-[18px] !py-[9px] !px-[25px]',
+    '!text-white dark:!text-algo-navy !rounded-[16px] font-bold leading-none !border-transparent !mx-0',
     classList,
   ]}
   {...Astro.props}
@@ -31,7 +31,7 @@ const { label, url, classList, alt } = Astro.props;
       alt
         ? 'w-[24px] h-[20px] lg:w-[28px] lg:h-[23px]'
         : 'w-[22px] h-[18px] lg:w-[25px] lg:h-[20px]',
-      'text-white! dark:text-algo-navy!',
+      '!text-white dark:!text-algo-navy',
     ]}
   />
 </LinkButton>
