@@ -1,0 +1,86 @@
+---
+title: 'LiquidAuth'
+description: 'A self-hosted authentication service that enables decentralized, passwordless identity for Web3 applications.'
+sidebar:
+  label: 'LiquidAuth'
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+## Overview
+
+LiquidAuth is a decentralized, self-hosted authentication service built by the Algorand Foundation.  
+It gives users full control over their data and privacy by removing intermediaries between wallets and applications.
+
+By combining **FIDO2/WebAuthn** with **WebRTC**, LiquidAuth enables passwordless authentication, links **passkeys** to crypto **keypairs**, and establishes direct, encrypted **peer-to-peer sessions** — all without relying on centralized identity providers.
+
+---
+
+## Why It Matters
+
+Most authentication systems today depend on centralized providers. These platforms store and control user credentials, introducing single points of failure — if a provider goes offline, changes policies, or is compromised, users may lose access to their accounts or data.
+
+LiquidAuth removes this dependency by enabling **peer-to-peer authentication** through cryptographic **passkeys** that can be linked to **keypairs** commonly used in wallets and other crypto systems.
+
+Users retain complete control over their credentials, while developers can integrate secure access without managing passwords or relying on external identity services.  
+This opens the possibility of creating and interacting with **passwordless systems** that are both secure and user-friendly.
+
+It simplifies authentication, enhances privacy, and gives both users and developers greater control — without adding complexity or external dependencies.
+
+---
+
+## Use Cases
+
+LiquidAuth enables decentralized and secure authentication flows between dApps and wallets.
+
+In a typical setup, the **dApp provides the LiquidAuth Service**, while **wallets act as clients**.  
+The wallet receives the `Origin` and `RequestId` from the dApp and uses them to authenticate with the service provided as the `Origin`.
+
+This structure allows developers to design authentication that is both **trustless** and **privacy-preserving**, removing the need for centralized intermediaries.
+
+### Example use cases include
+
+- **Passwordless wallet login:** Users can sign in to dApps through their wallets using passkeys instead of traditional credentials.
+- **Decentralized identity verification:** Wallets can prove ownership of a keypair to a dApp without revealing personal data.
+- **Future extensions:** Expand the same protocol to handle transaction signing and cross-dApp interactions.
+
+**Pera Wallet** is the first adopter of LiquidAuth, introducing **decentralized passkey authentication** for **passwordless Web3 access**.
+
+---
+
+## How to Use It
+
+To use LiquidAuth, a **dApp** must host the **LiquidAuth Service**, while connected **wallets** act as clients.  
+When a user initiates authentication, the dApp sends an `Origin` and `RequestId` to the wallet.  
+The wallet then uses its **passkey**, linked to a crypto **keypair**, to sign and verify the request through the LiquidAuth Service.
+
+Wallets should implement the **Offer** `SignalClient` and `WebAuthn Extension` to establish a peer-to-peer connection with the dApp.  
+dApps should implement the **Answer** `SignalClient` and host the Service.
+
+This process establishes a **secure, peer-to-peer session** between the wallet and the dApp.
+
+<LinkCard
+  title='Key Concepts'
+  href='https://liquidauth.com/guides/key-concepts/'
+  description='For full implementation details, see the Key Concepts guide'
+/>
+---
+
+## Quick Start Guide
+
+Starting with LiquidAuth is simple.  
+You’ll need to set up a **LiquidAuth Server** and connect a **Browser Client**.  
+The server handles **passkey registration** and **verification**, while the client manages **authentication requests** and **peer-to-peer communication** between dApps and wallets.
+
+<LinkCard
+  title='Getting Started Guide'
+  href='https://liquidauth.com/guides/getting-started/'
+  description='To learn how to deploy your own service and integrate a client into your browser application, see the Getting Started Guide'
+/>
+
+## Resources & References
+
+- **Official Documentation:** [https://liquidauth.com/introduction/](https://liquidauth.com/introduction/)
+- **GitHub Repository:** [https://github.com/algorandfoundation/liquid-auth](https://github.com/algorandfoundation/liquid-auth)
+- **Android Demo App:** [https://github.com/algorandfoundation/liquid-auth-android](https://github.com/algorandfoundation/liquid-auth-android)
+- **iOS Demo App:** [https://github.com/algorandfoundation/liquid-auth-ios-example](https://github.com/algorandfoundation/liquid-auth-ios-example)
