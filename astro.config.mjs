@@ -157,6 +157,7 @@ export default defineConfig({
         SiteTitle: './src/components/SiteTitle.astro',
         ThemeProvider: './src/components/CustomThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',
+        PageTitle: './src/components/PageTitle.astro',
       },
       logo: {
         light: '/src/assets/images/portal-logo-light-mode.svg',
