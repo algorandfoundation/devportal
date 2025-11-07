@@ -198,6 +198,11 @@ export default defineConfig({
               attrs: { target: '_blank', rel: 'noopener' },
             },
             {
+              label: 'AlgoKit 3.0 Video Course',
+              link: 'https://youtube.com/playlist?list=PLwRyHoehE4356E8tPKxC2XJtFEyLOHHEB&si=kfoKgu0jVObIJGWO',
+              attrs: { target: '_blank', rel: 'noopener' },
+            },
+            {
               label: 'Why Algorand?',
               link: 'getting-started/why-algorand',
             },
