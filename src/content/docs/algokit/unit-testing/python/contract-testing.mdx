@@ -2,6 +2,8 @@
 title: Smart Contract Testing
 ---
 
+import YouTube from '/src/components/YouTube.astro';
+
 This guide provides an overview of how to test smart contracts using the Algorand Python SDK (`algopy`). We will cover the basics of testing `ARC4Contract` and `Contract` classes, focusing on `abimethod` and `baremethod` decorators.
 
 ![](https://mermaid.ink/img/pako:eNqVkrFugzAQhl_Fujnp1ImhEiJrJNREWeoOV9sNVsFG9iEVBd69R5w0JE2llsk2n7-7_-AAymsDGewDtpXYrqQT_GyKFwl5vfcBnRZlT5V3IjYYSCjvKKAiCa-JzXfrObyzgTqsxRpVZZ25YOX2nnRrIomCneZzpszLkllktu0f8ratrUKyjFsXCZ1K2gTH7i01_8dGUjOT_55YeLdUFVr3zRunf5b6R5hZoFnBq9cX72_Br_Cj8bl4vJCHaVucvowYxHk5Xg_sfPkY6SbbphDL5dMgQZu29n0U5DMJwzTVGyApySKZKFSNMXKVxPJYYAGNCQ1azX_VYboqgSrTcAcZLzWGDwnSjcxhR37TOwUZhc4sIPhuX0H2jnXkXddqrrCyyKNpTqfjF5m74B8?type=png)
@@ -21,6 +23,10 @@ ctx_manager = algopy_testing_context()
 # Enter the context
 context = ctx_manager.__enter__()
 ```
+
+The following video includes a practical tutorial of how to do tests in Algorand Smart Contracts:
+
+<YouTube id='B4mzNmQB5mU' title='Algorand Smart Contract Testing - Python' />
 
 ## `algopy.ARC4Contract`
 

@@ -2,9 +2,13 @@
 title: AlgoKit TypeScript Utilities
 ---
 
+import YouTube from '/src/components/YouTube.astro';
+
 A set of core Algorand utilities written in TypeScript and released via npm that make it easier to build, test and deploy solutions on the Algorand Blockchain, including APIs, console apps and dApps. This project is part of [AlgoKit](https://github.com/algorandfoundation/algokit-cli).
 
 The goal of this library is to provide intuitive, productive utility functions that make it easier, quicker and safer to build applications on Algorand. Largely these functions provide a thin wrapper over the underlying Algorand SDK, but provide a higher level interface with sensible defaults and capabilities for common tasks that make development faster and easier.
+
+<YouTube id='s8rmuiXQmcU' title='Introduction to AlgoKit Utils Typescript' />
 
 Note: If you prefer Python there's an equivalent [Python utility library](https://github.com/algorandfoundation/algokit-utils-py).
 
@@ -20,7 +24,7 @@ This library is designed with the following principles:
 
 # Installation
 
-Before installing, you'll need to decide on the version you want to target. Version 7 and 8 have the same feature set, however v7 leverages algosdk@>=2.9.0<3.0, whereas v8 leverages algosdk@>=3.0.0. Your project and it's dependencies will help you decide which version to target.
+Before installing, you'll need to decide on the version you want to target. Version 7 and 8 have the same feature set, however v7 leverages `algosdk@>=2.9.0<3.0`, whereas v8 leverages `algosdk@>=3.0.0`. Your project and it's dependencies will help you decide which version to target.
 
 Once you've decided on the target version, this library can be installed from NPM using your favourite npm client, e.g.:
 

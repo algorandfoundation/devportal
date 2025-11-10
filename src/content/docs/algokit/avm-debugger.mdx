@@ -6,6 +6,8 @@ sidebar:
   order: 3
 ---
 
+import YouTube from '/src/components/YouTube.astro';
+
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
 import importedCode from '/src/env.d.ts?raw';
@@ -26,6 +28,8 @@ The AVM VSCode debugger enables inspection of blockchain logic through `Simulate
 While the extension works independently, projects created with algokit templates include utilities that automatically generate these debugging artifacts. For full list of available capabilities of debugger extension refer to this [documentation](https://github.com/microsoft/vscode-mock-debug).
 
 This tutorial demonstrates the workflow using a Python-based Algorand project. We will walk through identifying and fixing a bug in an Algorand smart contract using the Algorand Virtual Machine (AVM) Debugger. We’ll start with a simple, smart contract containing a deliberate bug, and by using the AVM Debugger, we’ll pinpoint and fix the issue. This guide will walk you through setting up, debugging, and fixing a smart contract using this extension.
+
+<YouTube id='yPWRlmmTSHA' title='Debugging with AlgoKit 3.0' />
 
 ## Prerequisites
 
