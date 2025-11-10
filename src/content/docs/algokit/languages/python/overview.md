@@ -4,7 +4,7 @@ title: Algorand Python
 
 Algorand Python is a partial implementation of the Python programming language that runs on the AVM. It includes a statically typed framework for development of Algorand smart contracts and logic signatures, with Pythonic interfaces to underlying AVM functionality that works with standard Python tooling.
 
-Algorand Python is compiled for execution on the AVM by PuyaPy, an optimising compiler that ensures the resulting AVM bytecode execution semantics that match the given Python code. PuyaPy produces output that is directly compatible with [AlgoKit typed clients](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate#1-typed-clients) to make deployment and calling easy.
+Algorand Python is compiled for execution on the AVM by PuyaPy, an optimising compiler that ensures the resulting AVM bytecode has execution semantics that match the given Python code. PuyaPy produces output that is directly compatible with [AlgoKit typed clients](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate.md#1-typed-clients) to make deployment and calling easy.
 
 ## Quick start
 
@@ -32,35 +32,20 @@ Alternatively, if you want to start from scratch you can do the following:
    algokit compile py contract.py
    ```
 7. You should now have `HelloWorldContract.approval.teal` and `HelloWorldContract.clear.teal` on the file system!
-8. We generally recommend using ARC-32 and [generated typed clients](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate#1-typed-clients) to have the most optimal deployment and consumption experience; to do this you need to ask PuyaPy to output an ARC-32 compatible app spec file:
+8. We generally recommend using ARC-56 and [generated typed clients](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate.md#1-typed-clients) to have the most optimal deployment and consumption experience; PuyaPy produces an ARC-56 compatible app spec file by default:
    ```shell
-   algokit compile py contract.py --output-arc32 --no-output-teal
+   algokit compile py contract.py --no-output-teal
    ```
-9. You should now have `HelloWorldContract.arc32.json`, which can be generated into a client e.g. using AlgoKit CLI:
+9. You should now have `HelloWorldContract.arc56.json`, which can be generated into a client e.g. using AlgoKit CLI:
    ```shell
-   algokit generate client HelloWorldContract.arc32.json --output client.py
+   algokit generate client HelloWorldContract.arc56.json --output client.py
    ```
 10. From here you can dive into the [examples](https://github.com/algorandfoundation/puya/tree/main/examples) or look at the [documentation](https://algorandfoundation.github.io/puya/).
 
 ## Programming with Algorand Python
 
-To get started developing with Algorand Python, please take a look at the [Language Guide](./language-guide).
+To get started developing with Algorand Python, please take a look at the [Language Guide](/algokit/languages/python/language-guide/).
 
 ## Using the PuyaPy compiler
 
-To see detailed guidance for using the PuyaPy compiler, please take a look at the [Compiler guide](./compiler).
-
-```{toctree}
----
-maxdepth: 2
-caption: Contents
-hidden: true
----
-
-language-guide
-principles
-api
-compiler
-references/algopy_testing
-references/avm_debugger
-```
+To see detailed guidance for using the PuyaPy compiler, please take a look at the [Compiler guide](/algokit/languages/python/compiler/).

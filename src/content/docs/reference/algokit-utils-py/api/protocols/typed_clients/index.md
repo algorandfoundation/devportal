@@ -49,7 +49,7 @@ only the presence of given attributes, ignoring their type signatures.
 Protocol classes can be generic, they are defined as:
 
 ```default
-class GenProto[T](Protocol):
+class GenProto[T](/reference/algokit-utils-py/api/protocols/typed_clients/protocol/):
     def meth(self) -> T:
         ...
 ```
@@ -94,7 +94,7 @@ only the presence of given attributes, ignoring their type signatures.
 Protocol classes can be generic, they are defined as:
 
 ```default
-class GenProto[T](Protocol):
+class GenProto[T](/reference/algokit-utils-py/api/protocols/typed_clients/protocol/):
     def meth(self) -> T:
         ...
 ```
