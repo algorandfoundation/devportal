@@ -460,6 +460,30 @@ export default defineConfig({
               link: 'algokit/algokit-intro',
             },
             {
+              label: 'Language Servers',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Python',
+                  items: [
+                    {
+                      label: 'Overview',
+                      link: 'algokit/language-servers/python/overview',
+                    }
+                  ]
+                },
+                {
+                  label: 'Typescript',
+                  items: [
+                    {
+                      label: 'Overview',
+                      link: 'algokit/language-servers/typescript/overview',
+                    }
+                  ]
+                }
+              ],
+            },
+            {
               label: 'CLI Tools',
               collapsed: true,
               items: [
