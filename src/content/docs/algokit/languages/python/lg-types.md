@@ -4,25 +4,42 @@ title: Types
 
 Algorand Python exposes a number of types that provide a statically typed representation of the behaviour that is possible on the Algorand Virtual Machine.
 
-```{contents} Types
-:local:
-:depth: 3
-:class: this-will-duplicate-information-and-it-is-still-useful-here
-```
+> ##### Types
+>
+> - [AVM types](#avm-types)
+>   - [UInt64](#uint64)
+>   - [Bytes](#bytes)
+>   - [String](#string)
+>   - [BigUInt](#biguint)
+>   - [bool](#bool)
+>   - [Account](#account)
+>   - [Asset](#asset)
+>   - [Application](#application)
+> - [Python built-in types](#python-built-in-types)
+>   - [bool](#id2)
+>   - [tuple](#tuple)
+>   - [typing.NamedTuple](#typing-namedtuple)
+>   - [None](#none)
+>   - [int, str, bytes, float](#int-str-bytes-float)
+> - [Template variables](#template-variables)
+> - [ARC-4 types](#arc-4-types)
+> - [Type Validation](#type-validation)
+>   - [Validated Sources of Values](#validated-sources-of-values)
+>   - [Non-Validated Sources](#non-validated-sources)
 
 ## AVM types
 
-The most basic [types on the AVM](https://devdeveloper.algorand.co/concepts/smart-contracts/avm/#stack-types)
+The most basic [types on the AVM](https://dev.algorand.co/concepts/smart-contracts/avm/#stack-types)
 are `uint64` and `bytes[]`, representing unsigned 64-bit integers and byte arrays respectively.
-These are represented by [`UInt64`](./#uint64) and [`Bytes`](./#bytes) in Algorand Python.
+These are represented by [`UInt64`]() and [`Bytes`]() in Algorand Python.
 
-There are further "bounded" types supported by the AVM, which are backed by these two simple primitives.
+There are further “bounded” types supported by the AVM, which are backed by these two simple primitives.
 For example, `bigint` represents a variably sized (up to 512-bits), unsigned integer, but is actually
-backed by a `bytes[]`. This is represented by [`BigUInt`](./#biguint) in Algorand Python.
+backed by a `bytes[]`. This is represented by [`BigUInt`]() in Algorand Python.
 
 ### UInt64
 
-`algopy.UInt64` represents the underlying AVM `uint64` type.
+[`algopy.UInt64`](/reference/algorand-python/api/api-algopy/#algopy.UInt64) represents the underlying AVM `uint64` type.
 
 It supports all the same operators as `int`, except for `/`, you must use `//` for truncating
 division instead.
@@ -49,8 +66,8 @@ num2 = num + 200 // 3
 
 ### Bytes
 
-`algopy.Bytes` represents the underlying AVM `bytes[]` type. It is intended
-to represent binary data, for UTF-8 it might be preferable to use [String](#string).
+[`algopy.Bytes`](/reference/algorand-python/api/api-algopy/#algopy.Bytes) represents the underlying AVM `bytes[]` type. It is intended
+to represent binary data, for UTF-8 it might be preferable to use [String]().
 
 ```python
 # you can instantiate with a bytes literal
@@ -72,10 +89,10 @@ assert data[:3] == abc
 assert abc in data
 ```
 
-```{hint}
-Indexing a `Bytes` returning a `Bytes` differs from the behaviour of Python's bytes type, which
+#### HINT
+
+Indexing a `Bytes` returning a `Bytes` differs from the behaviour of Python’s bytes type, which
 returns an `int`.
-```
 
 ```python
 # you can iterate
@@ -91,20 +108,20 @@ data ^= ~((base32_seq & base64_seq) | hex_seq)
 assert abc.length == 3
 ```
 
-```{note}
-See [Python builtins](lg-builtins#len---length) for an explanation of why `len()` isn't supported.
-```
+#### NOTE
+
+See [Python builtins](/algokit/languages/python/lg-builtins/#len---length) for an explanation of why `len()` isn’t supported.
 
 [See a full example](https://github.com/algorandfoundation/puya/blob/main/test_cases/stubs/bytes.py).
 
 ### String
 
-`String` is a special Algorand Python type that represents a UTF8 encoded string.
-It's backed by `Bytes`, which can be accessed through the `.bytes`.
+[`String`](/reference/algorand-python/api/api-algopy/#algopy.String) is a special Algorand Python type that represents a UTF-8 encoded string.
+It’s backed by `Bytes`, which can be accessed through the `.bytes` property.
 
 It works similarly to `Bytes`, except that it works with `str` literals rather than `bytes`
 literals. Additionally, due to a lack of AVM support for unicode data, indexing and length
-operations are not currently supported (simply getting the length of a UTF8 string is an `O(N)`
+operations are not currently supported (simply getting the length of a UTF-8 string is an `O(N)`
 operation, which would be quite costly in a smart contract). If you are happy using the length as
 the number of bytes, then you can call `.bytes.length`.
 
@@ -125,7 +142,7 @@ assert data == "abcdef"
 assert abc.startswith("ab")
 assert abc.endswith("bc")
 assert abc in data
-# you can also join multiple Strings together with a seperator:
+# you can also join multiple Strings together with a separator:
 assert algopy.String(", ").join((abc, abc)) == "abc, abc"
 # access the underlying bytes
 assert abc.bytes == b"abc"
@@ -135,7 +152,7 @@ assert abc.bytes == b"abc"
 
 ### BigUInt
 
-`algopy.BigUInt` represents a variable length (max 512-bit) unsigned integer stored
+[`algopy.BigUInt`](/reference/algorand-python/api/api-algopy/#algopy.BigUInt) represents a variable length (max 512-bit) unsigned integer stored
 as `bytes[]` in the AVM.
 
 It supports all the same operators as `int`, except for power (`**`), left and right shift (`<<`
@@ -143,9 +160,9 @@ and `>>`) and `/` (as with `UInt64`, you must use `//` for truncating division i
 
 Note that the op code costs for `bigint` math are an order of magnitude higher than those for
 `uint64` math. If you just need to handle overflow, take a look at the wide ops such as `addw`,
-`mulw`, etc - all of which are exposed through the `algopy.op` module.
+`mulw`, etc - all of which are exposed through the [`algopy.op`](/reference/algorand-python/api/api-algopyop/#module-algopy.op) module.
 
-Another contrast between `bigint` and `uint64` math is that `bigint` math ops don't immediately
+Another contrast between `bigint` and `uint64` math is that `bigint` math ops don’t immediately
 error on overflow - if the result exceeds 512-bits, then you can still access the value via
 `.bytes`, but any further math operations will fail.
 
@@ -171,7 +188,7 @@ num2 = num + 200 // 3
 
 ### bool
 
-The semantics of the AVM `bool` bounded type exactly match the semantics of Python's built-in `bool` type
+The semantics of the AVM `bool` bounded type exactly match the semantics of Python’s built-in `bool` type
 and thus Algorand Python uses the in-built `bool` type from Python.
 
 Per the behaviour in normal Python, Algorand Python automatically converts various types to `bool` when they
@@ -203,24 +220,24 @@ if a:
 
 ### Account
 
-`Account` represents a logical Account, backed by a `bytes[32]` representing the
+[`Account`](/reference/algorand-python/api/api-algopy/#algopy.Account) represents a logical Account, backed by a `bytes[32]` representing the
 bytes of the public key (without the checksum). It has various account related methods that can be called from the type.
 
-Also see `algopy.arc4.Address` if needing to represent the address as a distinct type.
+Also see [`algopy.arc4.Address`](/reference/algorand-python/api/api-algopyarc4/#algopy.arc4.Address) if needing to represent the address as a distinct type.
 
 ### Asset
 
-`Asset` represents a logical Asset, backed by a `uint64` ID.
+[`Asset`](/reference/algorand-python/api/api-algopy/#algopy.Asset) represents a logical Asset, backed by a `uint64` ID.
 It has various asset related methods that can be called from the type.
 
 ### Application
 
-`Application` represents a logical Application, backed by a `uint64` ID.
+[`Application`](/reference/algorand-python/api/api-algopy/#algopy.Application) represents a logical Application, backed by a `uint64` ID.
 It has various application related methods that can be called from the type.
 
 ## Python built-in types
 
-Unfortunately, the [AVM types](#avm-types) don't map to standard Python primitives. For instance,
+Unfortunately, the [AVM types]() don’t map to standard Python primitives. For instance,
 in Python, an `int` is unsigned, and effectively unbounded. A `bytes` similarly is limited only by
 the memory available, whereas an AVM `bytes[]` has a maximum length of 4096. In order to both maintain
 semantic compatibility and allow for a framework implementation in plain Python that will fail under the
@@ -230,7 +247,7 @@ In saying that, there are many places where built-in Python types can be used an
 
 ### bool
 
-[Per above](#bool) Algorand Python has full support for `bool`.
+[Per above]() Algorand Python has full support for `bool`.
 
 ### tuple
 
@@ -240,9 +257,9 @@ Python tuples are supported as arguments to subroutines, local variables, return
 
 Python named tuples are also supported using [`typing.NamedTuple`](https://docs.python.org/3/library/typing.html#typing.NamedTuple).
 
-```{note}
+#### NOTE
+
 Default field values and subclassing a NamedTuple are not supported
-```
 
 ```python
 import typing
@@ -262,10 +279,10 @@ returns no value.
 
 ### int, str, bytes, float
 
-The `int`, `str` and `bytes` built-in types are currently only supported as [module-level constants](./lg-modules) or literals.
+The `int`, `str` and `bytes` built-in types are currently only supported as [module-level constants](/algokit/languages/python/lg-modules/) or literals.
 
 They can be passed as arguments to various Algorand Python methods that support them or
-when interacting with certain [AVM types](#avm-types) e.g. adding a number to a `UInt64`.
+when interacting with certain [AVM types]() e.g. adding a number to a `UInt64`.
 
 `float` is not supported.
 
@@ -283,28 +300,28 @@ from algopy.arc4 import UInt512
 class TemplateVariablesContract(arc4.ARC4Contract):
     @arc4.abimethod()
     def get_bytes(self) -> Bytes:
-        return TemplateVar[Bytes]("SOME_BYTES")
+        return TemplateVar[Bytes](docs/_build/markdown/"SOME_BYTES")
 
     @arc4.abimethod()
     def get_big_uint(self) -> UInt512:
-        x = TemplateVar[BigUInt]("SOME_BIG_UINT")
+        x = TemplateVar[BigUInt](docs/_build/markdown/"SOME_BIG_UINT")
         return UInt512(x)
 
     @arc4.baremethod(allow_actions=["UpdateApplication"])
     def on_update(self) -> None:
-        assert TemplateVar[bool]("UPDATABLE")
+        assert TemplateVar[bool](docs/_build/markdown/"UPDATABLE")
 
     @arc4.baremethod(allow_actions=["DeleteApplication"])
     def on_delete(self) -> None:
-        assert TemplateVar[UInt64]("DELETABLE")
+        assert TemplateVar[UInt64](docs/_build/markdown/"DELETABLE")
 ```
 
 The resulting TEAL code that PuyaPy emits has placeholders with `TMPL_{template variable name}`
 that expects either an integer value or an encoded bytes value. This behaviour exactly
 matches what
-[AlgoKit Utils expects](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/capabilities/app-deploy#compilation-and-template-substitution).
+[AlgoKit Utils expects](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/capabilities/app-deploy.md#compilation-and-template-substitution).
 
-For more information look at the API reference for `TemplateVar`.
+For more information look at the API reference for [`TemplateVar`](/reference/algorand-python/api/api-algopy/#algopy.TemplateVar).
 
 ## ARC-4 types
 
@@ -315,6 +332,86 @@ often it may make sense to convert the ARC-4 value to a native AVM type, in whic
 the `native` property to retrieve the value. Most of the ARC-4 types also allow for mutation e.g.
 you can edit values in arrays by index.
 
-Please see the [reference documentation](./api-algopy.arc4) for the different classes that can
-be used to represent ARC-4 values or the [ARC-4 documentation](./lg-arc4) for more information
+Please see the [reference documentation](/reference/algorand-python/api/api-algopyarc4/) for the different classes that can
+be used to represent ARC-4 values or the [ARC-4 documentation](/algokit/languages/python/lg-arc4/) for more information
 about ARC-4.
+
+## Type Validation
+
+Most high-order types (i.e. not `Uint64` or `Bytes`) supported by Algorand TypeScript exist as a single byte array value with a specific encoding. When reading one of these values from an untrusted source it is important to validate the encoding of this value before using it. For example when expecting a `Account` one should validate that there are exactly 32 bytes in the underlying value.
+
+PuyaPy automatically validates some value sources for you, whilst leaving others to be explicitly validated by the developer. You should always validate untrusted sources (such as ABI args from untrusted clients) but may wish to omit validation for performance/efficiency reasons from trusted sources (such as a Global state value only your application accesses).
+
+For more detailed information on the impacts of type validation refer to [this section](https://dev.algorand.co/concepts/smart-contracts/abi/#validating-abi-values) in the developer portal.
+
+### Validated Sources of Values
+
+The following sources of ABI values are always validated by the compiler by default.
+
+- ABI method arguments (when called externally)
+- ABI return values
+- Bytes.to_fixed (with the `assert-length` strategy)
+
+**NOTE**: Argument validation can be disabled globally via the `--validate-abi-args` flags. Similarly, return value validation can be disable via the `--validate-abi-return` flag. It is also possible for a method implementation to disable validation for its own arguments via the `validate_encoding` option on the `abimethod` decorator. Per-method argument validation settings override the global compiler settings. If one wishes to disable the return validation, you can parse the return value directly from the inner transaction’s last log and use an unsafe method (`.from_bytes`) for converting the bytes to the desired ABI type.
+
+### Non-Validated Sources
+
+There are certain places where one can get an ABI value that is not fully validated:
+
+- Global state
+- Local state
+- Boxes
+- Subroutine arguments
+- Subroutine return values
+- `from_bytes` methods on ABI types
+
+There are no automatic validation steps taken for these values because it is assumed that the value was validated before reaching this point by the compiler.
+
+For example, if a method takes an ABI value as an argument and stores it in a box, the value is validated when taken as input from the method arguments but not when placed in the box. By default, all sources of ABI values other than what is listed above does have ABI validation, thus it would be inefficient to perform validation again every time the value is used.
+
+It should be noted, however, that all the validation methods the Puya compiler does automatically can be disabled on a per-method basis. This means it is theoretically possible for an incorrectly encoded value to come from one of the listed sources, but it will always be clear in the source code that this is the case.
+
+For example, given the following contract:
+
+```py
+class BoxReadWrite(ARC4Contract):
+
+    def __init__(self) -> None:
+        self.acct_box = Box(Account)
+
+    @abimethod()
+    def write_to_box(self, acct: Account) -> None:
+        self.acct_box.value = acct
+
+    @abimethod()
+    def read_from_box(self) -> Account:
+        return self.acct_box.value
+```
+
+One can be sure that the value in `acctBox` is always valid because the only source of the value is an ABI argument (`acct` in `writeToBox`). If validation was disabled, however, then one cannot trust that it is properly encoded and should perform a manual validation if required:
+
+```py
+class BoxReadWrite(ARC4Contract):
+
+    def __init__(self):
+        self.acct_box = Box(Account)
+
+    @abimethod(validate_encoding="unsafe_disabled")
+    def write_to_box(self, acct: Account) -> None:
+        acct.validate()
+        self.acct_box.value = acct
+
+
+    @abimethod()
+    def read_from_box(self) -> Account:
+        return self.acct_box.value
+```
+
+Similarly, if a the Account is constructed from bytes, a manual validation should be performed:
+
+```py
+    def write_to_box(self, acct_bytes: Bytes) -> None:
+        acct = Account.from_bytes(acct_bytes)
+        acct.validate()
+        self.acct_box.value = acct
+```

@@ -30,14 +30,7 @@ export default defineConfig({
         starlightLinksValidator({
           errorOnRelativeLinks: false,
           errorOnInvalidHashes: false,
-          exclude: [
-            '**[FUTURELINK]*',
-            '**/reference/algorand-python/**',
-            '**/reference/algorand-teal/**',
-            '**/reference/algorand-typescript/**',
-            '**/reference/rest-api/**',
-            '**/reference/sdk/**',
-          ],
+          exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
         }),
         starlightLlmsTxt({
           minify: {
@@ -835,6 +828,18 @@ export default defineConfig({
                       link: 'algokit/languages/python/overview',
                     },
                     {
+                      label: 'Migration Guide v4.x to 5.0',
+                      link: 'algokit/languages/python/lg-migration-4-5',
+                    },
+                    {
+                      label: 'Language Guide',
+                      link: 'algokit/languages/python/language-guide',
+                    },
+                    {
+                      label: 'Guiding Principles',
+                      link: 'algokit/languages/python/principles',
+                    },
+                    {
                       label: 'Program Structure',
                       link: 'algokit/languages/python/lg-structure',
                     },
@@ -848,10 +853,6 @@ export default defineConfig({
                     },
                     {
                       label: 'Module Level Constructs',
-                      link: 'algokit/languages/python/lg-modules',
-                    },
-                    {
-                      label: 'Overview',
                       link: 'algokit/languages/python/lg-modules',
                     },
                     {
@@ -1167,37 +1168,9 @@ export default defineConfig({
             {
               label: 'Algorand Python',
               collapsed: true,
-              items: [
-                {
-                  label: 'API Reference',
-                  items: [
-                    {
-                      label: 'algopy.arc4',
-                      link: 'reference/algorand-python/api-reference/algopy-arc4',
-                    },
-                    {
-                      label: 'algopy.gtxn',
-                      link: 'reference/algorand-python/api-reference/algopy-gtxn',
-                    },
-                    {
-                      label: 'algopy.itxn',
-                      link: 'reference/algorand-python/api-reference/algopy-itxn',
-                    },
-                    {
-                      label: 'algopy.op',
-                      link: 'reference/algorand-python/api-reference/algopy-op',
-                    },
-                    {
-                      label: 'algopy',
-                      link: 'reference/algorand-python/api-reference/algopy',
-                    },
-                  ],
-                },
-                {
-                  label: 'Overview',
-                  link: 'reference/algorand-python/overview',
-                },
-              ],
+              autogenerate: {
+                directory: 'reference/algorand-python/api',
+              },
             },
             {
               label: 'Algorand Typescript',

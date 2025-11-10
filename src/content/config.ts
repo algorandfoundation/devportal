@@ -18,6 +18,7 @@ import {
   utilsTypescriptConfig,
   utilsPythonConfig,
   puyaTsConfig,
+  puyaPyConfig,
 } from '../../imports/configs/index.js';
 
 const IMPORT_GITHUB = process.env.IMPORT_GITHUB === 'true';
@@ -33,6 +34,7 @@ const REMOTE_CONTENT: ImportOptions[] = [
   utilsTypescriptConfig,
   utilsPythonConfig,
   puyaTsConfig,
+  puyaPyConfig,
 ];
 
 export const collections = {

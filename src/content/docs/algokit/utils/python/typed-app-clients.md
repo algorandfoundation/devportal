@@ -4,7 +4,7 @@ title: Typed application clients
 
 Typed application clients are automatically generated, typed Python deployment and invocation clients for smart contracts that have a defined [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) or [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application specification so that the development experience is easier with less upskill ramp-up and less deployment errors. These clients give you a type-safe, intellisense-driven experience for invoking the smart contract.
 
-Typed application clients are the recommended way of interacting with smart contracts. If you don’t have/want a typed client, but have an ARC-56/ARC-32 app spec then you can use the [non-typed application clients](app-client.md) and if you want to call a smart contract you don’t have an app spec file for you can use the underlying [app management](app.md) and [app deployment](app-deploy.md) functionality to manually construct transactions.
+Typed application clients are the recommended way of interacting with smart contracts. If you don’t have/want a typed client, but have an ARC-56/ARC-32 app spec then you can use the [non-typed application clients](/algokit/utils/python/app-client/) and if you want to call a smart contract you don’t have an app spec file for you can use the underlying [app management](/algokit/utils/python/app/) and [app deployment](/algokit/utils/python/app-deploy/) functionality to manually construct transactions.
 
 ## Generating an app spec
 
@@ -27,7 +27,7 @@ Note: AlgoKit Utils >= 3.0.0 is compatible with the older 1.x.x generated typed 
 
 ## Getting a typed client instance
 
-To get an instance of a typed client you can use an [`AlgorandClient`](algorand-client.md) instance or a typed app [`Factory`]() instance.
+To get an instance of a typed client you can use an [`AlgorandClient`](/algokit/utils/python/algorand-client/) instance or a typed app [`Factory`]() instance.
 
 The approach to obtaining a client instance depends on how many app clients you require for a given app spec and if the app has already been deployed:
 

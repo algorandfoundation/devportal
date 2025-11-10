@@ -131,7 +131,7 @@ Key differences between result types:
 
 To understand how to create, simulate and send transactions consult:
 
-- The [`TransactionComposer`](transaction-composer.md) documentation for composing transaction groups
-- The [`AlgorandClient`](algorand-client.md) documentation for a high-level interface to send transactions
+- The [`TransactionComposer`](/algokit/utils/python/transaction-composer/) documentation for composing transaction groups
+- The [`AlgorandClient`](/algokit/utils/python/algorand-client/) documentation for a high-level interface to send transactions
 
 The transaction composer documentation covers the details of constructing transactions and transaction groups, while the Algorand client documentation covers the high-level interface for sending transactions.

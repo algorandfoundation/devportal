@@ -85,7 +85,7 @@ If the method to create the `ClientManager` doesn’t configure indexer or kmd (
 
 ### Creating a TestNet dispenser API client instance
 
-You can also create a [TestNet dispenser API client instance](dispenser-client.md) from `ClientManager` too.
+You can also create a [TestNet dispenser API client instance](/algokit/utils/python/dispenser-client/) from `ClientManager` too.
 
 ## Automatic retry
 

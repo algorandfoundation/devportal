@@ -2,9 +2,9 @@
 title: Logging
 ---
 
-Algorand Python provides a `log` method that allows you to emit debugging and event information as well as return values from your contracts to the caller.
+Algorand Python provides a [`log` method](/reference/algorand-python/api/api-algopy/#algopy.log) that allows you to emit debugging and event information as well as return values from your contracts to the caller.
 
-This `log` method is a superset of the [AVM `log` method](./lg-ops) that adds extra functionality:
+This `log` method is a superset of the [AVM `log` method](/algokit/languages/python/lg-ops/) that adds extra functionality:
 
 - You can log multiple items rather than a single item
 - Items are concatenated together with an optional separator (which defaults to: `""`)
@@ -15,13 +15,13 @@ This `log` method is a superset of the [AVM `log` method](./lg-ops) that adds ex
   - `str` literals / module variables (encoded as UTF-8)
   - `bytes` literals / module variables (encoded as is)
   - `Bytes` values (encoded as is)
-  - `BytesBacked` values, which includes `String`, `BigUInt`, `Account` and all of the [ARC-4 types](./api-algopy.arc4) (encoded as their underlying bytes values)
+  - `BytesBacked` values, which includes [`String`](/reference/algorand-python/api/api-algopy/#algopy.String), [`BigUInt`](/reference/algorand-python/api/api-algopy/#algopy.BigUInt), [`Account`](/reference/algorand-python/api/api-algopy/#algopy.Account) and all of the [ARC-4 types](/reference/algorand-python/api/api-algopyarc4/) (encoded as their underlying bytes values)
 
-Logged values are [available to the calling client](https://dev.algorand.co/reference/rest-apis/algod/#pendingtransactionresponse) and attached to the transaction record stored on the blockchain ledger.
+Logged values are [available to the calling client](https://dev.algorand.co/reference/rest-api/algod/#pendingtransactionresponse) and attached to the transaction record stored on the blockchain ledger.
 
-If you want to emit ARC-28 events in the logs then there is a [purpose-built function for that](./lg-arc28).
+If you want to emit ARC-28 events in the logs then there is a [purpose-built function for that](/algokit/languages/python/lg-arc28/).
 
-Here's an example contract that uses the log method in various ways:
+Here’s an example contract that uses the log method in various ways:
 
 ```python
 from algopy import BigUInt, Bytes, Contract, log, op
