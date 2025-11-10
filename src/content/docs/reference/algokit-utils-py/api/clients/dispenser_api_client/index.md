@@ -26,7 +26,7 @@ sidebar:
 
 ### _class_ algokit_utils.clients.dispenser_api_client.DispenserApiConfig
 
-#### BASE*URL *= 'https://api.dispenser.algorandfoundation.tools'_
+#### BASE_URL _= 'https://api.dispenser.algorandfoundation.tools'_
 
 ### _class_ algokit_utils.clients.dispenser_api_client.DispenserAssetName
 
@@ -38,7 +38,7 @@ Enum where members are also (and must be) ints
 
 ### _class_ algokit_utils.clients.dispenser_api_client.DispenserAsset
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 
@@ -52,7 +52,7 @@ The description of the asset
 
 ### _class_ algokit_utils.clients.dispenser_api_client.DispenserFundResponse
 
-#### tx*id *: str\_
+#### tx_id _: str_
 
 The transaction ID of the funded transaction
 
@@ -68,9 +68,9 @@ The amount of Algos that can be funded
 
 ### algokit_utils.clients.dispenser_api_client.DISPENSER_ASSETS
 
-### algokit*utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT *= 15\_
+### algokit_utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT _= 15_
 
-### algokit*utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY *= 'ALGOKIT*DISPENSER_ACCESS_TOKEN'*
+### algokit_utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY _= 'ALGOKIT_DISPENSER_ACCESS_TOKEN'_
 
 ### _class_ algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient(auth_token: str | None = None, request_timeout: int = DISPENSER_REQUEST_TIMEOUT)
 
@@ -82,9 +82,9 @@ and it will be auto loaded. If both are set, the constructor argument takes prec
 
 Default request timeout is 15 seconds. Modify by passing request_timeout to the constructor.
 
-#### auth*token *: str\_
+#### auth_token _: str_
 
-#### request*timeout *= 15\_
+#### request_timeout _= 15_
 
 #### fund(address: str, amount: int) → [DispenserFundResponse](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)
 

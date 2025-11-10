@@ -22,7 +22,7 @@ sidebar:
 
 ### algokit_utils.config.ALGOKIT_PROJECT_ROOT
 
-### algokit*utils.config.ALGOKIT_CONFIG_FILENAME *= '.algokit.toml'\_
+### algokit_utils.config.ALGOKIT_CONFIG_FILENAME _= '.algokit.toml'_
 
 ### _class_ algokit_utils.config.AlgoKitLogger(name: str = 'algokit-utils-py', level: int = logging.NOTSET)
 
@@ -66,19 +66,19 @@ Returns the logger instance.
 
 Returns the debug status.
 
-#### _property_ project*root *: pathlib.Path | None\_
+#### _property_ project_root _: pathlib.Path | None_
 
 Returns the project root path.
 
-#### _property_ trace*all *: bool\_
+#### _property_ trace_all _: bool_
 
 Indicates whether simulation traces for all operations should be stored.
 
-#### _property_ trace*buffer_size_mb *: int | float\_
+#### _property_ trace_buffer_size_mb _: int | float_
 
 Returns the size of the trace buffer in megabytes.
 
-#### _property_ populate*app_call_resource *: bool\_
+#### _property_ populate_app_call_resource _: bool_
 
 Indicates whether or not to populate app call resources.
 

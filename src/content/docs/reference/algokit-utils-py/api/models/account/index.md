@@ -21,7 +21,7 @@ sidebar:
 
 ## Module Contents
 
-### algokit*utils.models.account.DISPENSER_ACCOUNT_NAME *= 'DISPENSER'\_
+### algokit_utils.models.account.DISPENSER_ACCOUNT_NAME _= 'DISPENSER'_
 
 ### _class_ algokit_utils.models.account.TransactionSignerAccount
 
@@ -37,7 +37,7 @@ Holds the private key and address for an account.
 
 Provides access to the account’s private key, address, public key and transaction signer.
 
-#### private*key *: str\_
+#### private_key _: str_
 
 Base64 encoded private key
 
@@ -45,7 +45,7 @@ Base64 encoded private key
 
 Address for this account
 
-#### _property_ public*key *: bytes\_
+#### _property_ public_key _: bytes_
 
 The public key for this account.
 
@@ -102,7 +102,7 @@ Get the parameters for the multisig account.
 - **Returns:**
   The multisig account parameters
 
-#### _property_ signing*accounts *: list[[SigningAccount](#algokit_utils.models.account.SigningAccount)]\_
+#### _property_ signing_accounts _: list[[SigningAccount](#algokit_utils.models.account.SigningAccount)]_
 
 Get the list of accounts that are present to sign.
 

@@ -65,17 +65,17 @@ Bases: `str`, `enum.Enum`
 
 Enum representing different call types for application transactions.
 
-#### CLEAR*STATE *= 'ClearState'\_
+#### CLEAR_STATE _= 'ClearState'_
 
-#### CLOSE*OUT *= 'CloseOut'\_
+#### CLOSE_OUT _= 'CloseOut'_
 
-#### DELETE*APPLICATION *= 'DeleteApplication'\_
+#### DELETE_APPLICATION _= 'DeleteApplication'_
 
-#### NO*OP *= 'NoOp'\_
+#### NO_OP _= 'NoOp'_
 
-#### OPT*IN *= 'OptIn'\_
+#### OPT_IN _= 'OptIn'_
 
-#### UPDATE*APPLICATION *= 'UpdateApplication'\_
+#### UPDATE_APPLICATION _= 'UpdateApplication'_
 
 ### _class_ algokit_utils.applications.app_spec.arc56.CreateEnum
 
@@ -83,11 +83,11 @@ Bases: `str`, `enum.Enum`
 
 Enum representing different create types for application transactions.
 
-#### DELETE*APPLICATION *= 'DeleteApplication'\_
+#### DELETE_APPLICATION _= 'DeleteApplication'_
 
-#### NO*OP *= 'NoOp'\_
+#### NO_OP _= 'NoOp'_
 
-#### OPT*IN *= 'OptIn'\_
+#### OPT_IN _= 'OptIn'_
 
 ### _class_ algokit_utils.applications.app_spec.arc56.BareActions
 
@@ -131,7 +131,7 @@ Enum representing different compiler types.
 
 Represents compiler version information.
 
-#### commit*hash *: str | None\_ _= None_
+#### commit_hash _: str | None_ _= None_
 
 The git commit hash of the compiler
 
@@ -157,7 +157,7 @@ Information about the compiler used.
 
 The type of compiler used
 
-#### compiler*version *: [CompilerVersion](#algokit_utils.applications.app_spec.arc56.CompilerVersion)\_
+#### compiler_version _: [CompilerVersion](#algokit_utils.applications.app_spec.arc56.CompilerVersion)_
 
 Version information for the compiler
 
@@ -167,7 +167,7 @@ Version information for the compiler
 
 Network-specific application information.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The application ID on the network
 
@@ -247,11 +247,11 @@ The number of integers in local state
 
 Application state schema.
 
-#### global*state *: [Global](#algokit_utils.applications.app_spec.arc56.Global)\_
+#### global_state _: [Global](#algokit_utils.applications.app_spec.arc56.Global)_
 
 The global state schema
 
-#### local*state *: [Local](#algokit_utils.applications.app_spec.arc56.Local)\_
+#### local_state _: [Local](#algokit_utils.applications.app_spec.arc56.Local)_
 
 The local state schema
 
@@ -351,7 +351,7 @@ Method argument information.
 
 The type of the argument
 
-#### default*value *: [DefaultValue](#algokit_utils.applications.app_spec.arc56.DefaultValue) | None\_ _= None_
+#### default_value _: [DefaultValue](#algokit_utils.applications.app_spec.arc56.DefaultValue) | None_ _= None_
 
 The optional default value
 
@@ -377,11 +377,11 @@ Box storage requirements.
 
 The box key
 
-#### read*bytes *: int\_
+#### read_bytes _: int_
 
 The number of bytes to read
 
-#### write*bytes *: int\_
+#### write_bytes _: int_
 
 The number of bytes to write
 
@@ -411,7 +411,7 @@ The optional list of assets
 
 The optional box storage requirements
 
-#### inner*transaction_count *: int | None\_ _= None_
+#### inner_transaction_count _: int | None_ _= None_
 
 The optional inner transaction count
 
@@ -500,7 +500,7 @@ Source code location information.
 
 The list of program counter values
 
-#### error*message *: str | None\_ _= None_
+#### error_message _: str | None_ _= None_
 
 The optional error message
 
@@ -522,11 +522,11 @@ Storage key information.
 
 The storage key
 
-#### key*type *: str\_
+#### key_type _: str_
 
 The type of the key
 
-#### value*type *: str\_
+#### value_type _: str_
 
 The type of the value
 
@@ -540,11 +540,11 @@ The optional description
 
 Storage map information.
 
-#### key*type *: str\_
+#### key_type _: str_
 
 The type of the map keys
 
-#### value*type *: str\_
+#### value_type _: str_
 
 The type of the map values
 
@@ -566,11 +566,11 @@ Storage keys for different storage types.
 
 The box storage keys
 
-#### global*state *: dict[str, [StorageKey](#algokit_utils.applications.app_spec.arc56.StorageKey)]\_
+#### global_state _: dict[str, [StorageKey](#algokit_utils.applications.app_spec.arc56.StorageKey)]_
 
 The global state storage keys
 
-#### local*state *: dict[str, [StorageKey](#algokit_utils.applications.app_spec.arc56.StorageKey)]\_
+#### local_state _: dict[str, [StorageKey](#algokit_utils.applications.app_spec.arc56.StorageKey)]_
 
 The local state storage keys
 
@@ -584,11 +584,11 @@ Storage maps for different storage types.
 
 The box storage maps
 
-#### global*state *: dict[str, [StorageMap](#algokit_utils.applications.app_spec.arc56.StorageMap)]\_
+#### global_state _: dict[str, [StorageMap](#algokit_utils.applications.app_spec.arc56.StorageMap)]_
 
 The global state storage maps
 
-#### local*state *: dict[str, [StorageMap](#algokit_utils.applications.app_spec.arc56.StorageMap)]\_
+#### local_state _: dict[str, [StorageMap](#algokit_utils.applications.app_spec.arc56.StorageMap)]_
 
 The local state storage maps
 
@@ -616,11 +616,11 @@ The state schema
 
 Program source information.
 
-#### pc*offset_method *: [PcOffsetMethod](#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)\_
+#### pc_offset_method _: [PcOffsetMethod](#algokit_utils.applications.app_spec.arc56.PcOffsetMethod)_
 
 The PC offset method
 
-#### source*info *: list[[SourceInfo](#algokit_utils.applications.app_spec.arc56.SourceInfo)]\_
+#### source_info _: list[[SourceInfo](#algokit_utils.applications.app_spec.arc56.SourceInfo)]_
 
 The list of source info entries
 
@@ -650,7 +650,7 @@ See [https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0056.md](http
 
 The list of supported ARC version numbers
 
-#### bare*actions *: [BareActions](#algokit_utils.applications.app_spec.arc56.BareActions)\_
+#### bare_actions _: [BareActions](#algokit_utils.applications.app_spec.arc56.BareActions)_
 
 The bare call and create actions
 
@@ -670,11 +670,11 @@ The contract state information
 
 The contract struct definitions
 
-#### byte*code *: [ByteCode](#algokit_utils.applications.app_spec.arc56.ByteCode) | None\_ _= None_
+#### byte_code _: [ByteCode](#algokit_utils.applications.app_spec.arc56.ByteCode) | None_ _= None_
 
 The optional bytecode for approval and clear programs
 
-#### compiler*info *: [CompilerInfo](#algokit_utils.applications.app_spec.arc56.CompilerInfo) | None\_ _= None_
+#### compiler_info _: [CompilerInfo](#algokit_utils.applications.app_spec.arc56.CompilerInfo) | None_ _= None_
 
 The optional compiler information
 
@@ -690,7 +690,7 @@ The optional list of contract events
 
 The optional network deployment information
 
-#### scratch*variables *: dict[str, [ScratchVariables](#algokit_utils.applications.app_spec.arc56.ScratchVariables)] | None\_ _= None_
+#### scratch_variables _: dict[str, [ScratchVariables](#algokit_utils.applications.app_spec.arc56.ScratchVariables)] | None_ _= None_
 
 The optional scratch variable information
 
@@ -698,11 +698,11 @@ The optional scratch variable information
 
 The optional source code
 
-#### source*info *: [SourceInfoModel](#algokit_utils.applications.app_spec.arc56.SourceInfoModel) | None\_ _= None_
+#### source_info _: [SourceInfoModel](#algokit_utils.applications.app_spec.arc56.SourceInfoModel) | None_ _= None_
 
 The optional source code information
 
-#### template*variables *: dict[str, [TemplateVariables](#algokit_utils.applications.app_spec.arc56.TemplateVariables)] | None\_ _= None_
+#### template_variables _: dict[str, [TemplateVariables](#algokit_utils.applications.app_spec.arc56.TemplateVariables)] | None_ _= None_
 
 The optional template variable information
 

@@ -25,7 +25,7 @@ sidebar:
 
 ## Module Contents
 
-### _type_ algokit*utils.applications.app_spec.arc32.AppSpecStateDict *= dict[str, dict[str, dict]]\_
+### _type_ algokit_utils.applications.app_spec.arc32.AppSpecStateDict _= dict[str, dict[str, dict]]_
 
 Type defining Application Specification state entries
 
@@ -65,7 +65,6 @@ dict(iterable) -> new dictionary initialized as if via:
 for k, v in iterable:
 
 {' '}
-
 <br />> d[k] = v
 
 dict(
@@ -81,15 +80,15 @@ kwargs) -> new dictionary initialized with the name=value pairs
 
 #### elements _: list[list[str]]_
 
-### _type_ algokit*utils.applications.app_spec.arc32.OnCompleteActionName *= Literal['no_op', 'opt_in', 'close_out', 'clear_state', 'update_application', 'delete_application']\_
+### _type_ algokit_utils.applications.app_spec.arc32.OnCompleteActionName _= Literal['no_op', 'opt_in', 'close_out', 'clear_state', 'update_application', 'delete_application']_
 
 String literals representing on completion transaction types
 
-### _type_ algokit*utils.applications.app_spec.arc32.MethodConfigDict *= dict[OnCompleteActionName, [CallConfig](#algokit_utils.applications.app_spec.arc32.CallConfig)]\_
+### _type_ algokit_utils.applications.app_spec.arc32.MethodConfigDict _= dict[OnCompleteActionName, [CallConfig](#algokit_utils.applications.app_spec.arc32.CallConfig)]_
 
 Dictionary of dict[OnCompletionActionName, CallConfig] representing allowed actions for each on completion type
 
-### _type_ algokit*utils.applications.app_spec.arc32.DefaultArgumentType *= Literal['abi-method', 'local-state', 'global-state', 'constant']\_
+### _type_ algokit_utils.applications.app_spec.arc32.DefaultArgumentType _= Literal['abi-method', 'local-state', 'global-state', 'constant']_
 
 Literal values describing the types of default argument sources
 
@@ -110,13 +109,13 @@ be resolved prior to calling some target method
 
 MethodHints provides hints to the caller about how to call the method
 
-#### read*only *: bool\_ _= False_
+#### read_only _: bool_ _= False_
 
 #### structs _: dict[str, [StructArgDict](#algokit_utils.applications.app_spec.arc32.StructArgDict)]_
 
-#### default*arguments *: dict[str, [DefaultArgumentDict](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]\_
+#### default_arguments _: dict[str, [DefaultArgumentDict](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]_
 
-#### call*config *: MethodConfigDict\_
+#### call_config _: MethodConfigDict_
 
 #### empty() → bool
 
@@ -130,9 +129,9 @@ ARC-0032 application specification
 
 See <[https://github.com/algorandfoundation/ARCs/pull/150](https://github.com/algorandfoundation/ARCs/pull/150)>
 
-#### approval*program *: str\_
+#### approval_program _: str_
 
-#### clear*program *: str\_
+#### clear_program _: str_
 
 #### contract _: algosdk.abi.Contract_
 
@@ -140,11 +139,11 @@ See <[https://github.com/algorandfoundation/ARCs/pull/150](https://github.com/al
 
 #### schema _: StateDict_
 
-#### global*state_schema *: algosdk.transaction.StateSchema\_
+#### global_state_schema _: algosdk.transaction.StateSchema_
 
-#### local*state_schema *: algosdk.transaction.StateSchema\_
+#### local_state_schema _: algosdk.transaction.StateSchema_
 
-#### bare*call_config *: MethodConfigDict\_
+#### bare_call_config _: MethodConfigDict_
 
 #### dictify() → dict
 

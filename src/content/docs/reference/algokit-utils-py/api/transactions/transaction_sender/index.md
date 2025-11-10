@@ -31,15 +31,15 @@ The last transaction
 
 The last confirmation
 
-#### group*id *: str\_
+#### group_id _: str_
 
 The group ID
 
-#### tx*id *: str | None\_ _= None_
+#### tx_id _: str | None_ _= None_
 
 The transaction ID
 
-#### tx*ids *: list[str]\_
+#### tx_ids _: list[str]_
 
 The full array of transaction IDs
 
@@ -65,7 +65,7 @@ Result of creating a new ASA (Algorand Standard Asset).
 
 Contains the asset ID of the newly created asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the newly created asset
 
@@ -77,7 +77,7 @@ Result of an application transaction.
 
 Contains the ABI return value if applicable.
 
-#### abi*return *: ABIReturnT | None\_ _= None_
+#### abi_return _: ABIReturnT | None_ _= None_
 
 The ABI return value if applicable
 
@@ -89,11 +89,11 @@ Result of updating an application.
 
 Contains the compiled approval and clear programs.
 
-#### compiled*approval *: Any | None\_ _= None_
+#### compiled_approval _: Any | None_ _= None_
 
 The compiled approval program
 
-#### compiled*clear *: Any | None\_ _= None_
+#### compiled_clear _: Any | None_ _= None_
 
 The compiled clear state program
 
@@ -105,11 +105,11 @@ Result of creating a new application.
 
 Contains the app ID and address of the newly created application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the newly created application
 
-#### app*address *: str\_
+#### app_address _: str_
 
 The address of the newly created application
 

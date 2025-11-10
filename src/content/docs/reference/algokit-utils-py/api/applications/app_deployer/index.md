@@ -23,7 +23,7 @@ sidebar:
 
 ## Module Contents
 
-### algokit*utils.applications.app_deployer.APP_DEPLOY_NOTE_DAPP *: str\_ _= 'ALGOKIT_DEPLOYER'_
+### algokit_utils.applications.app_deployer.APP_DEPLOY_NOTE_DAPP _: str_ _= 'ALGOKIT_DEPLOYER'_
 
 ### _class_ algokit_utils.applications.app_deployer.AppDeploymentMetaData
 
@@ -43,9 +43,9 @@ Metadata about an application stored in a transaction note during creation.
 
 Information about an Algorand app
 
-#### app*id *: int\_
+#### app_id _: int_
 
-#### app*address *: str\_
+#### app_address _: str_
 
 ### _class_ algokit_utils.applications.app_deployer.ApplicationMetaData
 
@@ -53,17 +53,17 @@ Complete metadata about a deployed app
 
 #### reference _: [ApplicationReference](#algokit_utils.applications.app_deployer.ApplicationReference)_
 
-#### deploy*metadata *: [AppDeploymentMetaData](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)\_
+#### deploy_metadata _: [AppDeploymentMetaData](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)_
 
-#### created*round *: int\_
+#### created_round _: int_
 
-#### updated*round *: int\_
+#### updated_round _: int_
 
 #### deleted _: bool_ _= False_
 
-#### _property_ app*id *: int\_
+#### _property_ app_id _: int_
 
-#### _property_ app*address *: str\_
+#### _property_ app_address _: str_
 
 #### _property_ name _: str_
 
@@ -92,43 +92,43 @@ Parameters for deploying an app
 
 The deployment metadata
 
-#### deploy*time_params *: algokit*utils.models.state.TealTemplateParams | None* _= None_
+#### deploy_time_params _: algokit_utils.models.state.TealTemplateParams | None_ _= None_
 
 Optional template parameters to use during compilation
 
-#### on*schema_break *: Literal['replace', 'fail', 'append'] | [algokit_utils.applications.enums.OnSchemaBreak](/reference/algokit-utils-py/api/applications/enums/#algokit_utils.applications.enums.OnSchemaBreak) | None\_ _= None_
+#### on_schema_break _: Literal['replace', 'fail', 'append'] | [algokit_utils.applications.enums.OnSchemaBreak](/reference/algokit-utils-py/api/applications/enums/#algokit_utils.applications.enums.OnSchemaBreak) | None_ _= None_
 
 Optional on schema break action
 
-#### on*update *: Literal['update', 'replace', 'fail', 'append'] | [algokit_utils.applications.enums.OnUpdate](/reference/algokit-utils-py/api/applications/enums/#algokit_utils.applications.enums.OnUpdate) | None\_ _= None_
+#### on_update _: Literal['update', 'replace', 'fail', 'append'] | [algokit_utils.applications.enums.OnUpdate](/reference/algokit-utils-py/api/applications/enums/#algokit_utils.applications.enums.OnUpdate) | None_ _= None_
 
 Optional on update action
 
-#### create*params *: [algokit_utils.transactions.transaction_composer.AppCreateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCreateParams) | [algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)\_
+#### create_params _: [algokit_utils.transactions.transaction_composer.AppCreateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCreateParams) | [algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)_
 
 The creation parameters
 
-#### update*params *: [algokit_utils.transactions.transaction_composer.AppUpdateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppUpdateParams) | [algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)\_
+#### update_params _: [algokit_utils.transactions.transaction_composer.AppUpdateParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppUpdateParams) | [algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)_
 
 The update parameters
 
-#### delete*params *: [algokit_utils.transactions.transaction_composer.AppDeleteParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppDeleteParams) | [algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)\_
+#### delete_params _: [algokit_utils.transactions.transaction_composer.AppDeleteParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppDeleteParams) | [algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams](/reference/algokit-utils-py/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)_
 
 The deletion parameters
 
-#### existing*deployments *: [ApplicationLookup](#algokit_utils.applications.app_deployer.ApplicationLookup) | None\_ _= None_
+#### existing_deployments _: [ApplicationLookup](#algokit_utils.applications.app_deployer.ApplicationLookup) | None_ _= None_
 
 Optional existing deployments
 
-#### ignore*cache *: bool\_ _= False_
+#### ignore_cache _: bool_ _= False_
 
 Whether to ignore the cache
 
-#### max*fee *: int | None\_ _= None_
+#### max_fee _: int | None_ _= None_
 
 Optional maximum fee
 
-#### send*params *: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/models/transaction/#algokit_utils.models.transaction.SendParams) | None\_ _= None_
+#### send_params _: [algokit_utils.models.transaction.SendParams](/reference/algokit-utils-py/api/models/transaction/#algokit_utils.models.transaction.SendParams) | None_ _= None_
 
 Optional send parameters
 
@@ -140,19 +140,19 @@ The result of a deployment
 
 The application metadata
 
-#### operation*performed *: [algokit_utils.applications.enums.OperationPerformed](/reference/algokit-utils-py/api/applications/enums/#algokit_utils.applications.enums.OperationPerformed)\_
+#### operation_performed _: [algokit_utils.applications.enums.OperationPerformed](/reference/algokit-utils-py/api/applications/enums/#algokit_utils.applications.enums.OperationPerformed)_
 
 The operation performed
 
-#### create*result *: [algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
+#### create_result _: [algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None_ _= None_
 
 The create result
 
-#### update*result *: [algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
+#### update_result _: [algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None_ _= None_
 
 The update result
 
-#### delete*result *: [algokit_utils.transactions.transaction_sender.SendAppTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
+#### delete_result _: [algokit_utils.transactions.transaction_sender.SendAppTransactionResult](/reference/algokit-utils-py/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[algokit_utils.applications.abi.ABIReturn](/reference/algokit-utils-py/api/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None_ _= None_
 
 The delete result
 

@@ -66,7 +66,7 @@ The account that will receive the ALGO
 
 Amount to send
 
-#### close*remainder_to *: str | None\_ _= None_
+#### close_remainder_to _: str | None_ _= None_
 
 If given, close the sender account and send the remaining balance to this address, defaults to None
 
@@ -80,11 +80,11 @@ Parameters for creating a new asset.
 
 The total amount of the smallest divisible unit to create
 
-#### asset*name *: str | None\_ _= None_
+#### asset_name _: str | None_ _= None_
 
 The full name of the asset
 
-#### unit*name *: str | None\_ _= None_
+#### unit_name _: str | None_ _= None_
 
 The short ticker name for the asset
 
@@ -96,7 +96,7 @@ The metadata URL for the asset
 
 The amount of decimal places the asset should have
 
-#### default*frozen *: bool | None\_ _= None_
+#### default_frozen _: bool | None_ _= None_
 
 Whether the asset is frozen by default in the creator address
 
@@ -116,7 +116,7 @@ The address that can freeze the asset in any account
 
 The address that can clawback the asset from any account
 
-#### metadata*hash *: bytes | None\_ _= None_
+#### metadata_hash _: bytes | None_ _= None_
 
 Hash of the metadata contained in the metadata URL
 
@@ -126,7 +126,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for configuring an existing asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 
@@ -152,7 +152,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for freezing an asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 
@@ -170,7 +170,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for destroying an asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 
@@ -180,27 +180,27 @@ Bases: `_CommonTxnParams`
 
 Parameters for online key registration.
 
-#### vote*key *: str\_
+#### vote_key _: str_
 
 The root participation public key
 
-#### selection*key *: str\_
+#### selection_key _: str_
 
 The VRF public key
 
-#### vote*first *: int\_
+#### vote_first _: int_
 
 The first round that the participation key is valid
 
-#### vote*last *: int\_
+#### vote_last _: int_
 
 The last round that the participation key is valid
 
-#### vote*key_dilution *: int\_
+#### vote_key_dilution _: int_
 
 The dilution for the 2-level participation key
 
-#### state*proof_key *: bytes | None\_ _= None_
+#### state_proof_key _: bytes | None_ _= None_
 
 The 64 byte state proof public key commitment, defaults to None
 
@@ -210,7 +210,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for offline key registration.
 
-#### prevent*account_from_ever_participating_again *: bool\_
+#### prevent_account_from_ever_participating_again _: bool_
 
 Whether to prevent the account from ever participating again
 
@@ -220,7 +220,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for transferring an asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 
@@ -232,11 +232,11 @@ The amount of the asset to transfer (smallest divisible unit)
 
 The account to send the asset to
 
-#### clawback*target *: str | None\_ _= None_
+#### clawback_target _: str | None_ _= None_
 
 The account to take the asset from, defaults to None
 
-#### close*asset_to *: str | None\_ _= None_
+#### close_asset_to _: str | None_ _= None_
 
 The account to close the asset to, defaults to None
 
@@ -246,7 +246,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for opting into an asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 
@@ -256,7 +256,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for opting out of an asset.
 
-#### asset*id *: int\_
+#### asset_id _: int_
 
 The ID of the asset
 
@@ -270,19 +270,19 @@ Bases: `_CommonTxnParams`
 
 Parameters for calling an application.
 
-#### on*complete *: algosdk.transaction.OnComplete\_
+#### on_complete _: algosdk.transaction.OnComplete_
 
 The OnComplete action, defaults to None
 
-#### app*id *: int | None\_ _= None_
+#### app_id _: int | None_ _= None_
 
 The ID of the application, defaults to None
 
-#### approval*program *: str | bytes | None\_ _= None_
+#### approval_program _: str | bytes | None_ _= None_
 
 The program to execute for all OnCompletes other than ClearState, defaults to None
 
-#### clear*state_program *: str | bytes | None\_ _= None_
+#### clear_state_program _: str | bytes | None_ _= None_
 
 The program to execute for ClearState OnComplete, defaults to None
 
@@ -294,23 +294,23 @@ The state schema for the app, defaults to None
 
 Application arguments, defaults to None
 
-#### account*references *: list[str] | None\_ _= None_
+#### account_references _: list[str] | None_ _= None_
 
 Account references, defaults to None
 
-#### app*references *: list[int] | None\_ _= None_
+#### app_references _: list[int] | None_ _= None_
 
 App references, defaults to None
 
-#### asset*references *: list[int] | None\_ _= None_
+#### asset_references _: list[int] | None_ _= None_
 
 Asset references, defaults to None
 
-#### extra*pages *: int | None\_ _= None_
+#### extra_pages _: int | None_ _= None_
 
 Number of extra pages required for the programs, defaults to None
 
-#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
+#### box_references _: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None_ _= None_
 
 Box references, defaults to None
 
@@ -328,7 +328,6 @@ dict(iterable) -> new dictionary initialized as if via:
 for k, v in iterable:
 
 {' '}
-
 <br />> d[k] = v
 
 dict(
@@ -340,19 +339,19 @@ dict(
 kwargs) -> new dictionary initialized with the name=value pairs
 : in the keyword argument list. For example: dict(one=1, two=2)
 
-#### global*ints *: int\_
+#### global_ints _: int_
 
 The number of global ints in the schema
 
-#### global*byte_slices *: int\_
+#### global_byte_slices _: int_
 
 The number of global byte slices in the schema
 
-#### local*ints *: int\_
+#### local_ints _: int_
 
 The number of local ints in the schema
 
-#### local*byte_slices *: int\_
+#### local_byte_slices _: int_
 
 The number of local byte slices in the schema
 
@@ -362,11 +361,11 @@ Bases: `_CommonTxnParams`
 
 Parameters for creating an application.
 
-#### approval*program *: str | bytes\_
+#### approval_program _: str | bytes_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear*state_program *: str | bytes\_
+#### clear_state_program _: str | bytes_
 
 The program to execute for ClearState OnComplete
 
@@ -374,7 +373,7 @@ The program to execute for ClearState OnComplete
 
 The state schema for the app, defaults to None
 
-#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 The OnComplete action, defaults to None
 
@@ -382,23 +381,23 @@ The OnComplete action, defaults to None
 
 Application arguments, defaults to None
 
-#### account*references *: list[str] | None\_ _= None_
+#### account_references _: list[str] | None_ _= None_
 
 Account references, defaults to None
 
-#### app*references *: list[int] | None\_ _= None_
+#### app_references _: list[int] | None_ _= None_
 
 App references, defaults to None
 
-#### asset*references *: list[int] | None\_ _= None_
+#### asset_references _: list[int] | None_ _= None_
 
 Asset references, defaults to None
 
-#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
+#### box_references _: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None_ _= None_
 
 Box references, defaults to None
 
-#### extra*program_pages *: int | None\_ _= None_
+#### extra_program_pages _: int | None_ _= None_
 
 Number of extra pages required for the programs, defaults to None
 
@@ -408,15 +407,15 @@ Bases: `_CommonTxnParams`
 
 Parameters for updating an application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
-#### approval*program *: str | bytes\_
+#### approval_program _: str | bytes_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear*state_program *: str | bytes\_
+#### clear_state_program _: str | bytes_
 
 The program to execute for ClearState OnComplete
 
@@ -424,23 +423,23 @@ The program to execute for ClearState OnComplete
 
 Application arguments, defaults to None
 
-#### account*references *: list[str] | None\_ _= None_
+#### account_references _: list[str] | None_ _= None_
 
 Account references, defaults to None
 
-#### app*references *: list[int] | None\_ _= None_
+#### app_references _: list[int] | None_ _= None_
 
 App references, defaults to None
 
-#### asset*references *: list[int] | None\_ _= None_
+#### asset_references _: list[int] | None_ _= None_
 
 Asset references, defaults to None
 
-#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
+#### box_references _: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None_ _= None_
 
 Box references, defaults to None
 
-#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 The OnComplete action, defaults to None
 
@@ -450,7 +449,7 @@ Bases: `_CommonTxnParams`
 
 Parameters for deleting an application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
@@ -458,23 +457,23 @@ The ID of the application
 
 Application arguments, defaults to None
 
-#### account*references *: list[str] | None\_ _= None_
+#### account_references _: list[str] | None_ _= None_
 
 Account references, defaults to None
 
-#### app*references *: list[int] | None\_ _= None_
+#### app_references _: list[int] | None_ _= None_
 
 App references, defaults to None
 
-#### asset*references *: list[int] | None\_ _= None_
+#### asset_references _: list[int] | None_ _= None_
 
 Asset references, defaults to None
 
-#### box*references *: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit*utils.models.state.BoxIdentifier] | None* _= None_
+#### box_references _: list[[algokit_utils.models.state.BoxReference](/reference/algokit-utils-py/api/models/state/#algokit_utils.models.state.BoxReference) | algokit_utils.models.state.BoxIdentifier] | None_ _= None_
 
 Box references, defaults to None
 
-#### on*complete *: algosdk.transaction.OnComplete\_
+#### on_complete _: algosdk.transaction.OnComplete_
 
 The OnComplete action, defaults to DeleteApplicationOC
 
@@ -484,11 +483,11 @@ Bases: `_BaseAppMethodCall`
 
 Parameters for a regular ABI method call.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
-#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 The OnComplete action, defaults to None
 
@@ -498,11 +497,11 @@ Bases: `_BaseAppMethodCall`
 
 Parameters for an ABI method call that creates an application.
 
-#### approval*program *: str | bytes\_
+#### approval_program _: str | bytes_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear*state_program *: str | bytes\_
+#### clear_state_program _: str | bytes_
 
 The program to execute for ClearState OnComplete
 
@@ -510,11 +509,11 @@ The program to execute for ClearState OnComplete
 
 The state schema for the app, defaults to None
 
-#### on*complete *: algosdk.transaction.OnComplete | None\_ _= None_
+#### on_complete _: algosdk.transaction.OnComplete | None_ _= None_
 
 The OnComplete action (cannot be ClearState), defaults to None
 
-#### extra*program_pages *: int | None\_ _= None_
+#### extra_program_pages _: int | None_ _= None_
 
 Number of extra pages required for the programs, defaults to None
 
@@ -524,19 +523,19 @@ Bases: `_BaseAppMethodCall`
 
 Parameters for an ABI method call that updates an application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
-#### approval*program *: str | bytes\_
+#### approval_program _: str | bytes_
 
 The program to execute for all OnCompletes other than ClearState
 
-#### clear*state_program *: str | bytes\_
+#### clear_state_program _: str | bytes_
 
 The program to execute for ClearState OnComplete
 
-#### on*complete *: algosdk.transaction.OnComplete\_
+#### on_complete _: algosdk.transaction.OnComplete_
 
 The OnComplete action
 
@@ -546,11 +545,11 @@ Bases: `_BaseAppMethodCall`
 
 Parameters for an ABI method call that deletes an application.
 
-#### app*id *: int\_
+#### app_id _: int_
 
 The ID of the application
 
-#### on*complete *: algosdk.transaction.OnComplete\_
+#### on_complete _: algosdk.transaction.OnComplete_
 
 The OnComplete action
 
@@ -568,7 +567,7 @@ Set of transactions built by TransactionComposer.
 
 The built transactions
 
-#### method*calls *: dict[int, algosdk.abi.Method]\_
+#### method_calls _: dict[int, algosdk.abi.Method]_
 
 Map of transaction index to ABI method
 
@@ -588,7 +587,7 @@ The AtomicTransactionComposer instance
 
 The list of transactions with signers
 
-#### method*calls *: dict[int, algosdk.abi.Method]\_
+#### method_calls _: dict[int, algosdk.abi.Method]_
 
 Map of transaction index to ABI method
 
@@ -596,7 +595,7 @@ Map of transaction index to ABI method
 
 Results from sending an AtomicTransactionComposer transaction group.
 
-#### group*id *: str\_
+#### group_id _: str_
 
 The group ID if this was a transaction group
 
@@ -604,7 +603,7 @@ The group ID if this was a transaction group
 
 The confirmation info for each transaction
 
-#### tx*ids *: list[str]\_
+#### tx_ids _: list[str]_
 
 The transaction IDs that were sent
 
@@ -616,7 +615,7 @@ The transactions that were sent
 
 The ABI return values from any ABI method calls
 
-#### simulate*response *: dict[str, Any] | None\_ _= None_
+#### simulate_response _: dict[str, Any] | None_ _= None_
 
 The simulation response if simulation was performed, defaults to None
 

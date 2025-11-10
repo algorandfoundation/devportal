@@ -37,23 +37,23 @@ Details about an Algorand network.
 
 Contains network type flags and genesis information.
 
-#### is*testnet *: bool\_
+#### is_testnet _: bool_
 
 Whether the network is a testnet
 
-#### is*mainnet *: bool\_
+#### is_mainnet _: bool_
 
 Whether the network is a mainnet
 
-#### is*localnet *: bool\_
+#### is_localnet _: bool_
 
 Whether the network is a localnet
 
-#### genesis*id *: str\_
+#### genesis_id _: str_
 
 The genesis ID of the network
 
-#### genesis*hash *: str\_
+#### genesis_hash _: str_
 
 The genesis hash of the network
 
@@ -95,7 +95,7 @@ Returns an algosdk Indexer API client.
 - **Returns:**
   Indexer client instance
 
-#### _property_ indexer*if_present *: algosdk.v2client.indexer.IndexerClient | None\_
+#### _property_ indexer_if_present _: algosdk.v2client.indexer.IndexerClient | None_
 
 Returns the Indexer client if configured, otherwise None.
 
