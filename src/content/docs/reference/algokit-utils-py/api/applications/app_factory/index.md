@@ -24,17 +24,17 @@ sidebar:
 
 #### algorand _: [algokit_utils.algorand.AlgorandClient](/reference/algokit-utils-py/api/algorand/#algokit_utils.algorand.AlgorandClient)_
 
-#### app_spec _: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit_utils.\_legacy_v2.application_specification.ApplicationSpecification | str_
+#### app*spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/#algokit_utils.applications.app_spec.arc56.Arc56Contract) | algokit*utils.\_legacy_v2.application_specification.ApplicationSpecification | str*
 
-#### app_name _: str | None_ _= None_
+#### app*name *: str | None\_ _= None_
 
-#### default_sender _: str | None_ _= None_
+#### default*sender *: str | None\_ _= None_
 
-#### default_signer _: algosdk.atomic_transaction_composer.TransactionSigner | None_ _= None_
+#### default*signer *: algosdk.atomic*transaction_composer.TransactionSigner | None* _= None_
 
 #### version _: str | None_ _= None_
 
-#### compilation_params _: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/api/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None_ _= None_
+#### compilation*params *: [algokit_utils.applications.app_client.AppClientCompilationParams](/reference/algokit-utils-py/api/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None\_ _= None_
 
 ### _class_ algokit_utils.applications.app_factory.AppFactoryCreateParams
 
@@ -42,7 +42,7 @@ Bases: [`algokit_utils.applications.app_client.AppClientBareCallCreateParams`](/
 
 Parameters for creating application with bare call.
 
-#### on_complete _: algokit_utils.applications.app_client.CreateOnComplete | None_ _= None_
+#### on*complete *: algokit*utils.applications.app_client.CreateOnComplete | None* _= None_
 
 Optional on complete action
 
@@ -60,15 +60,15 @@ Base class for transaction results.
 
 Represents the result of sending a single transaction.
 
-#### app_id _: int_
+#### app*id *: int\_
 
-#### app_address _: str_
+#### app*address *: str\_
 
-#### compiled_approval _: Any | None_ _= None_
+#### compiled*approval *: Any | None\_ _= None_
 
-#### compiled_clear _: Any | None_ _= None_
+#### compiled*clear *: Any | None\_ _= None_
 
-#### abi_return _: ABIReturnT | None_ _= None_
+#### abi*return *: ABIReturnT | None\_ _= None_
 
 ### _class_ algokit_utils.applications.app_factory.SendAppFactoryTransactionResult
 
@@ -102,19 +102,19 @@ Result from deploying an application via AppFactory
 
 The application metadata
 
-#### operation_performed _: algokit_utils.applications.app_deployer.OperationPerformed_
+#### operation*performed *: algokit*utils.applications.app_deployer.OperationPerformed*
 
 The operation performed
 
-#### create_result _: [SendAppCreateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult) | None_ _= None_
+#### create*result *: [SendAppCreateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppCreateFactoryTransactionResult) | None\_ _= None_
 
 The create result
 
-#### update_result _: [SendAppUpdateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppUpdateFactoryTransactionResult) | None_ _= None_
+#### update*result *: [SendAppUpdateFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppUpdateFactoryTransactionResult) | None\_ _= None_
 
 The update result
 
-#### delete_result _: [SendAppFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppFactoryTransactionResult) | None_ _= None_
+#### delete*result *: [SendAppFactoryTransactionResult](#algokit_utils.applications.app_factory.SendAppFactoryTransactionResult) | None\_ _= None_
 
 The delete result
 
@@ -147,11 +147,11 @@ to interact with those (or other) app instances.
   )
   ```
 
-#### _property_ app_name _: str_
+#### _property_ app*name *: str\_
 
 The name of the app
 
-#### _property_ app_spec _: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/#algokit_utils.applications.app_spec.arc56.Arc56Contract)_
+#### _property_ app*spec *: [algokit_utils.applications.app_spec.arc56.Arc56Contract](/reference/algokit-utils-py/api/applications/app_spec/arc56/#algokit_utils.applications.app_spec.arc56.Arc56Contract)\_
 
 The app spec
 
@@ -201,7 +201,7 @@ Get the transaction sender.
 - **Returns:**
   The \_TransactionSender instance.
 
-#### _property_ create_transaction _: \_TransactionCreator_
+#### _property_ create*transaction *: \_TransactionCreator\_
 
 Get the transaction creator.
 

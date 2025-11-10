@@ -38,7 +38,7 @@ Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbe
   amount = AlgoAmount.from_micro_algo(1_000_000)
   ```
 
-#### _property_ micro_algo _: int_
+#### _property_ micro*algo *: int\_
 
 Return the amount as a number in µAlgo.
 

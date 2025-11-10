@@ -32,15 +32,15 @@ sidebar:
 
 ## Module Contents
 
-### _type_ algokit_utils.applications.abi.ABIValue _= bool | int | str | bytes | bytearray | list['ABIValue'] | tuple['ABIValue'] | dict[str, 'ABIValue']_
+### _type_ algokit*utils.applications.abi.ABIValue *= bool | int | str | bytes | bytearray | list['ABIValue'] | tuple['ABIValue'] | dict[str, 'ABIValue']\_
 
-### _type_ algokit_utils.applications.abi.ABIStruct _= dict[str, list[dict[str, 'ABIValue']]]_
+### _type_ algokit*utils.applications.abi.ABIStruct *= dict[str, list[dict[str, 'ABIValue']]]\_
 
-### _type_ algokit_utils.applications.abi.Arc56ReturnValueType _= ABIValue | ABIStruct | None_
+### _type_ algokit*utils.applications.abi.Arc56ReturnValueType *= ABIValue | ABIStruct | None\_
 
-### _type_ algokit_utils.applications.abi.ABIType _= algosdk.abi.ABIType_
+### _type_ algokit*utils.applications.abi.ABIType *= algosdk.abi.ABIType\_
 
-### _type_ algokit_utils.applications.abi.ABIArgumentType _= algosdk.abi.ABIType | algosdk.abi.ABITransactionType | algosdk.abi.ABIReferenceType_
+### _type_ algokit*utils.applications.abi.ABIArgumentType *= algosdk.abi.ABIType | algosdk.abi.ABITransactionType | algosdk.abi.ABIReferenceType\_
 
 ### _class_ algokit_utils.applications.abi.ABIReturn(result: algosdk.atomic_transaction_composer.ABIResult)
 
@@ -48,7 +48,7 @@ Represents the return value from an ABI method call.
 
 Wraps the raw return value and decoded value along with any decode errors.
 
-#### raw_value _: bytes | None_ _= None_
+#### raw*value *: bytes | None\_ _= None_
 
 The raw return value from the method call
 
@@ -60,15 +60,15 @@ The decoded return value from the method call
 
 The ABI method definition
 
-#### decode_error _: Exception | None_ _= None_
+#### decode*error *: Exception | None\_ _= None_
 
 The exception that occurred during decoding, if any
 
-#### tx_info _: dict[str, Any] | None_ _= None_
+#### tx*info *: dict[str, Any] | None\_ _= None_
 
 The transaction info for the method call from raw algosdk ABIResult
 
-#### _property_ is_success _: bool_
+#### _property_ is*success *: bool\_
 
 Returns True if the ABI call was successful (no decode error)
 
