@@ -2,18 +2,17 @@
 title: Storing data on-chain
 ---
 
-Algorand smart contracts have [three different types of on-chain storage](https://devdeveloper.algorand.co/concepts/smart-contracts/storage/overview/)
-they can utilise: [Global storage](#global-storage), [Local storage](#local-storage), [Box Storage](#box-storage), and [Scratch storage](#scratch-storage).
+Algorand smart contracts can utilise [three different types of on-chain storage](https://dev.algorand.co/concepts/smart-contracts/storage/overview): [Global storage](), [Local storage](), and [Box Storage](). They also have access to a transient form of storage in [Scratch space]().
 
 The life-cycle of a smart contract matches the semantics of Python classes when you consider
-deploying a smart contract as "instantiating" the class. Any calls to that smart contract are made
+deploying a smart contract as “instantiating” the class. Any calls to that smart contract are made
 to that instance of the smart contract, and any state assigned to `self.` variables will persist
 across different invocations (provided the transaction it was a part of succeeds, of course). You can
 deploy the same contract class multiple times, each will become a distinct and isolated instance.
 
-During a single smart contract execution there is also the ability to use "temporary" storage
-either global to the contract execution via [Scratch storage](#scratch-storage), or local to
-the current method via [local variables and subroutine params](./lg-structure#subroutines).
+During a single smart contract execution there is also the ability to use “temporary” storage
+either global to the contract execution via [Scratch storage](), or local to
+the current method via [local variables and subroutine params](/algokit/languages/python/lg-structure/#subroutines).
 
 ## Global storage
 
@@ -22,16 +21,16 @@ by key. There are [AVM limits to the amount of global storage that can be alloca
 
 This is represented in Algorand Python by either:
 
-1. Assigning any [Algorand Python typed](./lg-types) value to an instance variable (e.g. `self.value = UInt64(3)`).
+1. Assigning any [Algorand Python typed](/algokit/languages/python/lg-types/) value to an instance variable (e.g. `self.value = UInt64(3)`).
    - Use this approach if you just require a terse API for getting and setting a state value
-2. Using an instance of `GlobalState`, which gives some extra features to understand
-   and control the value and the metadata of it (which propagates to the ARC-32 app spec file)
+2. Using an instance of `GlobalState`, which gives [some extra features](/reference/algorand-python/api/api-algopy/#algopy.GlobalState) to understand
+   and control the value and the metadata of it (which propagates to the ARC-32/ARC-56 app spec file)
    - Use this approach if you need to:
      - Omit a default/initial value
      - Delete the stored value
      - Check if a value exists
      - Specify the exact key bytes
-     - Include a description to be included in App Spec files (ARC32/ARC56)
+     - Include a description to be included in App Spec files (ARC-32/ARC-56)
 
 For example:
 
@@ -50,15 +49,15 @@ error_if_not_set = self.global_int_no_default.value
 ```
 
 These values can be assigned anywhere you have access to `self` i.e. any instance methods/subroutines. The information about
-global storage is automatically included in the ARC-32 app spec file and thus will automatically appear within
-any [generated typed clients](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate#1-typed-clients).
+global storage is automatically included in the ARC-32/ARC-56 app spec file and thus will automatically appear within
+any [generated typed clients](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate.md#1-typed-clients).
 
 ## Local storage
 
 Local storage is state that is stored against the contract instance for a specific account and can be retrieved
 by key and account address. There are [AVM limits to the amount of local storage that can be allocated to a contract](https://dev.algorand.co/concepts/smart-contracts/storage/overview/#local-storage).
 
-This is represented in Algorand Python by using an instance of `LocalState`.
+This is represented in Algorand Python by using an instance of [`LocalState`](/reference/algorand-python/api/api-algopy/#algopy.LocalState).
 
 For example:
 
@@ -91,12 +90,12 @@ def delete_data(self, for_account: Account) -> None:
 ```
 
 These values can be assigned anywhere you have access to `self` i.e. any instance methods/subroutines. The information about
-local storage is automatically included in the ARC-32 app spec file and thus will automatically appear within
-any [generated typed clients](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate#1-typed-clients).
+local storage is automatically included in the ARC-32/ARC-56 app spec file and thus will automatically appear within
+any [generated typed clients](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/generate.md#1-typed-clients).
 
 ## Box storage
 
-We provide 3 different types for accessing box storage: Box, BoxMap, and BoxRef. We also expose raw operations via the [AVM ops](./lg-ops) module.
+We provide two different types for accessing box storage: [Box](/reference/algorand-python/api/api-algopy/#algopy.Box), and [BoxMap](/reference/algorand-python/api/api-algopy/#algopy.BoxMap). We also expose raw operations via the [AVM ops](/algokit/languages/python/lg-ops/) module.
 
 Before using box storage, be sure to familiarise yourself with the [requirements and restrictions](https://dev.algorand.co/concepts/smart-contracts/storage/overview/#boxes) of the underlying API.
 
@@ -129,6 +128,37 @@ class MyContract(Contract):
         return self.box_a.value[4] == arc4.UInt32(2)
 ```
 
+In addition to being able to set and read the box value, there are operations for extracting and replacing just a portion of the box data which is useful for minimizing the amount of reads and writes required, but also allows you to interact with byte arrays which are longer than the AVM can support (currently 4096).
+
+```python
+from algopy import Box, Contract, Global, Txn
+
+
+class MyContract(Contract):
+    def approval_program(self) -> bool:
+        my_blob = Box(Bytes, key=b"blob")
+
+        sender_bytes = Txn.sender.bytes
+        app_address = Global.current_application_address.bytes
+        assert my_blob.create(size=8000)
+        my_blob.replace(0, sender_bytes)
+        my_blob.splice(0, 0, app_address)
+        first_64 = my_blob.extract(0, 32 * 2)
+        assert first_64 == app_address + sender_bytes
+
+        value, exists =  my_blob.maybe()
+        assert exists
+        del my_blob.value
+        value, exists = my_blob.maybe()
+        assert not exists
+
+        assert my_blob.get(default=sender_bytes) == sender_bytes
+        my_blob.create(size=sender_bytes + app_address)
+        assert my_blob, "Blob exists"
+        assert my_blob.length == 64
+        return True
+```
+
 `BoxMap` is similar to the `Box` type, but allows for grouping a set of boxes with a common key and content type.
 A custom `key_prefix` can optionally be provided, with the default being to use the variable name as the prefix.
 The key can be a `Bytes` value, or anything that can be converted to `Bytes`. The final box name is the combination of `key_prefix + key`.
@@ -152,35 +182,7 @@ class MyContract(Contract):
         return self.my_map[Txn.sender] == String("Hello World")
 ```
 
-`BoxRef` is a specialised type for interacting with boxes which contain binary data. In addition to being able to set and read the box value, there are operations for extracting and replacing just a portion of the box data which
-is useful for minimizing the amount of reads and writes required, but also allows you to interact with byte arrays which are longer than the AVM can support (currently 4096).
-
-```python
-from algopy import BoxRef, Contract, Global, Txn
-
-
-class MyContract(Contract):
-    def approval_program(self) -> bool:
-        my_blob = BoxRef(key=b"blob")
-
-        sender_bytes = Txn.sender.bytes
-        app_address = Global.current_application_address.bytes
-        assert my_blob.create(8000)
-        my_blob.replace(0, sender_bytes)
-        my_blob.splice(0, 0, app_address)
-        first_64 = my_blob.extract(0, 32 * 2)
-        assert first_64 == app_address + sender_bytes
-        assert my_blob.delete()
-        value, exists = my_blob.maybe()
-        assert not exists
-        assert my_blob.get(default=sender_bytes) == sender_bytes
-        my_blob.create(sender_bytes + app_address)
-        assert my_blob, "Blob exists"
-        assert my_blob.length == 64
-        return True
-```
-
-If none of these abstractions suit your needs, you can use the box storage [AVM ops](./lg-ops) to interact with box storage. These ops match closely to the opcodes available on the AVM.
+If none of these abstractions suit your needs, you can use the box storage [AVM ops](/algokit/languages/python/lg-ops/) to interact with box storage. These ops match closely to the opcodes available on the AVM.
 
 For example:
 
@@ -195,7 +197,7 @@ See the [voting contract example](https://github.com/algorandfoundation/puya/tre
 
 ## Scratch storage
 
-To use stratch storage you need to [register the scratch storage that you want to use](./lg-structure#contract-class-configuration) and then you can use the scratch storage [AVM ops](./lg-ops).
+To use scratch storage you need to [register the scratch storage that you want to use](/algokit/languages/python/lg-structure/#contract-class-configuration) and then you can use the scratch storage [AVM ops](/algokit/languages/python/lg-ops/).
 
 For example:
 

@@ -6,7 +6,7 @@ In Algorand Python, error handling and assertions play a crucial role in ensurin
 
 ## Assertions
 
-Assertions allow you to immediately fail a smart contract if a [Boolean statement or value](./lg-types#bool) evaluates to `False`. If an assertion fails, it immediately stops the execution of the contract and marks the call as a failure.
+Assertions allow you to immediately fail a smart contract if a [Boolean statement or value](/algokit/languages/python/lg-types/#bool) evaluates to `False`. If an assertion fails, it immediately stops the execution of the contract and marks the call as a failure.
 
 In Algorand Python, you can use the Python built-in `assert` statement to make assertions in your code.
 
@@ -25,14 +25,14 @@ The (optional) string value provided with an assertion, if provided, will be add
 ## Explicit failure
 
 For scenarios where you need to fail a contract explicitly, you can use
-the `op.err()` operation. This operation causes the TEAL program to immediately
+the [`op.err()`](/reference/algorand-python/api/api-algopyop/#algopy.op.err) operation. This operation causes the TEAL program to immediately
 and unconditionally fail.
 
-Alternatively `op.exit(0)` will achieve the same result. A non-zero value will
+Alternatively [`op.exit(0)`](/reference/algorand-python/api/api-algopyop/#algopy.op.exit) will achieve the same result. A non-zero value will
 do the opposite and immediately succeed.
 
 ## Exception handling
 
-The AVM doesn't provide error trapping semantics so it's not possible to implement `raise` and `catch`.
+The AVM doesn’t provide error trapping semantics so it’s not possible to implement `raise` and `catch`.
 
-For more details see [Unsupported Python features](lg-unsupported-python-features#raise-tryexceptfinally).
+For more details see [Unsupported Python features](/algokit/languages/python/lg-unsupported-python-features/#raise-try-except-finally).

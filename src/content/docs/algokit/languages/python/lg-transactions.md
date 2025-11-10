@@ -7,25 +7,25 @@ creating and submitting inner transactions from your smart contract.
 
 The following types are available:
 
-| Group Transactions                                                   | Inner Transaction Field sets                     | Inner Transaction                                                              |
-| -------------------------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
-| [PaymentTransaction](algopy.gtxn.PaymentTransaction)                 | [Payment](algopy.itxn.Payment)                   | [PaymentInnerTransaction](algopy.itxn.PaymentInnerTransaction)                 |
-| [KeyRegistrationTransaction](algopy.gtxn.KeyRegistrationTransaction) | [KeyRegistration](algopy.itxn.KeyRegistration)   | [KeyRegistrationInnerTransaction](algopy.itxn.KeyRegistrationInnerTransaction) |
-| [AssetConfigTransaction](algopy.gtxn.AssetConfigTransaction)         | [AssetConfig](algopy.itxn.AssetConfig)           | [AssetConfigInnerTransaction](algopy.itxn.AssetConfigInnerTransaction)         |
-| [AssetTransferTransaction](algopy.gtxn.AssetTransferTransaction)     | [AssetTransfer](algopy.itxn.AssetTransfer)       | [AssetTransferInnerTransaction](algopy.itxn.AssetTransferInnerTransaction)     |
-| [AssetFreezeTransaction](algopy.gtxn.AssetFreezeTransaction)         | [AssetFreeze](algopy.itxn.AssetFreeze)           | [AssetFreezeInnerTransaction](algopy.itxn.AssetFreezeInnerTransaction)         |
-| [ApplicationCallTransaction](algopy.gtxn.ApplicationCallTransaction) | [ApplicationCall](algopy.itxn.ApplicationCall)   | [ApplicationCallInnerTransaction](algopy.itxn.ApplicationCallInnerTransaction) |
-| [Transaction](algopy.gtxn.Transaction)                               | [InnerTransaction](algopy.itxn.InnerTransaction) | [InnerTransactionResult](algopy.itxn.InnerTransactionResult)                   |
+| Group Transactions                                                                                                  | Inner Transaction Field sets                                                                    | Inner Transaction                                                                                                             |
+| ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| [PaymentTransaction](/reference/algorand-python/api/api-algopygtxn/#algopy.gtxn.PaymentTransaction)                 | [Payment](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.Payment)                   | [PaymentInnerTransaction](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.PaymentInnerTransaction)                 |
+| [KeyRegistrationTransaction](/reference/algorand-python/api/api-algopygtxn/#algopy.gtxn.KeyRegistrationTransaction) | [KeyRegistration](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.KeyRegistration)   | [KeyRegistrationInnerTransaction](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.KeyRegistrationInnerTransaction) |
+| [AssetConfigTransaction](/reference/algorand-python/api/api-algopygtxn/#algopy.gtxn.AssetConfigTransaction)         | [AssetConfig](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.AssetConfig)           | [AssetConfigInnerTransaction](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.AssetConfigInnerTransaction)         |
+| [AssetTransferTransaction](/reference/algorand-python/api/api-algopygtxn/#algopy.gtxn.AssetTransferTransaction)     | [AssetTransfer](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.AssetTransfer)       | [AssetTransferInnerTransaction](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.AssetTransferInnerTransaction)     |
+| [AssetFreezeTransaction](/reference/algorand-python/api/api-algopygtxn/#algopy.gtxn.AssetFreezeTransaction)         | [AssetFreeze](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.AssetFreeze)           | [AssetFreezeInnerTransaction](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.AssetFreezeInnerTransaction)         |
+| [ApplicationCallTransaction](/reference/algorand-python/api/api-algopygtxn/#algopy.gtxn.ApplicationCallTransaction) | [ApplicationCall](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.ApplicationCall)   | [ApplicationCallInnerTransaction](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.ApplicationCallInnerTransaction) |
+| [Transaction](/reference/algorand-python/api/api-algopygtxn/#algopy.gtxn.Transaction)                               | [InnerTransaction](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.InnerTransaction) | [InnerTransactionResult](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.InnerTransactionResult)                   |
 
 ## Group Transactions
 
-Group transactions can be used as ARC4 parameters or instantiated from a group index.
+Group transactions can be used as ARC-4 parameters or instantiated from a group index.
 
-### ARC4 parameter
+### ARC-4 parameter
 
-Group transactions can be used as parameters in ARC4 method
+Group transactions can be used as parameters in ARC-4 method
 
-For example to require a payment transaction in an ARC4 ABI method:
+For example to require a payment transaction in an ARC-4 ABI method:
 
 ```python
 import algopy
@@ -42,7 +42,7 @@ class MyContract(algopy.ARC4Contract):
 
 Group transactions can also be created using the group index of the transaction.
 If instantiating one of the type specific transactions they will be checked to ensure the transaction is of the expected type.
-[Transaction](algopy.gtxn.Transaction) is not checked for a specific type and provides access to all transaction fields
+[Transaction](/reference/algorand-python/api/api-algopygtxn/#algopy.gtxn.Transaction) is not checked for a specific type and provides access to all transaction fields
 
 For example, to obtain a reference to a payment transaction:
 
@@ -59,7 +59,7 @@ def process_payment(group_index: algopy.UInt64) -> None:
 ## Inner Transactions
 
 Inner transactions are defined using the parameter types, and can then be submitted individually by calling the
-`.submit()` method, or as a group by calling `submit_txns`
+`.submit()` method, or as a group by calling [`submit_txns`](/reference/algorand-python/api/api-algopyitxn/#algopy.itxn.submit_txns)
 
 ### Examples
 
@@ -124,7 +124,7 @@ def example() -> tuple[Asset, Bytes]:
     return asset1_txn.created_asset, app_txn.logs(1)
 ```
 
-#### Create an ARC4 application, and then call it
+#### Create an ARC-4 application, and then call it
 
 ```python
 from algopy import Bytes, arc4, itxn, subroutine

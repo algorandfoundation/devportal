@@ -5,9 +5,11 @@ import {
   conditionalTransform,
   removeH1,
   createReplace,
+  convertH1ToTitleMatch,
 } from '../transforms/common.js';
 import { createFrontmatterTransform } from '../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../transforms/links.js';
+import { create } from 'domain';
 
 /**
  * Import configuration for puya-ts repository
@@ -44,13 +46,7 @@ export const puyaTsConfig: ImportOptions = {
       transforms: [
         conditionalTransform(
           'docs/_md/**/README.md',
-          createFrontmatterTransform({
-            frontmatter: {
-              title: 'Overview',
-            },
-            mode: 'merge',
-            preserveExisting: false,
-          }),
+          convertH1ToTitleMatch(/\[`([^`]+)`\]/),
         ),
         conditionalTransform(
           'docs/_md/README.md',
@@ -103,19 +99,66 @@ export const puyaPyConfig: ImportOptions = {
   includes: [
     {
       pattern:
-        'docs/{lg-itxns,lg-ops,lg-program-structure,lg-storage,lg-types,migration-guides,guiding-principles,readme,language-guide}.md',
+        'docs/_build/markdown/{!(api*|front-end-guide).md,**/!(api*|front-end-guide)/*.md}',
       basePath: 'src/content/docs/algokit/languages/python',
       pathMappings: {
-        'docs/readme.md': 'overview.md',
+        'docs/_build/markdown/index.md': 'overview.md',
+      },
+      transforms: [convertH1ToTitle],
+    },
+    {
+      pattern: 'docs/_build/markdown/api*.md',
+      basePath: 'src/content/docs/reference/algorand-python/api',
+      pathMappings: {
+        'docs/_build/markdown/api.md': 'index.md',
       },
       transforms: [
         conditionalTransform(
-          'docs/readme.md',
-          createRemoveLineContaining('- [CLI Guide](./cli.md)'),
-          createRemoveLineContaining('- [Reference Docs](./reference.md)'),
+          'docs/_build/markdown/api-*.md',
+          convertH1ToTitleMatch(/\[`([^`]+)`\]/),
+          createFrontmatterTransform({
+            frontmatter: {
+              tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+        ),
+        conditionalTransform(
+          'docs/_build/markdown/!(api-*).md',
           convertH1ToTitle,
         ),
-        removeH1,
+        conditionalTransform(
+          'docs/_build/markdown/api.md',
+          createFrontmatterTransform({
+            frontmatter: {
+              sidebar: { order: 0 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+        ),
+      ],
+    },
+    {
+      pattern: 'docs/_build/markdown/front-end-guide/**/*.md',
+      basePath:
+        'src/content/docs/reference/algorand-python/api/front-end-guide',
+      pathMappings: {
+        'docs/_build/markdown/front-end-guide/index.md': 'overview.md',
+      },
+      transforms: [
+        convertH1ToTitle,
+        conditionalTransform(
+          'docs/_build/markdown/front-end-guide/index.md',
+          createFrontmatterTransform({
+            frontmatter: {
+              sidebar: { order: 0 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+        ),
       ],
     },
   ],

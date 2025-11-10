@@ -1,26 +1,26 @@
 ---
-title: ARC-28 - Structured event logging
+title: 'ARC-28: Structured event logging'
 ---
 
-[ARC-28](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0028) provides a methodology for structured logging by Algorand smart contracts. It introduces the concept of Events, where data contained in logs may be categorized and structured.
+[ARC-28](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0028.md) provides a methodology for structured logging by Algorand smart contracts. It introduces the concept of Events, where data contained in logs may be categorized and structured.
 
-Each Event is identified by a unique 4-byte identifier derived from its `Event Signature`. The Event Signature is a UTF-8 string comprised of the event's name, followed by the names of the [ARC-4](./lg-arc4) data types contained in the event, all enclosed in parentheses (`EventName(type1,type2,...)`) e.g.:
+Each Event is identified by a unique 4-byte identifier derived from its `Event Signature`. The Event Signature is a UTF-8 string comprised of the event’s name, followed by the names of the [ARC-4](/algokit/languages/python/lg-arc4/) data types contained in the event, all enclosed in parentheses (`EventName(type1,type2,...)`) e.g.:
 
-```
+```default
 Swapped(uint64,uint64)
 ```
 
-Events are emitting by including them in the [log output](./lg-logs). The metadata that identifies the event should then be included in the ARC-4 contract output so that a calling client can parse the logs to parse the structured data out. This part of the ARC-28 spec isn't yet implemented in Algorand Python, but it's on the roadmap.
+Events are emitted by including them in the [log output](/algokit/languages/python/lg-logs/). The metadata that identifies the event should then be included in the ARC-4 contract output so that a calling client can parse the logs to parse the structured data out. This part of the ARC-28 spec isn’t yet implemented in Algorand Python, but it’s on the roadmap.
 
 ## Emitting Events
 
 To emit an ARC-28 event in Algorand Python you can use the `emit` function, which appears in the `algopy.arc4` namespace for convenience since it heavily uses ARC-4 types and is essentially an extension of the ARC-4 specification. This function takes care of encoding the event payload to conform to the ARC-28 specification and there are 3 overloads:
 
-- An [ARC-4 struct](./lg-arc4), from what the name of the struct will be used as a the event name and the struct parameters will be used as the event fields - `arc4.emit(Swapped(a, b))`
-- An event signature as a [string literal (or module variable)](./lg-types), followed by the values - `arc4.emit("Swapped(uint64,uint64)", a, b)`
-- An event name as a [string literal (or module variable)](./lg-types), followed by the values - `arc4.emit("Swapped", a, b)`
+- An [ARC-4 struct](/algokit/languages/python/lg-arc4/#structs), from which the name of the struct will be used as the event name and the struct parameters will be used as the event fields - `arc4.emit(Swapped(a, b))`
+- An event signature as a [string literal (or module variable)](/algokit/languages/python/lg-types/), followed by the values - `arc4.emit("Swapped(uint64,uint64)", a, b)`
+- An event name as a [string literal (or module variable)](/algokit/languages/python/lg-types/), followed by the values - `arc4.emit("Swapped", a, b)`
 
-Here's an example contract that emits events:
+Here’s an example contract that emits events:
 
 ```python
 from algopy import ARC4Contract, arc4
@@ -37,7 +37,7 @@ class EventEmitter(ARC4Contract):
         arc4.emit("Swapped", b, a)
 ```
 
-It's worth noting that the ARC-28 event signature needs to be known at compile time so the event name can't be a dynamic type and must be a static string literal or string module constant. If you want to emit dynamic events you can do so using the [`log` method](./lg-logs), but you'd need to manually construct the correct series of bytes and the compiler won't be able to emit the ARC-28 metadata so you'll need to also manually parse the logs in your client.
+It’s worth noting that the ARC-28 event signature needs to be known at compile time so the event name can’t be a dynamic type and must be a static string literal or string module constant. If you want to emit dynamic events you can do so using the [`log` method](/algokit/languages/python/lg-logs/), but you’d need to manually construct the correct series of bytes and the compiler won’t be able to emit the ARC-28 metadata so you’ll need to also manually parse the logs in your client.
 
 Examples of manually constructing an event:
 

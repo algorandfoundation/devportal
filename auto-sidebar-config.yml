@@ -22,3 +22,14 @@ configs:
       collapsed: true
       cascade:
         - collapsed
+  - folder: reference/algorand-python/api
+    content: |
+      collapsed: true
+      cascade:
+        - collapsed
+  - folder: reference/algorand-python/api/front-end-guide
+    content: |
+      label: Front-end Guide
+      collapsed: true
+      cascade:
+        - collapsed
