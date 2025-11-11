@@ -1,0 +1,233 @@
+---
+title: Algorand Language Servers
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Code } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import algokitTsInstallPage from '@images/algokit-ts-lang-server-1.png';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+import LangServerBugExample from '/examples/algokit/ts/algokit-ts-lang-servers-bug.ts?raw';
+import LangServerBugFixedExample from '/examples/algokit/ts/algokit-ts-lang-servers-fixed.ts?raw';
+import algokitTypeScriptError from '@images/algokit-ts-lang-servers-error.png';
+import algokitTypeScriptErrorTip from '@images/algokit-ts-lang-servers-error-tip.png';
+import algokitTypeScriptFixed from '@images/algokit-ts-lang-servers-fixed.png';
+import algokitTypeScriptTerminalOutput from '@images/algokit-ts-lang-servers-terminal-output.png';
+
+The Algorand TypeScript language extension brings language server-powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed TypeScript language server to provide Algorand TypeScript-specific diagnostics and code actions.
+
+This tutorial demonstrates how to set up and use the Algorand Typescript extension to identify and resolve common issues early in your development workflow. We'll walk through identifying and fixing bugs in an Algorand Typescript smart contract using the extension's diagnostic features.
+
+## Prerequisites
+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.80.0 or higher
+- [puya-ts](https://www.npmjs.com/package/@algorandfoundation/puya-ts) 1.0.1 or higher
+- Basic understanding of [Algorand smart contracts using TypeScript](/concepts/smart-contracts/languages/typescript/)
+
+:::caution
+The Algorand TypeScript extension is currently in **beta**. It works alongside your existing TypeScript language server to provide additional Algorand-specific diagnostics and code actions for smart contract development.
+:::
+
+## Step 1: Install the Extension
+
+Install the Algorand TypeScript language extension from the VSCode Marketplace:
+
+1. Open the Extensions view in VSCode (`Ctrl+Shift+X` or `Cmd+Shift+X`)
+2. Search for `Algorand TypeScript`
+3. Click `Install` on the extension published by the Algorand Foundation
+
+Alternatively, install directly from the [marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode).
+
+<Image src={algokitTsInstallPage} alt='Algokit Typescript Language Server Installation Page' />
+
+## Step 2: Set Up Your Project
+
+### Initialize an AlgoKit Project
+
+If you're starting a new project, use AlgoKit to generate a TypeScript smart contract project:
+
+```bash
+algokit init
+```
+
+Select options for a TypeScript smart contract project from the interactive prompts.
+
+If you haven't installed algokit, follow these [steps](/getting-started/algokit-quick-start).
+
+<LinkCard
+  title='Create Algokit project'
+  href='/getting-started/algokit-quick-start#create-an-algokit-project'
+  description='Create your first Algokit project'
+/>
+
+### Install puya-ts
+
+The extension requires `puya-ts` version `1.0.1` or higher. Install it as a dev dependency in your project:
+
+```bash
+npm install --save-dev @algorandfoundation/puya-ts
+```
+
+## Step 3: Enable the Language Server
+
+For new AlgoKit projects, the language server is enabled by default. For existing projects, you need to enable it manually:
+
+1. Open your workspace settings (`File` > `Preferences` > `Settings` or `Cmd+,`)
+2. Search for `algorandTypeScript.languageServer.enable`
+3. Check the box to enable the language server
+
+Alternatively, add this to your `.vscode/settings.json`:
+
+```json
+{
+  "algorandTypeScript.languageServer.enable": true
+}
+```
+
+To see detailed information about what the language server is doing:
+
+1. Open the `Output panel` (`View` > `Output` or `Ctrl+Shift+U`)
+2. Select `Algorand TypeScript Language Server` from the dropdown
+3. Review logs for diagnostics and extension activity
+
+<Image
+  src={algokitTypeScriptTerminalOutput}
+  alt='Algokit TypeScript Language Server Terminal Output'
+/>
+
+## Step 4: Create an Example Smart Contract
+
+Let's create a simple contract with a deliberate bug to demonstrate the extension's capabilities. Replace the Hello World contract with the below contract:
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:ts'>
+    <Code code={LangServerBugExample} lang='ts' frame='none' showLineNumbers={false} />
+  </TabItem>
+</Tabs>
+
+This contract contains an intentional bug when updating the `current_vote` in the `cast_vote` function.
+
+## Step 5: Observe Real-Time Diagnostics
+
+Once you save the file, the Algorand TypeScript extension will analyze your code. You should see a red squiggly line under `current_votes` in the if condition.
+
+The extension will display the error `cannot create multiple references to a mutable stack type, the value must be copied using clone(...) when being assigned to another variable` in the contract when you hover over the red line.
+
+<Image src={algokitTypeScriptError} alt='Algokit TypeScript Language Example Code Error' />
+
+## Step 6: Apply Quick Fixes
+
+The extension also provides quick fixes for the issue. Look for the lightbulb icon (💡) that appears. It suggests the fix `💡 Wrap expression in clone(...)`. Click on the suggestion to add the fix.
+
+<Image src={algokitTypeScriptErrorTip} alt='Algokit TypeScript Language Example Code Error Tip' />
+
+## Step 7: Fix the Smart Contract
+
+Based on the extension's diagnostics, your contract should now be updated as follows to address the identified issue:
+
+<Tabs syncKey='lang'>
+  <TabItem label='TypeScript' icon='seti:python'>
+    <Code code={LangServerBugFixedExample} lang='py' frame='none' showLineNumbers={false} />
+  </TabItem>
+</Tabs>
+
+## Step 8: Verify the Fixes
+
+After applying the fixes, verify that warnings and errors have cleared in the Problems Panel. The extension will continue to provide real-time feedback as you progress in your development.
+
+<Image src={algokitTypeScriptFixed} alt='Algokit TypeScript Language Example Code Fixed' />
+
+## Configuration Options
+
+The extension provides additional configuration options for customizing your experience:
+
+### Log Level
+
+Adjust the verbosity of messages in the Output panel:
+
+```json
+{
+  "algorandTypeScript.languageServer.logLevel": "info"
+}
+```
+
+Available levels: `off`, `error`, `warn`, `info`, `debug`, `trace`
+
+## Troubleshooting
+
+If the extension isn't working as expected:
+
+### Extension Not Providing Diagnostics
+
+1. Verify the extension is installed and enabled:
+
+   - Check Extensions view for `Algorand TypeScript`
+   - Ensure it shows as `Enabled`
+
+2. Confirm the language server is enabled:
+
+   - Check workspace settings for `algorandTypeScript.languageServer.enable`
+   - Should be set to `true`
+
+3. Verify puya-ts installation:
+
+```bash
+   npm list @algorandfoundation/puya-ts
+```
+
+- Ensure version `1.0.1` or higher is installed
+
+### File Not Recognized
+
+The extension only activates for `.algo.ts` files. Ensure your smart contract files use this extension.
+
+### Conflicting Diagnostics
+
+If you see duplicate or conflicting messages:
+
+- The extension works alongside the standard TypeScript language server
+- Some messages come from TypeScript, others from the Algorand extension
+- Both sets of diagnostics are valuable for different aspects of your code
+
+### Check Language Server Logs
+
+1. Open Output panel (`View` > `Output`)
+2. Select `Algorand TypeScript Language Server` from dropdown
+3. Look for error messages or warnings
+4. Set log level to `debug` for more detailed information
+
+## Summary
+
+In this tutorial, we covered:
+
+- Installing and configuring the Algorand TypeScript language extension
+- Setting up a project with puya-ts
+- Using real-time diagnostics to identify issues
+- Applying quick fixes to resolve common problems
+- Troubleshooting common extension issues
+
+The Algorand TypeScript extension provides valuable assistance throughout your development process, helping you write more correct and robust smart contracts by catching issues early and suggesting improvements as you code.
+
+## Next Steps
+
+Learn Algorand TypeScript concepts, write and test smart contracts, debug with AVM Debugger, and follow best practices.
+
+<CardGrid>
+  <LinkCard
+    title='Algorand TypeScript Concepts'
+    href='/concepts/smart-contracts/languages/typescript'
+    description='Explore Algorand TypeScript concepts'
+  />
+  <LinkCard
+    title='Unit Tests'
+    href='/algokit/unit-testing/typescript/overview'
+    description='Learn about unit testing TypeScript contracts'
+  />
+  <LinkCard title='AVM Debugger' href='/algokit/avm-debugger' description='Try the AVM Debugger' />
+  <LinkCard
+    title='Smart Contract Best Practices'
+    href='/concepts/smart-contracts/best-practices'
+    description='Review smart contract best practices'
+  />
+</CardGrid>
