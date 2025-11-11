@@ -7,7 +7,7 @@ import { Code } from '@astrojs/starlight/components';
 import { Aside } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 import algokitPythonInstallPage from '@images/algokit-python-lang-server-1.png';
-import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
 import LangServerBugExample from '/examples/algokit/py/algokit-py-lang-servers-bug.py?raw';
 import LangServerBugFixedExample from '/examples/algokit/py/algokit-py-lang-servers-fixed.py?raw';
 import algokitPythonError from '@images/algokit-py-lang-servers-error.png';
@@ -248,21 +248,16 @@ The Algorand Python extension provides valuable assistance throughout your devel
 
 Learn Algorand Python concepts, write and test smart contracts, debug with AVM Debugger, and follow best practices.
 
-<CardGrid>
-  <LinkCard
-    title='Algorand Python Concepts'
-    href='/concepts/smart-contracts/languages/python'
-    description='Explore Algorand Python concepts'
-  />
-  <LinkCard
-    title='Unit Tests'
-    href='/algokit/unit-testing/python/overview'
-    description='Learn about unit testing Python contracts'
-  />
-  <LinkCard title='AVM Debugger' href='/algokit/avm-debugger' description='Try the AVM Debugger' />
-  <LinkCard
-    title='Smart Contract Best Practices'
-    href='/concepts/smart-contracts/best-practices'
-    description='Review smart contract best practices'
-  />
-</CardGrid>
+{' '}
+
+<LinkCard
+  title='Algorand Python Concepts'
+  href='/concepts/smart-contracts/languages/python'
+  description='Explore Algorand Python concepts'
+/>
+<LinkCard
+  title='Unit Tests'
+  href='/algokit/unit-testing/python/overview'
+  description='Learn about unit testing Python contracts'
+/>
+<LinkCard title='AVM Debugger' href='/algokit/avm-debugger' description='Try the AVM Debugger' />

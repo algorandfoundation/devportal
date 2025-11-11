@@ -7,7 +7,7 @@ import { Code } from '@astrojs/starlight/components';
 import { Aside } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 import algokitTsInstallPage from '@images/algokit-ts-lang-server-1.png';
-import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
 import LangServerBugExample from '/examples/algokit/ts/algokit-ts-lang-servers-bug.ts?raw';
 import LangServerBugFixedExample from '/examples/algokit/ts/algokit-ts-lang-servers-fixed.ts?raw';
 import algokitTypeScriptError from '@images/algokit-ts-lang-servers-error.png';
@@ -213,21 +213,16 @@ The Algorand TypeScript extension provides valuable assistance throughout your d
 
 Learn Algorand TypeScript concepts, write and test smart contracts, debug with AVM Debugger, and follow best practices.
 
-<CardGrid>
-  <LinkCard
-    title='Algorand TypeScript Concepts'
-    href='/concepts/smart-contracts/languages/typescript'
-    description='Explore Algorand TypeScript concepts'
-  />
-  <LinkCard
-    title='Unit Tests'
-    href='/algokit/unit-testing/typescript/overview'
-    description='Learn about unit testing TypeScript contracts'
-  />
-  <LinkCard title='AVM Debugger' href='/algokit/avm-debugger' description='Try the AVM Debugger' />
-  <LinkCard
-    title='Smart Contract Best Practices'
-    href='/concepts/smart-contracts/best-practices'
-    description='Review smart contract best practices'
-  />
-</CardGrid>
+{' '}
+
+<LinkCard
+  title='Algorand TypeScript Concepts'
+  href='/concepts/smart-contracts/languages/typescript'
+  description='Explore Algorand TypeScript concepts'
+/>
+<LinkCard
+  title='Unit Tests'
+  href='/algokit/unit-testing/typescript/overview'
+  description='Learn about unit testing TypeScript contracts'
+/>
+<LinkCard title='AVM Debugger' href='/algokit/avm-debugger' description='Try the AVM Debugger' />
