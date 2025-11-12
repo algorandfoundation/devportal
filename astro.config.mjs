@@ -1014,6 +1014,20 @@ export default defineConfig({
               ],
             },
             {
+              label: 'Language Servers',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Algorand Python',
+                  link: 'algokit/language-servers/algorand-python',
+                },
+                {
+                  label: 'Algorand TypeScript',
+                  link: 'algokit/language-servers/algorand-typescript',
+                }
+              ],
+            },
+            {
               label: 'Subscriber',
               collapsed: true,
               items: [

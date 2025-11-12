@@ -34,6 +34,59 @@ Your main task is to implement the business logic behind your application. You c
 
 This approach encourages clean, readable code while still harnessing the full power of the Algorand blockchain. It also makes it easier for developers who are familiar with Python or TypeScript to contribute without learning a new, lower-level language.
 
+### Enhanced IDE Support with VS Code Extensions
+
+To streamline your smart contract development experience, AlgoKit provides dedicated VS Code extensions that work alongside standard language servers to deliver Algorand-specific features. These extensions provide real-time validation, diagnostics, and intelligent code assistance as you write your contracts.
+
+#### Algorand Python Extension
+
+The Algorand Python language extension brings language server powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed Python language server to provide Algorand Python specific diagnostics and code actions.
+
+**Key capabilities:**
+
+- Works alongside your installed Python language server
+- Automatically discovers the PuyaPy version installed in your project venv
+- Algorand Python smart contract-aware code analysis, diagnostics and validation
+- Quick fixes for common Algorand Python issues, helping you learn the Algorand Python language as you build
+
+**Requirements:**
+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.80.0 or higher
+- [Python extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+- [Python](https://www.python.org/downloads/) 3.12 or higher
+- [PuyaPy](https://pypi.org/project/puyapy/) 5.3.0 or higher
+
+<LinkCard
+  title='Algorand Python Extension'
+  href='https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode'
+  description='Install the Algorand Python VS Code extension (currently in `beta`)'
+/>
+
+#### Algorand TypeScript Extension
+
+The Algorand TypeScript language extension brings language server powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed TypeScript language server to provide Algorand TypeScript specific diagnostics and code actions.
+
+**Key capabilities:**
+
+- Works alongside your installed TypeScript language server
+- Algorand TypeScript smart contract-aware code analysis, diagnostics and validation
+- Quick fixes for common TypeScript issues, helping you learn the Algorand TypeScript language as you build
+
+**Requirements:**
+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.80.0 or higher
+- [puya-ts](https://www.npmjs.com/package/@algorandfoundation/puya-ts) 1.0.1 or higher
+
+<LinkCard
+  title='Algorand TypeScript Extension'
+  href='https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode'
+  description='Install the Algorand TypeScript VS Code extension (currently in `beta`)'
+/>
+
+:::tip
+Both extensions are currently in `beta` and actively being improved. They complement the AlgoKit development workflow by catching common mistakes early and providing contextual guidance directly in your editor.
+:::
+
 ### Build and generate artifacts
 
 Once your contract logic is ready, you can run:
