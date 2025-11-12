@@ -1012,22 +1012,12 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
-                  label: 'Python',
-                  items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/language-servers/python/overview',
-                    }
-                  ]
+                  label: 'Algorand Python',
+                  link: 'algokit/language-servers/algorand-python',
                 },
                 {
-                  label: 'Typescript',
-                  items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/language-servers/typescript/overview',
-                    }
-                  ]
+                  label: 'Algorand TypeScript',
+                  link: 'algokit/language-servers/algorand-typescript',
                 }
               ],
             },
