@@ -19,6 +19,7 @@ import {
   utilsPythonConfig,
   puyaTsConfig,
   puyaPyConfig,
+  algokitSubscriberConfig,
 } from '../../imports/configs/index.js';
 
 const IMPORT_GITHUB = process.env.IMPORT_GITHUB === 'true';
@@ -35,6 +36,7 @@ const REMOTE_CONTENT: ImportOptions[] = [
   utilsPythonConfig,
   puyaTsConfig,
   puyaPyConfig,
+  algokitSubscriberConfig,
 ];
 
 export const collections = {
