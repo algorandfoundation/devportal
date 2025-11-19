@@ -1024,7 +1024,7 @@ export default defineConfig({
                 {
                   label: 'Algorand TypeScript',
                   link: 'algokit/language-servers/algorand-typescript',
-                }
+                },
               ],
             },
             {
@@ -1215,6 +1215,13 @@ export default defineConfig({
               collapsed: true,
               autogenerate: {
                 directory: 'reference/algokit-utils-ts/api',
+              },
+            },
+            {
+              label: 'AlgoKit Subscriber (Typescript)',
+              collapsed: true,
+              autogenerate: {
+                directory: 'reference/algokit-subscriber-ts/api',
               },
             },
             {

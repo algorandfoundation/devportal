@@ -56,12 +56,12 @@
       "lastImported": "2025-11-10T10:37:29.827Z",
       "ref": "main"
     },
-    "algorandfoundation/puya-ts@devportal": {
-      "name": "Algorand Typescript",
-      "repoId": "algorandfoundation/puya-ts@devportal",
-      "lastCommitSha": "e47bd211ffe3de89a8ee6818ee9849b32802dc2f",
-      "lastImported": "2025-10-31T11:01:46.827Z",
-      "ref": "devportal"
+    "larkiny/algokit-subscriber-ts@docs-dist": {
+      "name": "Algokit Subscriber TS Command Reference",
+      "repoId": "larkiny/algokit-subscriber-ts@docs-dist",
+      "lastCommitSha": "9f53c845b605c66fbab3971effa8e9a4212fe9e2",
+      "lastImported": "2025-11-16T09:07:04.259Z",
+      "ref": "docs-dist"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"

@@ -10,3 +10,4 @@ export { nodekitConfig } from './nodekit.js';
 export { algokitCLIConfig } from './algokit-cli.js';
 export { utilsTypescriptConfig, utilsPythonConfig } from './algokit-utils.js';
 export { puyaTsConfig, puyaPyConfig } from './puya.js';
+export { algokitSubscriberConfig } from './subscriber.js';
