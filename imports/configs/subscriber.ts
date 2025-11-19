@@ -17,6 +17,10 @@ export const algokitSubscriberConfig: ImportOptions = {
       pattern: 'latest/api/**/*',
       basePath: 'src/content/docs/reference/algokit-subscriber-ts/api',
     },
+    {
+      pattern: 'latest/guides/**/*',
+      basePath: 'src/content/docs/algokit/subscriber/typescript',
+    },
   ],
   enabled: true,
   clear: false,
