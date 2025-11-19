@@ -59,8 +59,8 @@
     "larkiny/algokit-subscriber-ts@docs-dist": {
       "name": "Algokit Subscriber TS Command Reference",
       "repoId": "larkiny/algokit-subscriber-ts@docs-dist",
-      "lastCommitSha": "9f53c845b605c66fbab3971effa8e9a4212fe9e2",
-      "lastImported": "2025-11-16T09:07:04.259Z",
+      "lastCommitSha": "a0d5dd9b2fe8a74c5880ff40664cc61380151059",
+      "lastImported": "2025-11-19T11:27:33.510Z",
       "ref": "docs-dist"
     }
   },
