@@ -110,6 +110,14 @@ jobs:
             echo "SOURCE_COMMIT=unknown" >> $GITHUB_ENV
           fi
 
+      - name: Clear Existing Imported Docs
+        run: |
+          echo "🧹 Clearing existing docs for $SOURCE_REPO"
+          if ! pnpm run import:clear "$SOURCE_REPO"; then
+            echo "❌ Failed to clean docs for $SOURCE_REPO. Check clean-docs-import script output for details." >&2
+            exit 1
+          fi
+
       - name: Import Documentation
         id: import
         run: |
