@@ -1,4 +1,5 @@
 import type { ImportOptions } from '@larkiny/astro-github-loader';
+import { convertH1ToTitle } from '../transforms/common.js';
 import { createFrontmatterTransform } from '../transforms/frontmatter.js';
 
 /**
@@ -20,6 +21,7 @@ export const algokitSubscriberConfig: ImportOptions = {
     {
       pattern: 'latest/guides/**/*',
       basePath: 'src/content/docs/algokit/subscriber/typescript',
+      transforms: [convertH1ToTitle],
     },
   ],
   enabled: true,
