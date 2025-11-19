@@ -10,7 +10,7 @@ title: AlgorandSubscriber
 
 Defined in: [src/subscriber.ts:20](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L20)
 
-Handles the logic for subscribing to the Algorand blockchain and emitting events.
+Handles the logic for subscribing to the Algorand and emitting events.
 
 ## Constructors
 
