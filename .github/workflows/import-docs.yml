@@ -16,17 +16,31 @@ on:
         type: string
         default: "latest"
 
+permissions:
+  contents: write
+  pull-requests: write
+  workflow: write
+
 jobs:
   import-documentation:
     name: Import Documentation and Create PR
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      AUTOMATION_TOKEN: ${{ secrets.IMPORT_DOCS_TOKEN }}
 
     steps:
+      - name: Validate Automation Token
+        run: |
+          if [ -z "$AUTOMATION_TOKEN" ]; then
+            echo "❌ Missing IMPORT_DOCS_TOKEN secret. Please add a PAT with 'repo' and 'workflow' scopes." >&2
+            exit 1
+          fi
+
       - name: Checkout DevPortal
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ env.AUTOMATION_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -104,7 +118,7 @@ jobs:
           echo "Version: $SOURCE_VERSION"
           pnpm run import:docs
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ env.AUTOMATION_TOKEN }}
           IMPORT_SOURCE_REPO: ${{ env.SOURCE_REPO }}
           IMPORT_SOURCE_BRANCH: ${{ env.SOURCE_BRANCH }}
           IMPORT_SOURCE_VERSION: ${{ env.SOURCE_VERSION }}
@@ -142,7 +156,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         id: create-pr
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ env.AUTOMATION_TOKEN }}
           branch: ${{ env.PR_BRANCH }}
           commit-message: |
             docs: import documentation from ${{ env.SOURCE_NAME }}
@@ -193,7 +207,7 @@ jobs:
         if: steps.git-check.outputs.has_changes == 'true' && steps.create-pr.outputs.pull-request-number
         uses: peter-evans/create-or-update-comment@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ env.AUTOMATION_TOKEN }}
           issue-number: ${{ steps.create-pr.outputs.pull-request-number }}
           body: |
             ### 🔍 Import Summary
