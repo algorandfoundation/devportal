@@ -248,3 +248,4 @@ jobs:
           else
             echo "❌ Documentation import failed"
             exit 1
+          fi
