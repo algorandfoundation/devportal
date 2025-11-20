@@ -55,13 +55,6 @@
       "lastCommitSha": "97fb35c271555ec58ccbaec3851ee32382c6ec68",
       "lastImported": "2025-11-10T10:37:29.827Z",
       "ref": "main"
-    },
-    "larkiny/algokit-subscriber-ts@docs-dist": {
-      "name": "Algokit Subscriber TS Command Reference",
-      "repoId": "larkiny/algokit-subscriber-ts@docs-dist",
-      "lastCommitSha": "ffbc347fc561a841743d04c2ac270b71d1ea6351",
-      "lastImported": "2025-11-20T09:14:12.078Z",
-      "ref": "docs-dist"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"
