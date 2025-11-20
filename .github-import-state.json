@@ -17,8 +17,8 @@
     "algorandfoundation/arcs@devportal": {
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "2008c8be5cabfa3f35e5ba905dfb480df67f290b",
-      "lastImported": "2025-10-30T20:07:03.863Z",
+      "lastCommitSha": "b3f659c6c839edcab984007e7ed787d2c5245299",
+      "lastImported": "2025-11-20T09:14:04.211Z",
       "ref": "devportal"
     },
     "algorandfoundation/algokit-cli@chore/content-fix": {
@@ -55,13 +55,6 @@
       "lastCommitSha": "97fb35c271555ec58ccbaec3851ee32382c6ec68",
       "lastImported": "2025-11-10T10:37:29.827Z",
       "ref": "main"
-    },
-    "larkiny/algokit-subscriber-ts@docs-dist": {
-      "name": "Algokit Subscriber TS Command Reference",
-      "repoId": "larkiny/algokit-subscriber-ts@docs-dist",
-      "lastCommitSha": "9f53c845b605c66fbab3971effa8e9a4212fe9e2",
-      "lastImported": "2025-11-16T09:07:04.259Z",
-      "ref": "docs-dist"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"
