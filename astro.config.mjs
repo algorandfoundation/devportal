@@ -30,14 +30,7 @@ export default defineConfig({
         starlightLinksValidator({
           errorOnRelativeLinks: false,
           errorOnInvalidHashes: false,
-          exclude: [
-            '**[FUTURELINK]*',
-            '**/reference/algorand-python/**',
-            '**/reference/algorand-teal/**',
-            '**/reference/algorand-typescript/**',
-            '**/reference/rest-api/**',
-            '**/reference/sdk/**',
-          ],
+          exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
         }),
         starlightLlmsTxt({
           minify: {
@@ -157,6 +150,7 @@ export default defineConfig({
         SiteTitle: './src/components/SiteTitle.astro',
         ThemeProvider: './src/components/CustomThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',
+        PageTitle: './src/components/PageTitle.astro',
       },
       logo: {
         light: '/src/assets/images/portal-logo-light-mode.svg',
@@ -194,6 +188,11 @@ export default defineConfig({
             {
               label: 'Interactive AlgoKit Code Tutorials',
               link: 'https://tutorials.dev.algorand.co',
+              attrs: { target: '_blank', rel: 'noopener' },
+            },
+            {
+              label: 'AlgoKit 3.0 Video Course',
+              link: 'https://youtube.com/playlist?list=PLwRyHoehE4356E8tPKxC2XJtFEyLOHHEB&si=kfoKgu0jVObIJGWO',
               attrs: { target: '_blank', rel: 'noopener' },
             },
             {
@@ -829,6 +828,18 @@ export default defineConfig({
                       link: 'algokit/languages/python/overview',
                     },
                     {
+                      label: 'Migration Guide v4.x to 5.0',
+                      link: 'algokit/languages/python/lg-migration-4-5',
+                    },
+                    {
+                      label: 'Language Guide',
+                      link: 'algokit/languages/python/language-guide',
+                    },
+                    {
+                      label: 'Guiding Principles',
+                      link: 'algokit/languages/python/principles',
+                    },
+                    {
                       label: 'Program Structure',
                       link: 'algokit/languages/python/lg-structure',
                     },
@@ -842,10 +853,6 @@ export default defineConfig({
                     },
                     {
                       label: 'Module Level Constructs',
-                      link: 'algokit/languages/python/lg-modules',
-                    },
-                    {
-                      label: 'Overview',
                       link: 'algokit/languages/python/lg-modules',
                     },
                     {
@@ -1007,6 +1014,20 @@ export default defineConfig({
               ],
             },
             {
+              label: 'Language Servers',
+              collapsed: true,
+              items: [
+                {
+                  label: 'Algorand Python',
+                  link: 'algokit/language-servers/algorand-python',
+                },
+                {
+                  label: 'Algorand TypeScript',
+                  link: 'algokit/language-servers/algorand-typescript',
+                },
+              ],
+            },
+            {
               label: 'Subscriber',
               collapsed: true,
               items: [
@@ -1161,37 +1182,9 @@ export default defineConfig({
             {
               label: 'Algorand Python',
               collapsed: true,
-              items: [
-                {
-                  label: 'API Reference',
-                  items: [
-                    {
-                      label: 'algopy.arc4',
-                      link: 'reference/algorand-python/api-reference/algopy-arc4',
-                    },
-                    {
-                      label: 'algopy.gtxn',
-                      link: 'reference/algorand-python/api-reference/algopy-gtxn',
-                    },
-                    {
-                      label: 'algopy.itxn',
-                      link: 'reference/algorand-python/api-reference/algopy-itxn',
-                    },
-                    {
-                      label: 'algopy.op',
-                      link: 'reference/algorand-python/api-reference/algopy-op',
-                    },
-                    {
-                      label: 'algopy',
-                      link: 'reference/algorand-python/api-reference/algopy',
-                    },
-                  ],
-                },
-                {
-                  label: 'Overview',
-                  link: 'reference/algorand-python/overview',
-                },
-              ],
+              autogenerate: {
+                directory: 'reference/algorand-python/api',
+              },
             },
             {
               label: 'Algorand Typescript',
@@ -1222,6 +1215,13 @@ export default defineConfig({
               collapsed: true,
               autogenerate: {
                 directory: 'reference/algokit-utils-ts/api',
+              },
+            },
+            {
+              label: 'AlgoKit Subscriber (Typescript)',
+              collapsed: true,
+              autogenerate: {
+                directory: 'reference/algokit-subscriber-ts/api',
               },
             },
             {
@@ -1281,6 +1281,10 @@ export default defineConfig({
             {
               label: 'Overview',
               link: 'resources/overview',
+            },
+            {
+              label: 'Liquid Auth',
+              link: 'resources/liquid-auth',
             },
             {
               label: 'Algorand Specifications',

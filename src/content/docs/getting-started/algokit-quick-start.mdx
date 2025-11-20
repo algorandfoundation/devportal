@@ -81,6 +81,91 @@ Before you install AlgoKit, you need to install the following prerequisites:
 - [Docker](https://docker.com/download/)
 - [VSCode](https://code.visualstudio.com/download) (recommended)
 
+## Recommended IDE Extensions
+
+To maximize your Algorand smart contract development experience, install dedicated Visual Studio Code extensions for Python and TypeScript. These extensions work alongside standard language servers to provide Algorand-specific validation, diagnostics, and code automation, so you get instant feedback and fixes as you write contracts.
+
+<Tabs syncKey="lang">
+
+<TabItem label="TypeScript" icon="seti:typescript">
+
+The Algorand TypeScript language extension brings language server powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed TypeScript language server to provide Algorand TypeScript specific diagnostics and code actions.
+
+#### Requirements:
+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.80.0 or higher
+- [puya-ts](https://www.npmjs.com/package/@algorandfoundation/puya-ts) 1.0.1 or higher
+
+#### Quick Start
+
+<Steps>
+  1. Install this Algorand TypeScript language extension 2. Install the puya-ts package on your
+  system. We recommend installing as a project dev dependency. 3. Enable the Algorand TypeScript
+  language server (`algorandTypeScript.languageServer.enable`) for your workspace (not required if
+  using a new AlgoKit project) 4. Open an Algorand TypeScript smart contract file (.algo.ts)
+</Steps>
+
+#### Configuration
+
+This extension exposes the following settings:
+
+<Steps>
+  1. `algorandTypeScript.languageServer.enable`: Enables the Algorand TypeScript language server. By
+  default the language server is disabled. 2. `algorandTypeScript.languageServer.logLevel`:
+  Configures the verbosity of the messages Algorand TypeScript language server displays in the
+  output window.
+</Steps>
+
+For more details refer to [Typescript - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode)
+
+:::note
+The Algorand TypeScript VS Code extension is currently in **beta**
+:::
+
+</TabItem>
+
+<TabItem label="Python" icon="seti:python">
+
+The Algorand Python language extension brings language server powered capabilities to your smart contract authoring experience in Visual Studio Code. It extends the results from your installed Python language server to provide Algorand Python specific diagnostics and code actions.
+
+#### Requirements:
+
+- [Visual Studio Code](https://code.visualstudio.com/download) 1.80.0 or higher
+- [Python extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+- [Python](https://www.python.org/downloads/) 3.12 or higher
+- [PuyaPy](https://pypi.org/project/puyapy/) 5.3.0 or higher
+
+#### Quick Start
+
+<Steps>
+  1. Install the Python extension for Visual Studio Code 2. Install this Algorand Python language
+  extension 3. Install the PuyaPy package on your system. We recommend installing as a project dev
+  dependency in your project venv. 4. Enable the Algorand Python language server
+  (`algorandPython.languageServer.enable`) for your workspace (not required if using a new AlgoKit
+  project) 5. Open a Python smart contract file (.py)
+</Steps>
+
+#### Configuration
+
+This extension exposes the following settings:
+
+<Steps>
+  1. `algorandPython.languageServer.enable`: Enables the Algorand Python language server. By default
+  the language server is disabled. 2. `algorandPython.languageServer.logLevel`: Configures the
+  verbosity of the messages Algorand Python language server displays in the output window. 3.
+  `algorandPython.languageServer.debounceInterval`: Configures the delay between receiving a code
+  change and refreshing related diagnostics.
+</Steps>
+
+For more details refer to [Python - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode)
+
+:::note
+The Algorand Python VS Code extension is currently in **beta**.
+:::
+
+</TabItem>
+</Tabs>
+
 ## Install AlgoKit
 
 <Tabs syncKey="lang">
@@ -519,4 +604,10 @@ You are now ready to start building your own decentralized applications on the A
   title='Intro to AlgoKit'
   href='/algokit/algokit-intro'
   description='Learn more about AlgoKit and what you can do with it'
+/>
+
+<LinkCard
+  title='Intro to Algokit 3.0 Course'
+  href='https://www.youtube.com/playlist?list=PLwRyHoehE4356E8tPKxC2XJtFEyLOHHEB'
+  description='Watch our complete, hands-on introduction to building on the Algorand blockchain with AlgoKit'
 />

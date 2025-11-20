@@ -5,7 +5,7 @@ title: App client and App factory
 > [!NOTE]
 > This page covers the untyped app client, but we recommend using typed clients (coming soon), which will give you a better developer experience with strong typing specific to the app itself.
 
-App client and App factory are higher-order use case capabilities provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App deployment](app-deploy.md) and [App management](app.md). They allow you to access high productivity application clients that work with [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) and [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application spec defined smart contracts, which you can use to create, update, delete, deploy and call a smart contract and access state data for it.
+App client and App factory are higher-order use case capabilities provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App deployment](/algokit/utils/python/app-deploy/) and [App management](/algokit/utils/python/app/). They allow you to access high productivity application clients that work with [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) and [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application spec defined smart contracts, which you can use to create, update, delete, deploy and call a smart contract and access state data for it.
 
 > [!NOTE]
 > If you are confused about when to use the factory vs client the mental model is: use the client if you know the app ID, use the factory if you don’t know the app ID (deferred knowledge or the instance doesn’t exist yet on the blockchain) or you have multiple app IDs
@@ -311,7 +311,7 @@ Often when calling a smart contract during development you will get logic errors
 
 When this occurs, you will generally get an error that looks something like: `TransactionPool.Remember: transaction {TRANSACTION_ID}: logic eval error: {ERROR_MESSAGE}. Details: pc={PROGRAM_COUNTER_VALUE}, opcodes={LIST_OF_OP_CODES}`.
 
-The information in that error message can be parsed and when combined with the [source map from compilation](app-deploy.md#compilation-and-template-substitution) you can expose debugging information that makes it much easier to understand what’s happening. The ARC-56 app spec, if provided, can also specify human-readable error messages against certain program counter values and further augment the error message.
+The information in that error message can be parsed and when combined with the [source map from compilation](/algokit/utils/python/app-deploy/#compilation-and-template-substitution) you can expose debugging information that makes it much easier to understand what’s happening. The ARC-56 app spec, if provided, can also specify human-readable error messages against certain program counter values and further augment the error message.
 
 The app client and app factory automatically provide this functionality for all smart contract calls through an automatically registered error transformer. This error transformer:
 
@@ -322,7 +322,7 @@ The app client and app factory automatically provide this functionality for all 
 
 They also expose a function that can be used for any custom calls you manually construct and need to add into your own try/catch `expose_logic_error(e: Error, is_clear: bool = False)`.
 
-For more information about error transformers and how to create custom ones, see the [Transaction Composer Error Transformers](transaction-composer.md#error-transformers) documentation.
+For more information about error transformers and how to create custom ones, see the [Transaction Composer Error Transformers](/algokit/utils/python/transaction-composer/#error-transformers) documentation.
 
 When an error is thrown then the resulting error that is re-thrown will be a [`LogicError`](/reference/algokit-utils-py/api/errors/logic_error/#algokit_utils.errors.logic_error.LogicError), which has the following fields:
 
@@ -351,7 +351,7 @@ config.configure(debug=True)
 
 If you do that then the exception will have the `traces` property within the underlying exception will have key information from the simulation within it and this will get populated into the `led.traces` property of the thrown error.
 
-When this debug flag is set, it will also emit debugging symbols to allow break-point debugging of the calls if the [project root is also configured](debugging.md).
+When this debug flag is set, it will also emit debugging symbols to allow break-point debugging of the calls if the [project root is also configured](/algokit/utils/python/debugging/).
 
 ## Default arguments
 

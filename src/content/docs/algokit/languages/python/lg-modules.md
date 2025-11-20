@@ -2,7 +2,7 @@
 title: Module level constructs
 ---
 
-You can write compile-time constant code at a module level and then use them in place of [Python built-in literal types](./lg-types#python-built-in-types).
+You can write compile-time constant code at a module level and then use them in place of [Python built-in literal types](/algokit/languages/python/lg-types/#python-built-in-types).
 
 For a full example of what syntax is currently possible see the [test case example](https://github.com/algorandfoundation/puya/blob/main/test_cases/module_consts/contract.py).
 

@@ -222,7 +222,7 @@ html:has(.homepage-hero) {
   }
 
   header {
-    @apply pt-[14px]! pb-[6px]! md:pb-2! md:pt-4! px-0! h-auto!;
+    @apply pt-[14px]! pb-[6px]! md:pb-2! md:pt-4! h-auto!;
 
     @media (width >= 48rem /* 768px */) {
       .social-icons svg {

@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { Octokit } from 'octokit';
@@ -18,6 +18,8 @@ import {
   utilsTypescriptConfig,
   utilsPythonConfig,
   puyaTsConfig,
+  puyaPyConfig,
+  algokitSubscriberConfig,
 } from '../../imports/configs/index.js';
 
 const IMPORT_GITHUB = process.env.IMPORT_GITHUB === 'true';
@@ -33,6 +35,8 @@ const REMOTE_CONTENT: ImportOptions[] = [
   utilsTypescriptConfig,
   utilsPythonConfig,
   puyaTsConfig,
+  puyaPyConfig,
+  algokitSubscriberConfig,
 ];
 
 export const collections = {
@@ -65,7 +69,16 @@ export const collections = {
         }
       },
     },
-    schema: docsSchema(),
+    schema: docsSchema({
+      extend: z.object({
+        titleImageLight: z.string().optional(),
+        titleImageDark: z.string().optional(),
+        contentType: z
+          .enum(['tutorial', 'how-to', 'guide', 'reference'])
+          .optional(),
+        tags: z.array(z.string()).optional(),
+      }),
+    }),
   }),
   autoSidebar: defineCollection({
     loader: autoSidebarLoader(),

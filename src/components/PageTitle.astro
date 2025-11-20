@@ -1,0 +1,81 @@
+---
+const {
+  entry: {
+    data: { title, titleImageLight, titleImageDark },
+  },
+} = Astro.locals.starlightRoute;
+
+const PAGE_TITLE_ID = '_top';
+const hasImageTitle = Boolean(titleImageLight ?? titleImageDark);
+const lightImageSrc = titleImageLight ?? titleImageDark ?? '';
+const darkImageSrc = titleImageDark ?? '';
+const hasDistinctDarkImage = Boolean(titleImageLight && titleImageDark);
+---
+
+{
+  hasImageTitle ? (
+    <div
+      id={PAGE_TITLE_ID}
+      class='page-title-image-wrapper'
+      role='heading'
+      aria-level='1'
+    >
+      <img
+        src={lightImageSrc}
+        alt={title}
+        loading='lazy'
+        decoding='async'
+        class:list={[
+          'page-title-image',
+          {
+            'page-title-image--light-variant': hasDistinctDarkImage,
+          },
+        ]}
+      />
+      {hasDistinctDarkImage && (
+        <img
+          src={darkImageSrc}
+          alt={title}
+          loading='lazy'
+          decoding='async'
+          class='page-title-image page-title-image--dark-variant'
+        />
+      )}
+    </div>
+  ) : (
+    <h1 id={PAGE_TITLE_ID}>{title}</h1>
+  )
+}
+
+<style>
+  @layer starlight.core {
+    h1 {
+      margin-top: 1rem;
+      font-size: var(--sl-text-h1);
+      line-height: var(--sl-line-height-headings);
+      font-weight: 600;
+      color: var(--sl-color-white);
+    }
+    .page-title-image-wrapper {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .page-title-image {
+      display: block;
+      max-width: 250px;
+      height: auto;
+      width: min(100%, 480px);
+    }
+    .page-title-image--dark-variant {
+      display: none;
+    }
+    :global(:root[data-theme='dark']) .page-title-image--dark-variant {
+      display: block;
+    }
+    :global(:root[data-theme='dark']) .page-title-image--light-variant {
+      display: none;
+    }
+  }
+</style>

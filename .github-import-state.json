@@ -17,8 +17,8 @@
     "algorandfoundation/arcs@devportal": {
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "2008c8be5cabfa3f35e5ba905dfb480df67f290b",
-      "lastImported": "2025-10-30T20:07:03.863Z",
+      "lastCommitSha": "0312b9f20526ebb97246c9298d9fab378ebe91c2",
+      "lastImported": "2025-11-20T12:53:22.334Z",
       "ref": "devportal"
     },
     "algorandfoundation/algokit-cli@chore/content-fix": {
@@ -35,19 +35,26 @@
       "lastImported": "2025-09-28T12:31:39.523Z",
       "ref": "chore/fix-docs"
     },
-    "algorandfoundation/algokit-utils-py@main": {
-      "name": "AlgoKit Utils Python Docs",
-      "repoId": "algorandfoundation/algokit-utils-py@main",
-      "lastCommitSha": "97fb35c271555ec58ccbaec3851ee32382c6ec68",
-      "lastImported": "2025-10-25T12:50:45.443Z",
-      "ref": "main"
-    },
     "algorandfoundation/puya-ts@devportal": {
       "name": "Algorand Typescript",
       "repoId": "algorandfoundation/puya-ts@devportal",
       "lastCommitSha": "e47bd211ffe3de89a8ee6818ee9849b32802dc2f",
       "lastImported": "2025-10-31T11:01:46.827Z",
       "ref": "devportal"
+    },
+    "algorandfoundation/puya@devportal": {
+      "name": "Algorand Python",
+      "repoId": "algorandfoundation/puya@devportal",
+      "lastCommitSha": "3d88a33396fdd9ce3ea311f5a1c69848dda7266e",
+      "lastImported": "2025-11-10T10:03:34.401Z",
+      "ref": "devportal"
+    },
+    "algorandfoundation/algokit-utils-py@main": {
+      "name": "AlgoKit Utils Python Docs",
+      "repoId": "algorandfoundation/algokit-utils-py@main",
+      "lastCommitSha": "97fb35c271555ec58ccbaec3851ee32382c6ec68",
+      "lastImported": "2025-11-10T10:37:29.827Z",
+      "ref": "main"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"

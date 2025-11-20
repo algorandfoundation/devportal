@@ -2,7 +2,7 @@
 title: AVM operations
 ---
 
-Algorand Python allows you to do express every op code the AVM has available submodule.
+Algorand Python allows you to do express [every op code the AVM has available](https://dev.algorand.co/concepts/smart-contracts/avm/#operations) apart from ops that manipulate the stack (to avoid conflicts with the compiler), and `log` (to avoid confusion with the superior [Algorand Python log function](/algokit/languages/python/lg-logs/)). These ops are exposed via the [`algopy.op`](/reference/algorand-python/api/api-algopyop/#module-algopy.op) submodule.
 We generally recommend importing this entire submodule so you can use intellisense to discover the available methods:
 
 ```python
@@ -15,7 +15,7 @@ def sqrt_16() -> UInt64:
 
 All ops are typed using Algorand Python types and have correct static type representations.
 
-Many ops have higher-order functionality that Algorand Python exposes and would limit the need to reach for the underlying ops. For instance, there is first-class support for local and global storage so there is little need to use the likes of `app_local_get` et. al. But they are still exposed just in case you want to do something that Algorand Python's abstractions don't support.
+Many ops have higher-order functionality that Algorand Python exposes and would limit the need to reach for the underlying ops. For instance, there is first-class support for local and global storage so there is little need to use the likes of `app_local_get` et. al. But they are still exposed just in case you want to do something that Algorand Python’s abstractions don’t support.
 
 ## Txn
 

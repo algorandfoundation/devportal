@@ -1,10 +1,13 @@
 ---
 title: Intro to AlgoKit
+titleImageDark: '/title-img/algokit-logo-dark.svg'
+titleImageLight: '/title-img/algokit-logo-light.svg'
 ---
 
 import { Tabs, TabItem, LinkCard, CardGrid, Badge } from '@astrojs/starlight/components';
 import { Code } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
+import YouTube from '/src/components/YouTube.astro';
 
 import helloWorldPython from '/examples/smart-contracts/py/hello-world.py?raw';
 import helloWorldTs from '/examples/smart-contracts/ts/hello-world.algo.ts?raw';
@@ -17,6 +20,8 @@ developers with an array of functionalities to simplify blockchain development. 
 templates, and tools that facilitate rapid prototyping and deployment of secure, scalable, and efficient applications. Whether you’re a
 seasoned blockchain developer or new to the ecosystem, AlgoKit offers everything you need to harness the full potential of Algorand’s
 impressive tech and innovative consensus algorithm.
+
+<YouTube id='pojEI-8h0lg' title='Introduction to AlgoKit' />
 
 ## AlgoKit CLI
 
@@ -149,6 +154,8 @@ To learn more about AlgoKit Utils, refer to the following resources:
 />
 </CardGrid>
 
+<YouTube id='AkUj1GgcMig' title='Introduction to Algokit Utils' />
+
 ## AlgoKit LocalNet
 
 The AlgoKit LocalNet feature allows you to manage (start, stop, reset, manage) a locally sandboxed private Algorand network. This allows you to interact with and deploy changes against your own Algorand network without needing to worry about funding TestNet accounts, whether the information you submit is publicly visible, or whether you are connected to an active Internet connection (once the network has been started).
@@ -183,6 +190,21 @@ To learn more about the AVM debugger, refer to the following resources:
   title='AVM Debugger Extension Repo'
   href='https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algokit-avm-vscode-debugger'
   description='Explore the AVM Debugger codebase and contribute to its development'
+/>
+
+## Language Servers
+
+The Algorand VS Code Language Extensions provide developers with enhanced capabilities to build Algorand smart contracts efficiently within Visual Studio Code. Designed to work alongside the standard Python and TypeScript language servers, these extensions extend core IDE functionality by adding Algorand-specific diagnostics, validation, and intelligent code actions. The [Python extension](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-python-vscode) integrates seamlessly with the official Python extension and automatically detects the PuyaPy environment to offer real-time contract-aware analysis and quick fixes, helping developers catch errors early and improve code quality. Similarly, the [TypeScript extension](https://marketplace.visualstudio.com/items?itemName=AlgorandFoundation.algorand-typescript-vscode) supports Algorand’s specialized TypeScript and smart contract utilities, providing targeted diagnostics and validation in a familiar developer workflow. Both extensions simplify the development process by offering immediate feedback relevant to Algorand’s unique blockchain environment, accelerating learning and reducing common mistakes. Currently in beta, they require Visual Studio Code 1.80.0 or later and are designed to complement existing language tooling, making them essential tools for any developer working on Algorand smart contracts.
+
+<LinkCard
+  title='Algokit TypeScript Language Server'
+  href='/algokit/language-servers/algorand-typescript'
+  description='Learn more about the TypeScript Language Server'
+/>
+<LinkCard
+  title='Algokit Python Langauge Server'
+  href='/algokit/language-servers/algorand-python'
+  description='Learn more about the Python Language Server'
 />
 
 ## Client Generator

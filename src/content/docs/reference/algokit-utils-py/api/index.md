@@ -17,13 +17,13 @@ For more specific functionality, import directly from the relevant submodules:
 
 ## Submodules
 
-- [algokit_utils.accounts](accounts/)
-- [algokit_utils.algorand](algorand/)
-- [algokit_utils.applications](applications/)
-- [algokit_utils.assets](assets/)
-- [algokit_utils.clients](clients/)
-- [algokit_utils.config](config/)
-- [algokit_utils.errors](errors/)
-- [algokit_utils.models](models/)
-- [algokit_utils.protocols](protocols/)
-- [algokit_utils.transactions](transactions/)
+- [algokit_utils.accounts](/reference/algokit-utils-py/api/accounts/)
+- [algokit_utils.algorand](/reference/algokit-utils-py/api/algorand/)
+- [algokit_utils.applications](/reference/algokit-utils-py/api/applications/)
+- [algokit_utils.assets](/reference/algokit-utils-py/api/assets/)
+- [algokit_utils.clients](/reference/algokit-utils-py/api/clients/)
+- [algokit_utils.config](/reference/algokit-utils-py/api/config/)
+- [algokit_utils.errors](/reference/algokit-utils-py/api/errors/)
+- [algokit_utils.models](/reference/algokit-utils-py/api/models/)
+- [algokit_utils.protocols](/reference/algokit-utils-py/api/protocols/)
+- [algokit_utils.transactions](/reference/algokit-utils-py/api/transactions/)

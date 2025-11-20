@@ -6,7 +6,7 @@ Control flow in Algorand Python is similar to standard Python control flow, with
 
 ## If statements
 
-If statements work the same as Python. The conditions must be an expression that evaluates to bool, which can include a [String or Uint64](./lg-types) among others.
+If statements work the same as Python. The conditions must be an expression that evaluates to bool, which can include a [String or Uint64](/algokit/languages/python/lg-types/) among others.
 
 ```python
 if condition:
@@ -21,7 +21,7 @@ else:
 
 ## Ternary conditions
 
-Ternary conditions work the same as Python. The condition must be an expression that evaluates to bool, which can include a [String or Uint64](./lg-types) among others.
+Ternary conditions work the same as Python. The condition must be an expression that evaluates to bool, which can include a [String or Uint64](/algokit/languages/python/lg-types/) among others.
 
 ```python
 value1 = UInt64(5)
@@ -30,7 +30,7 @@ value2 = String(">6") if value1 > 6 else String("<=6")
 
 ## While loops
 
-While loops work the same as Python. The condition must be an expression that evaluates to bool, which can include a [String or Uint64](./lg-types) among others.
+While loops work the same as Python. The condition must be an expression that evaluates to bool, which can include a [String or Uint64](/algokit/languages/python/lg-types/) among others.
 
 You can use `break` and `continue`.
 
@@ -43,11 +43,11 @@ while condition:
 
 ## For Loops
 
-For loops are used to iterate over sequences, ranges and [ARC-4 arrays](./lg-arc4). They work the same as Python.
+For loops are used to iterate over sequences, ranges and [ARC-4 arrays](/algokit/languages/python/lg-arc4/). They work the same as Python.
 
 Algorand Python provides functions like `uenumerate` and `urange` to facilitate creating sequences and ranges; in-built Python `reversed` method works with these.
 
-- `uenumerate` is similar to Python's built-in enumerate function, but for UInt64 numbers; it allows you to loop over a sequence and have an automatic counter.
+- `uenumerate` is similar to Python’s built-in enumerate function, but for UInt64 numbers; it allows you to loop over a sequence and have an automatic counter.
 - `urange` is a function that generates a sequence of Uint64 numbers, which you can iterate over.
 - `reversed` returns a reversed iterator of a sequence.
 
@@ -64,11 +64,11 @@ for index, item in uenumerate(reversed(urange(4))):
 assert test_array.bytes == Bytes.from_hex("03020100")
 ```
 
-[See full](https://github.com/algorandfoundation/puya/blob/main/test_cases/reversed_iteration/contract.py) [examples](https://github.com/algorandfoundation/puya/blob/main/test_cases/nested_loops/contract.py).
+[See full examples](https://github.com/algorandfoundation/puya/blob/main/test_cases/nested_loops/contract.py).
 
 ## Match Statements
 
-Match statements work the same as Python and work for [...]
+Match statements work the same as Python with support for basic case/switch functionality. Captures and patterns are not supported. Pattern matching and guard clauses are also not supported currently.
 
 ```python
 match value:
@@ -79,7 +79,5 @@ match value:
     case _:
         # Fallback
 ```
-
-Note: Captures and patterns are not supported. Currently, there is only support for basic case/switch functionality; pattern matching and guard clauses are not currently supported.
 
 [See full example](https://github.com/algorandfoundation/puya/blob/main/test_cases/match/contract.py).

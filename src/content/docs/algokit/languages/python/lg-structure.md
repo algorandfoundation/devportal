@@ -10,15 +10,15 @@ functions and re-use that library across multiple projects!
 ## Modules
 
 Algorand Python modules are files that end in `.py`, as with standard Python. Sub-modules are
-supported as well, so you're free to organise your Algorand Python code however you see fit.
+supported as well, so you’re free to organise your Algorand Python code however you see fit.
 The standard python import rules apply, including
 [relative vs absolute import](https://docs.python.org/3/reference/import.html#package-relative-imports)
 requirements.
 
 A given module can contain zero, one, or many smart contracts and/or logic signatures.
 
-A module can contain [contracts](#contract-classes), [subroutines](#subroutines),
-[logic signatures](#logic-signatures), and [compile-time constant code and values](lg-modules).
+A module can contain [contracts](), [subroutines](),
+[logic signatures](), and [compile-time constant code and values](/algokit/languages/python/lg-modules/).
 
 ## Typing
 
@@ -29,7 +29,7 @@ In practice, this mostly means annotating the arguments and return types of all 
 
 ## Subroutines
 
-Subroutines are "internal" or "private" methods to a contract. They can exist as part of a contract
+Subroutines are “internal” or “private” methods to a contract. They can exist as part of a contract
 class, or at the module level so they can be used by multiple classes or even across multiple
 projects.
 
@@ -47,17 +47,18 @@ def bar() -> None:
     ...
 ```
 
-```{note}
+#### NOTE
+
 Requiring this decorator serves two key purposes:
 
-1. You get an understandable error message if you try and use a third party package that wasn't
+1. You get an understandable error message if you try and use a third party package that wasn’t
    built for Algorand Python
-1. It provides for the ability to modify the functions on the fly when running in Python itself, in
+2. It provides for the ability to modify the functions on the fly when running in Python itself, in
    a future testing framework.
-```
 
-Argument and return types to a subroutine can be any Algorand Python variable type (except for  
-[some inner transaction types](lg-transactions#inner-transaction-objects-cannot-be-passed-to-or-returned-from-subroutines)
+Argument and return types to a subroutine can be any Algorand Python variable type (except for<br />
+\\\\
+[some inner transaction types](/algokit/languages/python/lg-transactions/#inner-transaction-objects-cannot-be-passed-to-or-returned-from-subroutines)
 ).
 
 Returning multiple values is allowed, this is annotated in the standard Python way with `tuple`:
@@ -89,21 +90,21 @@ The following argument/return types are not currently supported:
 ## Contract classes
 
 An [Algorand smart contract](https://dev.algorand.co/concepts/smart-contracts/apps/)
-consists of two distinct "programs"; an approval program, and a
+consists of two distinct “programs”; an approval program, and a
 clear-state program. These are tied together in Algorand Python as a single class.
 
 All contracts must inherit from the base class `algopy.Contract` - either directly or indirectly,
 which can include inheriting from `algopy.ARC4Contract`.
 
 The life-cycle of a smart contract matches the semantics of Python classes when you consider
-deploying a smart contract as "instantiating" the class. Any calls to that smart contract are made
+deploying a smart contract as “instantiating” the class. Any calls to that smart contract are made
 to that instance of the smart contract, and any state assigned to `self.` will persist across
 different invocations (provided the transaction it was a part of succeeds, of course). You can
 deploy the same contract class multiple times, each will become a distinct and isolated instance.
 
 Contract classes can optionally implement an `__init__` method, which will be executed exactly
 once, on first deployment. This method takes no arguments, but can contain arbitrary code,
-including reading directly from the transaction arguments via `Txn`. This makes
+including reading directly from the transaction arguments via [`Txn`](/reference/algorand-python/api/api-algopyop/#algopy.op.Txn). This makes
 it a good place to put common initialisation code, particularly in ARC-4 contracts with multiple
 methods that allow for creation.
 
@@ -124,27 +125,24 @@ class MyContract(algopy.Contract):
 Only concrete (ie non-abstract) classes produce output artifacts for deployment. To mark a class
 as explicitly abstract, inherit from [`abc.ABC`](https://docs.python.org/3/library/abc.html#abc.ABC).
 
-```{note}
+#### NOTE
+
 The compiler will produce a warning if a Contract class is implicitly abstract, i.e. if any
 abstract methods are unimplemented.
-```
-
-For more about inheritance and it's role in code reuse, see the section
-in [Code reuse](lg-code-reuse#inheritance)
 
 ### Contract class configuration
 
 When defining a contract subclass you can pass configuration options to the `algopy.Contract`
-base class per the API documentation.
+base class [per the API documentation](/reference/algorand-python/api/api-algopy/#algopy.Contract).
 
 Namely you can pass in:
 
 - `name` - Which will affect the output TEAL file name if there are multiple non-abstract contracts
-  in the same file and will also be used as the contract name in the ARC-32 application.json instead of the class name.
-- `scratch_slots` - Which allows you to mark a slot ID or range of slot IDs as "off limits" to Puya
+  in the same file and will also be used as the contract name in the ARC-32/ARC-56 application.json instead of the class name.
+- `scratch_slots` - Which allows you to mark a slot ID or range of slot IDs as “off limits” to Puya
   so you can manually use them.
 - `state_totals` - Which allows defining what values should be used for global and local uint and bytes storage values
-  when creating a contract and will appear in ARC-32 app spec.
+  when creating a contract and will appear in ARC-32/ARC-56 app spec.
 
 Full example:
 
@@ -162,7 +160,7 @@ class MyContract(
 
 ### Example: Simplest possible `algopy.Contract` implementation
 
-For a non-ARC4 contract, the contract class must implement an `approval_program` and
+For a non-ARC-4 contract, the contract class must implement an `approval_program` and
 a `clear_state_program` method.
 
 As an example, this is a valid contract that always approves:
@@ -209,14 +207,14 @@ class Counter(algopy.Contract):
 
 Some things to note:
 
-- `self.counter` will be stored in the application's [Global State](lg-storage#global-state).
+- `self.counter` will be stored in the application’s [Global State](/algokit/languages/python/lg-storage/#global-state).
 - The return type of `__init__` must be `None`, per standard typed Python.
 - Any methods other than `__init__`, `approval_program` or `clear_state_program` must be decorated
   with `@subroutine`.
 
 ### Example: Simplest possible `algopy.ARC4Contract` implementation
 
-And here is a valid ARC4 contract:
+And here is a valid ARC-4 contract:
 
 ```python
 class ABIContract(algopy.ARC4Contract):
@@ -231,7 +229,7 @@ based on the transaction application args to the correct public method.
 
 A default `clear_state_program` is implemented which always approves, but this can be overridden.
 
-### Example: An ARC4 call counter
+### Example: An ARC-4 call counter
 
 ```python
 import algopy
@@ -250,7 +248,7 @@ class ARC4Counter(algopy.ARC4Contract):
         self.counter += 1
 ```
 
-This functions very similarly to the [simple example](#example-simple-call-counter).
+This functions very similarly to the [simple example]().
 
 Things to note here:
 
@@ -258,13 +256,13 @@ Things to note here:
   app and also to invoke it after creation. This also means that no default bare-method create will
   be generated, so the only way to create the contract is through this method.
 - The default options for `abimethod` is to only allow `NoOp` as an on-completion-action, so we
-  don't need to check this manually.
+  don’t need to check this manually.
 - The current call count is returned from the `invoke` method.
-- Every method in an `AR4Contract` except for the optional `__init__` and `clear_state_program`
-  methods must be decorated with one of `algopy.arc4.abimethod`, `alogpy.arc4.baremethod`, or
-  `algopy.subroutine`. `subroutines` won't be directly callable through the default router.
+- Every method in an `ARC4Contract` except for the optional `__init__` and `clear_state_program`
+  methods must be decorated with one of `algopy.arc4.abimethod`, `algopy.arc4.baremethod`, or
+  `algopy.subroutine`. `subroutines` won’t be directly callable through the default router.
 
-See the [ARC-4 section](lg-arc4) of this language guide for more info on the above.
+See the [ARC-4 section](/algokit/languages/python/lg-arc4/) of this language guide for more info on the above.
 
 ## Logic signatures
 

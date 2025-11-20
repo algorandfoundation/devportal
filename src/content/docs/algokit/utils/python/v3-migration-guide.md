@@ -156,7 +156,7 @@ arc56_app_spec = Arc56Contract.from_arc32(testing_app_arc32_app_spec)
 
 ### Step 5 - Replace `ApplicationClient` usage
 
-The existing `ApplicationClient` (untyped app client) class is still present until at least v4, but it’s worthwhile migrating to the new [`AppClient` and `AppFactory` classes](capabilities/app-client.md). These new clients are [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) compatible, but also support [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) app specs and will continue to support this indefinitely until such time the community deems they are deprecated.
+The existing `ApplicationClient` (untyped app client) class is still present until at least v4, but it’s worthwhile migrating to the new [`AppClient` and `AppFactory` classes](/algokit/utils/python/app-client/). These new clients are [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) compatible, but also support [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) app specs and will continue to support this indefinitely until such time the community deems they are deprecated.
 
 All of the functionality in `ApplicationClient` is available within the new classes, but their interface is slightly different to make it easier to use and more consistent with the new `AlgorandClient` functionality. The key existing methods that have changed all have `@deprecation` notices to help guide you on this, but broadly the changes are:
 
@@ -164,14 +164,14 @@ All of the functionality in `ApplicationClient` is available within the new clas
 - If you want to call `create` or `deploy` then you need an `AppFactory` to do that, and then it will in turn give you an `AppClient` instance that is connected to the app you just created / deployed. This significantly simplifies the app client because now the app client has a clear operating purpose: allow for calls and state management for an _instance_ of an app, whereas the app factory handles all of the calls when you don’t have an instance yet (or may or may not have an instance in the case of `deploy`).
 - This means that you can simply access `client.app_id` and `client.app_address` on `AppClient` since these values are known statically and won’t change (previously associated calls to `app_address`, `app_id` properties potentially required extra API calls as the values weren’t always available).
 - Adding `fund_app_account` which serves as a convenience method to top up the balance of address associated with application.
-- All of the methods that return or execute a transaction (`update`, `call`, `opt_in`, etc.) are now exposed in an interface similar to the one in [`AlgorandClient`](capabilities/algorand-client.md#creating-and-issuing-transactions), namely (where `{call_type}` is one of: `update` / `delete` / `opt_in` / `close_out` / `clear_state` / `call`):
+- All of the methods that return or execute a transaction (`update`, `call`, `opt_in`, etc.) are now exposed in an interface similar to the one in [`AlgorandClient`](/algokit/utils/python/algorand-client/#creating-and-issuing-transactions), namely (where `{call_type}` is one of: `update` / `delete` / `opt_in` / `close_out` / `clear_state` / `call`):
   - `appClient.create_transaction.{callType}` to get a transaction for an ABI method call
   - `appClient.send.{call_type}` to sign and send a transaction for an ABI method call
-  - `appClient.params.{call_type}` to get a [params object](capabilities/algorand-client.md#transaction-parameters) for an ABI method call
+  - `appClient.params.{call_type}` to get a [params object](/algokit/utils/python/algorand-client/#transaction-parameters) for an ABI method call
   - `appClient.create_transaction.bare.{call_type}` to get a transaction for a bare app call
   - `appClient.send.bare.{call_type}` to sign and send a transaction for a bare app call
-  - `appClient.params.bare.{call_type}` to get a [params object](capabilities/algorand-client.md#transaction-parameters) for a bare app call
-- The semantics to resolve the application is now available via [simpler entrypoints within `algorand.client`](capabilities/app-client.md#appclient)
+  - `appClient.params.bare.{call_type}` to get a [params object](/algokit/utils/python/algorand-client/#transaction-parameters) for a bare app call
+- The semantics to resolve the application is now available via [simpler entrypoints within `algorand.client`](/algokit/utils/python/app-client/#appclient)
 - When making an ABI method call, the method arguments property is are now passed via explicit `args` field in a parameters dataclass applicable to the method call.
 - The foreign reference arrays have been renamed to align with typed parameters on `ts` and related core `algosdk`:
   - `boxes` -> `box_references`
