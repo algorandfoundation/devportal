@@ -24,6 +24,6 @@ export const algokitSubscriberConfig: ImportOptions = {
       transforms: [convertH1ToTitle],
     },
   ],
-  enabled: true,
+  enabled: false,
   clear: false,
 };
