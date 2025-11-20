@@ -17,8 +17,8 @@
     "algorandfoundation/arcs@devportal": {
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "b3f659c6c839edcab984007e7ed787d2c5245299",
-      "lastImported": "2025-11-20T09:14:04.211Z",
+      "lastCommitSha": "0312b9f20526ebb97246c9298d9fab378ebe91c2",
+      "lastImported": "2025-11-20T12:53:22.334Z",
       "ref": "devportal"
     },
     "algorandfoundation/algokit-cli@chore/content-fix": {

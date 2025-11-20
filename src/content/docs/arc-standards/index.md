@@ -120,11 +120,6 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0025/" style='display: block; text-decoration: none; color: inherit;'>API for communication between Dapps and wallets using WalletConnect</a></td>
   </tr>
       <tr>
-    <td><a href="/arc-standards/arc-0026/" style='display: block; text-decoration: none; color: inherit;'>26</a></td>
-    <td><a href="/arc-standards/arc-0026/" style='display: block; text-decoration: none; color: inherit;'>URI scheme</a></td>
-    <td><a href="/arc-standards/arc-0026/" style='display: block; text-decoration: none; color: inherit;'>A specification for encoding Transactions in a URI format.</a></td>
-  </tr>
-      <tr>
     <td><a href="/arc-standards/arc-0027/" style='display: block; text-decoration: none; color: inherit;'>27</a></td>
     <td><a href="/arc-standards/arc-0027/" style='display: block; text-decoration: none; color: inherit;'>Provider Message Schema</a></td>
     <td><a href="/arc-standards/arc-0027/" style='display: block; text-decoration: none; color: inherit;'>A comprehensive message schema for communication between clients and providers.</a></td>
@@ -205,21 +200,6 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0074/" style='display: block; text-decoration: none; color: inherit;'>REST API for reading data about Application's NFTs.</a></td>
   </tr>
       <tr>
-    <td><a href="/arc-standards/arc-0078/" style='display: block; text-decoration: none; color: inherit;'>78</a></td>
-    <td><a href="/arc-standards/arc-0078/" style='display: block; text-decoration: none; color: inherit;'>URI scheme, keyreg Transactions extension</a></td>
-    <td><a href="/arc-standards/arc-0078/" style='display: block; text-decoration: none; color: inherit;'>A specification for encoding Key Registration Transactions in a URI format.</a></td>
-  </tr>
-      <tr>
-    <td><a href="/arc-standards/arc-0079/" style='display: block; text-decoration: none; color: inherit;'>79</a></td>
-    <td><a href="/arc-standards/arc-0079/" style='display: block; text-decoration: none; color: inherit;'>URI scheme, App NoOp call extension</a></td>
-    <td><a href="/arc-standards/arc-0079/" style='display: block; text-decoration: none; color: inherit;'>A specification for encoding NoOp Application call Transactions in a URI format.</a></td>
-  </tr>
-      <tr>
-    <td><a href="/arc-standards/arc-0082/" style='display: block; text-decoration: none; color: inherit;'>82</a></td>
-    <td><a href="/arc-standards/arc-0082/" style='display: block; text-decoration: none; color: inherit;'>URI scheme blockchain information</a></td>
-    <td><a href="/arc-standards/arc-0082/" style='display: block; text-decoration: none; color: inherit;'>Querying blockchain information using a URI format</a></td>
-  </tr>
-      <tr>
     <td><a href="/arc-standards/arc-0086/" style='display: block; text-decoration: none; color: inherit;'>86</a></td>
     <td><a href="/arc-standards/arc-0086/" style='display: block; text-decoration: none; color: inherit;'>xGov status and voting power</a></td>
     <td><a href="/arc-standards/arc-0086/" style='display: block; text-decoration: none; color: inherit;'>xGov status and voting power for the Algorand Governance</a></td>
@@ -242,6 +222,11 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0053/" style='display: block; text-decoration: none; color: inherit;'>53</a></td>
     <td><a href="/arc-standards/arc-0053/" style='display: block; text-decoration: none; color: inherit;'>Metadata Declarations</a></td>
     <td><a href="/arc-standards/arc-0053/" style='display: block; text-decoration: none; color: inherit;'>A specification for a decentralized, Self-declared, & Verifiable Tokens, Collections, & Metadata</a></td>
+  </tr>
+      <tr>
+    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>90</a></td>
+    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>URI scheme</a></td>
+    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>Consolidated specification for encoding Algorand transactions and queries as URIs.</a></td>
   </tr>
     </tbody>
   </table>
@@ -312,6 +297,11 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0015/" style='display: block; text-decoration: none; color: inherit;'>Scheme for encryption/decryption that allows for private messages.</a></td>
   </tr>
       <tr>
+    <td><a href="/arc-standards/arc-0026/" style='display: block; text-decoration: none; color: inherit;'>26</a></td>
+    <td><a href="/arc-standards/arc-0026/" style='display: block; text-decoration: none; color: inherit;'>URI scheme</a></td>
+    <td><a href="/arc-standards/arc-0026/" style='display: block; text-decoration: none; color: inherit;'>A specification for encoding Transactions in a URI format.</a></td>
+  </tr>
+      <tr>
     <td><a href="/arc-standards/arc-0033/" style='display: block; text-decoration: none; color: inherit;'>33</a></td>
     <td><a href="/arc-standards/arc-0033/" style='display: block; text-decoration: none; color: inherit;'>xGov Pilot - Becoming an xGov</a></td>
     <td><a href="/arc-standards/arc-0033/" style='display: block; text-decoration: none; color: inherit;'>Explanation on how to become Expert Governors.</a></td>
@@ -335,6 +325,21 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0049/" style='display: block; text-decoration: none; color: inherit;'>49</a></td>
     <td><a href="/arc-standards/arc-0049/" style='display: block; text-decoration: none; color: inherit;'>NFT Rewards</a></td>
     <td><a href="/arc-standards/arc-0049/" style='display: block; text-decoration: none; color: inherit;'>NFT Rewards, Terms and Conditions</a></td>
+  </tr>
+      <tr>
+    <td><a href="/arc-standards/arc-0078/" style='display: block; text-decoration: none; color: inherit;'>78</a></td>
+    <td><a href="/arc-standards/arc-0078/" style='display: block; text-decoration: none; color: inherit;'>URI scheme, keyreg Transactions extension</a></td>
+    <td><a href="/arc-standards/arc-0078/" style='display: block; text-decoration: none; color: inherit;'>A specification for encoding Key Registration Transactions in a URI format.</a></td>
+  </tr>
+      <tr>
+    <td><a href="/arc-standards/arc-0079/" style='display: block; text-decoration: none; color: inherit;'>79</a></td>
+    <td><a href="/arc-standards/arc-0079/" style='display: block; text-decoration: none; color: inherit;'>URI scheme, App NoOp call extension</a></td>
+    <td><a href="/arc-standards/arc-0079/" style='display: block; text-decoration: none; color: inherit;'>A specification for encoding NoOp Application call Transactions in a URI format.</a></td>
+  </tr>
+      <tr>
+    <td><a href="/arc-standards/arc-0082/" style='display: block; text-decoration: none; color: inherit;'>82</a></td>
+    <td><a href="/arc-standards/arc-0082/" style='display: block; text-decoration: none; color: inherit;'>URI scheme blockchain information</a></td>
+    <td><a href="/arc-standards/arc-0082/" style='display: block; text-decoration: none; color: inherit;'>Querying blockchain information using a URI format</a></td>
   </tr>
     </tbody>
   </table>
