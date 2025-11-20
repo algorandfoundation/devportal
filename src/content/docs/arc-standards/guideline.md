@@ -50,6 +50,10 @@ The goal of this ARC is to clearly define the process for running for an xGov Co
 
 This ARC defines the Expert Governor (xGov) status and voting power in the Algorand Expert Governance.
 
+### ARC 90 - URI scheme
+
+This ARC defines a unified Algorand URI scheme that covers payment transactions, key registration, application NoOp calls, and read-only blockchain queries. It expands on earlier URI specifications to support deeplinks, QR codes, and other contexts where structured URIs communicate transaction intent or state queries.
+
 ## Asa ARCs
 
 ### ARC 3 - Conventions Fungible/Non-Fungible Tokens
