@@ -25,6 +25,7 @@ import {
 const IMPORT_GITHUB = process.env.IMPORT_GITHUB === 'true';
 const IMPORT_DRY_RUN = process.env.IMPORT_DRY_RUN === 'true';
 const FORCE_IMPORT = process.env.FORCE_IMPORT === 'true';
+const IMPORT_SOURCE_REPO = process.env.IMPORT_SOURCE_REPO;
 const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
 
 // List of remote content configs to import
@@ -48,9 +49,22 @@ export const collections = {
 
         if (IMPORT_GITHUB) {
           console.log('🔄 Importing content from GitHub repositories...');
+          if (IMPORT_SOURCE_REPO) {
+            console.log(`🎯 Filtering for repository: ${IMPORT_SOURCE_REPO}`);
+          }
 
           for (const config of REMOTE_CONTENT) {
             if (!config.enabled) continue;
+
+            const configRepoId = `${config.owner}/${config.repo}`;
+
+            // Skip if a specific repo is requested and this isn't it
+            if (IMPORT_SOURCE_REPO && configRepoId !== IMPORT_SOURCE_REPO) {
+              console.log(
+                `⏭️  Skipping ${config.name} (${configRepoId}) - filtering for ${IMPORT_SOURCE_REPO}`,
+              );
+              continue;
+            }
 
             try {
               console.log(`📥 Loading ${config.name}...`);
