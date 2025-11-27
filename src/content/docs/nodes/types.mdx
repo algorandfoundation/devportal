@@ -1,34 +1,34 @@
 ---
 title: Algorand Node Types
-description: This document explains the different types of Algorand nodes (relay and non-relay), their configurations (archival and participation modes), and provides guidance on which node type to choose based on specific use cases.
+description: This document explains the different types of Algorand nodes, their configurations, and provides guidance on which node type to choose based on specific use cases.
 ---
 
-The Algorand network is comprised of two distinct types of nodes, **relay nodes**, and **non-relay nodes**. Relay nodes are primarily used for communication routing to a set of connected non-relay nodes. Relay nodes communicate with other relay nodes and route blocks to all connected non-relay nodes. Non-relay nodes only connect to relay nodes and can also participate in consensus. Non-relay nodes may connect to several relay nodes but never connect to another non-relay node.
+The Algorand network is comprised of two distinct types of nodes, **repeater nodes**, and **non-repeater nodes**. Repeater nodes are primarily used for communication routing to a set of connected non-repeater nodes. Repeater nodes communicate with other repeater nodes and route blocks to all connected non-repeater nodes. Non-repeater nodes only connect to repeater nodes and can also participate in consensus. Non-repeater nodes may connect to several repeater nodes but never connect to another non-repeater node.
 
-In addition to the two node types, nodes can be configured to be [**archival**](#archival-mode). Archival nodes store the entire ledger, as opposed to the last 1000 blocks for non-archival blocks. Relay nodes are necessarily archival. Non-relay archival nodes are often used to feed an [**indexer**](/nodes/installation/indexer-installation) that allows more advanced queries on the history of the blockchain.
+In addition to the two node types, nodes can be configured to be an [**Archiver**](#archiver-mode). Archiver nodes store the entire ledger, as opposed to the last 1000 blocks for non-archiver nodes. Repeater nodes are necessarily archiver nodes as well. Non-repeater archiver nodes are often used to feed an [**indexer**](/nodes/installation/indexer-installation) that allows more advanced queries on the history of the blockchain.
 
-Finally, a node may either participate in consensus or not. Participation nodes do not need to be archival. In addition, to reduce attack surfaces and outage risks, it is strongly recommended that participation nodes are only used for the purpose in participating in consensus. In particular, participation nodes should not be relays.
+Finally, a node may either participate in consensus or not. Validator nodes do not need to be archiver. In addition, to reduce attack surfaces and outage risks, it is strongly recommended that validator nodes are only used for the purpose in participating in consensus. In particular, validator nodes should not be repeaters.
 
-All node types use the same install procedure. To setup a node for a specific type, requires a few configuration parameter changes or operations as described below. The default install will set the node up as a non-relay non-archival non-participation mode.
+All node types use the same install procedure. To setup a node for a specific type, requires a few configuration parameter changes or operations as described below. The default install will set the node up as a non-repeater non-archiver non-participation mode, also known as an **API provider** node.
 
 The table below is a summary of possible node configurations:
 
-| Relay? | Archival? | Participation? | Comments                                                                                                                                                                                   |
-| ------ | --------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| ✅ Yes | ✅ Yes    | ✅ Yes         | ❌ Insecure & strongly discouraged                                                                                                                                                         |
-| ✅ Yes | ✅ Yes    | ❌ No          | ✅ Normal configuration for a **"relay"**                                                                                                                                                  |
-| ✅ Yes | ❌ No     | ✅ Yes         | ❌ Insecure & strongly discouraged                                                                                                                                                         |
-| ✅ Yes | ❌ No     | ❌ No          | ✅ Alternate configuration for a **"non-archival relay"**                                                                                                                                  |
-| ❌ No  | ✅ Yes    | ✅ Yes         | ❓ Discouraged, as participation nodes do not need to be archival and should only be used for participation, and not used for any other purpose                                            |
-| ❌ No  | ✅ Yes    | ❌ No          | ✅ Normal configuration for an **"archival node"**, often connected to an [**indexer**](/nodes/installation/indexer-installation)                                                          |
-| ❌ No  | ❌ No     | ✅ Yes         | ✅ Normal configuration for a **"participation node"**                                                                                                                                     |
-| ❌ No  | ❌ No     | ❌ No          | ✅ Normal configuration for an **"API node"** used to submit transactions to the blockchain and access current state (current balances, smart contract state, ...) but no historical state |
+| Repeater? | Archiver? | Validator? | Comments                                                                                                                                                                                       |
+| --------- | --------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅ Yes    | ✅ Yes    | ✅ Yes     | ❌ Insecure & strongly discouraged                                                                                                                                                             |
+| ✅ Yes    | ✅ Yes    | ❌ No      | ✅ Normal configuration for a **"repeater"**                                                                                                                                                   |
+| ✅ Yes    | ❌ No     | ✅ Yes     | ❌ Insecure & strongly discouraged                                                                                                                                                             |
+| ✅ Yes    | ❌ No     | ❌ No      | ✅ Alternate configuration for a **"non-archiver repeater"**                                                                                                                                   |
+| ❌ No     | ✅ Yes    | ✅ Yes     | ❓ Discouraged, as validator nodes do not need to be archiver and should only be used for participation, and not used for any other purpose                                                    |
+| ❌ No     | ✅ Yes    | ❌ No      | ✅ Normal configuration for an **"archiver node"**, often connected to an [**indexer**](/nodes/installation/indexer-installation)                                                              |
+| ❌ No     | ❌ No     | ✅ Yes     | ✅ Normal configuration for a **"validator node"**                                                                                                                                             |
+| ❌ No     | ❌ No     | ❌ No      | ✅ Normal configuration for an **"API provider"** used to submit transactions to the blockchain and access current state (current balances, smart contract state, ...) but no historical state |
 
 ## Hardware Requirements
 
-### Participation Nodes
+### Validator Nodes
 
-Participation nodes are actively involved in the Algorand consensus protocol by proposing and voting
+Validator nodes are actively involved in the Algorand consensus protocol by proposing and voting
 on blocks. They require higher network bandwidth to communicate with other nodes efficiently.
 
 - 8 vCPU
@@ -36,10 +36,10 @@ on blocks. They require higher network bandwidth to communicate with other nodes
 - 100 GB NVMe SSD or equivalent
 - 1 Gbps connection with low latency (< 100ms)
 
-### Non-Participation Nodes
+### Non-Validator Nodes
 
-Non-participation nodes maintain a current copy of the blockchain but do not participate in
-consensus, so the hardware requirements are somewhat lower than for participation nodes.
+Non-validator nodes maintain a current copy of the blockchain but do not participate in
+consensus, so the hardware requirements are somewhat lower than for validator nodes.
 Non-participating nodes are useful for API endpoints and development environments.
 
 - 8 vCPU
@@ -47,9 +47,9 @@ Non-participating nodes are useful for API endpoints and development environment
 - 100 GB NVMe SSD or equivalent
 - 100Mbps connection with low latency (< 100ms)
 
-### Archival Nodes
+### Archiver Nodes
 
-Archival nodes store the entire history of the blockchain from genesis, making them valuable for
+Archiver nodes store the entire history of the blockchain from genesis, making them valuable for
 applications requiring historical data access. They need significantly more storage than other node
 types.
 
@@ -72,45 +72,45 @@ types.
 Here are some common use cases:
 
 - I want to participate in consensus and help secure the Algorand network.
-  - Non-relay, non-archival participation node
+  - Validator node: Non-repeater, non-archiver participation node
   - Note: I need to have some Algo for that purpose and I need to monitor my node 24/7 to ensure it is working properly.
 - I want to send transactions and read current state of smart contracts/applications:
-  - Non-relay, non-archival non-participation node
+  - Non-repeater, non-archiver non-participation node
   - Example: a dApp website that does not use any historical information (past transaction/operation), a website displaying balances of a list of important accounts.
 - I want full access to historical data (blocks, transactions) with advanced querying:
-  - Non-relay, archival non-participation node, together with an [**Indexer**](/nodes/installation/indexer-installation).
+  - Non-repeater, archiver non-participation node, together with an [**Indexer**](/nodes/installation/indexer-installation).
 - I want to get state proofs for any block:
-  - Non-relay, archival non-participation node
+  - Non-repeater, archiver non-participation node
 
-## Participation Node
+## Validator Node
 
-How to install a node is described [here](/nodes/installation/manual-installation). Classifying a node as a participation node is not a configuration parameter but a dynamic operation where the node is hosting participation keys for one or more online accounts. This process is described in [Participate in Consensus](/concepts/protocol/overview). Technically both non-relay and relay nodes can participate in consensus, but Algorand recommends _only_ non-relay nodes participate in consensus.
+How to install a node is described [here](/nodes/installation/manual-installation). Classifying a node as a validator node is not a configuration parameter but a dynamic operation where the node is hosting participation keys for one or more online accounts. This process is described in [Participate in Consensus](/concepts/protocol/overview). Technically both non-repeater and repeater nodes can participate in consensus, but Algorand recommends _only_ non-repeater nodes participate in consensus.
 
 :::note
-Non-relay nodes do not have to participate in consensus. They still have access to the ledger and can be used with applications that need to connect to the network to submit transactions and read block data.
+Non-repeater nodes do not have to participate in consensus. They still have access to the ledger and can be used with applications that need to connect to the network to submit transactions and read block data.
 :::
 
-## Archival Mode
+## Archiver Mode
 
-By default non-relay nodes only store a limited number of blocks (approximately up to the last 1000 blocks) locally. Older blocks are dropped from the local copy of the ledger. This reduces the disk space requirement of the node. These nodes can still participate in consensus and applications can connect to these nodes for transaction submission and reading block data. The primary drawback for this type of operation is that older block data will not be available.
+By default non-repeater nodes only store a limited number of blocks (approximately up to the last 1000 blocks) locally. Older blocks are dropped from the local copy of the ledger. This reduces the disk space requirement of the node. These nodes can still participate in consensus and applications can connect to these nodes for transaction submission and reading block data. The primary drawback for this type of operation is that older block data will not be available.
 
-The archival property must be set to true to run in archival mode, which will then set the node to store the entire ledger.
+The archiver property must be set to true to run in archiver mode, which will then set the node to store the entire ledger.
 
 :::caution
-Setting a node to run in archival mode on MainNet/TestNet/BetaNet will significantly increase the disk space requirements for the node. For example, in September 2023, a MainNet non-archival node uses around 20GB of storage, while an archival node requires approximately 2TB of storage.
+Setting a node to run in archiver mode on MainNet/TestNet/BetaNet will significantly increase the disk space requirements for the node. For example, in September 2023, a MainNet non-archiver node uses around 20GB of storage, while an archiver node requires approximately 2TB of storage.
 :::
 
-## Relay Node
+## Repeater Node
 
-A relay node uses the same software install as a non-relay node and only requires setting a few additional configuration parameters.
+A repeater node uses the same software install as a non-repeater node and only requires setting a few additional configuration parameters.
 
-A node is a valid relay node if two things are true:
+A node is a valid repeater node if two things are true:
 
 1. The node is configured to accept incoming connections on a publicly-accessible port (4160 by convention on MainNet, and 4161 on TestNet, except if behind a proxy in which case port 80 is used.).
 2. The node's public IP address (or a valid DNS name) and assigned port are registered in Algorand's SRV records for a specific network (MainNet/TestNet).
 
-Relay nodes are where other nodes connect. Therefore, a relay node must be able to support a large number of connections and handle the processing load associated with all the data flowing to and from these connections. Thus, relay nodes require significantly more power than non-relay nodes. Relay nodes are always configured in archival mode.
+Repeater nodes are where other nodes connect. Therefore, a repeater node must be able to support a large number of connections and handle the processing load associated with all the data flowing to and from these connections. Thus, repeater nodes require significantly more power than non-repeater nodes. Repeater nodes are always configured in archiver mode.
 
-Relay nodes also require very high egress bandwidth. In October 2022, MainNet relay nodes egress bandwidth is between 10TB to 30TB per month.
+Repeater nodes also require very high egress bandwidth. In October 2022, MainNet repeater nodes egress bandwidth is between 10TB to 30TB per month.
 
-See [Configuring Node as a Relay](/nodes/reference/relay-config) for more information on setting up a relay.
+See [Configuring Node as a Repeater](/nodes/reference/repeater-config) for more information on setting up a repeater.

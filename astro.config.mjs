@@ -1145,6 +1145,10 @@ export default defineConfig({
                   label: 'Switching Networks',
                   link: 'nodes/management/switch-networks',
                 },
+                {
+                  label: 'Configuring P2P',
+                  link: 'nodes/management/p2p-config',
+                },
               ],
             },
             {
@@ -1161,7 +1165,7 @@ export default defineConfig({
                 },
                 {
                   label: 'Relay Node Configuration',
-                  link: 'nodes/reference/relay-config',
+                  link: 'nodes/reference/repeater-config',
                 },
                 {
                   label: 'Telemetry Configuration',
