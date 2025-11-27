@@ -1295,6 +1295,10 @@ export default defineConfig({
               link: 'https://specs.algorand.co',
               attrs: { target: '_blank', rel: 'noopener' },
             },
+            {
+              label: 'Configuring P2P on FUNC',
+              link: 'resources/p2p-func',
+            },
           ],
         },
       ],
