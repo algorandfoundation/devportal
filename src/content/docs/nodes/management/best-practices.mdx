@@ -11,7 +11,7 @@ Additionally, various “don’ts” are outlined. Adhering to these best practi
 
 ## Preparing Your Machine
 
-To get ready to set up an Algorand participation node, there are a few prerequisites to get sorted.
+To get ready to set up an Algorand validator node, there are a few prerequisites to get sorted.
 This section covers preparing your machine with the foundation on which the node will be run.
 Running archiver and repeater nodes requires additional configuration and considerations that are not
 covered in this guide.
@@ -90,14 +90,14 @@ Visit the [Renew Participation Keys](/concepts/protocol/partkey-management#renew
 
 ### Ensure that Participation Nodes are Working Properly
 
-Monitor your participation node to ensure high performance and consistent access to your registered
+Monitor your validator node to ensure high performance and consistent access to your registered
 participation key. The following should be monitored:
 
 - Last committed block (goal node status or API) matches a third-party API service
 - CPU / RAM / disk use are within thresholds
 - Clock is accurate (blocks are timestamped using the clock time from the block proposer's node, so
   keep your node clock accurate and on time)
-- The participation node is sending votes and proposing blocks at the expected frequency.
+- The validator node is sending votes and proposing blocks at the expected frequency.
 
 ### Securely Store Participation Keys
 
@@ -185,7 +185,7 @@ cryptocurrencies that can be mined and which may benefit from additional computi
 proof-of-stake consensus algorithm does not benefit from running additional node processes unless
 you have a large number of accounts participating in consensus.
 
-##### Dont add many accounts to a single participation node
+##### Dont add many accounts to a single validator node
 
 Adding more than a few accounts' worth of participation keys on the same physical node could cause
 your node to fall behind in participating. For each round, the node needs to work through all online
@@ -197,7 +197,7 @@ consensus.
 
 ##### Don't run an under-provisioned node
 
-Running a participation node on a machine with less than 16GB of RAM without configuring GOMEMLIMIT
+Running a validator node on a machine with less than 16GB of RAM without configuring GOMEMLIMIT
 to explicitly cap memory usage could cause crashes. Without this limit in place, a node running on
 only 4GB or 8GB of RAM may encounter an out-of-memory error under high chain throughput. This
 behavior was observed during multiple high-TPS load tests in 2024. If you must run a node on a

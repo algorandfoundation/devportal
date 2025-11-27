@@ -3,13 +3,13 @@ title: Algorand Node Types
 description: This document explains the different types of Algorand nodes, their configurations, and provides guidance on which node type to choose based on specific use cases.
 ---
 
-The Algorand network is comprised of two distinct types of nodes, **repeater nodes**, and **non-repeater nodes**. Repeater nodes are primarily used for communication routing to a set of connected non-repeater nodes. Repeater nodes communicate with other repeater nodes and route blocks to all connected non-repeater nodes. Non-repeater nodes only connect to repeater nodes and can also participate in consensus. Non-repeater nodes may connect to several repeater nodes but never connect to another non-repeater node.
+The Algorand network is comprised of two distinct types of nodes, **Repeater Nodes**, and **Validator Nodes**. Repeater nodes are primarily used for communication routing to a set of connected validator nodes. Repeater nodes communicate with other repeater nodes and route blocks to all connected validator nodes. Validator nodes only connect to repeater nodes and can also participate in consensus. Validator nodes may connect to several repeater nodes but never connect to another validator node.
 
-In addition to the two node types, nodes can be configured to be an [**Archiver**](#archiver-mode). Archiver nodes store the entire ledger, as opposed to the last 1000 blocks for non-archiver nodes. Repeater nodes are necessarily archiver nodes as well. Non-repeater archiver nodes are often used to feed an [**indexer**](/nodes/installation/indexer-installation) that allows more advanced queries on the history of the blockchain.
+In addition to the two node types, nodes can be configured to be an [**Archiver**](#archiver-mode). Archiver nodes store the entire ledger, as opposed to the last 1000 blocks for non-archiver nodes. Repeater nodes are necessarily archiver nodes as well. Validator archiver nodes are often used to feed an [**indexer**](/nodes/installation/indexer-installation) that allows more advanced queries on the history of the blockchain.
 
 Finally, a node may either participate in consensus or not. Validator nodes do not need to be archiver. In addition, to reduce attack surfaces and outage risks, it is strongly recommended that validator nodes are only used for the purpose in participating in consensus. In particular, validator nodes should not be repeaters.
 
-All node types use the same install procedure. To setup a node for a specific type, requires a few configuration parameter changes or operations as described below. The default install will set the node up as a non-repeater non-archiver non-participation mode, also known as an **API provider** node.
+All node types use the same install procedure. To setup a node for a specific type, requires a few configuration parameter changes or operations as described below. The default install will set the node up as a validator non-archiver non-participation mode, also known as an **API provider** node.
 
 The table below is a summary of possible node configurations:
 
@@ -36,9 +36,9 @@ on blocks. They require higher network bandwidth to communicate with other nodes
 - 100 GB NVMe SSD or equivalent
 - 1 Gbps connection with low latency (< 100ms)
 
-### Non-Validator Nodes
+### API Provider Nodes
 
-Non-validator nodes maintain a current copy of the blockchain but do not participate in
+API Provider nodes maintain a current copy of the blockchain but do not participate in
 consensus, so the hardware requirements are somewhat lower than for validator nodes.
 Non-participating nodes are useful for API endpoints and development environments.
 
@@ -72,19 +72,19 @@ types.
 Here are some common use cases:
 
 - I want to participate in consensus and help secure the Algorand network.
-  - Validator node: Non-repeater, non-archiver participation node
+  - Validator node: Non-repeater, non-archiver
   - Note: I need to have some Algo for that purpose and I need to monitor my node 24/7 to ensure it is working properly.
 - I want to send transactions and read current state of smart contracts/applications:
-  - Non-repeater, non-archiver non-participation node
+  - API Provider node: non-archiver non-validator node
   - Example: a dApp website that does not use any historical information (past transaction/operation), a website displaying balances of a list of important accounts.
 - I want full access to historical data (blocks, transactions) with advanced querying:
-  - Non-repeater, archiver non-participation node, together with an [**Indexer**](/nodes/installation/indexer-installation).
+  - Archiver node: non-repeater, non-validator node, together with an [**Indexer**](/nodes/installation/indexer-installation).
 - I want to get state proofs for any block:
-  - Non-repeater, archiver non-participation node
+  - API Provider: archiver non-validator node
 
 ## Validator Node
 
-How to install a node is described [here](/nodes/installation/manual-installation). Classifying a node as a validator node is not a configuration parameter but a dynamic operation where the node is hosting participation keys for one or more online accounts. This process is described in [Participate in Consensus](/concepts/protocol/overview). Technically both non-repeater and repeater nodes can participate in consensus, but Algorand recommends _only_ non-repeater nodes participate in consensus.
+How to install a node is described [here](/nodes/installation/manual-installation). Classifying a node as a validator node is not a configuration parameter but a dynamic operation where the node is hosting participation keys for one or more online accounts. This process is described in [Participate in Consensus](/concepts/protocol/overview). Technically both validator and repeater nodes can participate in consensus, but Algorand recommends _only_ validator nodes participate in consensus.
 
 :::note
 Non-repeater nodes do not have to participate in consensus. They still have access to the ledger and can be used with applications that need to connect to the network to submit transactions and read block data.
@@ -92,7 +92,7 @@ Non-repeater nodes do not have to participate in consensus. They still have acce
 
 ## Archiver Mode
 
-By default non-repeater nodes only store a limited number of blocks (approximately up to the last 1000 blocks) locally. Older blocks are dropped from the local copy of the ledger. This reduces the disk space requirement of the node. These nodes can still participate in consensus and applications can connect to these nodes for transaction submission and reading block data. The primary drawback for this type of operation is that older block data will not be available.
+By default validator nodes only store a limited number of blocks (approximately up to the last 1000 blocks) locally. Older blocks are dropped from the local copy of the ledger. This reduces the disk space requirement of the node. These nodes can still participate in consensus and applications can connect to these nodes for transaction submission and reading block data. The primary drawback for this type of operation is that older block data will not be available.
 
 The archiver property must be set to true to run in archiver mode, which will then set the node to store the entire ledger.
 
@@ -102,14 +102,14 @@ Setting a node to run in archiver mode on MainNet/TestNet/BetaNet will significa
 
 ## Repeater Node
 
-A repeater node uses the same software install as a non-repeater node and only requires setting a few additional configuration parameters.
+A repeater node uses the same software install as a validator node and only requires setting a few additional configuration parameters.
 
 A node is a valid repeater node if two things are true:
 
 1. The node is configured to accept incoming connections on a publicly-accessible port (4160 by convention on MainNet, and 4161 on TestNet, except if behind a proxy in which case port 80 is used.).
 2. The node's public IP address (or a valid DNS name) and assigned port are registered in Algorand's SRV records for a specific network (MainNet/TestNet).
 
-Repeater nodes are where other nodes connect. Therefore, a repeater node must be able to support a large number of connections and handle the processing load associated with all the data flowing to and from these connections. Thus, repeater nodes require significantly more power than non-repeater nodes. Repeater nodes are always configured in archiver mode.
+Repeater nodes are where other nodes connect. Therefore, a repeater node must be able to support a large number of connections and handle the processing load associated with all the data flowing to and from these connections. Thus, repeater nodes require significantly more power than validator nodes. Repeater nodes are always configured in archiver mode.
 
 Repeater nodes also require very high egress bandwidth. In October 2022, MainNet repeater nodes egress bandwidth is between 10TB to 30TB per month.
 

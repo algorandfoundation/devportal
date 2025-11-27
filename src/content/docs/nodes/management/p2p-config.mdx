@@ -28,7 +28,7 @@ There are three different P2P configuration modes:
 
 ### P2P Mode: OFF (Default)
 
-P2P networking is disabled and your node will only connect to non-P2P Repeaters.
+P2P networking is disabled and your node will only connect to Permissioned Repeaters.
 
 #### Why choose this mode?
 
@@ -50,7 +50,8 @@ Choose this mode if you have strict bandwidth constraints.
     Update the `EnableP2P` setting in your node's config:
     ```json frame=none
     {
-      "EnableP2P": false
+      "EnableP2P": false,
+      "EnableP2PHybridMode": false
     }
     ```
 
@@ -61,7 +62,7 @@ Choose this mode if you have strict bandwidth constraints.
 
 ### P2P Mode: HYBRID (Recommended)
 
-P2P networking is enabled and your node will connect to _both_ P2P Repeaters and non-P2P Repeaters.
+P2P networking is enabled and your node will connect to _both_ Permissionless Repeaters and Permissioned Repeaters.
 
 #### Why choose this mode?
 
@@ -94,7 +95,7 @@ Choose this mode if you have flexible bandwidth constraints. This mode will also
 
 ### P2P Mode: ON
 
-P2P networking is enabled and your node will connect to only P2P Repeaters and validators.
+P2P networking is enabled and your node will connect to only Permissionless Repeaters and validators.
 
 #### Why choose this mode?
 
@@ -133,9 +134,9 @@ We strongly discourage enabling this setting for the following reasons:
 
 ## Privacy and bandwidth notes
 
-By default, enabling Algorand P2P will only makes outbound connections from your node to Repeaters on the mesh. The Repeaters you connect to will see your public IP. Previously, only the non-P2P Repeaters saw it. You can allow inbound connections if you choose, but it is not required. This change improves openness but may not suit everyone running a node from home.
+By default, enabling Algorand P2P will only makes outbound connections from your node to Repeaters on the mesh. The Repeaters you connect to will see your public IP. Previously, only the Permissioned Repeaters saw it. You can allow inbound connections if you choose, but it is not required. This change improves openness but may not suit everyone running a node from home.
 
-- **Who sees your IP:** the specific Repeaters your node connects to in **Hybrid** or **On**. In **Off**, only Repeaters can.
+- **Who sees your IP:** the specific Repeaters your node connects to in **Hybrid** or **On**. In **Off**, only Permissioned Repeaters can.
 - **Inbound connections:** off by default; enable only if you want to accept peers.
 - **Bandwidth:** P2P can increase data usage. Monitor after enabling.
 - **Ways to limit exposure:** run your node in the cloud or through a trusted provider if you prefer not to expose a residential IP.
