@@ -87,7 +87,7 @@ the command line.
 
 #### DNS restrictions
 
-By default, nodes get their relay list by reading DNS SRV records. To ensure these records aren't
+By default, nodes get their repeater list by reading DNS SRV records. To ensure these records aren't
 tampered with, the node uses DNSSec.
 
 The node first tries the system DNS. If that fails, it uses the fallback DNS from **_config.json_**
@@ -99,7 +99,7 @@ which may not support DNSSec. In this case, set `"DNSSecurityFlags": 0` in
 [`$ALGORAND_DATA/config.json`](https://github.com/algorand/go-algorand/blob/master/tools/network/dnssec/config.go).
 
 :::caution Setting `DNSSecurityFlags` to `0` reduces node security and may allow attackers to
-connect your node to untrustworthy relays. While these relays cannot make your node accept invalid
+connect your node to untrustworthy repeaters. While these repeaters cannot make your node accept invalid
 blocks or create invalid transactions, they may censor transactions or prevent syncing by
 withholding new blocks. Enable DNSSec in production whenever possible. :::
 
@@ -112,7 +112,7 @@ dig -t SRV _algobootstrap._tcp.mainnet.algorand.network +dnssec
 dig -t SRV _algobootstrap._tcp.mainnet.algorand.network @8.8.8.8 +dnssec
 ```
 
-At least one command should return a relay list without errors or warnings. The first command uses
+At least one command should return a repeater list without errors or warnings. The first command uses
 system DNS; the second uses Google DNS.
 
 #### Other issues
@@ -129,8 +129,8 @@ Less common reasons for failing to catch up:
 As of November 2022, syncing without fast-catchup takes 2-4 weeks due to the blockchain's size.
 Syncing slows as rounds increase since newer blocks typically contain more transactions.
 
-:::tip Non-archival nodes can sync faster using [fast-catchup](/nodes/installation/catchup-status).
-For archival nodes, nodely.io provides [snapshots](https://nodely.io/extras/). This is not an
+:::tip Non-archiver nodes can sync faster using [fast-catchup](/nodes/installation/catchup-status).
+For archiver nodes, nodely.io provides [snapshots](https://nodely.io/extras/). This is not an
 endorsement - using these snapshots requires careful risk assessment since `algod` cannot verify
 their validity or that they don't contain invalid data, allowing double spending. :::
 
@@ -143,8 +143,8 @@ If syncing appears to need much longer than 4 weeks:
    1. Monitor RAM and CPU usage with `top` or `htop`
    2. Check available disk space with `df -h`
 3. Verify your internet connection speed (need 100Mbps minimum) and latency (should be under 100ms).
-4. Some regions may have fewer relays, which can slow syncing. Latency above 100ms to the top 20
-   relays may cause issues. Check latency to the best relays using
+4. Some regions may have fewer repeaters, which can slow syncing. Latency above 100ms to the top 20
+   repeaters may cause issues. Check latency to the best repeaters using
    [nodely.io](https://nodely.io/extras/) scripts (from
    [https://snap.algonode.cloud](https://snap.algonode.cloud) in the `utils` directory):
 
@@ -155,14 +155,14 @@ If syncing appears to need much longer than 4 weeks:
 N=$(dig +short srv _algobootstrap._tcp.mainnet.algorand.network @1.1.1.1 |wc -l)
 echo "Querying $N nodes, be patient..."
 echo "" > report.txt
-for relay in $(dig +short srv _algobootstrap._tcp.mainnet.algorand.network @1.1.1.1|awk '{print $4 ":" $3}');
+for repeater in $(dig +short srv _algobootstrap._tcp.mainnet.algorand.network @1.1.1.1|awk '{print $4 ":" $3}');
 do
   echo -n .
-  curl -s -o /dev/null --max-time 1 "http://$relay/v1/urtho/ledger/0"
+  curl -s -o /dev/null --max-time 1 "http://$repeater/v1/urtho/ledger/0"
   echo -ne '\bo'
-  curl -s -o /dev/null --max-time 1 "http://$relay/v1/urtho/ledger/0" -w %{time_total} >> report.txt
+  curl -s -o /dev/null --max-time 1 "http://$repeater/v1/urtho/ledger/0" -w %{time_total} >> report.txt
   echo -ne '\b+'
-  echo "s;$relay" >> report.txt
+  echo "s;$repeater" >> report.txt
 done
 
 echo "Top 20 nodes"

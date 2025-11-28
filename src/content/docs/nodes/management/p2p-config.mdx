@@ -1,0 +1,142 @@
+---
+title: Configuring P2P
+description: Details on configuring P2P networking mode for Algorand nodes.
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+
+This guide explains peer-to-peer (P2P) network mode for Algorand nodes and how to configure your node to enable it. Peer-to-peer networking lets Algorand nodes discover and connect to permissionless Repeaters on a global mesh. Validators make outbound connections to Repeaters, which then propagate blocks, transactions, and participation messages across many independent paths, improving resilience and censorship resistance.
+
+## What is P2P?
+
+Up until now, Algorand operated only within a more traditional network architecture whereby regular nodes connected to a fixed set of permissioned repeaters that handled message distribution. This created a hierarchy: clients depended on specific servers, and if those servers failed or became congested, the connected nodes lost their pathway to the network. It was like having a few major post offices that all mail must pass through first—efficient when working well, but vulnerable to bottlenecks and single points of failure.
+
+P2P networking, however, adds a mesh layer alongside this existing infrastructure. On Algorand, nodes can now maintain connections to both the established repeater backbone and to community-run Repeaters that they discover dynamically. When a node receives a new transaction or block, it propagates through both the traditional network and the diverse P2P mesh channels, creating redundant paths for the flow of data. This hybrid approach (recommended for most operators) combines the stability of trusted permissioned Repeaters with the resilience and decentralization benefits of permissionless Repeaters. If parts of either system slow down or become unavailable, messages still flow through alternative routes, making the overall network more robust.
+
+## Why P2P is important
+
+- **Greater decentralization:** No single infrastructure provider can throttle traffic.
+- **Censorship resistance:** Transactions and votes propagate through many independent paths.
+- **Higher resilience:** Resilience is strengthened through path diversity. If a non-P2P Repeater is degraded, P2P Repeaters will still carry traffic, and vice versa.
+- **Lower barriers to entry:** Anyone with sufficient resources can contribute propagation power.
+
+## Configuring P2P on your node
+
+There are three different P2P configuration modes:
+
+### P2P Mode: OFF (Default)
+
+P2P networking is disabled and your node will only connect to Permissioned Repeaters.
+
+#### Why choose this mode?
+
+Choose this mode if you have strict bandwidth constraints.
+
+#### How to configure
+
+<Tabs syncKey='method'>
+  <TabItem label='NodeKit'>
+
+    Assuming NodeKit is already [installed](/nodes/nodekit-quick-start/), run the following command:
+    ```shell frame=none
+    ./bin/nodekit configure algod --hybrid=false
+    ```
+
+  </TabItem>
+  <TabItem label='config.json'>
+
+    Update the `EnableP2P` setting in your node's config:
+    ```json frame=none
+    {
+      "EnableP2P": false,
+      "EnableP2PHybridMode": false
+    }
+    ```
+
+    Restart your node to apply the change.
+
+  </TabItem>
+</Tabs>
+
+### P2P Mode: HYBRID (Recommended)
+
+P2P networking is enabled and your node will connect to _both_ Permissionless Repeaters and Permissioned Repeaters.
+
+#### Why choose this mode?
+
+Choose this mode if you have flexible bandwidth constraints. This mode will also result in the greatest resiliency by connecting to both P2P and non-P2P networks.
+
+#### How to configure
+
+<Tabs syncKey='method'>
+  <TabItem label='NodeKit'>
+
+    Assuming NodeKit is already [installed](/nodes/nodekit-quick-start/), run the following command:
+    ```shell frame=none
+    ./bin/nodekit configure algod --hybrid=true
+    ```
+
+  </TabItem>
+  <TabItem label='config.json'>
+
+    Update the `EnableP2P` setting in your node's config:
+    ```json frame=none
+    {
+      "EnableP2PHybridMode": true
+    }
+    ```
+
+    Restart your node to apply the change.
+
+  </TabItem>
+</Tabs>
+
+### P2P Mode: ON
+
+P2P networking is enabled and your node will connect to only Permissionless Repeaters and validators.
+
+#### Why choose this mode?
+
+Choose this mode if you have very high bandwidth constraints and are able to closely monitor your usage.
+
+#### How to configure
+
+<Tabs syncKey='method'>
+  <TabItem label='NodeKit'>
+
+    NodeKit does not currently support setting P2P to ON (non-Hybrid).
+
+  </TabItem>
+  <TabItem label='config.json'>
+
+    Update the `EnableP2P` setting in your node's config:
+    ```json frame=none
+    {
+      "EnableP2P": true
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+<Aside type="danger" title="EnableDHTProviders">
+
+`EnableDHTProviders` is an additional configuration setting for P2P that enables DHT (Distributed Hash Table). In P2P overlays, DHTs are used for efficient key-based routing and resource discovery.
+
+We strongly discourage enabling this setting for the following reasons:
+
+1. It will dramatically increase bandwidth usage, which could have costs on either a VPS or a capped residential ISP
+2. Only node runners who understand how static IPs work should be in such a mode to avoid nodes configured to be publicly accessible that aren’t reliably reachable
+
+</Aside>
+
+## Privacy and bandwidth notes
+
+By default, enabling Algorand P2P will only makes outbound connections from your node to Repeaters on the mesh. The Repeaters you connect to will see your public IP. Previously, only the Permissioned Repeaters saw it. You can allow inbound connections if you choose, but it is not required. This change improves openness but may not suit everyone running a node from home.
+
+- **Who sees your IP:** the specific Repeaters your node connects to in **Hybrid** or **On**. In **Off**, only Permissioned Repeaters can.
+- **Inbound connections:** off by default; enable only if you want to accept peers.
+- **Bandwidth:** P2P can increase data usage. Monitor after enabling.
+- **Ways to limit exposure:** run your node in the cloud or through a trusted provider if you prefer not to expose a residential IP.

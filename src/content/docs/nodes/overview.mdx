@@ -8,7 +8,7 @@ import { LinkCard } from '@astrojs/starlight/components';
 This page offers an introduction to all of the concepts and artifacts to consider when running and managing a node. After understanding the overall concepts, you can dive into detailed information about each topic.
 Here, it describes what an algorand node is, outlines the types of nodes in the algorand network, how a node is related to the consensus and its participation, details how they fit into Algorand’s Pure Proof-of-Stake (PPoS) consensus, alternatives for running your own node and the considerations for maintaining a secure, efficient and healthy node.
 
-Running an Algorand node is essential for participating in and maintaining the blockchain network. Whether you choose to run a relay node for network communication, a participation node for consensus voting, or an archival node for storing the complete ledger, your node plays a vital role in the network's security and decentralization. This documentation provides a comprehensive guide to understanding and running Algorand nodes.
+Running an Algorand node is essential for participating in and maintaining the blockchain network. Whether you choose to run a repeater node for network communication, a validator node for consensus voting, or an archiver node for storing the complete ledger, your node plays a vital role in the network's security and decentralization. This documentation provides a comprehensive guide to understanding and running Algorand nodes.
 
 ## What is a Node?
 
@@ -18,18 +18,17 @@ the consensus protocol or storing data.
 
 There are two primary types of nodes in Algorand:
 
-- **Relay Nodes:** Primarily facilitate communication by routing data to connected non-relay nodes. They
-  interact with other relay nodes and distribute blocks to all linked non-relay nodes.
+- **Repeater Nodes:** Primarily facilitate communication by routing data to connected non-repeater nodes. They
+  interact with other repeater nodes and distribute blocks to all linked non-repeater nodes.
 
-- **Non-Relay Nodes:** Connect exclusively to relay nodes and can participate in consensus. While
-  non-relay nodes may establish connections with multiple relay nodes, they do not connect directly
-  to other non-relay nodes.
+- **Validator Nodes:** Connect exclusively to repeater nodes and participate in consensus. While
+  validator nodes may establish connections with multiple repeater nodes, they do not connect directly
+  to other validator nodes, unless [P2P](/nodes/management/p2p-config) has been enabled.
 
 Also, depending on configuration, the nodes can be categorized as following:
 
-- **Archival Nodes:** Store the entire blockchain ledger.
-- **Non-Archival Nodes**: Retain only the last 1000 blocks.
-- **Participation Nodes:** Actively engage in consensus by proposing and voting on blocks.
+- **Archiver Nodes:** Store the entire blockchain ledger.
+- **API Provider Nodes**: Retain only the last 1000 blocks.
 
 <LinkCard
   title='Algorand Node Types'
@@ -61,13 +60,13 @@ Running a node on the Algorand network has several benefits that enhance the blo
 
 - **Support Network Decentralization**: Each node contributes to the decentralization and security of the Algorand network, making it more resistant to attacks and single points of failure. Nodes worldwide improve geographic diversity and network robustness.
 
-- **Participate in Consensus**: By running a participation node, you can propose and vote on new blocks, directly contributing to the integrity of the blockchain. Algorand’s consensus protocol allows participation without locking or risking your Algo.
+- **Participate in Consensus**: By running a Validator node, you can propose and vote on new blocks, directly contributing to the integrity of the blockchain. Algorand’s consensus protocol allows participation without locking or risking your Algo.
 
 - **Earn Staking Rewards**: Your Algo tokens automatically earn rewards for participating in the consensus process, unlike systems that require explicit staking or delegation. Your tokens remain spendable at all times, providing flexibility without compromising on rewards. Refer to [Staking Rewards](/concepts/protocol/staking-rewards) for more details.
 
-- **Direct Access to Blockchain Data with Advanced Querying**: Running a node provides direct access to the Algorand blockchain, enabling you to submit transactions, access real-time data. Additionally, running an archival node with an indexer enhances this capability by allowing advanced querying for specific transactions, accounts, or assets.
+- **Direct Access to Blockchain Data with Advanced Querying**: Running a node provides direct access to the Algorand blockchain, enabling you to submit transactions, access real-time data. Additionally, running an archiver node with an indexer enhances this capability by allowing advanced querying for specific transactions, accounts, or assets.
 
-- **Ease of Setup and Maintenance**: Algorand nodes use an efficient sync mechanism that requires only minimal disk space (~6-10 GB) for non-archival nodes. Your node can be fully operational within minutes using the Fast Catchup feature.
+- **Ease of Setup and Maintenance**: Algorand nodes use an efficient sync mechanism that requires only minimal disk space (~6-10 GB) for non-archiver nodes. Your node can be fully operational within minutes using the Fast Catchup feature.
 
 ## Running a Node
 

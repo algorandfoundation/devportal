@@ -594,10 +594,10 @@ Instead of processing every block, your node downloads a recent snapshot of the 
 then synchronizes only the most recent blocks.
 
 However, keep in mind that fast-catchup requires trusting the entity providing the catchpoint. For
-maximum security, either use a catchpoint from your own archival node or synchronize from genesis.
+maximum security, either use a catchpoint from your own archiver node or synchronize from genesis.
 
 :::caution
-Do not use fast-catchup on archival or relay nodes. If you accidentally do so, you must reset your
+Do not use fast-catchup on archiver or repeater nodes. If you accidentally do so, you must reset your
 node and start from scratch.
 :::
 
@@ -650,14 +650,14 @@ Get the most recent catchpoint for your network:
 
 If fast-catchup fails, verify:
 
-- Your node is not configured as archival or relay
+- Your node is not configured as archiver or repeater
 - You're running the latest Algorand software (goal version -v)
 - The catchpoint matches your network's Genesis ID
 - Your hardware meets the requirements
 - Your system has sufficient memory
 - You're using an SSD (not HDD) for storage
 
-If you accidentally used fast-catchup on an archival node:
+If you accidentally used fast-catchup on an archiver node:
 
 <Steps>
 
@@ -703,7 +703,7 @@ diagcfg telemetry name -n <hostname>
 sudo -u algorand -H -E diagcfg telemetry name -n <hostname>
 ```
 
-Replace `<hostname>` with your desired identifier (e.g., 'MainNetRelay1' or 'TestNetNode2').
+Replace `<hostname>` with your desired identifier (e.g., 'MainNetRepeater1' or 'TestNetNode2').
 
 To enable without a custom hostname:
 
@@ -791,6 +791,6 @@ For more details about Nodely's telemetry service, see their
 [telemetry documentation](https://nodely.io/docs/telemetry/quickstart/).
 
 :::note
-Nodely's telemetry service is designed for MainNet nodes including validators, API nodes, and P2P
-nodes/relays. Do not use it for the Relay/Archiver Running Program.
+Nodely's telemetry service is designed for MainNet nodes including validators, API Providers, and P2P
+nodes/repeaters. Do not use it for the Repeater/Archiver Running Program.
 :::
