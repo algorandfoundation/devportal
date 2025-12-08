@@ -1145,6 +1145,10 @@ export default defineConfig({
                   label: 'Switching Networks',
                   link: 'nodes/management/switch-networks',
                 },
+                {
+                  label: 'Configuring P2P',
+                  link: 'nodes/management/p2p-config',
+                },
               ],
             },
             {
@@ -1160,8 +1164,8 @@ export default defineConfig({
                   link: 'nodes/reference/config-settings',
                 },
                 {
-                  label: 'Relay Node Configuration',
-                  link: 'nodes/reference/relay-config',
+                  label: 'Repeater Node Configuration',
+                  link: 'nodes/reference/repeater-config',
                 },
                 {
                   label: 'Telemetry Configuration',
@@ -1290,6 +1294,10 @@ export default defineConfig({
               label: 'Algorand Specifications',
               link: 'https://specs.algorand.co',
               attrs: { target: '_blank', rel: 'noopener' },
+            },
+            {
+              label: 'Configuring P2P on FUNC',
+              link: 'resources/p2p-func',
             },
           ],
         },

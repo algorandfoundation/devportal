@@ -1,0 +1,64 @@
+---
+title: Configuring P2P on FUNC
+description: Details on configuring P2P networking mode for Algorand nodes when using the FUNC node controller.
+---
+
+import { Aside, LinkCard } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import p2pOn from '@images/p2p/p2p-on.png';
+import p2pOff from '@images/p2p/p2p-off.png';
+import p2pHybrid from '@images/p2p/p2p-hybrid.png';
+
+This guide details how to configure Peer-to-peer (P2P) networking when using the [FUNC node controller](https://github.com/GalaxyPay/func).
+
+<LinkCard
+  title='P2P Configuration Guide'
+  href='/nodes/management/p2p-config/'
+  description='Instructions on configuring P2P using NodeKit or directly updating the node’s config.json file'
+/>
+
+## Configuring P2P on your node
+
+There are three different P2P configuration modes:
+
+### P2P Mode: OFF (Default)
+
+P2P networking is disabled and your node will only connect to Permissioned Repeaters.
+
+#### Why choose this mode?
+
+Choose this mode if you have strict bandwidth constraints.
+
+#### How to configure
+
+Assuming FUNC is already [installed](https://github.com/GalaxyPay/func?tab=readme-ov-file#installation), open the FUNC [app](http://localhost:3536/), click Manage->Configure, and ensure both checkboxes are toggled off:
+
+<Image src={p2pOff} alt='Disabling P2P' />
+
+### P2P Mode: HYBRID (Recommended)
+
+P2P networking is enabled and your node will connect to _both_ Permissionless Repeaters and Permissioned Repeaters.
+
+#### Why choose this mode?
+
+Choose this mode if you have flexible bandwidth constraints. This mode will also result in the greatest resiliency by connecting to both P2P and non-P2P networks.
+
+#### How to configure
+
+Assuming FUNC is already [installed](https://github.com/GalaxyPay/func?tab=readme-ov-file#installation), open the FUNC [app](http://localhost:3536/), click Manage->Configure, and ensure the "Enable P2P Hybrid Mode" checkbox is toggled on:
+
+<Image src={p2pHybrid} alt='Enabling P2P in Hybrid mode' />
+
+### P2P Mode: ON
+
+P2P networking is enabled and your node will connect to only Permissionless Repeaters and validators.
+
+#### Why choose this mode?
+
+Choose this mode if you have very high bandwidth constraints and are able to closely monitor your usage.
+
+#### How to configure
+
+Assuming FUNC is already [installed](https://github.com/GalaxyPay/func?tab=readme-ov-file#installation), open the FUNC [app](http://localhost:3536/), click Manage->Configure, and ensure the "Enable P2P Mode" checkbox is toggled on:
+
+<Image src={p2pOn} alt='Enabling P2P (Non-hybrid mode)' />

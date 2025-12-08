@@ -10,7 +10,7 @@ significantly slow down nodes. Users should use the V2 Indexer.
 
 The V2 Indexer runs as an independent process that connects to a
 [PostgreSQL](https://www.postgresql.org/) compatible database containing the ledger data. The
-Indexer populates this database by connecting to an Algorand archival node and processing all ledger
+Indexer populates this database by connecting to an Algorand archiver node and processing all ledger
 data. Alternatively, the Indexer can connect to a PostgreSQL database that has already been
 populated by another Indexer instance. This setup allows you to have multiple reader instances
 providing [REST APIs](https://developer.algorand.org/docs/rest-apis/indexer) for searching the
@@ -73,7 +73,7 @@ To run the Indexer as a reader (without connecting to an Algorand node), use the
 
 #### Start as a Data Loader
 
-To populate the PostgreSQL database, provide the Algorand Archival node connection details using
+To populate the PostgreSQL database, provide the Algorand Archiver node connection details using
 either:
 
 - The Algorand Node data directory (`--algod`), if the node is on the same machine
@@ -120,7 +120,7 @@ for both server settings and authentication.
 To enable indexing on a node:
 
 1. Set the `isIndexerActive` configuration parameter to `true`
-2. Ensure the node is in archival mode
+2. Ensure the node is in archiver mode
 
 :::caution
 Enabling indexing will more than double the node's disk space requirements.
