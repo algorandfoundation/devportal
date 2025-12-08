@@ -1164,7 +1164,7 @@ export default defineConfig({
                   link: 'nodes/reference/config-settings',
                 },
                 {
-                  label: 'Relay Node Configuration',
+                  label: 'Repeater Node Configuration',
                   link: 'nodes/reference/repeater-config',
                 },
                 {
