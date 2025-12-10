@@ -1287,6 +1287,10 @@ export default defineConfig({
               link: 'resources/liquid-auth',
             },
             {
+              label: 'Bridging',
+              link: 'resources/bridging',
+            },
+            {
               label: 'Algorand Specifications',
               link: 'https://specs.algorand.co',
               attrs: { target: '_blank', rel: 'noopener' },

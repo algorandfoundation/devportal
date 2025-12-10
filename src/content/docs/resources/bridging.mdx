@@ -1,0 +1,453 @@
+---
+title: Wormhole Native Token Transfers on Algorand - Technical Implementation Guide
+---
+
+
+This guide provides comprehensive technical documentation for implementing Wormhole's Native Token Transfers (NTT) framework between Algorand and EVM-compatible chains. The implementation enables bidirectional token transfers across heterogeneous blockchain environments through Wormhole's verified attestation architecture.
+
+## 1. Architecture Overview
+
+### 1.1 System Components
+
+The NTT framework consists of three primary components:
+
+- **NttManager**: Core contract managing token custody, transfer lifecycle, and rate limiting
+- **WormholeTransceiver**: Handles cross-chain message transmission via Wormhole protocol
+- **Token Contracts**: Native implementations (ERC20 on EVM, ASA on Algorand)
+
+### 1.2 Transfer Flow
+
+```
+Source Chain              Wormhole Network          Destination Chain
+─────────────────────────────────────────────────────────────────────
+Lock/Burn Token    →    Generate VAA      →    Verify VAA
+NttManager         →    Guardian Network  →    Release/Mint Token
+Emit Message       →    Sign Attestation  →    Execute Transfer
+```
+
+## 2. Prerequisites
+
+### 2.1 Development Environment
+
+| Component | Requirement |
+|-----------|-------------|
+| Runtime | Node.js (LTS), npm, Bun v1.2.23+ |
+| Build Tools | Foundry (forge, cast) |
+| Compiler | Puya (puyapy) v5.3.2 |
+
+### 2.2 Network Requirements
+
+**Algorand Testnet**
+- Funded account with minimum balance for contract deployment
+- Active NTT contract deployment
+
+**Base Sepolia**
+- Wallet with testnet ETH
+- RPC endpoint access (public or Alchemy)
+
+### 2.3 Credentials
+
+- EVM private key (Base Sepolia deployment)
+- Algorand account mnemonic
+- Basescan API key (optional, for contract verification)
+
+## 3. Environment Configuration
+
+### 3.1 Base Sepolia Setup
+
+Acquire testnet ETH from the official [Base Sepolia faucet](https://docs.base.org/base-chain/tools/network-faucets).
+
+Configure RPC endpoint:
+
+```bash
+# Option 1: Public RPC
+export RPC_URL="https://sepolia.base.org"
+
+# Option 2: Alchemy endpoint (recommended for production)
+export RPC_URL="https://base-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}"
+```
+
+### 3.2 Algorand Testnet Setup
+
+1. Fund your testnet account via the Algorand testnet dispenser
+2. Verify Puya compiler installation (v5.3.2 or compatible)
+
+## 4. Installation
+
+### 4.1 NTT Framework Installation
+
+```bash
+# Clone the NTT repository
+git clone --branch 'v1.6.0+cli' --single-branch --depth 1 \
+  https://github.com/wormhole-foundation/native-token-transfers.git
+
+cd native-token-transfers
+
+# Install Bun runtime
+curl -fsSL https://bun.sh/install | bash -s "bun-v1.2.23"
+
+# Install project dependencies
+npm ci
+
+# Install NTT CLI globally
+cd cli
+./install.sh
+
+# Verify installation
+ntt --version
+```
+
+## 5. Project Initialization
+
+### 5.1 Create NTT Project
+
+```bash
+cd ~
+ntt new my-ntt-deployment
+cd my-ntt-deployment
+
+# Initialize for testnet environment
+ntt init Testnet
+```
+
+## 6. Token Deployment: Base Sepolia
+
+### 6.1 Clone Reference Implementation
+
+```bash
+git clone https://github.com/wormhole-foundation/example-ntt-token-evm.git
+cd example-ntt-token-evm
+forge install
+```
+
+### 6.2 Token Parameters
+
+Ensure consistency with Algorand ASA configuration:
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| `TOTAL_SUPPLY` | `MAX_UINT64` | Maximum token supply |
+| `DECIMALS` | `6` | Token precision (must match ASA) |
+| `ASSET_NAME` | `"ASSET_NAME"` | Token identifier |
+| `UNIT_NAME` | `"UNIT"` | Token symbol |
+
+### 6.3 Deploy Token Contract
+
+```bash
+forge create --rpc-url https://sepolia.base.org \
+  --private-key ${PRIVATE_KEY} \
+  src/PeerToken.sol:PeerToken \
+  --broadcast \
+  --constructor-args "ASSET_NAME" "UNIT" 6 ${DEPLOYER_ADDRESS} ${OWNER_ADDRESS}
+```
+
+**Expected Output:**
+```
+Deployer: 0x....
+Deployed to: 0x....
+Transaction hash: 0x....
+```
+
+### 6.4 Decimal Override (If Required)
+
+For non-standard decimal precision, override the ERC20 decimals function:
+
+```solidity
+function decimals() public view virtual override(ERC20) returns (uint8) {
+    return 6;
+}
+```
+
+
+## 7. NTT Deployment: Base Sepolia
+
+### 7.1 Contract Verification Configuration (Optional)
+
+For production deployments with verified contracts:
+
+```bash
+ntt config set-chain BaseSepolia verifier etherscan
+ntt config set-chain BaseSepolia scan_api_key ${BASESCAN_API_KEY}
+
+# Verify configuration
+ntt config get-chain BaseSepolia scan_api_key
+```
+
+### 7.2 Deploy NTT Infrastructure
+
+**Without Verification (Recommended for Testing):**
+
+```bash
+export ETH_PRIVATE_KEY=${PRIVATE_KEY}
+
+ntt add-chain BaseSepolia \
+  --latest \
+  --mode burning \
+  --token ${TOKEN_ADDRESS} \
+  --skip-verify
+```
+
+**With Verification:**
+
+```bash
+export ETH_PRIVATE_KEY=${PRIVATE_KEY}
+
+ntt add-chain BaseSepolia \
+  --latest \
+  --mode burning \
+  --token ${TOKEN_ADDRESS}
+```
+
+### 7.3 Deployment Verification
+
+```bash
+ntt status
+```
+
+Expected output:
+```
+deployment.json is up to date with the on-chain configuration.
+```
+
+### 7.4 Contract Addresses
+
+Record the following addresses from `deployment.json`:
+
+- `nttManagerAddress`: Core transfer management contract
+- `wormholeTransceiverAddress`: Cross-chain message handler
+
+## 8. NTT Deployment: Algorand Testnet
+We will use [Folks Finance NTT Contracts](https://github.com/Folks-Finance/algorand-ntt-contracts) as a reference.
+
+
+### 8.1. Requirements
+- Linux or macOS
+- Python 3.12+
+- AlgoKit
+
+To install all required packages, run:
+```bash 
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip install -r requirements.txt
+npm install
+```
+
+### 8.2 Build the contracts
+To generate the TEAL code, ARC56 specs and TS clients for the contracts, run the command:
+```bash
+npm run build
+```
+
+This will generate artifacts in `specs` folder.
+
+### 8.3. Deployment Configuration
+Create a `.env` file in the root directory with the following variables:
+```bash
+ALGORAND_TESTNET_ACCOUNT_MNEMONIC="your_avm_mnemonic_here"
+```
+
+### 8.4. Deployment on Testnet
+
+:::caution
+Before running the deployment and configuration scripts, make sure your account is funded with sufficient ALGO. We recommend having at least 10 ALGO spare.
+:::
+
+Follow the steps in the specified order:
+- The TransceiverManager has already been deployed on Mainnet at `3298383942` and Testnet at `748800766`. The scripts will use these values.
+- Deploy the `NttToken smart contract` depending on if this is a new ASA or an exising ASA
+- For a new ASA run `npm run script deployment/deployNewToken.ts`.
+- For an existing ASA run `npm run script deployment/deployExistingToken.ts`.
+- After deployment, you should transfer the entire non-circulating supply to the NttToken contract address (named `nttTokenAppAddress` in the `contracts.json` file).
+- (Optional) you can update the ASA reserve address to be the NttToken contract address.
+- Deploy the NttManager smart contract `npm run script deployment/deployNttManager.ts`.
+- Deploy the WormholeTransceiver smart contract `npm run script deployment/deployWormholeTransceiver.ts`.
+- The file `deployment/out/contracts.json` will be updated with your deployed contracts.
+
+Follow the steps in the specified order:
+- Run npm run script `deployment/configure.ts` to complete the configuration on Algorand.
+
+## 9. Peer Configuration: Base Sepolia → Algorand
+
+### 9.1 Address Collection
+
+**From Base Sepolia** (`deployment.json`):
+- NttManager address
+- WormholeTransceiver address
+
+**From Algorand** (`deployment/out/contracts.json`):
+- `nttManager.peerAddress` (32-byte hex, no 0x prefix)
+- `wormholeTransceiver.peerAddress` (32-byte hex, no 0x prefix)
+
+### 9.2 Configure NttManager Peer
+
+```bash
+cast send ${NTT_MANAGER_ADDRESS} \
+  "setPeer(uint16,bytes32,uint8,uint256)" \
+  8 \
+  0x${ALGORAND_NTT_MANAGER_PEER} \
+  6 \
+  1000000000000 \
+  --rpc-url https://sepolia.base.org \
+  --private-key ${PRIVATE_KEY}
+```
+
+**Parameters:**
+- `8`: Algorand Wormhole chain identifier
+- `ALGORAND_NTT_MANAGER_PEER`: 32-byte peer address
+- `6`: Token decimal precision
+- `1000000000000`: Inbound rate limit (per time window)
+
+### 9.3 Configure WormholeTransceiver Peer
+
+```bash
+cast send ${WORMHOLE_TRANSCEIVER_ADDRESS} \
+  "setWormholePeer(uint16,bytes32)" \
+  8 \
+  0x${ALGORAND_WORMHOLE_TRANSCEIVER_PEER} \
+  --rpc-url https://sepolia.base.org \
+  --private-key ${PRIVATE_KEY}
+```
+
+### 9.4 Verify Peer Registration
+
+```bash
+cast call ${WORMHOLE_TRANSCEIVER_ADDRESS} \
+  "getWormholePeer(uint16)(bytes32)" \
+  8 \
+  --rpc-url https://sepolia.base.org
+```
+
+
+## 10. Peer Configuration: Algorand → Base Sepolia
+
+### 10.1 Update Configuration File
+
+Edit `algorand-ntt-contracts/deployment/configure.ts`:
+
+```typescript
+const peers: NttPeerChain[] = [
+  {
+    wormholeChainId: 10004,  // Base Sepolia
+    nttManager: "0x000000000000000000000000${BASE_NTT_MANAGER_ADDRESS}",
+    wormholeTransceiver: "0x000000000000000000000000${BASE_TRANSCEIVER_ADDRESS}",
+  },
+];
+```
+
+**Note:** EVM addresses require left-padding with zeros to achieve 32-byte length.
+
+### 10.2 Apply Configuration
+
+```bash
+tsx deployment/configure.ts
+```
+
+
+## 11. Cross-Chain Transfer Testing
+
+### 11.1 Token Minting
+
+```bash
+cast send ${PEER_TOKEN_ADDRESS} \
+  "mint(address,uint256)" \
+  ${RECIPIENT_ADDRESS} \
+  10000000000 \
+  --rpc-url https://sepolia.base.org \
+  --private-key ${PRIVATE_KEY}
+```
+
+### 11.2 Asset Opt-In
+
+**Algorand:** Execute opt-in transaction for the ASA
+**Base Sepolia:** No action required (ERC20 standard)
+
+### 11.3 Initiate Transfer (Base Sepolia → Algorand)
+
+**Step 1: Convert Recipient Address**
+
+Convert Algorand address to 32-byte hex format.
+
+**Step 2: Approve Token Spend**
+
+```bash
+cast send ${TOKEN_ADDRESS} \
+  "approve(address,uint256)" \
+  ${NTT_MANAGER_ADDRESS} \
+  1000000000000000000000000 \
+  --rpc-url https://sepolia.base.org \
+  --private-key ${PRIVATE_KEY}
+```
+
+**Step 3: Execute Transfer**
+
+```bash
+cast send ${NTT_MANAGER_ADDRESS} \
+  "transfer(uint256,uint16,bytes32)" \
+  1000000 \
+  8 \
+  0x${ALGORAND_RECIPIENT_HEX} \
+  --rpc-url https://sepolia.base.org \
+  --private-key ${PRIVATE_KEY}
+```
+
+### 11.4 Transaction Monitoring
+
+Monitor transfer status via [WormholeScan Testnet](https://wormholescan.io/#/?network=Testnet).
+
+## 12. Known Limitations
+
+### 12.1 Critical: Relayer Infrastructure Gap
+
+**Status:** Transfer initiation successful; completion blocked
+
+**Issue:** The current implementation successfully deploys all infrastructure and emits Wormhole VAAs, but lacks the off-chain relayer component required to complete transfers to Algorand.
+
+**Root Cause:** Folks Finance's Algorand NTT specification requires manual VAA delivery. No automated relayer exists for this implementation.
+
+### 12.2 Attempted Solutions
+
+1. **Manual VAA Submission:** Unsuccessful due to implementation complexity
+2. **Generic Wormhole Relayers:** Incompatible with Algorand NTT architecture
+3. **Custom Relayer Development:** Outside current project scope
+
+## 13. Troubleshooting
+
+### 13.1 Common Issues
+
+| Issue | Root Cause | Solution |
+|-------|------------|----------|
+| Verifier error | Invalid API key or network mismatch | Use `--skip-verify` or validate scan_api_key |
+| Transaction revert | Incorrect parameter count or permissions | Verify function signature and caller permissions |
+| Address format errors | Improper padding | Apply 32-byte padding to EVM addresses |
+| Permission denied | Wrong private key or insufficient role | Confirm deployer has required contract permissions |
+| Compilation errors | Puya version mismatch | Use puyapy v5.3.2 |
+
+### 13.2 Address Format Reference
+
+**EVM Addresses (20 bytes → 32 bytes):**
+```
+Original: 0x1234567890123456789012345678901234567890
+Padded:   0x0000000000000000000000001234567890123456789012345678901234567890
+```
+
+**Algorand Addresses:**
+Use peer addresses directly from `contracts.json` with `0x` prefix.
+
+
+## 14. References
+
+### Official Documentation
+- [Wormhole NTT Documentation](https://docs.wormhole.com/wormhole/tutorials/ntt-quickstart)
+- [Base Network Documentation](https://docs.base.org)
+- [Algorand Developer Portal](https://developer.algorand.org)
+
+### Implementation Resources
+- [Folks Finance Algorand NTT Contracts](https://github.com/Folks-Finance/algorand-ntt-contracts/tree/main/deployment)
+- [Wormhole Example Token (EVM)](https://github.com/wormhole-foundation/example-ntt-token-evm)
+- [Algorand NTT Design Specification](https://docs.google.com/document/d/1eli_csvdUgOrrE75dbtoSZQDxv-zAjZyBo61wyaN7jQ/edit)
+
+### Network Tools
+- [WormholeScan Testnet Explorer](https://wormholescan.io/#/?network=Testnet)
+- [Base Sepolia Faucet](https://docs.base.org/base-chain/tools/network-faucets)
+- [Algorand Testnet Dispenser](https://dispenser.testnet.aws.algodev.network)
