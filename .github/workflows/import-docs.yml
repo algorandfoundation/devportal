@@ -1,8 +1,9 @@
 name: Import Documentation
 
 on:
-  repository_dispatch:
-    types: [docs_updated]
+  schedule:
+    # Runs daily at midnight ET (5:00 AM UTC)
+    - cron: "0 5 * * *"
 
   workflow_dispatch:
     inputs:
