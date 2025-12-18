@@ -3,8 +3,8 @@
     "algorandfoundation/nodekit@main": {
       "name": "NodeKit Command Reference",
       "repoId": "algorandfoundation/nodekit@main",
-      "lastCommitSha": "aa66ae32c4aca54f4c711dc5876c59a5f8d570b5",
-      "lastImported": "2025-10-30T20:07:05.167Z",
+      "lastCommitSha": "42b0c2248c5c05979002360a109898a29ececf65",
+      "lastImported": "2025-12-18T11:30:41.404Z",
       "ref": "main"
     },
     "algorandfoundation/algokit-cli@main": {
@@ -17,8 +17,8 @@
     "algorandfoundation/arcs@devportal": {
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "0312b9f20526ebb97246c9298d9fab378ebe91c2",
-      "lastImported": "2025-11-20T12:53:22.334Z",
+      "lastCommitSha": "2c1b907ec259a2e6c56119a029dedc14f8a4b7a9",
+      "lastImported": "2025-12-18T11:30:39.724Z",
       "ref": "devportal"
     },
     "algorandfoundation/algokit-cli@chore/content-fix": {
@@ -52,9 +52,16 @@
     "algorandfoundation/algokit-utils-py@main": {
       "name": "AlgoKit Utils Python Docs",
       "repoId": "algorandfoundation/algokit-utils-py@main",
-      "lastCommitSha": "97fb35c271555ec58ccbaec3851ee32382c6ec68",
-      "lastImported": "2025-11-10T10:37:29.827Z",
+      "lastCommitSha": "6971b957fbe298facdda00dca158c0a7eb9690df",
+      "lastImported": "2025-12-18T11:30:53.778Z",
       "ref": "main"
+    },
+    "larkiny/algokit-subscriber-ts@docs-dist": {
+      "name": "Algokit Subscriber TS Command Reference",
+      "repoId": "larkiny/algokit-subscriber-ts@docs-dist",
+      "lastCommitSha": "53d2c9991d3a894bf9e9bb5a8d1b7ca4dc9dbb26",
+      "lastImported": "2025-12-18T12:30:55.934Z",
+      "ref": "docs-dist"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"
