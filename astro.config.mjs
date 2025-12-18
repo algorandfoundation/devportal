@@ -1039,7 +1039,7 @@ export default defineConfig({
                       link: 'algokit/subscribers/typescript/overview',
                     },
                     {
-                      label: 'Subsciber',
+                      label: 'Subscriber',
                       link: 'algokit/subscribers/typescript/subscriber',
                     },
                     {
