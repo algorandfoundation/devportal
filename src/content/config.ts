@@ -62,9 +62,7 @@ export const collections = {
           let totalFilesChanged = 0;
 
           // Helper function to count changed files for a config
-          const getChangedFilesForConfig = (
-            config: ImportOptions,
-          ): number => {
+          const getChangedFilesForConfig = (config: ImportOptions): number => {
             try {
               // Get all changed files from git status
               const gitStatus = execSync('git status --porcelain', {
