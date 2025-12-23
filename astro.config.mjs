@@ -1221,13 +1221,13 @@ export default defineConfig({
                 directory: 'reference/algokit-utils-ts/api',
               },
             },
-            {
-              label: 'AlgoKit Subscriber (Typescript)',
-              collapsed: true,
-              autogenerate: {
-                directory: 'reference/algokit-subscriber-ts/api',
-              },
-            },
+            // {
+            //   label: 'AlgoKit Subscriber (Typescript)',
+            //   collapsed: true,
+            //   autogenerate: {
+            //     directory: 'reference/algokit-subscriber-ts/api',
+            //   },
+            // },
             {
               label: 'Algorand TEAL',
               collapsed: true,
