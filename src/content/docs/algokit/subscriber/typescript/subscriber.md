@@ -7,7 +7,6 @@ title: '`AlgorandSubscriber`'
 ## Creating a subscriber
 
 To create an `AlgorandSubscriber` you can this cool-ass constructor:
-just adding stuff
 
 ```typescript
   /**
