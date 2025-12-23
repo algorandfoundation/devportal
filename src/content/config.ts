@@ -9,6 +9,8 @@ import type {
   ImportOptions,
   LoaderContext,
 } from '@larkiny/astro-github-loader';
+import { execSync } from 'child_process';
+import { relative } from 'path';
 
 // Import external repo doc configs
 import {
@@ -53,21 +55,71 @@ export const collections = {
             console.log(`🎯 Filtering for repository: ${IMPORT_SOURCE_REPO}`);
           }
 
+          // Track import results
+          const updated: Array<{ name: string; filesChanged: number }> = [];
+          const skipped: string[] = [];
+          const failed: string[] = [];
+          let totalFilesChanged = 0;
+
+          // Helper function to count changed files for a config
+          const getChangedFilesForConfig = (
+            config: ImportOptions,
+          ): number => {
+            try {
+              // Get all changed files from git status
+              const gitStatus = execSync('git status --porcelain', {
+                encoding: 'utf-8',
+              });
+              const changedFiles = gitStatus
+                .split('\n')
+                .filter(line => line.trim())
+                .map(line => line.substring(3)); // Remove status prefix
+
+              // Filter files that match this config's basePaths
+              let matchingFiles = 0;
+              for (const include of config.includes || []) {
+                if (include.basePath) {
+                  matchingFiles += changedFiles.filter(file =>
+                    file.startsWith(include.basePath),
+                  ).length;
+                }
+              }
+
+              return matchingFiles;
+            } catch (error) {
+              console.warn(
+                `⚠️  Could not count changed files for ${config.name}:`,
+                error,
+              );
+              return 0;
+            }
+          };
+
           for (const config of REMOTE_CONTENT) {
-            if (!config.enabled) continue;
+            const configName = config.name || `${config.owner}/${config.repo}`;
+
+            if (!config.enabled) {
+              skipped.push(configName);
+              continue;
+            }
 
             const configRepoId = `${config.owner}/${config.repo}`;
 
             // Skip if a specific repo is requested and this isn't it
             if (IMPORT_SOURCE_REPO && configRepoId !== IMPORT_SOURCE_REPO) {
               console.log(
-                `⏭️  Skipping ${config.name} (${configRepoId}) - filtering for ${IMPORT_SOURCE_REPO}`,
+                `⏭️  Skipping ${configName} (${configRepoId}) - filtering for ${IMPORT_SOURCE_REPO}`,
               );
+              skipped.push(configName);
               continue;
             }
 
             try {
-              console.log(`📥 Loading ${config.name}...`);
+              console.log(`📥 Loading ${configName}...`);
+
+              // Get file count before import
+              const filesBeforeImport = getChangedFilesForConfig(config);
+
               await githubLoader({
                 octokit: GITHUB_API_CLIENT,
                 configs: [config],
@@ -75,11 +127,34 @@ export const collections = {
                 dryRun: IMPORT_DRY_RUN,
                 force: FORCE_IMPORT,
               }).load(context as LoaderContext);
-              console.log(`✅ ${config.name} loaded successfully`);
+
+              // Get file count after import
+              const filesAfterImport = getChangedFilesForConfig(config);
+              const filesChanged = filesAfterImport - filesBeforeImport;
+
+              console.log(`✅ ${configName} loaded successfully`);
+
+              if (filesChanged > 0) {
+                updated.push({ name: configName, filesChanged });
+                totalFilesChanged += filesChanged;
+              }
             } catch (error) {
-              console.error(`❌ Error loading ${config.name}:`, error);
+              console.error(`❌ Error loading ${configName}:`, error);
+              failed.push(configName);
             }
           }
+
+          // Output structured JSON summary
+          const summary = {
+            updated,
+            skipped,
+            failed,
+            totalConfigs: REMOTE_CONTENT.length,
+            successCount: updated.length,
+            totalFilesChanged,
+          };
+
+          console.log(`IMPORT_SUMMARY_JSON=${JSON.stringify(summary)}`);
         }
       },
     },

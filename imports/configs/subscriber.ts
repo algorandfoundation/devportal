@@ -23,10 +23,19 @@ export const algokitSubscriberConfig: ImportOptions = {
       pattern: 'latest/api/**/*',
       basePath: 'src/content/docs/reference/algokit-subscriber-ts/api',
       transforms: [
-        // Add frontmatter to overview doc
+        convertH1ToTitle,
+        conditionalTransform(
+          '**/README.md',
+          createFrontmatterTransform({
+            frontmatter: {
+              title: 'Overview',
+              sidebar: { order: 0 },
+            },
+            preserveExisting: false,
+          }),
+        ),
         conditionalTransform(
           'latest/api/README.md',
-          removeH1,
           createFrontmatterTransform({
             frontmatter: {
               title: 'Subscriber API Reference (TypeScript)',
@@ -36,31 +45,6 @@ export const algokitSubscriberConfig: ImportOptions = {
             preserveExisting: false,
           }),
         ),
-        conditionalTransform(
-          'latest/api/hierarchy.md',
-          removeH1,
-          createFrontmatterTransform({
-            frontmatter: {
-              title: 'Hierarchy Summary',
-              sidebar: { order: 10 },
-            },
-            mode: 'merge',
-            preserveExisting: false,
-          }),
-        ),
-        conditionalTransform(
-          'latest/api/**/README.md',
-          removeH1,
-          createFrontmatterTransform({
-            frontmatter: {
-              title: 'Overview',
-              sidebar: { label: 'Overview', order: 0 },
-            },
-            mode: 'merge',
-            preserveExisting: false,
-          }),
-        ),
-        convertH1ToTitle,
       ],
     },
     {
