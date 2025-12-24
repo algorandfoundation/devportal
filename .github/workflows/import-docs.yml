@@ -158,11 +158,13 @@ jobs:
             ### Import Information
             - **Trigger**: ${{ github.event_name == 'schedule' && 'Scheduled (nightly)' || github.event_name == 'workflow_dispatch' && 'Manual' || 'Repository dispatch' }}
             - **Files Changed**: ${{ steps.git-check.outputs.changed_count }}
-            ${{ steps.parse-summary.outputs.updated_count && format('- **Updated Repositories**: {0}', steps.parse-summary.outputs.updated_count) || '' }}
-            ${{ steps.parse-summary.outputs.skipped_count && format('- **Skipped Repositories**: {0}', steps.parse-summary.outputs.skipped_count) || '' }}
-            ${{ steps.parse-summary.outputs.failed_count && format('- **Failed Repositories**: {0}', steps.parse-summary.outputs.failed_count) || '' }}
+            ${{ steps.parse-summary.outputs.updated_count && format('- **Updated Repositories**: {0}
+            - **Skipped Repositories**: {1}
+            - **Failed Repositories**: {2}', steps.parse-summary.outputs.updated_count, steps.parse-summary.outputs.skipped_count, steps.parse-summary.outputs.failed_count) || '' }}
 
-            ${{ steps.parse-summary.outputs.updated_repos && format('### Updated Repositories{0}', steps.parse-summary.outputs.updated_repos) || '' }}
+            ${{ steps.parse-summary.outputs.updated_repos && format('### Updated Repositories
+
+            {0}', steps.parse-summary.outputs.updated_repos) || '' }}
 
             ### Review Checklist
             - [ ] Documentation structure looks correct
@@ -193,14 +195,32 @@ jobs:
             HEADER="### 🔍 Import Summary"
           fi
 
+          STATS_SECTION=""
+          if [ -n "${{ steps.parse-summary.outputs.updated_count }}" ]; then
+            STATS_SECTION="#### 📦 Repository Statistics
+
+          - **Updated**: ${{ steps.parse-summary.outputs.updated_count }} repositories
+          - **Skipped**: ${{ steps.parse-summary.outputs.skipped_count }} repositories
+          - **Failed**: ${{ steps.parse-summary.outputs.failed_count }} repositories
+
+          "
+          fi
+
+          REPOS_SECTION=""
+          if [ -n "${{ steps.parse-summary.outputs.updated_repos }}" ]; then
+            REPOS_SECTION="#### 📝 Per-Repository Changes
+
+          ${{ steps.parse-summary.outputs.updated_repos }}
+
+          "
+          fi
+
           gh pr comment ${{ steps.create-pr.outputs.pull-request-number }} --body "$(cat <<EOF
           $HEADER
 
           **Total Files Changed**: ${{ steps.git-check.outputs.changed_count }}
 
-          ${{ steps.parse-summary.outputs.updated_count && format('#### 📦 Repository Statistics\n\n- **Updated**: {0} repositories\n- **Skipped**: {1} repositories\n- **Failed**: {2} repositories\n\n', steps.parse-summary.outputs.updated_count, steps.parse-summary.outputs.skipped_count, steps.parse-summary.outputs.failed_count) || '' }}
-
-          ${{ steps.parse-summary.outputs.updated_repos && format('#### 📝 Per-Repository Changes\n\n{0}\n\n', steps.parse-summary.outputs.updated_repos) || '' }}
+          ${STATS_SECTION}${REPOS_SECTION}
 
           <details>
           <summary>View All Changed Files</summary>
