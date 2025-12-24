@@ -69,15 +69,7 @@ jobs:
         id: import
         run: |
           echo "📥 Starting documentation import..."
-          OUTPUT=$(pnpm run import:docs 2>&1)
-          echo "$OUTPUT"
-
-          # Extract JSON summary if present
-          if echo "$OUTPUT" | grep -q "IMPORT_SUMMARY_JSON="; then
-            SUMMARY_JSON=$(echo "$OUTPUT" | grep "IMPORT_SUMMARY_JSON=" | sed 's/IMPORT_SUMMARY_JSON=//')
-            echo "import_summary=$SUMMARY_JSON" >> $GITHUB_OUTPUT
-            echo "📊 Import Summary: $SUMMARY_JSON"
-          fi
+          pnpm run import:docs
         env:
           GITHUB_TOKEN: ${{ env.AUTOMATION_TOKEN }}
 
@@ -90,16 +82,8 @@ jobs:
             echo "📋 No documentation changes detected"
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "📝 Documentation changes detected:"
+            echo "📝 Documentation changes detected"
             git status --short
-            CHANGED_FILES=$(git diff --staged --name-only)
-            CHANGED_COUNT=$(printf "%s\n" "$CHANGED_FILES" | sed '/^$/d' | wc -l | tr -d ' ')
-            {
-              echo "changed_count=$CHANGED_COUNT"
-              echo 'changed_files<<EOF'
-              echo "$CHANGED_FILES"
-              echo 'EOF'
-            } >> $GITHUB_OUTPUT
           fi
 
       - name: Set PR Branch
@@ -107,32 +91,6 @@ jobs:
         run: |
           PR_BRANCH="docs/documentation-import"
           echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
-
-      - name: Parse Import Summary
-        if: steps.git-check.outputs.has_changes == 'true' && steps.import.outputs.import_summary
-        id: parse-summary
-        run: |
-          SUMMARY='${{ steps.import.outputs.import_summary }}'
-
-          # Extract counts
-          UPDATED_COUNT=$(echo "$SUMMARY" | jq -r '.updated | length')
-          SKIPPED_COUNT=$(echo "$SUMMARY" | jq -r '.skipped | length')
-          FAILED_COUNT=$(echo "$SUMMARY" | jq -r '.failed | length')
-          TOTAL_FILES=$(echo "$SUMMARY" | jq -r '.totalFilesChanged')
-
-          # Build updated repos list
-          UPDATED_REPOS=$(echo "$SUMMARY" | jq -r '.updated[] | "- **\(.name)**: \(.filesChanged) files"' | tr '\n' '\n' || echo "")
-
-          # Store for use in PR body
-          {
-            echo "updated_count=$UPDATED_COUNT"
-            echo "skipped_count=$SKIPPED_COUNT"
-            echo "failed_count=$FAILED_COUNT"
-            echo "total_files=$TOTAL_FILES"
-            echo 'updated_repos<<EOF'
-            echo "$UPDATED_REPOS"
-            echo 'EOF'
-          } >> $GITHUB_OUTPUT
 
       - name: Create Pull Request
         if: steps.git-check.outputs.has_changes == 'true'
@@ -143,8 +101,6 @@ jobs:
           branch: ${{ env.PR_BRANCH }}
           commit-message: |
             docs: Import updated documentation
-
-            Files changed: ${{ steps.git-check.outputs.changed_count }}
 
             Auto-imported via GitHub Actions
           committer: DevPortal Documentation Bot <action@github.com>
@@ -157,14 +113,6 @@ jobs:
 
             ### Import Information
             - **Trigger**: ${{ github.event_name == 'schedule' && 'Scheduled (nightly)' || github.event_name == 'workflow_dispatch' && 'Manual' || 'Repository dispatch' }}
-            - **Files Changed**: ${{ steps.git-check.outputs.changed_count }}
-            ${{ steps.parse-summary.outputs.updated_count && format('- **Updated Repositories**: {0}
-            - **Skipped Repositories**: {1}
-            - **Failed Repositories**: {2}', steps.parse-summary.outputs.updated_count, steps.parse-summary.outputs.skipped_count, steps.parse-summary.outputs.failed_count) || '' }}
-
-            ${{ steps.parse-summary.outputs.updated_repos && format('### Updated Repositories
-
-            {0}', steps.parse-summary.outputs.updated_repos) || '' }}
 
             ### Review Checklist
             - [ ] Documentation structure looks correct
@@ -195,40 +143,10 @@ jobs:
             HEADER="### 🔍 Import Summary"
           fi
 
-          STATS_SECTION=""
-          if [ -n "${{ steps.parse-summary.outputs.updated_count }}" ]; then
-            STATS_SECTION="#### 📦 Repository Statistics
-
-          - **Updated**: ${{ steps.parse-summary.outputs.updated_count }} repositories
-          - **Skipped**: ${{ steps.parse-summary.outputs.skipped_count }} repositories
-          - **Failed**: ${{ steps.parse-summary.outputs.failed_count }} repositories
-
-          "
-          fi
-
-          REPOS_SECTION=""
-          if [ -n "${{ steps.parse-summary.outputs.updated_repos }}" ]; then
-            REPOS_SECTION="#### 📝 Per-Repository Changes
-
-          ${{ steps.parse-summary.outputs.updated_repos }}
-
-          "
-          fi
-
           gh pr comment ${{ steps.create-pr.outputs.pull-request-number }} --body "$(cat <<EOF
           $HEADER
 
-          **Total Files Changed**: ${{ steps.git-check.outputs.changed_count }}
-
-          ${STATS_SECTION}${REPOS_SECTION}
-
-          <details>
-          <summary>View All Changed Files</summary>
-
-          \`\`\`
-          ${{ steps.git-check.outputs.changed_files }}
-          \`\`\`
-          </details>
+          Documentation has been automatically imported from configured repositories.
 
           ### Next Steps
           1. Review the changed files
@@ -261,12 +179,6 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
             echo "- **PR Action**: $PR_ACTION" >> $GITHUB_STEP_SUMMARY
-            echo "- **Files Changed**: ${{ steps.git-check.outputs.changed_count }}" >> $GITHUB_STEP_SUMMARY
-            if [ -n "${{ steps.parse-summary.outputs.updated_count }}" ]; then
-              echo "- **Updated Repositories**: ${{ steps.parse-summary.outputs.updated_count }}" >> $GITHUB_STEP_SUMMARY
-              echo "- **Skipped Repositories**: ${{ steps.parse-summary.outputs.skipped_count }}" >> $GITHUB_STEP_SUMMARY
-              echo "- **Failed Repositories**: ${{ steps.parse-summary.outputs.failed_count }}" >> $GITHUB_STEP_SUMMARY
-            fi
             echo "- **PR**: [#${{ steps.create-pr.outputs.pull-request-number }}](${{ steps.create-pr.outputs.pull-request-url }})" >> $GITHUB_STEP_SUMMARY
             echo "- **Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
           elif [ "${{ steps.git-check.outputs.has_changes }}" = "false" ]; then
