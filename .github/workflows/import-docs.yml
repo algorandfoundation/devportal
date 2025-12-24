@@ -102,11 +102,10 @@ jobs:
             } >> $GITHUB_OUTPUT
           fi
 
-      - name: Create PR Branch
+      - name: Set PR Branch
         if: steps.git-check.outputs.has_changes == 'true'
         run: |
-          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-          PR_BRANCH="docs-update/$TIMESTAMP"
+          PR_BRANCH="docs/documentation-import"
           echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
 
       - name: Parse Import Summary
@@ -159,11 +158,13 @@ jobs:
             ### Import Information
             - **Trigger**: ${{ github.event_name == 'schedule' && 'Scheduled (nightly)' || github.event_name == 'workflow_dispatch' && 'Manual' || 'Repository dispatch' }}
             - **Files Changed**: ${{ steps.git-check.outputs.changed_count }}
-            ${{ steps.parse-summary.outputs.updated_count && format('- **Updated Repositories**: {0}', steps.parse-summary.outputs.updated_count) || '' }}
-            ${{ steps.parse-summary.outputs.skipped_count && format('- **Skipped Repositories**: {0}', steps.parse-summary.outputs.skipped_count) || '' }}
-            ${{ steps.parse-summary.outputs.failed_count && format('- **Failed Repositories**: {0}', steps.parse-summary.outputs.failed_count) || '' }}
+            ${{ steps.parse-summary.outputs.updated_count && format('- **Updated Repositories**: {0}
+            - **Skipped Repositories**: {1}
+            - **Failed Repositories**: {2}', steps.parse-summary.outputs.updated_count, steps.parse-summary.outputs.skipped_count, steps.parse-summary.outputs.failed_count) || '' }}
 
-            ${{ steps.parse-summary.outputs.updated_repos && format('### Updated Repositories\n\n{0}', steps.parse-summary.outputs.updated_repos) || '' }}
+            ${{ steps.parse-summary.outputs.updated_repos && format('### Updated Repositories
+
+            {0}', steps.parse-summary.outputs.updated_repos) || '' }}
 
             ### Review Checklist
             - [ ] Documentation structure looks correct
@@ -177,50 +178,89 @@ jobs:
             documentation
             automated
             import
-            ${{ github.event_name == 'schedule' && 'scheduled' || '' }}
           assignees: ""
           reviewers: ""
-          team-reviewers: ""
+          team-reviewers: devrel
           draft: false
 
-      - name: Add PR Comment
+      - name: Comment on PR
         if: steps.git-check.outputs.has_changes == 'true' && steps.create-pr.outputs.pull-request-number
-        uses: peter-evans/create-or-update-comment@v3
-        with:
-          token: ${{ env.AUTOMATION_TOKEN }}
-          issue-number: ${{ steps.create-pr.outputs.pull-request-number }}
-          body: |
-            ### 🔍 Import Summary
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          PR_OPERATION="${{ steps.create-pr.outputs.pull-request-operation }}"
 
-            **Total Files Changed**: ${{ steps.git-check.outputs.changed_count }}
+          if [ "$PR_OPERATION" = "updated" ]; then
+            HEADER="### 🔄 Documentation Import Update - $TIMESTAMP"
+          else
+            HEADER="### 🔍 Import Summary"
+          fi
 
-            ${{ steps.parse-summary.outputs.updated_count && format('#### 📦 Repository Statistics\n\n- **Updated**: {0} repositories\n- **Skipped**: {1} repositories\n- **Failed**: {2} repositories\n\n', steps.parse-summary.outputs.updated_count, steps.parse-summary.outputs.skipped_count, steps.parse-summary.outputs.failed_count) || '' }}
+          STATS_SECTION=""
+          if [ -n "${{ steps.parse-summary.outputs.updated_count }}" ]; then
+            STATS_SECTION="#### 📦 Repository Statistics
 
-            ${{ steps.parse-summary.outputs.updated_repos && format('#### 📝 Per-Repository Changes\n\n{0}\n\n', steps.parse-summary.outputs.updated_repos) || '' }}
+          - **Updated**: ${{ steps.parse-summary.outputs.updated_count }} repositories
+          - **Skipped**: ${{ steps.parse-summary.outputs.skipped_count }} repositories
+          - **Failed**: ${{ steps.parse-summary.outputs.failed_count }} repositories
 
-            <details>
-            <summary>View All Changed Files</summary>
+          "
+          fi
 
-            ```
-            ${{ steps.git-check.outputs.changed_files }}
-            ```
-            </details>
+          REPOS_SECTION=""
+          if [ -n "${{ steps.parse-summary.outputs.updated_repos }}" ]; then
+            REPOS_SECTION="#### 📝 Per-Repository Changes
 
-            ### Next Steps
-            1. Review the changed files
-            2. Verify documentation renders correctly
-            3. Approve and merge
+          ${{ steps.parse-summary.outputs.updated_repos }}
+
+          "
+          fi
+
+          gh pr comment ${{ steps.create-pr.outputs.pull-request-number }} --body "$(cat <<EOF
+          $HEADER
+
+          **Total Files Changed**: ${{ steps.git-check.outputs.changed_count }}
+
+          ${STATS_SECTION}${REPOS_SECTION}
+
+          <details>
+          <summary>View All Changed Files</summary>
+
+          \`\`\`
+          ${{ steps.git-check.outputs.changed_files }}
+          \`\`\`
+          </details>
+
+          ### Next Steps
+          1. Review the changed files
+          2. Verify documentation renders correctly
+          3. Approve and merge
+          EOF
+          )"
+        env:
+          GH_TOKEN: ${{ env.AUTOMATION_TOKEN }}
 
       - name: Summary
         if: always()
         run: |
           if [ "${{ steps.git-check.outputs.has_changes }}" = "true" ]; then
-            echo "✅ Documentation import completed successfully"
-            echo "📝 Pull Request created: #${{ steps.create-pr.outputs.pull-request-number }}"
-            echo "🔗 PR URL: ${{ steps.create-pr.outputs.pull-request-url }}"
+            PR_OPERATION="${{ steps.create-pr.outputs.pull-request-operation }}"
+
+            if [ "$PR_OPERATION" = "updated" ]; then
+              echo "✅ Documentation import completed successfully"
+              echo "🔄 Pull Request updated: #${{ steps.create-pr.outputs.pull-request-number }}"
+              echo "🔗 PR URL: ${{ steps.create-pr.outputs.pull-request-url }}"
+              PR_ACTION="Updated"
+            else
+              echo "✅ Documentation import completed successfully"
+              echo "📝 Pull Request created: #${{ steps.create-pr.outputs.pull-request-number }}"
+              echo "🔗 PR URL: ${{ steps.create-pr.outputs.pull-request-url }}"
+              PR_ACTION="Created"
+            fi
+
             echo "## Documentation Import Summary" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR Action**: $PR_ACTION" >> $GITHUB_STEP_SUMMARY
             echo "- **Files Changed**: ${{ steps.git-check.outputs.changed_count }}" >> $GITHUB_STEP_SUMMARY
             if [ -n "${{ steps.parse-summary.outputs.updated_count }}" ]; then
               echo "- **Updated Repositories**: ${{ steps.parse-summary.outputs.updated_count }}" >> $GITHUB_STEP_SUMMARY

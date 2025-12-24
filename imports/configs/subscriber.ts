@@ -12,7 +12,7 @@ import { createFrontmatterTransform } from '../transforms/frontmatter.js';
  * Repository: https://github.com/algorandfoundation/algokit-subscriber-ts
  */
 export const algokitSubscriberConfig: ImportOptions = {
-  name: 'Algokit Subscriber TS Command Reference',
+  name: 'Algokit Subscriber TS API Docs',
   owner: 'larkiny',
   repo: 'algokit-subscriber-ts',
   ref: 'docs-dist',
