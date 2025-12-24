@@ -1,21 +1,27 @@
 ---
-title: 'Interface: TransactionInBlock'
+title: types/block
 ---
 
-[**@algorandfoundation/algokit-subscriber**](../../../README.md)
+[**@algorandfoundation/algokit-subscriber**](../README.md)
 
 ---
 
-[@algorandfoundation/algokit-subscriber](../../../modules.md) / [types/block](../README.md) / TransactionInBlock
+[@algorandfoundation/algokit-subscriber](../modules.md) / types/block
+
+# types/block
+
+## Interfaces
+
+### TransactionInBlock
 
 Defined in: [src/types/block.ts:6](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/types/block.ts#L6)
 
 The representation of all important data for a single transaction or inner transaction
 and its side effects within a committed block.
 
-## Properties
+#### Properties
 
-### assetCloseAmount?
+##### assetCloseAmount?
 
 > `optional` **assetCloseAmount**: `bigint`
 
@@ -23,9 +29,7 @@ Defined in: [src/types/block.ts:61](https://github.com/larkiny/algokit-subscribe
 
 The asset close amount if the sender asset position was closed from this transaction.
 
----
-
-### closeAmount?
+##### closeAmount?
 
 > `optional` **closeAmount**: `bigint`
 
@@ -33,9 +37,7 @@ Defined in: [src/types/block.ts:63](https://github.com/larkiny/algokit-subscribe
 
 The ALGO close amount if the sender account was closed from this transaction.
 
----
-
-### closeRewards?
+##### closeRewards?
 
 > `optional` **closeRewards**: `bigint`
 
@@ -43,9 +45,7 @@ Defined in: [src/types/block.ts:67](https://github.com/larkiny/algokit-subscribe
 
 Rewards in microalgos applied to the close remainder to account.
 
----
-
-### createdAppId?
+##### createdAppId?
 
 > `optional` **createdAppId**: `bigint`
 
@@ -53,9 +53,7 @@ Defined in: [src/types/block.ts:59](https://github.com/larkiny/algokit-subscribe
 
 The app ID if an app was created from this transaction.
 
----
-
-### createdAssetId?
+##### createdAssetId?
 
 > `optional` **createdAssetId**: `bigint`
 
@@ -63,9 +61,7 @@ Defined in: [src/types/block.ts:57](https://github.com/larkiny/algokit-subscribe
 
 The asset ID if an asset was created from this transaction.
 
----
-
-### genesisHash?
+##### genesisHash?
 
 > `optional` **genesisHash**: `Buffer`
 
@@ -73,9 +69,7 @@ Defined in: [src/types/block.ts:47](https://github.com/larkiny/algokit-subscribe
 
 The binary genesis hash of the network the transaction is within.
 
----
-
-### genesisId?
+##### genesisId?
 
 > `optional` **genesisId**: `string`
 
@@ -83,9 +77,7 @@ Defined in: [src/types/block.ts:49](https://github.com/larkiny/algokit-subscribe
 
 The string genesis ID of the network the transaction is within.
 
----
-
-### intraRoundOffset
+##### intraRoundOffset
 
 > **intraRoundOffset**: `number`
 
@@ -93,15 +85,13 @@ Defined in: [src/types/block.ts:30](https://github.com/larkiny/algokit-subscribe
 
 The offset of the transaction within the round including inner transactions.
 
-#### Example
+###### Example
 
 ```ts
 -0 - 1 - 2 - 3 - 4 - 5;
 ```
 
----
-
-### logs?
+##### logs?
 
 > `optional` **logs**: `Uint8Array`[]
 
@@ -109,9 +99,7 @@ Defined in: [src/types/block.ts:65](https://github.com/larkiny/algokit-subscribe
 
 Any logs that were issued as a result of this transaction.
 
----
-
-### parentIntraRoundOffset?
+##### parentIntraRoundOffset?
 
 > `optional` **parentIntraRoundOffset**: `number`
 
@@ -119,15 +107,13 @@ Defined in: [src/types/block.ts:41](https://github.com/larkiny/algokit-subscribe
 
 The intra-round offset of the parent transaction if this is an inner transaction.
 
-#### Example
+###### Example
 
 ```ts
 -0 - 1 - 1 - 1 - 1 - 2;
 ```
 
----
-
-### parentTransactionId?
+##### parentTransactionId?
 
 > `optional` **parentTransactionId**: `string`
 
@@ -135,9 +121,7 @@ Defined in: [src/types/block.ts:45](https://github.com/larkiny/algokit-subscribe
 
 The ID of the parent transaction if this is an inner transaction.
 
----
-
-### receiverRewards?
+##### receiverRewards?
 
 > `optional` **receiverRewards**: `bigint`
 
@@ -145,9 +129,7 @@ Defined in: [src/types/block.ts:71](https://github.com/larkiny/algokit-subscribe
 
 Rewards in microalgos applied to the receiver account.
 
----
-
-### roundNumber
+##### roundNumber
 
 > **roundNumber**: `bigint`
 
@@ -155,9 +137,7 @@ Defined in: [src/types/block.ts:51](https://github.com/larkiny/algokit-subscribe
 
 The round number of the block the transaction is within.
 
----
-
-### roundTimestamp
+##### roundTimestamp
 
 > **roundTimestamp**: `number`
 
@@ -165,9 +145,7 @@ Defined in: [src/types/block.ts:53](https://github.com/larkiny/algokit-subscribe
 
 The round unix timestamp of the block the transaction is within.
 
----
-
-### senderRewards?
+##### senderRewards?
 
 > `optional` **senderRewards**: `bigint`
 
@@ -175,9 +153,7 @@ Defined in: [src/types/block.ts:69](https://github.com/larkiny/algokit-subscribe
 
 Rewards in microalgos applied to the sender account.
 
----
-
-### signedTxnWithAD
+##### signedTxnWithAD
 
 > **signedTxnWithAD**: `SignedTxnWithAD`
 
@@ -185,9 +161,7 @@ Defined in: [src/types/block.ts:10](https://github.com/larkiny/algokit-subscribe
 
 The signed transaction with apply data from the block
 
----
-
-### transaction
+##### transaction
 
 > **transaction**: `Transaction`
 
@@ -195,9 +169,7 @@ Defined in: [src/types/block.ts:55](https://github.com/larkiny/algokit-subscribe
 
 The transaction as an algosdk `Transaction` object.
 
----
-
-### transactionId
+##### transactionId
 
 > **transactionId**: `string`
 
@@ -205,7 +177,7 @@ Defined in: [src/types/block.ts:19](https://github.com/larkiny/algokit-subscribe
 
 The transaction ID
 
-#### Example
+###### Example
 
 ```ts
 - W6IG6SETWKISJV4JQSS6GNZGWKYXOOLH7FT3NQM4BIFRLCOXOQHA if it's a parent transaction
