@@ -176,10 +176,9 @@ jobs:
             documentation
             automated
             import
-            ${{ github.event_name == 'schedule' && 'scheduled' || '' }}
           assignees: ""
           reviewers: ""
-          team-reviewers: ""
+          team-reviewers: devrel
           draft: false
 
       - name: Comment on PR
