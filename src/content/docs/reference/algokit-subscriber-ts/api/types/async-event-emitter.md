@@ -1,12 +1,18 @@
 ---
-title: 'Class: AsyncEventEmitter'
+title: types/async-event-emitter
 ---
 
-[**@algorandfoundation/algokit-subscriber**](../../../README.md)
+[**@algorandfoundation/algokit-subscriber**](../README.md)
 
 ---
 
-[@algorandfoundation/algokit-subscriber](../../../modules.md) / [types/async-event-emitter](../README.md) / AsyncEventEmitter
+[@algorandfoundation/algokit-subscriber](../modules.md) / types/async-event-emitter
+
+# types/async-event-emitter
+
+## Classes
+
+### AsyncEventEmitter
 
 Defined in: [src/types/async-event-emitter.ts:10](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/types/async-event-emitter.ts#L10)
 
@@ -14,21 +20,21 @@ Simple asynchronous event emitter class.
 
 **Note:** This class is not thread-safe.
 
-## Constructors
+#### Constructors
 
-### Constructor
+##### Constructor
 
-> **new AsyncEventEmitter**(): `AsyncEventEmitter`
+> **new AsyncEventEmitter**(): [`AsyncEventEmitter`](#asynceventemitter)
 
-#### Returns
+###### Returns
 
-`AsyncEventEmitter`
+[`AsyncEventEmitter`](#asynceventemitter)
 
-## Properties
+#### Properties
 
-### off()
+##### off()
 
-> **off**: (`eventName`, `listener`) => `AsyncEventEmitter`
+> **off**: (`eventName`, `listener`) => [`AsyncEventEmitter`](#asynceventemitter)
 
 Defined in: [src/types/async-event-emitter.ts:82](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/types/async-event-emitter.ts#L82)
 
@@ -36,29 +42,29 @@ Alias for `removeListener`.
 
 Removes an event listener from the given event.
 
-#### Parameters
+###### Parameters
 
-##### eventName
+###### eventName
 
 The name of the event
 
 `string` | `symbol`
 
-##### listener
+###### listener
 
-[`AsyncEventListener`](../type-aliases/AsyncEventListener.md)
+[`AsyncEventListener`](#asynceventlistener)
 
 The listener to remove
 
-#### Returns
+###### Returns
 
-`AsyncEventEmitter`
+[`AsyncEventEmitter`](#asynceventemitter)
 
 The `AsyncEventEmitter` so you can chain registrations
 
-## Methods
+#### Methods
 
-### emitAsync()
+##### emitAsync()
 
 > **emitAsync**(`eventName`, `event`): `Promise`\<`void`\>
 
@@ -67,110 +73,128 @@ Defined in: [src/types/async-event-emitter.ts:21](https://github.com/larkiny/alg
 Emit an event and wait for all registered listeners to be run one-by-one
 in the order they were registered.
 
-#### Parameters
+###### Parameters
 
-##### eventName
+###### eventName
 
 The name of the event
 
 `string` | `symbol`
 
-##### event
+###### event
 
 `unknown`
 
 The event payload
 
-#### Returns
+###### Returns
 
 `Promise`\<`void`\>
 
----
+##### on()
 
-### on()
-
-> **on**(`eventName`, `listener`): `AsyncEventEmitter`
+> **on**(`eventName`, `listener`): [`AsyncEventEmitter`](#asynceventemitter)
 
 Defined in: [src/types/async-event-emitter.ts:33](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/types/async-event-emitter.ts#L33)
 
 Register an event listener for the given event.
 
-#### Parameters
+###### Parameters
 
-##### eventName
+###### eventName
 
 The name of the event
 
 `string` | `symbol`
 
-##### listener
+###### listener
 
-[`AsyncEventListener`](../type-aliases/AsyncEventListener.md)
+[`AsyncEventListener`](#asynceventlistener)
 
 The listener to trigger
 
-#### Returns
+###### Returns
 
-`AsyncEventEmitter`
+[`AsyncEventEmitter`](#asynceventemitter)
 
 The `AsyncEventEmitter` so you can chain registrations
 
----
+##### once()
 
-### once()
-
-> **once**(`eventName`, `listener`): `AsyncEventEmitter`
+> **once**(`eventName`, `listener`): [`AsyncEventEmitter`](#asynceventemitter)
 
 Defined in: [src/types/async-event-emitter.ts:45](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/types/async-event-emitter.ts#L45)
 
 Register an event listener for the given event that is only fired once.
 
-#### Parameters
+###### Parameters
 
-##### eventName
+###### eventName
 
 The name of the event
 
 `string` | `symbol`
 
-##### listener
+###### listener
 
-[`AsyncEventListener`](../type-aliases/AsyncEventListener.md)
+[`AsyncEventListener`](#asynceventlistener)
 
 The listener to trigger
 
-#### Returns
+###### Returns
 
-`AsyncEventEmitter`
+[`AsyncEventEmitter`](#asynceventemitter)
 
 The `AsyncEventEmitter` so you can chain registrations
 
----
+##### removeListener()
 
-### removeListener()
-
-> **removeListener**(`eventName`, `listener`): `AsyncEventEmitter`
+> **removeListener**(`eventName`, `listener`): [`AsyncEventEmitter`](#asynceventemitter)
 
 Defined in: [src/types/async-event-emitter.ts:63](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/types/async-event-emitter.ts#L63)
 
 Removes an event listener from the given event.
 
-#### Parameters
+###### Parameters
 
-##### eventName
+###### eventName
 
 The name of the event
 
 `string` | `symbol`
 
-##### listener
+###### listener
 
-[`AsyncEventListener`](../type-aliases/AsyncEventListener.md)
+[`AsyncEventListener`](#asynceventlistener)
 
 The listener to remove
 
-#### Returns
+###### Returns
 
-`AsyncEventEmitter`
+[`AsyncEventEmitter`](#asynceventemitter)
 
 The `AsyncEventEmitter` so you can chain registrations
+
+## Type Aliases
+
+### AsyncEventListener()
+
+> **AsyncEventListener** = (`event`, `eventName`) => `Promise`\<`void`\> \| `void`
+
+Defined in: [src/types/async-event-emitter.ts:4](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/types/async-event-emitter.ts#L4)
+
+An asynchronous event listener
+
+#### Parameters
+
+##### event
+
+`unknown`
+
+##### eventName
+
+`string` | `symbol`
+
+#### Returns
+
+`Promise`\<`void`\> \| `void`

@@ -1,56 +1,62 @@
 ---
-title: 'Class: AlgorandSubscriber'
+title: index
 ---
 
-[**@algorandfoundation/algokit-subscriber**](../../README.md)
+[**@algorandfoundation/algokit-subscriber**](README.md)
 
 ---
 
-[@algorandfoundation/algokit-subscriber](../../modules.md) / [index](../README.md) / AlgorandSubscriber
+[@algorandfoundation/algokit-subscriber](modules.md) / index
+
+# index
+
+## Classes
+
+### AlgorandSubscriber
 
 Defined in: [src/subscriber.ts:20](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L20)
 
 Handles the logic for subscribing to the Algorand and emitting events.
 
-## Constructors
+#### Constructors
 
-### Constructor
+##### Constructor
 
-> **new AlgorandSubscriber**(`config`, `algod`, `indexer?`): `AlgorandSubscriber`
+> **new AlgorandSubscriber**(`config`, `algod`, `indexer?`): [`AlgorandSubscriber`](#algorandsubscriber)
 
 Defined in: [src/subscriber.ts:41](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L41)
 
 Create a new `AlgorandSubscriber`.
 
-#### Parameters
+###### Parameters
 
-##### config
+###### config
 
-[`AlgorandSubscriberConfig`](../../types/subscription/interfaces/AlgorandSubscriberConfig.md)
+[`AlgorandSubscriberConfig`](types/subscription.md#algorandsubscriberconfig)
 
 The subscriber configuration
 
-##### algod
+###### algod
 
 `AlgodClient`
 
 An algod client
 
-##### indexer?
+###### indexer?
 
 `IndexerClient`
 
 An (optional) indexer client; only needed if `subscription.syncBehaviour` is `catchup-with-indexer`
 
-#### Returns
+###### Returns
 
-`AlgorandSubscriber`
+[`AlgorandSubscriber`](#algorandsubscriber)
 
-## Methods
+#### Methods
 
-### on()
+##### on()
 
-> **on**\<`T`\>(`filterName`, `listener`): `AlgorandSubscriber`
+> **on**\<`T`\>(`filterName`, `listener`): [`AlgorandSubscriber`](#algorandsubscriber)
 
 Defined in: [src/subscriber.ts:191](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L191)
 
@@ -58,33 +64,33 @@ Register an event handler to run on every subscribed transaction matching the gi
 
 The listener can be async and it will be awaited if so.
 
-#### Type Parameters
+###### Type Parameters
 
-##### T
+###### T
 
-`T` = [`SubscribedTransaction`](../../types/subscription/classes/SubscribedTransaction.md)
+`T` = [`SubscribedTransaction`](types/subscription.md#subscribedtransaction)
 
-#### Parameters
+###### Parameters
 
-##### filterName
+###### filterName
 
 `string`
 
 The name of the filter to subscribe to
 
-##### listener
+###### listener
 
-[`TypedAsyncEventListener`](../../types/subscription/type-aliases/TypedAsyncEventListener.md)\<`T`\>
+[`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<`T`\>
 
 The listener function to invoke with the subscribed event
 
-#### Returns
+###### Returns
 
-`AlgorandSubscriber`
+[`AlgorandSubscriber`](#algorandsubscriber)
 
 The subscriber so `on*` calls can be chained
 
-#### Examples
+###### Examples
 
 ```typescript
 subscriber.on('my-filter', async transaction => {
@@ -97,11 +103,9 @@ new AlgorandSubscriber({filters: [{name: 'my-filter', filter: {...}, mapper: (t)
  .on<string>('my-filter', async (transactionId) => { console.log(transactionId) })
 ```
 
----
+##### onBatch()
 
-### onBatch()
-
-> **onBatch**\<`T`\>(`filterName`, `listener`): `AlgorandSubscriber`
+> **onBatch**\<`T`\>(`filterName`, `listener`): [`AlgorandSubscriber`](#algorandsubscriber)
 
 Defined in: [src/subscriber.ts:220](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L220)
 
@@ -113,33 +117,33 @@ in bulk rather than one-by-one.
 
 The listener can be async and it will be awaited if so.
 
-#### Type Parameters
+###### Type Parameters
 
-##### T
+###### T
 
-`T` = [`SubscribedTransaction`](../../types/subscription/classes/SubscribedTransaction.md)
+`T` = [`SubscribedTransaction`](types/subscription.md#subscribedtransaction)
 
-#### Parameters
+###### Parameters
 
-##### filterName
+###### filterName
 
 `string`
 
 The name of the filter to subscribe to
 
-##### listener
+###### listener
 
-[`TypedAsyncEventListener`](../../types/subscription/type-aliases/TypedAsyncEventListener.md)\<`T`[]\>
+[`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<`T`[]\>
 
 The listener function to invoke with the subscribed events
 
-#### Returns
+###### Returns
 
-`AlgorandSubscriber`
+[`AlgorandSubscriber`](#algorandsubscriber)
 
 The subscriber so `on*` calls can be chained
 
-#### Examples
+###### Examples
 
 ```typescript
 subscriber.onBatch('my-filter', async transactions => {
@@ -152,11 +156,9 @@ new AlgorandSubscriber({filters: [{name: 'my-filter', filter: {...}, mapper: (t)
  .onBatch<string>('my-filter', async (transactionIds) => { console.log(transactionIds) })
 ```
 
----
+##### onBeforePoll()
 
-### onBeforePoll()
-
-> **onBeforePoll**(`listener`): `AlgorandSubscriber`
+> **onBeforePoll**(`listener`): [`AlgorandSubscriber`](#algorandsubscriber)
 
 Defined in: [src/subscriber.ts:238](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L238)
 
@@ -166,21 +168,21 @@ This is useful when you want to do pre-poll logging or start a transaction etc.
 
 The listener can be async and it will be awaited if so.
 
-#### Parameters
+###### Parameters
 
-##### listener
+###### listener
 
-[`TypedAsyncEventListener`](../../types/subscription/type-aliases/TypedAsyncEventListener.md)\<[`BeforePollMetadata`](../../types/subscription/interfaces/BeforePollMetadata.md)\>
+[`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<[`BeforePollMetadata`](types/subscription.md#beforepollmetadata)\>
 
 The listener function to invoke with the pre-poll metadata
 
-#### Returns
+###### Returns
 
-`AlgorandSubscriber`
+[`AlgorandSubscriber`](#algorandsubscriber)
 
 The subscriber so `on*` calls can be chained
 
-#### Example
+###### Example
 
 ```typescript
 subscriber.onBeforePoll(async metadata => {
@@ -188,11 +190,9 @@ subscriber.onBeforePoll(async metadata => {
 });
 ```
 
----
+##### onError()
 
-### onError()
-
-> **onError**(`listener`): `AlgorandSubscriber`
+> **onError**(`listener`): [`AlgorandSubscriber`](#algorandsubscriber)
 
 Defined in: [src/subscriber.ts:292](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L292)
 
@@ -202,21 +202,21 @@ This is useful to handle any errors that occur and can be used to perform retrie
 
 The listener can be async and it will be awaited if so.
 
-#### Parameters
+###### Parameters
 
-##### listener
+###### listener
 
-[`ErrorListener`](../../types/subscription/type-aliases/ErrorListener.md)
+[`ErrorListener`](types/subscription.md#errorlistener)
 
 The listener function to invoke with the error that was thrown
 
-#### Returns
+###### Returns
 
-`AlgorandSubscriber`
+[`AlgorandSubscriber`](#algorandsubscriber)
 
 The subscriber so `on*` calls can be chained
 
-#### Examples
+###### Examples
 
 ```typescript
 subscriber.onError(error => {
@@ -239,11 +239,9 @@ subscriber.onError(async error => {
 });
 ```
 
----
+##### onPoll()
 
-### onPoll()
-
-> **onPoll**(`listener`): `AlgorandSubscriber`
+> **onPoll**(`listener`): [`AlgorandSubscriber`](#algorandsubscriber)
 
 Defined in: [src/subscriber.ts:259](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L259)
 
@@ -256,21 +254,21 @@ transactions etc.
 
 The listener can be async and it will be awaited if so.
 
-#### Parameters
+###### Parameters
 
-##### listener
+###### listener
 
-[`TypedAsyncEventListener`](../../types/subscription/type-aliases/TypedAsyncEventListener.md)\<[`TransactionSubscriptionResult`](../../types/subscription/interfaces/TransactionSubscriptionResult.md)\>
+[`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
 
 The listener function to invoke with the poll result
 
-#### Returns
+###### Returns
 
-`AlgorandSubscriber`
+[`AlgorandSubscriber`](#algorandsubscriber)
 
 The subscriber so `on*` calls can be chained
 
-#### Example
+###### Example
 
 ```typescript
 subscriber.onPoll(async pollResult => {
@@ -278,11 +276,9 @@ subscriber.onPoll(async pollResult => {
 });
 ```
 
----
+##### pollOnce()
 
-### pollOnce()
-
-> **pollOnce**(): `Promise`\<[`TransactionSubscriptionResult`](../../types/subscription/interfaces/TransactionSubscriptionResult.md)\>
+> **pollOnce**(): `Promise`\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
 
 Defined in: [src/subscriber.ts:67](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L67)
 
@@ -291,15 +287,13 @@ Execute a single subscription poll.
 This is useful when executing in the context of a process
 triggered by a recurring schedule / cron.
 
-#### Returns
+###### Returns
 
-`Promise`\<[`TransactionSubscriptionResult`](../../types/subscription/interfaces/TransactionSubscriptionResult.md)\>
+`Promise`\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
 
 The poll result
 
----
-
-### start()
+##### start()
 
 > **start**(`inspect?`, `suppressLog?`): `void`
 
@@ -309,27 +303,25 @@ Start the subscriber in a loop until `stop` is called.
 
 This is useful when running in the context of a long-running process / container.
 
-#### Parameters
+###### Parameters
 
-##### inspect?
+###### inspect?
 
 (`pollResult`) => `void`
 
 A function that is called for each poll so the inner workings can be inspected / logged / etc.
 
-##### suppressLog?
+###### suppressLog?
 
 `boolean`
 
-#### Returns
+###### Returns
 
 `void`
 
 An object that contains a promise you can wait for after calling stop
 
----
-
-### stop()
+##### stop()
 
 > **stop**(`reason`): `Promise`\<`void`\>
 
@@ -337,16 +329,53 @@ Defined in: [src/subscriber.ts:164](https://github.com/larkiny/algokit-subscribe
 
 Stops the subscriber if previously started via `start`.
 
-#### Parameters
+###### Parameters
 
-##### reason
+###### reason
 
 `unknown`
 
 The reason the subscriber is being stopped
 
-#### Returns
+###### Returns
 
 `Promise`\<`void`\>
 
 A promise that can be awaited to ensure the subscriber has finished stopping
+
+## Functions
+
+### getSubscribedTransactions()
+
+> **getSubscribedTransactions**(`subscription`, `algod`, `indexer?`): `Promise`\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
+
+Defined in: [src/subscriptions.ts:56](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriptions.ts#L56)
+
+Executes a single pull/poll to subscribe to transactions on the configured Algorand
+blockchain for the given subscription context.
+
+#### Parameters
+
+##### subscription
+
+[`TransactionSubscriptionParams`](types/subscription.md#transactionsubscriptionparams)
+
+The subscription context.
+
+##### algod
+
+`AlgodClient`
+
+An Algod client.
+
+##### indexer?
+
+`IndexerClient`
+
+An optional indexer client, only needed when `onMaxRounds` is `catchup-with-indexer`.
+
+#### Returns
+
+`Promise`\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
+
+The result of this subscription pull/poll.
