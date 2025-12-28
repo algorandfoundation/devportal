@@ -111,9 +111,6 @@ jobs:
 
             This PR contains automated documentation updates from configured repositories.
 
-            ### Import Information
-            - **Trigger**: ${{ github.event_name == 'schedule' && 'Scheduled (nightly)' || github.event_name == 'workflow_dispatch' && 'Manual' || 'Repository dispatch' }}
-
             ### Review Checklist
             - [ ] Documentation structure looks correct
             - [ ] No unexpected files were modified
@@ -132,19 +129,10 @@ jobs:
           draft: false
 
       - name: Comment on PR
-        if: steps.git-check.outputs.has_changes == 'true' && steps.create-pr.outputs.pull-request-number
+        if: steps.git-check.outputs.has_changes == 'true' && steps.create-pr.outputs.pull-request-number && steps.create-pr.outputs.pull-request-operation == 'created'
         run: |
-          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          PR_OPERATION="${{ steps.create-pr.outputs.pull-request-operation }}"
-
-          if [ "$PR_OPERATION" = "updated" ]; then
-            HEADER="### 🔄 Documentation Import Update - $TIMESTAMP"
-          else
-            HEADER="### 🔍 Import Summary"
-          fi
-
           gh pr comment ${{ steps.create-pr.outputs.pull-request-number }} --body "$(cat <<EOF
-          $HEADER
+          ### 🔍 Import Summary
 
           Documentation has been automatically imported from configured repositories.
 
