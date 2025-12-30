@@ -71,6 +71,7 @@ export const utilsTypescriptConfig: ImportOptions = {
     stripPrefixes: ['src/content/docs'],
     linkMappings: [...generateStarlightLinkMappings()],
   },
+  clear: true,
   enabled: true,
 };
 

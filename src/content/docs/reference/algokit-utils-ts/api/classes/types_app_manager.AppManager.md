@@ -12,38 +12,38 @@ Allows management of application information.
 
 ### Constructors
 
-- [constructor](types_app_manager.AppManager.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#constructor)
 
 ### Properties
 
-- [\_algod](types_app_manager.AppManager.md#_algod)
-- [\_compilationResults](types_app_manager.AppManager.md#_compilationresults)
+- [\_algod](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#_algod)
+- [\_compilationResults](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#_compilationresults)
 
 ### Methods
 
-- [compileTeal](types_app_manager.AppManager.md#compileteal)
-- [compileTealTemplate](types_app_manager.AppManager.md#compiletealtemplate)
-- [getBoxNames](types_app_manager.AppManager.md#getboxnames)
-- [getBoxValue](types_app_manager.AppManager.md#getboxvalue)
-- [getBoxValueFromABIType](types_app_manager.AppManager.md#getboxvaluefromabitype)
-- [getBoxValues](types_app_manager.AppManager.md#getboxvalues)
-- [getBoxValuesFromABIType](types_app_manager.AppManager.md#getboxvaluesfromabitype)
-- [getById](types_app_manager.AppManager.md#getbyid)
-- [getCompilationResult](types_app_manager.AppManager.md#getcompilationresult)
-- [getGlobalState](types_app_manager.AppManager.md#getglobalstate)
-- [getLocalState](types_app_manager.AppManager.md#getlocalstate)
-- [decodeAppState](types_app_manager.AppManager.md#decodeappstate)
-- [getABIReturn](types_app_manager.AppManager.md#getabireturn)
-- [getBoxReference](types_app_manager.AppManager.md#getboxreference)
-- [replaceTealTemplateDeployTimeControlParams](types_app_manager.AppManager.md#replacetealtemplatedeploytimecontrolparams)
-- [replaceTealTemplateParams](types_app_manager.AppManager.md#replacetealtemplateparams)
-- [stripTealComments](types_app_manager.AppManager.md#striptealcomments)
+- [compileTeal](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#compileteal)
+- [compileTealTemplate](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#compiletealtemplate)
+- [getBoxNames](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getboxnames)
+- [getBoxValue](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getboxvalue)
+- [getBoxValueFromABIType](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getboxvaluefromabitype)
+- [getBoxValues](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getboxvalues)
+- [getBoxValuesFromABIType](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getboxvaluesfromabitype)
+- [getById](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getbyid)
+- [getCompilationResult](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getcompilationresult)
+- [getGlobalState](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getglobalstate)
+- [getLocalState](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getlocalstate)
+- [decodeAppState](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#decodeappstate)
+- [getABIReturn](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getabireturn)
+- [getBoxReference](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#getboxreference)
+- [replaceTealTemplateDeployTimeControlParams](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#replacetealtemplatedeploytimecontrolparams)
+- [replaceTealTemplateParams](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#replacetealtemplateparams)
+- [stripTealComments](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/#striptealcomments)
 
 ## Constructors
 
 ### constructor
 
-• **new AppManager**(`algod`): [`AppManager`](types_app_manager.AppManager.md)
+• **new AppManager**(`algod`): [`AppManager`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/)
 
 Creates an `AppManager`
 
@@ -55,7 +55,7 @@ Creates an `AppManager`
 
 #### Returns
 
-[`AppManager`](types_app_manager.AppManager.md)
+[`AppManager`](/reference/algokit-utils-ts/api/classes/types_app_managerappmanager/)
 
 #### Defined in
 

@@ -43,30 +43,30 @@ If neither the environment variable 'ALGOKIT_DISPENSER_ACCESS_TOKEN' nor the aut
 
 ### Constructors
 
-- [constructor](types_dispenser_client.TestNetDispenserApiClient.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#constructor)
 
 ### Properties
 
-- [\_authToken](types_dispenser_client.TestNetDispenserApiClient.md#_authtoken)
-- [\_requestTimeout](types_dispenser_client.TestNetDispenserApiClient.md#_requesttimeout)
+- [\_authToken](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#_authtoken)
+- [\_requestTimeout](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#_requesttimeout)
 
 ### Accessors
 
-- [authToken](types_dispenser_client.TestNetDispenserApiClient.md#authtoken)
-- [requestTimeout](types_dispenser_client.TestNetDispenserApiClient.md#requesttimeout)
+- [authToken](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#authtoken)
+- [requestTimeout](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#requesttimeout)
 
 ### Methods
 
-- [fund](types_dispenser_client.TestNetDispenserApiClient.md#fund)
-- [getLimit](types_dispenser_client.TestNetDispenserApiClient.md#getlimit)
-- [processDispenserRequest](types_dispenser_client.TestNetDispenserApiClient.md#processdispenserrequest)
-- [refund](types_dispenser_client.TestNetDispenserApiClient.md#refund)
+- [fund](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#fund)
+- [getLimit](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#getlimit)
+- [processDispenserRequest](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#processdispenserrequest)
+- [refund](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/#refund)
 
 ## Constructors
 
 ### constructor
 
-• **new TestNetDispenserApiClient**(`params?`): [`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
+• **new TestNetDispenserApiClient**(`params?`): [`TestNetDispenserApiClient`](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
 
 #### Parameters
 
@@ -76,7 +76,7 @@ If neither the environment variable 'ALGOKIT_DISPENSER_ACCESS_TOKEN' nor the aut
 
 #### Returns
 
-[`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
+[`TestNetDispenserApiClient`](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
 
 #### Defined in
 

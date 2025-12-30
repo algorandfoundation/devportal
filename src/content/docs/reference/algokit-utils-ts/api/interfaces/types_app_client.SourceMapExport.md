@@ -10,10 +10,10 @@ title: SourceMapExport
 
 ### Properties
 
-- [mappings](types_app_client.SourceMapExport.md#mappings)
-- [names](types_app_client.SourceMapExport.md#names)
-- [sources](types_app_client.SourceMapExport.md#sources)
-- [version](types_app_client.SourceMapExport.md#version)
+- [mappings](/reference/algokit-utils-ts/api/interfaces/types_app_clientsourcemapexport/#mappings)
+- [names](/reference/algokit-utils-ts/api/interfaces/types_app_clientsourcemapexport/#names)
+- [sources](/reference/algokit-utils-ts/api/interfaces/types_app_clientsourcemapexport/#sources)
+- [version](/reference/algokit-utils-ts/api/interfaces/types_app_clientsourcemapexport/#version)
 
 ## Properties
 

@@ -12,9 +12,9 @@ Config for an Algorand SDK client.
 
 ### Properties
 
-- [port](types_network_client.AlgoClientConfig.md#port)
-- [server](types_network_client.AlgoClientConfig.md#server)
-- [token](types_network_client.AlgoClientConfig.md#token)
+- [port](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/#port)
+- [server](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/#server)
+- [token](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/#token)
 
 ## Properties
 

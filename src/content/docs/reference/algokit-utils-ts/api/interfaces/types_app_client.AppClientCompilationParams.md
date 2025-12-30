@@ -10,9 +10,9 @@ title: AppClientCompilationParams
 
 ### Properties
 
-- [deletable](types_app_client.AppClientCompilationParams.md#deletable)
-- [deployTimeParams](types_app_client.AppClientCompilationParams.md#deploytimeparams)
-- [updatable](types_app_client.AppClientCompilationParams.md#updatable)
+- [deletable](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/#deletable)
+- [deployTimeParams](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/#deploytimeparams)
+- [updatable](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/#updatable)
 
 ## Properties
 
@@ -30,7 +30,7 @@ Whether or not the contract should have deploy-time permanence control set, unde
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](types_app.TealTemplateParams.md)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/)
 
 Any deploy-time parameters to replace in the TEAL code
 

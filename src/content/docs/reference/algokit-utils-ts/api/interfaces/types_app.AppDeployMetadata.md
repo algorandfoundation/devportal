@@ -12,18 +12,18 @@ The payload of the metadata to add to the transaction note when deploying an app
 
 - **`AppDeployMetadata`**
 
-  ↳ [`AppMetadata`](types_app_deployer.AppMetadata.md)
+  ↳ [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/)
 
-  ↳ [`AppMetadata`](types_app.AppMetadata.md)
+  ↳ [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/)
 
 ## Table of contents
 
 ### Properties
 
-- [deletable](types_app.AppDeployMetadata.md#deletable)
-- [name](types_app.AppDeployMetadata.md#name)
-- [updatable](types_app.AppDeployMetadata.md#updatable)
-- [version](types_app.AppDeployMetadata.md#version)
+- [deletable](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/#deletable)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/#name)
+- [updatable](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/#updatable)
+- [version](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/#version)
 
 ## Properties
 

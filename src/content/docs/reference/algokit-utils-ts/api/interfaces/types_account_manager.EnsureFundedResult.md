@@ -12,8 +12,8 @@ Result from performing an ensureFunded call.
 
 ### Properties
 
-- [amountFunded](types_account_manager.EnsureFundedResult.md#amountfunded)
-- [transactionId](types_account_manager.EnsureFundedResult.md#transactionid)
+- [amountFunded](/reference/algokit-utils-ts/api/interfaces/types_account_managerensurefundedresult/#amountfunded)
+- [transactionId](/reference/algokit-utils-ts/api/interfaces/types_account_managerensurefundedresult/#transactionid)
 
 ## Properties
 

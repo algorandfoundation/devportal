@@ -12,15 +12,15 @@ Test automation context.
 
 ### Properties
 
-- [algod](types_testing.AlgorandTestAutomationContext.md#algod)
-- [algorand](types_testing.AlgorandTestAutomationContext.md#algorand)
-- [generateAccount](types_testing.AlgorandTestAutomationContext.md#generateaccount)
-- [indexer](types_testing.AlgorandTestAutomationContext.md#indexer)
-- [kmd](types_testing.AlgorandTestAutomationContext.md#kmd)
-- [testAccount](types_testing.AlgorandTestAutomationContext.md#testaccount)
-- [transactionLogger](types_testing.AlgorandTestAutomationContext.md#transactionlogger)
-- [waitForIndexer](types_testing.AlgorandTestAutomationContext.md#waitforindexer)
-- [waitForIndexerTransaction](types_testing.AlgorandTestAutomationContext.md#waitforindexertransaction)
+- [algod](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#algod)
+- [algorand](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#algorand)
+- [generateAccount](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#generateaccount)
+- [indexer](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#indexer)
+- [kmd](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#kmd)
+- [testAccount](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#testaccount)
+- [transactionLogger](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#transactionlogger)
+- [waitForIndexer](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#waitforindexer)
+- [waitForIndexerTransaction](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/#waitforindexertransaction)
 
 ## Properties
 
@@ -50,23 +50,23 @@ An AlgorandClient instance loaded with the current context, including testAccoun
 
 ### generateAccount
 
-• **generateAccount**: (`params`: [`GetTestAccountParams`](types_testing.GetTestAccountParams.md)) => `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md)\>
+• **generateAccount**: (`params`: [`GetTestAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/)) => `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/)\>
 
 Generate and fund an additional ephemerally created account
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md)\>
+▸ (`params`): `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/)\>
 
 ##### Parameters
 
-| Name     | Type                                                            |
-| :------- | :-------------------------------------------------------------- |
-| `params` | [`GetTestAccountParams`](types_testing.GetTestAccountParams.md) |
+| Name     | Type                                                                                                    |
+| :------- | :------------------------------------------------------------------------------------------------------ |
+| `params` | [`GetTestAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/) |
 
 ##### Returns
 
-`Promise`\<`Address` & `default` & [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md)\>
+`Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/)\>
 
 #### Defined in
 
@@ -100,7 +100,7 @@ KMD client instance
 
 ### testAccount
 
-• **testAccount**: `Address` & [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md) & `default`
+• **testAccount**: `Address` & [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) & `default`
 
 Default, funded test account that is ephemerally created
 

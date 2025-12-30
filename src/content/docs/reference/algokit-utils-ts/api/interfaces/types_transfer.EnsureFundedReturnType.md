@@ -12,8 +12,8 @@ title: EnsureFundedReturnType
 
 ### Properties
 
-- [amount](types_transfer.EnsureFundedReturnType.md#amount)
-- [transactionId](types_transfer.EnsureFundedReturnType.md#transactionid)
+- [amount](/reference/algokit-utils-ts/api/interfaces/types_transferensurefundedreturntype/#amount)
+- [transactionId](/reference/algokit-utils-ts/api/interfaces/types_transferensurefundedreturntype/#transactionid)
 
 ## Properties
 

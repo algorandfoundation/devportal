@@ -13,10 +13,10 @@ title: testing
 
 ### Functions
 
-- [algoKitLogCaptureFixture](testing.md#algokitlogcapturefixture)
-- [algorandFixture](testing.md#algorandfixture)
-- [getTestAccount](testing.md#gettestaccount)
-- [runWhenIndexerCaughtUp](testing.md#runwhenindexercaughtup)
+- [algoKitLogCaptureFixture](/reference/algokit-utils-ts/api/modules/testing/#algokitlogcapturefixture)
+- [algorandFixture](/reference/algokit-utils-ts/api/modules/testing/#algorandfixture)
+- [getTestAccount](/reference/algokit-utils-ts/api/modules/testing/#gettestaccount)
+- [runWhenIndexerCaughtUp](/reference/algokit-utils-ts/api/modules/testing/#runwhenindexercaughtup)
 
 ## Functions
 

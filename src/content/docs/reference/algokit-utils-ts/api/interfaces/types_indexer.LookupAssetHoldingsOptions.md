@@ -12,9 +12,9 @@ Options when looking up an asset's account holdings, https://dev.algorand.co/ref
 
 ### Properties
 
-- [currencyGreaterThan](types_indexer.LookupAssetHoldingsOptions.md#currencygreaterthan)
-- [currencyLessThan](types_indexer.LookupAssetHoldingsOptions.md#currencylessthan)
-- [includeAll](types_indexer.LookupAssetHoldingsOptions.md#includeall)
+- [currencyGreaterThan](/reference/algokit-utils-ts/api/interfaces/types_indexerlookupassetholdingsoptions/#currencygreaterthan)
+- [currencyLessThan](/reference/algokit-utils-ts/api/interfaces/types_indexerlookupassetholdingsoptions/#currencylessthan)
+- [includeAll](/reference/algokit-utils-ts/api/interfaces/types_indexerlookupassetholdingsoptions/#includeall)
 
 ## Properties
 

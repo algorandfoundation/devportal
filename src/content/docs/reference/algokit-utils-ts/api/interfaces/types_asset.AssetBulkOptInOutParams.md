@@ -14,13 +14,13 @@ Parameters for `assetBulkOptIn` / `assetBulkOptOut` call.
 
 ### Properties
 
-- [account](types_asset.AssetBulkOptInOutParams.md#account)
-- [assetIds](types_asset.AssetBulkOptInOutParams.md#assetids)
-- [maxFee](types_asset.AssetBulkOptInOutParams.md#maxfee)
-- [note](types_asset.AssetBulkOptInOutParams.md#note)
-- [suppressLog](types_asset.AssetBulkOptInOutParams.md#suppresslog)
-- [transactionParams](types_asset.AssetBulkOptInOutParams.md#transactionparams)
-- [validateBalances](types_asset.AssetBulkOptInOutParams.md#validatebalances)
+- [account](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/#account)
+- [assetIds](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/#assetids)
+- [maxFee](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/#maxfee)
+- [note](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/#note)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/#suppresslog)
+- [transactionParams](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/#transactionparams)
+- [validateBalances](/reference/algokit-utils-ts/api/interfaces/types_assetassetbulkoptinoutparams/#validatebalances)
 
 ## Properties
 

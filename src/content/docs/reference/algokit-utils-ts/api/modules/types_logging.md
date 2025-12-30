@@ -8,15 +8,15 @@ title: types/logging
 
 ### Type Aliases
 
-- [Logger](types_logging.md#logger)
+- [Logger](/reference/algokit-utils-ts/api/modules/types_logging/#logger)
 
 ### Variables
 
-- [consoleLogger](types_logging.md#consolelogger)
-- [infoConsoleLogger](types_logging.md#infoconsolelogger)
-- [nullLogger](types_logging.md#nulllogger)
-- [verboseConsoleLogger](types_logging.md#verboseconsolelogger)
-- [warningConsoleLogger](types_logging.md#warningconsolelogger)
+- [consoleLogger](/reference/algokit-utils-ts/api/modules/types_logging/#consolelogger)
+- [infoConsoleLogger](/reference/algokit-utils-ts/api/modules/types_logging/#infoconsolelogger)
+- [nullLogger](/reference/algokit-utils-ts/api/modules/types_logging/#nulllogger)
+- [verboseConsoleLogger](/reference/algokit-utils-ts/api/modules/types_logging/#verboseconsolelogger)
+- [warningConsoleLogger](/reference/algokit-utils-ts/api/modules/types_logging/#warningconsolelogger)
 
 ## Type Aliases
 
@@ -44,7 +44,7 @@ General purpose logger type, compatible with Winston and others.
 
 ### consoleLogger
 
-• `Const` **consoleLogger**: [`Logger`](types_logging.md#logger)
+• `Const` **consoleLogger**: [`Logger`](/reference/algokit-utils-ts/api/modules/types_logging/#logger)
 
 A logger implementation that writes to console
 
@@ -56,7 +56,7 @@ A logger implementation that writes to console
 
 ### infoConsoleLogger
 
-• `Const` **infoConsoleLogger**: [`Logger`](types_logging.md#logger)
+• `Const` **infoConsoleLogger**: [`Logger`](/reference/algokit-utils-ts/api/modules/types_logging/#logger)
 
 #### Defined in
 
@@ -66,7 +66,7 @@ A logger implementation that writes to console
 
 ### nullLogger
 
-• `Const` **nullLogger**: [`Logger`](types_logging.md#logger)
+• `Const` **nullLogger**: [`Logger`](/reference/algokit-utils-ts/api/modules/types_logging/#logger)
 
 A logger implementation that does nothing
 
@@ -78,7 +78,7 @@ A logger implementation that does nothing
 
 ### verboseConsoleLogger
 
-• `Const` **verboseConsoleLogger**: [`Logger`](types_logging.md#logger)
+• `Const` **verboseConsoleLogger**: [`Logger`](/reference/algokit-utils-ts/api/modules/types_logging/#logger)
 
 #### Defined in
 
@@ -88,7 +88,7 @@ A logger implementation that does nothing
 
 ### warningConsoleLogger
 
-• `Const` **warningConsoleLogger**: [`Logger`](types_logging.md#logger)
+• `Const` **warningConsoleLogger**: [`Logger`](/reference/algokit-utils-ts/api/modules/types_logging/#logger)
 
 #### Defined in
 

@@ -12,9 +12,9 @@ Represents the data for a single TEAL source
 
 ### Properties
 
-- [appName](types_debugging.TealSourceDebugEventData.md#appname)
-- [compiledTeal](types_debugging.TealSourceDebugEventData.md#compiledteal)
-- [fileName](types_debugging.TealSourceDebugEventData.md#filename)
+- [appName](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcedebugeventdata/#appname)
+- [compiledTeal](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcedebugeventdata/#compiledteal)
+- [fileName](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcedebugeventdata/#filename)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The name of the application
 
 ### compiledTeal
 
-• **compiledTeal**: [`CompiledTeal`](types_app.CompiledTeal.md)
+• **compiledTeal**: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/)
 
 The compiled TEAL code
 

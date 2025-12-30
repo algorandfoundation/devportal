@@ -16,19 +16,19 @@ title: types/app-factory
 
 ### Type Aliases
 
-- [AppFactoryAppClientParams](types_app_factory.md#appfactoryappclientparams)
-- [AppFactoryCreateMethodCallParams](types_app_factory.md#appfactorycreatemethodcallparams)
-- [AppFactoryCreateParams](types_app_factory.md#appfactorycreateparams)
-- [AppFactoryDeployParams](types_app_factory.md#appfactorydeployparams)
-- [AppFactoryResolveAppClientByCreatorAndNameParams](types_app_factory.md#appfactoryresolveappclientbycreatorandnameparams)
-- [CreateOnComplete](types_app_factory.md#createoncomplete)
-- [CreateSchema](types_app_factory.md#createschema)
+- [AppFactoryAppClientParams](/reference/algokit-utils-ts/api/modules/types_app_factory/#appfactoryappclientparams)
+- [AppFactoryCreateMethodCallParams](/reference/algokit-utils-ts/api/modules/types_app_factory/#appfactorycreatemethodcallparams)
+- [AppFactoryCreateParams](/reference/algokit-utils-ts/api/modules/types_app_factory/#appfactorycreateparams)
+- [AppFactoryDeployParams](/reference/algokit-utils-ts/api/modules/types_app_factory/#appfactorydeployparams)
+- [AppFactoryResolveAppClientByCreatorAndNameParams](/reference/algokit-utils-ts/api/modules/types_app_factory/#appfactoryresolveappclientbycreatorandnameparams)
+- [CreateOnComplete](/reference/algokit-utils-ts/api/modules/types_app_factory/#createoncomplete)
+- [CreateSchema](/reference/algokit-utils-ts/api/modules/types_app_factory/#createschema)
 
 ## Type Aliases
 
 ### AppFactoryAppClientParams
 
-Ƭ **AppFactoryAppClientParams**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"`\>\>
+Ƭ **AppFactoryAppClientParams**: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"`\>\>
 
 Params to get an app client by ID from an app factory.
 
@@ -40,7 +40,7 @@ Params to get an app client by ID from an app factory.
 
 ### AppFactoryCreateMethodCallParams
 
-Ƭ **AppFactoryCreateMethodCallParams**: [`Expand`](types_expand.md#expand)\<[`AppClientMethodCallParams`](types_app_client.md#appclientmethodcallparams) & [`AppClientCompilationParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/) & [`CreateOnComplete`](types_app_factory.md#createoncomplete) & [`CreateSchema`](types_app_factory.md#createschema)\>
+Ƭ **AppFactoryCreateMethodCallParams**: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<[`AppClientMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_app_client/#appclientmethodcallparams) & [`AppClientCompilationParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/) & [`CreateOnComplete`](/reference/algokit-utils-ts/api/modules/types_app_factory/#createoncomplete) & [`CreateSchema`](/reference/algokit-utils-ts/api/modules/types_app_factory/#createschema)\>
 
 Params to specify a create method call for an app
 
@@ -52,7 +52,7 @@ Params to specify a create method call for an app
 
 ### AppFactoryCreateParams
 
-Ƭ **AppFactoryCreateParams**: [`Expand`](types_expand.md#expand)\<[`AppClientBareCallParams`](types_app_client.md#appclientbarecallparams) & [`AppClientCompilationParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/) & [`CreateOnComplete`](types_app_factory.md#createoncomplete) & [`CreateSchema`](types_app_factory.md#createschema)\>
+Ƭ **AppFactoryCreateParams**: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<[`AppClientBareCallParams`](/reference/algokit-utils-ts/api/modules/types_app_client/#appclientbarecallparams) & [`AppClientCompilationParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationparams/) & [`CreateOnComplete`](/reference/algokit-utils-ts/api/modules/types_app_factory/#createoncomplete) & [`CreateSchema`](/reference/algokit-utils-ts/api/modules/types_app_factory/#createschema)\>
 
 Params to specify a bare (raw) create call for an app
 
@@ -64,7 +64,7 @@ Params to specify a bare (raw) create call for an app
 
 ### AppFactoryDeployParams
 
-Ƭ **AppFactoryDeployParams**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`AppDeployParams`](types_app_deployer.md#appdeployparams), `"createParams"` \| `"updateParams"` \| `"deleteParams"` \| `"metadata"`\> & \{ `appName?`: `string` ; `createParams?`: [`Expand`](types_expand.md#expand)\<[`AppClientMethodCallParams`](types_app_client.md#appclientmethodcallparams) & [`CreateOnComplete`](types_app_factory.md#createoncomplete) & [`CreateSchema`](types_app_factory.md#createschema)\> \| [`Expand`](types_expand.md#expand)\<[`AppClientBareCallParams`](types_app_client.md#appclientbarecallparams) & [`CreateOnComplete`](types_app_factory.md#createoncomplete) & [`CreateSchema`](types_app_factory.md#createschema)\> ; `deletable?`: `boolean` ; `deleteParams?`: [`AppClientMethodCallParams`](types_app_client.md#appclientmethodcallparams) \| [`AppClientBareCallParams`](types_app_client.md#appclientbarecallparams) ; `updatable?`: `boolean` ; `updateParams?`: [`AppClientMethodCallParams`](types_app_client.md#appclientmethodcallparams) \| [`AppClientBareCallParams`](types_app_client.md#appclientbarecallparams) }\>
+Ƭ **AppFactoryDeployParams**: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<`Omit`\<[`AppDeployParams`](/reference/algokit-utils-ts/api/modules/types_app_deployer/#appdeployparams), `"createParams"` \| `"updateParams"` \| `"deleteParams"` \| `"metadata"`\> & \{ `appName?`: `string` ; `createParams?`: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<[`AppClientMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_app_client/#appclientmethodcallparams) & [`CreateOnComplete`](/reference/algokit-utils-ts/api/modules/types_app_factory/#createoncomplete) & [`CreateSchema`](/reference/algokit-utils-ts/api/modules/types_app_factory/#createschema)\> \| [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<[`AppClientBareCallParams`](/reference/algokit-utils-ts/api/modules/types_app_client/#appclientbarecallparams) & [`CreateOnComplete`](/reference/algokit-utils-ts/api/modules/types_app_factory/#createoncomplete) & [`CreateSchema`](/reference/algokit-utils-ts/api/modules/types_app_factory/#createschema)\> ; `deletable?`: `boolean` ; `deleteParams?`: [`AppClientMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_app_client/#appclientmethodcallparams) \| [`AppClientBareCallParams`](/reference/algokit-utils-ts/api/modules/types_app_client/#appclientbarecallparams) ; `updatable?`: `boolean` ; `updateParams?`: [`AppClientMethodCallParams`](/reference/algokit-utils-ts/api/modules/types_app_client/#appclientmethodcallparams) \| [`AppClientBareCallParams`](/reference/algokit-utils-ts/api/modules/types_app_client/#appclientbarecallparams) }\>
 
 Parameters to define a deployment for an `AppFactory`
 
@@ -76,7 +76,7 @@ Parameters to define a deployment for an `AppFactory`
 
 ### AppFactoryResolveAppClientByCreatorAndNameParams
 
-Ƭ **AppFactoryResolveAppClientByCreatorAndNameParams**: [`Expand`](types_expand.md#expand)\<`Omit`\<[`ResolveAppClientByCreatorAndName`](types_app_client.md#resolveappclientbycreatorandname), `"algorand"` \| `"appSpec"`\>\>
+Ƭ **AppFactoryResolveAppClientByCreatorAndNameParams**: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<`Omit`\<[`ResolveAppClientByCreatorAndName`](/reference/algokit-utils-ts/api/modules/types_app_client/#resolveappclientbycreatorandname), `"algorand"` \| `"appSpec"`\>\>
 
 Params to get an app client by creator address and name from an app factory.
 

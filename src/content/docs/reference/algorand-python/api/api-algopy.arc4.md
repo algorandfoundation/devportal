@@ -1325,7 +1325,7 @@ _validate() → [None](https://docs.python.org/3/library/constants.html#None)_
 
 Performs validation to ensure the value is well-formed, errors if it is not
 
-##### algopy.arc4.abi*call *: algopy.arc4.\_ABICallProtocolType\_
+##### algopy.arc4.abi_call _: algopy.arc4.\_ABICallProtocolType_
 
 Ellipsis
 

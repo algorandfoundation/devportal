@@ -12,11 +12,11 @@ Details about a smart contract logic error
 
 ### Properties
 
-- [desc](types_logic_error.LogicErrorDetails.md#desc)
-- [msg](types_logic_error.LogicErrorDetails.md#msg)
-- [pc](types_logic_error.LogicErrorDetails.md#pc)
-- [traces](types_logic_error.LogicErrorDetails.md#traces)
-- [txId](types_logic_error.LogicErrorDetails.md#txid)
+- [desc](/reference/algokit-utils-ts/api/interfaces/types_logic_errorlogicerrordetails/#desc)
+- [msg](/reference/algokit-utils-ts/api/interfaces/types_logic_errorlogicerrordetails/#msg)
+- [pc](/reference/algokit-utils-ts/api/interfaces/types_logic_errorlogicerrordetails/#pc)
+- [traces](/reference/algokit-utils-ts/api/interfaces/types_logic_errorlogicerrordetails/#traces)
+- [txId](/reference/algokit-utils-ts/api/interfaces/types_logic_errorlogicerrordetails/#txid)
 
 ## Properties
 

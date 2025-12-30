@@ -8,7 +8,7 @@ title: types/instance-of
 
 ### Type Aliases
 
-- [InterfaceOf](types_instance_of.md#interfaceof)
+- [InterfaceOf](/reference/algokit-utils-ts/api/modules/types_instance_of/#interfaceof)
 
 ## Type Aliases
 

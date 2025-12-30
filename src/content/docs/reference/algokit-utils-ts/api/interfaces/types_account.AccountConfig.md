@@ -15,10 +15,10 @@ Config for an account config
 
 ### Properties
 
-- [accountMnemonic](types_account.AccountConfig.md#accountmnemonic)
-- [accountName](types_account.AccountConfig.md#accountname)
-- [senderAddress](types_account.AccountConfig.md#senderaddress)
-- [senderMnemonic](types_account.AccountConfig.md#sendermnemonic)
+- [accountMnemonic](/reference/algokit-utils-ts/api/interfaces/types_accountaccountconfig/#accountmnemonic)
+- [accountName](/reference/algokit-utils-ts/api/interfaces/types_accountaccountconfig/#accountname)
+- [senderAddress](/reference/algokit-utils-ts/api/interfaces/types_accountaccountconfig/#senderaddress)
+- [senderMnemonic](/reference/algokit-utils-ts/api/interfaces/types_accountaccountconfig/#sendermnemonic)
 
 ## Properties
 

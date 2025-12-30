@@ -12,16 +12,16 @@ Hint information for a given method call to allow client generation
 
 ### Properties
 
-- [call_config](types_app_spec.Hint.md#call_config)
-- [default_arguments](types_app_spec.Hint.md#default_arguments)
-- [read_only](types_app_spec.Hint.md#read_only)
-- [structs](types_app_spec.Hint.md#structs)
+- [call_config](/reference/algokit-utils-ts/api/interfaces/types_app_spechint/#call_config)
+- [default_arguments](/reference/algokit-utils-ts/api/interfaces/types_app_spechint/#default_arguments)
+- [read_only](/reference/algokit-utils-ts/api/interfaces/types_app_spechint/#read_only)
+- [structs](/reference/algokit-utils-ts/api/interfaces/types_app_spechint/#structs)
 
 ## Properties
 
 ### call_config
 
-• **call_config**: [`CallConfig`](types_app_spec.CallConfig.md)
+• **call_config**: [`CallConfig`](/reference/algokit-utils-ts/api/interfaces/types_app_speccallconfig/)
 
 #### Defined in
 
@@ -51,7 +51,7 @@ Hint information for a given method call to allow client generation
 
 ### structs
 
-• `Optional` **structs**: `Record`\<`string`, [`Struct`](types_app_spec.Struct.md)\>
+• `Optional` **structs**: `Record`\<`string`, [`Struct`](/reference/algokit-utils-ts/api/interfaces/types_app_specstruct/)\>
 
 Any user-defined struct/tuple types used in the method call, keyed by parameter name or `output` for return type
 

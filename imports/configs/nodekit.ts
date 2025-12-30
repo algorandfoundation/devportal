@@ -29,5 +29,5 @@ export const nodekitConfig: ImportOptions = {
     },
   ],
   enabled: true,
-  clear: false,
+  clear: true,
 };

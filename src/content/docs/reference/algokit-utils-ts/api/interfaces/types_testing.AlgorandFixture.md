@@ -12,13 +12,13 @@ An Algorand automated testing fixture
 
 ### Properties
 
-- [beforeEach](types_testing.AlgorandFixture.md#beforeeach)
-- [newScope](types_testing.AlgorandFixture.md#newscope)
+- [beforeEach](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixture/#beforeeach)
+- [newScope](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixture/#newscope)
 
 ### Accessors
 
-- [algorand](types_testing.AlgorandFixture.md#algorand)
-- [context](types_testing.AlgorandFixture.md#context)
+- [algorand](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixture/#algorand)
+- [context](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixture/#context)
 
 ## Properties
 
@@ -119,7 +119,7 @@ Retrieve an `AlgorandClient` loaded with the current context, including testAcco
 
 ### context
 
-• `get` **context**(): [`AlgorandTestAutomationContext`](types_testing.AlgorandTestAutomationContext.md)
+• `get` **context**(): [`AlgorandTestAutomationContext`](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/)
 
 Retrieve the current context.
 Useful with destructuring.
@@ -128,7 +128,7 @@ If you haven't called `newScope` then this will throw an error.
 
 #### Returns
 
-[`AlgorandTestAutomationContext`](types_testing.AlgorandTestAutomationContext.md)
+[`AlgorandTestAutomationContext`](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandtestautomationcontext/)
 
 **`Example`**
 

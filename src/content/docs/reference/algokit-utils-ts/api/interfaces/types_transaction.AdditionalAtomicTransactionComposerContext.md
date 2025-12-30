@@ -12,8 +12,8 @@ Additional context about the `AtomicTransactionComposer`.
 
 ### Properties
 
-- [maxFees](types_transaction.AdditionalAtomicTransactionComposerContext.md#maxfees)
-- [suggestedParams](types_transaction.AdditionalAtomicTransactionComposerContext.md#suggestedparams)
+- [maxFees](/reference/algokit-utils-ts/api/interfaces/types_transactionadditionalatomictransactioncomposercontext/#maxfees)
+- [suggestedParams](/reference/algokit-utils-ts/api/interfaces/types_transactionadditionalatomictransactioncomposercontext/#suggestedparams)
 
 ## Properties
 
