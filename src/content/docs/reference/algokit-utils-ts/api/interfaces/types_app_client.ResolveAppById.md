@@ -10,7 +10,7 @@ Configuration to resolve app by ID
 
 ## Hierarchy
 
-- [`ResolveAppByIdBase`](types_app_client.ResolveAppByIdBase.md)
+- [`ResolveAppByIdBase`](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/)
 
   ↳ **`ResolveAppById`**
 
@@ -18,9 +18,9 @@ Configuration to resolve app by ID
 
 ### Properties
 
-- [id](types_app_client.ResolveAppById.md#id)
-- [name](types_app_client.ResolveAppById.md#name)
-- [resolveBy](types_app_client.ResolveAppById.md#resolveby)
+- [id](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyid/#id)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyid/#name)
+- [resolveBy](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyid/#resolveby)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The id of an existing app to call using this client, or 0 if the app hasn't been
 
 #### Inherited from
 
-[ResolveAppByIdBase](types_app_client.ResolveAppByIdBase.md).[id](types_app_client.ResolveAppByIdBase.md#id)
+[ResolveAppByIdBase](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/).[id](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/#id)
 
 #### Defined in
 
@@ -48,7 +48,7 @@ The optional name to use to mark the app when deploying `ApplicationClient.deplo
 
 #### Inherited from
 
-[ResolveAppByIdBase](types_app_client.ResolveAppByIdBase.md).[name](types_app_client.ResolveAppByIdBase.md#name)
+[ResolveAppByIdBase](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/).[name](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/#name)
 
 #### Defined in
 

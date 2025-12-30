@@ -12,11 +12,11 @@ Details of the current network.
 
 ### Properties
 
-- [genesisHash](types_network_client.NetworkDetails.md#genesishash)
-- [genesisId](types_network_client.NetworkDetails.md#genesisid)
-- [isLocalNet](types_network_client.NetworkDetails.md#islocalnet)
-- [isMainNet](types_network_client.NetworkDetails.md#ismainnet)
-- [isTestNet](types_network_client.NetworkDetails.md#istestnet)
+- [genesisHash](/reference/algokit-utils-ts/api/interfaces/types_network_clientnetworkdetails/#genesishash)
+- [genesisId](/reference/algokit-utils-ts/api/interfaces/types_network_clientnetworkdetails/#genesisid)
+- [isLocalNet](/reference/algokit-utils-ts/api/interfaces/types_network_clientnetworkdetails/#islocalnet)
+- [isMainNet](/reference/algokit-utils-ts/api/interfaces/types_network_clientnetworkdetails/#ismainnet)
+- [isTestNet](/reference/algokit-utils-ts/api/interfaces/types_network_clientnetworkdetails/#istestnet)
 
 ## Properties
 

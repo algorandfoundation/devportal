@@ -12,14 +12,14 @@ Parameters to create an app client
 
 ### Properties
 
-- [algorand](types_app_client.AppClientParams.md#algorand)
-- [appId](types_app_client.AppClientParams.md#appid)
-- [appName](types_app_client.AppClientParams.md#appname)
-- [appSpec](types_app_client.AppClientParams.md#appspec)
-- [approvalSourceMap](types_app_client.AppClientParams.md#approvalsourcemap)
-- [clearSourceMap](types_app_client.AppClientParams.md#clearsourcemap)
-- [defaultSender](types_app_client.AppClientParams.md#defaultsender)
-- [defaultSigner](types_app_client.AppClientParams.md#defaultsigner)
+- [algorand](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/#algorand)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/#appid)
+- [appName](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/#appname)
+- [appSpec](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/#appspec)
+- [approvalSourceMap](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/#approvalsourcemap)
+- [clearSourceMap](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/#clearsourcemap)
+- [defaultSender](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/#defaultsender)
+- [defaultSigner](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/#defaultsigner)
 
 ## Properties
 
@@ -62,7 +62,7 @@ Defaults to the ARC-32/ARC-56 app spec name
 
 ### appSpec
 
-• **appSpec**: `string` \| [`Arc56Contract`](types_app_arc56.Arc56Contract.md) \| [`AppSpec`](types_app_spec.AppSpec.md)
+• **appSpec**: `string` \| [`Arc56Contract`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/)
 
 The ARC-56 or ARC-32 application spec as either:
 

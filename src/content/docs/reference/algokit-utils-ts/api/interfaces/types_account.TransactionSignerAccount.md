@@ -12,8 +12,8 @@ A wrapper around `TransactionSigner` that also has the sender address.
 
 ### Properties
 
-- [addr](types_account.TransactionSignerAccount.md#addr)
-- [signer](types_account.TransactionSignerAccount.md#signer)
+- [addr](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/#addr)
+- [signer](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/#signer)
 
 ## Properties
 

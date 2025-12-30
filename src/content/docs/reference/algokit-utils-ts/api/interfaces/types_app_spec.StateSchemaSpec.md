@@ -12,8 +12,8 @@ The rolled-up schema allocation specification for local and global state
 
 ### Properties
 
-- [global](types_app_spec.StateSchemaSpec.md#global)
-- [local](types_app_spec.StateSchemaSpec.md#local)
+- [global](/reference/algokit-utils-ts/api/interfaces/types_app_specstateschemaspec/#global)
+- [local](/reference/algokit-utils-ts/api/interfaces/types_app_specstateschemaspec/#local)
 
 ## Properties
 

@@ -12,22 +12,22 @@ Information about an asset.
 
 ### Properties
 
-- [assetId](types_asset_manager.AssetInformation.md#assetid)
-- [assetName](types_asset_manager.AssetInformation.md#assetname)
-- [assetNameAsBytes](types_asset_manager.AssetInformation.md#assetnameasbytes)
-- [clawback](types_asset_manager.AssetInformation.md#clawback)
-- [creator](types_asset_manager.AssetInformation.md#creator)
-- [decimals](types_asset_manager.AssetInformation.md#decimals)
-- [defaultFrozen](types_asset_manager.AssetInformation.md#defaultfrozen)
-- [freeze](types_asset_manager.AssetInformation.md#freeze)
-- [manager](types_asset_manager.AssetInformation.md#manager)
-- [metadataHash](types_asset_manager.AssetInformation.md#metadatahash)
-- [reserve](types_asset_manager.AssetInformation.md#reserve)
-- [total](types_asset_manager.AssetInformation.md#total)
-- [unitName](types_asset_manager.AssetInformation.md#unitname)
-- [unitNameAsBytes](types_asset_manager.AssetInformation.md#unitnameasbytes)
-- [url](types_asset_manager.AssetInformation.md#url)
-- [urlAsBytes](types_asset_manager.AssetInformation.md#urlasbytes)
+- [assetId](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#assetid)
+- [assetName](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#assetname)
+- [assetNameAsBytes](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#assetnameasbytes)
+- [clawback](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#clawback)
+- [creator](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#creator)
+- [decimals](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#decimals)
+- [defaultFrozen](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#defaultfrozen)
+- [freeze](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#freeze)
+- [manager](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#manager)
+- [metadataHash](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#metadatahash)
+- [reserve](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#reserve)
+- [total](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#total)
+- [unitName](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#unitname)
+- [unitNameAsBytes](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#unitnameasbytes)
+- [url](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#url)
+- [urlAsBytes](/reference/algokit-utils-ts/api/interfaces/types_asset_managerassetinformation/#urlasbytes)
 
 ## Properties
 

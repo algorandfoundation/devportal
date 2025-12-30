@@ -10,8 +10,8 @@ title: EventType
 
 ### Enumeration Members
 
-- [AppCompiled](types_lifecycle_events.EventType.md#appcompiled)
-- [TxnGroupSimulated](types_lifecycle_events.EventType.md#txngroupsimulated)
+- [AppCompiled](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/#appcompiled)
+- [TxnGroupSimulated](/reference/algokit-utils-ts/api/enums/types_lifecycle_eventseventtype/#txngroupsimulated)
 
 ## Enumeration Members
 

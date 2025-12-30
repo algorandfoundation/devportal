@@ -12,57 +12,57 @@ Exposes access to various API clients.
 
 ### Constructors
 
-- [constructor](types_client_manager.ClientManager.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#constructor)
 
 ### Properties
 
-- [\_algod](types_client_manager.ClientManager.md#_algod)
-- [\_algorand](types_client_manager.ClientManager.md#_algorand)
-- [\_getNetworkPromise](types_client_manager.ClientManager.md#_getnetworkpromise)
-- [\_indexer](types_client_manager.ClientManager.md#_indexer)
-- [\_kmd](types_client_manager.ClientManager.md#_kmd)
+- [\_algod](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#_algod)
+- [\_algorand](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#_algorand)
+- [\_getNetworkPromise](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#_getnetworkpromise)
+- [\_indexer](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#_indexer)
+- [\_kmd](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#_kmd)
 
 ### Accessors
 
-- [algod](types_client_manager.ClientManager.md#algod)
-- [indexer](types_client_manager.ClientManager.md#indexer)
-- [indexerIfPresent](types_client_manager.ClientManager.md#indexerifpresent)
-- [kmd](types_client_manager.ClientManager.md#kmd)
+- [algod](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#algod)
+- [indexer](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#indexer)
+- [indexerIfPresent](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#indexerifpresent)
+- [kmd](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#kmd)
 
 ### Methods
 
-- [getAppClientByCreatorAndName](types_client_manager.ClientManager.md#getappclientbycreatorandname)
-- [getAppClientById](types_client_manager.ClientManager.md#getappclientbyid)
-- [getAppClientByNetwork](types_client_manager.ClientManager.md#getappclientbynetwork)
-- [getAppFactory](types_client_manager.ClientManager.md#getappfactory)
-- [getTestNetDispenser](types_client_manager.ClientManager.md#gettestnetdispenser)
-- [getTestNetDispenserFromEnvironment](types_client_manager.ClientManager.md#gettestnetdispenserfromenvironment)
-- [getTypedAppClientByCreatorAndName](types_client_manager.ClientManager.md#gettypedappclientbycreatorandname)
-- [getTypedAppClientById](types_client_manager.ClientManager.md#gettypedappclientbyid)
-- [getTypedAppClientByNetwork](types_client_manager.ClientManager.md#gettypedappclientbynetwork)
-- [getTypedAppFactory](types_client_manager.ClientManager.md#gettypedappfactory)
-- [isLocalNet](types_client_manager.ClientManager.md#islocalnet)
-- [isMainNet](types_client_manager.ClientManager.md#ismainnet)
-- [isTestNet](types_client_manager.ClientManager.md#istestnet)
-- [network](types_client_manager.ClientManager.md#network)
-- [genesisIdIsLocalNet](types_client_manager.ClientManager.md#genesisidislocalnet)
-- [getAlgoNodeConfig](types_client_manager.ClientManager.md#getalgonodeconfig)
-- [getAlgodClient](types_client_manager.ClientManager.md#getalgodclient)
-- [getAlgodClientFromEnvironment](types_client_manager.ClientManager.md#getalgodclientfromenvironment)
-- [getAlgodConfigFromEnvironment](types_client_manager.ClientManager.md#getalgodconfigfromenvironment)
-- [getConfigFromEnvironmentOrLocalNet](types_client_manager.ClientManager.md#getconfigfromenvironmentorlocalnet)
-- [getDefaultLocalNetConfig](types_client_manager.ClientManager.md#getdefaultlocalnetconfig)
-- [getIndexerClient](types_client_manager.ClientManager.md#getindexerclient)
-- [getIndexerClientFromEnvironment](types_client_manager.ClientManager.md#getindexerclientfromenvironment)
-- [getIndexerConfigFromEnvironment](types_client_manager.ClientManager.md#getindexerconfigfromenvironment)
-- [getKmdClient](types_client_manager.ClientManager.md#getkmdclient)
-- [getKmdClientFromEnvironment](types_client_manager.ClientManager.md#getkmdclientfromenvironment)
+- [getAppClientByCreatorAndName](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getappclientbycreatorandname)
+- [getAppClientById](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getappclientbyid)
+- [getAppClientByNetwork](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getappclientbynetwork)
+- [getAppFactory](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getappfactory)
+- [getTestNetDispenser](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#gettestnetdispenser)
+- [getTestNetDispenserFromEnvironment](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#gettestnetdispenserfromenvironment)
+- [getTypedAppClientByCreatorAndName](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#gettypedappclientbycreatorandname)
+- [getTypedAppClientById](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#gettypedappclientbyid)
+- [getTypedAppClientByNetwork](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#gettypedappclientbynetwork)
+- [getTypedAppFactory](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#gettypedappfactory)
+- [isLocalNet](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#islocalnet)
+- [isMainNet](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#ismainnet)
+- [isTestNet](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#istestnet)
+- [network](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#network)
+- [genesisIdIsLocalNet](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#genesisidislocalnet)
+- [getAlgoNodeConfig](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getalgonodeconfig)
+- [getAlgodClient](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getalgodclient)
+- [getAlgodClientFromEnvironment](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getalgodclientfromenvironment)
+- [getAlgodConfigFromEnvironment](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getalgodconfigfromenvironment)
+- [getConfigFromEnvironmentOrLocalNet](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getconfigfromenvironmentorlocalnet)
+- [getDefaultLocalNetConfig](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getdefaultlocalnetconfig)
+- [getIndexerClient](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getindexerclient)
+- [getIndexerClientFromEnvironment](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getindexerclientfromenvironment)
+- [getIndexerConfigFromEnvironment](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getindexerconfigfromenvironment)
+- [getKmdClient](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getkmdclient)
+- [getKmdClientFromEnvironment](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/#getkmdclientfromenvironment)
 
 ## Constructors
 
 ### constructor
 
-• **new ClientManager**(`clientsOrConfig`, `algorandClient?`): [`ClientManager`](types_client_manager.ClientManager.md)
+• **new ClientManager**(`clientsOrConfig`, `algorandClient?`): [`ClientManager`](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/)
 
 algosdk clients or config for interacting with the official Algorand APIs.
 
@@ -71,11 +71,11 @@ algosdk clients or config for interacting with the official Algorand APIs.
 | Name              | Type                                                                                                                                                                                             | Description                  |
 | :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------- |
 | `clientsOrConfig` | [`AlgoConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoconfig/) \| [`AlgoSdkClients`](/reference/algokit-utils-ts/api/interfaces/types_client_manageralgosdkclients/) | The clients or config to use |
-| `algorandClient?` | [`AlgorandClient`](types_algorand_client.AlgorandClient.md)                                                                                                                                      | -                            |
+| `algorandClient?` | [`AlgorandClient`](/reference/algokit-utils-ts/api/classes/types_algorand_clientalgorandclient/)                                                                                                 | -                            |
 
 #### Returns
 
-[`ClientManager`](types_client_manager.ClientManager.md)
+[`ClientManager`](/reference/algokit-utils-ts/api/classes/types_client_managerclientmanager/)
 
 **`Example`**
 
@@ -123,7 +123,7 @@ const clientManager = new ClientManager({ algodConfig, indexerConfig, kmdConfig 
 
 ### \_algorand
 
-• `Private` `Optional` **\_algorand**: [`AlgorandClient`](types_algorand_client.AlgorandClient.md)
+• `Private` `Optional` **\_algorand**: [`AlgorandClient`](/reference/algokit-utils-ts/api/classes/types_algorand_clientalgorandclient/)
 
 #### Defined in
 
@@ -243,7 +243,7 @@ Error if no KMD client is configured
 
 ### getAppClientByCreatorAndName
 
-▸ **getAppClientByCreatorAndName**(`params`): `Promise`\<[`AppClient`](types_app_client.AppClient.md)\>
+▸ **getAppClientByCreatorAndName**(`params`): `Promise`\<[`AppClient`](/reference/algokit-utils-ts/api/classes/types_app_clientappclient/)\>
 
 Returns a new `AppClient` client for managing calls and state for an ARC-32/ARC-56 app.
 This method resolves the app ID by looking up the creator address and name
@@ -266,7 +266,7 @@ using AlgoKit app deployment semantics (i.e. looking for the app creation transa
 
 #### Returns
 
-`Promise`\<[`AppClient`](types_app_client.AppClient.md)\>
+`Promise`\<[`AppClient`](/reference/algokit-utils-ts/api/classes/types_app_clientappclient/)\>
 
 The `AppClient` instance
 
@@ -288,7 +288,7 @@ const appClient = clientManager.getAppClientByCreatorAndName({
 
 ### getAppClientById
 
-▸ **getAppClientById**(`params`): [`AppClient`](types_app_client.AppClient.md)
+▸ **getAppClientById**(`params`): [`AppClient`](/reference/algokit-utils-ts/api/classes/types_app_clientappclient/)
 
 Returns a new `AppClient` client for managing calls and state for an ARC-32/ARC-56 app.
 
@@ -307,7 +307,7 @@ Returns a new `AppClient` client for managing calls and state for an ARC-32/ARC-
 
 #### Returns
 
-[`AppClient`](types_app_client.AppClient.md)
+[`AppClient`](/reference/algokit-utils-ts/api/classes/types_app_clientappclient/)
 
 The `AppClient` instance
 
@@ -328,7 +328,7 @@ const appClient = clientManager.getAppClientById({
 
 ### getAppClientByNetwork
 
-▸ **getAppClientByNetwork**(`params`): `Promise`\<[`AppClient`](types_app_client.AppClient.md)\>
+▸ **getAppClientByNetwork**(`params`): `Promise`\<[`AppClient`](/reference/algokit-utils-ts/api/classes/types_app_clientappclient/)\>
 
 Returns a new `AppClient` client for managing calls and state for an ARC-56 app.
 This method resolves the app ID for the current network based on
@@ -350,7 +350,7 @@ If no IDs are in the app spec or the network isn't recognised, an error is throw
 
 #### Returns
 
-`Promise`\<[`AppClient`](types_app_client.AppClient.md)\>
+`Promise`\<[`AppClient`](/reference/algokit-utils-ts/api/classes/types_app_clientappclient/)\>
 
 The `AppClient` instance
 
@@ -371,7 +371,7 @@ const appClient = clientManager.getAppClientByNetwork({
 
 ### getAppFactory
 
-▸ **getAppFactory**(`params`): [`AppFactory`](types_app_factory.AppFactory.md)
+▸ **getAppFactory**(`params`): [`AppFactory`](/reference/algokit-utils-ts/api/classes/types_app_factoryappfactory/)
 
 Returns a new `AppFactory` client
 
@@ -391,7 +391,7 @@ Returns a new `AppFactory` client
 
 #### Returns
 
-[`AppFactory`](types_app_factory.AppFactory.md)
+[`AppFactory`](/reference/algokit-utils-ts/api/classes/types_app_factoryappfactory/)
 
 The `AppFactory` instance
 
@@ -425,7 +425,7 @@ const factory = clientManager.getAppFactory({
 
 ### getTestNetDispenser
 
-▸ **getTestNetDispenser**(`params`): [`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
+▸ **getTestNetDispenser**(`params`): [`TestNetDispenserApiClient`](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
 
 Returns a TestNet Dispenser API client.
 
@@ -439,7 +439,7 @@ Refer to [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/tes
 
 #### Returns
 
-[`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
+[`TestNetDispenserApiClient`](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
 
 An instance of the TestNetDispenserApiClient class.
 
@@ -460,7 +460,7 @@ const client = clientManager.getTestNetDispenser({
 
 ### getTestNetDispenserFromEnvironment
 
-▸ **getTestNetDispenserFromEnvironment**(`params?`): [`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
+▸ **getTestNetDispenserFromEnvironment**(`params?`): [`TestNetDispenserApiClient`](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
 
 Returns a TestNet Dispenser API client, loading the auth token from `process.env.ALGOKIT_DISPENSER_ACCESS_TOKEN`.
 
@@ -474,7 +474,7 @@ Refer to [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/tes
 
 #### Returns
 
-[`TestNetDispenserApiClient`](types_dispenser_client.TestNetDispenserApiClient.md)
+[`TestNetDispenserApiClient`](/reference/algokit-utils-ts/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
 
 An instance of the TestNetDispenserApiClient class.
 

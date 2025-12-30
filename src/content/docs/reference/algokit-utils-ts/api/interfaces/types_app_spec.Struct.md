@@ -12,8 +12,8 @@ A user-defined struct/tuple type
 
 ### Properties
 
-- [elements](types_app_spec.Struct.md#elements)
-- [name](types_app_spec.Struct.md#name)
+- [elements](/reference/algokit-utils-ts/api/interfaces/types_app_specstruct/#elements)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_app_specstruct/#name)
 
 ## Properties
 

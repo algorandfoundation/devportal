@@ -105,7 +105,7 @@ Custom generate commands are defined in the `.algokit.toml` file within the proj
 
 ### Understanding `Generators`
 
-A `generator` is essentially a compact, self-sufficient `copier` template. This template can optionally be defined within the primary `algokit templates` to offer supplementary functionality after a project is initialized from the template. For instance, the official [`algokit-python-template`](https://github.com/algorandfoundation/algokit-python-template/tree/main/template_content) provides a generator within the `.algokit/generators` directory. This generator can be employed for executing extra tasks on AlgoKit projects that have been initiated from this template, such as adding new smart contracts to an existing project. For a comprehensive explanation, please refer to the [`architecture decision record`](docs/architecture-decisions/2023-07-19_advanced_generate_command.md).
+A `generator` is essentially a compact, self-sufficient `copier` template. This template can optionally be defined within the primary `algokit templates` to offer supplementary functionality after a project is initialized from the template. For instance, the official [`algokit-python-template`](https://github.com/algorandfoundation/algokit-python-template/tree/main/template_content) provides a generator within the `.algokit/generators` directory. This generator can be employed for executing extra tasks on AlgoKit projects that have been initiated from this template, such as adding new smart contracts to an existing project. For a comprehensive explanation, please refer to the [`architecture decision record`](docs/architecture-decisions/2023-07-19_advanced_generate_command).
 
 ### Requirements
 

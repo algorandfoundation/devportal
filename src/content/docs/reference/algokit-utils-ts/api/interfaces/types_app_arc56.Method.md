@@ -12,14 +12,14 @@ Describes a method in the contract. This interface is an extension of the interf
 
 ### Properties
 
-- [actions](types_app_arc56.Method.md#actions)
-- [args](types_app_arc56.Method.md#args)
-- [desc](types_app_arc56.Method.md#desc)
-- [events](types_app_arc56.Method.md#events)
-- [name](types_app_arc56.Method.md#name)
-- [readonly](types_app_arc56.Method.md#readonly)
-- [recommendations](types_app_arc56.Method.md#recommendations)
-- [returns](types_app_arc56.Method.md#returns)
+- [actions](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/#actions)
+- [args](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/#args)
+- [desc](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/#desc)
+- [events](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/#events)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/#name)
+- [readonly](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/#readonly)
+- [recommendations](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/#recommendations)
+- [returns](/reference/algokit-utils-ts/api/interfaces/types_app_arc56method/#returns)
 
 ## Properties
 
@@ -68,7 +68,7 @@ Optional, user-friendly description for the method
 
 ### events
 
-• `Optional` **events**: [`Event`](types_app_arc56.Event.md)[]
+• `Optional` **events**: [`Event`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56event/)[]
 
 ARC-28 events that MAY be emitted by this method
 

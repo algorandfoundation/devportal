@@ -12,18 +12,18 @@ The result of sending a transaction
 
 - **`SendTransactionResult`**
 
-  ↳ [`AppCallTransactionResultOfType`](types_app.AppCallTransactionResultOfType.md)
+  ↳ [`AppCallTransactionResultOfType`](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/)
 
-  ↳ [`ConfirmedTransactionResult`](types_transaction.ConfirmedTransactionResult.md)
+  ↳ [`ConfirmedTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/)
 
-  ↳ [`ConfirmedTransactionResults`](types_transaction.ConfirmedTransactionResults.md)
+  ↳ [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/)
 
 ## Table of contents
 
 ### Properties
 
-- [confirmation](types_transaction.SendTransactionResult.md#confirmation)
-- [transaction](types_transaction.SendTransactionResult.md#transaction)
+- [confirmation](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/#confirmation)
+- [transaction](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/#transaction)
 
 ## Properties
 

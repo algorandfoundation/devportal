@@ -12,10 +12,10 @@ Parameters for funding an app account
 
 ### Properties
 
-- [amount](types_app_client.FundAppAccountParams.md#amount)
-- [note](types_app_client.FundAppAccountParams.md#note)
-- [sendParams](types_app_client.FundAppAccountParams.md#sendparams)
-- [sender](types_app_client.FundAppAccountParams.md#sender)
+- [amount](/reference/algokit-utils-ts/api/interfaces/types_app_clientfundappaccountparams/#amount)
+- [note](/reference/algokit-utils-ts/api/interfaces/types_app_clientfundappaccountparams/#note)
+- [sendParams](/reference/algokit-utils-ts/api/interfaces/types_app_clientfundappaccountparams/#sendparams)
+- [sender](/reference/algokit-utils-ts/api/interfaces/types_app_clientfundappaccountparams/#sender)
 
 ## Properties
 
@@ -43,7 +43,7 @@ The transaction note for the smart contract call
 
 ### sendParams
 
-• `Optional` **sendParams**: [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
+• `Optional` **sendParams**: [`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/)
 
 Parameters to control transaction sending
 

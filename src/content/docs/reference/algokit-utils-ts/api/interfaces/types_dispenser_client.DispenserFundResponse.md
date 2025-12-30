@@ -12,8 +12,8 @@ The TestNet Dispenser API response when funding.
 
 ### Properties
 
-- [amount](types_dispenser_client.DispenserFundResponse.md#amount)
-- [txId](types_dispenser_client.DispenserFundResponse.md#txid)
+- [amount](/reference/algokit-utils-ts/api/interfaces/types_dispenser_clientdispenserfundresponse/#amount)
+- [txId](/reference/algokit-utils-ts/api/interfaces/types_dispenser_clientdispenserfundresponse/#txid)
 
 ## Properties
 

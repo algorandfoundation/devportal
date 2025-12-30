@@ -12,14 +12,14 @@ A lookup of name -> Algorand app for a creator
 
 ### Properties
 
-- [apps](types_app.AppLookup.md#apps)
-- [creator](types_app.AppLookup.md#creator)
+- [apps](/reference/algokit-utils-ts/api/interfaces/types_appapplookup/#apps)
+- [creator](/reference/algokit-utils-ts/api/interfaces/types_appapplookup/#creator)
 
 ## Properties
 
 ### apps
 
-• **apps**: `Readonly`\<\{ `[name: string]`: [`AppMetadata`](types_app.AppMetadata.md); }\>
+• **apps**: `Readonly`\<\{ `[name: string]`: [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/); }\>
 
 #### Defined in
 

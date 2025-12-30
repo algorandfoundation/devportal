@@ -12,7 +12,7 @@ title: types/async-event-emitter
 
 ### Type Aliases
 
-- [AsyncEventListener](types_async_event_emitter.md#asynceventlistener)
+- [AsyncEventListener](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)
 
 ## Type Aliases
 

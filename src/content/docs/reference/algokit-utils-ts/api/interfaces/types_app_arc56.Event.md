@@ -12,9 +12,9 @@ ARC-28 event
 
 ### Properties
 
-- [args](types_app_arc56.Event.md#args)
-- [desc](types_app_arc56.Event.md#desc)
-- [name](types_app_arc56.Event.md#name)
+- [args](/reference/algokit-utils-ts/api/interfaces/types_app_arc56event/#args)
+- [desc](/reference/algokit-utils-ts/api/interfaces/types_app_arc56event/#desc)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_app_arc56event/#name)
 
 ## Properties
 

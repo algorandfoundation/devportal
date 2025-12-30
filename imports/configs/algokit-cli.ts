@@ -75,5 +75,6 @@ export const algokitCLIConfig: ImportOptions = {
       },
     ],
   },
+  clear: true,
   enabled: true,
 };

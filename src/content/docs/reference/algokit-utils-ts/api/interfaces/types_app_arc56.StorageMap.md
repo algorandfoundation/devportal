@@ -12,10 +12,10 @@ Describes a mapping of key-value pairs in storage
 
 ### Properties
 
-- [desc](types_app_arc56.StorageMap.md#desc)
-- [keyType](types_app_arc56.StorageMap.md#keytype)
-- [prefix](types_app_arc56.StorageMap.md#prefix)
-- [valueType](types_app_arc56.StorageMap.md#valuetype)
+- [desc](/reference/algokit-utils-ts/api/interfaces/types_app_arc56storagemap/#desc)
+- [keyType](/reference/algokit-utils-ts/api/interfaces/types_app_arc56storagemap/#keytype)
+- [prefix](/reference/algokit-utils-ts/api/interfaces/types_app_arc56storagemap/#prefix)
+- [valueType](/reference/algokit-utils-ts/api/interfaces/types_app_arc56storagemap/#valuetype)
 
 ## Properties
 

@@ -10,7 +10,7 @@ The metadata that can be collected about a deployed app
 
 ## Hierarchy
 
-- [`AppDeployMetadata`](types_app.AppDeployMetadata.md)
+- [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/)
 
   ↳ **`AppMetadata`**
 
@@ -18,16 +18,16 @@ The metadata that can be collected about a deployed app
 
 ### Properties
 
-- [appAddress](types_app_deployer.AppMetadata.md#appaddress)
-- [appId](types_app_deployer.AppMetadata.md#appid)
-- [createdMetadata](types_app_deployer.AppMetadata.md#createdmetadata)
-- [createdRound](types_app_deployer.AppMetadata.md#createdround)
-- [deletable](types_app_deployer.AppMetadata.md#deletable)
-- [deleted](types_app_deployer.AppMetadata.md#deleted)
-- [name](types_app_deployer.AppMetadata.md#name)
-- [updatable](types_app_deployer.AppMetadata.md#updatable)
-- [updatedRound](types_app_deployer.AppMetadata.md#updatedround)
-- [version](types_app_deployer.AppMetadata.md#version)
+- [appAddress](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#appaddress)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#appid)
+- [createdMetadata](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#createdmetadata)
+- [createdRound](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#createdround)
+- [deletable](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#deletable)
+- [deleted](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#deleted)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#name)
+- [updatable](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#updatable)
+- [updatedRound](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#updatedround)
+- [version](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/#version)
 
 ## Properties
 
@@ -57,7 +57,7 @@ The id of the app
 
 ### createdMetadata
 
-• **createdMetadata**: [`AppDeployMetadata`](types_app.AppDeployMetadata.md)
+• **createdMetadata**: [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/)
 
 The metadata when the app was created
 
@@ -87,7 +87,7 @@ Whether or not the app is deletable / permanent / unspecified
 
 #### Inherited from
 
-[AppDeployMetadata](types_app.AppDeployMetadata.md).[deletable](types_app.AppDeployMetadata.md#deletable)
+[AppDeployMetadata](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/).[deletable](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/#deletable)
 
 #### Defined in
 
@@ -115,7 +115,7 @@ The unique name identifier of the app within the creator account
 
 #### Inherited from
 
-[AppDeployMetadata](types_app.AppDeployMetadata.md).[name](types_app.AppDeployMetadata.md#name)
+[AppDeployMetadata](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/).[name](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/#name)
 
 #### Defined in
 
@@ -131,7 +131,7 @@ Whether or not the app is updatable / immutable / unspecified
 
 #### Inherited from
 
-[AppDeployMetadata](types_app.AppDeployMetadata.md).[updatable](types_app.AppDeployMetadata.md#updatable)
+[AppDeployMetadata](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/).[updatable](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/#updatable)
 
 #### Defined in
 
@@ -159,7 +159,7 @@ The version of app that is / will be deployed
 
 #### Inherited from
 
-[AppDeployMetadata](types_app.AppDeployMetadata.md).[version](types_app.AppDeployMetadata.md#version)
+[AppDeployMetadata](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/).[version](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/#version)
 
 #### Defined in
 

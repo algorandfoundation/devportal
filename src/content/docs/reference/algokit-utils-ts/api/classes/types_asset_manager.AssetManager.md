@@ -12,38 +12,38 @@ Allows management of asset information.
 
 ### Constructors
 
-- [constructor](types_asset_manager.AssetManager.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#constructor)
 
 ### Properties
 
-- [\_algod](types_asset_manager.AssetManager.md#_algod)
-- [\_newGroup](types_asset_manager.AssetManager.md#_newgroup)
+- [\_algod](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#_algod)
+- [\_newGroup](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#_newgroup)
 
 ### Methods
 
-- [bulkOptIn](types_asset_manager.AssetManager.md#bulkoptin)
-- [bulkOptOut](types_asset_manager.AssetManager.md#bulkoptout)
-- [getAccountInformation](types_asset_manager.AssetManager.md#getaccountinformation)
-- [getById](types_asset_manager.AssetManager.md#getbyid)
+- [bulkOptIn](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#bulkoptin)
+- [bulkOptOut](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#bulkoptout)
+- [getAccountInformation](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#getaccountinformation)
+- [getById](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/#getbyid)
 
 ## Constructors
 
 ### constructor
 
-• **new AssetManager**(`algod`, `newGroup`): [`AssetManager`](types_asset_manager.AssetManager.md)
+• **new AssetManager**(`algod`, `newGroup`): [`AssetManager`](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/)
 
 Create a new asset manager.
 
 #### Parameters
 
-| Name       | Type                                                                 | Description                                                           |
-| :--------- | :------------------------------------------------------------------- | :-------------------------------------------------------------------- |
-| `algod`    | `AlgodClient`                                                        | An algod client                                                       |
-| `newGroup` | () => [`TransactionComposer`](types_composer.TransactionComposer.md) | A function that creates a new `TransactionComposer` transaction group |
+| Name       | Type                                                                                                      | Description                                                           |
+| :--------- | :-------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| `algod`    | `AlgodClient`                                                                                             | An algod client                                                       |
+| `newGroup` | () => [`TransactionComposer`](/reference/algokit-utils-ts/api/classes/types_composertransactioncomposer/) | A function that creates a new `TransactionComposer` transaction group |
 
 #### Returns
 
-[`AssetManager`](types_asset_manager.AssetManager.md)
+[`AssetManager`](/reference/algokit-utils-ts/api/classes/types_asset_managerassetmanager/)
 
 **`Example`**
 
@@ -69,15 +69,15 @@ const assetManager = new AssetManager(algod, () => new TransactionComposer({algo
 
 ### \_newGroup
 
-• `Private` **\_newGroup**: () => [`TransactionComposer`](types_composer.TransactionComposer.md)
+• `Private` **\_newGroup**: () => [`TransactionComposer`](/reference/algokit-utils-ts/api/classes/types_composertransactioncomposer/)
 
 #### Type declaration
 
-▸ (): [`TransactionComposer`](types_composer.TransactionComposer.md)
+▸ (): [`TransactionComposer`](/reference/algokit-utils-ts/api/classes/types_composertransactioncomposer/)
 
 ##### Returns
 
-[`TransactionComposer`](types_composer.TransactionComposer.md)
+[`TransactionComposer`](/reference/algokit-utils-ts/api/classes/types_composertransactioncomposer/)
 
 #### Defined in
 

@@ -12,32 +12,32 @@ The sending configuration for a transaction
 
 - **`SendTransactionParams`**
 
-  ↳ [`AppCallParams`](types_app.AppCallParams.md)
+  ↳ [`AppCallParams`](/reference/algokit-utils-ts/api/interfaces/types_appappcallparams/)
 
-  ↳ [`CreateAssetParams`](types_asset.CreateAssetParams.md)
+  ↳ [`CreateAssetParams`](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/)
 
-  ↳ [`AssetOptInParams`](types_asset.AssetOptInParams.md)
+  ↳ [`AssetOptInParams`](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/)
 
-  ↳ [`AlgoTransferParams`](types_transfer.AlgoTransferParams.md)
+  ↳ [`AlgoTransferParams`](/reference/algokit-utils-ts/api/interfaces/types_transferalgotransferparams/)
 
-  ↳ [`AlgoRekeyParams`](types_transfer.AlgoRekeyParams.md)
+  ↳ [`AlgoRekeyParams`](/reference/algokit-utils-ts/api/interfaces/types_transferalgorekeyparams/)
 
-  ↳ [`EnsureFundedParams`](types_transfer.EnsureFundedParams.md)
+  ↳ [`EnsureFundedParams`](/reference/algokit-utils-ts/api/interfaces/types_transferensurefundedparams/)
 
-  ↳ [`TransferAssetParams`](types_transfer.TransferAssetParams.md)
+  ↳ [`TransferAssetParams`](/reference/algokit-utils-ts/api/interfaces/types_transfertransferassetparams/)
 
 ## Table of contents
 
 ### Properties
 
-- [atc](types_transaction.SendTransactionParams.md#atc)
-- [fee](types_transaction.SendTransactionParams.md#fee)
-- [maxFee](types_transaction.SendTransactionParams.md#maxfee)
-- [maxRoundsToWaitForConfirmation](types_transaction.SendTransactionParams.md#maxroundstowaitforconfirmation)
-- [populateAppCallResources](types_transaction.SendTransactionParams.md#populateappcallresources)
-- [skipSending](types_transaction.SendTransactionParams.md#skipsending)
-- [skipWaiting](types_transaction.SendTransactionParams.md#skipwaiting)
-- [suppressLog](types_transaction.SendTransactionParams.md#suppresslog)
+- [atc](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#atc)
+- [fee](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#fee)
+- [maxFee](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#maxroundstowaitforconfirmation)
+- [populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#populateappcallresources)
+- [skipSending](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#skipsending)
+- [skipWaiting](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#skipwaiting)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#suppresslog)
 
 ## Properties
 

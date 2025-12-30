@@ -12,14 +12,14 @@ The result of compiling the approval and clear state TEAL programs for an app
 
 ### Properties
 
-- [compiledApproval](types_app.AppCompilationResult.md#compiledapproval)
-- [compiledClear](types_app.AppCompilationResult.md#compiledclear)
+- [compiledApproval](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/#compiledapproval)
+- [compiledClear](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/#compiledclear)
 
 ## Properties
 
 ### compiledApproval
 
-• **compiledApproval**: [`CompiledTeal`](types_app.CompiledTeal.md)
+• **compiledApproval**: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/)
 
 The result of compiling the approval program
 
@@ -31,7 +31,7 @@ The result of compiling the approval program
 
 ### compiledClear
 
-• **compiledClear**: [`CompiledTeal`](types_app.CompiledTeal.md)
+• **compiledClear**: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/)
 
 The result of compiling the clear state program
 

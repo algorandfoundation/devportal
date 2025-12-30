@@ -12,8 +12,8 @@ A grouping of the app ID and name identifier to reference an app box.
 
 ### Properties
 
-- [appId](types_app_manager.BoxReference.md#appid)
-- [name](types_app_manager.BoxReference.md#name)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/#appid)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxreference/#name)
 
 ## Properties
 

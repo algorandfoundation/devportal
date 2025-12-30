@@ -18,31 +18,31 @@ Wrapper around `algosdk.ABIMethod` that represents an ARC-56 ABI method.
 
 ### Constructors
 
-- [constructor](types_app_arc56.Arc56Method.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#constructor)
 
 ### Properties
 
-- [args](types_app_arc56.Arc56Method.md#args)
-- [description](types_app_arc56.Arc56Method.md#description)
-- [events](types_app_arc56.Arc56Method.md#events)
-- [method](types_app_arc56.Arc56Method.md#method)
-- [name](types_app_arc56.Arc56Method.md#name)
-- [readonly](types_app_arc56.Arc56Method.md#readonly)
-- [returns](types_app_arc56.Arc56Method.md#returns)
+- [args](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#args)
+- [description](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#description)
+- [events](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#events)
+- [method](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#method)
+- [name](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#name)
+- [readonly](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#readonly)
+- [returns](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#returns)
 
 ### Methods
 
-- [getSelector](types_app_arc56.Arc56Method.md#getselector)
-- [getSignature](types_app_arc56.Arc56Method.md#getsignature)
-- [toJSON](types_app_arc56.Arc56Method.md#tojson)
-- [txnCount](types_app_arc56.Arc56Method.md#txncount)
-- [fromSignature](types_app_arc56.Arc56Method.md#fromsignature)
+- [getSelector](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#getselector)
+- [getSignature](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#getsignature)
+- [toJSON](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#tojson)
+- [txnCount](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#txncount)
+- [fromSignature](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/#fromsignature)
 
 ## Constructors
 
 ### constructor
 
-• **new Arc56Method**(`method`): [`Arc56Method`](types_app_arc56.Arc56Method.md)
+• **new Arc56Method**(`method`): [`Arc56Method`](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Wrapper around `algosdk.ABIMethod` that represents an ARC-56 ABI method.
 
 #### Returns
 
-[`Arc56Method`](types_app_arc56.Arc56Method.md)
+[`Arc56Method`](/reference/algokit-utils-ts/api/classes/types_app_arc56arc56method/)
 
 #### Overrides
 

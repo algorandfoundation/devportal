@@ -18,5 +18,5 @@ export const arcStandardsConfig: ImportOptions = {
     },
   ],
   enabled: true,
-  clear: false,
+  clear: true,
 };

@@ -18,7 +18,7 @@ Interface to identify a typed factory that can be used to create and deploy an a
 
 ### Constructors
 
-- [constructor](types_client_manager.TypedAppFactory.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/interfaces/types_client_managertypedappfactory/#constructor)
 
 ## Constructors
 
@@ -28,9 +28,9 @@ Interface to identify a typed factory that can be used to create and deploy an a
 
 #### Parameters
 
-| Name     | Type                                                                               |
-| :------- | :--------------------------------------------------------------------------------- |
-| `params` | `Omit`\<[`AppFactoryParams`](types_app_factory.AppFactoryParams.md), `"appSpec"`\> |
+| Name     | Type                                                                                                                       |
+| :------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `params` | `Omit`\<[`AppFactoryParams`](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/), `"appSpec"`\> |
 
 #### Returns
 
