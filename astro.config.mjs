@@ -1036,15 +1036,19 @@ export default defineConfig({
                   items: [
                     {
                       label: 'Overview',
-                      link: 'algokit/subscribers/typescript/overview',
+                      link: 'algokit/subscriber/typescript/overview',
                     },
                     {
                       label: 'Subscriber',
-                      link: 'algokit/subscribers/typescript/subscriber',
+                      link: 'algokit/subscriber/typescript/subscriber',
                     },
                     {
                       label: 'Subscriptions',
-                      link: 'algokit/subscribers/typescript/subscriptions',
+                      link: 'algokit/subscriber/typescript/subscriptions',
+                    },
+                    {
+                      label: 'v3 Migration Guide',
+                      link: 'algokit/subscriber/typescript/v3-migration',
                     },
                   ],
                 },
@@ -1053,15 +1057,15 @@ export default defineConfig({
                   items: [
                     {
                       label: 'Overview',
-                      link: 'algokit/subscribers/python/overview',
+                      link: 'algokit/subscriber/python/overview',
                     },
                     {
                       label: 'Subsciber',
-                      link: 'algokit/subscribers/python/subscriber',
+                      link: 'algokit/subscriber/python/subscriber',
                     },
                     {
                       label: 'Subscriptions',
-                      link: 'algokit/subscribers/python/subscriptions',
+                      link: 'algokit/subscriber/python/subscriptions',
                     },
                   ],
                 },
