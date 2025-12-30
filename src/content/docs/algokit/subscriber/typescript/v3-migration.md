@@ -1,4 +1,6 @@
-# v3 migration
+---
+title: v3 Migration Guide
+---
 
 This release updates the subscriber library to support `algosdk@3`. As a result the majority of the changes are to support this.
 
@@ -23,14 +25,14 @@ Previously `SubscribedTransaction` extended `TransactionResult` from `@algorandf
 
 /**** Before ****/
 if (subscribedTransaction['tx-type'] === TransactionType.axfer) {
-  console.log('assetId', subscribedTransaction['asset-transfer-transaction']['asset-id'])
+  console.log('assetId', subscribedTransaction['asset-transfer-transaction']['asset-id']);
 }
 // Result:
 //  assetId: 31566704
 
 /**** After ****/
 if (subscribedTransaction.txType === TransactionType.axfer) {
-  console.log('assetId', subscribedTransaction.assetTransferTransaction.assetId)
+  console.log('assetId', subscribedTransaction.assetTransferTransaction.assetId);
 }
 // Result:
 //  assetId: 31566704n <- this is now a bigint
@@ -57,7 +59,7 @@ This type has had several changes, mainly to make this type more aligned with `S
 Previously a custom `BlockData` type was used to represent a raw algosdk block, as `algosdk@2` didn't export a suitable one. Now that `algosdk@3` does, `algosdk.modelsv2.BlockResponse` replaces `BlockData`. In `algosdk@3`, you can get the `algosdk.modelsv2.BlockResponse` from algod client as below.
 
 ```typescript
-const block = await algodClient.block(round).do()
+const block = await algodClient.block(round).do();
 ```
 
 ### Removal of `BlockTransaction` and `BlockInnerTransaction`
@@ -70,12 +72,12 @@ Previously `BlockTransaction` and `BlockInnerTransaction` represented the raw `a
 // To get the created asset ID from a block transaction
 
 /**** Before ****/
-console.log('created asset ID', blockTransaction.caid)
+console.log('created asset ID', blockTransaction.caid);
 // Result:
 //   created asset ID: 31566704
 
 /**** After ****/
-console.log('created asset ID', signedTxnWithAD.applyData.configAsset)
+console.log('created asset ID', signedTxnWithAD.applyData.configAsset);
 // Result:
 // created asset ID: 31566704n <- this is a bigint
 ```
@@ -84,13 +86,13 @@ console.log('created asset ID', signedTxnWithAD.applyData.configAsset)
 // To access the transaction sender
 
 /**** Before ****/
-console.log('transaction sender', blockTransaction.txn.snd)
+console.log('transaction sender', blockTransaction.txn.snd);
 // Result:
 // transaction sender: 25M5BT2DMMED3V6CWDEYKSNEFGPXX4QBIINCOICLXXRU3UGTSGRMF3MTOE
 
 /**** After ****/
 // The sender now has `Address` type
-console.log('transaction sender', signedTxnWithAD.signedTxn.txn.sender.toString())
+console.log('transaction sender', signedTxnWithAD.signedTxn.txn.sender.toString());
 // Result:
 // transaction sender: 25M5BT2DMMED3V6CWDEYKSNEFGPXX4QBIINCOICLXXRU3UGTSGRMF3MTOE
 ```
@@ -126,7 +128,7 @@ const subscriber = new AlgorandSubscriber(
     // ...
   },
   algorand.client.algod,
-)
+);
 
 /**** After ****/
 const subscriber = new AlgorandSubscriber(
@@ -144,11 +146,11 @@ const subscriber = new AlgorandSubscriber(
     // ...
   },
   algorand.client.algod,
-)
+);
 
-subscriber.on('usdc', (subscribedTransaction) => {
+subscriber.on('usdc', subscribedTransaction => {
   // Handling logic goes here
-})
+});
 ```
 
 ```typescript
@@ -169,7 +171,7 @@ const result = await getSubscribedTransactions(
     watermark: 100n,
   },
   algorand.client.algod,
-)
+);
 
 /**** After ****/
 const result = await getSubscribedTransactions(
@@ -188,11 +190,11 @@ const result = await getSubscribedTransactions(
     watermark: 100n,
   },
   algorand.client.algod,
-)
+);
 
-result.subscribedTransactions.forEach((subscribedTransaction) => {
+result.subscribedTransactions.forEach(subscribedTransaction => {
   // Handling logic goes here
-})
+});
 ```
 
 The `SubscribedTransaction` returned from your subscriber now leverage the `algosdk@3` types, so your handling code will require updates to account for these changes. See [Changes to `SubscribedTransaction`](#changes-to-subscribedtransaction) for details on how to update.
@@ -205,12 +207,12 @@ The output type `TransactionInBlock` has been updated to support the `algosdk@3`
 ```typescript
 /**** Before ****/
 // The algod client returns a `Record<string, any>` value
-const blockData = (await algorand.client.algod.block(round).do()) as BlockData
-const blockTransactions = getBlockTransactions(blockData.block)
+const blockData = (await algorand.client.algod.block(round).do()) as BlockData;
+const blockTransactions = getBlockTransactions(blockData.block);
 
 /**** After ****/
-const block = await algorand.client.algod.block(round).do()
-const blockTransactions = getBlockTransactions(block)
+const block = await algorand.client.algod.block(round).do();
+const blockTransactions = getBlockTransactions(block);
 ```
 
 ### Step 3 - Update usages of `getIndexerTransactionFromAlgodTransaction`
@@ -226,12 +228,12 @@ The output type `BlockMetadata` has been changed in a few small ways, see [Chang
 ```typescript
 /**** Before ****/
 // The algod client returns a `Record<string, any>` value
-const blockData = (await algorand.client.algod.block(round).do()) as BlockData
-const blockMetadata = blockDataToBlockMetadata(blockData)
+const blockData = (await algorand.client.algod.block(round).do()) as BlockData;
+const blockMetadata = blockDataToBlockMetadata(blockData);
 
 /**** After ****/
-const block = await algorand.client.algod.block(round).do()
-const blockMetadata = blockResponseToBlockMetadata(block)
+const block = await algorand.client.algod.block(round).do();
+const blockMetadata = blockResponseToBlockMetadata(block);
 ```
 
 ### Step 5 - Update usages of `extractBalanceChangesFromBlockTransaction`
@@ -253,5 +255,6 @@ The previous return type `BlockData` has been changed to `algosdk.modelsv2.Block
 Since the majority of number fields are now `bigint`, the default `JSON.stringify` will no longer work in scenarios where it previously did. We recommend you use a custom JSON replacer to handle the bigint values. Below is an example of how you might do this.
 
 ```typescript
-export const asJson = (value: unknown) => JSON.stringify(value, (_, v) => (typeof v === 'bigint' ? v.toString() : v), 2)
+export const asJson = (value: unknown) =>
+  JSON.stringify(value, (_, v) => (typeof v === 'bigint' ? v.toString() : v), 2);
 ```
