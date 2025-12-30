@@ -17,32 +17,32 @@ This is useful for automated testing.
 
 ### Constructors
 
-- [constructor](testing.TestLogger.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/testingtestlogger/#constructor)
 
 ### Properties
 
-- [logs](testing.TestLogger.md#logs)
-- [originalLogger](testing.TestLogger.md#originallogger)
+- [logs](/reference/algokit-utils-ts/api/classes/testingtestlogger/#logs)
+- [originalLogger](/reference/algokit-utils-ts/api/classes/testingtestlogger/#originallogger)
 
 ### Accessors
 
-- [capturedLogs](testing.TestLogger.md#capturedlogs)
+- [capturedLogs](/reference/algokit-utils-ts/api/classes/testingtestlogger/#capturedlogs)
 
 ### Methods
 
-- [clear](testing.TestLogger.md#clear)
-- [debug](testing.TestLogger.md#debug)
-- [error](testing.TestLogger.md#error)
-- [getLogSnapshot](testing.TestLogger.md#getlogsnapshot)
-- [info](testing.TestLogger.md#info)
-- [verbose](testing.TestLogger.md#verbose)
-- [warn](testing.TestLogger.md#warn)
+- [clear](/reference/algokit-utils-ts/api/classes/testingtestlogger/#clear)
+- [debug](/reference/algokit-utils-ts/api/classes/testingtestlogger/#debug)
+- [error](/reference/algokit-utils-ts/api/classes/testingtestlogger/#error)
+- [getLogSnapshot](/reference/algokit-utils-ts/api/classes/testingtestlogger/#getlogsnapshot)
+- [info](/reference/algokit-utils-ts/api/classes/testingtestlogger/#info)
+- [verbose](/reference/algokit-utils-ts/api/classes/testingtestlogger/#verbose)
+- [warn](/reference/algokit-utils-ts/api/classes/testingtestlogger/#warn)
 
 ## Constructors
 
 ### constructor
 
-• **new TestLogger**(`originalLogger?`): [`TestLogger`](testing.TestLogger.md)
+• **new TestLogger**(`originalLogger?`): [`TestLogger`](/reference/algokit-utils-ts/api/classes/testingtestlogger/)
 
 Create a new test logger that wraps the given logger if provided.
 
@@ -54,7 +54,7 @@ Create a new test logger that wraps the given logger if provided.
 
 #### Returns
 
-[`TestLogger`](testing.TestLogger.md)
+[`TestLogger`](/reference/algokit-utils-ts/api/classes/testingtestlogger/)
 
 #### Defined in
 

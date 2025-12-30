@@ -14,16 +14,16 @@ with random values in the log snapshot, but rather will get substituted with pre
 
 ### Properties
 
-- [accounts](types_testing.LogSnapshotConfig.md#accounts)
-- [apps](types_testing.LogSnapshotConfig.md#apps)
-- [filterPredicate](types_testing.LogSnapshotConfig.md#filterpredicate)
-- [transactions](types_testing.LogSnapshotConfig.md#transactions)
+- [accounts](/reference/algokit-utils-ts/api/interfaces/types_testinglogsnapshotconfig/#accounts)
+- [apps](/reference/algokit-utils-ts/api/interfaces/types_testinglogsnapshotconfig/#apps)
+- [filterPredicate](/reference/algokit-utils-ts/api/interfaces/types_testinglogsnapshotconfig/#filterpredicate)
+- [transactions](/reference/algokit-utils-ts/api/interfaces/types_testinglogsnapshotconfig/#transactions)
 
 ## Properties
 
 ### accounts
 
-• `Optional` **accounts**: (`string` \| [`MultisigAccount`](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/) \| `Address` \| [`TransactionSignerAccount`](types_account.TransactionSignerAccount.md) \| `LogicSigAccount`)[]
+• `Optional` **accounts**: (`string` \| [`MultisigAccount`](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/) \| `Address` \| [`TransactionSignerAccount`](/reference/algokit-utils-ts/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount`)[]
 
 Any accounts/addresses to replace the address for predictably
 

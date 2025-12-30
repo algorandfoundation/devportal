@@ -12,7 +12,7 @@ Represents the data for AVM traces debug events emitted whenever a transaction i
 
 ### Properties
 
-- [simulateResponse](types_debugging.AVMTracesEventData.md#simulateresponse)
+- [simulateResponse](/reference/algokit-utils-ts/api/interfaces/types_debuggingavmtraceseventdata/#simulateresponse)
 
 ## Properties
 

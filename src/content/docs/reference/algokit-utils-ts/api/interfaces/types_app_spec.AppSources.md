@@ -12,8 +12,8 @@ The TEAL source of a contract
 
 ### Properties
 
-- [approval](types_app_spec.AppSources.md#approval)
-- [clear](types_app_spec.AppSources.md#clear)
+- [approval](/reference/algokit-utils-ts/api/interfaces/types_app_specappsources/#approval)
+- [clear](/reference/algokit-utils-ts/api/interfaces/types_app_specappsources/#clear)
 
 ## Properties
 

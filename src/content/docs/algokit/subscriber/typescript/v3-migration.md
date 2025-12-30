@@ -1,5 +1,5 @@
 ---
-title: v3 migration
+title: v3 Migration Guide
 ---
 
 This release updates the subscriber library to support `algosdk@3`. As a result the majority of the changes are to support this.

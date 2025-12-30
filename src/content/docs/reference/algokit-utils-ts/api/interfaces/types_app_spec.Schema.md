@@ -12,14 +12,14 @@ The storage schema definition
 
 ### Properties
 
-- [declared](types_app_spec.Schema.md#declared)
-- [reserved](types_app_spec.Schema.md#reserved)
+- [declared](/reference/algokit-utils-ts/api/interfaces/types_app_specschema/#declared)
+- [reserved](/reference/algokit-utils-ts/api/interfaces/types_app_specschema/#reserved)
 
 ## Properties
 
 ### declared
 
-• **declared**: `Record`\<`string`, [`DeclaredSchemaValueSpec`](types_app_spec.DeclaredSchemaValueSpec.md)\>
+• **declared**: `Record`\<`string`, [`DeclaredSchemaValueSpec`](/reference/algokit-utils-ts/api/interfaces/types_app_specdeclaredschemavaluespec/)\>
 
 Declared storage schema
 
@@ -31,7 +31,7 @@ Declared storage schema
 
 ### reserved
 
-• **reserved**: `Record`\<`string`, [`ReservedSchemaValueSpec`](types_app_spec.ReservedSchemaValueSpec.md)\>
+• **reserved**: `Record`\<`string`, [`ReservedSchemaValueSpec`](/reference/algokit-utils-ts/api/interfaces/types_app_specreservedschemavaluespec/)\>
 
 Reserved storage schema
 

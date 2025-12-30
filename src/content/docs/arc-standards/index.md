@@ -204,6 +204,11 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0086/" style='display: block; text-decoration: none; color: inherit;'>xGov status and voting power</a></td>
     <td><a href="/arc-standards/arc-0086/" style='display: block; text-decoration: none; color: inherit;'>xGov status and voting power for the Algorand Governance</a></td>
   </tr>
+      <tr>
+    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>90</a></td>
+    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>URI scheme</a></td>
+    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>Consolidated specification for encoding Algorand transactions and queries as URIs.</a></td>
+  </tr>
     </tbody>
   </table>
 </section>
@@ -222,11 +227,6 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0053/" style='display: block; text-decoration: none; color: inherit;'>53</a></td>
     <td><a href="/arc-standards/arc-0053/" style='display: block; text-decoration: none; color: inherit;'>Metadata Declarations</a></td>
     <td><a href="/arc-standards/arc-0053/" style='display: block; text-decoration: none; color: inherit;'>A specification for a decentralized, Self-declared, & Verifiable Tokens, Collections, & Metadata</a></td>
-  </tr>
-      <tr>
-    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>90</a></td>
-    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>URI scheme</a></td>
-    <td><a href="/arc-standards/arc-0090/" style='display: block; text-decoration: none; color: inherit;'>Consolidated specification for encoding Algorand transactions and queries as URIs.</a></td>
   </tr>
     </tbody>
   </table>

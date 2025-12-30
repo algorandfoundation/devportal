@@ -12,33 +12,33 @@ Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbe
 
 ### Constructors
 
-- [constructor](types_amount.AlgoAmount.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#constructor)
 
 ### Properties
 
-- [amountInMicroAlgo](types_amount.AlgoAmount.md#amountinmicroalgo)
+- [amountInMicroAlgo](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#amountinmicroalgo)
 
 ### Accessors
 
-- [algo](types_amount.AlgoAmount.md#algo)
-- [algos](types_amount.AlgoAmount.md#algos)
-- [microAlgo](types_amount.AlgoAmount.md#microalgo)
-- [microAlgos](types_amount.AlgoAmount.md#microalgos)
+- [algo](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#algo)
+- [algos](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#algos)
+- [microAlgo](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#microalgo)
+- [microAlgos](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#microalgos)
 
 ### Methods
 
-- [toString](types_amount.AlgoAmount.md#tostring)
-- [valueOf](types_amount.AlgoAmount.md#valueof)
-- [Algo](types_amount.AlgoAmount.md#algo-1)
-- [Algos](types_amount.AlgoAmount.md#algos-1)
-- [MicroAlgo](types_amount.AlgoAmount.md#microalgo-1)
-- [MicroAlgos](types_amount.AlgoAmount.md#microalgos-1)
+- [toString](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#tostring)
+- [valueOf](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#valueof)
+- [Algo](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#algo-1)
+- [Algos](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#algos-1)
+- [MicroAlgo](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#microalgo-1)
+- [MicroAlgos](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/#microalgos-1)
 
 ## Constructors
 
 ### constructor
 
-• **new AlgoAmount**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
+• **new AlgoAmount**(`amount`): [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 Create a new `AlgoAmount` instance.
 
@@ -50,7 +50,7 @@ Create a new `AlgoAmount` instance.
 
 #### Returns
 
-[`AlgoAmount`](types_amount.AlgoAmount.md)
+[`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 A new instance of `AlgoAmount` representing the specified amount.
 
@@ -174,7 +174,7 @@ the algos or microAlgos properties
 
 ### Algo
 
-▸ **Algo**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
+▸ **Algo**(`amount`): [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 Create a `AlgoAmount` object representing the given number of Algo
 
@@ -186,7 +186,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 #### Returns
 
-[`AlgoAmount`](types_amount.AlgoAmount.md)
+[`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 #### Defined in
 
@@ -196,7 +196,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 ### Algos
 
-▸ **Algos**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
+▸ **Algos**(`amount`): [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 Create a `AlgoAmount` object representing the given number of Algo
 
@@ -208,7 +208,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 #### Returns
 
-[`AlgoAmount`](types_amount.AlgoAmount.md)
+[`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 #### Defined in
 
@@ -218,7 +218,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 ### MicroAlgo
 
-▸ **MicroAlgo**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
+▸ **MicroAlgo**(`amount`): [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 Create a `AlgoAmount` object representing the given number of µAlgo
 
@@ -230,7 +230,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 #### Returns
 
-[`AlgoAmount`](types_amount.AlgoAmount.md)
+[`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 #### Defined in
 
@@ -240,7 +240,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 ### MicroAlgos
 
-▸ **MicroAlgos**(`amount`): [`AlgoAmount`](types_amount.AlgoAmount.md)
+▸ **MicroAlgos**(`amount`): [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 Create a `AlgoAmount` object representing the given number of µAlgo
 
@@ -252,7 +252,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 #### Returns
 
-[`AlgoAmount`](types_amount.AlgoAmount.md)
+[`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/)
 
 #### Defined in
 

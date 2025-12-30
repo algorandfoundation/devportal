@@ -16,8 +16,8 @@ A grouping of the app ID and name of the box in an Uint8Array
 
 ### Properties
 
-- [appId](types_app.BoxReference.md#appid)
-- [name](types_app.BoxReference.md#name)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_appboxreference/#appid)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_appboxreference/#name)
 
 ## Properties
 

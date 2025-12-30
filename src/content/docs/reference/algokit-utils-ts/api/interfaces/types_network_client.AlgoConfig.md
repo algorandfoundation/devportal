@@ -12,15 +12,15 @@ Configuration for algod, indexer and kmd clients.
 
 ### Properties
 
-- [algodConfig](types_network_client.AlgoConfig.md#algodconfig)
-- [indexerConfig](types_network_client.AlgoConfig.md#indexerconfig)
-- [kmdConfig](types_network_client.AlgoConfig.md#kmdconfig)
+- [algodConfig](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoconfig/#algodconfig)
+- [indexerConfig](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoconfig/#indexerconfig)
+- [kmdConfig](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoconfig/#kmdconfig)
 
 ## Properties
 
 ### algodConfig
 
-• **algodConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
+• **algodConfig**: [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/)
 
 Algod client configuration
 
@@ -32,7 +32,7 @@ Algod client configuration
 
 ### indexerConfig
 
-• `Optional` **indexerConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
+• `Optional` **indexerConfig**: [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/)
 
 Indexer client configuration
 
@@ -44,7 +44,7 @@ Indexer client configuration
 
 ### kmdConfig
 
-• `Optional` **kmdConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
+• `Optional` **kmdConfig**: [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/)
 
 Kmd configuration
 

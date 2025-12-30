@@ -12,10 +12,10 @@ Describes a single key in app storage
 
 ### Properties
 
-- [desc](types_app_arc56.StorageKey.md#desc)
-- [key](types_app_arc56.StorageKey.md#key)
-- [keyType](types_app_arc56.StorageKey.md#keytype)
-- [valueType](types_app_arc56.StorageKey.md#valuetype)
+- [desc](/reference/algokit-utils-ts/api/interfaces/types_app_arc56storagekey/#desc)
+- [key](/reference/algokit-utils-ts/api/interfaces/types_app_arc56storagekey/#key)
+- [keyType](/reference/algokit-utils-ts/api/interfaces/types_app_arc56storagekey/#keytype)
+- [valueType](/reference/algokit-utils-ts/api/interfaces/types_app_arc56storagekey/#valuetype)
 
 ## Properties
 

@@ -10,7 +10,7 @@ The result of sending and confirming a transaction
 
 ## Hierarchy
 
-- [`SendTransactionResult`](types_transaction.SendTransactionResult.md)
+- [`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/)
 
   ↳ **`ConfirmedTransactionResult`**
 
@@ -18,8 +18,8 @@ The result of sending and confirming a transaction
 
 ### Properties
 
-- [confirmation](types_transaction.ConfirmedTransactionResult.md#confirmation)
-- [transaction](types_transaction.ConfirmedTransactionResult.md#transaction)
+- [confirmation](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/#confirmation)
+- [transaction](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresult/#transaction)
 
 ## Properties
 
@@ -31,7 +31,7 @@ The response from sending and waiting for the transaction
 
 #### Overrides
 
-[SendTransactionResult](types_transaction.SendTransactionResult.md).[confirmation](types_transaction.SendTransactionResult.md#confirmation)
+[SendTransactionResult](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/).[confirmation](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/#confirmation)
 
 #### Defined in
 
@@ -47,7 +47,7 @@ The transaction
 
 #### Inherited from
 
-[SendTransactionResult](types_transaction.SendTransactionResult.md).[transaction](types_transaction.SendTransactionResult.md#transaction)
+[SendTransactionResult](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/).[transaction](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/#transaction)
 
 #### Defined in
 

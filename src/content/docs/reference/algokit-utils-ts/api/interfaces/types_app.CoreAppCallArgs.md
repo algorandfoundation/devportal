@@ -12,18 +12,18 @@ Common app call arguments for ABI and non-ABI (raw) calls
 
 - **`CoreAppCallArgs`**
 
-  ↳ [`RawAppCallArgs`](types_app.RawAppCallArgs.md)
+  ↳ [`RawAppCallArgs`](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/)
 
 ## Table of contents
 
 ### Properties
 
-- [accounts](types_app.CoreAppCallArgs.md#accounts)
-- [apps](types_app.CoreAppCallArgs.md#apps)
-- [assets](types_app.CoreAppCallArgs.md#assets)
-- [boxes](types_app.CoreAppCallArgs.md#boxes)
-- [lease](types_app.CoreAppCallArgs.md#lease)
-- [rekeyTo](types_app.CoreAppCallArgs.md#rekeyto)
+- [accounts](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#accounts)
+- [apps](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#apps)
+- [assets](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#assets)
+- [boxes](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#boxes)
+- [lease](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#lease)
+- [rekeyTo](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#rekeyto)
 
 ## Properties
 
@@ -65,7 +65,7 @@ IDs of any assets to load into the foreignAssets array
 
 ### boxes
 
-• `Optional` **boxes**: ([`BoxReference`](types_app.BoxReference.md) \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
+• `Optional` **boxes**: ([`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_appboxreference/) \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
 
 Any box references to load
 

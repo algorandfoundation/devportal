@@ -12,18 +12,18 @@ The result of preparing and/or sending multiple transactions
 
 - **`SendTransactionResults`**
 
-  ↳ [`AppCallTransactionResultOfType`](types_app.AppCallTransactionResultOfType.md)
+  ↳ [`AppCallTransactionResultOfType`](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/)
 
-  ↳ [`SendAtomicTransactionComposerResults`](types_transaction.SendAtomicTransactionComposerResults.md)
+  ↳ [`SendAtomicTransactionComposerResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/)
 
-  ↳ [`ConfirmedTransactionResults`](types_transaction.ConfirmedTransactionResults.md)
+  ↳ [`ConfirmedTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionconfirmedtransactionresults/)
 
 ## Table of contents
 
 ### Properties
 
-- [confirmations](types_transaction.SendTransactionResults.md#confirmations)
-- [transactions](types_transaction.SendTransactionResults.md#transactions)
+- [confirmations](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/#confirmations)
+- [transactions](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/#transactions)
 
 ## Properties
 

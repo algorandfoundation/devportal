@@ -18,12 +18,12 @@ title: types/account
 
 ### Type Aliases
 
-- [AccountAssetInformation](types_account.md#accountassetinformation)
-- [AccountInformation](types_account.md#accountinformation)
+- [AccountAssetInformation](/reference/algokit-utils-ts/api/modules/types_account/#accountassetinformation)
+- [AccountInformation](/reference/algokit-utils-ts/api/modules/types_account/#accountinformation)
 
 ### Variables
 
-- [DISPENSER_ACCOUNT](types_account.md#dispenser_account)
+- [DISPENSER_ACCOUNT](/reference/algokit-utils-ts/api/modules/types_account/#dispenser_account)
 
 ## Type Aliases
 

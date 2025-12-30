@@ -8,13 +8,13 @@ title: types/expand
 
 ### Type Aliases
 
-- [Expand](types_expand.md#expand)
+- [Expand](/reference/algokit-utils-ts/api/modules/types_expand/#expand)
 
 ## Type Aliases
 
 ### Expand
 
-Ƭ **Expand**\<`T`\>: `T` extends (...`args`: infer A) => infer R ? (...`args`: [`Expand`](types_expand.md#expand)\<`A`\>) => [`Expand`](types_expand.md#expand)\<`R`\> : `T` extends infer O ? \{ [K in keyof O]: O[K] } : `never`
+Ƭ **Expand**\<`T`\>: `T` extends (...`args`: infer A) => infer R ? (...`args`: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<`A`\>) => [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<`R`\> : `T` extends infer O ? \{ [K in keyof O]: O[K] } : `never`
 
 Expands types for IntelliSense so they are more human readable
 See https://stackoverflow.com/a/69288824

@@ -12,9 +12,9 @@ Common (core) parameters to construct a ApplicationClient contract call
 
 ### Properties
 
-- [note](types_app_client.AppClientCallCoreParams.md#note)
-- [sendParams](types_app_client.AppClientCallCoreParams.md#sendparams)
-- [sender](types_app_client.AppClientCallCoreParams.md#sender)
+- [note](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallcoreparams/#note)
+- [sendParams](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallcoreparams/#sendparams)
+- [sender](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcallcoreparams/#sender)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The transaction note for the smart contract call
 
 ### sendParams
 
-• `Optional` **sendParams**: [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
+• `Optional` **sendParams**: [`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/)
 
 Parameters to control transaction sending
 

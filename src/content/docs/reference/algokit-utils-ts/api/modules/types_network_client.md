@@ -14,7 +14,7 @@ title: types/network-client
 
 ### Functions
 
-- [genesisIdIsLocalNet](types_network_client.md#genesisidislocalnet)
+- [genesisIdIsLocalNet](/reference/algokit-utils-ts/api/modules/types_network_client/#genesisidislocalnet)
 
 ## Functions
 

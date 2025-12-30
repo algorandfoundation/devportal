@@ -12,9 +12,9 @@ The name of a box storage box
 
 ### Properties
 
-- [name](types_app.BoxName.md#name)
-- [nameBase64](types_app.BoxName.md#namebase64)
-- [nameRaw](types_app.BoxName.md#nameraw)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_appboxname/#name)
+- [nameBase64](/reference/algokit-utils-ts/api/interfaces/types_appboxname/#namebase64)
+- [nameRaw](/reference/algokit-utils-ts/api/interfaces/types_appboxname/#nameraw)
 
 ## Properties
 

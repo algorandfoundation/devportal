@@ -12,9 +12,9 @@ Delegation status of the account
 
 ### Enumeration Members
 
-- [NotParticipating](types_indexer.AccountStatus.md#notparticipating)
-- [Offline](types_indexer.AccountStatus.md#offline)
-- [Online](types_indexer.AccountStatus.md#online)
+- [NotParticipating](/reference/algokit-utils-ts/api/enums/types_indexeraccountstatus/#notparticipating)
+- [Offline](/reference/algokit-utils-ts/api/enums/types_indexeraccountstatus/#offline)
+- [Online](/reference/algokit-utils-ts/api/enums/types_indexeraccountstatus/#online)
 
 ## Enumeration Members
 

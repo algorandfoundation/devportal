@@ -12,14 +12,14 @@ Source maps for an Algorand app
 
 ### Properties
 
-- [approvalSourceMap](types_app_client.AppSourceMaps.md#approvalsourcemap)
-- [clearSourceMap](types_app_client.AppSourceMaps.md#clearsourcemap)
+- [approvalSourceMap](/reference/algokit-utils-ts/api/interfaces/types_app_clientappsourcemaps/#approvalsourcemap)
+- [clearSourceMap](/reference/algokit-utils-ts/api/interfaces/types_app_clientappsourcemaps/#clearsourcemap)
 
 ## Properties
 
 ### approvalSourceMap
 
-• **approvalSourceMap**: [`SourceMapExport`](types_app_client.SourceMapExport.md)
+• **approvalSourceMap**: [`SourceMapExport`](/reference/algokit-utils-ts/api/interfaces/types_app_clientsourcemapexport/)
 
 The source map of the approval program
 
@@ -31,7 +31,7 @@ The source map of the approval program
 
 ### clearSourceMap
 
-• **clearSourceMap**: [`SourceMapExport`](types_app_client.SourceMapExport.md)
+• **clearSourceMap**: [`SourceMapExport`](/reference/algokit-utils-ts/api/interfaces/types_app_clientsourcemapexport/)
 
 The source map of the clear program
 

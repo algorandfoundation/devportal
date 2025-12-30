@@ -12,9 +12,9 @@ Clients from algosdk that interact with the official Algorand APIs
 
 ### Properties
 
-- [algod](types_client_manager.AlgoSdkClients.md#algod)
-- [indexer](types_client_manager.AlgoSdkClients.md#indexer)
-- [kmd](types_client_manager.AlgoSdkClients.md#kmd)
+- [algod](/reference/algokit-utils-ts/api/interfaces/types_client_manageralgosdkclients/#algod)
+- [indexer](/reference/algokit-utils-ts/api/interfaces/types_client_manageralgosdkclients/#indexer)
+- [kmd](/reference/algokit-utils-ts/api/interfaces/types_client_manageralgosdkclients/#kmd)
 
 ## Properties
 

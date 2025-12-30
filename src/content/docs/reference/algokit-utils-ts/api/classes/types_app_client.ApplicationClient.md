@@ -19,58 +19,58 @@ Application client - a class that wraps an ARC-0032 app spec and provides high p
 
 ### Constructors
 
-- [constructor](types_app_client.ApplicationClient.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#constructor)
 
 ### Properties
 
-- [\_appAddress](types_app_client.ApplicationClient.md#_appaddress)
-- [\_appId](types_app_client.ApplicationClient.md#_appid)
-- [\_appName](types_app_client.ApplicationClient.md#_appname)
-- [\_approvalSourceMap](types_app_client.ApplicationClient.md#_approvalsourcemap)
-- [\_clearSourceMap](types_app_client.ApplicationClient.md#_clearsourcemap)
-- [\_creator](types_app_client.ApplicationClient.md#_creator)
-- [algod](types_app_client.ApplicationClient.md#algod)
-- [appSpec](types_app_client.ApplicationClient.md#appspec)
-- [deployTimeParams](types_app_client.ApplicationClient.md#deploytimeparams)
-- [existingDeployments](types_app_client.ApplicationClient.md#existingdeployments)
-- [indexer](types_app_client.ApplicationClient.md#indexer)
-- [params](types_app_client.ApplicationClient.md#params)
-- [sender](types_app_client.ApplicationClient.md#sender)
+- [\_appAddress](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#_appaddress)
+- [\_appId](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#_appid)
+- [\_appName](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#_appname)
+- [\_approvalSourceMap](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#_approvalsourcemap)
+- [\_clearSourceMap](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#_clearsourcemap)
+- [\_creator](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#_creator)
+- [algod](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#algod)
+- [appSpec](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#appspec)
+- [deployTimeParams](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#deploytimeparams)
+- [existingDeployments](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#existingdeployments)
+- [indexer](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#indexer)
+- [params](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#params)
+- [sender](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#sender)
 
 ### Methods
 
-- [call](types_app_client.ApplicationClient.md#call)
-- [callOfType](types_app_client.ApplicationClient.md#calloftype)
-- [clearState](types_app_client.ApplicationClient.md#clearstate)
-- [closeOut](types_app_client.ApplicationClient.md#closeout)
-- [compile](types_app_client.ApplicationClient.md#compile)
-- [create](types_app_client.ApplicationClient.md#create)
-- [delete](types_app_client.ApplicationClient.md#delete)
-- [deploy](types_app_client.ApplicationClient.md#deploy)
-- [exportSourceMaps](types_app_client.ApplicationClient.md#exportsourcemaps)
-- [exposeLogicError](types_app_client.ApplicationClient.md#exposelogicerror)
-- [fundAppAccount](types_app_client.ApplicationClient.md#fundappaccount)
-- [getABIMethod](types_app_client.ApplicationClient.md#getabimethod)
-- [getABIMethodParams](types_app_client.ApplicationClient.md#getabimethodparams)
-- [getABIMethodSignature](types_app_client.ApplicationClient.md#getabimethodsignature)
-- [getAppReference](types_app_client.ApplicationClient.md#getappreference)
-- [getBoxNames](types_app_client.ApplicationClient.md#getboxnames)
-- [getBoxValue](types_app_client.ApplicationClient.md#getboxvalue)
-- [getBoxValueFromABIType](types_app_client.ApplicationClient.md#getboxvaluefromabitype)
-- [getBoxValues](types_app_client.ApplicationClient.md#getboxvalues)
-- [getBoxValuesFromABIType](types_app_client.ApplicationClient.md#getboxvaluesfromabitype)
-- [getCallArgs](types_app_client.ApplicationClient.md#getcallargs)
-- [getGlobalState](types_app_client.ApplicationClient.md#getglobalstate)
-- [getLocalState](types_app_client.ApplicationClient.md#getlocalstate)
-- [importSourceMaps](types_app_client.ApplicationClient.md#importsourcemaps)
-- [optIn](types_app_client.ApplicationClient.md#optin)
-- [update](types_app_client.ApplicationClient.md#update)
+- [call](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#call)
+- [callOfType](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#calloftype)
+- [clearState](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#clearstate)
+- [closeOut](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#closeout)
+- [compile](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#compile)
+- [create](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#create)
+- [delete](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#delete)
+- [deploy](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#deploy)
+- [exportSourceMaps](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#exportsourcemaps)
+- [exposeLogicError](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#exposelogicerror)
+- [fundAppAccount](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#fundappaccount)
+- [getABIMethod](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getabimethod)
+- [getABIMethodParams](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getabimethodparams)
+- [getABIMethodSignature](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getabimethodsignature)
+- [getAppReference](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getappreference)
+- [getBoxNames](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getboxnames)
+- [getBoxValue](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getboxvalue)
+- [getBoxValueFromABIType](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getboxvaluefromabitype)
+- [getBoxValues](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getboxvalues)
+- [getBoxValuesFromABIType](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getboxvaluesfromabitype)
+- [getCallArgs](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getcallargs)
+- [getGlobalState](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getglobalstate)
+- [getLocalState](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#getlocalstate)
+- [importSourceMaps](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#importsourcemaps)
+- [optIn](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#optin)
+- [update](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/#update)
 
 ## Constructors
 
 ### constructor
 
-• **new ApplicationClient**(`appDetails`, `algod`): [`ApplicationClient`](types_app_client.ApplicationClient.md)
+• **new ApplicationClient**(`appDetails`, `algod`): [`ApplicationClient`](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/)
 
 #### Parameters
 
@@ -81,7 +81,7 @@ Application client - a class that wraps an ARC-0032 app spec and provides high p
 
 #### Returns
 
-[`ApplicationClient`](types_app_client.ApplicationClient.md)
+[`ApplicationClient`](/reference/algokit-utils-ts/api/classes/types_app_clientapplicationclient/)
 
 **`Deprecated`**
 
@@ -512,9 +512,9 @@ Funds Algo into the app account for this app.
 
 #### Parameters
 
-| Name   | Type                                                                                                                                                     | Description                                          |
-| :----- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
-| `fund` | [`AlgoAmount`](types_amount.AlgoAmount.md) \| [`FundAppAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientfundappaccountparams/) | The parameters for the funding or the funding amount |
+| Name   | Type                                                                                                                                                                                          | Description                                          |
+| :----- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
+| `fund` | [`AlgoAmount`](/reference/algokit-utils-ts/api/classes/types_amountalgoamount/) \| [`FundAppAccountParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientfundappaccountparams/) | The parameters for the funding or the funding amount |
 
 #### Returns
 

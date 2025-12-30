@@ -12,14 +12,14 @@ Configuration to resolve app by ID
 
 - **`ResolveAppByIdBase`**
 
-  ↳ [`ResolveAppById`](types_app_client.ResolveAppById.md)
+  ↳ [`ResolveAppById`](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyid/)
 
 ## Table of contents
 
 ### Properties
 
-- [id](types_app_client.ResolveAppByIdBase.md#id)
-- [name](types_app_client.ResolveAppByIdBase.md#name)
+- [id](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/#id)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_app_clientresolveappbyidbase/#name)
 
 ## Properties
 

@@ -12,9 +12,9 @@ Parameters for the `getTestAccount` function.
 
 ### Properties
 
-- [accountGetter](types_testing.GetTestAccountParams.md#accountgetter)
-- [initialFunds](types_testing.GetTestAccountParams.md#initialfunds)
-- [suppressLog](types_testing.GetTestAccountParams.md#suppresslog)
+- [accountGetter](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/#accountgetter)
+- [initialFunds](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/#initialfunds)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_testinggettestaccountparams/#suppresslog)
 
 ## Properties
 

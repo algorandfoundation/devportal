@@ -10,7 +10,7 @@ The parameters to deploy an app
 
 ## Hierarchy
 
-- `Omit`\<[`CreateAppParams`](types_app.CreateAppParams.md), `"onCompleteAction"` \| `"args"` \| `"note"` \| `"skipSending"` \| `"skipWaiting"` \| `"atc"`\>
+- `Omit`\<[`CreateAppParams`](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/), `"onCompleteAction"` \| `"args"` \| `"note"` \| `"skipSending"` \| `"skipWaiting"` \| `"atc"`\>
 
   ↳ **`AppDeploymentParams`**
 
@@ -18,25 +18,25 @@ The parameters to deploy an app
 
 ### Properties
 
-- [approvalProgram](types_app.AppDeploymentParams.md#approvalprogram)
-- [clearStateProgram](types_app.AppDeploymentParams.md#clearstateprogram)
-- [createArgs](types_app.AppDeploymentParams.md#createargs)
-- [createOnCompleteAction](types_app.AppDeploymentParams.md#createoncompleteaction)
-- [deleteArgs](types_app.AppDeploymentParams.md#deleteargs)
-- [deployTimeParams](types_app.AppDeploymentParams.md#deploytimeparams)
-- [existingDeployments](types_app.AppDeploymentParams.md#existingdeployments)
-- [fee](types_app.AppDeploymentParams.md#fee)
-- [from](types_app.AppDeploymentParams.md#from)
-- [maxFee](types_app.AppDeploymentParams.md#maxfee)
-- [maxRoundsToWaitForConfirmation](types_app.AppDeploymentParams.md#maxroundstowaitforconfirmation)
-- [metadata](types_app.AppDeploymentParams.md#metadata)
-- [onSchemaBreak](types_app.AppDeploymentParams.md#onschemabreak)
-- [onUpdate](types_app.AppDeploymentParams.md#onupdate)
-- [populateAppCallResources](types_app.AppDeploymentParams.md#populateappcallresources)
-- [schema](types_app.AppDeploymentParams.md#schema)
-- [suppressLog](types_app.AppDeploymentParams.md#suppresslog)
-- [transactionParams](types_app.AppDeploymentParams.md#transactionparams)
-- [updateArgs](types_app.AppDeploymentParams.md#updateargs)
+- [approvalProgram](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#approvalprogram)
+- [clearStateProgram](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#clearstateprogram)
+- [createArgs](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#createargs)
+- [createOnCompleteAction](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#createoncompleteaction)
+- [deleteArgs](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#deleteargs)
+- [deployTimeParams](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#deploytimeparams)
+- [existingDeployments](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#existingdeployments)
+- [fee](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#fee)
+- [from](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#from)
+- [maxFee](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#maxroundstowaitforconfirmation)
+- [metadata](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#metadata)
+- [onSchemaBreak](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#onschemabreak)
+- [onUpdate](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#onupdate)
+- [populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#populateappcallresources)
+- [schema](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#schema)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#suppresslog)
+- [transactionParams](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#transactionparams)
+- [updateArgs](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymentparams/#updateargs)
 
 ## Properties
 
@@ -110,7 +110,7 @@ Any args to pass to any delete transaction that is issued as part of deployment
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](types_app.TealTemplateParams.md)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/)
 
 Any deploy-time parameters to replace in the TEAL code
 
@@ -122,7 +122,7 @@ Any deploy-time parameters to replace in the TEAL code
 
 ### existingDeployments
 
-• `Optional` **existingDeployments**: [`AppLookup`](types_app.AppLookup.md)
+• `Optional` **existingDeployments**: [`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_appapplookup/)
 
 Optional cached value of the existing apps for the given creator
 
@@ -198,7 +198,7 @@ Omit.maxRoundsToWaitForConfirmation
 
 ### metadata
 
-• **metadata**: [`AppDeployMetadata`](types_app.AppDeployMetadata.md)
+• **metadata**: [`AppDeployMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappdeploymetadata/)
 
 The deployment metadata
 
@@ -250,7 +250,7 @@ Omit.populateAppCallResources
 
 ### schema
 
-• **schema**: [`AppStorageSchema`](types_app.AppStorageSchema.md)
+• **schema**: [`AppStorageSchema`](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/)
 
 The storage schema to request for the created app
 

@@ -19,7 +19,7 @@ title: types/app-manager
 
 ### Type Aliases
 
-- [BoxIdentifier](types_app_manager.md#boxidentifier)
+- [BoxIdentifier](/reference/algokit-utils-ts/api/modules/types_app_manager/#boxidentifier)
 
 ## Type Aliases
 

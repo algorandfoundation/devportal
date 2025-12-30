@@ -12,8 +12,8 @@ A lookup of name -> Algorand app for a creator
 
 ### Properties
 
-- [apps](types_app_deployer.AppLookup.md#apps)
-- [creator](types_app_deployer.AppLookup.md#creator)
+- [apps](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/#apps)
+- [creator](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/#creator)
 
 ## Properties
 
@@ -25,7 +25,7 @@ A hash map of app name to app metadata
 
 #### Index signature
 
-▪ [name: `string`]: [`AppMetadata`](types_app_deployer.AppMetadata.md)
+▪ [name: `string`]: [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerappmetadata/)
 
 #### Defined in
 

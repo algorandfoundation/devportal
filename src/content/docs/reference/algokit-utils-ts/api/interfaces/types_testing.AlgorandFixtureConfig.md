@@ -10,7 +10,7 @@ Configuration for creating an Algorand testing fixture.
 
 ## Hierarchy
 
-- `Partial`\<[`AlgoConfig`](types_network_client.AlgoConfig.md)\>
+- `Partial`\<[`AlgoConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoconfig/)\>
 
   ↳ **`AlgorandFixtureConfig`**
 
@@ -18,14 +18,14 @@ Configuration for creating an Algorand testing fixture.
 
 ### Properties
 
-- [accountGetter](types_testing.AlgorandFixtureConfig.md#accountgetter)
-- [algod](types_testing.AlgorandFixtureConfig.md#algod)
-- [algodConfig](types_testing.AlgorandFixtureConfig.md#algodconfig)
-- [indexer](types_testing.AlgorandFixtureConfig.md#indexer)
-- [indexerConfig](types_testing.AlgorandFixtureConfig.md#indexerconfig)
-- [kmd](types_testing.AlgorandFixtureConfig.md#kmd)
-- [kmdConfig](types_testing.AlgorandFixtureConfig.md#kmdconfig)
-- [testAccountFunding](types_testing.AlgorandFixtureConfig.md#testaccountfunding)
+- [accountGetter](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/#accountgetter)
+- [algod](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/#algod)
+- [algodConfig](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/#algodconfig)
+- [indexer](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/#indexer)
+- [indexerConfig](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/#indexerconfig)
+- [kmd](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/#kmd)
+- [kmdConfig](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/#kmdconfig)
+- [testAccountFunding](/reference/algokit-utils-ts/api/interfaces/types_testingalgorandfixtureconfig/#testaccountfunding)
 
 ## Properties
 
@@ -70,7 +70,7 @@ An optional algod client, if not specified then it will create one against `algo
 
 ### algodConfig
 
-• `Optional` **algodConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
+• `Optional` **algodConfig**: [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/)
 
 Algod client configuration
 
@@ -98,7 +98,7 @@ An optional indexer client, if not specified then it will create one against `in
 
 ### indexerConfig
 
-• `Optional` **indexerConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
+• `Optional` **indexerConfig**: [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/)
 
 Indexer client configuration
 
@@ -126,7 +126,7 @@ An optional kmd client, if not specified then it will create one against `kmdCon
 
 ### kmdConfig
 
-• `Optional` **kmdConfig**: [`AlgoClientConfig`](types_network_client.AlgoClientConfig.md)
+• `Optional` **kmdConfig**: [`AlgoClientConfig`](/reference/algokit-utils-ts/api/interfaces/types_network_clientalgoclientconfig/)
 
 Kmd configuration
 

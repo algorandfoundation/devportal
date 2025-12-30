@@ -18,12 +18,12 @@ Interface to identify a typed client that can be used to interact with an applic
 
 ### Constructors
 
-- [constructor](types_client_manager.TypedAppClient.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/interfaces/types_client_managertypedappclient/#constructor)
 
 ### Methods
 
-- [fromCreatorAndName](types_client_manager.TypedAppClient.md#fromcreatorandname)
-- [fromNetwork](types_client_manager.TypedAppClient.md#fromnetwork)
+- [fromCreatorAndName](/reference/algokit-utils-ts/api/interfaces/types_client_managertypedappclient/#fromcreatorandname)
+- [fromNetwork](/reference/algokit-utils-ts/api/interfaces/types_client_managertypedappclient/#fromnetwork)
 
 ## Constructors
 
@@ -33,9 +33,9 @@ Interface to identify a typed client that can be used to interact with an applic
 
 #### Parameters
 
-| Name     | Type                                                                            |
-| :------- | :------------------------------------------------------------------------------ |
-| `params` | `Omit`\<[`AppClientParams`](types_app_client.AppClientParams.md), `"appSpec"`\> |
+| Name     | Type                                                                                                                    |
+| :------- | :---------------------------------------------------------------------------------------------------------------------- |
+| `params` | `Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"appSpec"`\> |
 
 #### Returns
 
@@ -53,9 +53,9 @@ Interface to identify a typed client that can be used to interact with an applic
 
 #### Parameters
 
-| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params` | `Omit`\<\{ `algorand`: [`AlgorandClient`](/reference/algokit-utils-ts/api/classes/types_algorand_clientalgorandclient/) ; `appLookupCache?`: [`AppLookup`](types_app_deployer.AppLookup.md) ; `appName?`: `string` ; `appSpec`: `string` \| [`Arc56Contract`](types_app_arc56.Arc56Contract.md) \| [`AppSpec`](types_app_spec.AppSpec.md) ; `approvalSourceMap?`: `ProgramSourceMap` ; `clearSourceMap?`: `ProgramSourceMap` ; `creatorAddress`: `string` \| `Address` ; `defaultSender?`: `string` \| `Address` ; `defaultSigner?`: `TransactionSigner` ; `ignoreCache?`: `boolean` }, `"appSpec"`\> |
+| Name     | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params` | `Omit`\<\{ `algorand`: [`AlgorandClient`](/reference/algokit-utils-ts/api/classes/types_algorand_clientalgorandclient/) ; `appLookupCache?`: [`AppLookup`](/reference/algokit-utils-ts/api/interfaces/types_app_deployerapplookup/) ; `appName?`: `string` ; `appSpec`: `string` \| [`Arc56Contract`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/) ; `approvalSourceMap?`: `ProgramSourceMap` ; `clearSourceMap?`: `ProgramSourceMap` ; `creatorAddress`: `string` \| `Address` ; `defaultSender?`: `string` \| `Address` ; `defaultSigner?`: `TransactionSigner` ; `ignoreCache?`: `boolean` }, `"appSpec"`\> |
 
 #### Returns
 
@@ -73,9 +73,9 @@ Interface to identify a typed client that can be used to interact with an applic
 
 #### Parameters
 
-| Name     | Type                                                                                         |
-| :------- | :------------------------------------------------------------------------------------------- |
-| `params` | `Omit`\<[`AppClientParams`](types_app_client.AppClientParams.md), `"appId"` \| `"appSpec"`\> |
+| Name     | Type                                                                                                                                 |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| `params` | `Omit`\<[`AppClientParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientparams/), `"appId"` \| `"appSpec"`\> |
 
 #### Returns
 

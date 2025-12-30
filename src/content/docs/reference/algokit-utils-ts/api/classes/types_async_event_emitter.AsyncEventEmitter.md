@@ -10,30 +10,30 @@ title: AsyncEventEmitter
 
 ### Constructors
 
-- [constructor](types_async_event_emitter.AsyncEventEmitter.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/#constructor)
 
 ### Properties
 
-- [listenerMap](types_async_event_emitter.AsyncEventEmitter.md#listenermap)
-- [listenerWrapperMap](types_async_event_emitter.AsyncEventEmitter.md#listenerwrappermap)
-- [off](types_async_event_emitter.AsyncEventEmitter.md#off)
+- [listenerMap](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/#listenermap)
+- [listenerWrapperMap](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/#listenerwrappermap)
+- [off](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/#off)
 
 ### Methods
 
-- [emitAsync](types_async_event_emitter.AsyncEventEmitter.md#emitasync)
-- [on](types_async_event_emitter.AsyncEventEmitter.md#on)
-- [once](types_async_event_emitter.AsyncEventEmitter.md#once)
-- [removeListener](types_async_event_emitter.AsyncEventEmitter.md#removelistener)
+- [emitAsync](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/#emitasync)
+- [on](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/#on)
+- [once](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/#once)
+- [removeListener](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/#removelistener)
 
 ## Constructors
 
 ### constructor
 
-• **new AsyncEventEmitter**(): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+• **new AsyncEventEmitter**(): [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Returns
 
-[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+[`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 ## Properties
 
@@ -59,11 +59,11 @@ title: AsyncEventEmitter
 
 ### off
 
-• **off**: (`eventName`: `string` \| `symbol`, `listener`: [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`unknown`\>) => [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+• **off**: (`eventName`: `string` \| `symbol`, `listener`: [`AsyncEventListener`](/reference/algokit-utils-ts/api/modules/types_async_event_emitter/#asynceventlistener)\<`unknown`\>) => [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Type declaration
 
-▸ (`eventName`, `listener`): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+▸ (`eventName`, `listener`): [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 ##### Parameters
 
@@ -74,7 +74,7 @@ title: AsyncEventEmitter
 
 ##### Returns
 
-[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+[`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Defined in
 
@@ -128,7 +128,7 @@ title: AsyncEventEmitter
 
 ### on
 
-▸ **on**\<`K`\>(`eventName`, `listener`): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+▸ **on**\<`K`\>(`eventName`, `listener`): [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Type parameters
 
@@ -145,13 +145,13 @@ title: AsyncEventEmitter
 
 #### Returns
 
-[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+[`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Defined in
 
 [src/types/async-event-emitter.ts:17](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/async-event-emitter.ts#L17)
 
-▸ **on**\<`T`\>(`eventName`, `listener`): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+▸ **on**\<`T`\>(`eventName`, `listener`): [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Type parameters
 
@@ -168,7 +168,7 @@ title: AsyncEventEmitter
 
 #### Returns
 
-[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+[`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Defined in
 
@@ -178,7 +178,7 @@ title: AsyncEventEmitter
 
 ### once
 
-▸ **once**\<`K`\>(`eventName`, `listener`): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+▸ **once**\<`K`\>(`eventName`, `listener`): [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Type parameters
 
@@ -195,13 +195,13 @@ title: AsyncEventEmitter
 
 #### Returns
 
-[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+[`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Defined in
 
 [src/types/async-event-emitter.ts:25](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/async-event-emitter.ts#L25)
 
-▸ **once**\<`T`\>(`eventName`, `listener`): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+▸ **once**\<`T`\>(`eventName`, `listener`): [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Type parameters
 
@@ -218,7 +218,7 @@ title: AsyncEventEmitter
 
 #### Returns
 
-[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+[`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Defined in
 
@@ -228,7 +228,7 @@ title: AsyncEventEmitter
 
 ### removeListener
 
-▸ **removeListener**(`eventName`, `listener`): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+▸ **removeListener**(`eventName`, `listener`): [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Parameters
 
@@ -239,7 +239,7 @@ title: AsyncEventEmitter
 
 #### Returns
 
-[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+[`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Defined in
 

@@ -167,5 +167,5 @@ export const puyaPyConfig: ImportOptions = {
     linkMappings: [...generateStarlightLinkMappings()],
   },
   enabled: true,
-  clear: false,
+  clear: true,
 };

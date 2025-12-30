@@ -12,17 +12,17 @@ Information about an app.
 
 ### Properties
 
-- [appAddress](types_app_manager.AppInformation.md#appaddress)
-- [appId](types_app_manager.AppInformation.md#appid)
-- [approvalProgram](types_app_manager.AppInformation.md#approvalprogram)
-- [clearStateProgram](types_app_manager.AppInformation.md#clearstateprogram)
-- [creator](types_app_manager.AppInformation.md#creator)
-- [extraProgramPages](types_app_manager.AppInformation.md#extraprogrampages)
-- [globalByteSlices](types_app_manager.AppInformation.md#globalbyteslices)
-- [globalInts](types_app_manager.AppInformation.md#globalints)
-- [globalState](types_app_manager.AppInformation.md#globalstate)
-- [localByteSlices](types_app_manager.AppInformation.md#localbyteslices)
-- [localInts](types_app_manager.AppInformation.md#localints)
+- [appAddress](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#appaddress)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#appid)
+- [approvalProgram](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#approvalprogram)
+- [clearStateProgram](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#clearstateprogram)
+- [creator](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#creator)
+- [extraProgramPages](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#extraprogrampages)
+- [globalByteSlices](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#globalbyteslices)
+- [globalInts](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#globalints)
+- [globalState](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#globalstate)
+- [localByteSlices](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#localbyteslices)
+- [localInts](/reference/algokit-utils-ts/api/interfaces/types_app_managerappinformation/#localints)
 
 ## Properties
 
@@ -125,7 +125,7 @@ The number of allocated ints in global state.
 
 ### globalState
 
-• **globalState**: [`AppState`](types_app.AppState.md)
+• **globalState**: [`AppState`](/reference/algokit-utils-ts/api/interfaces/types_appappstate/)
 
 Current global state values.
 

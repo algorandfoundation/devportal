@@ -25,7 +25,7 @@ Options:
   -h, --help                      Show this message and exit.
 ```
 
-> Note: If you use a wallet address for the `sender` argument, you'll be asked for the mnemonic phrase. To use a wallet alias instead, see the [wallet aliasing](wallet.md) task. For wallet aliases, the sender must have a stored `private key`, but the receiver doesn't need one. This is because the sender signs and sends the transfer transaction, while the receiver reference only needs a valid Algorand address.
+> Note: If you use a wallet address for the `sender` argument, you'll be asked for the mnemonic phrase. To use a wallet alias instead, see the [wallet aliasing](/algokit/cli/tasks/wallet/) task. For wallet aliases, the sender must have a stored `private key`, but the receiver doesn't need one. This is because the sender signs and sends the transfer transaction, while the receiver reference only needs a valid Algorand address.
 
 ## Examples
 

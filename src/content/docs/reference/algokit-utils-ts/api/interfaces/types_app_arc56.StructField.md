@@ -12,8 +12,8 @@ Information about a single field in a struct
 
 ### Properties
 
-- [name](types_app_arc56.StructField.md#name)
-- [type](types_app_arc56.StructField.md#type)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_app_arc56structfield/#name)
+- [type](/reference/algokit-utils-ts/api/interfaces/types_app_arc56structfield/#type)
 
 ## Properties
 
@@ -31,7 +31,7 @@ The name of the struct field
 
 ### type
 
-• **type**: `string` \| [`StructField`](types_app_arc56.StructField.md)[]
+• **type**: `string` \| [`StructField`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56structfield/)[]
 
 The type of the struct field's value
 

@@ -57,7 +57,7 @@ export const collections = {
               await githubLoader({
                 octokit: GITHUB_API_CLIENT,
                 configs: [config],
-                clear: false,
+                clear: config.clear ?? false,
                 dryRun: IMPORT_DRY_RUN,
                 force: FORCE_IMPORT,
               }).load(context as LoaderContext);

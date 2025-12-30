@@ -12,13 +12,13 @@ Represents the data for multiple TEAL sources debug events emitted whenever an a
 
 ### Properties
 
-- [sources](types_debugging.TealSourcesDebugEventData.md#sources)
+- [sources](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcesdebugeventdata/#sources)
 
 ## Properties
 
 ### sources
 
-• **sources**: [`TealSourceDebugEventData`](types_debugging.TealSourceDebugEventData.md)[]
+• **sources**: [`TealSourceDebugEventData`](/reference/algokit-utils-ts/api/interfaces/types_debuggingtealsourcedebugeventdata/)[]
 
 An array of TEAL source debug event data
 

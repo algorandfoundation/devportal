@@ -12,15 +12,15 @@ Parameters to create an app client
 
 ### Properties
 
-- [algorand](types_app_factory.AppFactoryParams.md#algorand)
-- [appName](types_app_factory.AppFactoryParams.md#appname)
-- [appSpec](types_app_factory.AppFactoryParams.md#appspec)
-- [defaultSender](types_app_factory.AppFactoryParams.md#defaultsender)
-- [defaultSigner](types_app_factory.AppFactoryParams.md#defaultsigner)
-- [deletable](types_app_factory.AppFactoryParams.md#deletable)
-- [deployTimeParams](types_app_factory.AppFactoryParams.md#deploytimeparams)
-- [updatable](types_app_factory.AppFactoryParams.md#updatable)
-- [version](types_app_factory.AppFactoryParams.md#version)
+- [algorand](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#algorand)
+- [appName](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#appname)
+- [appSpec](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#appspec)
+- [defaultSender](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#defaultsender)
+- [defaultSigner](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#defaultsigner)
+- [deletable](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#deletable)
+- [deployTimeParams](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#deploytimeparams)
+- [updatable](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#updatable)
+- [version](/reference/algokit-utils-ts/api/interfaces/types_app_factoryappfactoryparams/#version)
 
 ## Properties
 
@@ -51,7 +51,7 @@ Defaults to the ARC-32/ARC-56 app spec name.
 
 ### appSpec
 
-• **appSpec**: `string` \| [`Arc56Contract`](types_app_arc56.Arc56Contract.md) \| [`AppSpec`](types_app_spec.AppSpec.md)
+• **appSpec**: `string` \| [`Arc56Contract`](/reference/algokit-utils-ts/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/)
 
 The ARC-56 or ARC-32 application spec as either:
 
@@ -107,7 +107,7 @@ for each call.
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](types_app.TealTemplateParams.md)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/)
 
 Optional deploy-time TEAL template replacement parameters.
 If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls.

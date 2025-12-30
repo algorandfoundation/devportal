@@ -10,12 +10,12 @@ title: AlgoKitLogCaptureFixture
 
 ### Properties
 
-- [afterEach](types_testing.AlgoKitLogCaptureFixture.md#aftereach)
-- [beforeEach](types_testing.AlgoKitLogCaptureFixture.md#beforeeach)
+- [afterEach](/reference/algokit-utils-ts/api/interfaces/types_testingalgokitlogcapturefixture/#aftereach)
+- [beforeEach](/reference/algokit-utils-ts/api/interfaces/types_testingalgokitlogcapturefixture/#beforeeach)
 
 ### Accessors
 
-- [testLogger](types_testing.AlgoKitLogCaptureFixture.md#testlogger)
+- [testLogger](/reference/algokit-utils-ts/api/interfaces/types_testingalgokitlogcapturefixture/#testlogger)
 
 ## Properties
 

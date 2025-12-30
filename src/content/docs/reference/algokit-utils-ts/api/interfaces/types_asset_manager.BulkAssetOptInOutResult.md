@@ -12,8 +12,8 @@ Individual result from performing a bulk opt-in or bulk opt-out for an account a
 
 ### Properties
 
-- [assetId](types_asset_manager.BulkAssetOptInOutResult.md#assetid)
-- [transactionId](types_asset_manager.BulkAssetOptInOutResult.md#transactionid)
+- [assetId](/reference/algokit-utils-ts/api/interfaces/types_asset_managerbulkassetoptinoutresult/#assetid)
+- [transactionId](/reference/algokit-utils-ts/api/interfaces/types_asset_managerbulkassetoptinoutresult/#transactionid)
 
 ## Properties
 

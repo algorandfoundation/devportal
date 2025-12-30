@@ -12,11 +12,11 @@ Call configuration for a method
 
 ### Properties
 
-- [close_out](types_app_spec.CallConfig.md#close_out)
-- [delete_application](types_app_spec.CallConfig.md#delete_application)
-- [no_op](types_app_spec.CallConfig.md#no_op)
-- [opt_in](types_app_spec.CallConfig.md#opt_in)
-- [update_application](types_app_spec.CallConfig.md#update_application)
+- [close_out](/reference/algokit-utils-ts/api/interfaces/types_app_speccallconfig/#close_out)
+- [delete_application](/reference/algokit-utils-ts/api/interfaces/types_app_speccallconfig/#delete_application)
+- [no_op](/reference/algokit-utils-ts/api/interfaces/types_app_speccallconfig/#no_op)
+- [opt_in](/reference/algokit-utils-ts/api/interfaces/types_app_speccallconfig/#opt_in)
+- [update_application](/reference/algokit-utils-ts/api/interfaces/types_app_speccallconfig/#update_application)
 
 ## Properties
 

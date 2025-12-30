@@ -12,18 +12,18 @@ An ARC-0032 Application Specification see https://github.com/algorandfoundation/
 
 ### Properties
 
-- [bare_call_config](types_app_spec.AppSpec.md#bare_call_config)
-- [contract](types_app_spec.AppSpec.md#contract)
-- [hints](types_app_spec.AppSpec.md#hints)
-- [schema](types_app_spec.AppSpec.md#schema)
-- [source](types_app_spec.AppSpec.md#source)
-- [state](types_app_spec.AppSpec.md#state)
+- [bare_call_config](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/#bare_call_config)
+- [contract](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/#contract)
+- [hints](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/#hints)
+- [schema](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/#schema)
+- [source](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/#source)
+- [state](/reference/algokit-utils-ts/api/interfaces/types_app_specappspec/#state)
 
 ## Properties
 
 ### bare_call_config
 
-• **bare_call_config**: [`CallConfig`](types_app_spec.CallConfig.md)
+• **bare_call_config**: [`CallConfig`](/reference/algokit-utils-ts/api/interfaces/types_app_speccallconfig/)
 
 The config of all BARE calls (i.e. non ABI calls with no args)
 
@@ -59,7 +59,7 @@ Method call hints
 
 ### schema
 
-• **schema**: [`SchemaSpec`](types_app_spec.SchemaSpec.md)
+• **schema**: [`SchemaSpec`](/reference/algokit-utils-ts/api/interfaces/types_app_specschemaspec/)
 
 The values that make up the local and global state
 
@@ -71,7 +71,7 @@ The values that make up the local and global state
 
 ### source
 
-• **source**: [`AppSources`](types_app_spec.AppSources.md)
+• **source**: [`AppSources`](/reference/algokit-utils-ts/api/interfaces/types_app_specappsources/)
 
 The TEAL source
 
@@ -83,7 +83,7 @@ The TEAL source
 
 ### state
 
-• **state**: [`StateSchemaSpec`](types_app_spec.StateSchemaSpec.md)
+• **state**: [`StateSchemaSpec`](/reference/algokit-utils-ts/api/interfaces/types_app_specstateschemaspec/)
 
 The rolled-up schema allocation values for local and global state
 

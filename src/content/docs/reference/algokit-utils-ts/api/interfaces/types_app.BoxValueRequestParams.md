@@ -15,9 +15,9 @@ Parameters to get and decode a box value as an ABI type.
 
 ### Properties
 
-- [appId](types_app.BoxValueRequestParams.md#appid)
-- [boxName](types_app.BoxValueRequestParams.md#boxname)
-- [type](types_app.BoxValueRequestParams.md#type)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_appboxvaluerequestparams/#appid)
+- [boxName](/reference/algokit-utils-ts/api/interfaces/types_appboxvaluerequestparams/#boxname)
+- [type](/reference/algokit-utils-ts/api/interfaces/types_appboxvaluerequestparams/#type)
 
 ## Properties
 
@@ -35,7 +35,7 @@ The ID of the app return box names for
 
 ### boxName
 
-• **boxName**: `string` \| `Uint8Array` \| [`BoxName`](types_app.BoxName.md)
+• **boxName**: `string` \| `Uint8Array` \| [`BoxName`](/reference/algokit-utils-ts/api/interfaces/types_appboxname/)
 
 The name of the box to return either as a string, binary array or `BoxName`
 

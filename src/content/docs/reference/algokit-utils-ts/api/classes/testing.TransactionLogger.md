@@ -13,34 +13,34 @@ Useful for automated tests.
 
 ### Constructors
 
-- [constructor](testing.TransactionLogger.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#constructor)
 
 ### Properties
 
-- [\_latestLastValidRound](testing.TransactionLogger.md#_latestlastvalidround)
-- [\_sentTransactionIds](testing.TransactionLogger.md#_senttransactionids)
+- [\_latestLastValidRound](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#_latestlastvalidround)
+- [\_sentTransactionIds](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#_senttransactionids)
 
 ### Accessors
 
-- [sentTransactionIds](testing.TransactionLogger.md#senttransactionids)
+- [sentTransactionIds](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#senttransactionids)
 
 ### Methods
 
-- [\_pushTxn](testing.TransactionLogger.md#_pushtxn)
-- [capture](testing.TransactionLogger.md#capture)
-- [clear](testing.TransactionLogger.md#clear)
-- [logRawTransaction](testing.TransactionLogger.md#lograwtransaction)
-- [waitForIndexer](testing.TransactionLogger.md#waitforindexer)
+- [\_pushTxn](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#_pushtxn)
+- [capture](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#capture)
+- [clear](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#clear)
+- [logRawTransaction](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#lograwtransaction)
+- [waitForIndexer](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/#waitforindexer)
 
 ## Constructors
 
 ### constructor
 
-• **new TransactionLogger**(): [`TransactionLogger`](testing.TransactionLogger.md)
+• **new TransactionLogger**(): [`TransactionLogger`](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/)
 
 #### Returns
 
-[`TransactionLogger`](testing.TransactionLogger.md)
+[`TransactionLogger`](/reference/algokit-utils-ts/api/classes/testingtransactionlogger/)
 
 ## Properties
 

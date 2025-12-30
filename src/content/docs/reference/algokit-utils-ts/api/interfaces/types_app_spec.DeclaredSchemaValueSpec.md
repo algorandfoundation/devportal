@@ -12,10 +12,10 @@ Declared schema value specification
 
 ### Properties
 
-- [descr](types_app_spec.DeclaredSchemaValueSpec.md#descr)
-- [key](types_app_spec.DeclaredSchemaValueSpec.md#key)
-- [static](types_app_spec.DeclaredSchemaValueSpec.md#static)
-- [type](types_app_spec.DeclaredSchemaValueSpec.md#type)
+- [descr](/reference/algokit-utils-ts/api/interfaces/types_app_specdeclaredschemavaluespec/#descr)
+- [key](/reference/algokit-utils-ts/api/interfaces/types_app_specdeclaredschemavaluespec/#key)
+- [static](/reference/algokit-utils-ts/api/interfaces/types_app_specdeclaredschemavaluespec/#static)
+- [type](/reference/algokit-utils-ts/api/interfaces/types_app_specdeclaredschemavaluespec/#type)
 
 ## Properties
 

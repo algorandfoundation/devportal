@@ -36,25 +36,25 @@ title: types/app
 
 ### Type Aliases
 
-- [ABIAppCallArg](types_app.md#abiappcallarg)
-- [ABIAppCallArgs](types_app.md#abiappcallargs)
-- [ABIReturn](types_app.md#abireturn)
-- [AppCallArgs](types_app.md#appcallargs)
-- [AppCallTransactionResult](types_app.md#appcalltransactionresult)
-- [AppCallType](types_app.md#appcalltype)
-- [AppReturn](types_app.md#appreturn)
-- [BoxIdentifier](types_app.md#boxidentifier)
-- [SendAppCreateTransactionResult](types_app.md#sendappcreatetransactionresult)
-- [SendAppTransactionResult](types_app.md#sendapptransactionresult)
-- [SendAppUpdateTransactionResult](types_app.md#sendappupdatetransactionresult)
+- [ABIAppCallArg](/reference/algokit-utils-ts/api/modules/types_app/#abiappcallarg)
+- [ABIAppCallArgs](/reference/algokit-utils-ts/api/modules/types_app/#abiappcallargs)
+- [ABIReturn](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)
+- [AppCallArgs](/reference/algokit-utils-ts/api/modules/types_app/#appcallargs)
+- [AppCallTransactionResult](/reference/algokit-utils-ts/api/modules/types_app/#appcalltransactionresult)
+- [AppCallType](/reference/algokit-utils-ts/api/modules/types_app/#appcalltype)
+- [AppReturn](/reference/algokit-utils-ts/api/modules/types_app/#appreturn)
+- [BoxIdentifier](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier)
+- [SendAppCreateTransactionResult](/reference/algokit-utils-ts/api/modules/types_app/#sendappcreatetransactionresult)
+- [SendAppTransactionResult](/reference/algokit-utils-ts/api/modules/types_app/#sendapptransactionresult)
+- [SendAppUpdateTransactionResult](/reference/algokit-utils-ts/api/modules/types_app/#sendappupdatetransactionresult)
 
 ### Variables
 
-- [ABI_RETURN_PREFIX](types_app.md#abi_return_prefix)
-- [APP_DEPLOY_NOTE_DAPP](types_app.md#app_deploy_note_dapp)
-- [APP_PAGE_MAX_SIZE](types_app.md#app_page_max_size)
-- [DELETABLE_TEMPLATE_NAME](types_app.md#deletable_template_name)
-- [UPDATABLE_TEMPLATE_NAME](types_app.md#updatable_template_name)
+- [ABI_RETURN_PREFIX](/reference/algokit-utils-ts/api/modules/types_app/#abi_return_prefix)
+- [APP_DEPLOY_NOTE_DAPP](/reference/algokit-utils-ts/api/modules/types_app/#app_deploy_note_dapp)
+- [APP_PAGE_MAX_SIZE](/reference/algokit-utils-ts/api/modules/types_app/#app_page_max_size)
+- [DELETABLE_TEMPLATE_NAME](/reference/algokit-utils-ts/api/modules/types_app/#deletable_template_name)
+- [UPDATABLE_TEMPLATE_NAME](/reference/algokit-utils-ts/api/modules/types_app/#updatable_template_name)
 
 ## Type Aliases
 
@@ -72,7 +72,7 @@ An argument for an ABI method, either a primitive value, or a transaction with o
 
 ### ABIAppCallArgs
 
-Ƭ **ABIAppCallArgs**: [`CoreAppCallArgs`](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/) & \{ `method`: `ABIMethodParams` \| `ABIMethod` ; `methodArgs`: [`ABIAppCallArg`](types_app.md#abiappcallarg)[] }
+Ƭ **ABIAppCallArgs**: [`CoreAppCallArgs`](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/) & \{ `method`: `ABIMethodParams` \| `ABIMethod` ; `methodArgs`: [`ABIAppCallArg`](/reference/algokit-utils-ts/api/modules/types_app/#abiappcallarg)[] }
 
 App call args for an ABI call
 
@@ -96,7 +96,7 @@ The return value of an ABI method call
 
 ### AppCallArgs
 
-Ƭ **AppCallArgs**: [`RawAppCallArgs`](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/) \| [`ABIAppCallArgs`](types_app.md#abiappcallargs)
+Ƭ **AppCallArgs**: [`RawAppCallArgs`](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/) \| [`ABIAppCallArgs`](/reference/algokit-utils-ts/api/modules/types_app/#abiappcallargs)
 
 Arguments to pass to an app call either:
 
@@ -111,7 +111,7 @@ Arguments to pass to an app call either:
 
 ### AppCallTransactionResult
 
-Ƭ **AppCallTransactionResult**: [`AppCallTransactionResultOfType`](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/)\<[`ABIReturn`](types_app.md#abireturn)\>
+Ƭ **AppCallTransactionResult**: [`AppCallTransactionResultOfType`](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/)\<[`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn)\>
 
 Result from calling an app
 
@@ -170,7 +170,7 @@ Equivalent of `algosdk.OnApplicationComplete`, but as a more convenient string e
 
 ### BoxIdentifier
 
-Ƭ **BoxIdentifier**: `string` \| `Uint8Array` \| [`SendTransactionFrom`](types_transaction.md#sendtransactionfrom)
+Ƭ **BoxIdentifier**: `string` \| `Uint8Array` \| [`SendTransactionFrom`](/reference/algokit-utils-ts/api/modules/types_transaction/#sendtransactionfrom)
 
 **`Deprecated`**
 
@@ -190,7 +190,7 @@ Something that identifies a box name - either a:
 
 ### SendAppCreateTransactionResult
 
-Ƭ **SendAppCreateTransactionResult**: [`Expand`](types_expand.md#expand)\<[`SendAppUpdateTransactionResult`](types_app.md#sendappupdatetransactionresult) & \{ `appAddress`: `Address` ; `appId`: `bigint` }\>
+Ƭ **SendAppCreateTransactionResult**: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<[`SendAppUpdateTransactionResult`](/reference/algokit-utils-ts/api/modules/types_app/#sendappupdatetransactionresult) & \{ `appAddress`: `Address` ; `appId`: `bigint` }\>
 
 Result from sending a single app transaction.
 
@@ -202,7 +202,7 @@ Result from sending a single app transaction.
 
 ### SendAppTransactionResult
 
-Ƭ **SendAppTransactionResult**: [`Expand`](types_expand.md#expand)\<[`SendSingleTransactionResult`](types_transaction.md#sendsingletransactionresult) & \{ `return?`: [`ABIReturn`](types_app.md#abireturn) }\>
+Ƭ **SendAppTransactionResult**: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<[`SendSingleTransactionResult`](/reference/algokit-utils-ts/api/modules/types_transaction/#sendsingletransactionresult) & \{ `return?`: [`ABIReturn`](/reference/algokit-utils-ts/api/modules/types_app/#abireturn) }\>
 
 Result from sending a single app transaction.
 
@@ -214,7 +214,7 @@ Result from sending a single app transaction.
 
 ### SendAppUpdateTransactionResult
 
-Ƭ **SendAppUpdateTransactionResult**: [`Expand`](types_expand.md#expand)\<[`SendAppTransactionResult`](types_app.md#sendapptransactionresult) & `Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\>\>
+Ƭ **SendAppUpdateTransactionResult**: [`Expand`](/reference/algokit-utils-ts/api/modules/types_expand/#expand)\<[`SendAppTransactionResult`](/reference/algokit-utils-ts/api/modules/types_app/#sendapptransactionresult) & `Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\>\>
 
 Result from sending a single app transaction.
 

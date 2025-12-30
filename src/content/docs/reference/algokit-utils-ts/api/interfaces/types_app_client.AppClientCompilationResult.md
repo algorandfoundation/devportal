@@ -12,7 +12,7 @@ Always contains the compiled bytecode, and may contain the result of compiling T
 
 ## Hierarchy
 
-- `Partial`\<[`AppCompilationResult`](types_app.AppCompilationResult.md)\>
+- `Partial`\<[`AppCompilationResult`](/reference/algokit-utils-ts/api/interfaces/types_appappcompilationresult/)\>
 
   ↳ **`AppClientCompilationResult`**
 
@@ -20,10 +20,10 @@ Always contains the compiled bytecode, and may contain the result of compiling T
 
 ### Properties
 
-- [approvalProgram](types_app_client.AppClientCompilationResult.md#approvalprogram)
-- [clearStateProgram](types_app_client.AppClientCompilationResult.md#clearstateprogram)
-- [compiledApproval](types_app_client.AppClientCompilationResult.md#compiledapproval)
-- [compiledClear](types_app_client.AppClientCompilationResult.md#compiledclear)
+- [approvalProgram](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationresult/#approvalprogram)
+- [clearStateProgram](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationresult/#clearstateprogram)
+- [compiledApproval](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationresult/#compiledapproval)
+- [compiledClear](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientcompilationresult/#compiledclear)
 
 ## Properties
 
@@ -53,7 +53,7 @@ The compiled bytecode of the clear state program, ready to deploy to algod
 
 ### compiledApproval
 
-• `Optional` **compiledApproval**: [`CompiledTeal`](types_app.CompiledTeal.md)
+• `Optional` **compiledApproval**: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/)
 
 The result of compiling the approval program
 
@@ -69,7 +69,7 @@ Partial.compiledApproval
 
 ### compiledClear
 
-• `Optional` **compiledClear**: [`CompiledTeal`](types_app.CompiledTeal.md)
+• `Optional` **compiledClear**: [`CompiledTeal`](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/)
 
 The result of compiling the clear state program
 

@@ -16,38 +16,38 @@ Updatable AlgoKit config
 
 ### Constructors
 
-- [constructor](types_config.UpdatableConfig.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#constructor)
 
 ### Properties
 
-- [config](types_config.UpdatableConfig.md#config)
+- [config](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#config)
 
 ### Accessors
 
-- [debug](types_config.UpdatableConfig.md#debug)
-- [events](types_config.UpdatableConfig.md#events)
-- [logger](types_config.UpdatableConfig.md#logger)
-- [maxSearchDepth](types_config.UpdatableConfig.md#maxsearchdepth)
-- [populateAppCallResources](types_config.UpdatableConfig.md#populateappcallresources)
-- [projectRoot](types_config.UpdatableConfig.md#projectroot)
-- [traceAll](types_config.UpdatableConfig.md#traceall)
-- [traceBufferSizeMb](types_config.UpdatableConfig.md#tracebuffersizemb)
+- [debug](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#debug)
+- [events](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#events)
+- [logger](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#logger)
+- [maxSearchDepth](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#maxsearchdepth)
+- [populateAppCallResources](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#populateappcallresources)
+- [projectRoot](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#projectroot)
+- [traceAll](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#traceall)
+- [traceBufferSizeMb](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#tracebuffersizemb)
 
 ### Methods
 
-- [configure](types_config.UpdatableConfig.md#configure)
-- [getLogger](types_config.UpdatableConfig.md#getlogger)
-- [withDebug](types_config.UpdatableConfig.md#withdebug)
+- [configure](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#configure)
+- [getLogger](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#getlogger)
+- [withDebug](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/#withdebug)
 
 ## Constructors
 
 ### constructor
 
-• **new UpdatableConfig**(): [`UpdatableConfig`](types_config.UpdatableConfig.md)
+• **new UpdatableConfig**(): [`UpdatableConfig`](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/)
 
 #### Returns
 
-[`UpdatableConfig`](types_config.UpdatableConfig.md)
+[`UpdatableConfig`](/reference/algokit-utils-ts/api/classes/types_configupdatableconfig/)
 
 #### Defined in
 
@@ -85,11 +85,11 @@ Readonly.debug
 
 ### events
 
-• `get` **events**(): [`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+• `get` **events**(): [`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Returns
 
-[`AsyncEventEmitter`](types_async_event_emitter.AsyncEventEmitter.md)
+[`AsyncEventEmitter`](/reference/algokit-utils-ts/api/classes/types_async_event_emitterasynceventemitter/)
 
 #### Implementation of
 

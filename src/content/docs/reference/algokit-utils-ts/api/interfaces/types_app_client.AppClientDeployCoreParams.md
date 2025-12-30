@@ -12,19 +12,19 @@ Core parameters to pass into ApplicationClient.deploy
 
 - **`AppClientDeployCoreParams`**
 
-  ↳ [`AppClientDeployParams`](types_app_client.AppClientDeployParams.md)
+  ↳ [`AppClientDeployParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeployparams/)
 
 ## Table of contents
 
 ### Properties
 
-- [allowDelete](types_app_client.AppClientDeployCoreParams.md#allowdelete)
-- [allowUpdate](types_app_client.AppClientDeployCoreParams.md#allowupdate)
-- [onSchemaBreak](types_app_client.AppClientDeployCoreParams.md#onschemabreak)
-- [onUpdate](types_app_client.AppClientDeployCoreParams.md#onupdate)
-- [sendParams](types_app_client.AppClientDeployCoreParams.md#sendparams)
-- [sender](types_app_client.AppClientDeployCoreParams.md#sender)
-- [version](types_app_client.AppClientDeployCoreParams.md#version)
+- [allowDelete](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycoreparams/#allowdelete)
+- [allowUpdate](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycoreparams/#allowupdate)
+- [onSchemaBreak](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycoreparams/#onschemabreak)
+- [onUpdate](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycoreparams/#onupdate)
+- [sendParams](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycoreparams/#sendparams)
+- [sender](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycoreparams/#sender)
+- [version](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycoreparams/#version)
 
 ## Properties
 
@@ -80,7 +80,7 @@ What action to perform if a TEAL update is detected
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](types_transaction.SendTransactionParams.md), `"skipSending"` \| `"skipWaiting"`\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/), `"skipSending"` \| `"skipWaiting"`\>
 
 Parameters to control transaction sending
 

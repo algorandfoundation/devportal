@@ -10,8 +10,8 @@ title: ProgramSourceInfo
 
 ### Properties
 
-- [pcOffsetMethod](types_app_arc56.ProgramSourceInfo.md#pcoffsetmethod)
-- [sourceInfo](types_app_arc56.ProgramSourceInfo.md#sourceinfo)
+- [pcOffsetMethod](/reference/algokit-utils-ts/api/interfaces/types_app_arc56programsourceinfo/#pcoffsetmethod)
+- [sourceInfo](/reference/algokit-utils-ts/api/interfaces/types_app_arc56programsourceinfo/#sourceinfo)
 
 ## Properties
 

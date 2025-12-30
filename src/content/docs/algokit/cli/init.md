@@ -9,7 +9,7 @@ For a quick start template with all of the defaults you can run: `algokit init` 
 
 ## Prerequisites
 
-Git is a prerequisite for the init command as it is used to clone templates and initialize git repos. Please consult the [README](README.md#prerequisites) for installation instructions.
+Git is a prerequisite for the init command as it is used to clone templates and initialize git repos. Please consult the [README](README#prerequisites) for installation instructions.
 
 ## Functionality
 

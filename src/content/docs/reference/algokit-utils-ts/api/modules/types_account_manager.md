@@ -16,7 +16,7 @@ title: types/account-manager
 
 ### Functions
 
-- [getAccountTransactionSigner](types_account_manager.md#getaccounttransactionsigner)
+- [getAccountTransactionSigner](/reference/algokit-utils-ts/api/modules/types_account_manager/#getaccounttransactionsigner)
 
 ## Functions
 

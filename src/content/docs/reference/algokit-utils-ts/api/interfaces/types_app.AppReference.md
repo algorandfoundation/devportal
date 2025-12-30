@@ -12,14 +12,14 @@ Information about an Algorand app
 
 - **`AppReference`**
 
-  ↳ [`AppMetadata`](types_app.AppMetadata.md)
+  ↳ [`AppMetadata`](/reference/algokit-utils-ts/api/interfaces/types_appappmetadata/)
 
 ## Table of contents
 
 ### Properties
 
-- [appAddress](types_app.AppReference.md#appaddress)
-- [appId](types_app.AppReference.md#appid)
+- [appAddress](/reference/algokit-utils-ts/api/interfaces/types_appappreference/#appaddress)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_appappreference/#appid)
 
 ## Properties
 

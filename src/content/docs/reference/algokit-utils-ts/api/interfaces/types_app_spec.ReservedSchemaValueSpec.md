@@ -12,9 +12,9 @@ Reserved schema value specification
 
 ### Properties
 
-- [descr](types_app_spec.ReservedSchemaValueSpec.md#descr)
-- [max_keys](types_app_spec.ReservedSchemaValueSpec.md#max_keys)
-- [type](types_app_spec.ReservedSchemaValueSpec.md#type)
+- [descr](/reference/algokit-utils-ts/api/interfaces/types_app_specreservedschemavaluespec/#descr)
+- [max_keys](/reference/algokit-utils-ts/api/interfaces/types_app_specreservedschemavaluespec/#max_keys)
+- [type](/reference/algokit-utils-ts/api/interfaces/types_app_specreservedschemavaluespec/#type)
 
 ## Properties
 

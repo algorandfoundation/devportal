@@ -12,10 +12,10 @@ What action to perform when deploying an app and an update is detected in the TE
 
 ### Enumeration Members
 
-- [AppendApp](types_app.OnUpdate.md#appendapp)
-- [Fail](types_app.OnUpdate.md#fail)
-- [ReplaceApp](types_app.OnUpdate.md#replaceapp)
-- [UpdateApp](types_app.OnUpdate.md#updateapp)
+- [AppendApp](/reference/algokit-utils-ts/api/enums/types_apponupdate/#appendapp)
+- [Fail](/reference/algokit-utils-ts/api/enums/types_apponupdate/#fail)
+- [ReplaceApp](/reference/algokit-utils-ts/api/enums/types_apponupdate/#replaceapp)
+- [UpdateApp](/reference/algokit-utils-ts/api/enums/types_apponupdate/#updateapp)
 
 ## Enumeration Members
 

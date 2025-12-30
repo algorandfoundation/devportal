@@ -12,29 +12,29 @@ Parameters for `assetOptIn` call.
 
 ## Hierarchy
 
-- [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
+- [`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/)
 
   ↳ **`AssetOptInParams`**
 
-  ↳↳ [`AssetOptOutParams`](types_asset.AssetOptOutParams.md)
+  ↳↳ [`AssetOptOutParams`](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptoutparams/)
 
 ## Table of contents
 
 ### Properties
 
-- [account](types_asset.AssetOptInParams.md#account)
-- [assetId](types_asset.AssetOptInParams.md#assetid)
-- [atc](types_asset.AssetOptInParams.md#atc)
-- [fee](types_asset.AssetOptInParams.md#fee)
-- [lease](types_asset.AssetOptInParams.md#lease)
-- [maxFee](types_asset.AssetOptInParams.md#maxfee)
-- [maxRoundsToWaitForConfirmation](types_asset.AssetOptInParams.md#maxroundstowaitforconfirmation)
-- [note](types_asset.AssetOptInParams.md#note)
-- [populateAppCallResources](types_asset.AssetOptInParams.md#populateappcallresources)
-- [skipSending](types_asset.AssetOptInParams.md#skipsending)
-- [skipWaiting](types_asset.AssetOptInParams.md#skipwaiting)
-- [suppressLog](types_asset.AssetOptInParams.md#suppresslog)
-- [transactionParams](types_asset.AssetOptInParams.md#transactionparams)
+- [account](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#account)
+- [assetId](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#assetid)
+- [atc](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#atc)
+- [fee](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#fee)
+- [lease](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#lease)
+- [maxFee](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#maxroundstowaitforconfirmation)
+- [note](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#note)
+- [populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#populateappcallresources)
+- [skipSending](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#skipsending)
+- [skipWaiting](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#skipwaiting)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#suppresslog)
+- [transactionParams](/reference/algokit-utils-ts/api/interfaces/types_assetassetoptinparams/#transactionparams)
 
 ## Properties
 
@@ -70,7 +70,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[atc](types_transaction.SendTransactionParams.md#atc)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[atc](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#atc)
 
 #### Defined in
 
@@ -86,7 +86,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[fee](types_transaction.SendTransactionParams.md#fee)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[fee](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#fee)
 
 #### Defined in
 
@@ -114,7 +114,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxFee](types_transaction.SendTransactionParams.md#maxfee)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[maxFee](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#maxfee)
 
 #### Defined in
 
@@ -130,7 +130,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxRoundsToWaitForConfirmation](types_transaction.SendTransactionParams.md#maxroundstowaitforconfirmation)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -158,7 +158,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[populateAppCallResources](types_transaction.SendTransactionParams.md#populateappcallresources)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#populateappcallresources)
 
 #### Defined in
 
@@ -175,7 +175,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipSending](types_transaction.SendTransactionParams.md#skipsending)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[skipSending](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#skipsending)
 
 #### Defined in
 
@@ -191,7 +191,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipWaiting](types_transaction.SendTransactionParams.md#skipwaiting)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[skipWaiting](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#skipwaiting)
 
 #### Defined in
 
@@ -207,7 +207,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[suppressLog](types_transaction.SendTransactionParams.md#suppresslog)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[suppressLog](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#suppresslog)
 
 #### Defined in
 

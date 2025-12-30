@@ -10,7 +10,7 @@ App call args with non-ABI (raw) values (minus some processing like encoding str
 
 ## Hierarchy
 
-- [`CoreAppCallArgs`](types_app.CoreAppCallArgs.md)
+- [`CoreAppCallArgs`](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/)
 
   ↳ **`RawAppCallArgs`**
 
@@ -18,14 +18,14 @@ App call args with non-ABI (raw) values (minus some processing like encoding str
 
 ### Properties
 
-- [accounts](types_app.RawAppCallArgs.md#accounts)
-- [appArgs](types_app.RawAppCallArgs.md#appargs)
-- [apps](types_app.RawAppCallArgs.md#apps)
-- [assets](types_app.RawAppCallArgs.md#assets)
-- [boxes](types_app.RawAppCallArgs.md#boxes)
-- [lease](types_app.RawAppCallArgs.md#lease)
-- [method](types_app.RawAppCallArgs.md#method)
-- [rekeyTo](types_app.RawAppCallArgs.md#rekeyto)
+- [accounts](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/#accounts)
+- [appArgs](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/#appargs)
+- [apps](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/#apps)
+- [assets](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/#assets)
+- [boxes](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/#boxes)
+- [lease](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/#lease)
+- [method](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/#method)
+- [rekeyTo](/reference/algokit-utils-ts/api/interfaces/types_apprawappcallargs/#rekeyto)
 
 ## Properties
 
@@ -37,7 +37,7 @@ The address of any accounts to load in
 
 #### Inherited from
 
-[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[accounts](types_app.CoreAppCallArgs.md#accounts)
+[CoreAppCallArgs](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/).[accounts](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#accounts)
 
 #### Defined in
 
@@ -65,7 +65,7 @@ IDs of any apps to load into the foreignApps array
 
 #### Inherited from
 
-[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[apps](types_app.CoreAppCallArgs.md#apps)
+[CoreAppCallArgs](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/).[apps](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#apps)
 
 #### Defined in
 
@@ -81,7 +81,7 @@ IDs of any assets to load into the foreignAssets array
 
 #### Inherited from
 
-[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[assets](types_app.CoreAppCallArgs.md#assets)
+[CoreAppCallArgs](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/).[assets](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#assets)
 
 #### Defined in
 
@@ -91,13 +91,13 @@ IDs of any assets to load into the foreignAssets array
 
 ### boxes
 
-• `Optional` **boxes**: ([`BoxReference`](types_app.BoxReference.md) \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
+• `Optional` **boxes**: ([`BoxReference`](/reference/algokit-utils-ts/api/interfaces/types_appboxreference/) \| [`BoxIdentifier`](/reference/algokit-utils-ts/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
 
 Any box references to load
 
 #### Inherited from
 
-[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[boxes](types_app.CoreAppCallArgs.md#boxes)
+[CoreAppCallArgs](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/).[boxes](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#boxes)
 
 #### Defined in
 
@@ -113,7 +113,7 @@ The optional lease for the transaction
 
 #### Inherited from
 
-[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[lease](types_app.CoreAppCallArgs.md#lease)
+[CoreAppCallArgs](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/).[lease](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#lease)
 
 #### Defined in
 
@@ -143,7 +143,7 @@ Optional account / account address that should be authorised to transact on beha
 
 #### Inherited from
 
-[CoreAppCallArgs](types_app.CoreAppCallArgs.md).[rekeyTo](types_app.CoreAppCallArgs.md#rekeyto)
+[CoreAppCallArgs](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/).[rekeyTo](/reference/algokit-utils-ts/api/interfaces/types_appcoreappcallargs/#rekeyto)
 
 #### Defined in
 

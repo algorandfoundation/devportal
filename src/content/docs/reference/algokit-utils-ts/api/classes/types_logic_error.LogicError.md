@@ -18,31 +18,31 @@ Wraps key functionality around processing logic errors
 
 ### Constructors
 
-- [constructor](types_logic_error.LogicError.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#constructor)
 
 ### Properties
 
-- [cause](types_logic_error.LogicError.md#cause)
-- [led](types_logic_error.LogicError.md#led)
-- [lines](types_logic_error.LogicError.md#lines)
-- [message](types_logic_error.LogicError.md#message)
-- [name](types_logic_error.LogicError.md#name)
-- [program](types_logic_error.LogicError.md#program)
-- [stack](types_logic_error.LogicError.md#stack)
-- [teal_line](types_logic_error.LogicError.md#teal_line)
-- [prepareStackTrace](types_logic_error.LogicError.md#preparestacktrace)
-- [stackTraceLimit](types_logic_error.LogicError.md#stacktracelimit)
+- [cause](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#cause)
+- [led](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#led)
+- [lines](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#lines)
+- [message](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#message)
+- [name](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#name)
+- [program](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#program)
+- [stack](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#stack)
+- [teal_line](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#teal_line)
+- [prepareStackTrace](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#preparestacktrace)
+- [stackTraceLimit](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#stacktracelimit)
 
 ### Methods
 
-- [captureStackTrace](types_logic_error.LogicError.md#capturestacktrace)
-- [parseLogicError](types_logic_error.LogicError.md#parselogicerror)
+- [captureStackTrace](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#capturestacktrace)
+- [parseLogicError](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/#parselogicerror)
 
 ## Constructors
 
 ### constructor
 
-• **new LogicError**(`errorDetails`, `program`, `getLineForPc`): [`LogicError`](types_logic_error.LogicError.md)
+• **new LogicError**(`errorDetails`, `program`, `getLineForPc`): [`LogicError`](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/)
 
 Create a new logic error object.
 
@@ -56,7 +56,7 @@ Create a new logic error object.
 
 #### Returns
 
-[`LogicError`](types_logic_error.LogicError.md)
+[`LogicError`](/reference/algokit-utils-ts/api/classes/types_logic_errorlogicerror/)
 
 #### Overrides
 

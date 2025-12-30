@@ -14,11 +14,11 @@ title: types/debugging
 
 ### Variables
 
-- [ALGOKIT_DIR](types_debugging.md#algokit_dir)
-- [DEFAULT_MAX_SEARCH_DEPTH](types_debugging.md#default_max_search_depth)
-- [SOURCES_DIR](types_debugging.md#sources_dir)
-- [TEAL_FILE_EXT](types_debugging.md#teal_file_ext)
-- [TEAL_SOURCEMAP_EXT](types_debugging.md#teal_sourcemap_ext)
+- [ALGOKIT_DIR](/reference/algokit-utils-ts/api/modules/types_debugging/#algokit_dir)
+- [DEFAULT_MAX_SEARCH_DEPTH](/reference/algokit-utils-ts/api/modules/types_debugging/#default_max_search_depth)
+- [SOURCES_DIR](/reference/algokit-utils-ts/api/modules/types_debugging/#sources_dir)
+- [TEAL_FILE_EXT](/reference/algokit-utils-ts/api/modules/types_debugging/#teal_file_ext)
+- [TEAL_SOURCEMAP_EXT](/reference/algokit-utils-ts/api/modules/types_debugging/#teal_sourcemap_ext)
 
 ## Variables
 
