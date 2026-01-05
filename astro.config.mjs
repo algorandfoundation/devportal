@@ -28,7 +28,7 @@ export default defineConfig({
       plugins: [
         starlightImageZoom(),
         starlightLinksValidator({
-          errorOnRelativeLinks: false,
+          errorOnRelativeLinks: true,
           errorOnInvalidHashes: false,
           exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
         }),
@@ -865,7 +865,7 @@ export default defineConfig({
                     },
                     {
                       label: 'Data Structures',
-                      link: 'algokit/languages/python/lg-structure',
+                      link: 'algokit/languages/python/lg-data-structures',
                     },
                     {
                       label: 'Storing Data On-Chain',
