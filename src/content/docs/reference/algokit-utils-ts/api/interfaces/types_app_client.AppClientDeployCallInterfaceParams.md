@@ -12,17 +12,17 @@ Call interface parameters to pass into ApplicationClient.deploy
 
 - **`AppClientDeployCallInterfaceParams`**
 
-  ↳ [`AppClientDeployParams`](types_app_client.AppClientDeployParams.md)
+  ↳ [`AppClientDeployParams`](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeployparams/)
 
 ## Table of contents
 
 ### Properties
 
-- [createArgs](types_app_client.AppClientDeployCallInterfaceParams.md#createargs)
-- [createOnCompleteAction](types_app_client.AppClientDeployCallInterfaceParams.md#createoncompleteaction)
-- [deleteArgs](types_app_client.AppClientDeployCallInterfaceParams.md#deleteargs)
-- [deployTimeParams](types_app_client.AppClientDeployCallInterfaceParams.md#deploytimeparams)
-- [updateArgs](types_app_client.AppClientDeployCallInterfaceParams.md#updateargs)
+- [createArgs](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#createargs)
+- [createOnCompleteAction](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#createoncompleteaction)
+- [deleteArgs](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#deleteargs)
+- [deployTimeParams](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#deploytimeparams)
+- [updateArgs](/reference/algokit-utils-ts/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#updateargs)
 
 ## Properties
 
@@ -64,7 +64,7 @@ Any args to pass to any delete transaction that is issued as part of deployment
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](types_app.TealTemplateParams.md)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/reference/algokit-utils-ts/api/interfaces/types_apptealtemplateparams/)
 
 Any deploy-time parameters to replace in the TEAL code
 

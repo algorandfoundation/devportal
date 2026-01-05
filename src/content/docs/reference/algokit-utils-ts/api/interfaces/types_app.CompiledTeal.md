@@ -12,11 +12,11 @@ Information about a compiled teal program
 
 ### Properties
 
-- [compiled](types_app.CompiledTeal.md#compiled)
-- [compiledBase64ToBytes](types_app.CompiledTeal.md#compiledbase64tobytes)
-- [compiledHash](types_app.CompiledTeal.md#compiledhash)
-- [sourceMap](types_app.CompiledTeal.md#sourcemap)
-- [teal](types_app.CompiledTeal.md#teal)
+- [compiled](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/#compiled)
+- [compiledBase64ToBytes](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/#compiledbase64tobytes)
+- [compiledHash](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/#compiledhash)
+- [sourceMap](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/#sourcemap)
+- [teal](/reference/algokit-utils-ts/api/interfaces/types_appcompiledteal/#teal)
 
 ## Properties
 

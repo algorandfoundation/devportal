@@ -22,22 +22,22 @@ Parameters that are passed in when creating an app.
 
 ### Properties
 
-- [approvalProgram](types_app.CreateAppParams.md#approvalprogram)
-- [args](types_app.CreateAppParams.md#args)
-- [atc](types_app.CreateAppParams.md#atc)
-- [clearStateProgram](types_app.CreateAppParams.md#clearstateprogram)
-- [fee](types_app.CreateAppParams.md#fee)
-- [from](types_app.CreateAppParams.md#from)
-- [maxFee](types_app.CreateAppParams.md#maxfee)
-- [maxRoundsToWaitForConfirmation](types_app.CreateAppParams.md#maxroundstowaitforconfirmation)
-- [note](types_app.CreateAppParams.md#note)
-- [onCompleteAction](types_app.CreateAppParams.md#oncompleteaction)
-- [populateAppCallResources](types_app.CreateAppParams.md#populateappcallresources)
-- [schema](types_app.CreateAppParams.md#schema)
-- [skipSending](types_app.CreateAppParams.md#skipsending)
-- [skipWaiting](types_app.CreateAppParams.md#skipwaiting)
-- [suppressLog](types_app.CreateAppParams.md#suppresslog)
-- [transactionParams](types_app.CreateAppParams.md#transactionparams)
+- [approvalProgram](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#approvalprogram)
+- [args](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#args)
+- [atc](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#atc)
+- [clearStateProgram](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#clearstateprogram)
+- [fee](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#fee)
+- [from](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#from)
+- [maxFee](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#maxroundstowaitforconfirmation)
+- [note](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#note)
+- [onCompleteAction](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#oncompleteaction)
+- [populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#populateappcallresources)
+- [schema](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#schema)
+- [skipSending](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#skipsending)
+- [skipWaiting](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#skipwaiting)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#suppresslog)
+- [transactionParams](/reference/algokit-utils-ts/api/interfaces/types_appcreateappparams/#transactionparams)
 
 ## Properties
 
@@ -215,7 +215,7 @@ CreateOrUpdateAppParams.populateAppCallResources
 
 ### schema
 
-• **schema**: [`AppStorageSchema`](types_app.AppStorageSchema.md)
+• **schema**: [`AppStorageSchema`](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/)
 
 The storage schema to request for the created app
 

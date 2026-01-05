@@ -46,7 +46,7 @@ Generate a vanity address with the keyword "ALGO" anywhere in the address with o
 $ ~ algokit task vanity-address ALGO -m anywhere -o file -f vanity-address.txt
 ```
 
-Generate a vanity address with the keyword "ALGO" at the start of the address and store into a [wallet alias](wallet.md):
+Generate a vanity address with the keyword "ALGO" at the start of the address and store into a [wallet alias](/algokit/cli/tasks/wallet/):
 
 ```bash
 $ ~ algokit task vanity-address ALGO -o alias -a my-vanity-address

@@ -865,7 +865,7 @@ export default defineConfig({
                     },
                     {
                       label: 'Data Structures',
-                      link: 'algokit/languages/python/lg-structure',
+                      link: 'algokit/languages/python/lg-data-structures',
                     },
                     {
                       label: 'Storing Data On-Chain',
@@ -1036,15 +1036,19 @@ export default defineConfig({
                   items: [
                     {
                       label: 'Overview',
-                      link: 'algokit/subscribers/typescript/overview',
+                      link: 'algokit/subscriber/typescript/overview',
                     },
                     {
-                      label: 'Subsciber',
-                      link: 'algokit/subscribers/typescript/subscriber',
+                      label: 'Subscriber',
+                      link: 'algokit/subscriber/typescript/subscriber',
                     },
                     {
                       label: 'Subscriptions',
-                      link: 'algokit/subscribers/typescript/subscriptions',
+                      link: 'algokit/subscriber/typescript/subscriptions',
+                    },
+                    {
+                      label: 'v3 Migration Guide',
+                      link: 'algokit/subscriber/typescript/v3-migration',
                     },
                   ],
                 },
@@ -1053,15 +1057,15 @@ export default defineConfig({
                   items: [
                     {
                       label: 'Overview',
-                      link: 'algokit/subscribers/python/overview',
+                      link: 'algokit/subscriber/python/overview',
                     },
                     {
                       label: 'Subsciber',
-                      link: 'algokit/subscribers/python/subscriber',
+                      link: 'algokit/subscriber/python/subscriber',
                     },
                     {
                       label: 'Subscriptions',
-                      link: 'algokit/subscribers/python/subscriptions',
+                      link: 'algokit/subscriber/python/subscriptions',
                     },
                   ],
                 },
@@ -1221,13 +1225,13 @@ export default defineConfig({
                 directory: 'reference/algokit-utils-ts/api',
               },
             },
-            {
-              label: 'AlgoKit Subscriber (Typescript)',
-              collapsed: true,
-              autogenerate: {
-                directory: 'reference/algokit-subscriber-ts/api',
-              },
-            },
+            // {
+            //   label: 'AlgoKit Subscriber (Typescript)',
+            //   collapsed: true,
+            //   autogenerate: {
+            //     directory: 'reference/algokit-subscriber-ts/api',
+            //   },
+            // },
             {
               label: 'Algorand TEAL',
               collapsed: true,

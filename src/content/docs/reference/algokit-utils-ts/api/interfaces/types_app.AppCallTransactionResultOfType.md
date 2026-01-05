@@ -16,9 +16,9 @@ The result of preparing and/or sending multiple transactions
 
 ## Hierarchy
 
-- [`SendTransactionResults`](types_transaction.SendTransactionResults.md)
+- [`SendTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/)
 
-- [`SendTransactionResult`](types_transaction.SendTransactionResult.md)
+- [`SendTransactionResult`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/)
 
   ↳ **`AppCallTransactionResultOfType`**
 
@@ -26,11 +26,11 @@ The result of preparing and/or sending multiple transactions
 
 ### Properties
 
-- [confirmation](types_app.AppCallTransactionResultOfType.md#confirmation)
-- [confirmations](types_app.AppCallTransactionResultOfType.md#confirmations)
-- [return](types_app.AppCallTransactionResultOfType.md#return)
-- [transaction](types_app.AppCallTransactionResultOfType.md#transaction)
-- [transactions](types_app.AppCallTransactionResultOfType.md#transactions)
+- [confirmation](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/#confirmation)
+- [confirmations](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/#confirmations)
+- [return](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/#return)
+- [transaction](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/#transaction)
+- [transactions](/reference/algokit-utils-ts/api/interfaces/types_appappcalltransactionresultoftype/#transactions)
 
 ## Properties
 
@@ -42,7 +42,7 @@ The response if the transaction was sent and waited for
 
 #### Inherited from
 
-[SendTransactionResult](types_transaction.SendTransactionResult.md).[confirmation](types_transaction.SendTransactionResult.md#confirmation)
+[SendTransactionResult](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/).[confirmation](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/#confirmation)
 
 #### Defined in
 
@@ -59,7 +59,7 @@ the index of the confirmation will match the index of the underlying transaction
 
 #### Inherited from
 
-[SendTransactionResults](types_transaction.SendTransactionResults.md).[confirmations](types_transaction.SendTransactionResults.md#confirmations)
+[SendTransactionResults](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/).[confirmations](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/#confirmations)
 
 #### Defined in
 
@@ -87,7 +87,7 @@ The transaction
 
 #### Inherited from
 
-[SendTransactionResult](types_transaction.SendTransactionResult.md).[transaction](types_transaction.SendTransactionResult.md#transaction)
+[SendTransactionResult](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/).[transaction](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresult/#transaction)
 
 #### Defined in
 
@@ -103,7 +103,7 @@ The transactions that have been prepared and/or sent
 
 #### Inherited from
 
-[SendTransactionResults](types_transaction.SendTransactionResults.md).[transactions](types_transaction.SendTransactionResults.md#transactions)
+[SendTransactionResults](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/).[transactions](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/#transactions)
 
 #### Defined in
 

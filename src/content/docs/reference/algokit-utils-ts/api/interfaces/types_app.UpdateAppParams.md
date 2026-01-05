@@ -22,21 +22,21 @@ Parameters that are passed in when updating an app.
 
 ### Properties
 
-- [appId](types_app.UpdateAppParams.md#appid)
-- [approvalProgram](types_app.UpdateAppParams.md#approvalprogram)
-- [args](types_app.UpdateAppParams.md#args)
-- [atc](types_app.UpdateAppParams.md#atc)
-- [clearStateProgram](types_app.UpdateAppParams.md#clearstateprogram)
-- [fee](types_app.UpdateAppParams.md#fee)
-- [from](types_app.UpdateAppParams.md#from)
-- [maxFee](types_app.UpdateAppParams.md#maxfee)
-- [maxRoundsToWaitForConfirmation](types_app.UpdateAppParams.md#maxroundstowaitforconfirmation)
-- [note](types_app.UpdateAppParams.md#note)
-- [populateAppCallResources](types_app.UpdateAppParams.md#populateappcallresources)
-- [skipSending](types_app.UpdateAppParams.md#skipsending)
-- [skipWaiting](types_app.UpdateAppParams.md#skipwaiting)
-- [suppressLog](types_app.UpdateAppParams.md#suppresslog)
-- [transactionParams](types_app.UpdateAppParams.md#transactionparams)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#appid)
+- [approvalProgram](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#approvalprogram)
+- [args](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#args)
+- [atc](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#atc)
+- [clearStateProgram](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#clearstateprogram)
+- [fee](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#fee)
+- [from](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#from)
+- [maxFee](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#maxroundstowaitforconfirmation)
+- [note](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#note)
+- [populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#populateappcallresources)
+- [skipSending](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#skipsending)
+- [skipWaiting](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#skipwaiting)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#suppresslog)
+- [transactionParams](/reference/algokit-utils-ts/api/interfaces/types_appupdateappparams/#transactionparams)
 
 ## Properties
 

@@ -12,8 +12,8 @@ Defines an unsigned transaction that will appear in a group of transactions alon
 
 ### Properties
 
-- [signer](types_transaction.TransactionToSign.md#signer)
-- [transaction](types_transaction.TransactionToSign.md#transaction)
+- [signer](/reference/algokit-utils-ts/api/interfaces/types_transactiontransactiontosign/#signer)
+- [transaction](/reference/algokit-utils-ts/api/interfaces/types_transactiontransactiontosign/#transaction)
 
 ## Properties
 

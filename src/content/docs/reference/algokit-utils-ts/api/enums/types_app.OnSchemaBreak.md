@@ -12,9 +12,9 @@ What action to perform when deploying an app and a breaking schema change is det
 
 ### Enumeration Members
 
-- [AppendApp](types_app.OnSchemaBreak.md#appendapp)
-- [Fail](types_app.OnSchemaBreak.md#fail)
-- [ReplaceApp](types_app.OnSchemaBreak.md#replaceapp)
+- [AppendApp](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/#appendapp)
+- [Fail](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/#fail)
+- [ReplaceApp](/reference/algokit-utils-ts/api/enums/types_apponschemabreak/#replaceapp)
 
 ## Enumeration Members
 

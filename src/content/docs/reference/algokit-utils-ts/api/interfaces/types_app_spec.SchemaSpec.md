@@ -12,14 +12,14 @@ The schema for global and local storage
 
 ### Properties
 
-- [global](types_app_spec.SchemaSpec.md#global)
-- [local](types_app_spec.SchemaSpec.md#local)
+- [global](/reference/algokit-utils-ts/api/interfaces/types_app_specschemaspec/#global)
+- [local](/reference/algokit-utils-ts/api/interfaces/types_app_specschemaspec/#local)
 
 ## Properties
 
 ### global
 
-• **global**: [`Schema`](types_app_spec.Schema.md)
+• **global**: [`Schema`](/reference/algokit-utils-ts/api/interfaces/types_app_specschema/)
 
 The global storage schema
 
@@ -31,7 +31,7 @@ The global storage schema
 
 ### local
 
-• **local**: [`Schema`](types_app_spec.Schema.md)
+• **local**: [`Schema`](/reference/algokit-utils-ts/api/interfaces/types_app_specschema/)
 
 The local storage schema
 

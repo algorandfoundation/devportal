@@ -10,7 +10,7 @@ The result of preparing and/or sending multiple transactions using an `AtomicTra
 
 ## Hierarchy
 
-- [`SendTransactionResults`](types_transaction.SendTransactionResults.md)
+- [`SendTransactionResults`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/)
 
   ↳ **`SendAtomicTransactionComposerResults`**
 
@@ -18,11 +18,11 @@ The result of preparing and/or sending multiple transactions using an `AtomicTra
 
 ### Properties
 
-- [confirmations](types_transaction.SendAtomicTransactionComposerResults.md#confirmations)
-- [groupId](types_transaction.SendAtomicTransactionComposerResults.md#groupid)
-- [returns](types_transaction.SendAtomicTransactionComposerResults.md#returns)
-- [transactions](types_transaction.SendAtomicTransactionComposerResults.md#transactions)
-- [txIds](types_transaction.SendAtomicTransactionComposerResults.md#txids)
+- [confirmations](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/#confirmations)
+- [groupId](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/#groupid)
+- [returns](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/#returns)
+- [transactions](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/#transactions)
+- [txIds](/reference/algokit-utils-ts/api/interfaces/types_transactionsendatomictransactioncomposerresults/#txids)
 
 ## Properties
 
@@ -35,7 +35,7 @@ the index of the confirmation will match the index of the underlying transaction
 
 #### Overrides
 
-[SendTransactionResults](types_transaction.SendTransactionResults.md).[confirmations](types_transaction.SendTransactionResults.md#confirmations)
+[SendTransactionResults](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/).[confirmations](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/#confirmations)
 
 #### Defined in
 
@@ -75,7 +75,7 @@ The transactions that have been prepared and/or sent
 
 #### Inherited from
 
-[SendTransactionResults](types_transaction.SendTransactionResults.md).[transactions](types_transaction.SendTransactionResults.md#transactions)
+[SendTransactionResults](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/).[transactions](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionresults/#transactions)
 
 #### Defined in
 

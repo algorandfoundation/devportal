@@ -12,11 +12,11 @@ Parameters representing the storage schema of an app.
 
 ### Properties
 
-- [extraPages](types_app.AppStorageSchema.md#extrapages)
-- [globalByteSlices](types_app.AppStorageSchema.md#globalbyteslices)
-- [globalInts](types_app.AppStorageSchema.md#globalints)
-- [localByteSlices](types_app.AppStorageSchema.md#localbyteslices)
-- [localInts](types_app.AppStorageSchema.md#localints)
+- [extraPages](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/#extrapages)
+- [globalByteSlices](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/#globalbyteslices)
+- [globalInts](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/#globalints)
+- [localByteSlices](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/#localbyteslices)
+- [localInts](/reference/algokit-utils-ts/api/interfaces/types_appappstorageschema/#localints)
 
 ## Properties
 

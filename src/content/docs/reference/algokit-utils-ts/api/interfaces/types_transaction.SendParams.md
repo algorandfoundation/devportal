@@ -12,16 +12,16 @@ Parameters to configure transaction sending.
 
 - **`SendParams`**
 
-  ↳ [`AtomicTransactionComposerToSend`](types_transaction.AtomicTransactionComposerToSend.md)
+  ↳ [`AtomicTransactionComposerToSend`](/reference/algokit-utils-ts/api/interfaces/types_transactionatomictransactioncomposertosend/)
 
 ## Table of contents
 
 ### Properties
 
-- [coverAppCallInnerTransactionFees](types_transaction.SendParams.md#coverappcallinnertransactionfees)
-- [maxRoundsToWaitForConfirmation](types_transaction.SendParams.md#maxroundstowaitforconfirmation)
-- [populateAppCallResources](types_transaction.SendParams.md#populateappcallresources)
-- [suppressLog](types_transaction.SendParams.md#suppresslog)
+- [coverAppCallInnerTransactionFees](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/#coverappcallinnertransactionfees)
+- [maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/#maxroundstowaitforconfirmation)
+- [populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/#populateappcallresources)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_transactionsendparams/#suppresslog)
 
 ## Properties
 

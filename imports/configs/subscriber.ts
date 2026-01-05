@@ -1,5 +1,10 @@
 import type { ImportOptions } from '@larkiny/astro-github-loader';
-import { convertH1ToTitle } from '../transforms/common.js';
+import {
+  conditionalTransform,
+  convertH1ToTitle,
+  convertH1ToTitleMatch,
+  removeH1,
+} from '../transforms/common.js';
 import { createFrontmatterTransform } from '../transforms/frontmatter.js';
 
 /**
@@ -7,7 +12,7 @@ import { createFrontmatterTransform } from '../transforms/frontmatter.js';
  * Repository: https://github.com/algorandfoundation/algokit-subscriber-ts
  */
 export const algokitSubscriberConfig: ImportOptions = {
-  name: 'Algokit Subscriber TS Command Reference',
+  name: 'Algokit Subscriber TS API Docs',
   owner: 'larkiny',
   repo: 'algokit-subscriber-ts',
   ref: 'docs-dist',
@@ -17,6 +22,30 @@ export const algokitSubscriberConfig: ImportOptions = {
     {
       pattern: 'latest/api/**/*',
       basePath: 'src/content/docs/reference/algokit-subscriber-ts/api',
+      transforms: [
+        convertH1ToTitle,
+        conditionalTransform(
+          '**/README.md',
+          createFrontmatterTransform({
+            frontmatter: {
+              title: 'Overview',
+              sidebar: { order: 0 },
+            },
+            preserveExisting: false,
+          }),
+        ),
+        conditionalTransform(
+          'latest/api/README.md',
+          createFrontmatterTransform({
+            frontmatter: {
+              title: 'Subscriber API Reference (TypeScript)',
+              sidebar: { label: 'Overview', order: 0 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+        ),
+      ],
     },
     {
       pattern: 'latest/guides/**/*',
@@ -24,6 +53,6 @@ export const algokitSubscriberConfig: ImportOptions = {
       transforms: [convertH1ToTitle],
     },
   ],
-  enabled: false,
-  clear: false,
+  enabled: true,
+  clear: true,
 };

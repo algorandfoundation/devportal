@@ -21,18 +21,18 @@ title: types/app-spec
 
 ### Type Aliases
 
-- [ABIType](types_app_spec.md#abitype)
-- [AVMType](types_app_spec.md#avmtype)
-- [CallConfigValue](types_app_spec.md#callconfigvalue)
-- [DefaultArgument](types_app_spec.md#defaultargument)
-- [FieldName](types_app_spec.md#fieldname)
-- [HintSpec](types_app_spec.md#hintspec)
-- [StateSchema](types_app_spec.md#stateschema)
-- [StructElement](types_app_spec.md#structelement)
+- [ABIType](/reference/algokit-utils-ts/api/modules/types_app_spec/#abitype)
+- [AVMType](/reference/algokit-utils-ts/api/modules/types_app_spec/#avmtype)
+- [CallConfigValue](/reference/algokit-utils-ts/api/modules/types_app_spec/#callconfigvalue)
+- [DefaultArgument](/reference/algokit-utils-ts/api/modules/types_app_spec/#defaultargument)
+- [FieldName](/reference/algokit-utils-ts/api/modules/types_app_spec/#fieldname)
+- [HintSpec](/reference/algokit-utils-ts/api/modules/types_app_spec/#hintspec)
+- [StateSchema](/reference/algokit-utils-ts/api/modules/types_app_spec/#stateschema)
+- [StructElement](/reference/algokit-utils-ts/api/modules/types_app_spec/#structelement)
 
 ### Functions
 
-- [arc32ToArc56](types_app_spec.md#arc32toarc56)
+- [arc32ToArc56](/reference/algokit-utils-ts/api/modules/types_app_spec/#arc32toarc56)
 
 ## Type Aliases
 
@@ -134,7 +134,7 @@ Schema spec summary for global or local storage
 
 ### StructElement
 
-Ƭ **StructElement**: [[`FieldName`](types_app_spec.md#fieldname), [`ABIType`](types_app_spec.md#abitype)]
+Ƭ **StructElement**: [[`FieldName`](/reference/algokit-utils-ts/api/modules/types_app_spec/#fieldname), [`ABIType`](/reference/algokit-utils-ts/api/modules/types_app_spec/#abitype)]
 
 The elements of the struct/tuple: `FieldName`, `ABIType`
 

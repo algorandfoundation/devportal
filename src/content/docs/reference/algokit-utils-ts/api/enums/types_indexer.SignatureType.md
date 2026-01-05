@@ -12,9 +12,9 @@ Type of signature used by an account
 
 ### Enumeration Members
 
-- [lsig](types_indexer.SignatureType.md#lsig)
-- [msig](types_indexer.SignatureType.md#msig)
-- [sig](types_indexer.SignatureType.md#sig)
+- [lsig](/reference/algokit-utils-ts/api/enums/types_indexersignaturetype/#lsig)
+- [msig](/reference/algokit-utils-ts/api/enums/types_indexersignaturetype/#msig)
+- [sig](/reference/algokit-utils-ts/api/enums/types_indexersignaturetype/#sig)
 
 ## Enumeration Members
 

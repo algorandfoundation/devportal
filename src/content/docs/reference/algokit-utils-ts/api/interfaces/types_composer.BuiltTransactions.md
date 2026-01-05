@@ -12,9 +12,9 @@ Set of transactions built by `TransactionComposer`.
 
 ### Properties
 
-- [methodCalls](types_composer.BuiltTransactions.md#methodcalls)
-- [signers](types_composer.BuiltTransactions.md#signers)
-- [transactions](types_composer.BuiltTransactions.md#transactions)
+- [methodCalls](/reference/algokit-utils-ts/api/interfaces/types_composerbuilttransactions/#methodcalls)
+- [signers](/reference/algokit-utils-ts/api/interfaces/types_composerbuilttransactions/#signers)
+- [transactions](/reference/algokit-utils-ts/api/interfaces/types_composerbuilttransactions/#transactions)
 
 ## Properties
 

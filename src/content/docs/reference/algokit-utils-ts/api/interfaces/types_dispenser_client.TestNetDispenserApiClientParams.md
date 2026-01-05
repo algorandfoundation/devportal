@@ -12,8 +12,8 @@ The parameters to construct a TestNet Dispenser API client.
 
 ### Properties
 
-- [authToken](types_dispenser_client.TestNetDispenserApiClientParams.md#authtoken)
-- [requestTimeout](types_dispenser_client.TestNetDispenserApiClientParams.md#requesttimeout)
+- [authToken](/reference/algokit-utils-ts/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/#authtoken)
+- [requestTimeout](/reference/algokit-utils-ts/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/#requesttimeout)
 
 ## Properties
 

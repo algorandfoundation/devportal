@@ -12,9 +12,9 @@ Parameters to get and decode a box value as an ABI type.
 
 ### Properties
 
-- [appId](types_app_manager.BoxValueRequestParams.md#appid)
-- [boxName](types_app_manager.BoxValueRequestParams.md#boxname)
-- [type](types_app_manager.BoxValueRequestParams.md#type)
+- [appId](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxvaluerequestparams/#appid)
+- [boxName](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxvaluerequestparams/#boxname)
+- [type](/reference/algokit-utils-ts/api/interfaces/types_app_managerboxvaluerequestparams/#type)
 
 ## Properties
 

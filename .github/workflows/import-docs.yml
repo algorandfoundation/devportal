@@ -1,20 +1,11 @@
 name: Import Documentation
 
 on:
-  repository_dispatch:
-    types: [docs_updated]
+  schedule:
+    # Runs daily at midnight ET (5:00 AM UTC)
+    - cron: "0 5 * * *"
 
   workflow_dispatch:
-    inputs:
-      source_repo:
-        description: "Source repository to import docs from (optional)"
-        required: false
-        type: string
-      version:
-        description: "Version to import (default: latest)"
-        required: false
-        type: string
-        default: "latest"
 
 permissions:
   contents: write
@@ -73,63 +64,14 @@ jobs:
         run: |
           echo "🔄 Documentation import triggered"
           echo "Event: ${{ github.event_name }}"
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "Source Repository: ${{ github.event.client_payload.source_repo }}"
-            echo "Source Name: ${{ github.event.client_payload.source_name }}"
-            echo "Branch: ${{ github.event.client_payload.branch }}"
-            echo "Version: ${{ github.event.client_payload.version }}"
-            echo "Format: ${{ github.event.client_payload.structure }}"
-            echo "Commit: ${{ github.event.client_payload.ref }}"
-            echo "Trigger Event: ${{ github.event.client_payload.trigger_event }}"
-          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "Manual trigger"
-            echo "Source Repository: ${{ github.event.inputs.source_repo }}"
-            echo "Version: ${{ github.event.inputs.version }}"
-          fi
-
-      - name: Set Import Environment Variables
-        run: |
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "SOURCE_REPO=${{ github.event.client_payload.source_repo }}" >> $GITHUB_ENV
-            echo "SOURCE_NAME=${{ github.event.client_payload.source_name }}" >> $GITHUB_ENV
-            echo "SOURCE_BRANCH=${{ github.event.client_payload.branch }}" >> $GITHUB_ENV
-            echo "SOURCE_VERSION=${{ github.event.client_payload.version }}" >> $GITHUB_ENV
-            echo "SOURCE_COMMIT=${{ github.event.client_payload.ref }}" >> $GITHUB_ENV
-          else
-            SOURCE_REPO_INPUT="${{ github.event.inputs.source_repo }}"
-            SOURCE_NAME_INPUT=$SOURCE_REPO_INPUT
-            if [ -n "$SOURCE_REPO_INPUT" ]; then
-              SOURCE_NAME_INPUT=$(echo "$SOURCE_REPO_INPUT" | cut -d'/' -f2)
-            else
-              SOURCE_NAME_INPUT="manual-import"
-            fi
-            echo "SOURCE_REPO=$SOURCE_REPO_INPUT" >> $GITHUB_ENV
-            echo "SOURCE_NAME=$SOURCE_NAME_INPUT" >> $GITHUB_ENV
-            echo "SOURCE_BRANCH=docs-dist" >> $GITHUB_ENV
-            echo "SOURCE_VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
-            echo "SOURCE_COMMIT=unknown" >> $GITHUB_ENV
-          fi
-
-      - name: Clear Existing Imported Docs
-        run: |
-          echo "🧹 Clearing existing docs for $SOURCE_REPO"
-          if ! pnpm run import:clear "$SOURCE_REPO"; then
-            echo "❌ Failed to clean docs for $SOURCE_REPO. Check clean-docs-import script output for details." >&2
-            exit 1
-          fi
 
       - name: Import Documentation
         id: import
         run: |
           echo "📥 Starting documentation import..."
-          echo "Importing from: $SOURCE_REPO"
-          echo "Version: $SOURCE_VERSION"
           pnpm run import:docs
         env:
           GITHUB_TOKEN: ${{ env.AUTOMATION_TOKEN }}
-          IMPORT_SOURCE_REPO: ${{ env.SOURCE_REPO }}
-          IMPORT_SOURCE_BRANCH: ${{ env.SOURCE_BRANCH }}
-          IMPORT_SOURCE_VERSION: ${{ env.SOURCE_VERSION }}
 
       - name: Check for Changes
         id: git-check
@@ -140,23 +82,14 @@ jobs:
             echo "📋 No documentation changes detected"
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo "📝 Documentation changes detected:"
+            echo "📝 Documentation changes detected"
             git status --short
-            CHANGED_FILES=$(git diff --staged --name-only)
-            CHANGED_COUNT=$(printf "%s\n" "$CHANGED_FILES" | sed '/^$/d' | wc -l | tr -d ' ')
-            {
-              echo "changed_count=$CHANGED_COUNT"
-              echo 'changed_files<<EOF'
-              echo "$CHANGED_FILES"
-              echo 'EOF'
-            } >> $GITHUB_OUTPUT
           fi
 
-      - name: Create PR Branch
+      - name: Set PR Branch
         if: steps.git-check.outputs.has_changes == 'true'
         run: |
-          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-          PR_BRANCH="docs-update/${SOURCE_NAME:-source}-${SOURCE_VERSION:-latest}-$TIMESTAMP"
+          PR_BRANCH="docs/documentation-import"
           echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
 
       - name: Create Pull Request
@@ -167,32 +100,16 @@ jobs:
           token: ${{ env.AUTOMATION_TOKEN }}
           branch: ${{ env.PR_BRANCH }}
           commit-message: |
-            docs: import documentation from ${{ env.SOURCE_NAME }}
-
-            Source: ${{ env.SOURCE_REPO }}@${{ env.SOURCE_COMMIT }}
-            Version: ${{ env.SOURCE_VERSION }}
-            Files changed: ${{ steps.git-check.outputs.changed_count }}
+            docs: Import updated documentation
 
             Auto-imported via GitHub Actions
           committer: DevPortal Documentation Bot <action@github.com>
           delete-branch: true
-          title: "Documentation Update: ${{ env.SOURCE_NAME }}"
+          title: "Documentation Update"
           body: |
             ## 📚 Documentation Import
 
-            This PR contains automated documentation updates from **${{ env.SOURCE_REPO }}**.
-
-            ### Source Information
-            - **Repository**: `${{ env.SOURCE_REPO }}`
-            - **Version**: `${{ env.SOURCE_VERSION }}`
-            - **Commit**: `${{ env.SOURCE_COMMIT }}`
-            - **Branch**: `${{ env.SOURCE_BRANCH }}`
-            - **Files Changed**: ${{ steps.git-check.outputs.changed_count }}
-
-            ### Trigger Details
-            - **Event Type**: ${{ github.event_name }}
-            - **Triggered At**: ${{ github.event.client_payload.timestamp || github.event.repository.updated_at }}
-            ${{ github.event.client_payload.reason && format('- **Reason**: {0}', github.event.client_payload.reason) || '' }}
+            This PR contains automated documentation updates from configured repositories.
 
             ### Review Checklist
             - [ ] Documentation structure looks correct
@@ -208,64 +125,56 @@ jobs:
             import
           assignees: ""
           reviewers: ""
-          team-reviewers: ""
+          team-reviewers: devrel
           draft: false
 
-      - name: Add PR Comment
-        if: steps.git-check.outputs.has_changes == 'true' && steps.create-pr.outputs.pull-request-number
-        uses: peter-evans/create-or-update-comment@v3
-        with:
-          token: ${{ env.AUTOMATION_TOKEN }}
-          issue-number: ${{ steps.create-pr.outputs.pull-request-number }}
-          body: |
-            ### 🔍 Import Summary
+      - name: Comment on PR
+        if: steps.git-check.outputs.has_changes == 'true' && steps.create-pr.outputs.pull-request-number && steps.create-pr.outputs.pull-request-operation == 'created'
+        run: |
+          gh pr comment ${{ steps.create-pr.outputs.pull-request-number }} --body "$(cat <<EOF
+          ### 🔍 Import Summary
 
-            <details>
-            <summary>Changed Files</summary>
+          Documentation has been automatically imported from configured repositories.
 
-            ```
-            ${{ steps.git-check.outputs.changed_files }}
-            ```
-            </details>
-
-            <details>
-            <summary>Import Configuration</summary>
-
-            ```json
-            {
-              "source_repo": "${{ env.SOURCE_REPO }}",
-              "version": "${{ env.SOURCE_VERSION }}",
-              "branch": "${{ env.SOURCE_BRANCH }}",
-              "commit": "${{ env.SOURCE_COMMIT }}"
-            }
-            ```
-            </details>
-
-            To merge this PR:
-            1. Review the changed files
-            2. Verify documentation renders correctly
-            3. Approve and merge
+          ### Next Steps
+          1. Review the changed files
+          2. Verify documentation renders correctly
+          3. Approve and merge
+          EOF
+          )"
+        env:
+          GH_TOKEN: ${{ env.AUTOMATION_TOKEN }}
 
       - name: Summary
         if: always()
         run: |
           if [ "${{ steps.git-check.outputs.has_changes }}" = "true" ]; then
-            echo "✅ Documentation import completed successfully"
-            echo "📝 Pull Request created: #${{ steps.create-pr.outputs.pull-request-number }}"
-            echo "🔗 PR URL: ${{ steps.create-pr.outputs.pull-request-url }}"
+            PR_OPERATION="${{ steps.create-pr.outputs.pull-request-operation }}"
+
+            if [ "$PR_OPERATION" = "updated" ]; then
+              echo "✅ Documentation import completed successfully"
+              echo "🔄 Pull Request updated: #${{ steps.create-pr.outputs.pull-request-number }}"
+              echo "🔗 PR URL: ${{ steps.create-pr.outputs.pull-request-url }}"
+              PR_ACTION="Updated"
+            else
+              echo "✅ Documentation import completed successfully"
+              echo "📝 Pull Request created: #${{ steps.create-pr.outputs.pull-request-number }}"
+              echo "🔗 PR URL: ${{ steps.create-pr.outputs.pull-request-url }}"
+              PR_ACTION="Created"
+            fi
+
             echo "## Documentation Import Summary" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- **Source**: \`$SOURCE_REPO\`" >> $GITHUB_STEP_SUMMARY
-            echo "- **Version**: \`$SOURCE_VERSION\`" >> $GITHUB_STEP_SUMMARY
-            echo "- **PR**: #${{ steps.create-pr.outputs.pull-request-number }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR Action**: $PR_ACTION" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR**: [#${{ steps.create-pr.outputs.pull-request-number }}](${{ steps.create-pr.outputs.pull-request-url }})" >> $GITHUB_STEP_SUMMARY
             echo "- **Status**: ✅ Success" >> $GITHUB_STEP_SUMMARY
           elif [ "${{ steps.git-check.outputs.has_changes }}" = "false" ]; then
             echo "✅ Documentation import completed - no changes detected"
-            echo "ℹ️ The documentation is already up to date"
+            echo "ℹ️ All documentation is already up to date"
             echo "## Documentation Import Summary" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- **Source**: \`$SOURCE_REPO\`" >> $GITHUB_STEP_SUMMARY
-            echo "- **Version**: \`$SOURCE_VERSION\`" >> $GITHUB_STEP_SUMMARY
+            echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
             echo "- **Status**: ℹ️ No changes needed" >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ Documentation import failed"

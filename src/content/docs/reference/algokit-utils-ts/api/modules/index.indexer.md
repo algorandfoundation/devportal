@@ -2,24 +2,24 @@
 title: 'Namespace: indexer'
 ---
 
-[@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [index](index.md) / indexer
+[@algorandfoundation/algokit-utils](/reference/algokit-utils-ts/api/readme/) / [index](/reference/algokit-utils-ts/api/modules/) / indexer
 
-[index](index.md).indexer
+[index](/reference/algokit-utils-ts/api/modules/).indexer
 
 ## Table of contents
 
 ### Type Aliases
 
-- [SearchForTransactions](index.indexer.md#searchfortransactions)
+- [SearchForTransactions](/reference/algokit-utils-ts/api/modules/indexindexer/#searchfortransactions)
 
 ### Functions
 
-- [executePaginatedRequest](index.indexer.md#executepaginatedrequest)
-- [lookupAccountByAddress](index.indexer.md#lookupaccountbyaddress)
-- [lookupAccountCreatedApplicationByAddress](index.indexer.md#lookupaccountcreatedapplicationbyaddress)
-- [lookupAssetHoldings](index.indexer.md#lookupassetholdings)
-- [lookupTransactionById](index.indexer.md#lookuptransactionbyid)
-- [searchTransactions](index.indexer.md#searchtransactions)
+- [executePaginatedRequest](/reference/algokit-utils-ts/api/modules/indexindexer/#executepaginatedrequest)
+- [lookupAccountByAddress](/reference/algokit-utils-ts/api/modules/indexindexer/#lookupaccountbyaddress)
+- [lookupAccountCreatedApplicationByAddress](/reference/algokit-utils-ts/api/modules/indexindexer/#lookupaccountcreatedapplicationbyaddress)
+- [lookupAssetHoldings](/reference/algokit-utils-ts/api/modules/indexindexer/#lookupassetholdings)
+- [lookupTransactionById](/reference/algokit-utils-ts/api/modules/indexindexer/#lookuptransactionbyid)
+- [searchTransactions](/reference/algokit-utils-ts/api/modules/indexindexer/#searchtransactions)
 
 ## Type Aliases
 

@@ -2,13 +2,9 @@
 title: AlgoKit TypeScript Utilities
 ---
 
-import YouTube from '/src/components/YouTube.astro';
-
 A set of core Algorand utilities written in TypeScript and released via npm that make it easier to build, test and deploy solutions on the Algorand Blockchain, including APIs, console apps and dApps. This project is part of [AlgoKit](https://github.com/algorandfoundation/algokit-cli).
 
 The goal of this library is to provide intuitive, productive utility functions that make it easier, quicker and safer to build applications on Algorand. Largely these functions provide a thin wrapper over the underlying Algorand SDK, but provide a higher level interface with sensible defaults and capabilities for common tasks that make development faster and easier.
-
-<YouTube id='s8rmuiXQmcU' title='Introduction to AlgoKit Utils Typescript' />
 
 Note: If you prefer Python there's an equivalent [Python utility library](https://github.com/algorandfoundation/algokit-utils-py).
 
@@ -24,7 +20,7 @@ This library is designed with the following principles:
 
 # Installation
 
-Before installing, you'll need to decide on the version you want to target. Version 7 and 8 have the same feature set, however v7 leverages `algosdk@>=2.9.0<3.0`, whereas v8 leverages `algosdk@>=3.0.0`. Your project and it's dependencies will help you decide which version to target.
+Before installing, you'll need to decide on the version you want to target. Version 7 and 8 have the same feature set, however v7 leverages algosdk@>=2.9.0<3.0, whereas v8 leverages algosdk@>=3.0.0. Your project and it's dependencies will help you decide which version to target.
 
 Once you've decided on the target version, this library can be installed from NPM using your favourite npm client, e.g.:
 
@@ -63,7 +59,7 @@ As well as `AlgorandClient` and `Config`, you can use intellisense to auto-compl
 >
 > This version will still work until at least v9, but it exposes an older, function-based interface to the functionality that is deprecated. The new way to use AlgoKit Utils is via the `AlgorandClient` class, which is easier, simpler and more convenient to use and has powerful new features.
 >
-> If you are migrating from the old functions to the new ones then you can follow the [migration guide](v7-migration.md).
+> If you are migrating from the old functions to the new ones then you can follow the [migration guide](/algokit/utils/typescript/v7-migration/).
 
 The main entrypoint to the bulk of the functionality is the `AlgorandClient` class, most of the time you can get started by typing `AlgorandClient.` and choosing one of the static initialisation methods to create an [Algorand client](/algokit/utils/typescript/algorand-client/), e.g.:
 
@@ -104,7 +100,7 @@ Or, you can generally get away with just importing the `algorandFixture` since i
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
-To see how to use it consult the [testing capability page](capabilities/testing.md) or to see what's available look at the [reference documentation](/reference/algokit-utils-ts/api/modules/testing/).
+To see how to use it consult the [testing capability page](/algokit/utils/typescript/testing/) or to see what's available look at the [reference documentation](/reference/algokit-utils-ts/api/modules/testing/).
 
 ## Types
 

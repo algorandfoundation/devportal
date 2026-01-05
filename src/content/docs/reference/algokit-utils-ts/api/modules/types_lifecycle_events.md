@@ -12,7 +12,7 @@ title: types/lifecycle-events
 
 ### Type Aliases
 
-- [EventDataMap](types_lifecycle_events.md#eventdatamap)
+- [EventDataMap](/reference/algokit-utils-ts/api/modules/types_lifecycle_events/#eventdatamap)
 
 ## Type Aliases
 

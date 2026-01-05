@@ -12,42 +12,42 @@ Account wrapper that supports partial or full multisig signing.
 
 ### Constructors
 
-- [constructor](types_account.MultisigAccount.md#constructor)
+- [constructor](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#constructor)
 
 ### Properties
 
-- [\_addr](types_account.MultisigAccount.md#_addr)
-- [\_params](types_account.MultisigAccount.md#_params)
-- [\_signer](types_account.MultisigAccount.md#_signer)
-- [\_signingAccounts](types_account.MultisigAccount.md#_signingaccounts)
+- [\_addr](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#_addr)
+- [\_params](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#_params)
+- [\_signer](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#_signer)
+- [\_signingAccounts](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#_signingaccounts)
 
 ### Accessors
 
-- [addr](types_account.MultisigAccount.md#addr)
-- [params](types_account.MultisigAccount.md#params)
-- [signer](types_account.MultisigAccount.md#signer)
-- [signingAccounts](types_account.MultisigAccount.md#signingaccounts)
+- [addr](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#addr)
+- [params](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#params)
+- [signer](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#signer)
+- [signingAccounts](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#signingaccounts)
 
 ### Methods
 
-- [sign](types_account.MultisigAccount.md#sign)
+- [sign](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/#sign)
 
 ## Constructors
 
 ### constructor
 
-• **new MultisigAccount**(`multisigParams`, `signingAccounts`): [`MultisigAccount`](types_account.MultisigAccount.md)
+• **new MultisigAccount**(`multisigParams`, `signingAccounts`): [`MultisigAccount`](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/)
 
 #### Parameters
 
-| Name              | Type                                                                 |
-| :---------------- | :------------------------------------------------------------------- |
-| `multisigParams`  | `MultisigMetadata`                                                   |
-| `signingAccounts` | (`default` \| [`SigningAccount`](types_account.SigningAccount.md))[] |
+| Name              | Type                                                                                                      |
+| :---------------- | :-------------------------------------------------------------------------------------------------------- |
+| `multisigParams`  | `MultisigMetadata`                                                                                        |
+| `signingAccounts` | (`default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/))[] |
 
 #### Returns
 
-[`MultisigAccount`](types_account.MultisigAccount.md)
+[`MultisigAccount`](/reference/algokit-utils-ts/api/classes/types_accountmultisigaccount/)
 
 #### Defined in
 
@@ -87,7 +87,7 @@ Account wrapper that supports partial or full multisig signing.
 
 ### \_signingAccounts
 
-• **\_signingAccounts**: (`default` \| [`SigningAccount`](types_account.SigningAccount.md))[]
+• **\_signingAccounts**: (`default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/))[]
 
 #### Defined in
 
@@ -145,13 +145,13 @@ The transaction signer for the multisig account
 
 ### signingAccounts
 
-• `get` **signingAccounts**(): readonly (`default` \| [`SigningAccount`](types_account.SigningAccount.md))[]
+• `get` **signingAccounts**(): readonly (`default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/))[]
 
 The list of accounts that are present to sign
 
 #### Returns
 
-readonly (`default` \| [`SigningAccount`](types_account.SigningAccount.md))[]
+readonly (`default` \| [`SigningAccount`](/reference/algokit-utils-ts/api/classes/types_accountsigningaccount/))[]
 
 #### Defined in
 

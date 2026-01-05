@@ -12,7 +12,7 @@ Parameters for `createAsset` call.
 
 ## Hierarchy
 
-- [`SendTransactionParams`](types_transaction.SendTransactionParams.md)
+- [`SendTransactionParams`](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/)
 
   ↳ **`CreateAssetParams`**
 
@@ -20,29 +20,29 @@ Parameters for `createAsset` call.
 
 ### Properties
 
-- [atc](types_asset.CreateAssetParams.md#atc)
-- [clawbackAccount](types_asset.CreateAssetParams.md#clawbackaccount)
-- [creator](types_asset.CreateAssetParams.md#creator)
-- [decimals](types_asset.CreateAssetParams.md#decimals)
-- [fee](types_asset.CreateAssetParams.md#fee)
-- [freezeAccount](types_asset.CreateAssetParams.md#freezeaccount)
-- [frozenByDefault](types_asset.CreateAssetParams.md#frozenbydefault)
-- [lease](types_asset.CreateAssetParams.md#lease)
-- [manager](types_asset.CreateAssetParams.md#manager)
-- [maxFee](types_asset.CreateAssetParams.md#maxfee)
-- [maxRoundsToWaitForConfirmation](types_asset.CreateAssetParams.md#maxroundstowaitforconfirmation)
-- [metadataHash](types_asset.CreateAssetParams.md#metadatahash)
-- [name](types_asset.CreateAssetParams.md#name)
-- [note](types_asset.CreateAssetParams.md#note)
-- [populateAppCallResources](types_asset.CreateAssetParams.md#populateappcallresources)
-- [reserveAccount](types_asset.CreateAssetParams.md#reserveaccount)
-- [skipSending](types_asset.CreateAssetParams.md#skipsending)
-- [skipWaiting](types_asset.CreateAssetParams.md#skipwaiting)
-- [suppressLog](types_asset.CreateAssetParams.md#suppresslog)
-- [total](types_asset.CreateAssetParams.md#total)
-- [transactionParams](types_asset.CreateAssetParams.md#transactionparams)
-- [unit](types_asset.CreateAssetParams.md#unit)
-- [url](types_asset.CreateAssetParams.md#url)
+- [atc](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#atc)
+- [clawbackAccount](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#clawbackaccount)
+- [creator](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#creator)
+- [decimals](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#decimals)
+- [fee](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#fee)
+- [freezeAccount](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#freezeaccount)
+- [frozenByDefault](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#frozenbydefault)
+- [lease](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#lease)
+- [manager](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#manager)
+- [maxFee](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#maxroundstowaitforconfirmation)
+- [metadataHash](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#metadatahash)
+- [name](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#name)
+- [note](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#note)
+- [populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#populateappcallresources)
+- [reserveAccount](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#reserveaccount)
+- [skipSending](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#skipsending)
+- [skipWaiting](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#skipwaiting)
+- [suppressLog](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#suppresslog)
+- [total](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#total)
+- [transactionParams](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#transactionparams)
+- [unit](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#unit)
+- [url](/reference/algokit-utils-ts/api/interfaces/types_assetcreateassetparams/#url)
 
 ## Properties
 
@@ -54,7 +54,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[atc](types_transaction.SendTransactionParams.md#atc)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[atc](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#atc)
 
 #### Defined in
 
@@ -114,7 +114,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[fee](types_transaction.SendTransactionParams.md#fee)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[fee](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#fee)
 
 #### Defined in
 
@@ -180,7 +180,7 @@ The maximum fee that you are happy to pay (default: unbounded) - if this is set 
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxFee](types_transaction.SendTransactionParams.md#maxfee)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[maxFee](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#maxfee)
 
 #### Defined in
 
@@ -196,7 +196,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[maxRoundsToWaitForConfirmation](types_transaction.SendTransactionParams.md#maxroundstowaitforconfirmation)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[maxRoundsToWaitForConfirmation](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -249,7 +249,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[populateAppCallResources](types_transaction.SendTransactionParams.md#populateappcallresources)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[populateAppCallResources](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#populateappcallresources)
 
 #### Defined in
 
@@ -281,7 +281,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipSending](types_transaction.SendTransactionParams.md#skipsending)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[skipSending](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#skipsending)
 
 #### Defined in
 
@@ -297,7 +297,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[skipWaiting](types_transaction.SendTransactionParams.md#skipwaiting)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[skipWaiting](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#skipwaiting)
 
 #### Defined in
 
@@ -313,7 +313,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendTransactionParams](types_transaction.SendTransactionParams.md).[suppressLog](types_transaction.SendTransactionParams.md#suppresslog)
+[SendTransactionParams](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/).[suppressLog](/reference/algokit-utils-ts/api/interfaces/types_transactionsendtransactionparams/#suppresslog)
 
 #### Defined in
 
