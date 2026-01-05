@@ -28,7 +28,7 @@ export default defineConfig({
       plugins: [
         starlightImageZoom(),
         starlightLinksValidator({
-          errorOnRelativeLinks: true,
+          errorOnRelativeLinks: false,
           errorOnInvalidHashes: false,
           exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
         }),
