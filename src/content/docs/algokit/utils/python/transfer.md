@@ -22,7 +22,7 @@ result = algorand_client.send.payment(
     PaymentParams(
         sender="SENDERADDRESS",
         receiver="RECEIVERADDRESS",
-        amount=AlgoAmount(4, "algo")
+        amount=AlgoAmount(algo=4)
     )
 )
 
@@ -31,7 +31,7 @@ result2 = algorand_client.send.payment(
     PaymentParams(
         sender="SENDERADDRESS",
         receiver="RECEIVERADDRESS",
-        amount=AlgoAmount(4, "algo"),
+        amount=AlgoAmount(algo=4),
         close_remainder_to="CLOSEREMAINDERTOADDRESS",
         lease="lease",
         note=b"note",
@@ -40,11 +40,11 @@ result2 = algorand_client.send.payment(
         # You wouldn't normally set this field
         first_valid_round=1000,
         validity_window=10,
-        extra_fee=AlgoAmount(1000, "microalgo"),
-        static_fee=AlgoAmount(1000, "microalgo"),
+        extra_fee=AlgoAmount(micro_algo=1000),
+        static_fee=AlgoAmount(micro_algo=1000),
         # Max fee doesn't make sense with extra_fee AND static_fee
         # already specified, but here for completeness
-        max_fee=AlgoAmount(3000, "microalgo"),
+        max_fee=AlgoAmount(micro_algo=3000),
         # Signer only needed if you want to provide one,
         # generally you'd register it with AlgorandClient
         # against the sender and not need to pass it in
@@ -89,14 +89,14 @@ The general structure of these calls is similar, they all take:
 # From account
 
 # Basic example
-algorand_client.account.ensure_funded("ACCOUNTADDRESS", "DISPENSERADDRESS", AlgoAmount(1, "algo"))
+algorand_client.account.ensure_funded("ACCOUNTADDRESS", "DISPENSERADDRESS", AlgoAmount(algo=1))
 # With configuration
 algorand_client.account.ensure_funded(
     "ACCOUNTADDRESS",
     "DISPENSERADDRESS",
-    AlgoAmount(1, "algo"),
-    min_funding_increment=AlgoAmount(2, "algo"),
-    fee=AlgoAmount(1000, "microalgo"),
+    AlgoAmount(algo=1),
+    min_funding_increment=AlgoAmount(algo=2),
+    fee=AlgoAmount(micro_algo=1000),
     send_params=SendParams(
         suppress_log=True,
     ),
@@ -105,13 +105,13 @@ algorand_client.account.ensure_funded(
 # From environment
 
 # Basic example
-algorand_client.account.ensure_funded_from_environment("ACCOUNTADDRESS", AlgoAmount(1, "algo"))
+algorand_client.account.ensure_funded_from_environment("ACCOUNTADDRESS", AlgoAmount(algo=1))
 # With configuration
 algorand_client.account.ensure_funded_from_environment(
     "ACCOUNTADDRESS",
-    AlgoAmount(1, "algo"),
-    min_funding_increment=AlgoAmount(2, "algo"),
-    fee=AlgoAmount(1000, "microalgo"),
+    AlgoAmount(algo=1),
+    min_funding_increment=AlgoAmount(algo=2),
+    fee=AlgoAmount(micro_algo=1000),
     send_params=SendParams(
         suppress_log=True,
     ),
@@ -123,14 +123,14 @@ algorand_client.account.ensure_funded_from_environment(
 algorand_client.account.ensure_funded_from_testnet_dispenser_api(
     "ACCOUNTADDRESS",
     algorand_client.client.get_testnet_dispenser_from_environment(),
-    AlgoAmount(1, "algo")
+    AlgoAmount(algo=1)
 )
 # With configuration
 algorand_client.account.ensure_funded_from_testnet_dispenser_api(
     "ACCOUNTADDRESS",
     algorand_client.client.get_testnet_dispenser_from_environment(),
-    AlgoAmount(1, "algo"),
-    min_funding_increment=AlgoAmount(2, "algo"),
+    AlgoAmount(algo=1),
+    min_funding_increment=AlgoAmount(algo=2),
 )
 ```
 
