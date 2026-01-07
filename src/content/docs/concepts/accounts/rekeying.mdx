@@ -109,7 +109,7 @@ The rekey-to transaction workflow is as follows:
 
 ### Construct an Unsigned Transaction
 
-We will construct an unsigned transaction using `goal` with the `--outfile` flag to write the unsigned transaction to a file:
+We will construct an unsigned transaction using `goal` with the `--out` flag to write the unsigned transaction to a file:
 
 ```shell showLineNumbers=false frame=none
 goal clerk send --from $ADDR_A --to $ADDR_B --amount 100000 --out send-single.txn
