@@ -228,6 +228,11 @@ New ideas for ARCs are discussed through <a href="https://github.com/algorandfou
     <td><a href="/arc-standards/arc-0053/" style='display: block; text-decoration: none; color: inherit;'>Metadata Declarations</a></td>
     <td><a href="/arc-standards/arc-0053/" style='display: block; text-decoration: none; color: inherit;'>A specification for a decentralized, Self-declared, & Verifiable Tokens, Collections, & Metadata</a></td>
   </tr>
+      <tr>
+    <td><a href="/arc-standards/arc-0089/" style='display: block; text-decoration: none; color: inherit;'>89</a></td>
+    <td><a href="/arc-standards/arc-0089/" style='display: block; text-decoration: none; color: inherit;'>ASA Metadata Registry</a></td>
+    <td><a href="/arc-standards/arc-0089/" style='display: block; text-decoration: none; color: inherit;'>Singleton Application providing ASA metadata via Algod API or the AVM</a></td>
+  </tr>
     </tbody>
   </table>
 </section>
