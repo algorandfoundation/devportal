@@ -30,8 +30,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@catppuccin/vscode':
-        specifier: ^3.15.1
-        version: 3.15.1
+        specifier: ^3.18.1
+        version: 3.18.1
       '@larkiny/astro-github-loader':
         specifier: ^0.11.3
         version: 0.11.3(astro@5.14.4(@types/node@22.12.0)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.0))
@@ -449,8 +449,12 @@ packages:
   '@catppuccin/palette@1.2.0':
     resolution: {integrity: sha512-R5fxLcU47mRcsdQkXZBNfxt7SdEqLGWb1qhEKBrnYfEB4ZWOQRBEow4e78PKxaFUECBNOs6uEkwvwxFL9FmQqQ==}
 
-  '@catppuccin/vscode@3.15.1':
-    resolution: {integrity: sha512-2y5LpSom0SytZTy/Jyu02qK+V1Uyzk9xlCVwDmmm08CI4nPCuVnOccQmaq83vUpZ/r3sdhWF6Aa3XF+ahfz00g==}
+  '@catppuccin/palette@1.7.1':
+    resolution: {integrity: sha512-aRc1tbzrevOTV7nFTT9SRdF26w/MIwT4Jwt4fDMc9itRZUDXCuEDBLyz4TQMlqO9ZP8mf5Hu4Jr6D03NLFc6Gw==}
+
+  '@catppuccin/vscode@3.18.1':
+    resolution: {integrity: sha512-aVG6vUN0RXPd8wX9X9RSiyGkwsBeGulifmwwFkYQgdEiyR2ERmv0Z/y0KADlUJMU/cDLrRxmRRbXPC5Ni+ctvQ==}
+    engines: {node: '>=22.0.0'}
 
   '@ctrl/tinycolor@4.1.0':
     resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
@@ -2185,8 +2189,8 @@ packages:
     resolution: {integrity: sha512-0LrrStPOdJj+SPCCrGhzryycLjwcgUSHBtxNA8aIDxf0GLsRh1cKYhB00Gd1lDOS4yGH69+SNn13+TWbVHETFQ==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
 
-  csstype@3.1.3:
-    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
+  csstype@3.2.3:
+    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -4161,6 +4165,7 @@ packages:
   sitemap@8.0.0:
     resolution: {integrity: sha512-+AbdxhM9kJsHtruUF39bwS/B0Fytw6Fr1o4ZAIAEqA6cke2xcoO2GleBw9Zw7nRzILVEgz7zBM5GiTJjie1G9A==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+    deprecated: 'SECURITY: Multiple vulnerabilities fixed in 8.0.1 (XML injection, path traversal, command injection, protocol injection). Upgrade immediately: npm install sitemap@8.0.1'
     hasBin: true
 
   slash@3.0.0:
@@ -5458,9 +5463,11 @@ snapshots:
 
   '@catppuccin/palette@1.2.0': {}
 
-  '@catppuccin/vscode@3.15.1':
+  '@catppuccin/palette@1.7.1': {}
+
+  '@catppuccin/vscode@3.18.1':
     dependencies:
-      '@catppuccin/palette': 1.2.0
+      '@catppuccin/palette': 1.7.1
 
   '@ctrl/tinycolor@4.1.0': {}
 
@@ -6542,7 +6549,7 @@ snapshots:
 
   '@types/react@19.1.12':
     dependencies:
-      csstype: 3.1.3
+      csstype: 3.2.3
 
   '@types/sax@1.2.7':
     dependencies:
@@ -7266,7 +7273,7 @@ snapshots:
     dependencies:
       css-tree: 2.2.1
 
-  csstype@3.1.3: {}
+  csstype@3.2.3: {}
 
   debug@2.6.9:
     dependencies:
