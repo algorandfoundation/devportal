@@ -16,13 +16,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install D2
         run: curl -fsSL https://d2lang.com/install.sh | sh -s -- --tala
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
 
@@ -60,7 +60,7 @@ jobs:
       - name: Post to Slack
         id: slack
         if: github.event_name == 'pull_request'
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v2.1.1
         with:
           payload: |
             {

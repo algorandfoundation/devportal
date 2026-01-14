@@ -29,18 +29,18 @@ jobs:
           fi
 
       - name: Checkout DevPortal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ env.AUTOMATION_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: 10.6.3
 
@@ -50,7 +50,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -94,7 +94,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.git-check.outputs.has_changes == 'true'
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v8
         id: create-pr
         with:
           token: ${{ env.AUTOMATION_TOKEN }}
