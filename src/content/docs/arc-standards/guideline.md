@@ -102,6 +102,11 @@ The goal is to make it simpler for block explorers, wallets, exchanges, marketpl
 This defines an interface extending [ARC-3](/arc-standards/arc-0003) & [ARC-69](/arc-standards/arc-0069) non fungible ASA to create Non-transferable ASA. Before issuance, both parties (issuer and receiver), have to agree on who has (if any) the authorization to burn this ASA.
 > This spec is compatible with [ARC-19](/arc-standards/arc-0019) to create an updatable Non-transferable ASA.
 
+### ARC 89 - ASA Metadata Registry
+
+This ARC defines the interface and the implementation of a singleton Application
+that provides Algorand Standard Assets metadata through the Algod API or the AVM.
+
 ## Application ARCs
 
 ### ARC 4 - Application Binary Interface (ABI)
