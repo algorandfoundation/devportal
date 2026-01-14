@@ -1,0 +1,94 @@
+# Dependabot configuration for Astro/Starlight project
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # npm/pnpm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    groups:
+      # Astro core - group together as they often need coordinated updates
+      astro-core:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      # Starlight and plugins - keep in sync
+      starlight:
+        patterns:
+          - "@astrojs/starlight"
+          - "@astrojs/starlight-*"
+          - "starlight-*"
+      # React ecosystem
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react*"
+      # Tailwind CSS
+      tailwind:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+      # TypeDoc for API documentation
+      typedoc:
+        patterns:
+          - "typedoc"
+          - "typedoc-*"
+      # Rehype/Remark markdown processing
+      markdown:
+        patterns:
+          - "rehype*"
+          - "remark*"
+          - "marked"
+      # Linting and formatting
+      linting:
+        patterns:
+          - "eslint*"
+          - "@eslint/*"
+          - "prettier*"
+          - "@typescript-eslint/*"
+          - "typescript-eslint"
+        update-types:
+          - "minor"
+          - "patch"
+      # TypeScript tooling
+      typescript:
+        patterns:
+          - "typescript"
+          - "@types/*"
+          - "tsx"
+      # Minor/patch dev dependency updates
+      dev-dependencies-minor:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+        exclude-patterns:
+          - "eslint*"
+          - "prettier*"
+          - "typescript*"
+          - "@types/*"
+    # Ignore major version bumps for stable core dependencies
+    # (review these manually as they may have breaking changes)
+    ignore:
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    groups:
+      # Group all GitHub Actions updates
+      github-actions:
+        patterns:
+          - "*"
