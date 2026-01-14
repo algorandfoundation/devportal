@@ -1,14 +1,8 @@
 ---
-title: index
+title: subscriber
 ---
 
-[**@algorandfoundation/algokit-subscriber**](README.md)
-
----
-
-[@algorandfoundation/algokit-subscriber](modules.md) / index
-
-# index
+# subscriber
 
 ## Classes
 
@@ -30,23 +24,11 @@ Create a new `AlgorandSubscriber`.
 
 ###### Parameters
 
-###### config
-
-[`AlgorandSubscriberConfig`](types/subscription.md#algorandsubscriberconfig)
-
-The subscriber configuration
-
-###### algod
-
-`AlgodClient`
-
-An algod client
-
-###### indexer?
-
-`IndexerClient`
-
-An (optional) indexer client; only needed if `subscription.syncBehaviour` is `catchup-with-indexer`
+| Parameter  | Type                                                                         | Description                                                                                         |
+| ---------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `config`   | [`AlgorandSubscriberConfig`](types/subscription.md#algorandsubscriberconfig) | The subscriber configuration                                                                        |
+| `algod`    | `AlgodClient`                                                                | An algod client                                                                                     |
+| `indexer?` | `IndexerClient`                                                              | An (optional) indexer client; only needed if `subscription.syncBehaviour` is `catchup-with-indexer` |
 
 ###### Returns
 
@@ -66,23 +48,16 @@ The listener can be async and it will be awaited if so.
 
 ###### Type Parameters
 
-###### T
-
-`T` = [`SubscribedTransaction`](types/subscription.md#subscribedtransaction)
+| Type Parameter | Default type                                                           |
+| -------------- | ---------------------------------------------------------------------- |
+| `T`            | [`SubscribedTransaction`](types/subscription.md#subscribedtransaction) |
 
 ###### Parameters
 
-###### filterName
-
-`string`
-
-The name of the filter to subscribe to
-
-###### listener
-
-[`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<`T`\>
-
-The listener function to invoke with the subscribed event
+| Parameter    | Type                                                                              | Description                                               |
+| ------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `filterName` | `string`                                                                          | The name of the filter to subscribe to                    |
+| `listener`   | [`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<`T`\> | The listener function to invoke with the subscribed event |
 
 ###### Returns
 
@@ -119,23 +94,16 @@ The listener can be async and it will be awaited if so.
 
 ###### Type Parameters
 
-###### T
-
-`T` = [`SubscribedTransaction`](types/subscription.md#subscribedtransaction)
+| Type Parameter | Default type                                                           |
+| -------------- | ---------------------------------------------------------------------- |
+| `T`            | [`SubscribedTransaction`](types/subscription.md#subscribedtransaction) |
 
 ###### Parameters
 
-###### filterName
-
-`string`
-
-The name of the filter to subscribe to
-
-###### listener
-
-[`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<`T`[]\>
-
-The listener function to invoke with the subscribed events
+| Parameter    | Type                                                                                | Description                                                |
+| ------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `filterName` | `string`                                                                            | The name of the filter to subscribe to                     |
+| `listener`   | [`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<`T`[]\> | The listener function to invoke with the subscribed events |
 
 ###### Returns
 
@@ -170,11 +138,9 @@ The listener can be async and it will be awaited if so.
 
 ###### Parameters
 
-###### listener
-
-[`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<[`BeforePollMetadata`](types/subscription.md#beforepollmetadata)\>
-
-The listener function to invoke with the pre-poll metadata
+| Parameter  | Type                                                                                                                                           | Description                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `listener` | [`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<[`BeforePollMetadata`](types/subscription.md#beforepollmetadata)\> | The listener function to invoke with the pre-poll metadata |
 
 ###### Returns
 
@@ -204,11 +170,9 @@ The listener can be async and it will be awaited if so.
 
 ###### Parameters
 
-###### listener
-
-[`ErrorListener`](types/subscription.md#errorlistener)
-
-The listener function to invoke with the error that was thrown
+| Parameter  | Type                                                   | Description                                                    |
+| ---------- | ------------------------------------------------------ | -------------------------------------------------------------- |
+| `listener` | [`ErrorListener`](types/subscription.md#errorlistener) | The listener function to invoke with the error that was thrown |
 
 ###### Returns
 
@@ -256,11 +220,9 @@ The listener can be async and it will be awaited if so.
 
 ###### Parameters
 
-###### listener
-
-[`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
-
-The listener function to invoke with the poll result
+| Parameter  | Type                                                                                                                                                                 | Description                                          |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `listener` | [`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\> | The listener function to invoke with the poll result |
 
 ###### Returns
 
@@ -305,15 +267,10 @@ This is useful when running in the context of a long-running process / container
 
 ###### Parameters
 
-###### inspect?
-
-(`pollResult`) => `void`
-
-A function that is called for each poll so the inner workings can be inspected / logged / etc.
-
-###### suppressLog?
-
-`boolean`
+| Parameter      | Type                     | Description                                                                                    |
+| -------------- | ------------------------ | ---------------------------------------------------------------------------------------------- |
+| `inspect?`     | (`pollResult`) => `void` | A function that is called for each poll so the inner workings can be inspected / logged / etc. |
+| `suppressLog?` | `boolean`                | -                                                                                              |
 
 ###### Returns
 
@@ -331,51 +288,12 @@ Stops the subscriber if previously started via `start`.
 
 ###### Parameters
 
-###### reason
-
-`unknown`
-
-The reason the subscriber is being stopped
+| Parameter | Type      | Description                                |
+| --------- | --------- | ------------------------------------------ |
+| `reason`  | `unknown` | The reason the subscriber is being stopped |
 
 ###### Returns
 
 `Promise`\<`void`\>
 
 A promise that can be awaited to ensure the subscriber has finished stopping
-
-## Functions
-
-### getSubscribedTransactions()
-
-> **getSubscribedTransactions**(`subscription`, `algod`, `indexer?`): `Promise`\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
-
-Defined in: [src/subscriptions.ts:56](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriptions.ts#L56)
-
-Executes a single pull/poll to subscribe to transactions on the configured Algorand
-blockchain for the given subscription context.
-
-#### Parameters
-
-##### subscription
-
-[`TransactionSubscriptionParams`](types/subscription.md#transactionsubscriptionparams)
-
-The subscription context.
-
-##### algod
-
-`AlgodClient`
-
-An Algod client.
-
-##### indexer?
-
-`IndexerClient`
-
-An optional indexer client, only needed when `onMaxRounds` is `catchup-with-indexer`.
-
-#### Returns
-
-`Promise`\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
-
-The result of this subscription pull/poll.
