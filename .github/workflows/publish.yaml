@@ -63,6 +63,8 @@ jobs:
         if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
         uses: slackapi/slack-github-action@v2.1.1
         with:
+          webhook-type: incoming-webhook
+          webhook: ${{ secrets.SLACK_PR_WEBHOOK_URL }}
           payload: |
             {
               "pr_id": "${{ steps.pr_info.outputs.pr_id }}",
@@ -70,5 +72,3 @@ jobs:
               "pr_url": "${{ steps.pr_info.outputs.pr_url }}",
               "preview_url": "${{ steps.deploy.outputs.deployment-url }}"
             }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PR_WEBHOOK_URL }}
