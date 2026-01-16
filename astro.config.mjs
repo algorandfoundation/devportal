@@ -30,7 +30,7 @@ export default defineConfig({
         starlightLinksValidator({
           errorOnRelativeLinks: false,
           errorOnInvalidHashes: false,
-          exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
+          exclude: ['**/reference/rest-api/**', '**/reference/sdk/**', 'https://localhost**'],
         }),
         starlightLlmsTxt({
           minify: {
