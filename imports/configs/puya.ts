@@ -43,6 +43,9 @@ export const puyaTsConfig: ImportOptions = {
     {
       pattern: 'docs/_md/{!(modules).md,**/!(_media|documents)/*.md}',
       basePath: 'src/content/docs/reference/algorand-typescript/api',
+      pathMappings: {
+        'docs/_md/': '',
+      },
       transforms: [
         conditionalTransform(
           'docs/_md/**/README.md',
