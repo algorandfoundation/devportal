@@ -37,7 +37,7 @@
     "@catppuccin/palette": "^1.2.0",
     "@catppuccin/vscode": "^3.15.1",
     "@larkiny/astro-github-loader": "^0.11.3",
-    "@tailwindcss/vite": "^4.0.14",
+    "@tailwindcss/vite": "^4.1.18",
     "@types/js-yaml": "^4.0.9",
     "astro": "^5.16.9",
     "astro-d2": "^0.3.0",
@@ -60,7 +60,7 @@
     "starlight-llms-txt": "^0.5.0",
     "starlight-openapi": "^0.21.1",
     "starlight-typedoc": "^0.17.0",
-    "tailwindcss": "^4.0.14",
+    "tailwindcss": "^4.1.18",
     "typedoc": "^0.27.3",
     "typedoc-plugin-markdown": "^4.3.1",
     "widdershins": "^4.0.1"
