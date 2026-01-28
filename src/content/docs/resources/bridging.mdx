@@ -1,5 +1,5 @@
 ---
-title: Wormhole Native Token Transfers on Algorand - Technical Implementation Guide
+title: Wormhole Native Token Transfers on Algorand
 ---
 
 import { Image } from 'astro:assets';
@@ -21,338 +21,134 @@ import optIn from '@images/wormhole-ntt-opt-in.png';
 import initiateTransfer from '@images/wormhole-ntt-intiate-transfer.png';
 import completeTransfer from '@images/wormhole-ntt-complete-transfer.png';
 import sdkTransferEVMResult from '@images/wormhole-ntt-sdk-avm-to-evm-result.png';
+import wormholeEVMResult from '@images/wormhole-ntt-avm-to-evm-result.png';
 
 This guide provides comprehensive technical documentation for implementing Wormhole's Native Token Transfers (NTT) framework between Algorand and EVM-compatible chains. The implementation enables bidirectional token transfers across heterogeneous blockchain environments through Wormhole's verified attestation architecture.
 
 
-### What is Native Token Transfers (NTT)?
+### Native Token Transfers (NTT)
+Native Token Transfers (NTT) is Wormhole's framework for transferring tokens across blockchains without requiring liquidity pools. Unlike traditional token bridges that wrap assets or rely on locked liquidity, NTT enables direct token transfers by either burning tokens on the source chain and minting them on the destination, or by locking tokens on one chain while minting representations on others.
 
-Wormhole’s Native Token Transfers (NTT) is an open, flexible, and composable Wormhole's framework for transferring tokens across blockchains without liquidity pools. Integrators have full control over how their Natively Transferred Tokens (NTTs) behave on each chain, including the token standard and metadata. For existing token deployments, the framework can be used in “locking” mode which preserves the original token supply on a single chain. Otherwise, the framework can be used in “burning” mode to deploy natively multichain tokens with the supply distributed among multiple chains.
+The framework gives integrators complete control over how their tokens behave on each chain, including the token standard, metadata, and supply distribution. This level of control makes NTT particularly valuable for projects that want to maintain native token properties across multiple blockchains while ensuring security through Wormhole's Guardian network.
 
-### Design
 
-There are two basic components to NTT:
+### Core Components
 
-(1) **Transceiver**: This contract is responsible for sending NTT transfers forwarded through the `NttManager` on the source chain and delivered to a corresponding peer `NttManager` on the recipient chain. Transceivers should follow the `ITransceiver` interface. Transceivers can be defined independently of Wormhole core and can be modified to support any verification backend. See [docs/Transceiver.md](./docs/Transceiver.md) for more info.
+#### Transceiver
+The Transceiver contract serves as the foundational abstraction for all cross-chain communication within the NTT framework. It defines a standardized interface for sending and receiving messages between chains, independent of the underlying messaging protocol. They sit at the boundary between NTT and an underlying General Messaging Protocol (GMP) such as Wormhole, Axelar, LayerZero, or CCIP.
 
-(2) **NttManager**: The NttManager contract is responsible for managing the token and the Transceivers. It also handles the rate-limiting and the message attestation logic. Note that each `NttManager` corresponds to a single token. However, a single `NttManager` can control multiple transceivers. See [docs/NttManager.md](./docs/NttManager.md) for more info.
+A transceiver does not understand tokens, balances, or rate limits. Its sole responsibility is to move opaque messages across chains and attest to their receipt. This abstraction allows the NTT framework to remain agnostic to the messaging layer. Wormhole is simply one concrete implementation.
 
-## When to Use Custom vs Existing Tokens
+#### Wormhole Transceiver
+The Wormhole Transceiver represents a concrete implementation of the Transceiver abstraction using the Wormhole messaging protocol. It bridges the generic Transceiver interface with Wormhole's specific verification model, particularly the Verified Action Approval (VAA) system.
 
-### Decision Tree
+When a Wormhole Transceiver sends a message, it interacts with Wormhole Core to publish a message that will be observed and signed by Wormhole Guardians. This creates a VAA which is a cryptographically verified attestation that a specific action occurred on the source chain. The VAA serves as a decentralized notarization, with signatures from a supermajority of Guardians providing strong security guarantees.
 
-```
-Do you have an existing token?
-│
-├─ YES → Is it on Algorand (ASA)?
-│   │
-│   ├─ YES → Deploy in LOCKING mode on Algorand
-│   │         Deploy in BURNING mode on all other chains
-│   │
-│   └─ NO → Is it on an EVM chain (ERC-20)?
-│       │
-│       ├─ YES → Deploy in LOCKING mode on that EVM chain
-│       │         Deploy in BURNING mode on all other chains (including Algorand)
-│       │
-│       └─ NO → This scenario shouldn't exist
-│
-└─ NO → Creating a new token
-    │
-    └─ Deploy in BURNING mode on ALL chains
-       Mint initial supply on chosen chain(s)
-```
+On the receiving side, the Wormhole Transceiver must verify the VAA signatures, check for replay attacks, and validate that the message originates from a known peer contract. This verification process transforms a potentially untrustworthy cross-chain message into a verified fact that can be acted upon with confidence. Each WormholeTransceiver needs to know its counterpart on other chains. This is where we need to configure peer addresses.
 
-### Use Case Examples
+#### Transceiver Manager
+The Transceiver Manager serves as the central coordination point for all cross-chain messaging within an NTT deployment. Its primary function is managing the relationship between MessageHandlers (like NttManager) and their configured Transceivers, while tracking attestations for received messages.
+
+This design enables multi-transceiver security. A message handler can require attestations from one or many transceivers before a message is considered valid. This makes it possible to combine multiple GMPs or verification backends for stronger guarantees.
+
+#### Message Handler
+The Message Handler abstract contract provides the scaffolding for executing cross-chain messages once they've been sufficiently verified. It defines the critical lifecycle methods for message approval and execution, while leaving message-specific logic to concrete implementations.
+
+It encapsulates the threshold logic, checking whether a message has received enough attestations from distinct Transceivers. It then carries out the actual business logic once approval conditions are met. This separation ensures that verification and execution remain distinct phases, preventing premature execution of unverified messages.
+
+#### NttManager
+The NTT Manager is the central orchestrator of all token transfers and sits at the heart of the NTT system. When a user wants to transfer tokens cross-chain, they interact exclusively with the NTT Manager, which handles everything from rate limiting to message creation.
+
+The manager's first responsibility is enforcing rate limits, which protect against potential exploits by limiting how many tokens can move in or out within a given time period. If a transfer exceeds the current capacity, the manager can either reject it or place it in a queue, depending on configuration. This queuing system ensures that even during high-volume periods, transfers can eventually complete once capacity refills.
+
+Beyond rate limiting, the NTT Manager creates unique message identifiers for each transfer by maintaining a sequence counter. This sequence, combined with the source chain ID and contract address, ensures every message can be uniquely identified throughout its lifecycle. The manager also maintains a registry of peer NTT Managers on other chains, knowing exactly where to send messages and from where to accept them.
+
+When receiving messages from other chains, the NTT Manager verifies that sufficient attestations have been collected before executing the transfer. It checks with the Transceiver Manager to confirm that the required number of Transceivers have verified the incoming message. Only after this verification does it call the NTT Token contract to mint or unlock tokens for the recipient.
+
+#### NttToken
+The NTT Token contract manages the actual token supply and is the lowest level of the NTT architecture. Its behavior differs significantly between Algorand and EVM chains due to fundamental differences in how these platforms handle tokens.
+
+On Algorand, tokens exist as Algorand Standard Assets (ASAs) that are natively integrated into the protocol layer. The NTT Token contract doesn't implement the token itself but rather controls the supply of an ASA. In burning mode, the ASA is created within the NTT Token contract, meaning the entire supply initially sits in the contract's account. In locking mode, the ASA already exists externally, and the NTT Token contract receives tokens when they need to be locked.
+
+On EVM chains, the NTT Token contract is an ERC-20 implementation. In burning mode, it includes mint and burn functions that the NTT Manager can call. In locking mode, it's typically an existing ERC-20 contract, and the NTT Manager holds tokens on behalf of users who have transferred them to other chains.
+
+The critical point is that after deployment, both modes function identically from the transfer perspective. Whether tokens are being `burned` or `locked`, the user experience is the same: tokens go into the NTT Token contract when leaving the chain and come out when arriving. The distinction is semantic and affects how circulating supply is calculated, but not the actual mechanics of transfers.
+
+
+### Message Lifecycle
+The lifecycle of a message can be broken down into two stages:
+1. Initiating the transfer on the source chain by locking/burning the token.
+2. Completing the transfer on the destination chain by unlocking/minting the token.
+
+#### Initiation Phase
+
+The transfer process begins when a user wants to move tokens from one chain to another. On Algorand, the user creates a transaction group that includes both a call to the NTT Manager's transfer function and an asset transfer that sends the tokens to the NTT Token contract. On EVM chains, the user must first approve the NTT Manager to spend their tokens, then call the transfer function.
+
+The NTT Manager immediately checks its rate limit to determine if the transfer can proceed. If capacity is sufficient, the manager calls the NTT Token contract to lock or burn the tokens. The tokens are removed from circulation on the source chain before any message is sent to the destination chain. In burning mode, this reduces the total supply. In locking mode, it moves the tokens into the NTT Token contract's custody. With the tokens secured, the NTT Manager creates a message containing all transfer details. 
+
+The message goes to Wormhole Core, which emits an event that Guardian nodes observe. The Guardians independently validate that the event came from a legitimate source and sign it. Once the threshold of signatures is reached, the VAA becomes available for anyone to query from Wormhole's network. The transaction succeeds, the user receives a message ID for tracking, and the tokens have been removed from the source chain.
+
+<Image src={initiateTransfer} alt=' Execute Transfer Result' />
+
+#### Completion Phase
+
+Completion on the destination chain happens in two distinct phases:
+<br />
+The first phase is message reception and attestation. A relayer retrieves the VAA from Wormhole's network and submits it to the Wormhole Transceiver on the destination chain. The Transceiver first calls Wormhole Core to verify the VAA's Guardian signatures. The Transceiver also checks that the message came from a known peer Transceiver on the source chain and VAA hasn't been processed before by checking its hash against a registry of seen messages. This replay protection ensures the same transfer can't be executed multiple times. The Transceiver Manager records this attestation, associating it with the message digest.
+
+The second phase is message execution. Once threshold has been met, the relayer, the recipient, or any third party,  calls the NTT Manager which verifies the message hasn't been executed already and the message came from a known peer NTT Manager on the source chain.
+
+Rate limiting is checked on the destination chain and if it passes, the NTT Manager calls the NTT Token contract's mint function, passing the recipient address and amount. In burning mode, this creates new tokens. In locking mode, it transfers existing tokens from the contract's custody. The tokens appear in the recipient's account, completing the transfer. The transfer is now complete end-to-end.
+
+<Image src={completeTransfer} alt=' Execute Transfer Result' />
+
+### Choosing the Right Deployment Path
+
+One of the most important design decisions when adopting NTT is whether you are working with a new token or an existing token. NTT is flexible enough to support both existing tokens and brand new multichain-native tokens. The main tool for this is the choice between **locking** and **burning** mode on each chain.
+
+1. If You Have an **Existing Token on Algorand (ASA)**
+
+- Algorand should use **locking mode**:
+  - NttToken is configured to hold the existing ASA when users transfer cross-chain.
+  - The original ASA continues to be the “canonical” representation of your token.
+  - All initial supply is on Algorand, and other chains get supply only when Algorand locks some of its ASA balance and mint or unlock on the other chains.
+- All other chains should use **burning mode**:
+  - On each destination chain, you deploy an NttToken that either wraps a newly created token or directly manages it.
+  - The supply on each destination chain increases only when Algorand has locked the corresponding amount.
+
+
+2. If You Have an **Existing Token on an EVM Chain (ERC-20)**
+- The chain with the existing ERC-20 should use **locking mode**:
+  - NttToken holds locked ERC-20 balances when users bridge out.
+  - The original ERC-20 contract remains the canonical representation.
+  - All initial supply starts and conceptually lives on that chain.
+- All other chains, including Algorand, should use **burning mode**:
+  - Algorand gets an NttToken that manages an ASA in burning mode.
+  - Supply on Algorand increases only when tokens have been locked on the origin chain.
+
+3. If You Are Creating a **New Token**
+- Every chain uses **burning mode**:
+  - On Algorand, NttToken creates a new ASA and holds the supply.
+  - On each EVM chain, NttToken deploys a new ERC-20 or equivalent managed token.
+  - You decide how to distribute the initial supply across chains: mint everything on one chain and move it out via NTT, or mint portions on multiple chains according to your distribution plan.
+
 
 | Example | Scenario | Setup |
 |--------|----------|-------|
-| New Project Token | You're launching **MyToken** and want it on Algorand + Base | Algorand: **BURNING** mode (new ASA created)<br/>Base Sepolia: **BURNING** mode (new ERC-20 created)<br/>Mint initial supply on either or both chains |
+| New Token | You're launching **NewToken** and want it on Algorand + Base | Algorand: **BURNING** mode (new ASA created)<br/>Base Sepolia: **BURNING** mode (new ERC-20 created)<br/>Mint initial supply on either or both chains |
 | Existing Algorand ASA | You have an ASA on Algorand and want to expand to Base | Algorand: **LOCKING** mode (use existing ASA)<br/>Base Sepolia: **BURNING** mode (new ERC-20 created)<br/>All token supply starts on Algorand |
 | Existing ERC-20 on Base | You have an ERC-20 on Base and want to expand to Algorand | Base Sepolia: **LOCKING** mode (use existing ERC-20)<br/>Algorand: **BURNING** mode (new ASA created)<br/>All token supply starts on Base |
 
-
-### Contract Purposes
-
-#### 1. NttToken Contract
-**Purpose:** Controls the token supply
-
-**On Algorand:**
-- **BURNING mode**: Creates new ASA, holds entire supply in contract account
-- **LOCKING mode**: Uses existing ASA, receives locked tokens
-
-**On EVM:**
-- **BURNING mode**: Deploys new ERC-20 with mint/burn capabilities
-- **LOCKING mode**: Uses existing ERC-20, holds locked tokens
-
-**Key Methods:**
-```solidity
-// EVM
-mint(address receiver, uint256 amount)  // Create tokens
-burn(address owner, uint256 amount)     // Destroy tokens
-
-// Algorand
-mint(address receiver, uint64 amount)   // Transfer from contract
-set_minter(address new_minter)          // Grant minting rights
-```
-
-**Think of it as:** The vault that holds/creates your tokens
-
----
-
-#### 2. NttManager Contract
-**Purpose:** The brain of the operation - manages all transfers
-
-**Responsibilities:**
-- Initiates transfers when users call it
-- Enforces rate limits (prevents exploits)
-- Queues transfers if rate limit exceeded
-- Verifies incoming messages have enough attestations
-- Manages peer chain connections
-- Calls NttToken to burn/mint
-
-**Key Methods:**
-```solidity
-// Start a transfer
-transfer(uint256 amount, uint16 recipientChain, bytes32 recipient)
-
-// Complete queued transfer
-complete_outbound_queued_transfer(bytes32 messageId)
-complete_inbound_queued_transfer(bytes32 messageDigest)
-
-// Cancel queued transfer
-cancel_outbound_queued_transfer(bytes32 messageId)
-
-// Configuration
-set_peer(uint16 chainId, bytes32 peerAddress, uint8 decimals, uint256 inboundLimit)
-set_outbound_rate_limit(uint256 newLimit)
-```
-
-**Think of it as:** The central control tower managing all cross-chain operations
-
----
-
-#### 3. TransceiverManager Contract
-**Purpose:** Routes messages to/from transceivers and tracks attestations
-
-**Responsibilities:**
-- Maintains registry of MessageHandlers (like NttManager)
-- Sends messages through configured Transceivers
-- Tracks which Transceivers have attested to messages
-- Ensures threshold requirements are met
-
-**Key Concept - Message Attestations:**
-```
-Example: 2/2 threshold with Wormhole + Axelar
-
-Message sent:
-  Wormhole ✓ Attested
-  Axelar   ✓ Attested
-  
-Result: 2/2 threshold met → Message can execute
-```
-
-**Key Methods:**
-```solidity
-// Setup
-add_message_handler(address admin)
-add_transceiver(address messageHandler, address transceiver)
-
-// Send message
-send_message_to_transceivers(MessageToSend message)
-
-// Track attestations
-attestation_received(MessageReceived message)
-has_transceiver_attested(bytes32 messageDigest, uint64 transceiver)
-```
-
-#### 4. WormholeTransceiver Contract
-**Purpose:** Handles communication with Wormhole network
-
-**Responsibilities:**
-- Sends messages via Wormhole Core
-- Receives and verifies Wormhole VAAs (Verified Action Approvals)
-- Prevents replay attacks
-- Manages peer connections
-
-**Key Concepts:**
-
-**VAA (Verified Action Approval):**
-```
-A VAA is a signed message from Wormhole Guardians proving
-something happened on another chain. It's like a notarized
-receipt that says "Yes, this transfer was initiated."
-```
-
-**Peer Configuration:**
-```
-Each WormholeTransceiver needs to know its counterpart
-on other chains:
-
-Algorand WormholeTransceiver knows:
-  - Base Sepolia WormholeTransceiver address
-  
-Base WormholeTransceiver knows:
-  - Algorand WormholeTransceiver address
-```
-
-### Message Flow
-
-Let's trace a complete transfer from Algorand to Base:
-
-```
-STEP 1: User Initiates (Algorand)
-┌─────────────────────────────────────────┐
-│ User calls NttManager.transfer()        │
-│ - Sends 1000 tokens                     │
-│ - Destination: Base Sepolia            │
-│ - Recipient: 0xABC...                  │
-└────────────────┬────────────────────────┘
-                 ▼
-┌─────────────────────────────────────────┐
-│ NttManager checks rate limit           │
-│ - Current capacity: 5000 tokens         │
-│ - Request: 1000 tokens ✓                │
-│ - Proceeds immediately                  │
-└────────────────┬────────────────────────┘
-                 ▼
-┌─────────────────────────────────────────┐
-│ NttManager calls NttToken.burn()        │
-│ - Burns 1000 tokens from user           │
-│ - Reduces circulating supply            │
-└────────────────┬────────────────────────┘
-                 ▼
-┌─────────────────────────────────────────┐
-│ NttManager creates MessageToSend        │
-│ {                                       │
-│   id: 42,  // sequence number           │
-│   amount: 1000,                         │
-│   recipient: 0xABC...,                  │
-│   destination_chain: 10004 (Base)       │
-│ }                                       │
-└────────────────┬────────────────────────┘
-                 ▼
-┌─────────────────────────────────────────┐
-│ TransceiverManager.send_message()       │
-│ - Routes to WormholeTransceiver         │
-└────────────────┬────────────────────────┘
-                 ▼
-┌─────────────────────────────────────────┐
-│ WormholeTransceiver sends via Wormhole  │
-│ - Calls Wormhole Core.publishMessage()  │
-│ - Wormhole Guardians observe & sign     │
-│ - VAA created with 19 signatures        │
-└─────────────────────────────────────────┘
-
-STEP 2: Wormhole Network (Off-chain)
-┌─────────────────────────────────────────┐
-│ Wormhole Guardians (19 validators)      │
-│ - Observe Algorand transaction          │
-│ - Sign VAA independently                │
-│ - Publish signed VAA                    │
-└────────────────┬────────────────────────┘
-                 ▼
-         VAA Available on 
-         Wormhole Network
-
-STEP 3: Complete Transfer (Base Sepolia)
-┌─────────────────────────────────────────┐
-│ Relayer (or manual) calls:              │
-│ WormholeTransceiver.receiveMessage(VAA) │
-│ - Verifies VAA signatures               │
-│ - Checks source is known peer           │
-│ - Prevents replay attack                │
-└────────────────┬────────────────────────┘
-                 ▼
-┌─────────────────────────────────────────┐
-│ WormholeTransceiver calls:              │
-│ TransceiverManager.attestation_received()│
-│ - Records: "Wormhole attested to msg 42"│
-│ - Checks threshold (1/1 met ✓)          │
-└────────────────┬────────────────────────┘
-                 ▼
-┌─────────────────────────────────────────┐
-│ User/Relayer calls:                     │
-│ NttManager.execute_message()            │
-│ - Verifies attestations met threshold   │
-│ - Checks rate limit on Base side        │
-└────────────────┬────────────────────────┘
-                 ▼
-┌─────────────────────────────────────────┐
-│ NttManager calls NttToken.mint()        │
-│ - Mints 1000 tokens to 0xABC...        │
-│ - Increases circulating supply          │
-└────────────────┬────────────────────────┘
-                 ▼
-         ✓ Transfer Complete!
-    User has tokens on Base Sepolia
-```
-<Image src={initiateTransfer} alt=' Execute Transfer Result' />
-<Image src={completeTransfer} alt=' Execute Transfer Result' />
-
-
-## Architecture Overview
-
-### System Components
-
-The NTT framework consists of three primary layers:
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Application Layer                        │
-│  ┌──────────────────────┐  ┌──────────────────────────┐   │
-│  │  Folks Finance SDK   │  │   NTT CLI Tools          │   │
-│  └──────────────────────┘  └──────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-┌─────────────────────────────────────────────────────────────┐
-│                   Protocol Layer                            │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │ NttManager   │  │ Transceiver  │  │  NttToken    │     │
-│  └──────────────┘  └──────────────┘  └──────────────┘     │
-└─────────────────────────────────────────────────────────────┘
-┌─────────────────────────────────────────────────────────────┐
-│                  Infrastructure Layer                        │
-│  ┌──────────────────────┐  ┌──────────────────────────┐   │
-│  │  Wormhole Network    │  │  Guardian Validators     │   │
-│  └──────────────────────┘  └──────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Transfer Flow Architecture
-
-```
-Source Chain (Base Sepolia)           Wormhole Network              Destination Chain (Algorand)
-─────────────────────────────────────────────────────────────────────────────────────────────────
-User initiates transfer         →     Emit VAA message        →     
-  ↓                                      ↓                            
-Lock/Burn tokens in NttToken           Guardian signatures           
-  ↓                                      ↓                            
-NttManager processes                   Generate attestation          
-  ↓                                      ↓                            
-WormholeTransceiver sends              Relay VAA                →    Receive & verify VAA
-                                                                      ↓
-                                                                   WormholeTransceiver validates
-                                                                      ↓
-                                                                   NttManager executes
-                                                                      ↓
-                                                                   Mint/unlock tokens
-                                                                      ↓
-                                                                   Transfer to recipient
-```
-
-
-### Key Contract Addresses (Testnet)
-
-| Network | Contract | Address/App ID |
-|---------|----------|----------------|
-| **Algorand Testnet** | TransceiverManager | `748800766` |
-| **Base Sepolia** | Wormhole Core | `0x79A1027a6A159502049F10906D333EC57E95F083` |
-| **Base Sepolia** | Chain ID | `10004` |
-| **Algorand** | Chain ID | `8` |
-
 ## Prerequisites
 
-### Development Environment Requirements
-
+- Node.js [v18.0+](https://nodejs.org/)
+- npm [v9.0+](https://nodejs.org/)
+- Bun [v1.2.23](https://bun.sh/install)
+- Python [3.12+](https://www.python.org/)
+- Foundry [latest](https://foundry.paradigm.xyz)
+- AlgoKit [latest](/algokit/algokit-intro)
+- Puya Compiler [v5.3.2](/concepts/smart-contracts/languages/typescript/#puyats-compiler)
+ 
 | Component | Version | Installation |
 |-----------|---------|--------------|
 | **Node.js** | 18.x LTS or higher | [nodejs.org](https://nodejs.org/) |
@@ -386,32 +182,32 @@ WormholeTransceiver sends              Relay VAA                →    Receive &
 
 
 ## Phase 1: Algorand Deployment
-
-### Clone Folks Finance NTT Contracts
-
+### Clone contract and install dependencies
+Clone Folks Finance NTT Contracts repository
 ```bash
 git clone https://github.com/Folks-Finance/algorand-ntt-contracts.git
 cd algorand-ntt-contracts
 ```
 
-### Install Dependencies
-
+Create Python virtual environment
 ```bash
-# Create Python virtual environment
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-# Install Python dependencies
+Install Python dependencies
+```bash
 pip install -r requirements.txt
+```
 
-# Install Node.js dependencies
+Install Node.js dependencies
+```bash
 npm install
 ```
 
 ### Build Contracts
-
+Generate TEAL code, ARC56 specs, and TypeScript clients
 ```bash
-# Generate TEAL code, ARC56 specs, and TypeScript clients
 npm run build
 ```
 
@@ -1108,7 +904,7 @@ Visit: `https://wormholescan.io/#/tx/{YOUR_TX_HASH}?network=Testnet`
 1. **Source Finalized** - Transaction confirmed on Base Sepolia
 2. **Guardian Signed** - Wormhole guardians created VAA
 3. **Transfer Finalized** - Transfer tokens to Algorand
-4. **successful** - Tokens transferred on Algorand to user account
+4. **Successful** - Tokens transferred on Algorand to user account
 
 :::note
  VAA signing by guardian signing might take some time to execute the bridging
@@ -1121,10 +917,10 @@ Alternatively you can also checkout on Base Sepolia Explorer: `https://sepolia.b
 Once all the steps are finalized you can checkout the progress by going to `progress` tab.
 <Image src={wormholeNttSDKTransferStepsResult} alt=' Execute Transfer Result' />
 
-You can checkout all the details and the transaction status would change to `finalized`
-<Image src={wormholeNttSDKTransferFinalResult} alt=' Execute Transfer Result' />
+You can checkout all the details and the transaction status would change to `successful`
+<Image src={wormholeEVMResult} alt=' Execute Transfer Result' />
 
-If you have been able to complete all the steps and are able to  get successfull status then congratulations, you have been able to transfer tokens across chains.
+You should now be able to see the tokens being received in the destination account address.
 
 ## Troubleshooting Guide
 
@@ -1198,81 +994,39 @@ cast call 0x168f7ff796C49a7e70bB3050DDba9Af57CDADCA1 \
 
 **Expected:** Should return Algorand peer address
 
----
-
-## Appendices
-9.1 Contract Address Reference
-#### Wormhole Chain IDs
-
-| Chain | Wormhole ID |
-|-------|-------------|
-| Algorand | `8` |
-| Base Sepolia | `10004` |
-
----
-
-### Address Format Conversion
-
-#### EVM Address Padding (20 bytes → 32 bytes)
-
-```javascript
-function padEVMAddress(address) {
-  // Remove 0x prefix if present
-  const cleanAddress = address.replace('0x', '');
-  
-  // Pad with zeros to 64 characters (32 bytes)
-  const paddedAddress = cleanAddress.padStart(64, '0');
-  
-  return '0x' + paddedAddress;
-}
-
-// Example
-const original = "0xDA239b01C42d97eDe2d01bc674436D752efbcEBb";
-const padded = padEVMAddress(original);
-// Result: "0x000000000000000000000000DA239b01C42d97eDe2d01bc674436D752efbcEBb"
-```
-
-#### Algorand Address → Hex Conversion
-
-```javascript
-import algosdk from 'algosdk';
-
-function algorandAddressToHex(address) {
-  const decoded = algosdk.decodeAddress(address);
-  return '0x' + Buffer.from(decoded.publicKey).toString('hex');
-}
-
-// Example
-const algoAddress = "EFHYIY44HD2YFSZP67WZBNOXDV3WXVQDGS2QMF7EGG2VCKPND6MCYZ3XKM";
-const hexAddress = algorandAddressToHex(algoAddress);
-// Result: "0x214f84639c38f582cb2ff7ed90b5d71d776bd60334b50617e431b55129ed1f98"
-```
-
----
 
 ### Useful Commands Reference
 
+|Feature |Operation| Command|
+|---|-----| -------|
+| Token Operations | Mint Tokens| ```cast send $TOKEN "mint(address,uint256)" $RECIPIENT $AMOUNT --rpc-url $RPC --private-key $KEY``` |
+| | Check token balance | ```cast call $TOKEN "balanceOf(address)(uint256)" $ADDRESS --rpc-url $RPC``` |
+| | Approve spender|```cast send $TOKEN "approve(address,uint256)" $SPENDER $AMOUNT --rpc-url $RPC --private-key $KEY``` |
+| | Check allowance |```cast call $TOKEN "allowance(address,address)(uint256)" $OWNER $SPENDER --rpc-url $RPC```|
+| | Check decimals | ```cast call $TOKEN "decimals()(uint8)" --rpc-url $RPC``` |
+| | Check total supply |```cast call $TOKEN "totalSupply()(uint256)" --rpc-url $RPC```|
+| Account Operations| Check ETH balance | ```cast balance $ADDRESS --rpc-url $RPC``` |
+|| Send ETH | ```cast send $RECIPIENT --value 0.1ether --rpc-url $RPC --private-key $KEY``` |
+|| Get nonce | ```cast nonce $ADDRESS --rpc-url $RPC``` |
+|| Get transaction receipt | ```cast receipt $TX_HASH --rpc-url $RPC``` | 
+
 #### Token Operations
+- Mint tokens
+```cast send $TOKEN "mint(address,uint256)" $RECIPIENT $AMOUNT --rpc-url $RPC --private-key $KEY```
+- Check balance
+```cast call $TOKEN "balanceOf(address)(uint256)" $ADDRESS --rpc-url $RPC```
 
-```bash
-# Mint tokens
-cast send $TOKEN "mint(address,uint256)" $RECIPIENT $AMOUNT --rpc-url $RPC --private-key $KEY
+- Approve spender
+```cast send $TOKEN "approve(address,uint256)" $SPENDER $AMOUNT --rpc-url $RPC --private-key $KEY```
 
-# Check balance
-cast call $TOKEN "balanceOf(address)(uint256)" $ADDRESS --rpc-url $RPC
+- Check allowance
+```cast call $TOKEN "allowance(address,address)(uint256)" $OWNER $SPENDER --rpc-url $RPC```
 
-# Approve spender
-cast send $TOKEN "approve(address,uint256)" $SPENDER $AMOUNT --rpc-url $RPC --private-key $KEY
+- Check decimals
+```cast call $TOKEN "decimals()(uint8)" --rpc-url $RPC```
 
-# Check allowance
-cast call $TOKEN "allowance(address,address)(uint256)" $OWNER $SPENDER --rpc-url $RPC
-
-# Check decimals
-cast call $TOKEN "decimals()(uint8)" --rpc-url $RPC
-
-# Check total supply
-cast call $TOKEN "totalSupply()(uint256)" --rpc-url $RPC
-```
+- Check total supply
+```cast call $TOKEN "totalSupply()(uint256)" --rpc-url $RPC```
 
 #### Account Operations
 
@@ -1339,14 +1093,18 @@ Transfer Failed?
     ├─> Transaction successful on Base Sepolia?
     ├─> Check WormholeScan for VAA status
     └─> Manual delivery required (known limitation)
-```
 
+Transfer Got Stuck at Finalised?
+|
+|-> NTT Address has minter role?
+    |-> Grant minter role to NTTManager
+```
 
 
 
 ## Conclusion
 
-You have successfully deployed a cross-chain NTT token bridge between Base Sepolia and Algorand Testnet. For next steps you can try out testing bidirectional transfers (Algorand → Base Sepolia). Once you are confident with the transfers on testnet you can start preparing for mainnet deployment with updated configurations
+You have successfully deployed a cross-chain NTT token bridge between Base Sepolia and Algorand Testnet. Once you are confident with the bidirectional transfers on testnet you can start preparing for mainnet deployment with updated configurations
 
 ## Resources
 - [Wormhole NTT Framework](https://docs.wormhole.com/wormhole/tutorials/ntt-quickstart)
