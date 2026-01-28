@@ -42,7 +42,7 @@ jobs:
 
       - name: Publish to Cloudflare Pages
         id: deploy
-        if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -52,7 +52,7 @@ jobs:
 
       - name: Capture PR Information
         id: pr_info
-        if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
         run: |
           echo "::set-output name=pr_id::${{ github.event.pull_request.number }}"
           echo "::set-output name=pr_title::${{ github.event.pull_request.title }}"
@@ -60,7 +60,7 @@ jobs:
 
       - name: Post to Slack
         id: slack
-        if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
         uses: slackapi/slack-github-action@v2.1.1
         with:
           webhook-type: incoming-webhook
