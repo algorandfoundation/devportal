@@ -145,7 +145,6 @@ Algorand TypeScript requires explicit handling of math operations to ensure type
 
 1. Basic arithmetic operations (+, -, \*, /) are supported but require explicit type handling
 2. Results of math operations must be explicitly typed using either:
-
    - A constructor: `const sum = Uint64(x + y)`
    - Type annotation: `const sum: uint64 = x + y`
    - Return type annotation: `function add(x: uint64, y: uint64): uint64 { return x + y }`
