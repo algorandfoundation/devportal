@@ -77,7 +77,6 @@ class MyContract(algopy.Contract, name="CustomName"):
 ```
 
 - **Parameters:**
-
   - **name** –
 
     Will affect the output TEAL file name if there are multiple non-abstract contracts
@@ -1502,11 +1501,9 @@ _algopy.arc4.emit(event: [str](https://docs.python.org/3/library/stdtypes.html#s
 Emit an ARC-28 event for the provided event signature or name, and provided args.
 
 - **Parameters:**
-
   - **event** –
 
     Either an ARC-4 Struct, an event name, or event signature.
-
     - If event is an ARC-4 Struct, the event signature will be determined from the Struct name and fields
     - If event is a signature, then the following args will be typed checked to ensure they match.
     - If event is just a name, the event signature will be inferred from the name and following arguments
