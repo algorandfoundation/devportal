@@ -663,13 +663,11 @@ Starting with AVM v12 in consensus v41, the Access List, `txn.Access` or `al`, p
 ### Key Features
 
 - **Simple Resources**:
-
   - Address (`d`): References an account (e.g., for balance checks).
   - Asset (`s`): References an ASA (e.g., for params like total supply).
   - App (`p`): References another application (e.g., for global state reads).
 
 - **Complex Resources** (for sublist access):
-
   - Holding (`h`): Explicitly references an account's holding of a specific asset (account + asset ID).
   - Locals (`l`): References an account's local state for a specific app (account + app ID).
   - Box (`b`): References a box with an app index and box name (e.g., for reading/writing box data).
