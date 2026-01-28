@@ -11,6 +11,7 @@ import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
+import sitemap from '@astrojs/sitemap';
 
 const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -30,6 +31,7 @@ export default defineConfig({
         starlightLinksValidator({
           errorOnRelativeLinks: false,
           errorOnInvalidHashes: false,
+          errorOnLocalLinks: false,
           exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
         }),
         starlightLlmsTxt({
@@ -1312,6 +1314,7 @@ export default defineConfig({
       sketch: true,
       layout: 'dagre',
     }),
+    sitemap(),
   ],
   markdown: {
     rehypePlugins: [

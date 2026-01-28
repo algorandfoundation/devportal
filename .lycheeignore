@@ -1,0 +1,33 @@
+# Lychee link checker ignore patterns
+# One regex pattern per line
+
+# Social media sites (often block bots or require auth)
+^https?://(www\.)?linkedin\.com
+^https?://(www\.)?twitter\.com
+^https?://(www\.)?x\.com
+^https?://(www\.)?facebook\.com
+^https?://(www\.)?medium\.com
+
+# GitHub rate limiting (use GITHUB_TOKEN in CI instead)
+# ^https?://github\.com
+
+# Localhost and local development URLs (localhost:4321 is allowed for CI checks)
+^https?://127\.0\.0\.1
+^https?://0\.0\.0\.0
+
+# Example domains
+^https?://example\.(com|org|net)
+^https?://.*\.example\.(com|org|net)
+
+# Placeholder URLs
+^https?://your-.*
+^https?://my-.*
+^https?://.*\.test$
+^https?://.*\.local$
+
+# API endpoints that may not be publicly accessible
+^https?://api\.algonode\.cloud
+^https?://.*\.algonode\.network
+
+# Known flaky or temporarily unavailable
+^https?://pypa\.github\.io

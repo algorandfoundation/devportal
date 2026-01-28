@@ -236,7 +236,6 @@ The method accepts either a positional argument or a keyword argument named ‘a
 The ‘signer’ parameter is deprecated and will show a warning when used.
 
 - **Parameters:**
-
   - **\*args** –
 
     Variable positional arguments. The first argument should be a TransactionSignerAccountProtocol.
