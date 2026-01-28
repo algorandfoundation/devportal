@@ -33,8 +33,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@catppuccin/vscode':
-        specifier: ^3.15.1
-        version: 3.15.1
+        specifier: ^3.18.1
+        version: 3.18.1
       '@larkiny/astro-github-loader':
         specifier: ^0.11.3
         version: 0.11.3(astro@5.16.10(@types/node@22.12.0)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.50.0)(tsx@4.19.2)(typescript@5.5.2)(yaml@2.7.1))
@@ -471,8 +471,12 @@ packages:
   '@catppuccin/palette@1.2.0':
     resolution: {integrity: sha512-R5fxLcU47mRcsdQkXZBNfxt7SdEqLGWb1qhEKBrnYfEB4ZWOQRBEow4e78PKxaFUECBNOs6uEkwvwxFL9FmQqQ==}
 
-  '@catppuccin/vscode@3.15.1':
-    resolution: {integrity: sha512-2y5LpSom0SytZTy/Jyu02qK+V1Uyzk9xlCVwDmmm08CI4nPCuVnOccQmaq83vUpZ/r3sdhWF6Aa3XF+ahfz00g==}
+  '@catppuccin/palette@1.7.1':
+    resolution: {integrity: sha512-aRc1tbzrevOTV7nFTT9SRdF26w/MIwT4Jwt4fDMc9itRZUDXCuEDBLyz4TQMlqO9ZP8mf5Hu4Jr6D03NLFc6Gw==}
+
+  '@catppuccin/vscode@3.18.1':
+    resolution: {integrity: sha512-aVG6vUN0RXPd8wX9X9RSiyGkwsBeGulifmwwFkYQgdEiyR2ERmv0Z/y0KADlUJMU/cDLrRxmRRbXPC5Ni+ctvQ==}
+    engines: {node: '>=22.0.0'}
 
   '@ctrl/tinycolor@4.1.0':
     resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
@@ -5591,9 +5595,11 @@ snapshots:
 
   '@catppuccin/palette@1.2.0': {}
 
-  '@catppuccin/vscode@3.15.1':
+  '@catppuccin/palette@1.7.1': {}
+
+  '@catppuccin/vscode@3.18.1':
     dependencies:
-      '@catppuccin/palette': 1.2.0
+      '@catppuccin/palette': 1.7.1
 
   '@ctrl/tinycolor@4.1.0': {}
 
