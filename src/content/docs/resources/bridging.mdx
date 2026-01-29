@@ -22,9 +22,10 @@ import initiateTransfer from '@images/wormhole-ntt-intiate-transfer.png';
 import completeTransfer from '@images/wormhole-ntt-complete-transfer.png';
 import sdkTransferEVMResult from '@images/wormhole-ntt-sdk-avm-to-evm-result.png';
 import wormholeEVMResult from '@images/wormhole-ntt-avm-to-evm-result.png';
+import wormholeAVMResult from '@images/wormhole-ntt-evm-to-avm-result.png';
+import deployPeerTokenEVM from '@images/wormhole-ntt-deploy-peer-token.png';
 
-This guide provides comprehensive technical documentation for implementing Wormhole's Native Token Transfers (NTT) framework between Algorand and EVM-compatible chains. The implementation enables bidirectional token transfers across heterogeneous blockchain environments through Wormhole's verified attestation architecture.
-
+This guide provides comprehensive technical documentation for implementing Wormhole's Native Token Transfers (NTT) framework between Algorand and EVM-compatible chains. The implementation enables bidirectional token transfers across heterogeneous blockchain environments through Wormhole's verified attestation architecture. This guide has been made considering we have an existing Algorand token. So, a new token is deployed on EVM in `burning` mode. You can deploy in `locking`/`burning` mode as per your requirement. The details of which mode you need is covered in [this](/choosing the right deployment path) section.
 
 ### Native Token Transfers (NTT)
 Native Token Transfers (NTT) is Wormhole's framework for transferring tokens across blockchains without requiring liquidity pools. Unlike traditional token bridges that wrap assets or rely on locked liquidity, NTT enables direct token transfers by either burning tokens on the source chain and minting them on the destination, or by locking tokens on one chain while minting representations on others.
@@ -81,6 +82,7 @@ The lifecycle of a message can be broken down into two stages:
 2. Completing the transfer on the destination chain by unlocking/minting the token.
 
 #### Initiation Phase
+<Image src={initiateTransfer} alt=' Execute Transfer Result' />
 
 The transfer process begins when a user wants to move tokens from one chain to another. On Algorand, the user creates a transaction group that includes both a call to the NTT Manager's transfer function and an asset transfer that sends the tokens to the NTT Token contract. On EVM chains, the user must first approve the NTT Manager to spend their tokens, then call the transfer function.
 
@@ -88,9 +90,8 @@ The NTT Manager immediately checks its rate limit to determine if the transfer c
 
 The message goes to Wormhole Core, which emits an event that Guardian nodes observe. The Guardians independently validate that the event came from a legitimate source and sign it. Once the threshold of signatures is reached, the VAA becomes available for anyone to query from Wormhole's network. The transaction succeeds, the user receives a message ID for tracking, and the tokens have been removed from the source chain.
 
-<Image src={initiateTransfer} alt=' Execute Transfer Result' />
-
 #### Completion Phase
+<Image src={completeTransfer} alt=' Execute Transfer Result' />
 
 Completion on the destination chain happens in two distinct phases:
 <br />
@@ -99,8 +100,6 @@ The first phase is message reception and attestation. A relayer retrieves the VA
 The second phase is message execution. Once threshold has been met, the relayer, the recipient, or any third party,  calls the NTT Manager which verifies the message hasn't been executed already and the message came from a known peer NTT Manager on the source chain.
 
 Rate limiting is checked on the destination chain and if it passes, the NTT Manager calls the NTT Token contract's mint function, passing the recipient address and amount. In burning mode, this creates new tokens. In locking mode, it transfers existing tokens from the contract's custody. The tokens appear in the recipient's account, completing the transfer. The transfer is now complete end-to-end.
-
-<Image src={completeTransfer} alt=' Execute Transfer Result' />
 
 ### Choosing the Right Deployment Path
 
@@ -132,12 +131,9 @@ One of the most important design decisions when adopting NTT is whether you are 
   - On each EVM chain, NttToken deploys a new ERC-20 or equivalent managed token.
   - You decide how to distribute the initial supply across chains: mint everything on one chain and move it out via NTT, or mint portions on multiple chains according to your distribution plan.
 
-
-| Example | Scenario | Setup |
-|--------|----------|-------|
-| New Token | You're launching **NewToken** and want it on Algorand + Base | Algorand: **BURNING** mode (new ASA created)<br/>Base Sepolia: **BURNING** mode (new ERC-20 created)<br/>Mint initial supply on either or both chains |
-| Existing Algorand ASA | You have an ASA on Algorand and want to expand to Base | Algorand: **LOCKING** mode (use existing ASA)<br/>Base Sepolia: **BURNING** mode (new ERC-20 created)<br/>All token supply starts on Algorand |
-| Existing ERC-20 on Base | You have an ERC-20 on Base and want to expand to Algorand | Base Sepolia: **LOCKING** mode (use existing ERC-20)<br/>Algorand: **BURNING** mode (new ASA created)<br/>All token supply starts on Base |
+:::note
+This guide covers bridging between AVM and EVM-compatible chains only. It currently doesnt support bridging between any other chains.
+:::
 
 ## Prerequisites
 
@@ -148,60 +144,47 @@ One of the most important design decisions when adopting NTT is whether you are 
 - Foundry [latest](https://foundry.paradigm.xyz)
 - AlgoKit [latest](/algokit/algokit-intro)
 - Puya Compiler [v5.3.2](/concepts/smart-contracts/languages/typescript/#puyats-compiler)
- 
-| Component | Version | Installation |
-|-----------|---------|--------------|
-| **Node.js** | 18.x LTS or higher | [nodejs.org](https://nodejs.org/) |
-| **npm** | 9.x or higher | Bundled with Node.js |
-| **Bun** | v1.2.23 | `curl -fsSL https://bun.sh/install \| bash -s "bun-v1.2.23"` |
-| **Python** | 3.12+ | [python.org](https://www.python.org/) |
-| **Foundry** | Latest | `curl -L https://foundry.paradigm.xyz \| bash && foundryup` |
-| **AlgoKit** | Latest | `pipx install algokit` |
-| **Puya Compiler** | v5.3.2 | `pip install puyapy==5.3.2` |
 
 ### Required Accounts & Credentials
 
 #### Algorand Testnet
-- **Account with funds**: Minimum 10 ALGO for contract deployment
+- **Account with funds**: Minimum 10 ALGO for contract deployment and testing
 - Save **Account mnemonic**: 25-word recovery phrase. This will be used later while bridging.
 
-#### Base Sepolia
+#### EVM Chain
 - **Wallet with ETH**: Minimum 0.05 ETH for deployment and testing
 - Save **Private key** which is 64-character hex string. This will also be used later while bridging.
 - **Basescan API key**: From [sepolia.basescan.org/apis](https://sepolia.basescan.org/apis)
 
 ### Obtain Testnet Funds
 
-1. Base Sepolia ETH Faucets: Get some Base Sepolia Tokens using [Coinbase Faucet](https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet) (`Recommended` - gives 0.05-0.1 ETH). Other alternatives available are:
+1. ETH Faucets: Get some Base Sepolia Tokens using [Coinbase Faucet](https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet) (`Recommended` - gives 0.05-0.1 ETH). Other alternatives available are:
 - [Alchemy Faucet](https://www.alchemy.com/faucets/base-sepolia)
 - [QuickNode Faucet](https://faucet.quicknode.com/base/sepolia)
 - [LearnWeb3 Faucet](https://learnweb3.io/faucets/base_sepolia/)
 
-
 2. Algorand Testnet ALGO: Get some Algorand testnet tokens using [Algorand Testnet Dispenser](https://lora.algokit.io/testnet/fund)
 
+:::note
+We are going to use base sepolia for this guide. You can use any other EVM-compatible testnet. It is recommended to try the bridging on testnet before moving to mainnet.
+:::
 
-## Phase 1: Algorand Deployment
+## Algorand Deployment
 ### Clone contract and install dependencies
-Clone Folks Finance NTT Contracts repository
+
 ```bash
+# Clone Folks Finance NTT Contracts repository
 git clone https://github.com/Folks-Finance/algorand-ntt-contracts.git
 cd algorand-ntt-contracts
-```
 
-Create Python virtual environment
-```bash
+# Create Python virtual environment
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
 
-Install Python dependencies
-```bash
+# Install Python dependencies
 pip install -r requirements.txt
-```
 
-Install Node.js dependencies
-```bash
+# Install Node.js dependencies
 npm install
 ```
 
@@ -227,7 +210,7 @@ ALGORAND_TESTNET_ACCOUNT_MNEMONIC="your twenty five word mnemonic phrase here ..
 
 ### Deploy Contracts
 
-#### Step 1: Deploy NttToken Contract
+#### Deploy NttToken Contract
 
 **Option A: For a New ASA (Creating a new token)**
 
@@ -245,11 +228,10 @@ npm run script deployment/deployExistingToken.ts
 <Image src={deployExistingToken} alt=' Execute Transfer Result' />
 
 
-**Post-Deployment Actions:**
+#### Post-Deployment
 
-1. **Transfer Supply (Critical for New ASA):**
+ For existing token, transfer entire non-circulating supply(apart from tokens you want to send during bridging) to NttToken contract
    ```bash
-   # Transfer entire non-circulating supply to NttToken contract
    algokit goal asset send \
      --from <YOUR_ADDRESS> \
      --to <NTT_TOKEN_APP_ADDRESS> \
@@ -257,9 +239,8 @@ npm run script deployment/deployExistingToken.ts
      --amount <TOTAL_SUPPLY>
    ```
 
-2. **Update Reserve Address (Optional but Recommended):**
+  For existing token (optional), update the ASA reserve address to be the NttToken contract address
    ```bash
-   # Set NttToken as reserve address for accurate circulating supply
    algokit goal asset config \
      --assetid <ASA_ID> \
      --manager <YOUR_ADDRESS> \
@@ -289,15 +270,10 @@ npm run script deployment/deployWormholeTransceiver.ts
 
 ### Record Deployment Addresses
 
-After deployment, check `deployment/out/contracts.json`:
+After deployment, check `deployment/out/contracts.json`. The testnet should be populated with `token`, `nttManager` and `wormholeTransceiver` details.
 <Image src={deploymentOutJson} alt=' Execute Transfer Result' />
 
-
-:::note
-Save these values as you'll need them for Base Sepolia configuration
-:::
-
-## Phase 2: Base Sepolia Deployment
+## EVM Testnet Deployment
 
 ### Install NTT CLI
 
@@ -335,7 +311,7 @@ ntt init Testnet
 
 ### Deploy ERC20 Token
 
-#### Clone Reference Implementation
+#### Clone EVM Example NTT Token
 
 ```bash
 git clone https://github.com/wormhole-foundation/example-ntt-token-evm.git
@@ -344,16 +320,28 @@ forge install
 ```
 
 #### Configure Token Parameters
-
-**Critical:** Token decimals MUST match Algorand ASA decimals!
+Ensure token parameters match Algorand ASA and vice versa.
 
 ```bash
-# Token parameters (must match Algorand ASA)
-ASSET_NAME="MyCustomToken"
-UNIT_NAME="MCT"
-DECIMALS=6  # MUST match ASA decimals
-DEPLOYER_ADDRESS=0xYourAddress
-OWNER_ADDRESS=0xYourAddress  # Can be same as deployer
+ASSET_NAME=<YOUR_ASSET_NAME>
+UNIT_NAME=<YOUR_ASSET_UNIT_NAME>
+DECIMALS=6  # Must match ASA decimals
+DEPLOYER_ADDRESS=<YOUR_EVM_ADDRESS>
+OWNER_ADDRESS=<YOUR_EVM_ADDRESS>  # Can be same as deployer
+```
+
+:::caution
+Token decimals must match Algorand ASA decimals.
+:::
+
+#### Override Decimals Function (If Needed)
+
+Alternatively, if your token requires non-standard decimals (not 18), add to `PeerToken.sol`:
+
+```solidity
+function decimals() public view virtual override(ERC20) returns (uint8) {
+    return 6;  // Match your ASA decimals
+}
 ```
 
 #### Deploy Token Contract
@@ -367,25 +355,9 @@ forge create --rpc-url https://sepolia.base.org \
 ```
 
 **Expected Output:**
-```
-Deployer: 0xd8eF0b50B9EfbbAFBeBf36c2D3ac27CA989f4f08
-Deployed to: 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1
-Transaction hash: 0x...
-```
+<Image src={deployPeerTokenEVM} alt='Deployment Result of Peer Token on EVM' />
 
-**Save the deployed token address!**
-
-#### Override Decimals Function (If Needed)
-
-If your token requires non-standard decimals (not 18), add to `PeerToken.sol`:
-
-```solidity
-function decimals() public view virtual override(ERC20) returns (uint8) {
-    return 6;  // Match your ASA decimals
-}
-```
-
-Then redeploy.
+Save the deployed token address!
 
 ### Deploy NTT Infrastructure
 
@@ -403,27 +375,23 @@ ntt config get-chain BaseSepolia scan_api_key
 
 #### Deploy NTT Contracts
 
-**Without Verification (Recommended for Testing):**
+**Without Verification:**
 
 ```bash
-export ETH_PRIVATE_KEY=$EVM_TESTNET_PRIVATE_KEY
-
 ntt add-chain BaseSepolia \
   --latest \
   --mode burning \
-  --token 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1 \
+  --token $YOUR_EVM_TOKEN_ADDRESS \
   --skip-verify
 ```
 
 **With Verification:**
 
 ```bash
-export ETH_PRIVATE_KEY=$EVM_TESTNET_PRIVATE_KEY
-
 ntt add-chain BaseSepolia \
   --latest \
   --mode burning \
-  --token 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1
+  --token $YOUR_EVM_TOKEN_ADDRESS
 ```
 
 #### Verify Deployment
@@ -438,49 +406,36 @@ ntt status
 
 ### Record Deployment Addresses
 
-Check `deployment.json` in your NTT project:
-<Image src={deploymentOutJson} alt=' Execute Transfer Result' />
-
+Check `deployment.json` in your NTT project. You should be able to see details of your deployed token.
+<Image src={deploymentResultEVM} alt=' Execute Transfer Result' />
+:::note
+The token is in burning mode since the token already existed in Algorand. If your token already exists, then this should be `locking` mode.
+:::
 **Save the addresses you get in your `deployment.json` file for peer configuration!**
 
----
-
-## Phase 3: Cross-Chain Configuration
+## Cross-Chain Configuration
 
 ### Configure Base Sepolia → Algorand Peering
-
-#### Collect Required Addresses
-
-**From Base Sepolia** (`deployment.json`):
-```
-NttManager: 0xDA239b01C42d97eDe2d01bc674436D752efbcEBb
-WormholeTransceiver: 0x168f7ff796C49a7e70bB3050DDba9Af57CDADCA1
-```
-
-**From Algorand** (`deployment/out/contracts.json`):
-```
-nttManager.peerAddress: 000000000000000000000000000000000000000000000000000000002ce9f00a
-wormholeTransceiver.peerAddress: 5f915d09560d48ca857ea93e19e02cdbcd37ec7dfb7b2b8d5a4fb4e78ae6f05f
-```
+Copy the below addresses
+- From Base Sepolia (`deployment.json`): `NttManager` and `WormholeTransceiver`
+- From Algorand (`deployment/out/contracts.json`): `nttManager.peerAddress` and `wormholeTransceiver.peerAddress`
 
 #### Set NttManager Peer on Base Sepolia
 
 ```bash
-cast send 0xDA239b01C42d97eDe2d01bc674436D752efbcEBb \
+export PEER_ADDRESS=<YOUR_PEER_ADDRESS>
+export TOKEN_DECIMALS=6 #Token decimals (MUST match ASA)
+export NTTMANAGER=<YOUR_NTT_MANAGER>
+
+cast send $NTTMANAGER \
   "setPeer(uint16,bytes32,uint8,uint256)" \
-  8 \
-  0x000000000000000000000000000000000000000000000000000000002ce9f00a \
-  6 \
+  8 \ # Algorand's Wormhole chain ID
+  $PEER_ADDRESS \
+  $TOKEN_DECIMALS \
   1000000000000 \
   --rpc-url https://sepolia.base.org \
   --private-key $EVM_TESTNET_PRIVATE_KEY
 ```
-
-**Parameters Explained:**
-- `8`: Algorand's Wormhole chain ID
-- `0x000...2ce9f00a`: Algorand NttManager peer address
-- `6`: Token decimals (MUST match ASA)
-- `1000000000000`: Inbound rate limit (tokens per time window)
 
 **Expected Output:**
 <Image src={setPeerResult} alt='set peer result' />
@@ -488,17 +443,17 @@ cast send 0xDA239b01C42d97eDe2d01bc674436D752efbcEBb \
 #### Set WormholeTransceiver Peer on Base Sepolia
 
 ```bash
-cast send 0x168f7ff796C49a7e70bB3050DDba9Af57CDADCA1 \
+cast send $WORMHOLE_TRANSCEIVER \
   "setWormholePeer(uint16,bytes32)" \
   8 \
-  0x5f915d09560d48ca857ea93e19e02cdbcd37ec7dfb7b2b8d5a4fb4e78ae6f05f \
+  $WORMHOLE_TRANSCEIVER_PEER_ADDRESS \
   --rpc-url https://sepolia.base.org \
   --private-key $EVM_TESTNET_PRIVATE_KEY
 ```
 
 Once you set you can verify it using the below command:
 ```bash
-cast call 0x168f7ff796C49a7e70bB3050DDba9Af57CDADCA1 \
+cast call $WORMHOLE_TRANSCEIVER \
   "getWormholePeer(uint16)(bytes32)" \
   8 \
   --rpc-url https://sepolia.base.org
@@ -536,9 +491,9 @@ npm run script deployment/configure.ts
 <Image src={configureNTTResult} alt='get configure NTT result' />
 
 
-## Phase 4: SDK Integration & Testing
+## SDK Integration & Testing
 
-### Install Folks Finance SDK
+### Build NTT SDK
 
 ```bash
 # Clone the SDK repository
@@ -554,224 +509,70 @@ npm run build
 
 ### Configure Custom Token
 
-#### Update `examples/constants.ts`
-
-Add your deployed token configuration:
-
-```typescript
-import { NetworkType, TESTNET_FOLKS_CHAIN_ID } from "../src/index.js";
-import type { CustomNttToken } from "../src/index.js";
-
-export const CUSTOM_NTT_TOKEN_TESTNET_ID = "MCT";  // Your token symbol
-
-export const CUSTOM_NTT_TOKEN_TESTNET: Record<string, CustomNttToken> = {
-  [CUSTOM_NTT_TOKEN_TESTNET_ID]: {
-    network: NetworkType.TESTNET,
-    symbol: CUSTOM_NTT_TOKEN_TESTNET_ID,
-    decimals: 6,  // Match your token decimals
-    chains: {
-      [TESTNET_FOLKS_CHAIN_ID.BASE_SEPOLIA]: {
-        nttManagerAddress: <ADD_NTT_MANAGER_ADDRESS>,
-        tokenAddress: <ADD_TOKEN_ADDRESS>,
-      },
-      [TESTNET_FOLKS_CHAIN_ID.ALGORAND_TESTNET]: {
-        nttManagerAppId: <ADD_NTT_MANAGER_APP_ID>,
-        assetId: <ADD_ASSET_ID>,
-      },
-    },
-  },
-};
-```
+Go to `examples/constants.ts` file. Update your token details and contract addresses in `CUSTOM_NTT_TOKEN_TESTNET_ID`, `CUSTOM_NTT_TOKEN_TESTNET_AVM` and `CUSTOM_NTT_TOKEN_TESTNET_EVM`.
 
 ### Use Transfer Script
-1. For transferring from avm to evm use `examples/transfer-algorand-to-base.ts`:
+#### Transfer from AVM to EVM
+
+For transferring from avm to evm use `examples/transfer-avm-to-evm-custom-token.ts`. Update `destChain` according to the EVM testnet you are using. Since we are using base sepolia, we will update:
+
 ```typescript
-import {
-  ChainType,
-  convertToGenericAddress,
-  FolksBridge,
-  FolksCore,
-  NetworkType,
-  TESTNET_FOLKS_CHAIN_ID,
-  TokenType,
-} from "../src/index.js";
+const destChain = TESTNET_FOLKS_CHAIN_ID.BASE_SEPOLIA;
+```
 
-import {
-  CUSTOM_NTT_TOKEN_TESTNET,
-  CUSTOM_NTT_TOKEN_TESTNET_ID,
-} from "./constants.js";
+Update `YOUR_EVM_ADDRESS` to the address you want to send the tokens as well as the amount(default is 1 TOKEN) to in `convertToGenericAddress`. This transfer function will transfer the TOKENS from Algorand to your configured EVM chain.  
 
-import { getAVMSigner } from "./utils.js";
+```typescript
+  const prepareCall = await FolksBridge.prepare.transfer(
+    CUSTOM_NTT_TOKEN_TESTNET_ID,
+    1_000_000n,
+    destChain,
+    convertToGenericAddress(<YOUR_EVM_ADDRESS>, ChainType.EVM),
+    capabilities,
+    quote,
+    feePaymentToken
+  );
+```
+Incase you dont have FOLKS token to pay fees, you can update `feePaymentToken` to use native ALGO for fee payment
 
-import type { EVMAddress, FolksCoreConfig } from "../src/index.js";
-
-async function main() {
-  const network = NetworkType.TESTNET;
-  const folksChainId = TESTNET_FOLKS_CHAIN_ID.ALGORAND_TESTNET;
-
-  console.log("network", network);
-  console.log("folksChainId", folksChainId);
-
-  const folksConfig: FolksCoreConfig = {
-    network,
-    provider: { EVM: {}, AVM: {} },
-  };
-
-  FolksCore.init(folksConfig);
-  FolksCore.setNetwork(network);
-
-  const avmSigner = await getAVMSigner(network);
-
-  FolksCore.setFolksSigner({
-    signer: avmSigner,
-    folksChainId,
-    chainType: ChainType.AVM,
-  });
-
-  console.log("AVM Signer Address:", avmSigner.addresses);
-
-  FolksCore.addTokens(CUSTOM_NTT_TOKEN_TESTNET);
-
-  const capabilities = await FolksBridge.read.capabilities();
-
-  // Use native ALGO for fee payment
+```typescript
   const feePaymentToken = {
     tokenType: TokenType.GAS,
     tokenSymbol: "ALGO",
     tokenDecimals: 6,
   };
+```
 
-  console.log("Fee payment token:", feePaymentToken);
+#### Transfer from EVM to AVM
+To transfer from evm to avm use `examples/transfer-evm-to-avm-custom-token.ts`.
+ Update `chain`, `sourceChain` and `folksChainId` according to the EVM testnet you are using. Since we are using base sepolia, we will update:
 
-  const sourceChain = TESTNET_FOLKS_CHAIN_ID.ALGORAND_TESTNET;
-  const destChain = TESTNET_FOLKS_CHAIN_ID.BASE_SEPOLIA;
+```typescript
+  const chain = baseSepolia;
+  const folksChainId = TESTNET_FOLKS_CHAIN_ID.BASE_SEPOLIA;
+  const sourceChain = TESTNET_FOLKS_CHAIN_ID.BASE_SEPOLIA;
+```
 
-  console.log(`Transfer: ${sourceChain} → ${destChain}`);
-
-  const quote = await FolksBridge.read.quote(
-    sourceChain,
-    destChain,
-    feePaymentToken
-  );
-
-  console.log("Quote:", quote);
-
-  const evmRecipient =
-    "<YOUR_EVM_ADDRESS>" as EVMAddress;
-    
+Update `YOUR_AVM_ADDRESS` to the address you want to send the tokens as well as the amount(default is 1 TOKEN) to in `convertToGenericAddress`. This transfer function will transfer the TOKENS from configured EVM chain to Algorand.
+```typescript
   const prepareCall = await FolksBridge.prepare.transfer(
     CUSTOM_NTT_TOKEN_TESTNET_ID,
     1_000_000n,
     destChain,
-    convertToGenericAddress(evmRecipient, ChainType.EVM),
+    convertToGenericAddress(<YOUR_AVM_ADDRESS>, ChainType.AVM),
     capabilities,
     quote,
-    feePaymentToken
+    feePaymentToken,
   );
-
-  console.log("\nPrepared transfer:", prepareCall);
-
-  console.log("\nExecuting transfer...");
-  const txHash = await FolksBridge.write.transfer(prepareCall);
-
-  console.log("\n✅ Transfer initiated!");
-  console.log("Transaction hash:", txHash);
-  console.log(`Track: https://wormholescan.io/#/tx/${txHash}?network=Testnet`);
-}
-
-main().catch(console.error);
 ```
 
-
-2. For transferring from evm to avm use `examples/transfer-base-to-algorand.ts`:
-
+Incase you dont have FOLKS token to pay fees, you can update `feePaymentToken` to use native ETH token for fee payment
 ```typescript
-import { baseSepolia } from "viem/chains";
-
-import {
-  ChainType,
-  convertToGenericAddress,
-  FolksBridge,
-  FolksCore,
-  NetworkType,
-  TESTNET_FOLKS_CHAIN_ID,
-  TokenType,
-} from "../src/index.js";
-
-import { CUSTOM_NTT_TOKEN_TESTNET, CUSTOM_NTT_TOKEN_TESTNET_ID } from "./constants.js";
-import { getEVMSigner } from "./utils.js";
-
-import type { AVMAddress, FolksCoreConfig } from "../src/index.js";
-
-async function main() {
-  const network = NetworkType.TESTNET;
-  const chain = baseSepolia;
-  const folksChainId = TESTNET_FOLKS_CHAIN_ID.BASE_SEPOLIA;
-  
-  console.log("folksChainId", folksChainId);
-  console.log("chain", chain);
-  console.log("network", network);
-
-  const folksConfig: FolksCoreConfig = {
-    network,
-    provider: { EVM: {}, AVM: {} },
-  };
-  
-  console.log("folksConfig", folksConfig);
-  FolksCore.init(folksConfig);
-  FolksCore.setNetwork(network);
-
-  const evmSigner = getEVMSigner(network, chain);
-  FolksCore.setFolksSigner({
-    signer: evmSigner,
-    folksChainId,
-    chainType: ChainType.EVM,
-  });
-  
-  FolksCore.addTokens(CUSTOM_NTT_TOKEN_TESTNET);
-
-  const capabilities = await FolksBridge.read.capabilities();
-  
-  // Use native ETH token
   const feePaymentToken = {
     tokenType: TokenType.GAS,
     tokenSymbol: "ETH",
     tokenDecimals: 18,
   };
-  
-  console.log("Fee payment token:", feePaymentToken);
-
-  const sourceChain = TESTNET_FOLKS_CHAIN_ID.BASE_SEPOLIA;
-  const destChain = TESTNET_FOLKS_CHAIN_ID.ALGORAND_TESTNET;
-
-  console.log(`Transfer: ${sourceChain} → ${destChain}`);
-
-  const quote = await FolksBridge.read.quote(sourceChain, destChain, feePaymentToken);
-  console.log("Quote:", quote);
-
-  const algoRecipient = "<YOUR_ALGORAND_ADDRESS>" as AVMAddress;
-  
-  const prepareCall = await FolksBridge.prepare.transfer(
-    CUSTOM_NTT_TOKEN_TESTNET_ID,
-    1_000_000n,
-    destChain,
-    convertToGenericAddress(algoRecipient, ChainType.AVM),
-    capabilities,
-    quote,
-    feePaymentToken,
-  );
-  
-  console.log("\nPrepared transfer:", prepareCall);
-
-  console.log("\nExecuting transfer...");
-  const txHash = await FolksBridge.write.transfer(prepareCall);
-  
-  console.log("\nTransfer initiated!");
-  console.log("Transaction hash:", txHash);
-  console.log(`Track: https://wormholescan.io/#/tx/${txHash}?network=Testnet`);
-}
-
-main().catch(console.error);
 ```
 
 ### Environment Variable Template
@@ -785,278 +586,83 @@ ALGORAND_TESTNET_ACCOUNT_MNEMONIC=<YOUR_ALGORAND_TESTNET_ACCOUNT_MNEMONIC>
 
 ### Pre-Transfer Checklist
 
-Before running the transfer, ensure:
+Before running AVM to EVM transfer, ensure:
+1. Your Algorand Account has at least 10 ALGO
+2. You have enough custom ALGO token you want to send(excluding MBR)
+3. Set minter role to NTT Manager Address  ```cast send $YOUR_EVM_TOKEN_ADDRESS "setMinter(address)" $NTT_MANAGER_ADDRESS --rpc-url https://sepolia.base.org --private-key $EVM_TESTNET_PRIVATE_KEY``` to mint tokens for your `EVM_TESTNET_ADDRESS` on destination chain.
 
-| Description | Command | Notes |
-|---------|-----------------|---------------------------------|
-| Check ETH Balance | ```cast balance <0xYourAddress> --rpc-url https://sepolia.base.org``` |  At least 0.002 ETH (0.0015 for bridge fee + 0.0005 for gas) |
-| Check Token Balance | ```cast call 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1  "balanceOf(address)(uint256)" <0xYourAddress> --rpc-url https://sepolia.base.org``` |  At least 1,000,000 (1 token with 6 decimals) |
-| Mint Tokens (If Needed) | ```cast send 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1  "mint(address,uint256)"  <0xYourAddress>  10000000000 --rpc-url https://sepolia.base.org  --private-key $EVM_TESTNET_PRIVATE_KEY``` | Only if your token balance is insufficient |
- | Approve FolksBridge Contract | ```cast send 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1  "approve(address,uint256)"  0x5845E08d890E21687F7Ebf7CbAbD360cD91c6245  1000000000000000000000000  --rpc-url https://sepolia.base.org  --private-key $EVM_TESTNET_PRIVATE_KEY``` | Must approve both bridge contracts |
- | Verify FolksBridge approval | ```cast call 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1  "allowance(address,address)(uint256)"  <0xYourAddress>  0x5845E08d890E21687F7Ebf7CbAbD360cD91c6245  --rpc-url https://sepolia.base.org ``` | Should return a large number (e.g., `1000000000000000000000000`) |
- | Verify NttManager approval |  ```cast call 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1  "allowance(address,address)(uint256)"  <0xYourAddress>  0xDA239b01C42d97eDe2d01bc674436D752efbcEBb  --rpc-url https://sepolia.base.org``` | Should return a large number (e.g., `1000000000000000000000000`) |
-| Opt-in to ASA on Algorand | ```algokit goal asset optin  --assetid 753528629  --account <YOUR_ALGORAND_ADDRESS>``` or  visit [Lora Transaction Wizard](https://lora.algokit.io/testnet/transaction-wizard) and add asset opt-in transaction. Click `Add` | This step is required to receive assets on Algorand |
-
-
-#### Check ETH Balance
-
-```bash
-cast balance 0xYourAddress --rpc-url https://sepolia.base.org
-```
-
-**Required:** At least 0.002 ETH (0.0015 for bridge fee + 0.0005 for gas)
-
-#### Check Token Balance
-
-```bash
-cast call 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1 \
-  "balanceOf(address)(uint256)" \
-  0xYourAddress \
-  --rpc-url https://sepolia.base.org
-```
-
-**Required:** At least 1,000,000 (1 token with 6 decimals)
-
-#### Mint Tokens (If Needed)
-
-```bash
-cast send 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1 \
-  "mint(address,uint256)" \
-  0xYourAddress \
-  10000000000 \
-  --rpc-url https://sepolia.base.org \
-  --private-key $EVM_TESTNET_PRIVATE_KEY
-```
-
-#### Approve FolksBridge Contract
-
-**Critical Step:** Approve BOTH bridge contracts:
-
-```bash
-# 1. Approve FolksBridge adapter
-cast send 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1 \
-  "approve(address,uint256)" \
-  0x5845E08d890E21687F7Ebf7CbAbD360cD91c6245 \
-  1000000000000000000000000 \
-  --rpc-url https://sepolia.base.org \
-  --private-key $EVM_TESTNET_PRIVATE_KEY
-```
-
-#### Verify Approvals
-
-```bash
-# Check FolksBridge approval
-cast call 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1 \
-  "allowance(address,address)(uint256)" \
-  0xYourAddress \
-  0x5845E08d890E21687F7Ebf7CbAbD360cD91c6245 \
-  --rpc-url https://sepolia.base.org
-
-# Check NttManager approval
-cast call 0xD4CF1F149D45CC45A658E57e1df10bcF6c7c06B1 \
-  "allowance(address,address)(uint256)" \
-  0xYourAddress \
-  0xDA239b01C42d97eDe2d01bc674436D752efbcEBb \
-  --rpc-url https://sepolia.base.org
-```
-
-**Expected:** Both should return a large number (e.g., `1000000000000000000000000`)
-
-#### Opt-in to ASA on Algorand
-
-```bash
-algokit goal asset optin \
-  --assetid 753528629 \
-  --account <YOUR_ALGORAND_ADDRESS>
-```
-Alternatively you can visit [Lora Transaction Wizard](https://lora.algokit.io/testnet/transaction-wizard) and add asset opt-in transaction. Click on `Add` button.
-
-**Expected Output:**
-<Image src={optIn} alt='opt into asset'/>
-
-:::note
-This step is required in order to receive assets on Algorand
-:::
+Before running EVM to AVM transfer, ensure:
+1. At least 0.002 ETH (0.0015 for bridge fee + 0.0005 for gas)
+2. You have enough custom ETH token you want to send
+3. Must approve Folks Bridge contracts. If using other EVM chains, get the `NTT_EXECUTOR_ADDRESS` from `nttWithExecutor.ts` file: ```cast send $YOUR_EVM_TOKEN_ADDRESS  "approve(address,uint256)"  $BASE_SEPOLIA_NTT_EXECUTOR_ADDRESS  $AMOUNT  --rpc-url https://sepolia.base.org  --private-key $EVM_TESTNET_PRIVATE_KEY```
+4. Must approve NTTManager. Get `$MANAGER` address of EVM testnet from `deployment.json` file: ```cast send $YOUR_EVM_TOKEN_ADDRESS  "approve(address,uint256)"  $MANAGER $AMOUNT  --rpc-url https://sepolia.base.org  --private-key $EVM_TESTNET_PRIVATE_KEY```
+5. Opt-in to ASA to receive assets on Algorand
 
 ### Execute Transfer
-Use the below command to transfer from evm to avm:
+Run the below command to transfer from evm to avm:
 
 ```bash
-npx env-cmd tsx examples/transfer-base-to-algorand.ts
+npx env-cmd tsx examples/transfer-evm-to-avm-custom-token.ts
 ```
 <Image src={wormholeNttSDKTransferResult} alt='Execute Transfer Result' />
 
 Alternatively, you could use below command to transfer from avm to evm: 
 
 ```bash
-npx env-cmd tsx examples/transfer-algorand-to-base.ts
+npx env-cmd tsx examples/transfer-avm-to-evm-custom-token.ts
 ```
 <Image src={sdkTransferEVMResult} alt='Execute Transfer Result' />
 
 
-### Monitor Transfer Status
+## Monitor Transfer Status
 
-#### Via WormholeScan
+### Via WormholeScan
 
 Visit: `https://wormholescan.io/#/tx/{YOUR_TX_HASH}?network=Testnet`
 
 **Transfer Stages:**
-1. **Source Finalized** - Transaction confirmed on Base Sepolia
+1. **Source Finalized** - Transaction confirmed on Source Chain
 2. **Guardian Signed** - Wormhole guardians created VAA
-3. **Transfer Finalized** - Transfer tokens to Algorand
-4. **Successful** - Tokens transferred on Algorand to user account
+3. **Transfer Finalized** - Transfer tokens to Destination Chain
+4. **Successful** - Tokens transferred on Destination Chain to user account
 
 :::note
- VAA signing by guardian signing might take some time to execute the bridging
+ VAA signing by guardian signing might take some time to execute the bridging. This time can vary from seconds to sometimes hours. Check the transaction status or progress tab in WormholeScan
 :::
-
-<Image src={wormholeNttSDKTransferPendingResult} alt=' Execute Transfer Result' />
-
-Alternatively you can also checkout on Base Sepolia Explorer: `https://sepolia.basescan.org/tx/{YOUR_TX_HASH}`
-
-Once all the steps are finalized you can checkout the progress by going to `progress` tab.
 <Image src={wormholeNttSDKTransferStepsResult} alt=' Execute Transfer Result' />
 
-You can checkout all the details and the transaction status would change to `successful`
-<Image src={wormholeEVMResult} alt=' Execute Transfer Result' />
+On completion the transaction status will change to `successful`. You should now be able to see the tokens being received in the destination account address.
 
-You should now be able to see the tokens being received in the destination account address.
+<Image src={wormholeEVMResult} alt=' Execute Transfer Result' />
+Figure: AVM to EVM transfer result
+
+<Image src={wormholeAVMResult} alt=' Execute Transfer Result' />
+Figure: EVM to AVM transfer result
 
 ## Troubleshooting Guide
 
-### Common Errors and Solutions
-
-| SNO | Error | Problem | Solution | Required |
-|------|------|--------|----------|----------|
-| 1 | insufficient funds for gas * price + value | Not enough ETH to cover transaction cost | Check balance using `cast balance <0xYourAddress> --rpc-url https://sepolia.base.org` and fund the wallet via the Base Sepolia faucet | Minimum **0.002 ETH** |
-| 2 | 0xfb8f41b2 (InsufficientAllowance) | Token approval missing for bridge contract | Approve the FolksBridge contract using ```cast send $TOKEN_ADDRESS  "approve(address,uint256)" 0x5845E08d890E21687F7Ebf7CbAbD360cD91c6245 1000000000000000000000000 --rpc-url https://sepolia.base.org  --private-key $EVM_TESTNET_PRIVATE_KEY``` | Token approval for bridge contract |
-| 3 | 0xe450d38c (InsufficientBalance) | Not enough FOLKS tokens for fee payment | Switch fee payment token to ETH in config | ETH as gas token |
-| 4 | invalid private key, expected hex or 32 bytes | Private key format incorrect | Ensure private key includes `0x` prefix | Hex private key with `0x` prefix |
-| 5 | encode length mismatch: expected 2 types, got 1 | Missing address parameter in `cast call` | Provide both `OWNER` and `SPENDER` addresses | Correct function arguments |
-| 6 | Decimal mismatch | Token decimals differ across chains | Verify token decimals on Base Sepolia and match Algorand ASA, override if needed | Matching token decimals |
-
-
-1. `0xfb8f41b2` (InsufficientAllowance) - Token approval missing for bridge contract
-<br />``` cast send $TOKEN_ADDRESS "approve(address,uint256)" 0x5845E08d890E21687F7Ebf7CbAbD360cD91c6245 1000000000000000000000000 --rpc-url https://sepolia.base.org --private-key $EVM_TESTNET_PRIVATE_KEY```
-
-2. `0xe450d38c` (InsufficientBalance) -  Not enough FOLKS tokens for fee payment. Switch to ETH for fee payment
-<br />
-```typescript
-const feePaymentToken = {
-  tokenType: TokenType.GAS,
-  tokenSymbol: "ETH",
-  tokenDecimals: 18,
-};
-```
-
-3. Invalid private key, expected hex or 32 bytes
-<br /> ```EVM_TESTNET_PRIVATE_KEY=0x1234567890abcdef...```
-
-4. Encode length mismatch: expected 2 types, got 1 
-<br />```cast call $TOKEN "allowance(address,address)(uint256)" $OWNER $SPENDER```
-
-5. Insufficient funds for gas * price + value
-<br />```cast balance 0xYourAddress --rpc-url https://sepolia.base.org```
-Incase its insufficient, get more ETH from faucet https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet. Minimum 0.002 ETH
-
-6. Decimal mismatch: Token decimals don't match between chains
-- Check Base Sepolia token decimals:
-  <br /> ```cast call $TOKEN_ADDRESS "decimals()(uint8)" --rpc-url https://sepolia.base.org```
-- Verify matches Algorand ASA decimals
-- Override if needed in `PeerToken.sol`:
-   ```solidity
-   function decimals() public view virtual override(ERC20) returns (uint8) {
-       return 6;  // Match ASA decimals
-   }
-   ```
-
-### Validation Commands
-
-#### Check All Balances
-
-
-- ETH balance 
-<br />```cast balance <0xYourAddress> --rpc-url https://sepolia.base.org```
-- Token balance 
-<br />```cast call $TOKEN_ADDRESS "balanceOf(address)(uint256)" <0xYourAddress> --rpc-url https://sepolia.base.org```
-- Token allowance for FolksBridge 
-<br />```cast call $TOKEN_ADDRESS "allowance(address,address)(uint256)" <0xYourAddress> 0x5845E08d890E21687F7Ebf7CbAbD360cD91c6245  --rpc-url https://sepolia.base.org```
-
-#### Verify Peer Configuration
-
-```bash
-# Check WormholeTransceiver peer on Base Sepolia
-cast call 0x168f7ff796C49a7e70bB3050DDba9Af57CDADCA1 \
-  "getWormholePeer(uint16)(bytes32)" \
-  8 \
-  --rpc-url https://sepolia.base.org
-```
-
-**Expected:** Should return Algorand peer address
-
-
 ### Useful Commands Reference
 
-|Feature |Operation| Command|
-|---|-----| -------|
-| Token Operations | Mint Tokens| ```cast send $TOKEN "mint(address,uint256)" $RECIPIENT $AMOUNT --rpc-url $RPC --private-key $KEY``` |
-| | Check token balance | ```cast call $TOKEN "balanceOf(address)(uint256)" $ADDRESS --rpc-url $RPC``` |
-| | Approve spender|```cast send $TOKEN "approve(address,uint256)" $SPENDER $AMOUNT --rpc-url $RPC --private-key $KEY``` |
-| | Check allowance |```cast call $TOKEN "allowance(address,address)(uint256)" $OWNER $SPENDER --rpc-url $RPC```|
-| | Check decimals | ```cast call $TOKEN "decimals()(uint8)" --rpc-url $RPC``` |
-| | Check total supply |```cast call $TOKEN "totalSupply()(uint256)" --rpc-url $RPC```|
-| Account Operations| Check ETH balance | ```cast balance $ADDRESS --rpc-url $RPC``` |
-|| Send ETH | ```cast send $RECIPIENT --value 0.1ether --rpc-url $RPC --private-key $KEY``` |
-|| Get nonce | ```cast nonce $ADDRESS --rpc-url $RPC``` |
-|| Get transaction receipt | ```cast receipt $TX_HASH --rpc-url $RPC``` | 
+|Operation| Command|
+|-----| -------|
+| Mint Tokens| ```cast send $TOKEN "mint(address,uint256)" $RECIPIENT $AMOUNT --rpc-url $RPC --private-key $KEY``` |
+| Check token balance | ```cast call $TOKEN "balanceOf(address)(uint256)" $ADDRESS --rpc-url $RPC``` |
+| Approve spender|```cast send $TOKEN "approve(address,uint256)" $SPENDER $AMOUNT --rpc-url $RPC --private-key $KEY``` |
+| Check allowance |```cast call $TOKEN "allowance(address,address)(uint256)" $OWNER $SPENDER --rpc-url $RPC```|
+| Check decimals | ```cast call $TOKEN "decimals()(uint8)" --rpc-url $RPC``` |
+| Check total supply |```cast call $TOKEN "totalSupply()(uint256)" --rpc-url $RPC```|
+| Check ETH balance | ```cast balance $ADDRESS --rpc-url $RPC``` |
+| Send ETH | ```cast send $RECIPIENT --value 0.1ether --rpc-url $RPC --private-key $KEY``` |
+| Get nonce | ```cast nonce $ADDRESS --rpc-url $RPC``` |
+| Get transaction receipt | ```cast receipt $TX_HASH --rpc-url $RPC``` | 
+ | Get peer configuration | ```cast call $WORMHOLE_TRANSCEIVER "getWormholePeer(uint16)(bytes32)" $CHAIN_ID --rpc-url $RPC``` |
+| Check if peer is set | ```cast call $NTT_MANAGER "getPeer(uint16)((bytes32,uint8,uint256))" $CHAIN_ID --rpc-url $RPC``` |
+ | Get rate limit info | ```cast call $NTT_MANAGER "getCurrentOutboundCapacity()(uint256)" --rpc-url $RPC \ cast call $NTT_MANAGER "getCurrentInboundCapacity(uint16)(uint256)" $CHAIN_ID --rpc-url $RPC``` | 
+| ETH balance | ```cast balance $YOUR_EVM_ADDRESS --rpc-url https://sepolia.base.org```|
+| Token balance | ```cast call $TOKEN_ADDRESS "balanceOf(address)(uint256)" $YOUR_EVM_ADDRESS --rpc-url https://sepolia.base.org``` |
+| Token allowance for FolksBridge | ```cast call $TOKEN_ADDRESS "allowance(address,address)(uint256)" $YOUR_EVM_ADDRESS $BASE_SEPOLIA_NTT_EXECUTOR_ADDRESS  --rpc-url https://sepolia.base.org``` | 
+| Check WormholeTransceiver peer on Base Sepolia | ``` cast call $WORMHOLE_TRANSCEIVER_ADDRESS "getWormholePeer(uint16)(bytes32)"   8  --rpc-url https://sepolia.base.org``` | 
 
-#### Token Operations
-- Mint tokens
-```cast send $TOKEN "mint(address,uint256)" $RECIPIENT $AMOUNT --rpc-url $RPC --private-key $KEY```
-- Check balance
-```cast call $TOKEN "balanceOf(address)(uint256)" $ADDRESS --rpc-url $RPC```
-
-- Approve spender
-```cast send $TOKEN "approve(address,uint256)" $SPENDER $AMOUNT --rpc-url $RPC --private-key $KEY```
-
-- Check allowance
-```cast call $TOKEN "allowance(address,address)(uint256)" $OWNER $SPENDER --rpc-url $RPC```
-
-- Check decimals
-```cast call $TOKEN "decimals()(uint8)" --rpc-url $RPC```
-
-- Check total supply
-```cast call $TOKEN "totalSupply()(uint256)" --rpc-url $RPC```
-
-#### Account Operations
-
-```bash
-# Check ETH balance
-cast balance $ADDRESS --rpc-url $RPC
-
-# Send ETH
-cast send $RECIPIENT --value 0.1ether --rpc-url $RPC --private-key $KEY
-
-# Get nonce
-cast nonce $ADDRESS --rpc-url $RPC
-
-# Get transaction receipt
-cast receipt $TX_HASH --rpc-url $RPC
-```
-
-#### NTT Contract Queries
-
-```bash
-# Get peer configuration
-cast call $WORMHOLE_TRANSCEIVER "getWormholePeer(uint16)(bytes32)" $CHAIN_ID --rpc-url $RPC
-
-# Check if peer is set
-cast call $NTT_MANAGER "getPeer(uint16)((bytes32,uint8,uint256))" $CHAIN_ID --rpc-url $RPC
-
-# Get rate limit info
-cast call $NTT_MANAGER "getCurrentOutboundCapacity()(uint256)" --rpc-url $RPC
-cast call $NTT_MANAGER "getCurrentInboundCapacity(uint16)(uint256)" $CHAIN_ID --rpc-url $RPC
-```
 
 ### Troubleshooting Decision Tree
 
@@ -1064,17 +670,20 @@ cast call $NTT_MANAGER "getCurrentInboundCapacity(uint16)(uint256)" $CHAIN_ID --
 Transfer Failed?
 │
 ├─> Insufficient funds error?
-│   ├─> Check ETH balance (need 0.002+ ETH)
-│   └─> Get funds from faucet
+|   ├─> Check source chain
+|     ├─> Algorand: Check ALGO balance(need 10 ALGO)   
+|         ├─> Get funds from [Lora](https://www.lora.algokit.io/testnet/funds)
+│     ├─> ETH: Check ETH balance (need 0.002+ ETH)
+│         └─> Get funds from Coinbase or any other faucet
 │
 ├─> InsufficientAllowance (0xfb8f41b2)?
-│   ├─> Approve FolksBridge: 0x5845E08d890E21687F7Ebf7CbAbD360cD91c6245
-│   └─> Approve NttManager: 0xDA239b01C42d97eDe2d01bc674436D752efbcEBb
+│   ├─> Approve FolksBridge Contract
+│   └─> Approve NttManager Address
 │
 ├─> InsufficientBalance (0xe450d38c)?
 │   ├─> Check token balance
-│   ├─> Mint more tokens if needed
-│   └─> Use ETH for fees instead of FOLKS
+│   ├─> Mint/Transfer more tokens if needed
+│   └─> Use ETH/ALGO for fees instead of FOLKS
 │
 ├─> Invalid private key?
 │   ├─> Ensure 0x prefix
@@ -1089,15 +698,13 @@ Transfer Failed?
 │   ├─> Check 32-byte padding for EVM addresses
 │   └─> Run configure.ts on Algorand
 │
-└─> VAA not delivered?
-    ├─> Transaction successful on Base Sepolia?
-    ├─> Check WormholeScan for VAA status
-    └─> Manual delivery required (known limitation)
-
-Transfer Got Stuck at Finalised?
+├─> VAA not delivered?
+|   ├─> Transaction successful on EVM chain?
+|   └─> Check WormholeScan for VAA Status
 |
-|-> NTT Address has minter role?
-    |-> Grant minter role to NTTManager
+├─> Transfer Got Stuck at Finalised?
+|   |-> NTT Address has minter role?
+|   └─> Grant minter role to NTTManager
 ```
 
 
