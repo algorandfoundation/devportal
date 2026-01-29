@@ -85,7 +85,6 @@ class MyContract(algopy.Contract, name="CustomName"):
 ```
 
 - **Parameters:**
-
   - **name** –
 
     Will affect the output TEAL file name if there are multiple non-abstract contracts
@@ -1521,7 +1520,6 @@ class MyContract(algopy.Contract, name="CustomName"):
 ```
 
 - **Parameters:**
-
   - **name** –
 
     Will affect the output TEAL file name if there are multiple non-abstract contracts

@@ -4,27 +4,29 @@ repos:
       - id: eslint
         name: eslint
         description: "eslint: Find and fix problems in your JavaScript code"
-        entry: npx eslint .
+        entry: npx eslint --max-warnings=0 --no-warn-ignored
         language: node
+        types_or: [javascript, jsx, ts, tsx]
+        files: \.(js|jsx|ts|tsx|mjs|cjs|astro)$
+        exclude: ^examples/
         fail_fast: true
-        minimum_pre_commit_version: 2.9.2
         require_serial: true
 
       - id: prettier
         name: prettier
-        description: 'prettier: Opinionated Code Formatter'
-        entry: npx prettier -c
-        files: '^src'
+        description: "prettier: Opinionated Code Formatter"
+        entry: npx prettier --check
         language: node
+        files: ^src/.*\.(js|jsx|ts|tsx|mjs|cjs|json|md|mdx|astro|css)$
         fail_fast: true
-        minimum_pre_commit_version: 2.9.2
         require_serial: true
 
-      - id: astro
-        name: astro
-        description: 'astro check: Check your project for errors'
+      - id: astro-check
+        name: astro check
+        description: "astro check: Check your project for errors"
         entry: npx astro check
         language: node
+        pass_filenames: false
+        files: \.(astro|ts|tsx)$
         fail_fast: true
-        minimum_pre_commit_version: 2.9.2
         require_serial: true

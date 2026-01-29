@@ -268,7 +268,6 @@ CurrentApplicationAddress` are _available_.
 - Top-level transactions that are not application calls also make
   resources available to group-level resource sharing. The following
   resources are made available by other transaction types.
-
   - `pay` - `txn.Sender`, `txn.Receiver`, and
     `txn.CloseRemainderTo` (if set).
 

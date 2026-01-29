@@ -16,13 +16,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install D2
         run: curl -fsSL https://d2lang.com/install.sh | sh -s -- --tala
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
 
@@ -42,6 +42,7 @@ jobs:
 
       - name: Publish to Cloudflare Pages
         id: deploy
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -51,7 +52,7 @@ jobs:
 
       - name: Capture PR Information
         id: pr_info
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
         run: |
           echo "::set-output name=pr_id::${{ github.event.pull_request.number }}"
           echo "::set-output name=pr_title::${{ github.event.pull_request.title }}"
@@ -59,9 +60,11 @@ jobs:
 
       - name: Post to Slack
         id: slack
-        if: github.event_name == 'pull_request'
-        uses: slackapi/slack-github-action@v1.27.0
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
+        uses: slackapi/slack-github-action@v2.1.1
         with:
+          webhook-type: incoming-webhook
+          webhook: ${{ secrets.SLACK_PR_WEBHOOK_URL }}
           payload: |
             {
               "pr_id": "${{ steps.pr_info.outputs.pr_id }}",
@@ -69,5 +72,3 @@ jobs:
               "pr_url": "${{ steps.pr_info.outputs.pr_url }}",
               "preview_url": "${{ steps.deploy.outputs.deployment-url }}"
             }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_PR_WEBHOOK_URL }}

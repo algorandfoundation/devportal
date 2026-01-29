@@ -198,7 +198,6 @@ Currently this allows you filter based on any combination (AND logic) of:
 - Account (sender and receiver) e.g. `filter: { sender: "ABCDE..F" }` or `filter: { sender: ["ABCDE..F", "ZYXWV..A"] }` and `filter: { receiver: "12345..6" }` or `filter: { receiver: ["ABCDE..F", "ZYXWV..A"] }`
 - Note prefix e.g. `filter: { note_prefix: "xyz" }`
 - Apps
-
   - ID e.g. `filter: { appId: 54321 }` or `filter: { appId: [54321, 12345] }`
   - Creation e.g. `filter: { app_create: true }`
   - Call on-complete(s) e.g. `filter: { app_on_complete: 'optin' }` or `filter: { app_on_complete: ['optin', 'noop'] }`

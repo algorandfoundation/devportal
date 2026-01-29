@@ -1,0 +1,92 @@
+name: Link Check
+
+on:
+  # Run on PRs to catch broken links before merge
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "src/content/**"
+      - "**.md"
+      - "**.mdx"
+      - "astro.config.mjs"
+  # Run weekly to catch links that have gone stale
+  schedule:
+    - cron: "0 9 * * 1" # Every Monday at 9am UTC
+  # Allow manual triggering
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.6.3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install D2
+        run: curl -fsSL https://d2lang.com/install.sh | sh -s -- --tala
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build site
+        run: pnpm run build
+        env:
+          TSTRUCT_TOKEN: ${{ secrets.TSTRUCT_TOKEN }}
+          PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
+
+      - name: Restore lychee cache
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
+      - name: Start preview server
+        run: |
+          pnpm run preview &
+          # Wait for server to be ready
+          timeout 30 bash -c 'until curl -s http://localhost:4321 > /dev/null; do sleep 1; done'
+
+      - name: Run lychee link checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Check built HTML files, resolving links against the preview server
+          args: >-
+            --config ./lychee.toml
+            --cache
+            --max-cache-age 1d
+            --base-url "http://localhost:4321"
+            "./dist/**/*.html"
+          # Use GitHub token to avoid rate limiting on GitHub links
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Output format
+          format: markdown
+          output: ./lychee-report.md
+          # Fail the workflow if broken links are found
+          fail: true
+          # Write summary to GitHub job summary
+          jobSummary: true
+
+      - name: Upload link check report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lychee-report
+          path: ./lychee-report.md
+          retention-days: 14

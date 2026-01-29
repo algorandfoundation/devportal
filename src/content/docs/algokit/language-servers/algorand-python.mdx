@@ -189,24 +189,23 @@ If the extension isn't working as expected:
 ### Extension Not Providing Diagnostics
 
 1. Verify the extension is installed and enabled:
-
    - Check Extensions view for `Algorand Python`
    - Ensure it shows as `Enabled`
 
 2. Confirm both extensions are installed:
-
    - Python extension for Visual Studio Code
    - Algorand Python extension
 
 3. Verify the language server is enabled:
-
    - Check workspace settings for `algorandPython.languageServer.enable`
    - Should be set to `true`
 
 4. Verify PuyaPy installation:
+
    ```bash
    pip show puyapy
    ```
+
    - Ensure version `5.3.0` or higher is installed
    - Confirm it's in the same virtual environment VS Code is using
 
