@@ -25,7 +25,7 @@ import wormholeEVMResult from '@images/wormhole-ntt-avm-to-evm-result.png';
 import wormholeAVMResult from '@images/wormhole-ntt-evm-to-avm-result.png';
 import deployPeerTokenEVM from '@images/wormhole-ntt-deploy-peer-token.png';
 
-This guide provides comprehensive technical documentation for implementing Wormhole's Native Token Transfers (NTT) framework between Algorand and EVM-compatible chains. The implementation enables bidirectional token transfers across heterogeneous blockchain environments through Wormhole's verified attestation architecture. This guide has been made considering we have an existing Algorand token. So, a new token is deployed on EVM in `burning` mode. You can deploy in `locking`/`burning` mode as per your requirement. The details of which mode you need is covered in [this](/choosing the right deployment path) section.
+This guide provides comprehensive technical documentation for implementing Wormhole's Native Token Transfers (NTT) framework between Algorand and EVM-compatible chains. The implementation enables bidirectional token transfers across heterogeneous blockchain environments through Wormhole's verified attestation architecture. This guide has been made considering we have an existing Algorand token. So, a new token is deployed on EVM in `burning` mode. You can deploy in `locking`/`burning` mode as per your requirement. The details of which mode you need is covered in [this](/resources/bridging#choosing-the-right-deployment-path) section.
 
 :::note
 This guide is in beta, reflecting the early stage of some components, and will be updated as they continue to mature.
@@ -79,9 +79,9 @@ When receiving messages from other chains, the NTT Manager verifies that suffici
 
 The NTT Token contract manages the actual token supply and is the lowest level of the NTT architecture. Its behavior differs significantly between Algorand and EVM chains due to fundamental differences in how these platforms handle tokens.
 
-On Algorand, tokens exist as Algorand Standard Assets (ASAs) that are natively integrated into the protocol layer. The NTT Token contract doesn't implement the token itself but rather controls the supply of an ASA. In burning mode, the ASA is created within the NTT Token contract, meaning the entire supply initially sits in the contract's account. In locking mode, the ASA already exists externally, and the NTT Token contract receives tokens when they need to be locked.
+On Algorand, tokens exist as Algorand Standard Assets (ASAs) that are natively integrated into the protocol layer. The NTT Token contract doesn't implement the token itself but rather controls the supply of an ASA. In `burning` mode, the ASA is created within the NTT Token contract, meaning the entire supply initially sits in the contract's account. In locking mode, the ASA already exists externally, and the NTT Token contract receives tokens when they need to be locked.
 
-On EVM chains, the NTT Token contract is an ERC-20 implementation. In burning mode, it includes mint and burn functions that the NTT Manager can call. In locking mode, it's typically an existing ERC-20 contract, and the NTT Manager holds tokens on behalf of users who have transferred them to other chains.
+On EVM chains, the NTT Token contract is an ERC-20 implementation. In `burning` mode, it includes mint and burn functions that the NTT Manager can call. In locking mode, it's typically an existing ERC-20 contract, and the NTT Manager holds tokens on behalf of users who have transferred them to other chains.
 
 The critical point is that after deployment, both modes function identically from the transfer perspective. Whether tokens are being `burned` or `locked`, the user experience is the same: tokens go into the NTT Token contract when leaving the chain and come out when arriving. The distinction is semantic and affects how circulating supply is calculated, but not the actual mechanics of transfers.
 
@@ -98,7 +98,7 @@ The lifecycle of a message can be broken down into two stages:
 
 The transfer process begins when a user wants to move tokens from one chain to another. On Algorand, the user creates a transaction group that includes both a call to the NTT Manager's transfer function and an asset transfer that sends the tokens to the NTT Token contract. On EVM chains, the user must first approve the NTT Manager to spend their tokens, then call the transfer function.
 
-The NTT Manager immediately checks its rate limit to determine if the transfer can proceed. If capacity is sufficient, the manager calls the NTT Token contract to lock or burn the tokens. The tokens are removed from circulation on the source chain before any message is sent to the destination chain. In burning mode, this reduces the total supply. In locking mode, it moves the tokens into the NTT Token contract's custody. With the tokens secured, the NTT Manager creates a message containing all transfer details.
+The NTT Manager immediately checks its rate limit to determine if the transfer can proceed. If capacity is sufficient, the manager calls the NTT Token contract to lock or burn the tokens. The tokens are removed from circulation on the source chain before any message is sent to the destination chain. In `burning` mode, this reduces the total supply. In locking mode, it moves the tokens into the NTT Token contract's custody. With the tokens secured, the NTT Manager creates a message containing all transfer details.
 
 The message goes to Wormhole Core, which emits an event that Guardian nodes observe. The Guardians independently validate that the event came from a legitimate source and sign it. Once the threshold of signatures is reached, the VAA becomes available for anyone to query from Wormhole's network. The transaction succeeds, the user receives a message ID for tracking, and the tokens have been removed from the source chain.
 
@@ -119,7 +119,7 @@ associating it with the message digest.
 
 The second phase is message execution. Once threshold has been met, the relayer, the recipient, or any third party, calls the NTT Manager which verifies the message hasn't been executed already and the message came from a known peer NTT Manager on the source chain.
 
-Rate limiting is checked on the destination chain and if it passes, the NTT Manager calls the NTT Token contract's mint function, passing the recipient address and amount. In burning mode, this creates new tokens. In locking mode, it transfers existing tokens from the contract's custody. The tokens appear in the recipient's account, completing the transfer. The transfer is now complete end-to-end.
+Rate limiting is checked on the destination chain and if it passes, the NTT Manager calls the NTT Token contract's mint function, passing the recipient address and amount. In `burning` mode, this creates new tokens. In locking mode, it transfers existing tokens from the contract's custody. The tokens appear in the recipient's account, completing the transfer. The transfer is now complete end-to-end.
 
 ### Choosing the Right Deployment Path
 
@@ -142,7 +142,7 @@ One of the most important design decisions when adopting NTT is whether you are 
   - The original ERC-20 contract remains the canonical representation.
   - All initial supply starts and conceptually lives on that chain.
 - All other chains, including Algorand, should use **burning mode**:
-  - Algorand gets an NttToken that manages an ASA in burning mode.
+  - Algorand gets an NttToken that manages an ASA in `burning` mode.
   - Supply on Algorand increases only when tokens have been locked on the origin chain.
 
 3. If You Are Creating a **New Token**
@@ -441,9 +441,13 @@ ntt status
 Check `deployment.json` in your NTT project. You should be able to see details of your deployed token.
 
 <Image src={deploymentResultEVM} alt=' Execute Transfer Result' />
-:::note The token is in burning mode since the token already existed in Algorand. If your token
-already exists, then this should be `locking` mode. ::: **Save the addresses you get in your
-`deployment.json` file for peer configuration!**
+
+:::note
+The token is in `burning` mode since the token already existed in Algorand. If your token
+already exists, then this should be `locking` mode.
+:::
+
+Save the addresses you get in your `deployment.json` file for peer configuration!
 
 ## Cross-Chain Configuration
 
