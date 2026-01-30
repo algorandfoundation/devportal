@@ -27,6 +27,10 @@ import deployPeerTokenEVM from '@images/wormhole-ntt-deploy-peer-token.png';
 
 This guide provides comprehensive technical documentation for implementing Wormhole's Native Token Transfers (NTT) framework between Algorand and EVM-compatible chains. The implementation enables bidirectional token transfers across heterogeneous blockchain environments through Wormhole's verified attestation architecture. This guide has been made considering we have an existing Algorand token. So, a new token is deployed on EVM in `burning` mode. You can deploy in `locking`/`burning` mode as per your requirement. The details of which mode you need is covered in [this](/choosing the right deployment path) section.
 
+:::note
+This guide is in beta, reflecting the early stage of some components, and will be updated as they continue to mature.
+:::
+
 ### Native Token Transfers (NTT)
 
 Native Token Transfers (NTT) is Wormhole's framework for transferring tokens across blockchains without requiring liquidity pools. Unlike traditional token bridges that wrap assets or rely on locked liquidity, NTT enables direct token transfers by either burning tokens on the source chain and minting them on the destination, or by locking tokens on one chain while minting representations on others.
