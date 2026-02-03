@@ -44,7 +44,7 @@
     "astro-icon": "^1.1.0",
     "astro-rehype-relative-markdown-links": "^0.17.3",
     "astro-remote": "^0.3.3",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "marked": "^17.0.1",
     "octokit": "^5.0.4",
     "picomatch": "^4.0.3",
