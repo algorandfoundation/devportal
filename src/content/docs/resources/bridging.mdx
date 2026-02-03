@@ -11,7 +11,7 @@ import deployExistingToken from '@images/wormhole-ntt-deploy-existing-token.png'
 import deployNttManager from '@images/wormhole-ntt-deploy-ntt-manager.png';
 import deployWormholeTransceiver from '@images/wormhole-ntt.png';
 import deploymentOutJson from '@images/wormhole-ntt-deploymentOutJson.png';
-import deploymentResultEVM from '@images/womrhole-ntt-deployment-evm.png';
+import deploymentResultEVM from '@images/wormhole-ntt-deployment-evm.png';
 import getPeerResult from '@images/wormhole-ntt-get-peer.png';
 import configureNTTResult from '@images/wormhole-ntt-configure-ntt-contracts.png';
 import addChainSepoliaResult from '@images/wormhole-add-chain-sepolia.png';
@@ -153,7 +153,7 @@ One of the most important design decisions when adopting NTT is whether you are 
   - You decide how to distribute the initial supply across chains: mint everything on one chain and move it out via NTT, or mint portions on multiple chains according to your distribution plan.
 
 :::note
-This guide covers bridging between AVM and EVM-compatible chains only. It currently doesnt support bridging between any other chains.
+This guide covers bridging between AVM and EVM-compatible chains only. It currently doesn't support bridging between any other chains.
 :::
 
 ## Prerequisites
@@ -576,7 +576,7 @@ Update `YOUR_EVM_ADDRESS` to the address you want to send the tokens as well as 
   );
 ```
 
-Incase you dont have FOLKS token to pay fees, you can update `feePaymentToken` to use native ALGO for fee payment
+In case you don't have FOLKS token to pay fees, you can update `feePaymentToken` to use native ALGO for fee payment
 
 ```typescript
 const feePaymentToken = {
@@ -611,7 +611,7 @@ Update `YOUR_AVM_ADDRESS` to the address you want to send the tokens as well as 
   );
 ```
 
-Incase you dont have FOLKS token to pay fees, you can update `feePaymentToken` to use native ETH token for fee payment
+In case you don't have FOLKS token to pay fees, you can update `feePaymentToken` to use native ETH token for fee payment
 
 ```typescript
 const feePaymentToken = {
@@ -723,7 +723,7 @@ Transfer Failed?
 ├─> Insufficient funds error?
 |   ├─> Check source chain
 |     ├─> Algorand: Check ALGO balance(need 10 ALGO)
-|         ├─> Get funds from [Lora](https://www.lora.algokit.io/testnet/funds)
+|         ├─> Get funds from [Lora](https://lora.algokit.io/testnet/fund)
 │     ├─> ETH: Check ETH balance (need 0.002+ ETH)
 │         └─> Get funds from Coinbase or any other faucet
 │
@@ -774,7 +774,7 @@ You have successfully deployed a cross-chain NTT token bridge between Base Sepol
 
 - [WormholeScan Testnet](https://wormholescan.io/#/?network=Testnet)
 - [Base Sepolia Explorer](https://sepolia.basescan.org)
-- [AlgoExplorer Testnet](https://lora.algokit.io/)
+- [Lora Testnet](https://lora.algokit.io/)
 
 #### Faucets
 
