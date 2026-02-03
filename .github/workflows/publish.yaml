@@ -2,6 +2,7 @@ name: Deploy to Cloudflare Pages
 
 # Trigger on push to main branch and pull requests to main
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -42,7 +43,7 @@ jobs:
 
       - name: Publish to Cloudflare Pages
         id: deploy
-        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]')
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]')
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
