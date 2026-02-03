@@ -42,7 +42,7 @@
     "astro": "^5.17.1",
     "astro-d2": "^0.3.0",
     "astro-icon": "^1.1.0",
-    "astro-rehype-relative-markdown-links": "^0.17.3",
+    "astro-rehype-relative-markdown-links": "^0.18.1",
     "astro-remote": "^0.3.3",
     "js-yaml": "^4.1.0",
     "marked": "^17.0.1",
