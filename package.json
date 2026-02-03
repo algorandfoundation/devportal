@@ -72,7 +72,7 @@
     "dotenv": "^17.2.3",
     "dotenv-cli": "^10.0.0",
     "eslint": "^9.39.2",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",
     "handlebars": "^4.7.8",
     "pnpm": "^10.28.0",
