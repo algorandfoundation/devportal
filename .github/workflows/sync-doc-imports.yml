@@ -147,8 +147,7 @@ jobs:
             --body-file /tmp/pr-body.md \
             --label "documentation" \
             --label "automated" \
-            --label "sync" \
-            --reviewer "algorandfoundation/devrel"
+            --label "sync"
 
       - name: Summary
         if: always()
