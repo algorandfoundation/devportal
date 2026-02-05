@@ -1,0 +1,121 @@
+name: Sync to Production
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  create-sync-pr:
+    name: Create Sync PR to Production
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.IMPORT_DOCS_TOKEN }}
+
+    steps:
+      - name: Validate Automation Token
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "Missing IMPORT_DOCS_TOKEN secret." >&2
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.IMPORT_DOCS_TOKEN }}
+
+      - name: Check for changes between main and main-dist
+        id: diff-check
+        run: |
+          git fetch origin main-dist
+          if git diff --quiet origin/main-dist..origin/main; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes between main and main-dist"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected between main and main-dist"
+          fi
+
+      - name: Generate PR body
+        if: steps.diff-check.outputs.has_changes == 'true'
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          {
+            echo "## Production Sync: Main → Main-Dist"
+            echo ""
+            echo "Automated sync of \`main\` into \`main-dist\` for production deployment."
+            echo ""
+            echo "---"
+
+            if [ "$EVENT_NAME" = "pull_request" ]; then
+              echo "*Triggered by merge of PR #${PR_NUMBER}: ${PR_TITLE}*"
+            else
+              echo "*Triggered manually via workflow dispatch.*"
+            fi
+          } > /tmp/pr-body.md
+
+      - name: Check for existing sync PR
+        if: steps.diff-check.outputs.has_changes == 'true'
+        id: existing-pr
+        run: |
+          EXISTING_PR=$(gh pr list --base main-dist --head main --state open --json number --jq '.[0].number // empty')
+          echo "pr_number=${EXISTING_PR}" >> $GITHUB_OUTPUT
+
+      - name: Re-request Copilot review on existing PR
+        if: steps.diff-check.outputs.has_changes == 'true' && steps.existing-pr.outputs.pr_number != ''
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          PR_NUM="${{ steps.existing-pr.outputs.pr_number }}"
+          gh api "repos/${REPO}/pulls/${PR_NUM}/requested_reviewers" \
+            -f "reviewers[]=copilot"
+          echo "Re-requested Copilot review on PR #${PR_NUM}"
+
+      - name: Create new sync PR
+        if: steps.diff-check.outputs.has_changes == 'true' && steps.existing-pr.outputs.pr_number == ''
+        id: create-pr
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          PR_URL=$(gh pr create \
+            --base main-dist \
+            --head main \
+            --title "Canary to Production Sync" \
+            --body-file /tmp/pr-body.md \
+            --label "automated" \
+            --label "sync")
+
+          PR_NUM=$(echo "$PR_URL" | grep -o '[0-9]*$')
+          echo "pr_number=${PR_NUM}" >> $GITHUB_OUTPUT
+
+          gh api "repos/${REPO}/pulls/${PR_NUM}/requested_reviewers" \
+            -f "reviewers[]=copilot"
+          echo "Created PR #${PR_NUM} and requested Copilot review"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.diff-check.outputs.has_changes }}" = "false" ]; then
+            echo "No changes to sync between main and main-dist." >> $GITHUB_STEP_SUMMARY
+          elif [ -n "${{ steps.existing-pr.outputs.pr_number }}" ]; then
+            echo "Re-requested Copilot review on existing sync PR #${{ steps.existing-pr.outputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+          elif [ -n "${{ steps.create-pr.outputs.pr_number }}" ]; then
+            echo "Created sync PR #${{ steps.create-pr.outputs.pr_number }} with Copilot review" >> $GITHUB_STEP_SUMMARY
+          fi
