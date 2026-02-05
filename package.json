@@ -75,6 +75,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",
     "handlebars": "^4.7.8",
+    "openai": "^6.18.0",
     "pnpm": "^10.28.0",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
