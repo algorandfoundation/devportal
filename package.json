@@ -15,6 +15,8 @@
     "validate:links": "pkill -f 'astro preview' || true; pkill -f 'astro dev' || true; pnpm run preview & sleep 3 && lychee --config ./lychee.toml --base-url 'http://localhost:4321' './dist/**/*.html'",
     "_section:utils": "====================== Helper Scripts ======================",
     "generate-opcode-list": "npx tsx scripts/generate-opcode-list.js",
+    "prose:check": "npx tsx scripts/prose-check.ts $(git diff --name-only --cached -- 'src/content/docs/**/*.md' 'src/content/docs/**/*.mdx' | tr '\\n' ' ')",
+    "prose:check:all": "find src/content/docs -name '*.md' -o -name '*.mdx' | xargs npx tsx scripts/prose-check.ts",
     "_section:github-imports": "====================== GitHub Imports ======================",
     "import:docs": "IMPORT_GITHUB=true astro sync && pnpm run sidebar:generate && pnpm run lint:fix",
     "import:force": "FORCE_IMPORT=true pnpm run import:docs",

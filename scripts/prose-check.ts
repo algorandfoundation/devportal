@@ -140,11 +140,23 @@ interface ProseResponse {
 }
 
 // ── Main logic ────────────────────────────────────────────
+const enabled = (process.env.PROSE_CHECK_ENABLED ?? 'true').toLowerCase() !== 'false';
+if (!enabled) {
+  process.exit(0);
+}
+
 const apiKey = process.env.OPENAI_API_KEY;
 const mode = (process.env.PROSE_CHECK_MODE ?? 'warn').toLowerCase();
 const model = process.env.PROSE_CHECK_MODEL ?? 'gpt-4o-mini';
 const sensitivity = (process.env.PROSE_CHECK_SENSITIVITY ?? 'medium').toLowerCase();
-const files = process.argv.slice(2);
+const excludePaths = (process.env.PROSE_CHECK_EXCLUDE ?? '')
+  .split(',')
+  .map((p) => p.trim())
+  .filter(Boolean);
+
+// Filter out excluded paths
+const allFiles = process.argv.slice(2);
+const files = allFiles.filter((file) => !excludePaths.some((exclude) => file.includes(exclude)));
 
 // Map sensitivity to temperature (lower temp = more deterministic/strict)
 // Some models (o1, o3, gpt-5) don't support custom temperature
