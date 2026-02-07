@@ -9,7 +9,7 @@
 [![Starlight](https://img.shields.io/badge/Starlight_v0.37-EF8E19?logo=astro&logoColor=white)](https://starlight.astro.build/)
 [![React](https://img.shields.io/badge/React_v19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 The official Algorand Developer Portal - a comprehensive documentation site for Algorand blockchain developers.
