@@ -1,5 +1,8 @@
 import { BIP39_WORDS } from './wordlist'
 
+/** Default minimum number of consecutive BIP39 words to trigger a violation. */
+export const DEFAULT_THRESHOLD = 8
+
 /** A detected sequence of consecutive BIP39 mnemonic words in scanned content. */
 export interface Bip39Violation {
   /** The 1-based line number where the violation was found. */
@@ -13,7 +16,8 @@ export interface Bip39Violation {
 /**
  * Strip surrounding non-alphabetic characters from a token and classify it.
  * Returns the stripped word if the core is pure alpha, or null if it contains
- * interior punctuation (e.g. "they're", "open-source").
+ * interior punctuation (e.g. "they're", "open-source") or digits in the
+ * stripped portions (e.g. "board[0]", "abandon123").
  * Returns 'skip' for tokens that are entirely non-alpha (e.g. "1.", "//", "2)").
  */
 function stripToken(token: string): string | null | 'skip' {
@@ -29,6 +33,11 @@ function stripToken(token: string): string | null | 'skip' {
 
   // If core contains any non-alpha character, it has interior punctuation
   if (!/^[a-z]+$/.test(core)) return null
+
+  // If stripped leading/trailing portions contain digits, the token is
+  // likely a code construct (e.g. board[0], abandon123) — disqualify it.
+  if (/\d/.test(token.slice(0, start)) || /\d/.test(token.slice(end + 1)))
+    return null
 
   return core
 }
@@ -108,21 +117,20 @@ function analyzeLine(line: string): {
  * Purely non-alphabetic tokens (like "1.", "2)", "//") are skipped without breaking a sequence.
  *
  * @param content - The text content to scan for BIP39 sequences.
- * @param threshold - Minimum number of consecutive BIP39 words to trigger a violation (default: 5).
+ * @param threshold - Minimum number of consecutive BIP39 words to trigger a violation (default: {@link DEFAULT_THRESHOLD}).
  * @returns An array of {@link Bip39Violation} objects, one per detected sequence.
  *
  * @example
  * ```ts
  * const violations = detectBip39Sequences(
  *   'abandon ability able about above absent absorb abstract absurd abuse access accident',
- *   5,
  * )
  * // violations[0].matchedWords.length === 12
  * ```
  */
 export function detectBip39Sequences(
   content: string,
-  threshold: number = 5,
+  threshold: number = DEFAULT_THRESHOLD,
 ): Bip39Violation[] {
   if (!content) return []
 

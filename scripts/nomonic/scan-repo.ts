@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync, statSync } from 'fs'
 import { execFileSync } from 'child_process'
 import { join } from 'path'
-import { detectBip39Sequences } from './detect'
+import { DEFAULT_THRESHOLD, detectBip39Sequences } from './detect'
 import { loadIgnorePatterns, compilePattern, isIgnored } from './ignore'
 
 const LOCK_FILES = new Set([
@@ -78,12 +78,12 @@ export function getFilesRecursive(dir: string): string[] {
  * silently skipped. Files that cannot be read are also skipped.
  *
  * @param files - Absolute or relative file paths to scan.
- * @param threshold - Minimum consecutive BIP39 words to trigger a violation (default: 5).
+ * @param threshold - Minimum consecutive BIP39 words to trigger a violation (default: {@link DEFAULT_THRESHOLD}).
  * @returns An array of {@link ScanViolation} objects across all scanned files.
  */
 export function scanFiles(
   files: string[],
-  threshold: number = 5,
+  threshold: number = DEFAULT_THRESHOLD,
 ): ScanViolation[] {
   const violations: ScanViolation[] = []
 
@@ -126,7 +126,7 @@ export function main(): void {
   let mode: 'git' | 'dir' = 'git'
   let dirPath = '.'
   let includeLockfiles = false
-  let threshold = 5
+  let threshold = DEFAULT_THRESHOLD
   let jsonOutput = false
   const extraIgnorePatterns: string[] = []
 

@@ -1,5 +1,5 @@
 import { execFileSync } from 'child_process'
-import { detectBip39Sequences } from './detect'
+import { DEFAULT_THRESHOLD, detectBip39Sequences } from './detect'
 import { loadIgnorePatterns, compilePattern, isIgnored } from './ignore'
 
 const LOCK_FILES = new Set([
@@ -146,13 +146,13 @@ export function buildContentBlock(addedLines: AddedLine[]): ContentBlock {
 
 export function getThreshold(): number {
   const env = process.env.BIP39_THRESHOLD
-  if (env === undefined) return 5
+  if (env === undefined) return DEFAULT_THRESHOLD
   const parsed = parseInt(env, 10)
   if (Number.isNaN(parsed) || parsed < 1) {
     process.stderr.write(
-      `${YELLOW}⚠ Invalid BIP39_THRESHOLD="${env}", using default (5)${NC}\n`,
+      `${YELLOW}⚠ Invalid BIP39_THRESHOLD="${env}", using default (${DEFAULT_THRESHOLD})${NC}\n`,
     )
-    return 5
+    return DEFAULT_THRESHOLD
   }
   return parsed
 }
