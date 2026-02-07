@@ -147,6 +147,9 @@ importers:
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
+      openai:
+        specifier: ^6.18.0
+        version: 6.18.0(zod@3.25.76)
       pnpm:
         specifier: ^10.28.0
         version: 10.28.2
@@ -3390,6 +3393,18 @@ packages:
 
   oniguruma-to-es@4.3.4:
     resolution: {integrity: sha512-3VhUGN3w2eYxnTzHn+ikMI+fp/96KoRSVK9/kMTcFqj1NRDh2IhQCKvYxDnWePKRXY/AqH+Fuiyb7VHSzBjHfA==}
+
+  openai@6.18.0:
+    resolution: {integrity: sha512-odLRYyz9rlzz6g8gKn61RM2oP5UUm428sE2zOxZqS9MzVfD5/XW8UoEjpnRkzTuScXP7ZbP/m7fC+bl8jCOZZw==}
+    hasBin: true
+    peerDependencies:
+      ws: ^8.18.0
+      zod: ^3.25 || ^4.0
+    peerDependenciesMeta:
+      ws:
+        optional: true
+      zod:
+        optional: true
 
   openapi-sampler@1.6.1:
     resolution: {integrity: sha512-s1cIatOqrrhSj2tmJ4abFYZQK6l5v+V4toO5q1Pa0DyN8mtyqy2I+Qrj5W9vOELEtybIMQs/TBZGVO/DtTFK8w==}
@@ -8436,6 +8451,10 @@ snapshots:
       oniguruma-parser: 0.12.1
       regex: 6.1.0
       regex-recursion: 6.0.2
+
+  openai@6.18.0(zod@3.25.76):
+    optionalDependencies:
+      zod: 3.25.76
 
   openapi-sampler@1.6.1:
     dependencies:
