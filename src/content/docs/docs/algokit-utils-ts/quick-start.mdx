@@ -1,0 +1,28 @@
+---
+title: Quick Start
+description: Get started with AlgoKit Utils TypeScript
+---
+
+# Quick Start
+
+This guide walks you through creating your first Algorand transaction using AlgoKit Utils.
+
+## Setup
+
+```typescript
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+
+const algorand = AlgorandClient.defaultLocalNet()
+```
+
+## Create an Account
+
+```typescript
+const account = await algorand.account.random()
+```
+
+## Fund the Account
+
+```typescript
+await algorand.account.ensureFunded(account, algorand.account.localNetDispenser(), (1).algo())
+```

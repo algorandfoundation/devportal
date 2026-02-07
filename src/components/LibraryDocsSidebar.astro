@@ -1,0 +1,355 @@
+---
+/**
+ * LibraryDocsSidebar - Isolated sidebar for library virtual collections.
+ *
+ * Replaces the main sidebar when viewing /docs/<library>/ pages.
+ * Features:
+ * - Hamburger/chevron at top that slides down the library list (like TanStack)
+ * - Language selector (if library has language variants)
+ * - Version selector
+ * - Library-specific sidebar navigation tree
+ */
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import LibrarySwitcher from './LibrarySwitcher.astro';
+import { toStarlightSidebar, type LibraryConfig } from '../config/libraries';
+
+interface Props {
+  library: LibraryConfig;
+  currentPath: string;
+}
+
+const { library, currentPath } = Astro.props;
+
+// Convert our library sidebar config to Starlight-compatible format
+const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
+---
+
+<div class="library-docs-sidebar">
+  <!-- Library switcher overlay (hidden by default, slides down on hover/click) -->
+  <library-switcher-toggle>
+    <button
+      class="library-toggle-btn"
+      aria-expanded="false"
+      aria-controls="library-switcher-panel"
+      title="Switch library"
+    >
+      <span class="toggle-icon hamburger" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <rect x="1" y="3" width="14" height="1.5" rx="0.75" />
+          <rect x="1" y="7.25" width="14" height="1.5" rx="0.75" />
+          <rect x="1" y="11.5" width="14" height="1.5" rx="0.75" />
+        </svg>
+      </span>
+      <span class="library-name">
+        <span class="library-dot" style={`background-color: ${library.color}`} />
+        {library.label}
+      </span>
+      <span class="toggle-chevron" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+    </button>
+
+    <div class="library-switcher-panel" id="library-switcher-panel" aria-hidden="true">
+      <div class="panel-inner">
+        <a href="/" class="back-home-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 7L7 1L13 7" />
+            <path d="M3 5.5V12.5H11V5.5" />
+          </svg>
+          Home
+        </a>
+        <a href="/docs/" class="back-home-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 2H9L12 5V12H2V2Z" />
+            <path d="M5 7H9" />
+            <path d="M5 9.5H9" />
+          </svg>
+          All Docs
+        </a>
+        <div class="panel-divider" />
+        <LibrarySwitcher currentPath={currentPath} compact />
+      </div>
+    </div>
+  </library-switcher-toggle>
+
+  <!-- Version / Language selectors -->
+  <div class="selectors">
+    {library.languages.length > 0 && (
+      <div class="selector">
+        <label class="selector-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.6">
+            <path d="M2 3h12v1.5H2zM4 6h8v1.5H4zM3 9h10v1.5H3zM5 12h6v1.5H5z" />
+          </svg>
+        </label>
+        <select class="selector-select" aria-label="Language">
+          {library.languages.map((lang) => (
+            <option value={lang}>{lang}</option>
+          ))}
+        </select>
+        <span class="selector-chevron" aria-hidden="true">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+            <path d="M2 3.5L5 7L8 3.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </div>
+    )}
+    <div class="selector">
+      <label class="selector-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.6">
+          <path d="M8 1.5l1 3h3l-2.5 2 1 3-2.5-2-2.5 2 1-3L4 4.5h3z" />
+        </svg>
+      </label>
+      <select class="selector-select" aria-label="Version">
+        {library.versions.map((ver) => (
+          <option value={ver}>{ver === 'latest' ? 'Latest' : ver}</option>
+        ))}
+      </select>
+      <span class="selector-chevron" aria-hidden="true">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+          <path d="M2 3.5L5 7L8 3.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="section-divider" />
+
+  <!-- Library-specific sidebar navigation -->
+  <div class="library-nav">
+    <SidebarSublist sublist={sidebarEntries} />
+  </div>
+</div>
+
+<!-- Client-side toggle behavior for the library switcher panel -->
+<script>
+  class LibrarySwitcherToggle extends HTMLElement {
+    private btn!: HTMLButtonElement;
+    private panel!: HTMLElement;
+
+    connectedCallback() {
+      this.btn = this.querySelector('.library-toggle-btn')!;
+      this.panel = this.querySelector('.library-switcher-panel')!;
+
+      if (!this.btn || !this.panel) return;
+
+      this.btn.addEventListener('click', () => this.toggle());
+
+      // Close on escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.isOpen()) this.close();
+      });
+
+      // Close when clicking outside
+      document.addEventListener('click', (e) => {
+        if (this.isOpen() && !this.contains(e.target as Node)) {
+          this.close();
+        }
+      });
+    }
+
+    isOpen() {
+      return this.btn.getAttribute('aria-expanded') === 'true';
+    }
+
+    toggle() {
+      if (this.isOpen()) {
+        this.close();
+      } else {
+        this.open();
+      }
+    }
+
+    open() {
+      this.btn.setAttribute('aria-expanded', 'true');
+      this.panel.setAttribute('aria-hidden', 'false');
+    }
+
+    close() {
+      this.btn.setAttribute('aria-expanded', 'false');
+      this.panel.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  customElements.define('library-switcher-toggle', LibrarySwitcherToggle);
+</script>
+
+<style>
+  .library-docs-sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Toggle button */
+  .library-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    background: none;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    color: var(--sl-color-white);
+    cursor: pointer;
+    font-size: var(--sl-text-base);
+    font-weight: 600;
+    text-align: left;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+
+  @media (min-width: 50rem) {
+    .library-toggle-btn {
+      font-size: var(--sl-text-sm);
+    }
+  }
+
+  .library-toggle-btn:hover {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-4);
+  }
+
+  .toggle-icon {
+    display: flex;
+    align-items: center;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .library-name {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .library-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .toggle-chevron {
+    display: flex;
+    align-items: center;
+    opacity: 0.5;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  [aria-expanded='true'] .toggle-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Library switcher panel (slide-down overlay) */
+  .library-switcher-panel {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.3s ease;
+    margin-top: 0;
+  }
+
+  .library-switcher-panel[aria-hidden='false'] {
+    max-height: 80vh;
+    opacity: 1;
+    margin-top: 0.5rem;
+    overflow-y: auto;
+  }
+
+  .panel-inner {
+    padding: 0.5rem 0;
+  }
+
+  .back-home-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    transition: color 0.15s, background-color 0.15s;
+  }
+
+  .back-home-link:hover {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .panel-divider {
+    height: 1px;
+    background-color: var(--sl-color-hairline-light);
+    margin: 0.5rem;
+  }
+
+  /* Selectors */
+  .selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.5rem 0;
+  }
+
+  .selector {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--sl-color-gray-6);
+    border-radius: 0.375rem;
+    background: transparent;
+    position: relative;
+  }
+
+  .selector:hover {
+    border-color: var(--sl-color-gray-4);
+  }
+
+  .selector-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .selector-select {
+    appearance: none;
+    background: none;
+    border: none;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    padding: 0.1rem 0;
+    flex: 1;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .selector-select:focus {
+    color: var(--sl-color-white);
+  }
+
+  .selector-chevron {
+    display: flex;
+    align-items: center;
+    opacity: 0.4;
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  /* Divider */
+  .section-divider {
+    height: 1px;
+    background-color: var(--sl-color-hairline-light);
+    margin: 0.25rem 0.5rem 0.5rem;
+  }
+
+  /* Library nav tree */
+  .library-nav {
+    flex: 1;
+  }
+</style>

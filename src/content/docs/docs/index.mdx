@@ -1,0 +1,133 @@
+---
+title: API & Reference Docs
+description: Browse documentation for Algorand libraries, SDKs, and tools.
+prev: false
+next: false
+---
+
+import { libraries, categoryLabels, getLibrariesByCategory } from '../../../config/libraries';
+
+# API & Reference Documentation
+
+Browse documentation for Algorand development libraries, SDKs, CLI tools, and REST APIs. Each library has its own isolated documentation section with version-specific content.
+
+## SDKs & Utilities
+
+<div class="library-cards">
+  <a href="/docs/algokit-utils-ts/" class="library-card">
+    <span class="library-dot" style="background-color: #3B82F6"></span>
+    <div>
+      <strong>AlgoKit Utils TS</strong>
+      <p>TypeScript utilities for building on Algorand</p>
+    </div>
+  </a>
+  <a href="/docs/algokit-utils-py/" class="library-card">
+    <span class="library-dot" style="background-color: #10B981"></span>
+    <div>
+      <strong>AlgoKit Utils Python</strong>
+      <p>Python utilities for building on Algorand</p>
+    </div>
+  </a>
+</div>
+
+## CLI Tools
+
+<div class="library-cards">
+  <a href="/docs/algokit-cli/" class="library-card">
+    <span class="library-dot" style="background-color: #F59E0B"></span>
+    <div>
+      <strong>AlgoKit CLI</strong>
+      <p>The AlgoKit command-line interface</p>
+    </div>
+  </a>
+</div>
+
+## Smart Contract Languages
+
+<div class="library-cards">
+  <a href="/docs/algorand-python/" class="library-card">
+    <span class="library-dot" style="background-color: #8B5CF6"></span>
+    <div>
+      <strong>Algorand Python</strong>
+      <p>Write Algorand smart contracts in Python</p>
+    </div>
+  </a>
+  <a href="/docs/algorand-typescript/" class="library-card">
+    <span class="library-dot" style="background-color: #EC4899"></span>
+    <div>
+      <strong>Algorand TypeScript</strong>
+      <p>Write Algorand smart contracts in TypeScript</p>
+    </div>
+  </a>
+</div>
+
+## Libraries & Tools
+
+<div class="library-cards">
+  <a href="/docs/algokit-subscriber-ts/" class="library-card">
+    <span class="library-dot" style="background-color: #06B6D4"></span>
+    <div>
+      <strong>AlgoKit Subscriber TS</strong>
+      <p>Subscribe to Algorand blockchain events</p>
+    </div>
+  </a>
+  <a href="/docs/nodekit/" class="library-card">
+    <span class="library-dot" style="background-color: #EF4444"></span>
+    <div>
+      <strong>NodeKit</strong>
+      <p>Tools for running Algorand nodes</p>
+    </div>
+  </a>
+</div>
+
+## REST APIs
+
+<div class="library-cards">
+  <a href="/docs/rest-api/" class="library-card">
+    <span class="library-dot" style="background-color: #F97316"></span>
+    <div>
+      <strong>REST APIs</strong>
+      <p>Algorand REST API reference (algod, indexer, kmd)</p>
+    </div>
+  </a>
+</div>
+
+<style>{`
+  .library-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .library-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .library-card:hover {
+    border-color: var(--sl-color-accent);
+    background: var(--sl-color-gray-7, rgba(255,255,255,0.03));
+  }
+  .library-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 0.35rem;
+  }
+  .library-card strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .library-card p {
+    margin: 0;
+    font-size: 0.875rem;
+    opacity: 0.8;
+  }
+`}</style>

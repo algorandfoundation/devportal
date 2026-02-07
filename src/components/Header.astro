@@ -7,6 +7,7 @@ import SiteTitle from './SiteTitle.astro';
 import SocialIcons from './SocialIcons.astro';
 import ThemeSelect from './ThemeSelect.astro';
 import Default from '@astrojs/starlight/components/Header.astro';
+import { getLibraryFromPath } from '../config/libraries';
 
 /**
  * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
@@ -15,6 +16,8 @@ const shouldRenderSearch =
   config.pagefind ||
   config.components.Search !== '@astrojs/starlight/components/Search.astro';
 const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+const currentPath = Astro.url.pathname;
+const activeLibrary = getLibraryFromPath(currentPath);
 ---
 
 {
@@ -40,6 +43,15 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
     </div>
   ) : (
     <Default>
+      {activeLibrary && (
+        <div class="library-header-indicator">
+          <span class="library-header-dot" style={`background-color: ${activeLibrary.color}`} />
+          <span class="library-header-name">{activeLibrary.label}</span>
+          {activeLibrary.versions[0] && (
+            <span class="library-header-version">{activeLibrary.versions[0] === 'latest' ? 'Latest' : activeLibrary.versions[0]}</span>
+          )}
+        </div>
+      )}
       <slot />
     </Default>
   )
@@ -62,6 +74,39 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
   .social-icons {
     gap: 1rem;
     align-items: center;
+  }
+
+  .library-header-indicator {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    color: var(--sl-color-white);
+    margin-inline-start: 0.5rem;
+  }
+
+  @media (min-width: 50rem) {
+    .library-header-indicator {
+      display: flex;
+    }
+  }
+
+  .library-header-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .library-header-version {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--sl-color-gray-3);
+    background: var(--sl-color-gray-6);
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.25rem;
+    margin-inline-start: 0.25rem;
   }
 
   @media (min-width: 50rem) {
@@ -87,7 +132,7 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
       );
       display: grid;
       grid-template-columns:
-        /* 1 (site title): runs up until the main content column’s left edge or the width of the title, whichever is the largest  */
+        /* 1 (site title): runs up until the main content column's left edge or the width of the title, whichever is the largest  */
         minmax(
           calc(
             var(--__sidebar-width) +

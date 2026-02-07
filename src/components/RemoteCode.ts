@@ -49,9 +49,14 @@ export async function getSelectedCode(
   );
 
   if (occurrenceIndexes.length !== 2) {
-    throw new Error(
-      `Error: Pattern "${pattern}" must occur exactly twice. Found: ${occurrenceIndexes.length}`,
+    console.warn(
+      `RemoteCode: Pattern "${pattern}" must occur exactly twice. Found: ${occurrenceIndexes.length}. Using placeholder.`,
     );
+    return {
+      content: `// Snippet "${snippet}" not found in source`,
+      line: null,
+      githubUrl,
+    };
   }
 
   const [startIndex, endIndex] = occurrenceIndexes;
@@ -100,7 +105,8 @@ async function getCode(src: string): Promise<string> {
     new URL(src);
     const response = await fetch(src);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      console.warn(`RemoteCode: HTTP ${response.status} for ${src}, using placeholder`);
+      return `// Could not fetch remote code: HTTP ${response.status}\n// Source: ${src}`;
     }
     return await response.text();
   } catch (error) {
@@ -108,13 +114,12 @@ async function getCode(src: string): Promise<string> {
       try {
         return await fs.readFile(src, 'utf-8');
       } catch (fsError) {
-        if (fsError instanceof Error) {
-          throw new Error(`Error reading file: ${fsError.message}`);
-        }
-        throw new Error(`Unknown error reading file: ${fsError}`);
+        console.warn(`RemoteCode: Could not read ${src}, using placeholder`);
+        return `// Could not load code from: ${src}`;
       }
     } else {
-      throw new Error(`RemoteCode retrieval failed: ${error}`);
+      console.warn(`RemoteCode: Failed to retrieve ${src}, using placeholder`);
+      return `// Could not load code from: ${src}`;
     }
   }
 }

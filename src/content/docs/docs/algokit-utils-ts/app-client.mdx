@@ -1,0 +1,17 @@
+---
+title: App Client
+description: Interacting with Algorand smart contracts via App Client
+---
+
+# App Client
+
+The App Client provides a high-level interface for interacting with Algorand smart contracts.
+
+## Creating an App Client
+
+```typescript
+const appClient = algorand.client.getAppClientById({
+  appId: 1234n,
+  appSpec: myAppSpec,
+})
+```

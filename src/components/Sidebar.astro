@@ -1,0 +1,52 @@
+---
+/**
+ * Custom Sidebar override that implements TanStack-style navigation:
+ *
+ * 1. On main site pages: Shows a library switcher list at the top of the sidebar,
+ *    followed by the normal main-site sidebar navigation.
+ *
+ * 2. On library pages (/docs/<library>/): Replaces the entire sidebar with:
+ *    - A "back to libraries" hamburger/chevron at the top
+ *    - Language + version selectors
+ *    - The library-specific sidebar navigation
+ *
+ * The hamburger menu at the top slides down the library list overlay,
+ * similar to TanStack's behavior.
+ */
+import MobileMenuFooter from '@astrojs/starlight/components/MobileMenuFooter.astro';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import LibrarySwitcher from './LibrarySwitcher.astro';
+import LibraryDocsSidebar from './LibraryDocsSidebar.astro';
+import { getLibraryFromPath } from '../config/libraries';
+
+const { sidebar } = Astro.locals.starlightRoute;
+const currentPath = Astro.url.pathname;
+const activeLibrary = getLibraryFromPath(currentPath);
+const isDocsIndex = currentPath.replace(/\/$/, '') === '/docs';
+---
+
+{activeLibrary ? (
+  <!-- Library virtual collection view -->
+  <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
+) : (
+  <!-- Main site view: library switcher at top + normal sidebar -->
+  <div class="main-sidebar-wrapper">
+    <LibrarySwitcher currentPath={currentPath} />
+    {!isDocsIndex && (
+      <SidebarPersister>
+        <SidebarSublist sublist={sidebar} />
+      </SidebarPersister>
+    )}
+  </div>
+)}
+
+<div class="md:sl-hidden">
+  <MobileMenuFooter />
+</div>
+
+<style>
+  .main-sidebar-wrapper {
+    display: contents;
+  }
+</style>

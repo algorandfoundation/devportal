@@ -10,12 +10,14 @@ import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-lin
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
-import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
+// Temporarily disabled — requires network access
+// import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
 
-const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
-const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
-const kmdAPIDocsSidebarGroup = createOpenAPISidebarGroup();
+// Temporarily disabled — requires network access to download OpenAPI specs
+// const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
+// const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
+// const kmdAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 
 export default defineConfig({
   site: 'https://dev.algorand.co',
@@ -28,80 +30,12 @@ export default defineConfig({
       title: 'Algorand Developer Portal',
       plugins: [
         starlightImageZoom(),
-        starlightLinksValidator({
-          errorOnRelativeLinks: false,
-          errorOnInvalidHashes: false,
-          errorOnLocalLinks: false,
-          exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
-        }),
-        starlightLlmsTxt({
-          minify: {
-            customSelectors: [':any-link'],
-          },
-          customSets: [
-            {
-              label: 'Reference',
-              description: 'Algorand Developer Portal - Reference Docs',
-              paths: ['reference/**'],
-            },
-            {
-              label: 'Typescript - Reference',
-              description: 'Algorand Developer Portal - Typescript Reference Docs',
-              paths: ['reference/algorand-typescript/**'],
-            },
-            {
-              label: 'Python - Reference',
-              description: 'Algorand Developer Portal - Python Reference Docs',
-              paths: ['reference/algorand-python/**'],
-            },
-            {
-              label: 'Typescript',
-              description: 'Algorand Developer Portal - Typescript Docs',
-              paths: ['algokit/languages/typescript/**'],
-            },
-            {
-              label: 'Python',
-              description: 'Algorand Developer Portal - Python Docs',
-              paths: ['algokit/languages/python/**'],
-            },
-          ],
-        }),
+        // Temporarily disabled for prototype build (network-dependent)
+        // starlightLinksValidator({...}),
+        // starlightLlmsTxt({...}),
         starlightAutoSidebar(),
-        starlightOpenAPI([
-          {
-            base: 'reference/rest-api/algod',
-            schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/master/daemon/algod/api/algod.oas3.yml',
-            sidebar: {
-              label: 'algod',
-              group: algodAPIDocsSidebarGroup,
-              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
-              tags: { sort: 'alphabetical' },
-            },
-          },
-          {
-            base: 'reference/rest-api/indexer',
-            schema:
-              'https://raw.githubusercontent.com/algorand/indexer/refs/heads/main/api/indexer.oas3.yml',
-            sidebar: {
-              label: 'indexer',
-              group: indexerAPIDocsSidebarGroup,
-              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
-              tags: { sort: 'alphabetical' },
-            },
-          },
-          {
-            base: 'reference/rest-api/kmd',
-            schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/ad578576ab5f5bfe58a590164903617ecef379e4/daemon/kmd/api/swagger.json',
-            sidebar: {
-              label: 'kmd',
-              group: kmdAPIDocsSidebarGroup,
-              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
-              tags: { sort: 'alphabetical' },
-            },
-          },
-        ]),
+        // Temporarily disabled — requires network access to download OpenAPI specs
+        // starlightOpenAPI([...]),
       ],
       head: [
         {
@@ -149,6 +83,7 @@ export default defineConfig({
         Footer: './src/components/Footer.astro',
         Header: './src/components/Header.astro',
         Hero: './src/components/Hero.astro',
+        Sidebar: './src/components/Sidebar.astro',
         SiteTitle: './src/components/SiteTitle.astro',
         ThemeProvider: './src/components/CustomThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',
@@ -1262,9 +1197,10 @@ export default defineConfig({
                   label: 'Overview',
                   link: 'reference/rest-api/overview',
                 },
-                algodAPIDocsSidebarGroup,
-                indexerAPIDocsSidebarGroup,
-                kmdAPIDocsSidebarGroup,
+                // OpenAPI sidebar groups disabled — requires network access
+                // algodAPIDocsSidebarGroup,
+                // indexerAPIDocsSidebarGroup,
+                // kmdAPIDocsSidebarGroup,
               ],
             },
             {
@@ -1311,13 +1247,23 @@ export default defineConfig({
             },
           ],
         },
+        // Virtual collection pages - sidebar is overridden by custom Sidebar component
+        // but Starlight needs entries here so it generates the routes
+        {
+          label: 'API Docs',
+          collapsed: true,
+          autogenerate: {
+            directory: 'docs',
+          },
+        },
       ],
     }),
     icon(),
-    d2({
-      sketch: true,
-      layout: 'dagre',
-    }),
+    // d2 disabled — requires d2 binary installed
+    // d2({
+    //   sketch: true,
+    //   layout: 'dagre',
+    // }),
     sitemap(),
   ],
   markdown: {
