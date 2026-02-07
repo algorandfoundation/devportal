@@ -182,7 +182,8 @@ if (files.length === 0) {
 }
 
 if (!apiKey) {
-  console.warn(`\n  ${c.yellow}⚠ OPENAI_API_KEY not set in .env.local — skipping prose check${c.reset}\n`);
+  console.warn(`\n  ${c.yellow}⚠ OPENAI_API_KEY not set — skipping prose check${c.reset}`);
+  console.warn(`  ${c.dim}Set via direnv (.envrc) or dotenv (.env.local)${c.reset}\n`);
   process.exit(0);
 }
 
