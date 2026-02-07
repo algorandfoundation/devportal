@@ -26,7 +26,8 @@
     "sidebar:generate": "npx tsx scripts/manage-sidebar-meta.js --clean && npx tsx scripts/manage-sidebar-meta.js",
     "sidebar:update": "npx tsx scripts/manage-sidebar-meta.js --update",
     "sidebar:overwrite": "npx tsx scripts/manage-sidebar-meta.js --overwrite",
-    "sidebar:preview": "npx tsx scripts/manage-sidebar-meta.js --dry-run"
+    "sidebar:preview": "npx tsx scripts/manage-sidebar-meta.js --dry-run",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
@@ -77,6 +78,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",
     "handlebars": "^4.7.8",
+    "husky": "^9.1.7",
     "openai": "^6.18.0",
     "pnpm": "^10.28.0",
     "prettier": "^3.8.1",

@@ -1,6 +1,16 @@
 # Algorand Developer Portal
 
+[![Acceptance](https://github.com/algorandfoundation/devportal/actions/workflows/acceptance.yml/badge.svg)](https://github.com/algorandfoundation/devportal/actions/workflows/acceptance.yml)
+[![Portal](https://img.shields.io/website?url=https%3A%2F%2Fdev.algorand.co&label=dev.algorand.co)](https://dev.algorand.co)
+[![Last Commit](https://img.shields.io/github/last-commit/algorandfoundation/devportal)](https://github.com/algorandfoundation/devportal/commits)
+[![Contributors](https://img.shields.io/github/contributors/algorandfoundation/devportal)](https://github.com/algorandfoundation/devportal/graphs/contributors)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Astro](https://img.shields.io/badge/Astro_v5-BC52EE?logo=astro&logoColor=white)](https://astro.build/)
+[![Starlight](https://img.shields.io/badge/Starlight_v0.37-EF8E19?logo=astro&logoColor=white)](https://starlight.astro.build/)
+[![React](https://img.shields.io/badge/React_v19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 The official Algorand Developer Portal - a comprehensive documentation site for Algorand blockchain developers.
 
@@ -19,10 +29,8 @@ The official Algorand Developer Portal - a comprehensive documentation site for 
 
 Before you begin, ensure you have the following installed:
 
-- **[Node.js](https://nodejs.org/en)** - JavaScript runtime
-- **[pnpm](https://pnpm.io)** - Fast, disk space efficient package manager
-- **[Python](https://www.python.org/)** - Required for importing Python documentation
-- **[Poetry](https://python-poetry.org/)** - Python dependency management
+- **[Node.js](https://nodejs.org/en)** (v18+) - JavaScript runtime
+- **[pnpm](https://pnpm.io)** (v10.6+) - Fast, disk space efficient package manager
 - **[D2](https://github.com/terrastruct/d2/blob/master/docs/INSTALL.md)** - Diagram scripting language for generating diagrams
 
 ## Quick Start
@@ -34,24 +42,18 @@ Before you begin, ensure you have the following installed:
    cd devportal
    ```
 
-2. **Install dependencies**
-
-   ```bash
-   pnpm install
-   ```
-
-   Install the D2 diagram binary
+2. **Install D2 diagram binary**
 
    ```bash
    brew install d2
    ```
 
-   See d2 [docs](https://github.com/terrastruct/d2/blob/master/docs/INSTALL.md) for other installation options.
+   See D2 [docs](https://github.com/terrastruct/d2/blob/master/docs/INSTALL.md) for other installation options.
 
-3. **Initialize submodules and import content**
+3. **Install dependencies**
 
    ```bash
-   pnpm run import
+   pnpm install
    ```
 
 4. **Start the development server**
@@ -71,19 +73,17 @@ Before you begin, ensure you have the following installed:
 ├── examples/               # Code examples
 │   ├── algokit/           # AlgoKit examples
 │   └── smart-contracts/   # Smart contract examples
-├── imports/               # External content import system
-│   ├── build/             # Build scripts for imported content
-│   ├── configs/           # Import configurations
-│   ├── repos/             # Git submodules for external repos
-│   ├── scripts/           # Import automation scripts
+├── imports/
+│   ├── configs/           # GitHub loader import configurations
 │   └── transforms/        # Content transformation utilities
 ├── public/                # Static assets (favicons, etc.)
 ├── scripts/               # Build and utility scripts
+│   ├── clean-docs-import.ts       # Clear imported documentation
 │   ├── generate-opcode-list.js    # Generate Algorand opcodes list
-│   └── manage-sidebar-meta.js     # Sidebar management
+│   ├── manage-sidebar-meta.js     # Sidebar management
+│   └── prose-check.ts             # AI-powered prose quality checker
 ├── src/
 │   ├── assets/            # Images and media files
-│   │   └── imports/       # Imported assets from external repos
 │   ├── components/        # Reusable Astro/React components
 │   ├── content/
 │   │   ├── docs/          # Documentation markdown files
@@ -94,7 +94,6 @@ Before you begin, ensure you have the following installed:
 │   └── utils/             # Utility functions
 ├── templates/             # Handlebars templates for generated content
 ├── astro.config.mjs       # Astro configuration
-├── ec.config.mjs          # Editorial comments configuration
 ├── package.json           # Project dependencies and scripts
 ├── tailwind.config.mjs    # Tailwind CSS configuration
 └── tsconfig.json          # TypeScript configuration
@@ -117,7 +116,6 @@ Before you begin, ensure you have the following installed:
 ### Content & Documentation
 
 - **[@larkiny/astro-github-loader](https://www.npmjs.com/package/@larkiny/astro-github-loader)** - Import documentation from GitHub repositories
-- **[starlight-typedoc](https://www.npmjs.com/package/starlight-typedoc)** - Generate API docs from TypeScript
 - **[starlight-openapi](https://www.npmjs.com/package/starlight-openapi)** - OpenAPI/Swagger documentation
 - **[starlight-auto-sidebar](https://www.npmjs.com/package/starlight-auto-sidebar)** - Automatic sidebar generation
 - **[astro-d2](https://www.npmjs.com/package/astro-d2)** - D2 diagram integration
@@ -157,38 +155,20 @@ All commands are run from the root of the project:
 
 ### Content Generation
 
-| Command                          | Description                             |
-| -------------------------------- | --------------------------------------- |
-| `pnpm run generate-opcode-list`  | Generate Algorand opcodes documentation |
+| Command                         | Description                             |
+| ------------------------------- | --------------------------------------- |
+| `pnpm run generate-opcode-list` | Generate Algorand opcodes documentation |
 
-### Content Import (Legacy submodules approach; will be phased out)
+### Content Import
 
-| Command                               | Description                              |
-| ------------------------------------- | ---------------------------------------- |
-| `pnpm run init:submodules`            | Initialize git submodules                |
-| `pnpm run import:poetry`              | Install Python dependencies via Poetry   |
-| `pnpm run import:algorand-python`     | Import Algorand Python documentation     |
-| `pnpm run import:algorand-typescript` | Import Algorand TypeScript documentation |
-| `pnpm run import`                     | Run all legacy import steps              |
-
-### Content Import (GitHub Loader)
+Documentation is imported from external GitHub repositories using `@larkiny/astro-github-loader`. Import configurations are defined in `imports/configs/`.
 
 | Command                   | Description                                                         |
 | ------------------------- | ------------------------------------------------------------------- |
-| `pnpm run import:dry-run` | Preview GitHub content imports without making changes               |
-| `pnpm run import:all`     | Import all content from GitHub, regenerate sidebar, and fix linting |
+| `pnpm run import:docs`    | Import all content from GitHub, regenerate sidebar, and fix linting |
 | `pnpm run import:force`   | Force re-import all content, ignoring cache                         |
-
-### Imported Content Cleanup
-
-| Command                   | Description                          |
-| ------------------------- | ------------------------------------ |
-| `pnpm run clean:all`      | Remove all imported content          |
-| `pnpm run clean:arcs`     | Remove ARC standards content         |
-| `pnpm run clean:nodekit`  | Remove NodeKit documentation         |
-| `pnpm run clean:cli`      | Remove AlgoKit CLI documentation     |
-| `pnpm run clean:utils-ts` | Remove AlgoKit Utils TypeScript docs |
-| `pnpm run clean:utils-py` | Remove AlgoKit Utils Python docs     |
+| `pnpm run import:dry-run` | Preview GitHub content imports without making changes               |
+| `pnpm run import:clear`   | Remove all imported documentation content                           |
 
 ### Auto-Sidebar Management
 
@@ -212,18 +192,16 @@ The `starlight-auto-sidebar` plugin enables you to customize the order and appea
 
 ### Environment Variables
 
-Create a `.env` file in the root directory:
+The following environment variables can be configured:
 
-```bash
-# GitHub API token for importing documentation (only needed if you are importing updated reference docs)
-GITHUB_TOKEN=your_github_token_here
+| Variable         | Description                                      | Default |
+| ---------------- | ------------------------------------------------ | ------- |
+| `GITHUB_TOKEN`   | GitHub API token (required for importing docs)   | -       |
+| `IMPORT_GITHUB`  | Enable GitHub content import                     | `false` |
+| `IMPORT_DRY_RUN` | Preview imports without writing files            | `false` |
+| `FORCE_IMPORT`   | Force re-import, ignoring cache                  | `false` |
 
-# Import configuration
-IMPORT_GITHUB=true          # Enable GitHub content import
-IMPORT_DRY_RUN=false        # Preview imports without writing
-FORCE_IMPORT=false          # Force re-import ignoring cache
-
-```
+Set these in your shell or use your preferred environment management tool.
 
 ### Astro Configuration
 
