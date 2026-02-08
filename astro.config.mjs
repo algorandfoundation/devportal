@@ -1026,7 +1026,7 @@ export default defineConfig({
         },
         {
           label: 'Running A Node',
-          collapsed: false,
+          collapsed: true,
           items: [
             {
               label: 'Overview',
@@ -1159,7 +1159,7 @@ export default defineConfig({
         // Virtual collection pages - sidebar is overridden by custom Sidebar component
         // but Starlight needs entries here so it generates the routes
         {
-          label: 'API Docs',
+          label: 'API Docs (will be hidden)',
           collapsed: true,
           autogenerate: {
             directory: 'docs',
