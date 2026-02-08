@@ -184,9 +184,7 @@ const isMac = true; // Server-rendered; JS will fix this
 
         <!-- Results area -->
         <div class="results-area">
-          <div class="results-empty">
-            <p class="results-empty-text">Type to search across all Algorand documentation</p>
-          </div>
+          <div class="results-empty"></div>
           <ul class="results-list" aria-hidden="true" role="list">
             {mockResults.map((result) => (
               <li class="result-item" data-library={result.library || ''}>
@@ -207,21 +205,6 @@ const isMac = true; // Server-rendered; JS will fix this
           </ul>
         </div>
 
-        <!-- Footer -->
-        <div class="search-footer">
-          <span class="search-footer-hint">
-            <kbd>&uarr;</kbd><kbd>&darr;</kbd> Navigate
-            <kbd>&crarr;</kbd> Open
-            <kbd>Esc</kbd> Close
-          </span>
-          <span class="search-footer-powered">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2" />
-              <path d="M7 4V7.5L9.5 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-            </svg>
-            Powered by Algolia
-          </span>
-        </div>
       </div>
     </dialog>
   </div>
@@ -506,7 +489,7 @@ const isMac = true; // Server-rendered; JS will fix this
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 10vh;
+    padding-top: 5vh;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.15s;
@@ -814,12 +797,6 @@ const isMac = true; // Server-rendered; JS will fix this
     display: none;
   }
 
-  .results-empty-text {
-    color: var(--sl-color-gray-3);
-    font-size: var(--sl-text-sm);
-    text-align: center;
-  }
-
   .results-list {
     list-style: none;
     padding: 0;
@@ -888,46 +865,4 @@ const isMac = true; // Server-rendered; JS will fix this
     overflow: hidden;
   }
 
-  /* Footer */
-  .search-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 1rem;
-    border-top: 1px solid var(--sl-color-gray-6);
-    flex-shrink: 0;
-  }
-
-  .search-footer-hint {
-    display: none;
-    gap: 0.35rem;
-    font-size: 0.65rem;
-    color: var(--sl-color-gray-4);
-  }
-
-  @media (min-width: 50rem) {
-    .search-footer-hint {
-      display: flex;
-    }
-  }
-
-  .search-footer-hint kbd {
-    font-family: inherit;
-    font-size: 0.6rem;
-    font-weight: 600;
-    padding: 0rem 0.25rem;
-    border: 1px solid var(--sl-color-gray-5);
-    border-radius: 0.15rem;
-    background: var(--sl-color-gray-6);
-    color: var(--sl-color-gray-3);
-    line-height: 1.5;
-  }
-
-  .search-footer-powered {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.65rem;
-    color: var(--sl-color-gray-4);
-  }
 </style>
