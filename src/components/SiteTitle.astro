@@ -4,6 +4,7 @@ import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
 import UtilsLogo from '../assets/images/utils.svg';
+import LibrarySwitcher from './LibrarySwitcher.astro';
 import { getLibraryFromPath } from '../config/libraries';
 
 interface Props {
@@ -23,44 +24,135 @@ const lightLogoSrc = activeLibrary ? UtilsLogo.src : (isFooter ? logos.dark.src 
 const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 ---
 
-<a href={logoHref} class='site-title sl-flex'>
-  {
-    config.logo && logos.dark && (
-      <>
-        <img
-          class:list={{
-            'light:sl-hidden print:hidden': !('src' in config.logo),
-            'h-full!': isHomepage,
-          }}
-          alt={activeLibrary ? activeLibrary.label : `light theme ${config.logo.alt}`}
-          src={darkLogoSrc}
-          width={logos.dark.width}
-          height={logos.dark.height}
-        />
-        {/* Show light alternate if a user configure both light and dark logos. */}
-        {!('src' in config.logo) && (
+<div class:list={['site-title-wrapper', { 'has-library-nav': !!activeLibrary }]}>
+  {activeLibrary && (
+    <library-header-toggle class="library-nav-toggle">
+      <button
+        class="library-nav-btn"
+        aria-expanded="false"
+        aria-controls="library-nav-panel"
+        title="Switch library"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <rect x="2" y="4" width="16" height="1.8" rx="0.9" />
+          <rect x="2" y="9.1" width="16" height="1.8" rx="0.9" />
+          <rect x="2" y="14.2" width="16" height="1.8" rx="0.9" />
+        </svg>
+      </button>
+      <div class="library-nav-panel" id="library-nav-panel" aria-hidden="true">
+        <div class="library-nav-panel-inner">
+          <a href="/getting-started/introduction/" class="panel-nav-link">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 1L1 6V13H5V9H9V13H13V6L7 1Z" />
+            </svg>
+            Learn Algorand
+          </a>
+          <a href="/docs/" class="panel-nav-link">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 2H9L12 5V12H2V2Z" />
+              <path d="M5 7H9" />
+              <path d="M5 9.5H9" />
+            </svg>
+            Library Docs
+          </a>
+          <div class="panel-divider" />
+          <LibrarySwitcher currentPath={currentPath} compact />
+        </div>
+      </div>
+    </library-header-toggle>
+  )}
+
+  <a href={logoHref} class='site-title sl-flex'>
+    {
+      config.logo && logos.dark && (
+        <>
           <img
-            class:list={[
-              'dark:sl-hidden print:block',
-              {
-                'h-full!': isHomepage,
-              },
-            ]}
-            alt={activeLibrary ? activeLibrary.label : `dark theme ${config.logo.alt}`}
-            src={lightLogoSrc}
-            width={isFooter ? logos.dark.width : logos.light?.width}
-            height={isFooter ? logos.dark.height : logos.light?.height}
+            class:list={{
+              'light:sl-hidden print:hidden': !('src' in config.logo),
+              'h-full!': isHomepage,
+            }}
+            alt={activeLibrary ? activeLibrary.label : `light theme ${config.logo.alt}`}
+            src={darkLogoSrc}
+            width={logos.dark.width}
+            height={logos.dark.height}
           />
-        )}
-      </>
-    )
+          {!('src' in config.logo) && (
+            <img
+              class:list={[
+                'dark:sl-hidden print:block',
+                {
+                  'h-full!': isHomepage,
+                },
+              ]}
+              alt={activeLibrary ? activeLibrary.label : `dark theme ${config.logo.alt}`}
+              src={lightLogoSrc}
+              width={isFooter ? logos.dark.width : logos.light?.width}
+              height={isFooter ? logos.dark.height : logos.light?.height}
+            />
+          )}
+        </>
+      )
+    }
+    <span class:list={{ 'sr-only': config.logo?.replacesTitle }} translate='no'>
+      {siteTitle}
+    </span>
+  </a>
+</div>
+
+<script>
+  class LibraryHeaderToggle extends HTMLElement {
+    private btn!: HTMLButtonElement;
+    private panel!: HTMLElement;
+
+    connectedCallback() {
+      this.btn = this.querySelector('.library-nav-btn')!;
+      this.panel = this.querySelector('.library-nav-panel')!;
+      if (!this.btn || !this.panel) return;
+
+      this.btn.addEventListener('click', () => this.toggle());
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.isOpen()) this.close();
+      });
+      document.addEventListener('click', (e) => {
+        if (this.isOpen() && !this.contains(e.target as Node)) this.close();
+      });
+    }
+
+    isOpen() {
+      return this.btn.getAttribute('aria-expanded') === 'true';
+    }
+
+    toggle() {
+      if (this.isOpen()) this.close();
+      else this.open();
+    }
+
+    open() {
+      this.btn.setAttribute('aria-expanded', 'true');
+      this.panel.setAttribute('aria-hidden', 'false');
+    }
+
+    close() {
+      this.btn.setAttribute('aria-expanded', 'false');
+      this.panel.setAttribute('aria-hidden', 'true');
+    }
   }
-  <span class:list={{ 'sr-only': config.logo?.replacesTitle }} translate='no'>
-    {siteTitle}
-  </span>
-</a>
+
+  customElements.define('library-header-toggle', LibraryHeaderToggle);
+</script>
 
 <style>
+  /* Wrapper that holds optional hamburger + the logo link */
+  .site-title-wrapper {
+    display: contents;
+  }
+
+  .site-title-wrapper.has-library-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .site-title {
     align-items: center;
     gap: var(--sl-nav-gap);
@@ -76,5 +168,81 @@ const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
     max-width: 100%;
     object-fit: contain;
     object-position: 0 50%;
+  }
+
+  /* Library nav hamburger toggle */
+  .library-nav-toggle {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .library-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--sl-color-gray-2);
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 0.375rem;
+    transition: color 0.15s, background-color 0.15s;
+  }
+
+  .library-nav-btn:hover {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .library-nav-btn[aria-expanded='true'] {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-5);
+  }
+
+  /* Dropdown panel */
+  .library-nav-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    min-width: 240px;
+    background: var(--sl-color-bg-nav);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    margin-top: 0.5rem;
+    display: none;
+  }
+
+  .library-nav-panel[aria-hidden='false'] {
+    display: block;
+  }
+
+  .library-nav-panel-inner {
+    padding: 0.5rem;
+  }
+
+  .panel-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    transition: color 0.15s, background-color 0.15s;
+  }
+
+  .panel-nav-link:hover {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .panel-divider {
+    height: 1px;
+    background-color: var(--sl-color-hairline-light);
+    margin: 0.4rem 0;
   }
 </style>

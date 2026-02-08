@@ -7,8 +7,6 @@ import SiteTitle from './SiteTitle.astro';
 import SocialIcons from './SocialIcons.astro';
 import ThemeSelect from './ThemeSelect.astro';
 import Default from '@astrojs/starlight/components/Header.astro';
-import LibrarySwitcher from './LibrarySwitcher.astro';
-import { getLibraryFromPath } from '../config/libraries';
 
 /**
  * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
@@ -17,8 +15,6 @@ const shouldRenderSearch =
   config.pagefind ||
   config.components.Search !== '@astrojs/starlight/components/Search.astro';
 const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
-const currentPath = Astro.url.pathname;
-const activeLibrary = getLibraryFromPath(currentPath);
 ---
 
 {
@@ -43,45 +39,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
     </div>
   ) : (
-    <Default>
-      {activeLibrary && (
-        <library-header-toggle class="library-hamburger-wrapper">
-          <button
-            class="library-hamburger-btn"
-            aria-expanded="false"
-            aria-controls="library-header-panel"
-            title="Switch library"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <rect x="2" y="4" width="16" height="1.8" rx="0.9" />
-              <rect x="2" y="9.1" width="16" height="1.8" rx="0.9" />
-              <rect x="2" y="14.2" width="16" height="1.8" rx="0.9" />
-            </svg>
-          </button>
-          <div class="library-header-panel" id="library-header-panel" aria-hidden="true">
-            <div class="library-header-panel-inner">
-              <a href="/getting-started/introduction/" class="panel-nav-link">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M7 1L1 6V13H5V9H9V13H13V6L7 1Z" />
-                </svg>
-                Learn Algorand
-              </a>
-              <a href="/docs/" class="panel-nav-link">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M2 2H9L12 5V12H2V2Z" />
-                  <path d="M5 7H9" />
-                  <path d="M5 9.5H9" />
-                </svg>
-                Library Docs
-              </a>
-              <div class="panel-divider" />
-              <LibrarySwitcher currentPath={currentPath} compact />
-            </div>
-          </div>
-        </library-header-toggle>
-      )}
-      <slot />
-    </Default>
+    <Default />
   )
 }
 
@@ -102,82 +60,6 @@ const activeLibrary = getLibraryFromPath(currentPath);
   .social-icons {
     gap: 1rem;
     align-items: center;
-  }
-
-  /* Library hamburger toggle in header */
-  .library-hamburger-wrapper {
-    display: flex;
-    align-items: center;
-    position: relative;
-    margin-inline-end: 0.25rem;
-  }
-
-  .library-hamburger-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    color: var(--sl-color-gray-2);
-    cursor: pointer;
-    padding: 0.4rem;
-    border-radius: 0.375rem;
-    transition: color 0.15s, background-color 0.15s;
-  }
-
-  .library-hamburger-btn:hover {
-    color: var(--sl-color-white);
-    background-color: var(--sl-color-gray-6);
-  }
-
-  .library-hamburger-btn[aria-expanded='true'] {
-    color: var(--sl-color-white);
-    background-color: var(--sl-color-gray-5);
-  }
-
-  .library-header-panel {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 100;
-    min-width: 240px;
-    background: var(--sl-color-bg-nav);
-    border: 1px solid var(--sl-color-gray-5);
-    border-radius: 0.5rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    margin-top: 0.5rem;
-    display: none;
-  }
-
-  .library-header-panel[aria-hidden='false'] {
-    display: block;
-  }
-
-  .library-header-panel-inner {
-    padding: 0.5rem;
-  }
-
-  .panel-nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.5rem;
-    border-radius: 0.25rem;
-    text-decoration: none;
-    color: var(--sl-color-gray-2);
-    font-size: var(--sl-text-sm);
-    transition: color 0.15s, background-color 0.15s;
-  }
-
-  .panel-nav-link:hover {
-    color: var(--sl-color-white);
-    background-color: var(--sl-color-gray-6);
-  }
-
-  .panel-divider {
-    height: 1px;
-    background-color: var(--sl-color-hairline-light);
-    margin: 0.4rem 0;
   }
 
   @media (min-width: 50rem) {
@@ -219,45 +101,3 @@ const activeLibrary = getLibraryFromPath(currentPath);
     }
   }
 </style>
-
-<script>
-  class LibraryHeaderToggle extends HTMLElement {
-    private btn!: HTMLButtonElement;
-    private panel!: HTMLElement;
-
-    connectedCallback() {
-      this.btn = this.querySelector('.library-hamburger-btn')!;
-      this.panel = this.querySelector('.library-header-panel')!;
-      if (!this.btn || !this.panel) return;
-
-      this.btn.addEventListener('click', () => this.toggle());
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.isOpen()) this.close();
-      });
-      document.addEventListener('click', (e) => {
-        if (this.isOpen() && !this.contains(e.target as Node)) this.close();
-      });
-    }
-
-    isOpen() {
-      return this.btn.getAttribute('aria-expanded') === 'true';
-    }
-
-    toggle() {
-      if (this.isOpen()) this.close();
-      else this.open();
-    }
-
-    open() {
-      this.btn.setAttribute('aria-expanded', 'true');
-      this.panel.setAttribute('aria-hidden', 'false');
-    }
-
-    close() {
-      this.btn.setAttribute('aria-expanded', 'false');
-      this.panel.setAttribute('aria-hidden', 'true');
-    }
-  }
-
-  customElements.define('library-header-toggle', LibraryHeaderToggle);
-</script>
