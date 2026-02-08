@@ -1,0 +1,79 @@
+---
+title: TransactionComposer
+description: API reference for the TransactionComposer class
+---
+
+# TransactionComposer
+
+Builds and sends atomic transaction groups with automatic resource population and fee handling.
+
+## Creating a Composer
+
+```typescript
+const composer = algorand.newGroup()
+```
+
+## Methods
+
+### `addPayment(params)`
+
+Adds a payment transaction.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `params.sender` | `TransactionSignerAccount` | Sender |
+| `params.receiver` | `string` | Receiver address |
+| `params.amount` | `AlgoAmount` | Payment amount |
+| `params.note` | `string \| Uint8Array` | Optional note |
+
+```typescript
+composer.addPayment({
+  sender: alice,
+  receiver: bob.addr,
+  amount: (1).algo(),
+})
+```
+
+### `addAssetTransfer(params)`
+
+Adds an asset transfer transaction.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `params.sender` | `TransactionSignerAccount` | Sender |
+| `params.receiver` | `string` | Receiver address |
+| `params.assetId` | `bigint` | Asset ID |
+| `params.amount` | `bigint` | Transfer amount |
+
+### `addAppCallMethodCall(params)`
+
+Adds an ABI method call to an application.
+
+### `send()`
+
+Sends all transactions in the group atomically.
+
+```typescript
+const result = await algorand.newGroup()
+  .addPayment({ sender: alice, receiver: bob.addr, amount: (1).algo() })
+  .addPayment({ sender: alice, receiver: charlie.addr, amount: (2).algo() })
+  .send()
+
+console.log(result.txIds) // ['TX1...', 'TX2...']
+```
+
+### `simulate()`
+
+Simulates the transaction group without submitting.
+
+```typescript
+const simResult = await composer.simulate()
+```
+
+### `buildGroup()`
+
+Builds the transaction group without sending.
+
+```typescript
+const txns = await composer.buildGroup()
+```

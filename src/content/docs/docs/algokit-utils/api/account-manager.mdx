@@ -1,0 +1,85 @@
+---
+title: AccountManager
+description: API reference for the AccountManager class
+---
+
+# AccountManager
+
+Manages Algorand accounts, including creation, funding, and key management.
+
+## Access
+
+```typescript
+const accountManager = algorand.account
+```
+
+## Methods
+
+### `random()`
+
+Creates a new random account.
+
+```typescript
+const account = await algorand.account.random()
+```
+
+**Returns:** `Promise<TransactionSignerAccount>` - The newly created account.
+
+### `fromMnemonic(mnemonic)`
+
+Restores an account from a 25-word mnemonic.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `mnemonic` | `string` | 25-word Algorand mnemonic |
+
+```typescript
+const account = algorand.account.fromMnemonic('abandon abandon ...')
+```
+
+### `fromKmd(name, predicate?)`
+
+Gets an account from KMD by name.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `name` | `string` | Account name in KMD |
+| `predicate` | `(account) => boolean` | Optional filter |
+
+```typescript
+const account = await algorand.account.fromKmd('my-account')
+```
+
+### `ensureFunded(account, dispenser, minBalance)`
+
+Ensures an account has a minimum balance by funding it from a dispenser.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `account` | `string \| TransactionSignerAccount` | Account to fund |
+| `dispenser` | `TransactionSignerAccount` | Funding source |
+| `minBalance` | `AlgoAmount` | Minimum balance required |
+
+```typescript
+await algorand.account.ensureFunded(
+  myAccount,
+  algorand.account.localNetDispenser(),
+  (1).algo()
+)
+```
+
+### `localNetDispenser()`
+
+Returns the default LocalNet dispenser account.
+
+```typescript
+const dispenser = algorand.account.localNetDispenser()
+```
+
+### `dispenserFromEnvironment()`
+
+Returns a TestNet dispenser from environment variables.
+
+```typescript
+const dispenser = await algorand.account.dispenserFromEnvironment()
+```

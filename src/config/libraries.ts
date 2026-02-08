@@ -5,12 +5,15 @@
  * sidebar when viewed under /docs/<slug>/. The sidebar items use the same
  * shape as Starlight SidebarEntry so they can be rendered directly by the
  * SidebarSublist component.
+ *
+ * Libraries with multiple language variants (e.g. AlgoKit Utils) appear as a
+ * single entry with a language selector, not as separate entries per language.
  */
 
 export interface LibraryConfig {
   /** URL slug used in /docs/<slug>/ */
   slug: string;
-  /** Display name shown in switcher */
+  /** Display name shown in switcher (language-agnostic) */
   label: string;
   /** Short one-line description */
   description: string;
@@ -18,7 +21,7 @@ export interface LibraryConfig {
   color: string;
   /** Available versions (first is default) */
   versions: string[];
-  /** Available language/framework variants */
+  /** Available language/framework variants (empty = language-agnostic) */
   languages: string[];
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
@@ -78,12 +81,12 @@ export function toStarlightSidebar(
 /** All registered library virtual collections */
 export const libraries: LibraryConfig[] = [
   {
-    slug: 'algokit-utils-ts',
-    label: 'AlgoKit Utils TS',
-    description: 'TypeScript utilities for building on Algorand',
+    slug: 'algokit-utils',
+    label: 'AlgoKit Utils',
+    description: 'Utilities for building solutions on Algorand',
     color: '#3B82F6', // blue
     versions: ['latest', 'v8.0.0', 'v7.0.0'],
-    languages: ['TypeScript'],
+    languages: ['TypeScript', 'Python'],
     category: 'sdk',
     sidebar: [
       {
@@ -91,9 +94,9 @@ export const libraries: LibraryConfig[] = [
         label: 'Getting Started',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Overview', href: '/docs/algokit-utils-ts/' },
-          { type: 'link', label: 'Installation', href: '/docs/algokit-utils-ts/install/' },
-          { type: 'link', label: 'Quick Start', href: '/docs/algokit-utils-ts/quick-start/' },
+          { type: 'link', label: 'Overview', href: '/docs/algokit-utils/' },
+          { type: 'link', label: 'Installation', href: '/docs/algokit-utils/install/' },
+          { type: 'link', label: 'Quick Start', href: '/docs/algokit-utils/quick-start/' },
         ],
       },
       {
@@ -101,12 +104,25 @@ export const libraries: LibraryConfig[] = [
         label: 'Guides',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Account Management', href: '/docs/algokit-utils-ts/accounts/' },
-          { type: 'link', label: 'Algorand Client', href: '/docs/algokit-utils-ts/algorand-client/' },
-          { type: 'link', label: 'App Client', href: '/docs/algokit-utils-ts/app-client/' },
-          { type: 'link', label: 'App Deployment', href: '/docs/algokit-utils-ts/app-deploy/' },
-          { type: 'link', label: 'Transaction Composer', href: '/docs/algokit-utils-ts/transaction-composer/' },
-          { type: 'link', label: 'Typed Clients', href: '/docs/algokit-utils-ts/typed-clients/' },
+          { type: 'link', label: 'Account Management', href: '/docs/algokit-utils/accounts/' },
+          { type: 'link', label: 'Algorand Client', href: '/docs/algokit-utils/algorand-client/' },
+          { type: 'link', label: 'App Client', href: '/docs/algokit-utils/app-client/' },
+          { type: 'link', label: 'App Deployment', href: '/docs/algokit-utils/app-deploy/' },
+          { type: 'link', label: 'Transaction Composer', href: '/docs/algokit-utils/transaction-composer/' },
+          { type: 'link', label: 'Typed Clients', href: '/docs/algokit-utils/typed-clients/' },
+        ],
+      },
+      {
+        type: 'group',
+        label: 'API Reference',
+        collapsed: false,
+        entries: [
+          { type: 'link', label: 'AlgorandClient', href: '/docs/algokit-utils/api/algorand-client/' },
+          { type: 'link', label: 'AccountManager', href: '/docs/algokit-utils/api/account-manager/' },
+          { type: 'link', label: 'AppClient', href: '/docs/algokit-utils/api/app-client/' },
+          { type: 'link', label: 'AppDeployer', href: '/docs/algokit-utils/api/app-deployer/' },
+          { type: 'link', label: 'TransactionComposer', href: '/docs/algokit-utils/api/transaction-composer/' },
+          { type: 'link', label: 'AssetManager', href: '/docs/algokit-utils/api/asset-manager/' },
         ],
       },
       {
@@ -114,56 +130,8 @@ export const libraries: LibraryConfig[] = [
         label: 'Migration',
         collapsed: true,
         entries: [
-          { type: 'link', label: 'v8 Migration Guide', href: '/docs/algokit-utils-ts/v8-migration/' },
-          { type: 'link', label: 'v7 Migration Guide', href: '/docs/algokit-utils-ts/v7-migration/' },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'API Reference',
-        collapsed: true,
-        entries: [
-          { type: 'link', label: 'Full API Docs', href: '/docs/algokit-utils-ts/api/' },
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'algokit-utils-py',
-    label: 'AlgoKit Utils Python',
-    description: 'Python utilities for building on Algorand',
-    color: '#10B981', // green
-    versions: ['latest', 'v3.0.0', 'v2.5.0'],
-    languages: ['Python'],
-    category: 'sdk',
-    sidebar: [
-      {
-        type: 'group',
-        label: 'Getting Started',
-        collapsed: false,
-        entries: [
-          { type: 'link', label: 'Overview', href: '/docs/algokit-utils-py/' },
-          { type: 'link', label: 'Installation', href: '/docs/algokit-utils-py/install/' },
-          { type: 'link', label: 'Quick Start', href: '/docs/algokit-utils-py/quick-start/' },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'Guides',
-        collapsed: false,
-        entries: [
-          { type: 'link', label: 'Account Management', href: '/docs/algokit-utils-py/accounts/' },
-          { type: 'link', label: 'Algorand Client', href: '/docs/algokit-utils-py/algorand-client/' },
-          { type: 'link', label: 'App Client', href: '/docs/algokit-utils-py/app-client/' },
-          { type: 'link', label: 'Transaction Composer', href: '/docs/algokit-utils-py/transaction-composer/' },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'API Reference',
-        collapsed: true,
-        entries: [
-          { type: 'link', label: 'Full API Docs', href: '/docs/algokit-utils-py/api/' },
+          { type: 'link', label: 'v8 Migration Guide', href: '/docs/algokit-utils/v8-migration/' },
+          { type: 'link', label: 'v7 Migration Guide', href: '/docs/algokit-utils/v7-migration/' },
         ],
       },
     ],
@@ -282,8 +250,8 @@ export const libraries: LibraryConfig[] = [
     ],
   },
   {
-    slug: 'algokit-subscriber-ts',
-    label: 'AlgoKit Subscriber TS',
+    slug: 'algokit-subscriber',
+    label: 'AlgoKit Subscriber',
     description: 'Subscribe to Algorand blockchain events',
     color: '#06B6D4', // cyan
     versions: ['latest', 'v3.0.0'],
@@ -295,8 +263,8 @@ export const libraries: LibraryConfig[] = [
         label: 'Getting Started',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Overview', href: '/docs/algokit-subscriber-ts/' },
-          { type: 'link', label: 'Quick Start', href: '/docs/algokit-subscriber-ts/quick-start/' },
+          { type: 'link', label: 'Overview', href: '/docs/algokit-subscriber/' },
+          { type: 'link', label: 'Quick Start', href: '/docs/algokit-subscriber/quick-start/' },
         ],
       },
       {
@@ -304,8 +272,8 @@ export const libraries: LibraryConfig[] = [
         label: 'Guides',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Subscriber', href: '/docs/algokit-subscriber-ts/subscriber/' },
-          { type: 'link', label: 'Subscriptions', href: '/docs/algokit-subscriber-ts/subscriptions/' },
+          { type: 'link', label: 'Subscriber', href: '/docs/algokit-subscriber/subscriber/' },
+          { type: 'link', label: 'Subscriptions', href: '/docs/algokit-subscriber/subscriptions/' },
         ],
       },
     ],

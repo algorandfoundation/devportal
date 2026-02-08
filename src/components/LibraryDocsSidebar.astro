@@ -53,20 +53,19 @@ const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
 
     <div class="library-switcher-panel" id="library-switcher-panel" aria-hidden="true">
       <div class="panel-inner">
-        <a href="/" class="back-home-link">
+        <a href="/getting-started/introduction/" class="nav-link">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 7L7 1L13 7" />
-            <path d="M3 5.5V12.5H11V5.5" />
+            <path d="M7 1L1 6V13H5V9H9V13H13V6L7 1Z" />
           </svg>
-          Home
+          Learn Algorand
         </a>
-        <a href="/docs/" class="back-home-link">
+        <a href="/docs/" class="nav-link">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M2 2H9L12 5V12H2V2Z" />
             <path d="M5 7H9" />
             <path d="M5 9.5H9" />
           </svg>
-          All Docs
+          Library Docs
         </a>
         <div class="panel-divider" />
         <LibrarySwitcher currentPath={currentPath} compact />
@@ -265,7 +264,7 @@ const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
     padding: 0.5rem 0;
   }
 
-  .back-home-link {
+  .nav-link {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -277,7 +276,7 @@ const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
     transition: color 0.15s, background-color 0.15s;
   }
 
-  .back-home-link:hover {
+  .nav-link:hover {
     color: var(--sl-color-white);
     background-color: var(--sl-color-gray-6);
   }
