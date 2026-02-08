@@ -2,8 +2,8 @@
 /**
  * Custom Sidebar override that implements TanStack-style navigation:
  *
- * 1. On main site pages: Shows the normal Starlight sidebar navigation.
- *    Users navigate to library docs via /docs/ index or links in content.
+ * 1. On main site pages: Shows a library switcher list at the top,
+ *    followed by the normal Starlight sidebar navigation below.
  *
  * 2. On library pages (/docs/<library>/): Replaces the entire sidebar with:
  *    - A hamburger toggle showing current library name
@@ -16,6 +16,7 @@ import MobileMenuFooter from '@astrojs/starlight/components/MobileMenuFooter.ast
 import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
 import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
 import LibraryDocsSidebar from './LibraryDocsSidebar.astro';
+import LibrarySwitcher from './LibrarySwitcher.astro';
 import { getLibraryFromPath } from '../config/libraries';
 
 const { sidebar } = Astro.locals.starlightRoute;
@@ -27,7 +28,8 @@ const activeLibrary = getLibraryFromPath(currentPath);
   <!-- Library virtual collection view -->
   <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
 ) : (
-  <!-- Main site view: normal Starlight sidebar -->
+  <!-- Main site view: library switcher at top + normal sidebar -->
+  <LibrarySwitcher currentPath={currentPath} />
   <SidebarPersister>
     <SidebarSublist sublist={sidebar} />
   </SidebarPersister>
