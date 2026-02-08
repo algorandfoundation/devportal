@@ -4,13 +4,13 @@
  *
  * Replaces the main sidebar when viewing /docs/<library>/ pages.
  * Features:
- * - Hamburger/chevron at top that slides down the library list (like TanStack)
- * - Language selector (if library has language variants)
- * - Version selector
+ * - Language selector with language icons (if library has variants)
+ * - Version selector with tag icon
  * - Library-specific sidebar navigation tree
+ *
+ * The hamburger menu / library switcher panel has been moved to the Header.
  */
 import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
-import LibrarySwitcher from './LibrarySwitcher.astro';
 import { toStarlightSidebar, type LibraryConfig } from '../config/libraries';
 
 interface Props {
@@ -22,92 +22,76 @@ const { library, currentPath } = Astro.props;
 
 // Convert our library sidebar config to Starlight-compatible format
 const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
+
+// Map language names to icon identifiers
+const languageIcons: Record<string, string> = {
+  TypeScript: 'typescript',
+  Python: 'python',
+  JavaScript: 'javascript',
+  Go: 'go',
+  Java: 'java',
+  Rust: 'rust',
+};
 ---
 
 <div class="library-docs-sidebar">
-  <!-- Library switcher overlay (hidden by default, slides down on hover/click) -->
-  <library-switcher-toggle>
-    <button
-      class="library-toggle-btn"
-      aria-expanded="false"
-      aria-controls="library-switcher-panel"
-      title="Switch library"
-    >
-      <span class="toggle-icon hamburger" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <rect x="1" y="3" width="14" height="1.5" rx="0.75" />
-          <rect x="1" y="7.25" width="14" height="1.5" rx="0.75" />
-          <rect x="1" y="11.5" width="14" height="1.5" rx="0.75" />
-        </svg>
-      </span>
-      <span class="library-name">
-        <span class="library-dot" style={`background-color: ${library.color}`} />
-        {library.label}
-      </span>
-      <span class="toggle-chevron" aria-hidden="true">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </span>
-    </button>
-
-    <div class="library-switcher-panel" id="library-switcher-panel" aria-hidden="true">
-      <div class="panel-inner">
-        <a href="/getting-started/introduction/" class="nav-link">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 1L1 6V13H5V9H9V13H13V6L7 1Z" />
-          </svg>
-          Learn Algorand
-        </a>
-        <a href="/docs/" class="nav-link">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 2H9L12 5V12H2V2Z" />
-            <path d="M5 7H9" />
-            <path d="M5 9.5H9" />
-          </svg>
-          Library Docs
-        </a>
-        <div class="panel-divider" />
-        <LibrarySwitcher currentPath={currentPath} compact />
-      </div>
-    </div>
-  </library-switcher-toggle>
-
-  <!-- Version / Language selectors -->
+  <!-- Language / Version selectors (TanStack-style) -->
   <div class="selectors">
     {library.languages.length > 0 && (
       <div class="selector">
-        <label class="selector-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.6">
-            <path d="M2 3h12v1.5H2zM4 6h8v1.5H4zM3 9h10v1.5H3zM5 12h6v1.5H5z" />
-          </svg>
-        </label>
+        <span class="selector-icon" aria-hidden="true">
+          {/* Render language icon based on selected language (default to first) */}
+          {languageIcons[library.languages[0]] === 'typescript' && (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="1" y="1" width="18" height="18" rx="2" fill="#3178C6" />
+              <path d="M5.5 10.2H11M8.25 10.2V15.5" stroke="white" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M12.2 15.5C12.6 15.5 13.5 15.4 14 14.9C14.5 14.4 14.6 13.6 14.2 13.1C13.8 12.6 12.8 12.3 12.3 12.1C11.8 11.9 11.2 11.6 11.2 11C11.2 10.4 11.8 10.1 12.3 10.1C12.8 10.1 13.4 10.3 13.7 10.7" stroke="white" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          )}
+          {languageIcons[library.languages[0]] === 'python' && (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M9.8 2C7 2 7.2 3.2 7.2 3.2V5H10V5.7H5.5S3 5.4 3 8.6s2.2 3.1 2.2 3.1h1.3V10s-.1-2.2 2.1-2.2h3.7s2.1 0 2.1-2V4s.3-2-4.6-2zm-2 1.2a.7.7 0 110 1.4.7.7 0 010-1.4z" fill="#3776AB" />
+              <path d="M10.2 18c2.8 0 2.6-1.2 2.6-1.2V15H10v-.7h4.5s2.5.3 2.5-2.9-2.2-3.1-2.2-3.1h-1.3V10s.1 2.2-2.1 2.2H7.7s-2.1 0-2.1 2V16s-.3 2 4.6 2zm2-1.2a.7.7 0 110-1.4.7.7 0 010 1.4z" fill="#FFD43B" />
+            </svg>
+          )}
+          {languageIcons[library.languages[0]] === 'javascript' && (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="1" y="1" width="18" height="18" rx="2" fill="#F7DF1E" />
+              <path d="M6.5 14.5c.3.5.8 1 1.6 1s1.2-.4 1.2-1-.5-1-1.2-1.3c-1-.4-1.8-.9-1.8-2s.8-1.8 2-1.8c1 0 1.6.4 2 1" stroke="#323330" stroke-width="1.2" stroke-linecap="round" />
+              <path d="M12.5 9.5V14c0 .8.4 1.2 1 1.2s1-.3 1.2-.8" stroke="#323330" stroke-width="1.2" stroke-linecap="round" />
+            </svg>
+          )}
+        </span>
         <select class="selector-select" aria-label="Language">
           {library.languages.map((lang) => (
             <option value={lang}>{lang}</option>
           ))}
         </select>
         <span class="selector-chevron" aria-hidden="true">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
-            <path d="M2 3.5L5 7L8 3.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M4 5L6 3L8 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 7L6 9L8 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </span>
       </div>
     )}
     <div class="selector">
-      <label class="selector-icon" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" opacity="0.6">
-          <path d="M8 1.5l1 3h3l-2.5 2 1 3-2.5-2-2.5 2 1-3L4 4.5h3z" />
+      <span class="selector-icon" aria-hidden="true">
+        <!-- Tag / label icon (matches TanStack version picker) -->
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M3 10.5V4a1 1 0 011-1h6.5a1 1 0 01.7.3l5.5 5.5a1 1 0 010 1.4l-6.5 6.5a1 1 0 01-1.4 0L3.3 11.2a1 1 0 01-.3-.7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="7" cy="7" r="1" fill="currentColor" />
         </svg>
-      </label>
+      </span>
       <select class="selector-select" aria-label="Version">
         {library.versions.map((ver) => (
           <option value={ver}>{ver === 'latest' ? 'Latest' : ver}</option>
         ))}
       </select>
       <span class="selector-chevron" aria-hidden="true">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
-          <path d="M2 3.5L5 7L8 3.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M3 7.5L6 4.5L9 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" transform="translate(0, -3)" />
         </svg>
       </span>
     </div>
@@ -122,188 +106,31 @@ const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
   </div>
 </div>
 
-<!-- Client-side toggle behavior for the library switcher panel -->
-<script>
-  class LibrarySwitcherToggle extends HTMLElement {
-    private btn!: HTMLButtonElement;
-    private panel!: HTMLElement;
-
-    connectedCallback() {
-      this.btn = this.querySelector('.library-toggle-btn')!;
-      this.panel = this.querySelector('.library-switcher-panel')!;
-
-      if (!this.btn || !this.panel) return;
-
-      this.btn.addEventListener('click', () => this.toggle());
-
-      // Close on escape
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.isOpen()) this.close();
-      });
-
-      // Close when clicking outside
-      document.addEventListener('click', (e) => {
-        if (this.isOpen() && !this.contains(e.target as Node)) {
-          this.close();
-        }
-      });
-    }
-
-    isOpen() {
-      return this.btn.getAttribute('aria-expanded') === 'true';
-    }
-
-    toggle() {
-      if (this.isOpen()) {
-        this.close();
-      } else {
-        this.open();
-      }
-    }
-
-    open() {
-      this.btn.setAttribute('aria-expanded', 'true');
-      this.panel.setAttribute('aria-hidden', 'false');
-    }
-
-    close() {
-      this.btn.setAttribute('aria-expanded', 'false');
-      this.panel.setAttribute('aria-hidden', 'true');
-    }
-  }
-
-  customElements.define('library-switcher-toggle', LibrarySwitcherToggle);
-</script>
-
 <style>
   .library-docs-sidebar {
     display: flex;
     flex-direction: column;
   }
 
-  /* Toggle button */
-  .library-toggle-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.5rem;
-    background: none;
-    border: 1px solid var(--sl-color-gray-5);
-    border-radius: 0.5rem;
-    color: var(--sl-color-white);
-    cursor: pointer;
-    font-size: var(--sl-text-base);
-    font-weight: 600;
-    text-align: left;
-    transition: background-color 0.15s, border-color 0.15s;
-  }
-
-  @media (min-width: 50rem) {
-    .library-toggle-btn {
-      font-size: var(--sl-text-sm);
-    }
-  }
-
-  .library-toggle-btn:hover {
-    background-color: var(--sl-color-gray-6);
-    border-color: var(--sl-color-gray-4);
-  }
-
-  .toggle-icon {
-    display: flex;
-    align-items: center;
-    opacity: 0.6;
-    flex-shrink: 0;
-  }
-
-  .library-name {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .library-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .toggle-chevron {
-    display: flex;
-    align-items: center;
-    opacity: 0.5;
-    transition: transform 0.2s;
-    flex-shrink: 0;
-  }
-
-  [aria-expanded='true'] .toggle-chevron {
-    transform: rotate(180deg);
-  }
-
-  /* Library switcher panel (slide-down overlay) */
-  .library-switcher-panel {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.3s ease;
-    margin-top: 0;
-  }
-
-  .library-switcher-panel[aria-hidden='false'] {
-    max-height: 80vh;
-    opacity: 1;
-    margin-top: 0.5rem;
-    overflow-y: auto;
-  }
-
-  .panel-inner {
-    padding: 0.5rem 0;
-  }
-
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.5rem;
-    border-radius: 0.25rem;
-    text-decoration: none;
-    color: var(--sl-color-gray-2);
-    font-size: var(--sl-text-sm);
-    transition: color 0.15s, background-color 0.15s;
-  }
-
-  .nav-link:hover {
-    color: var(--sl-color-white);
-    background-color: var(--sl-color-gray-6);
-  }
-
-  .panel-divider {
-    height: 1px;
-    background-color: var(--sl-color-hairline-light);
-    margin: 0.5rem;
-  }
-
-  /* Selectors */
+  /* Selectors (language + version pickers) */
   .selectors {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    padding: 0.5rem 0;
+    gap: 0.5rem;
+    padding: 0.25rem 0 0.5rem;
   }
 
   .selector {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--sl-color-gray-6);
-    border-radius: 0.375rem;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
     background: transparent;
     position: relative;
+    cursor: pointer;
+    transition: border-color 0.15s;
   }
 
   .selector:hover {
@@ -314,18 +141,26 @@ const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    color: var(--sl-color-gray-3);
   }
 
   .selector-select {
     appearance: none;
     background: none;
     border: none;
-    color: var(--sl-color-gray-2);
-    font-size: var(--sl-text-sm);
-    padding: 0.1rem 0;
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-base);
+    font-weight: 500;
+    padding: 0;
     flex: 1;
     cursor: pointer;
     outline: none;
+  }
+
+  @media (min-width: 50rem) {
+    .selector-select {
+      font-size: var(--sl-text-sm);
+    }
   }
 
   .selector-select:focus {
@@ -336,6 +171,7 @@ const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
     display: flex;
     align-items: center;
     opacity: 0.4;
+    color: var(--sl-color-gray-2);
     flex-shrink: 0;
     pointer-events: none;
   }
