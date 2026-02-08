@@ -16,7 +16,7 @@ import MobileMenuFooter from '@astrojs/starlight/components/MobileMenuFooter.ast
 import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
 import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
 import LibraryDocsSidebar from './LibraryDocsSidebar.astro';
-import LibrarySwitcher from './LibrarySwitcher.astro';
+import LibraryPicker from './LibraryPicker.astro';
 import { getLibraryFromPath } from '../config/libraries';
 
 const { sidebar } = Astro.locals.starlightRoute;
@@ -29,7 +29,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
   <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
 ) : (
   <!-- Main site view: library switcher at top + normal sidebar -->
-  <LibrarySwitcher currentPath={currentPath} />
+  <LibraryPicker currentPath={currentPath} />
   <SidebarPersister>
     <SidebarSublist sublist={sidebar} />
   </SidebarPersister>
