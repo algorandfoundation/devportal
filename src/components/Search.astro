@@ -96,7 +96,7 @@ const isMac = true; // Server-rendered; JS will fix this
 
   <!-- Search modal backdrop + dialog -->
   <div class="search-backdrop" aria-hidden="true">
-    <dialog class="search-dialog" aria-label="Search documentation">
+    <div class="search-dialog" role="dialog" aria-label="Search documentation">
       <div class="search-dialog-inner">
         <!-- Search input bar -->
         <div class="search-bar">
@@ -206,7 +206,7 @@ const isMac = true; // Server-rendered; JS will fix this
         </div>
 
       </div>
-    </dialog>
+    </div>
   </div>
 </faceted-search>
 
@@ -214,7 +214,7 @@ const isMac = true; // Server-rendered; JS will fix this
   class FacetedSearch extends HTMLElement {
     private trigger!: HTMLButtonElement;
     private backdrop!: HTMLElement;
-    private dialog!: HTMLDialogElement;
+    private dialog!: HTMLElement;
     private input!: HTMLInputElement;
     private langBtn!: HTMLButtonElement;
     private langDropdown!: HTMLElement;
@@ -325,14 +325,13 @@ const isMac = true; // Server-rendered; JS will fix this
 
     open() {
       this.backdrop.setAttribute('aria-hidden', 'false');
-      this.dialog.showModal();
-      // showModal focuses the dialog; re-focus input
+      this.dialog.classList.add('open');
       requestAnimationFrame(() => this.input.focus());
     }
 
     close() {
       this.backdrop.setAttribute('aria-hidden', 'true');
-      this.dialog.close();
+      this.dialog.classList.remove('open');
       this.input.value = '';
       this.clearLibraryFilter();
       this.updateResults();
@@ -502,10 +501,14 @@ const isMac = true; // Server-rendered; JS will fix this
 
   /* Dialog */
   .search-dialog {
-    position: relative;
+    position: fixed;
+    top: 8vh;
+    left: 50%;
+    transform: translateX(-50%);
     width: 95vw;
     max-width: 680px;
     max-height: 75vh;
+    margin: 0;
     border: 1px solid var(--sl-color-gray-5);
     border-radius: 0.75rem;
     background: var(--sl-color-bg-nav);
@@ -513,6 +516,12 @@ const isMac = true; // Server-rendered; JS will fix this
     padding: 0;
     overflow: hidden;
     color: var(--sl-color-text);
+    display: none;
+    z-index: 201;
+  }
+
+  .search-dialog.open {
+    display: block;
   }
 
   .search-dialog::backdrop {
