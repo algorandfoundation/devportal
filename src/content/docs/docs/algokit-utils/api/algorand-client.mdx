@@ -14,7 +14,7 @@ The main entry point for interacting with the Algorand network. Provides access 
 Creates a client configured for the default LocalNet.
 
 ```typescript
-const algorand = AlgorandClient.defaultLocalNet()
+const algorand = AlgorandClient.defaultLocalNet();
 ```
 
 ### `AlgorandClient.testNet()`
@@ -22,7 +22,7 @@ const algorand = AlgorandClient.defaultLocalNet()
 Creates a client configured for TestNet.
 
 ```typescript
-const algorand = AlgorandClient.testNet()
+const algorand = AlgorandClient.testNet();
 ```
 
 ### `AlgorandClient.mainNet()`
@@ -30,23 +30,23 @@ const algorand = AlgorandClient.testNet()
 Creates a client configured for MainNet.
 
 ```typescript
-const algorand = AlgorandClient.mainNet()
+const algorand = AlgorandClient.mainNet();
 ```
 
 ### `AlgorandClient.fromConfig(config)`
 
 Creates a client from a custom configuration.
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `config.algodConfig` | `AlgoClientConfig` | Algod client configuration |
+| Parameter              | Type               | Description                    |
+| ---------------------- | ------------------ | ------------------------------ |
+| `config.algodConfig`   | `AlgoClientConfig` | Algod client configuration     |
 | `config.indexerConfig` | `AlgoClientConfig` | Optional indexer configuration |
-| `config.kmdConfig` | `AlgoClientConfig` | Optional KMD configuration |
+| `config.kmdConfig`     | `AlgoClientConfig` | Optional KMD configuration     |
 
 ```typescript
 const algorand = AlgorandClient.fromConfig({
   algodConfig: { server: 'http://localhost', port: 4001, token: 'a]'.repeat(32) },
-})
+});
 ```
 
 ## Properties
@@ -74,8 +74,9 @@ Provides access to the underlying algod, indexer, and KMD clients.
 Creates a new [`TransactionComposer`](/docs/algokit-utils/api/transaction-composer/) for building atomic transaction groups.
 
 ```typescript
-const result = await algorand.newGroup()
+const result = await algorand
+  .newGroup()
   .addPayment({ sender: alice, receiver: bob, amount: (1).algo() })
   .addAssetTransfer({ sender: alice, receiver: bob, assetId: 123n, amount: 1n })
-  .send()
+  .send();
 ```

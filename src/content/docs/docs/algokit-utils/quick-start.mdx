@@ -10,19 +10,19 @@ This guide walks you through creating your first Algorand transaction using Algo
 ## Setup
 
 ```typescript
-import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import { AlgorandClient } from '@algorandfoundation/algokit-utils';
 
-const algorand = AlgorandClient.defaultLocalNet()
+const algorand = AlgorandClient.defaultLocalNet();
 ```
 
 ## Create an Account
 
 ```typescript
-const account = await algorand.account.random()
+const account = await algorand.account.random();
 ```
 
 ## Fund the Account
 
 ```typescript
-await algorand.account.ensureFunded(account, algorand.account.localNetDispenser(), (1).algo())
+await algorand.account.ensureFunded(account, algorand.account.localNetDispenser(), (1).algo());
 ```

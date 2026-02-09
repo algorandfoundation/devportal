@@ -26,53 +26,61 @@ const mockResults = [
   {
     title: 'Getting Started with AlgoKit',
     path: 'Getting Started > Introduction',
-    snippet: 'AlgoKit is the primary tool used by the Algorand community to develop smart contracts on the Algorand blockchain...',
+    snippet:
+      'AlgoKit is the primary tool used by the Algorand community to develop smart contracts on the Algorand blockchain...',
     section: 'guide',
   },
   {
     title: 'Creating an Application Client',
     path: 'AlgoKit Utils > App Client',
-    snippet: 'The ApplicationClient is a class that wraps the Algorand SDK application calls with a high-level interface...',
+    snippet:
+      'The ApplicationClient is a class that wraps the Algorand SDK application calls with a high-level interface...',
     section: 'library',
     library: 'AlgoKit Utils',
   },
   {
     title: 'Smart Contract Development in Python',
     path: 'Algorand Python > Quick Start',
-    snippet: 'Algorand Python allows you to write smart contracts using familiar Python syntax that compiles to AVM bytecode...',
+    snippet:
+      'Algorand Python allows you to write smart contracts using familiar Python syntax that compiles to AVM bytecode...',
     section: 'library',
     library: 'Algorand Python',
   },
   {
     title: 'Transaction Types and Structure',
     path: 'Concepts > Transactions',
-    snippet: 'Algorand supports several transaction types including payment, asset transfer, application call, and key registration...',
+    snippet:
+      'Algorand supports several transaction types including payment, asset transfer, application call, and key registration...',
     section: 'guide',
   },
   {
     title: 'Account Management and Rekeying',
     path: 'Concepts > Accounts',
-    snippet: 'Accounts on Algorand are identified by their public key address. Rekeying allows you to change the authorizing key...',
+    snippet:
+      'Accounts on Algorand are identified by their public key address. Rekeying allows you to change the authorizing key...',
     section: 'guide',
   },
   {
     title: 'Deploying Smart Contracts',
     path: 'AlgoKit Utils > App Deployment',
-    snippet: 'The AppDeployer class provides idempotent deployment of smart contracts, handling create, update, and delete operations...',
+    snippet:
+      'The AppDeployer class provides idempotent deployment of smart contracts, handling create, update, and delete operations...',
     section: 'library',
     library: 'AlgoKit Utils',
   },
   {
     title: 'Writing ARC-4 ABI Methods',
     path: 'Algorand Python > Language Guide > ARC-4',
-    snippet: 'ARC-4 defines a standard ABI for Algorand smart contracts. Use the @abimethod decorator to define ABI-compliant methods...',
+    snippet:
+      'ARC-4 defines a standard ABI for Algorand smart contracts. Use the @abimethod decorator to define ABI-compliant methods...',
     section: 'library',
     library: 'Algorand Python',
   },
   {
     title: 'TypeScript Smart Contract Basics',
     path: 'Algorand TypeScript > Quick Start',
-    snippet: 'Write type-safe Algorand smart contracts using TypeScript syntax. The compiler generates optimized TEAL bytecode...',
+    snippet:
+      'Write type-safe Algorand smart contracts using TypeScript syntax. The compiler generates optimized TEAL bytecode...',
     section: 'library',
     library: 'Algorand TypeScript',
   },
@@ -83,128 +91,211 @@ const isMac = true; // Server-rendered; JS will fix this
 
 <faceted-search>
   <!-- Search trigger button (replaces Starlight's default) -->
-  <button class="search-trigger" aria-label="Search" aria-keyshortcuts="Control+k">
-    <svg class="search-trigger-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M11.5 11.5L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-      <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5" />
+  <button
+    class='search-trigger'
+    aria-label='Search'
+    aria-keyshortcuts='Control+k'
+  >
+    <svg
+      class='search-trigger-icon'
+      width='16'
+      height='16'
+      viewBox='0 0 16 16'
+      fill='none'
+      aria-hidden='true'
+    >
+      <path
+        d='M11.5 11.5L14.5 14.5'
+        stroke='currentColor'
+        stroke-width='1.5'
+        stroke-linecap='round'></path>
+      <circle cx='7' cy='7' r='5.5' stroke='currentColor' stroke-width='1.5'
+      ></circle>
     </svg>
-    <span class="search-trigger-label">Search</span>
-    <span class="search-trigger-kbd" aria-hidden="true">
-      <kbd class="platform-key">Ctrl</kbd><kbd>K</kbd>
+    <span class='search-trigger-label'>Search</span>
+    <span class='search-trigger-kbd' aria-hidden='true'>
+      <kbd class='platform-key'>Ctrl</kbd><kbd>K</kbd>
     </span>
   </button>
 
   <!-- Search modal backdrop + dialog -->
-  <div class="search-backdrop" aria-hidden="true">
-    <div class="search-dialog" role="dialog" aria-label="Search documentation">
-      <div class="search-dialog-inner">
+  <div class='search-backdrop' aria-hidden='true'>
+    <div class='search-dialog' role='dialog' aria-label='Search documentation'>
+      <div class='search-dialog-inner'>
         <!-- Search input bar -->
-        <div class="search-bar">
+        <div class='search-bar'>
           <!-- Active library filter tag (hidden by default) -->
-          <span class="active-library-tag" data-active="false">
-            <span class="active-library-dot"></span>
-            <span class="active-library-name"></span>
-            <button class="active-library-remove" aria-label="Remove library filter" type="button">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M3 3L9 9M9 3L3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          <span class='active-library-tag' data-active='false'>
+            <span class='active-library-dot'></span>
+            <span class='active-library-name'></span>
+            <button
+              class='active-library-remove'
+              aria-label='Remove library filter'
+              type='button'
+            >
+              <svg
+                width='12'
+                height='12'
+                viewBox='0 0 12 12'
+                fill='none'
+                aria-hidden='true'
+              >
+                <path
+                  d='M3 3L9 9M9 3L3 9'
+                  stroke='currentColor'
+                  stroke-width='1.5'
+                  stroke-linecap='round'></path>
               </svg>
             </button>
           </span>
 
           <!-- Language picker -->
-          <div class="language-picker">
-            <button class="language-picker-btn" type="button" aria-expanded="false" aria-haspopup="listbox">
-              <span class="language-picker-label">All Languages</span>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                <path d="M2.5 4L5 6.5L7.5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+          <div class='language-picker'>
+            <button
+              class='language-picker-btn'
+              type='button'
+              aria-expanded='false'
+              aria-haspopup='listbox'
+            >
+              <span class='language-picker-label'>All Languages</span>
+              <svg
+                width='10'
+                height='10'
+                viewBox='0 0 10 10'
+                fill='none'
+                aria-hidden='true'
+              >
+                <path
+                  d='M2.5 4L5 6.5L7.5 4'
+                  stroke='currentColor'
+                  stroke-width='1.3'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'></path>
               </svg>
             </button>
-            <ul class="language-dropdown" role="listbox" aria-hidden="true">
-              <li role="option" data-lang="all" class="lang-option active">All Languages</li>
-              <li role="option" data-lang="TypeScript" class="lang-option">
-                <span class="lang-option-badge" style={`background:${langColor.TypeScript}`}>TS</span>
+            <ul class='language-dropdown' role='listbox' aria-hidden='true'>
+              <li role='option' data-lang='all' class='lang-option active'>
+                All Languages
+              </li>
+              <li role='option' data-lang='TypeScript' class='lang-option'>
+                <span
+                  class='lang-option-badge'
+                  style={`background:${langColor.TypeScript}`}>TS</span
+                >
                 TypeScript
               </li>
-              <li role="option" data-lang="Python" class="lang-option">
-                <span class="lang-option-badge" style={`background:${langColor.Python}`}>Py</span>
+              <li role='option' data-lang='Python' class='lang-option'>
+                <span
+                  class='lang-option-badge'
+                  style={`background:${langColor.Python}`}>Py</span
+                >
                 Python
               </li>
-              <li role="option" data-lang="TEAL" class="lang-option">
-                <span class="lang-option-badge" style={`background:${langColor.TEAL}`}>TEAL</span>
+              <li role='option' data-lang='TEAL' class='lang-option'>
+                <span
+                  class='lang-option-badge'
+                  style={`background:${langColor.TEAL}`}>TEAL</span
+                >
                 TEAL
               </li>
             </ul>
           </div>
 
           <!-- Divider -->
-          <span class="search-bar-divider"></span>
+          <span class='search-bar-divider'></span>
 
           <!-- Search input -->
-          <svg class="search-input-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M11.5 11.5L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-            <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5" />
+          <svg
+            class='search-input-icon'
+            width='16'
+            height='16'
+            viewBox='0 0 16 16'
+            fill='none'
+            aria-hidden='true'
+          >
+            <path
+              d='M11.5 11.5L14.5 14.5'
+              stroke='currentColor'
+              stroke-width='1.5'
+              stroke-linecap='round'></path>
+            <circle
+              cx='7'
+              cy='7'
+              r='5.5'
+              stroke='currentColor'
+              stroke-width='1.5'></circle>
           </svg>
           <input
-            class="search-input"
-            type="search"
-            placeholder="Search documentation..."
-            autocomplete="off"
+            class='search-input'
+            type='search'
+            placeholder='Search documentation...'
+            autocomplete='off'
             autofocus
           />
-          <kbd class="search-escape" aria-hidden="true">Esc</kbd>
+          <kbd class='search-escape' aria-hidden='true'>Esc</kbd>
         </div>
 
         <!-- Library facets panel -->
-        <div class="facets-panel">
-          <span class="facets-label">Filter by library:</span>
-          <div class="facets-pills">
-            {libraries.map((lib) => (
-              <button
-                class="facet-pill"
-                data-slug={lib.slug}
-                data-color={lib.color}
-                data-label={lib.label}
-                type="button"
-              >
-                <span class="facet-dot" style={`background:${lib.color}`} />
-                {lib.label}
-                {lib.languages.length > 1 && (
-                  <span class="facet-badges">
-                    {lib.languages.map((lang) => (
-                      <span class="facet-badge" style={`background:${langColor[lang] || '#888'}`}>
-                        {langBadge[lang] || lang}
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </button>
-            ))}
+        <div class='facets-panel'>
+          <span class='facets-label'>Filter by library:</span>
+          <div class='facets-pills'>
+            {
+              libraries.map(lib => (
+                <button
+                  class='facet-pill'
+                  data-slug={lib.slug}
+                  data-color={lib.color}
+                  data-label={lib.label}
+                  type='button'
+                >
+                  <span class='facet-dot' style={`background:${lib.color}`} />
+                  {lib.label}
+                  {lib.languages.length > 1 && (
+                    <span class='facet-badges'>
+                      {lib.languages.map(lang => (
+                        <span
+                          class='facet-badge'
+                          style={`background:${langColor[lang] || '#888'}`}
+                        >
+                          {langBadge[lang] || lang}
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </button>
+              ))
+            }
           </div>
         </div>
 
         <!-- Results area -->
-        <div class="results-area">
-          <div class="results-empty"></div>
-          <ul class="results-list" aria-hidden="true" role="list">
-            {mockResults.map((result) => (
-              <li class="result-item" data-library={result.library || ''}>
-                <a href="#" class="result-link" onclick="event.preventDefault()">
-                  <div class="result-header">
-                    <span class="result-title">{result.title}</span>
-                    {result.library && (
-                      <span class="result-library-badge">
-                        {result.library}
-                      </span>
-                    )}
-                  </div>
-                  <span class="result-path">{result.path}</span>
-                  <p class="result-snippet">{result.snippet}</p>
-                </a>
-              </li>
-            ))}
+        <div class='results-area'>
+          <div class='results-empty'></div>
+          <ul class='results-list' aria-hidden='true' role='list'>
+            {
+              mockResults.map(result => (
+                <li class='result-item' data-library={result.library || ''}>
+                  <a
+                    href='#'
+                    class='result-link'
+                    onclick='event.preventDefault()'
+                  >
+                    <div class='result-header'>
+                      <span class='result-title'>{result.title}</span>
+                      {result.library && (
+                        <span class='result-library-badge'>
+                          {result.library}
+                        </span>
+                      )}
+                    </div>
+                    <span class='result-path'>{result.path}</span>
+                    <p class='result-snippet'>{result.snippet}</p>
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </div>
-
       </div>
     </div>
   </div>
@@ -249,19 +340,25 @@ const isMac = true; // Server-rendered; JS will fix this
       // Fix platform key display
       const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
       const platformKeys = this.querySelectorAll('.platform-key');
-      platformKeys.forEach((el) => { el.textContent = isMac ? '⌘' : 'Ctrl'; });
+      platformKeys.forEach(el => {
+        el.textContent = isMac ? '⌘' : 'Ctrl';
+      });
 
       // Open/close
       this.trigger.addEventListener('click', () => this.open());
-      this.backdrop.addEventListener('click', (e) => {
+      this.backdrop.addEventListener('click', e => {
         if (e.target === this.backdrop) this.close();
       });
 
       // Keyboard shortcut
-      document.addEventListener('keydown', (e) => {
+      document.addEventListener('keydown', e => {
         if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
           e.preventDefault();
-          this.isOpen() ? this.close() : this.open();
+          if (this.isOpen()) {
+            this.close();
+          } else {
+            this.open();
+          }
         }
         if (e.key === 'Escape' && this.isOpen()) {
           e.preventDefault();
@@ -275,12 +372,12 @@ const isMac = true; // Server-rendered; JS will fix this
       });
 
       // Language picker
-      this.langBtn.addEventListener('click', (e) => {
+      this.langBtn.addEventListener('click', e => {
         e.stopPropagation();
         this.toggleLangDropdown();
       });
-      this.langDropdown.querySelectorAll('.lang-option').forEach((opt) => {
-        opt.addEventListener('click', (e) => {
+      this.langDropdown.querySelectorAll('.lang-option').forEach(opt => {
+        opt.addEventListener('click', e => {
           e.stopPropagation();
           const lang = (opt as HTMLElement).dataset.lang!;
           this.selectLanguage(lang, opt.textContent?.trim() || 'All Languages');
@@ -295,7 +392,7 @@ const isMac = true; // Server-rendered; JS will fix this
       });
 
       // Library facet pills
-      this.facetPills.forEach((pill) => {
+      this.facetPills.forEach(pill => {
         pill.addEventListener('click', () => {
           const slug = pill.dataset.slug!;
           const label = pill.dataset.label!;
@@ -355,8 +452,11 @@ const isMac = true; // Server-rendered; JS will fix this
 
     selectLanguage(lang: string, label: string) {
       // Update active state
-      this.langDropdown.querySelectorAll('.lang-option').forEach((opt) => {
-        opt.classList.toggle('active', (opt as HTMLElement).dataset.lang === lang);
+      this.langDropdown.querySelectorAll('.lang-option').forEach(opt => {
+        opt.classList.toggle(
+          'active',
+          (opt as HTMLElement).dataset.lang === lang,
+        );
       });
       // Show just the short label in the button when a specific lang is selected
       if (lang === 'all') {
@@ -375,7 +475,7 @@ const isMac = true; // Server-rendered; JS will fix this
       this.activeTag.dataset.active = 'true';
 
       // Highlight selected pill
-      this.facetPills.forEach((pill) => {
+      this.facetPills.forEach(pill => {
         pill.classList.toggle('selected', pill.dataset.slug === slug);
       });
 
@@ -386,7 +486,7 @@ const isMac = true; // Server-rendered; JS will fix this
     clearLibraryFilter() {
       this.selectedLibrary = null;
       this.activeTag.dataset.active = 'false';
-      this.facetPills.forEach((pill) => pill.classList.remove('selected'));
+      this.facetPills.forEach(pill => pill.classList.remove('selected'));
       this.updateResults();
     }
 
@@ -397,13 +497,13 @@ const isMac = true; // Server-rendered; JS will fix this
         this.resultsEmpty.setAttribute('aria-hidden', 'true');
         // Filter results by selected library if any
         const items = this.resultsList.querySelectorAll('.result-item');
-        items.forEach((item) => {
+        items.forEach(item => {
           const lib = (item as HTMLElement).dataset.library;
           if (this.selectedLibrary) {
             // Show items matching selected library or with no library
             const libLabel = this.activeTagName.textContent;
             (item as HTMLElement).style.display =
-              (!lib || lib === libLabel) ? '' : 'none';
+              !lib || lib === libLabel ? '' : 'none';
           } else {
             (item as HTMLElement).style.display = '';
           }
@@ -435,7 +535,9 @@ const isMac = true; // Server-rendered; JS will fix this
     color: var(--sl-color-gray-3);
     cursor: pointer;
     font-size: var(--sl-text-sm);
-    transition: border-color 0.15s, color 0.15s;
+    transition:
+      border-color 0.15s,
+      color 0.15s;
     min-width: 12rem;
   }
 
@@ -749,7 +851,10 @@ const isMac = true; // Server-rendered; JS will fix this
     font-size: 0.72rem;
     font-weight: 500;
     white-space: nowrap;
-    transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+    transition:
+      border-color 0.15s,
+      background-color 0.15s,
+      color 0.15s;
   }
 
   .facet-pill:hover {
@@ -873,5 +978,4 @@ const isMac = true; // Server-rendered; JS will fix this
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-
 </style>

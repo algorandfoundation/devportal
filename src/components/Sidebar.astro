@@ -24,17 +24,21 @@ const currentPath = Astro.url.pathname;
 const activeLibrary = getLibraryFromPath(currentPath);
 ---
 
-{activeLibrary ? (
-  <!-- Library virtual collection view -->
-  <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
-) : (
-  <!-- Main site view: library switcher at top + normal sidebar -->
-  <LibraryPicker currentPath={currentPath} />
-  <SidebarPersister>
-    <SidebarSublist sublist={sidebar} />
-  </SidebarPersister>
-)}
+{
+  activeLibrary ? (
+    /* Library virtual collection view */
+    <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
+  ) : (
+    /* Main site view: library switcher at top + normal sidebar */
+    <>
+      <LibraryPicker currentPath={currentPath} />
+      <SidebarPersister>
+        <SidebarSublist sublist={sidebar} />
+      </SidebarPersister>
+    </>
+  )
+}
 
-<div class="md:sl-hidden">
+<div class='md:sl-hidden'>
   <MobileMenuFooter />
 </div>

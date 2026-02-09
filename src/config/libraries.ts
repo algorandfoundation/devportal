@@ -33,7 +33,10 @@ export interface LibrarySidebarLink {
   type: 'link';
   label: string;
   href: string;
-  badge?: { text: string; variant?: 'note' | 'tip' | 'caution' | 'danger' | 'default' };
+  badge?: {
+    text: string;
+    variant?: 'note' | 'tip' | 'caution' | 'danger' | 'default';
+  };
   attrs?: Record<string, string>;
 }
 
@@ -42,7 +45,10 @@ export interface LibrarySidebarGroup {
   label: string;
   entries: LibrarySidebarEntry[];
   collapsed: boolean;
-  badge?: { text: string; variant?: 'note' | 'tip' | 'caution' | 'danger' | 'default' };
+  badge?: {
+    text: string;
+    variant?: 'note' | 'tip' | 'caution' | 'danger' | 'default';
+  };
 }
 
 export type LibrarySidebarEntry = LibrarySidebarLink | LibrarySidebarGroup;
@@ -53,9 +59,9 @@ export type LibrarySidebarEntry = LibrarySidebarLink | LibrarySidebarGroup;
  */
 export function toStarlightSidebar(
   entries: LibrarySidebarEntry[],
-  currentPath: string
+  currentPath: string,
 ): any[] {
-  return entries.map((entry) => {
+  return entries.map(entry => {
     if (entry.type === 'link') {
       const normalizedHref = entry.href.replace(/\/$/, '');
       const normalizedCurrent = currentPath.replace(/\/$/, '');
@@ -95,8 +101,16 @@ export const libraries: LibraryConfig[] = [
         collapsed: false,
         entries: [
           { type: 'link', label: 'Overview', href: '/docs/algokit-utils/' },
-          { type: 'link', label: 'Installation', href: '/docs/algokit-utils/install/' },
-          { type: 'link', label: 'Quick Start', href: '/docs/algokit-utils/quick-start/' },
+          {
+            type: 'link',
+            label: 'Installation',
+            href: '/docs/algokit-utils/install/',
+          },
+          {
+            type: 'link',
+            label: 'Quick Start',
+            href: '/docs/algokit-utils/quick-start/',
+          },
         ],
       },
       {
@@ -104,12 +118,36 @@ export const libraries: LibraryConfig[] = [
         label: 'Guides',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Account Management', href: '/docs/algokit-utils/accounts/' },
-          { type: 'link', label: 'Algorand Client', href: '/docs/algokit-utils/algorand-client/' },
-          { type: 'link', label: 'App Client', href: '/docs/algokit-utils/app-client/' },
-          { type: 'link', label: 'App Deployment', href: '/docs/algokit-utils/app-deploy/' },
-          { type: 'link', label: 'Transaction Composer', href: '/docs/algokit-utils/transaction-composer/' },
-          { type: 'link', label: 'Typed Clients', href: '/docs/algokit-utils/typed-clients/' },
+          {
+            type: 'link',
+            label: 'Account Management',
+            href: '/docs/algokit-utils/accounts/',
+          },
+          {
+            type: 'link',
+            label: 'Algorand Client',
+            href: '/docs/algokit-utils/algorand-client/',
+          },
+          {
+            type: 'link',
+            label: 'App Client',
+            href: '/docs/algokit-utils/app-client/',
+          },
+          {
+            type: 'link',
+            label: 'App Deployment',
+            href: '/docs/algokit-utils/app-deploy/',
+          },
+          {
+            type: 'link',
+            label: 'Transaction Composer',
+            href: '/docs/algokit-utils/transaction-composer/',
+          },
+          {
+            type: 'link',
+            label: 'Typed Clients',
+            href: '/docs/algokit-utils/typed-clients/',
+          },
         ],
       },
       {
@@ -117,12 +155,36 @@ export const libraries: LibraryConfig[] = [
         label: 'API Reference',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'AlgorandClient', href: '/docs/algokit-utils/api/algorand-client/' },
-          { type: 'link', label: 'AccountManager', href: '/docs/algokit-utils/api/account-manager/' },
-          { type: 'link', label: 'AppClient', href: '/docs/algokit-utils/api/app-client/' },
-          { type: 'link', label: 'AppDeployer', href: '/docs/algokit-utils/api/app-deployer/' },
-          { type: 'link', label: 'TransactionComposer', href: '/docs/algokit-utils/api/transaction-composer/' },
-          { type: 'link', label: 'AssetManager', href: '/docs/algokit-utils/api/asset-manager/' },
+          {
+            type: 'link',
+            label: 'AlgorandClient',
+            href: '/docs/algokit-utils/api/algorand-client/',
+          },
+          {
+            type: 'link',
+            label: 'AccountManager',
+            href: '/docs/algokit-utils/api/account-manager/',
+          },
+          {
+            type: 'link',
+            label: 'AppClient',
+            href: '/docs/algokit-utils/api/app-client/',
+          },
+          {
+            type: 'link',
+            label: 'AppDeployer',
+            href: '/docs/algokit-utils/api/app-deployer/',
+          },
+          {
+            type: 'link',
+            label: 'TransactionComposer',
+            href: '/docs/algokit-utils/api/transaction-composer/',
+          },
+          {
+            type: 'link',
+            label: 'AssetManager',
+            href: '/docs/algokit-utils/api/asset-manager/',
+          },
         ],
       },
       {
@@ -130,8 +192,16 @@ export const libraries: LibraryConfig[] = [
         label: 'Migration',
         collapsed: true,
         entries: [
-          { type: 'link', label: 'v8 Migration Guide', href: '/docs/algokit-utils/v8-migration/' },
-          { type: 'link', label: 'v7 Migration Guide', href: '/docs/algokit-utils/v7-migration/' },
+          {
+            type: 'link',
+            label: 'v8 Migration Guide',
+            href: '/docs/algokit-utils/v8-migration/',
+          },
+          {
+            type: 'link',
+            label: 'v7 Migration Guide',
+            href: '/docs/algokit-utils/v7-migration/',
+          },
         ],
       },
     ],
@@ -151,7 +221,11 @@ export const libraries: LibraryConfig[] = [
         collapsed: false,
         entries: [
           { type: 'link', label: 'Overview', href: '/docs/algokit-cli/' },
-          { type: 'link', label: 'Installation', href: '/docs/algokit-cli/install/' },
+          {
+            type: 'link',
+            label: 'Installation',
+            href: '/docs/algokit-cli/install/',
+          },
         ],
       },
       {
@@ -159,11 +233,27 @@ export const libraries: LibraryConfig[] = [
         label: 'Commands',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Compile', href: '/docs/algokit-cli/compile/' },
+          {
+            type: 'link',
+            label: 'Compile',
+            href: '/docs/algokit-cli/compile/',
+          },
           { type: 'link', label: 'Init', href: '/docs/algokit-cli/init/' },
-          { type: 'link', label: 'Localnet', href: '/docs/algokit-cli/localnet/' },
-          { type: 'link', label: 'Generate', href: '/docs/algokit-cli/generate/' },
-          { type: 'link', label: 'Project', href: '/docs/algokit-cli/project/' },
+          {
+            type: 'link',
+            label: 'Localnet',
+            href: '/docs/algokit-cli/localnet/',
+          },
+          {
+            type: 'link',
+            label: 'Generate',
+            href: '/docs/algokit-cli/generate/',
+          },
+          {
+            type: 'link',
+            label: 'Project',
+            href: '/docs/algokit-cli/project/',
+          },
           { type: 'link', label: 'Tasks', href: '/docs/algokit-cli/tasks/' },
         ],
       },
@@ -184,7 +274,11 @@ export const libraries: LibraryConfig[] = [
         collapsed: false,
         entries: [
           { type: 'link', label: 'Overview', href: '/docs/algorand-python/' },
-          { type: 'link', label: 'Quick Start', href: '/docs/algorand-python/quick-start/' },
+          {
+            type: 'link',
+            label: 'Quick Start',
+            href: '/docs/algorand-python/quick-start/',
+          },
         ],
       },
       {
@@ -192,12 +286,36 @@ export const libraries: LibraryConfig[] = [
         label: 'Language Guide',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Program Structure', href: '/docs/algorand-python/lg-structure/' },
-          { type: 'link', label: 'Types', href: '/docs/algorand-python/lg-types/' },
-          { type: 'link', label: 'Control Flow', href: '/docs/algorand-python/lg-control/' },
-          { type: 'link', label: 'Storage', href: '/docs/algorand-python/lg-storage/' },
-          { type: 'link', label: 'Transactions', href: '/docs/algorand-python/lg-transactions/' },
-          { type: 'link', label: 'ARC-4 ABI', href: '/docs/algorand-python/lg-arc4/' },
+          {
+            type: 'link',
+            label: 'Program Structure',
+            href: '/docs/algorand-python/lg-structure/',
+          },
+          {
+            type: 'link',
+            label: 'Types',
+            href: '/docs/algorand-python/lg-types/',
+          },
+          {
+            type: 'link',
+            label: 'Control Flow',
+            href: '/docs/algorand-python/lg-control/',
+          },
+          {
+            type: 'link',
+            label: 'Storage',
+            href: '/docs/algorand-python/lg-storage/',
+          },
+          {
+            type: 'link',
+            label: 'Transactions',
+            href: '/docs/algorand-python/lg-transactions/',
+          },
+          {
+            type: 'link',
+            label: 'ARC-4 ABI',
+            href: '/docs/algorand-python/lg-arc4/',
+          },
         ],
       },
       {
@@ -205,7 +323,11 @@ export const libraries: LibraryConfig[] = [
         label: 'API Reference',
         collapsed: true,
         entries: [
-          { type: 'link', label: 'Full API Docs', href: '/docs/algorand-python/api/' },
+          {
+            type: 'link',
+            label: 'Full API Docs',
+            href: '/docs/algorand-python/api/',
+          },
         ],
       },
     ],
@@ -224,8 +346,16 @@ export const libraries: LibraryConfig[] = [
         label: 'Getting Started',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Overview', href: '/docs/algorand-typescript/' },
-          { type: 'link', label: 'Quick Start', href: '/docs/algorand-typescript/quick-start/' },
+          {
+            type: 'link',
+            label: 'Overview',
+            href: '/docs/algorand-typescript/',
+          },
+          {
+            type: 'link',
+            label: 'Quick Start',
+            href: '/docs/algorand-typescript/quick-start/',
+          },
         ],
       },
       {
@@ -233,10 +363,26 @@ export const libraries: LibraryConfig[] = [
         label: 'Language Guide',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Program Structure', href: '/docs/algorand-typescript/lg-program-structure/' },
-          { type: 'link', label: 'Types', href: '/docs/algorand-typescript/lg-types/' },
-          { type: 'link', label: 'Storage', href: '/docs/algorand-typescript/lg-storage/' },
-          { type: 'link', label: 'Ops', href: '/docs/algorand-typescript/lg-ops/' },
+          {
+            type: 'link',
+            label: 'Program Structure',
+            href: '/docs/algorand-typescript/lg-program-structure/',
+          },
+          {
+            type: 'link',
+            label: 'Types',
+            href: '/docs/algorand-typescript/lg-types/',
+          },
+          {
+            type: 'link',
+            label: 'Storage',
+            href: '/docs/algorand-typescript/lg-storage/',
+          },
+          {
+            type: 'link',
+            label: 'Ops',
+            href: '/docs/algorand-typescript/lg-ops/',
+          },
         ],
       },
       {
@@ -244,7 +390,11 @@ export const libraries: LibraryConfig[] = [
         label: 'API Reference',
         collapsed: true,
         entries: [
-          { type: 'link', label: 'Full API Docs', href: '/docs/algorand-typescript/api/' },
+          {
+            type: 'link',
+            label: 'Full API Docs',
+            href: '/docs/algorand-typescript/api/',
+          },
         ],
       },
     ],
@@ -263,8 +413,16 @@ export const libraries: LibraryConfig[] = [
         label: 'Getting Started',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Overview', href: '/docs/algokit-subscriber/' },
-          { type: 'link', label: 'Quick Start', href: '/docs/algokit-subscriber/quick-start/' },
+          {
+            type: 'link',
+            label: 'Overview',
+            href: '/docs/algokit-subscriber/',
+          },
+          {
+            type: 'link',
+            label: 'Quick Start',
+            href: '/docs/algokit-subscriber/quick-start/',
+          },
         ],
       },
       {
@@ -272,8 +430,16 @@ export const libraries: LibraryConfig[] = [
         label: 'Guides',
         collapsed: false,
         entries: [
-          { type: 'link', label: 'Subscriber', href: '/docs/algokit-subscriber/subscriber/' },
-          { type: 'link', label: 'Subscriptions', href: '/docs/algokit-subscriber/subscriptions/' },
+          {
+            type: 'link',
+            label: 'Subscriber',
+            href: '/docs/algokit-subscriber/subscriber/',
+          },
+          {
+            type: 'link',
+            label: 'Subscriptions',
+            href: '/docs/algokit-subscriber/subscriptions/',
+          },
         ],
       },
     ],
@@ -293,7 +459,11 @@ export const libraries: LibraryConfig[] = [
         collapsed: false,
         entries: [
           { type: 'link', label: 'Overview', href: '/docs/nodekit/' },
-          { type: 'link', label: 'Quick Start', href: '/docs/nodekit/quick-start/' },
+          {
+            type: 'link',
+            label: 'Quick Start',
+            href: '/docs/nodekit/quick-start/',
+          },
         ],
       },
       {
@@ -322,7 +492,11 @@ export const libraries: LibraryConfig[] = [
         entries: [
           { type: 'link', label: 'Overview', href: '/docs/rest-api/' },
           { type: 'link', label: 'algod API', href: '/docs/rest-api/algod/' },
-          { type: 'link', label: 'indexer API', href: '/docs/rest-api/indexer/' },
+          {
+            type: 'link',
+            label: 'indexer API',
+            href: '/docs/rest-api/indexer/',
+          },
           { type: 'link', label: 'kmd API', href: '/docs/rest-api/kmd/' },
         ],
       },
@@ -332,7 +506,7 @@ export const libraries: LibraryConfig[] = [
 
 /** Lookup a library by its slug */
 export function getLibraryBySlug(slug: string): LibraryConfig | undefined {
-  return libraries.find((lib) => lib.slug === slug);
+  return libraries.find(lib => lib.slug === slug);
 }
 
 /**

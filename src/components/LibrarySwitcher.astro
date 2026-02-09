@@ -25,35 +25,40 @@ for (const lib of libraries) {
 const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
 ---
 
-<nav class:list={['library-switcher', { compact }]} aria-label="Library documentation">
-  {!compact && (
-    <div class="switcher-header">
-      <span class="switcher-title">Libraries & Tools</span>
-    </div>
-  )}
-  <ul class="library-list" role="list">
-    {categoryOrder.map((cat) =>
-      categories[cat]?.map((lib) => {
-        const href = `/docs/${lib.slug}/`;
-        const isActive = currentPath.startsWith(href);
-        return (
-          <li>
-            <a
-              href={href}
-              class:list={['library-item', { active: isActive }]}
-              aria-current={isActive ? 'true' : undefined}
-            >
-              <span class="library-dot" style={`--dot-color: ${lib.color}`} />
-              <span class="library-label">{lib.label}</span>
-            </a>
-          </li>
-        );
-      })
-    )}
+<nav
+  class:list={['library-switcher', { compact }]}
+  aria-label='Library documentation'
+>
+  {
+    !compact && (
+      <div class='switcher-header'>
+        <span class='switcher-title'>Libraries & Tools</span>
+      </div>
+    )
+  }
+  <ul class='library-list' role='list'>
+    {
+      categoryOrder.map(cat =>
+        categories[cat]?.map(lib => {
+          const href = `/docs/${lib.slug}/`;
+          const isActive = currentPath.startsWith(href);
+          return (
+            <li>
+              <a
+                href={href}
+                class:list={['library-item', { active: isActive }]}
+                aria-current={isActive ? 'true' : undefined}
+              >
+                <span class='library-dot' style={`--dot-color: ${lib.color}`} />
+                <span class='library-label'>{lib.label}</span>
+              </a>
+            </li>
+          );
+        }),
+      )
+    }
   </ul>
-  {!compact && (
-    <div class="switcher-divider" />
-  )}
+  {!compact && <div class='switcher-divider' />}
 </nav>
 
 <style>
@@ -97,7 +102,9 @@ const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
     color: var(--sl-color-gray-2);
     font-size: var(--sl-text-base);
     line-height: 1.4;
-    transition: color 0.15s, background-color 0.15s;
+    transition:
+      color 0.15s,
+      background-color 0.15s;
   }
 
   @media (min-width: 50rem) {

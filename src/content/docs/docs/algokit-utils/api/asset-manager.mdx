@@ -10,7 +10,7 @@ Manages Algorand Standard Assets (ASAs) including creation, configuration, and q
 ## Access
 
 ```typescript
-const assetManager = algorand.asset
+const assetManager = algorand.asset;
 ```
 
 ## Methods
@@ -19,40 +19,40 @@ const assetManager = algorand.asset
 
 Gets asset information by ID.
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type     | Description             |
+| --------- | -------- | ----------------------- |
 | `assetId` | `bigint` | The asset ID to look up |
 
 ```typescript
-const asset = await algorand.asset.getById(123n)
-console.log(asset.name, asset.unitName, asset.total)
+const asset = await algorand.asset.getById(123n);
+console.log(asset.name, asset.unitName, asset.total);
 ```
 
 ### `getAccountInformation(address, assetId)`
 
 Gets an account's information for a specific asset.
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type     | Description     |
+| --------- | -------- | --------------- |
 | `address` | `string` | Account address |
-| `assetId` | `bigint` | Asset ID |
+| `assetId` | `bigint` | Asset ID        |
 
 ```typescript
-const info = await algorand.asset.getAccountInformation(myAccount.addr, 123n)
-console.log(info.balance)
+const info = await algorand.asset.getAccountInformation(myAccount.addr, 123n);
+console.log(info.balance);
 ```
 
 ### `bulkOptIn(account, assetIds)`
 
 Opts an account into multiple assets at once.
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `account` | `TransactionSignerAccount` | Account to opt in |
-| `assetIds` | `bigint[]` | Array of asset IDs |
+| Parameter  | Type                       | Description        |
+| ---------- | -------------------------- | ------------------ |
+| `account`  | `TransactionSignerAccount` | Account to opt in  |
+| `assetIds` | `bigint[]`                 | Array of asset IDs |
 
 ```typescript
-await algorand.asset.bulkOptIn(myAccount, [123n, 456n, 789n])
+await algorand.asset.bulkOptIn(myAccount, [123n, 456n, 789n]);
 ```
 
 ### `bulkOptOut(account, assetIds)`
@@ -60,5 +60,5 @@ await algorand.asset.bulkOptIn(myAccount, [123n, 456n, 789n])
 Opts an account out of multiple assets at once.
 
 ```typescript
-await algorand.asset.bulkOptOut(myAccount, [123n, 456n])
+await algorand.asset.bulkOptOut(myAccount, [123n, 456n]);
 ```

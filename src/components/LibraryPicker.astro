@@ -43,58 +43,86 @@ const langColor: Record<string, string> = {
 };
 ---
 
-<library-picker class="library-picker">
+<library-picker class='library-picker'>
   <button
-    class="picker-btn"
-    aria-expanded="false"
-    aria-controls="library-picker-panel"
+    class='picker-btn'
+    aria-expanded='false'
+    aria-controls='library-picker-panel'
   >
-    <svg class="picker-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M2 3H14" />
-      <path d="M2 8H14" />
-      <path d="M2 13H14" />
-      <circle cx="5" cy="3" r="1.5" fill="currentColor" stroke="none" />
-      <circle cx="10" cy="8" r="1.5" fill="currentColor" stroke="none" />
-      <circle cx="7" cy="13" r="1.5" fill="currentColor" stroke="none" />
+    <svg
+      class='picker-icon'
+      width='16'
+      height='16'
+      viewBox='0 0 16 16'
+      fill='none'
+      stroke='currentColor'
+      stroke-width='1.5'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+      aria-hidden='true'
+    >
+      <path d='M2 3H14'></path>
+      <path d='M2 8H14'></path>
+      <path d='M2 13H14'></path>
+      <circle cx='5' cy='3' r='1.5' fill='currentColor' stroke='none'></circle>
+      <circle cx='10' cy='8' r='1.5' fill='currentColor' stroke='none'></circle>
+      <circle cx='7' cy='13' r='1.5' fill='currentColor' stroke='none'></circle>
     </svg>
-    <span class="picker-label">Libraries & Tools</span>
-    <svg class="picker-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-      <path d="M3 5L6 8L9 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <span class='picker-label'>Libraries & Tools</span>
+    <svg
+      class='picker-chevron'
+      width='12'
+      height='12'
+      viewBox='0 0 12 12'
+      fill='none'
+      aria-hidden='true'
+    >
+      <path
+        d='M3 5L6 8L9 5'
+        stroke='currentColor'
+        stroke-width='1.5'
+        stroke-linecap='round'
+        stroke-linejoin='round'></path>
     </svg>
   </button>
 
-  <div class="picker-panel" id="library-picker-panel" aria-hidden="true">
-    <ul class="picker-list" role="list">
-      {categoryOrder.map((cat) =>
-        categories[cat]?.map((lib) => {
-          const href = `/docs/${lib.slug}/`;
-          const isActive = currentPath.startsWith(href);
-          return (
-            <li>
-              <a
-                href={href}
-                class:list={['picker-item', { active: isActive }]}
-                aria-current={isActive ? 'true' : undefined}
-              >
-                <span class="picker-dot" style={`--dot-color: ${lib.color}`} />
-                <span class="picker-item-label">{lib.label}</span>
-                {lib.languages.length > 1 && (
-                  <span class="picker-badges">
-                    {lib.languages.map((lang) => (
-                      <span
-                        class="lang-badge"
-                        style={`--badge-color: ${langColor[lang] || '#888'}`}
-                      >
-                        {langBadge[lang] || lang}
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </a>
-            </li>
-          );
-        })
-      )}
+  <div class='picker-panel' id='library-picker-panel' aria-hidden='true'>
+    <ul class='picker-list' role='list'>
+      {
+        categoryOrder.map(cat =>
+          categories[cat]?.map(lib => {
+            const href = `/docs/${lib.slug}/`;
+            const isActive = currentPath.startsWith(href);
+            return (
+              <li>
+                <a
+                  href={href}
+                  class:list={['picker-item', { active: isActive }]}
+                  aria-current={isActive ? 'true' : undefined}
+                >
+                  <span
+                    class='picker-dot'
+                    style={`--dot-color: ${lib.color}`}
+                  />
+                  <span class='picker-item-label'>{lib.label}</span>
+                  {lib.languages.length > 1 && (
+                    <span class='picker-badges'>
+                      {lib.languages.map(lang => (
+                        <span
+                          class='lang-badge'
+                          style={`--badge-color: ${langColor[lang] || '#888'}`}
+                        >
+                          {langBadge[lang] || lang}
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </a>
+              </li>
+            );
+          }),
+        )
+      }
     </ul>
   </div>
 </library-picker>
@@ -110,10 +138,10 @@ const langColor: Record<string, string> = {
       if (!this.btn || !this.panel) return;
 
       this.btn.addEventListener('click', () => this.toggle());
-      document.addEventListener('keydown', (e) => {
+      document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && this.isOpen()) this.close();
       });
-      document.addEventListener('click', (e) => {
+      document.addEventListener('click', e => {
         if (this.isOpen() && !this.contains(e.target as Node)) this.close();
       });
     }
@@ -162,7 +190,9 @@ const langColor: Record<string, string> = {
     font-size: var(--sl-text-base);
     font-weight: 600;
     text-align: left;
-    transition: background-color 0.15s, border-color 0.15s;
+    transition:
+      background-color 0.15s,
+      border-color 0.15s;
   }
 
   @media (min-width: 50rem) {
@@ -205,7 +235,10 @@ const langColor: Record<string, string> = {
     overflow: hidden;
     max-height: 0;
     opacity: 0;
-    transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.25s ease;
+    transition:
+      max-height 0.25s ease,
+      opacity 0.2s ease,
+      margin 0.25s ease;
     margin-top: 0;
   }
 
@@ -233,7 +266,9 @@ const langColor: Record<string, string> = {
     color: var(--sl-color-gray-2);
     font-size: var(--sl-text-base);
     line-height: 1.4;
-    transition: color 0.15s, background-color 0.15s;
+    transition:
+      color 0.15s,
+      background-color 0.15s;
   }
 
   @media (min-width: 50rem) {

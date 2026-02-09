@@ -105,7 +105,9 @@ async function getCode(src: string): Promise<string> {
     new URL(src);
     const response = await fetch(src);
     if (!response.ok) {
-      console.warn(`RemoteCode: HTTP ${response.status} for ${src}, using placeholder`);
+      console.warn(
+        `RemoteCode: HTTP ${response.status} for ${src}, using placeholder`,
+      );
       return `// Could not fetch remote code: HTTP ${response.status}\n// Source: ${src}`;
     }
     return await response.text();

@@ -10,12 +10,12 @@ AlgoKit Utils provides comprehensive account management utilities.
 ## Creating Accounts
 
 ```typescript
-const account = await algorand.account.random()
-const fromMnemonic = algorand.account.fromMnemonic('your mnemonic here...')
+const account = await algorand.account.random();
+const fromMnemonic = algorand.account.fromMnemonic('your mnemonic here...');
 ```
 
 ## Funding Accounts
 
 ```typescript
-await algorand.account.ensureFunded(account, dispenser, (1).algo())
+await algorand.account.ensureFunded(account, dispenser, (1).algo());
 ```

@@ -10,7 +10,7 @@ Builds and sends atomic transaction groups with automatic resource population an
 ## Creating a Composer
 
 ```typescript
-const composer = algorand.newGroup()
+const composer = algorand.newGroup();
 ```
 
 ## Methods
@@ -19,31 +19,31 @@ const composer = algorand.newGroup()
 
 Adds a payment transaction.
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `params.sender` | `TransactionSignerAccount` | Sender |
-| `params.receiver` | `string` | Receiver address |
-| `params.amount` | `AlgoAmount` | Payment amount |
-| `params.note` | `string \| Uint8Array` | Optional note |
+| Parameter         | Type                       | Description      |
+| ----------------- | -------------------------- | ---------------- |
+| `params.sender`   | `TransactionSignerAccount` | Sender           |
+| `params.receiver` | `string`                   | Receiver address |
+| `params.amount`   | `AlgoAmount`               | Payment amount   |
+| `params.note`     | `string \| Uint8Array`     | Optional note    |
 
 ```typescript
 composer.addPayment({
   sender: alice,
   receiver: bob.addr,
   amount: (1).algo(),
-})
+});
 ```
 
 ### `addAssetTransfer(params)`
 
 Adds an asset transfer transaction.
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `params.sender` | `TransactionSignerAccount` | Sender |
-| `params.receiver` | `string` | Receiver address |
-| `params.assetId` | `bigint` | Asset ID |
-| `params.amount` | `bigint` | Transfer amount |
+| Parameter         | Type                       | Description      |
+| ----------------- | -------------------------- | ---------------- |
+| `params.sender`   | `TransactionSignerAccount` | Sender           |
+| `params.receiver` | `string`                   | Receiver address |
+| `params.assetId`  | `bigint`                   | Asset ID         |
+| `params.amount`   | `bigint`                   | Transfer amount  |
 
 ### `addAppCallMethodCall(params)`
 
@@ -54,12 +54,13 @@ Adds an ABI method call to an application.
 Sends all transactions in the group atomically.
 
 ```typescript
-const result = await algorand.newGroup()
+const result = await algorand
+  .newGroup()
   .addPayment({ sender: alice, receiver: bob.addr, amount: (1).algo() })
   .addPayment({ sender: alice, receiver: charlie.addr, amount: (2).algo() })
-  .send()
+  .send();
 
-console.log(result.txIds) // ['TX1...', 'TX2...']
+console.log(result.txIds); // ['TX1...', 'TX2...']
 ```
 
 ### `simulate()`
@@ -67,7 +68,7 @@ console.log(result.txIds) // ['TX1...', 'TX2...']
 Simulates the transaction group without submitting.
 
 ```typescript
-const simResult = await composer.simulate()
+const simResult = await composer.simulate();
 ```
 
 ### `buildGroup()`
@@ -75,5 +76,5 @@ const simResult = await composer.simulate()
 Builds the transaction group without sending.
 
 ```typescript
-const txns = await composer.buildGroup()
+const txns = await composer.buildGroup();
 ```
