@@ -28,11 +28,11 @@ const activeLibrary = getLibraryFromPath(currentPath);
       <div class='grid w-full! max-w-[94px]! md:max-w-[113px]! h-[30px] md:h-[36px] mr-4! mb-[10px]!'>
         <SiteTitle />
       </div>
-      <div class='sl-flex ml-auto! gap-2 items-center'>
+      <div class='sl-flex gap-2 items-center'>
         {shouldRenderSearch && <Search {...Astro.props} />}
         <AIChatTrigger client:idle />
       </div>
-      <div class='sl-flex right-group gap-x-7! ml-7!'>
+      <div class='sl-flex right-group gap-x-7! ml-auto!'>
         <div class='sl-flex social-icons text-algo-lavender-400 dark:text-algo-teal-700'>
           <SocialIcons
             {...Astro.props}
