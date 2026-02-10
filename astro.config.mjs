@@ -13,6 +13,7 @@ import starlightAutoSidebar from 'starlight-auto-sidebar';
 // Temporarily disabled — requires network access
 // import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 
 // Temporarily disabled — requires network access to download OpenAPI specs
 // const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -1175,6 +1176,7 @@ export default defineConfig({
     //   layout: 'dagre',
     // }),
     sitemap(),
+    react(),
   ],
   markdown: {
     rehypePlugins: [

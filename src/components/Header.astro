@@ -8,6 +8,7 @@ import SocialIcons from './SocialIcons.astro';
 import ThemeSelect from './ThemeSelect.astro';
 import Default from '@astrojs/starlight/components/Header.astro';
 import LibrarySwitcher from './LibrarySwitcher.astro';
+import AIChatTrigger from './AIChatTrigger.tsx';
 import { getLibraryFromPath } from '../config/libraries';
 
 /**
@@ -31,6 +32,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
         {shouldRenderSearch && <Search {...Astro.props} />}
       </div>
       <div class='sl-flex right-group gap-x-7! ml-7!'>
+        <AIChatTrigger client:idle />
         <div class='sl-flex social-icons text-algo-lavender-400 dark:text-algo-teal-700'>
           <SocialIcons
             {...Astro.props}
@@ -116,6 +118,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
         {shouldRenderSearch && <Search {...Astro.props} />}
       </div>
       <div class='sl-hidden md:sl-flex print:hidden right-group'>
+        <AIChatTrigger client:idle />
         <div class='sl-flex social-icons'>
           <SocialIcons {...Astro.props} />
         </div>

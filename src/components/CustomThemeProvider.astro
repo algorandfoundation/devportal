@@ -1,5 +1,6 @@
 ---
 import Default from '@astrojs/starlight/components/ThemeProvider.astro';
+import AIChatPanel from './AIChatPanel.tsx';
 ---
 
 <script is:inline>
@@ -12,3 +13,4 @@ import Default from '@astrojs/starlight/components/ThemeProvider.astro';
 </script>
 
 <Default {...Astro.props}><slot /></Default>
+<AIChatPanel client:only="react" />
