@@ -630,8 +630,8 @@ const styles: Record<string, React.CSSProperties> = {
     flexShrink: 0,
   },
   deepThinkingActive: {
-    color: 'var(--sl-color-accent)',
-    background: 'var(--sl-color-accent-low)',
+    color: '#FF7F48',
+    background: 'rgba(255, 127, 72, 0.15)',
   },
   deepThinkingStatus: {
     fontSize: '0.7rem',
