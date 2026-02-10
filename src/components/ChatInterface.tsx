@@ -630,7 +630,7 @@ const styles: Record<string, React.CSSProperties> = {
     flexShrink: 0,
   },
   deepThinkingActive: {
-    color: '#FF7F48',
+    color: '#01DC94',
     background: 'rgba(255, 127, 72, 0.15)',
   },
   deepThinkingStatus: {
