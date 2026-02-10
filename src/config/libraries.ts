@@ -482,7 +482,7 @@ export const libraries: LibraryConfig[] = [
     description: 'Algorand REST API reference (algod, indexer, kmd)',
     color: '#F97316', // orange
     versions: ['latest'],
-    languages: [],
+    languages: ['REST'],
     category: 'api',
     sidebar: [
       {
