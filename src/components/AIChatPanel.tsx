@@ -6,6 +6,11 @@ import ChatInterface from './ChatInterface';
 
 const INTEGRATION_ID = import.meta.env.PUBLIC_KAPA_INTEGRATION_ID ?? '';
 
+// Debug: log to help diagnose env var issues
+if (typeof window !== 'undefined') {
+  console.log('[AIChatPanel] INTEGRATION_ID:', INTEGRATION_ID ? '(set)' : '(empty)');
+}
+
 export default function AIChatPanel() {
   const isOpen = useStore(isChatOpen);
 
