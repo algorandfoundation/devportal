@@ -43,21 +43,8 @@ export default defineConfig({
           tag: 'script',
           content: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5XBZ7HB');`,
         },
-        {
-          tag: 'script',
-          attrs: {
-            src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-            'data-website-id': '6e799942-b20a-4203-8103-93582a2611e1',
-            'data-project-name': 'Algorand',
-            'data-project-color': '#99A1A7',
-            'data-modal-header-bg-color': '#17cac6',
-            'data-font-family': 'Inter, sans-serif',
-            'data-modal-title-color': '#ffffff',
-            'data-modal-title': 'Ask AI',
-            'data-modal-body-bg-color': '#f6f6f6',
-            'data-project-logo': '/algorand-logo.png',
-          },
-        },
+        // Legacy Kapa widget removed - now using custom React SDK implementation
+        // See src/components/AIChatPanel.tsx and AIChatTrigger.tsx
         {
           tag: 'meta',
           attrs: {
