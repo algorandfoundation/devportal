@@ -394,7 +394,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0.75rem 1rem',
+    padding: '0.75rem 2.5rem 0.75rem 1rem',
     borderBottom: '1px solid var(--sl-color-gray-5)',
     flexShrink: 0,
   },
