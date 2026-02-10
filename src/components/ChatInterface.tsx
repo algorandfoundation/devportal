@@ -140,6 +140,15 @@ export default function ChatInterface() {
                               {children}
                             </a>
                           ),
+                          ul: ({ children }) => (
+                            <ul style={styles.markdownList}>{children}</ul>
+                          ),
+                          ol: ({ children }) => (
+                            <ol style={styles.markdownList}>{children}</ol>
+                          ),
+                          li: ({ children }) => (
+                            <li style={styles.markdownListItem}>{children}</li>
+                          ),
                           code: ({ children, className }) => {
                             const match = /language-(\w+)/.exec(
                               className || '',
@@ -152,7 +161,7 @@ export default function ChatInterface() {
                                 customStyle={{
                                   margin: '0.5rem 0',
                                   borderRadius: '0.375rem',
-                                  fontSize: '0.8rem',
+                                  fontSize: '0.75rem',
                                 }}
                               >
                                 {code}
@@ -460,14 +469,21 @@ const styles: Record<string, React.CSSProperties> = {
     paddingLeft: '0.25rem',
   },
   answerContent: {
-    fontSize: 'var(--sl-text-sm)',
-    lineHeight: 1.65,
+    fontSize: '0.75rem',
+    lineHeight: 1.6,
     color: 'var(--sl-color-gray-1)',
   },
   markdownLink: {
     color: 'var(--sl-color-text-accent)',
     textDecoration: 'underline',
     textUnderlineOffset: '2px',
+  },
+  markdownList: {
+    margin: '0.35rem 0',
+    paddingLeft: '1.1rem',
+  },
+  markdownListItem: {
+    marginBottom: '0.2rem',
   },
   codeBlock: {
     background: 'var(--sl-color-gray-6)',
