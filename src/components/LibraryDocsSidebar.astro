@@ -43,7 +43,10 @@ const firstIcon = firstLang ? langIcons[firstLang] : null;
           >
             <span class='selector-icon' aria-hidden='true'>
               {firstIcon && (
-                <span class='selector-lang-icon' style={`color: ${firstIcon.color}`}>
+                <span
+                  class='selector-lang-icon'
+                  style={`color: ${firstIcon.color}`}
+                >
                   <Fragment set:html={firstIcon.svg} />
                 </span>
               )}
@@ -208,7 +211,9 @@ const firstIcon = firstLang ? langIcons[firstLang] : null;
     open() {
       // Close any other open selectors first
       document
-        .querySelectorAll('library-selector .selector-btn[aria-expanded="true"]')
+        .querySelectorAll(
+          'library-selector .selector-btn[aria-expanded="true"]',
+        )
         .forEach(btn => {
           if (btn !== this.btn) {
             const parent = btn.closest('library-selector') as LibrarySelector;
