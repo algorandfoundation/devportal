@@ -6,7 +6,6 @@ import Search from './Search.astro';
 import SiteTitle from './SiteTitle.astro';
 import SocialIcons from './SocialIcons.astro';
 import ThemeSelect from './ThemeSelect.astro';
-import Default from '@astrojs/starlight/components/Header.astro';
 import LibrarySwitcher from './LibrarySwitcher.astro';
 import AIChatTrigger from './AIChatTrigger.tsx';
 import { getLibraryFromPath } from '../config/libraries';
@@ -127,13 +126,21 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
     </div>
   ) : (
-    /* Default pages: wrap Starlight header to inject AI trigger */
-    <div class='header default-header'>
-      <div class='default-header-content'>
-        <Default {...Astro.props} />
+    /* Default content pages: custom header with AI trigger next to search */
+    <div class='header content-header'>
+      <div class='title-wrapper'>
+        <SiteTitle />
       </div>
-      <div class='sl-flex print:hidden gap-2 items-center default-ai-trigger'>
+      <div class='sl-flex gap-2 items-center search-group'>
+        {shouldRenderSearch && <Search {...Astro.props} />}
         <AIChatTrigger client:idle />
+      </div>
+      <div class='sl-hidden md:sl-flex print:hidden right-group'>
+        <div class='sl-flex social-icons'>
+          <SocialIcons {...Astro.props} />
+        </div>
+        <ThemeSelect />
+        <LanguageSelect {...Astro.props} />
       </div>
     </div>
   )
@@ -340,19 +347,8 @@ const activeLibrary = getLibraryFromPath(currentPath);
     }
   }
 
-  /* Default header wrapper for non-homepage, non-library pages */
-  .default-header {
+  /* Content pages header (non-homepage, non-library) */
+  .content-header {
     display: flex;
-    width: 100%;
-  }
-
-  .default-header-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .default-ai-trigger {
-    margin-left: 0.5rem;
-    align-items: center;
   }
 </style>
