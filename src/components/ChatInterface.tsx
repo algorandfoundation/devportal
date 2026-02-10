@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useChat } from '@kapaai/react-sdk';
 import Markdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { catppuccinMocha } from '../styles/catppuccin-mocha-prism';
 
 export default function ChatInterface() {
   const {
@@ -137,11 +139,22 @@ export default function ChatInterface() {
                             </a>
                           ),
                           code: ({ children, className }) => {
-                            const isBlock = className?.startsWith('language-');
-                            return isBlock ? (
-                              <pre style={styles.codeBlock}>
-                                <code>{children}</code>
-                              </pre>
+                            const match = /language-(\w+)/.exec(
+                              className || '',
+                            );
+                            const code = String(children).replace(/\n$/, '');
+                            return match ? (
+                              <SyntaxHighlighter
+                                style={catppuccinMocha}
+                                language={match[1]}
+                                customStyle={{
+                                  margin: '0.5rem 0',
+                                  borderRadius: '0.375rem',
+                                  fontSize: '0.8rem',
+                                }}
+                              >
+                                {code}
+                              </SyntaxHighlighter>
                             ) : (
                               <code style={styles.inlineCode}>{children}</code>
                             );
