@@ -47,13 +47,13 @@ export default function AIChatPanel() {
           pointerEvents: isOpen ? 'auto' : 'none',
           transition: 'opacity 0.2s ease',
         }}
-        aria-hidden="true"
+        aria-hidden='true'
       />
 
       {/* Panel */}
       <div
-        role="dialog"
-        aria-label="AI Chat Assistant"
+        role='dialog'
+        aria-label='AI Chat Assistant'
         aria-hidden={!isOpen}
         style={{
           position: 'fixed',
@@ -75,7 +75,7 @@ export default function AIChatPanel() {
         {/* Close button */}
         <button
           onClick={close}
-          aria-label="Close chat"
+          aria-label='Close chat'
           style={{
             position: 'absolute',
             top: '0.6rem',
@@ -94,15 +94,15 @@ export default function AIChatPanel() {
           }}
         >
           <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
+            width='16'
+            height='16'
+            viewBox='0 0 16 16'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='1.5'
+            strokeLinecap='round'
           >
-            <path d="M4 4l8 8M12 4l-8 8" />
+            <path d='M4 4l8 8M12 4l-8 8' />
           </svg>
         </button>
 

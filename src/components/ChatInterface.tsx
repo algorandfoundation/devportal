@@ -42,7 +42,10 @@ export default function ChatInterface() {
     if (feedbackState[qaId]) return;
     try {
       await addFeedback(qaId, reaction);
-      setFeedbackState((prev: Record<string, 'upvote' | 'downvote'>) => ({ ...prev, [qaId]: reaction }));
+      setFeedbackState((prev: Record<string, 'upvote' | 'downvote'>) => ({
+        ...prev,
+        [qaId]: reaction,
+      }));
     } catch {
       // Silently fail
     }
@@ -63,20 +66,20 @@ export default function ChatInterface() {
                 setFeedbackState({});
               }}
               style={styles.headerBtn}
-              title="New conversation"
+              title='New conversation'
             >
               <svg
-                width="14"
-                height="14"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                width='14'
+                height='14'
+                viewBox='0 0 16 16'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                strokeLinejoin='round'
               >
-                <path d="M2.5 2.5v4h4" />
-                <path d="M2.8 10a5.5 5.5 0 108.4-6.6L6.5 6.5" />
+                <path d='M2.5 2.5v4h4' />
+                <path d='M2.8 10a5.5 5.5 0 108.4-6.6L6.5 6.5' />
               </svg>
             </button>
           )}
@@ -88,17 +91,17 @@ export default function ChatInterface() {
         {!hasMessages && (
           <div style={styles.emptyState}>
             <svg
-              width="32"
-              height="32"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              width='32'
+              height='32'
+              viewBox='0 0 16 16'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='1'
+              strokeLinecap='round'
+              strokeLinejoin='round'
               style={{ opacity: 0.3 }}
             >
-              <path d="M2 6.5C2 4 4.5 2 8 2s6 2 6 4.5S11.5 11 8 11c-.6 0-1.2-.1-1.7-.2L3 13v-3.3C2.4 8.8 2 7.7 2 6.5z" />
+              <path d='M2 6.5C2 4 4.5 2 8 2s6 2 6 4.5S11.5 11 8 11c-.6 0-1.2-.1-1.7-.2L3 13v-3.3C2.4 8.8 2 7.7 2 6.5z' />
             </svg>
             <p style={styles.emptyTitle}>Ask anything about Algorand</p>
             <p style={styles.emptySubtitle}>
@@ -126,8 +129,8 @@ export default function ChatInterface() {
                           a: ({ href, children }) => (
                             <a
                               href={href}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                              target='_blank'
+                              rel='noopener noreferrer'
                               style={styles.markdownLink}
                             >
                               {children}
@@ -159,23 +162,23 @@ export default function ChatInterface() {
                             <a
                               key={i}
                               href={src.source_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                              target='_blank'
+                              rel='noopener noreferrer'
                               style={styles.sourceLink}
                             >
                               <svg
-                                width="10"
-                                height="10"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                                width='10'
+                                height='10'
+                                viewBox='0 0 16 16'
+                                fill='none'
+                                stroke='currentColor'
+                                strokeWidth='2'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
                               >
-                                <path d="M6 3H3v10h10v-3" />
-                                <path d="M9 2h5v5" />
-                                <path d="M14 2L7 9" />
+                                <path d='M6 3H3v10h10v-3' />
+                                <path d='M9 2h5v5' />
+                                <path d='M14 2L7 9' />
                               </svg>
                               {src.title || src.source_url}
                             </a>
@@ -195,21 +198,21 @@ export default function ChatInterface() {
                             : {}),
                         }}
                         disabled={!!feedbackState[qa.id]}
-                        title="Helpful"
+                        title='Helpful'
                       >
                         <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 16 16"
+                          width='12'
+                          height='12'
+                          viewBox='0 0 16 16'
                           fill={
                             feedbackState[qa.id] === 'upvote'
                               ? 'currentColor'
                               : 'none'
                           }
-                          stroke="currentColor"
-                          strokeWidth="1.5"
+                          stroke='currentColor'
+                          strokeWidth='1.5'
                         >
-                          <path d="M4 7h1.5l2-5 .5-.5h1L9 4l-.5 3H13l.5.5L12 13H5L4 12V7z" />
+                          <path d='M4 7h1.5l2-5 .5-.5h1L9 4l-.5 3H13l.5.5L12 13H5L4 12V7z' />
                         </svg>
                       </button>
                       <button
@@ -221,21 +224,21 @@ export default function ChatInterface() {
                             : {}),
                         }}
                         disabled={!!feedbackState[qa.id]}
-                        title="Not helpful"
+                        title='Not helpful'
                       >
                         <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 16 16"
+                          width='12'
+                          height='12'
+                          viewBox='0 0 16 16'
                           fill={
                             feedbackState[qa.id] === 'downvote'
                               ? 'currentColor'
                               : 'none'
                           }
-                          stroke="currentColor"
-                          strokeWidth="1.5"
+                          stroke='currentColor'
+                          strokeWidth='1.5'
                         >
-                          <path d="M12 9h-1.5l-2 5-.5.5h-1L7 12l.5-3H3l-.5-.5L4 3h7l1 1v5z" />
+                          <path d='M12 9h-1.5l-2 5-.5.5h-1L7 12l.5-3H3l-.5-.5L4 3h7l1 1v5z' />
                         </svg>
                       </button>
                     </div>
@@ -265,13 +268,8 @@ export default function ChatInterface() {
       <div style={styles.inputArea}>
         {isGeneratingAnswer && (
           <button onClick={stopGeneration} style={styles.stopBtn}>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-            >
-              <rect x="3" y="3" width="10" height="10" rx="1.5" />
+            <svg width='12' height='12' viewBox='0 0 16 16' fill='currentColor'>
+              <rect x='3' y='3' width='10' height='10' rx='1.5' />
             </svg>
             Stop generating
           </button>
@@ -279,15 +277,15 @@ export default function ChatInterface() {
         <form onSubmit={handleSubmit} style={styles.inputForm}>
           <input
             ref={inputRef}
-            type="text"
+            type='text'
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question..."
+            onChange={e => setInput(e.target.value)}
+            placeholder='Ask a question...'
             style={styles.input}
             disabled={isGeneratingAnswer}
           />
           <button
-            type="submit"
+            type='submit'
             disabled={!input.trim() || isGeneratingAnswer}
             style={{
               ...styles.submitBtn,
@@ -295,25 +293,25 @@ export default function ChatInterface() {
             }}
           >
             <svg
-              width="14"
-              height="14"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              width='14'
+              height='14'
+              viewBox='0 0 16 16'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='1.5'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             >
-              <path d="M2 8h12M10 4l4 4-4 4" />
+              <path d='M2 8h12M10 4l4 4-4 4' />
             </svg>
           </button>
         </form>
         <div style={styles.poweredBy}>
           Powered by{' '}
           <a
-            href="https://kapa.ai"
-            target="_blank"
-            rel="noopener noreferrer"
+            href='https://kapa.ai'
+            target='_blank'
+            rel='noopener noreferrer'
             style={styles.kapaLink}
           >
             kapa.ai
