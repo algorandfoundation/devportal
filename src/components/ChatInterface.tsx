@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useChat } from '@kapaai/react-sdk';
+import { useChat, useDeepThinking } from '@kapaai/react-sdk';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { catppuccinMocha } from '../styles/catppuccin-mocha-prism';
@@ -13,6 +13,8 @@ export default function ChatInterface() {
     stopGeneration,
     addFeedback,
   } = useChat();
+
+  const deepThinking = useDeepThinking();
 
   const [input, setInput] = useState('');
   const [feedbackState, setFeedbackState] = useState<
@@ -288,12 +290,33 @@ export default function ChatInterface() {
           </button>
         )}
         <form onSubmit={handleSubmit} style={styles.inputForm}>
+          <button
+            type='button'
+            onClick={deepThinking.toggle}
+            title={
+              deepThinking.active
+                ? 'Deep thinking enabled'
+                : 'Enable deep thinking'
+            }
+            style={{
+              ...styles.deepThinkingBtn,
+              ...(deepThinking.active ? styles.deepThinkingActive : {}),
+            }}
+          >
+            <svg width='16' height='16' viewBox='0 0 24 24' fill='currentColor'>
+              <path d='M9.5 2c.645 0 1.245.188 1.75.512v18.733A3.74 3.74 0 0 1 8.994 22c-1.726 0-3.195-1.187-3.627-2.8A4 4 0 0 1 2 15.25V15c0-1.562.896-2.914 2.201-3.572a3.876 3.876 0 0 1 2.081-6.633A3.25 3.25 0 0 1 9.5 2m3.25 3.86q.119.08.25.139l1.4.46c.517.175 1.014.566 1.19 1.09l.41 1.45a1.55 1.55 0 0 0 1.46 1.05c.236.003.47-.052.68-.16c-.12.2-.181.428-.18.66c-.004.54.362 1.048.87 1.23c.376.12 1.007.181 1.15.62c.24.76.501 1.65 1.48 1.65a1.3 1.3 0 0 0 .407-.063A4 4 0 0 1 22 15v.25a4 4 0 0 1-3.367 3.95c-.431 1.613-1.901 2.8-3.627 2.8a3.74 3.74 0 0 1-2.256-.755zM21.484 8a.3.3 0 0 1 .285.201l.25.766a1.58 1.58 0 0 0 .999.998l.765.248l.015.004a.304.304 0 0 1 .146.46a.3.3 0 0 1-.146.11l-.765.248a1.58 1.58 0 0 0-.999.998l-.249.766a.303.303 0 0 1-.57 0l-.25-.766a1.58 1.58 0 0 0-.998-1.002l-.765-.248a.304.304 0 0 1-.146-.46a.3.3 0 0 1 .146-.11l.765-.248a1.58 1.58 0 0 0 .984-.998L21.2 8.2a.3.3 0 0 1 .284-.2m-4.011-8a.545.545 0 0 1 .512.363l.449 1.376a2.84 2.84 0 0 0 1.797 1.797l1.378.447l.028.007a.55.55 0 0 1 .363.514a.54.54 0 0 1-.363.513l-1.378.447A2.84 2.84 0 0 0 18.46 7.26l-.447 1.376L18 8.67a.545.545 0 0 1-1.014-.034L16.54 7.26a2.84 2.84 0 0 0-1.798-1.804l-1.378-.447A.55.55 0 0 1 13 4.496a.54.54 0 0 1 .363-.513l1.378-.447A2.84 2.84 0 0 0 16.5 1.773l.012-.034l.447-1.376A.55.55 0 0 1 17.473 0' />
+            </svg>
+          </button>
           <input
             ref={inputRef}
             type='text'
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder='Ask a question...'
+            placeholder={
+              deepThinking.active
+                ? 'Ask with deep thinking...'
+                : 'Ask a question...'
+            }
             style={styles.input}
             disabled={isGeneratingAnswer}
           />
@@ -319,6 +342,13 @@ export default function ChatInterface() {
             </svg>
           </button>
         </form>
+        {deepThinking.active &&
+          isGeneratingAnswer &&
+          deepThinking.seconds > 0 && (
+            <div style={styles.deepThinkingStatus}>
+              Deep thinking... {deepThinking.seconds}s
+            </div>
+          )}
         <div style={styles.poweredBy}>
           Powered by{' '}
           <a
@@ -569,6 +599,30 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: 'pointer',
     flexShrink: 0,
     transition: 'opacity 0.15s',
+  },
+  deepThinkingBtn: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0.35rem',
+    background: 'none',
+    border: 'none',
+    color: 'var(--sl-color-gray-3)',
+    cursor: 'pointer',
+    borderRadius: '0.25rem',
+    transition: 'color 0.15s, background 0.15s',
+    flexShrink: 0,
+  },
+  deepThinkingActive: {
+    color: 'var(--sl-color-accent)',
+    background: 'var(--sl-color-accent-low)',
+  },
+  deepThinkingStatus: {
+    fontSize: '0.7rem',
+    color: 'var(--sl-color-accent)',
+    textAlign: 'center' as const,
+    marginTop: '0.35rem',
+    fontWeight: 500,
   },
   poweredBy: {
     textAlign: 'center' as const,
