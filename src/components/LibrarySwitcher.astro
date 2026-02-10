@@ -57,7 +57,11 @@ const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
                     {lib.languages.map(lang => {
                       const icon = langIcons[lang];
                       return icon ? (
-                        <span class='lang-icon' style={`color: ${icon.color}`} title={lang}>
+                        <span
+                          class='lang-icon'
+                          style={`color: ${icon.color}`}
+                          title={lang}
+                        >
                           <Fragment set:html={icon.svg} />
                         </span>
                       ) : null;

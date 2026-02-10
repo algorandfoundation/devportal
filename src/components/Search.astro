@@ -167,19 +167,28 @@ const isMac = true; // Server-rendered; JS will fix this
                 All Languages
               </li>
               <li role='option' data-lang='TypeScript' class='lang-option'>
-                <span class='lang-option-icon' style={`color: ${langIcons.TypeScript.color}`}>
+                <span
+                  class='lang-option-icon'
+                  style={`color: ${langIcons.TypeScript.color}`}
+                >
                   <Fragment set:html={langIcons.TypeScript.svg} />
                 </span>
                 TypeScript
               </li>
               <li role='option' data-lang='Python' class='lang-option'>
-                <span class='lang-option-icon' style={`color: ${langIcons.Python.color}`}>
+                <span
+                  class='lang-option-icon'
+                  style={`color: ${langIcons.Python.color}`}
+                >
                   <Fragment set:html={langIcons.Python.svg} />
                 </span>
                 Python
               </li>
               <li role='option' data-lang='Go' class='lang-option'>
-                <span class='lang-option-icon' style={`color: ${langIcons.Go.color}`}>
+                <span
+                  class='lang-option-icon'
+                  style={`color: ${langIcons.Go.color}`}
+                >
                   <Fragment set:html={langIcons.Go.svg} />
                 </span>
                 Go
@@ -241,7 +250,11 @@ const isMac = true; // Server-rendered; JS will fix this
                       {lib.languages.map(lang => {
                         const icon = langIcons[lang];
                         return icon ? (
-                          <span class='facet-icon' style={`color: ${icon.color}`} title={lang}>
+                          <span
+                            class='facet-icon'
+                            style={`color: ${icon.color}`}
+                            title={lang}
+                          >
                             <Fragment set:html={icon.svg} />
                           </span>
                         ) : null;
