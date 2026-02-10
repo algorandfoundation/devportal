@@ -4,7 +4,21 @@ import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
 import UtilsLogo from '../assets/images/utils.svg';
+import CliLogo from '../assets/images/cli.svg';
+import AlgorandPythonLogo from '../assets/images/algorand-python.svg';
+import AlgorandTypeScriptLogo from '../assets/images/algorand-typescript.svg';
+import SubscriberLogo from '../assets/images/subscriber.svg';
+import NodeKitLogo from '../assets/images/nodekit.svg';
 import { getLibraryFromPath } from '../config/libraries';
+
+const libraryLogos: Record<string, ImageMetadata> = {
+  'algokit-utils': UtilsLogo,
+  'algokit-cli': CliLogo,
+  'algorand-python': AlgorandPythonLogo,
+  'algorand-typescript': AlgorandTypeScriptLogo,
+  'algokit-subscriber': SubscriberLogo,
+  'nodekit': NodeKitLogo,
+};
 
 interface Props {
   isFooter?: boolean;
@@ -18,13 +32,14 @@ const currentPath = Astro.url.pathname;
 const activeLibrary = !isFooter ? getLibraryFromPath(currentPath) : undefined;
 
 // Use library logo when on a library page, otherwise use the default site logo
-const darkLogoSrc = activeLibrary
-  ? UtilsLogo.src
+const libraryLogo = activeLibrary ? libraryLogos[activeLibrary.slug] : undefined;
+const darkLogoSrc = libraryLogo
+  ? libraryLogo.src
   : isFooter
     ? AltDarkLogo.src
     : logos.dark.src;
-const lightLogoSrc = activeLibrary
-  ? UtilsLogo.src
+const lightLogoSrc = libraryLogo
+  ? libraryLogo.src
   : isFooter
     ? logos.dark.src
     : logos.light?.src;
