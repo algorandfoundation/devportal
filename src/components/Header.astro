@@ -127,7 +127,15 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
     </div>
   ) : (
-    <Default />
+    /* Default pages: wrap Starlight header to inject AI trigger */
+    <div class='header default-header'>
+      <div class='default-header-content'>
+        <Default {...Astro.props} />
+      </div>
+      <div class='sl-flex print:hidden gap-2 items-center default-ai-trigger'>
+        <AIChatTrigger client:idle />
+      </div>
+    </div>
   )
 }
 
@@ -326,5 +334,21 @@ const activeLibrary = getLibraryFromPath(currentPath);
         auto;
       align-content: center;
     }
+  }
+
+  /* Default header wrapper for non-homepage, non-library pages */
+  .default-header {
+    display: flex;
+    width: 100%;
+  }
+
+  .default-header-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .default-ai-trigger {
+    margin-left: 0.5rem;
+    align-items: center;
   }
 </style>
