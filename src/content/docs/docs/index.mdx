@@ -5,17 +5,22 @@ prev: false
 next: false
 ---
 
+import utilsLogo from '../../../assets/images/utils.svg';
+import cliLogo from '../../../assets/images/cli.svg';
+import algorandPythonLogo from '../../../assets/images/algorand-python.svg';
+import algorandTypeScriptLogo from '../../../assets/images/algorand-typescript.svg';
+import subscriberLogo from '../../../assets/images/subscriber.svg';
+import nodekitLogo from '../../../assets/images/nodekit.svg';
+import restLogo from '../../../assets/images/rest.svg';
+
 Browse guides and API documentation for AlgoKit development libraries, SDKs, CLI tools, and REST APIs. Each library has its own isolated documentation section with version-specific content.
 
 ## SDKs & Utilities
 
 <div class='library-cards'>
   <a href='/docs/algokit-utils/' class='library-card'>
-    <span class='library-dot' style='background-color: #3B82F6'></span>
-    <div>
-      <strong>AlgoKit Utils</strong>
-      <p>Utilities for building solutions on Algorand (TypeScript & Python)</p>
-    </div>
+    <img src={utilsLogo.src} alt='AlgoKit Utils' class='library-logo' />
+    <p>Utilities for building solutions on Algorand (TypeScript & Python)</p>
   </a>
 </div>
 
@@ -23,11 +28,8 @@ Browse guides and API documentation for AlgoKit development libraries, SDKs, CLI
 
 <div class='library-cards'>
   <a href='/docs/algokit-cli/' class='library-card'>
-    <span class='library-dot' style='background-color: #F59E0B'></span>
-    <div>
-      <strong>AlgoKit CLI</strong>
-      <p>The AlgoKit command-line interface</p>
-    </div>
+    <img src={cliLogo.src} alt='AlgoKit CLI' class='library-logo' />
+    <p>The AlgoKit command-line interface</p>
   </a>
 </div>
 
@@ -35,18 +37,12 @@ Browse guides and API documentation for AlgoKit development libraries, SDKs, CLI
 
 <div class='library-cards'>
   <a href='/docs/algorand-python/' class='library-card'>
-    <span class='library-dot' style='background-color: #8B5CF6'></span>
-    <div>
-      <strong>Algorand Python</strong>
-      <p>Write Algorand smart contracts in Python</p>
-    </div>
+    <img src={algorandPythonLogo.src} alt='Algorand Python' class='library-logo' />
+    <p>Write Algorand smart contracts in Python</p>
   </a>
   <a href='/docs/algorand-typescript/' class='library-card'>
-    <span class='library-dot' style='background-color: #EC4899'></span>
-    <div>
-      <strong>Algorand TypeScript</strong>
-      <p>Write Algorand smart contracts in TypeScript</p>
-    </div>
+    <img src={algorandTypeScriptLogo.src} alt='Algorand TypeScript' class='library-logo' />
+    <p>Write Algorand smart contracts in TypeScript</p>
   </a>
 </div>
 
@@ -54,18 +50,12 @@ Browse guides and API documentation for AlgoKit development libraries, SDKs, CLI
 
 <div class='library-cards'>
   <a href='/docs/algokit-subscriber/' class='library-card'>
-    <span class='library-dot' style='background-color: #06B6D4'></span>
-    <div>
-      <strong>AlgoKit Subscriber</strong>
-      <p>Subscribe to Algorand blockchain events</p>
-    </div>
+    <img src={subscriberLogo.src} alt='AlgoKit Subscriber' class='library-logo' />
+    <p>Subscribe to Algorand blockchain events</p>
   </a>
   <a href='/docs/nodekit/' class='library-card'>
-    <span class='library-dot' style='background-color: #EF4444'></span>
-    <div>
-      <strong>NodeKit</strong>
-      <p>Tools for running Algorand nodes</p>
-    </div>
+    <img src={nodekitLogo.src} alt='NodeKit' class='library-logo' />
+    <p>Tools for running Algorand nodes</p>
   </a>
 </div>
 
@@ -73,11 +63,8 @@ Browse guides and API documentation for AlgoKit development libraries, SDKs, CLI
 
 <div class='library-cards'>
   <a href='/docs/rest-api/' class='library-card'>
-    <span class='library-dot' style='background-color: #F97316'></span>
-    <div>
-      <strong>REST APIs</strong>
-      <p>Algorand REST API reference (algod, indexer, kmd)</p>
-    </div>
+    <img src={restLogo.src} alt='REST APIs' class='library-logo' />
+    <p>Algorand REST API reference (algod, indexer, kmd)</p>
   </a>
 </div>
 
@@ -90,8 +77,8 @@ Browse guides and API documentation for AlgoKit development libraries, SDKs, CLI
   }
   .library-card {
     display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
+    flex-direction: column;
+    gap: 0.5rem;
     padding: 1rem;
     border: 1px solid var(--sl-color-gray-5);
     border-radius: 0.5rem;
@@ -103,16 +90,12 @@ Browse guides and API documentation for AlgoKit development libraries, SDKs, CLI
     border-color: var(--sl-color-accent);
     background: var(--sl-color-gray-7, rgba(255,255,255,0.03));
   }
-  .library-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 0.35rem;
-  }
-  .library-card strong {
-    display: block;
-    margin-bottom: 0.25rem;
+  .library-logo {
+    height: 28px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
   }
   .library-card p {
     margin: 0;
