@@ -8,18 +8,7 @@
  * This is a UI mockup only — no actual search backend is connected.
  */
 import { libraries } from '../config/libraries';
-
-// Short labels for language badges
-const langBadge: Record<string, string> = {
-  TypeScript: 'TS',
-  Python: 'Py',
-};
-
-const langColor: Record<string, string> = {
-  TypeScript: '#3178C6',
-  Python: '#3776AB',
-  TEAL: '#6B7280',
-};
+import { langIcons } from '../config/lang-icons';
 
 // Mock search results for demonstration
 const mockResults = [
@@ -178,25 +167,22 @@ const isMac = true; // Server-rendered; JS will fix this
                 All Languages
               </li>
               <li role='option' data-lang='TypeScript' class='lang-option'>
-                <span
-                  class='lang-option-badge'
-                  style={`background:${langColor.TypeScript}`}>TS</span
-                >
+                <span class='lang-option-icon' style={`color: ${langIcons.TypeScript.color}`}>
+                  <Fragment set:html={langIcons.TypeScript.svg} />
+                </span>
                 TypeScript
               </li>
               <li role='option' data-lang='Python' class='lang-option'>
-                <span
-                  class='lang-option-badge'
-                  style={`background:${langColor.Python}`}>Py</span
-                >
+                <span class='lang-option-icon' style={`color: ${langIcons.Python.color}`}>
+                  <Fragment set:html={langIcons.Python.svg} />
+                </span>
                 Python
               </li>
-              <li role='option' data-lang='TEAL' class='lang-option'>
-                <span
-                  class='lang-option-badge'
-                  style={`background:${langColor.TEAL}`}>TEAL</span
-                >
-                TEAL
+              <li role='option' data-lang='Go' class='lang-option'>
+                <span class='lang-option-icon' style={`color: ${langIcons.Go.color}`}>
+                  <Fragment set:html={langIcons.Go.svg} />
+                </span>
+                Go
               </li>
             </ul>
           </div>
@@ -250,16 +236,16 @@ const isMac = true; // Server-rendered; JS will fix this
                 >
                   <span class='facet-dot' style={`background:${lib.color}`} />
                   {lib.label}
-                  {lib.languages.length > 1 && (
+                  {lib.languages.length > 0 && (
                     <span class='facet-badges'>
-                      {lib.languages.map(lang => (
-                        <span
-                          class='facet-badge'
-                          style={`background:${langColor[lang] || '#888'}`}
-                        >
-                          {langBadge[lang] || lang}
-                        </span>
-                      ))}
+                      {lib.languages.map(lang => {
+                        const icon = langIcons[lang];
+                        return icon ? (
+                          <span class='facet-icon' style={`color: ${icon.color}`} title={lang}>
+                            <Fragment set:html={icon.svg} />
+                          </span>
+                        ) : null;
+                      })}
                     </span>
                   )}
                 </button>
@@ -759,15 +745,16 @@ const isMac = true; // Server-rendered; JS will fix this
     font-weight: 600;
   }
 
-  .lang-option-badge {
+  .lang-option-icon {
     display: inline-flex;
     align-items: center;
-    font-size: 0.6rem;
-    font-weight: 700;
-    padding: 0.05rem 0.3rem;
-    border-radius: 0.2rem;
-    color: white;
-    line-height: 1.4;
+    flex-shrink: 0;
+    line-height: 0;
+  }
+
+  .lang-option-icon :global(svg) {
+    width: 14px;
+    height: 14px;
   }
 
   /* Search bar divider */
@@ -883,13 +870,16 @@ const isMac = true; // Server-rendered; JS will fix this
     margin-left: 0.1rem;
   }
 
-  .facet-badge {
-    font-size: 0.55rem;
-    font-weight: 700;
-    padding: 0rem 0.2rem;
-    border-radius: 0.15rem;
-    color: white;
-    line-height: 1.4;
+  .facet-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    line-height: 0;
+  }
+
+  .facet-icon :global(svg) {
+    width: 12px;
+    height: 12px;
   }
 
   /* Results area */

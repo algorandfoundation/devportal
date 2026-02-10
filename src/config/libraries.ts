@@ -212,7 +212,7 @@ export const libraries: LibraryConfig[] = [
     description: 'The AlgoKit command-line interface',
     color: '#F59E0B', // amber
     versions: ['latest', 'v3.0.0'],
-    languages: [],
+    languages: ['Python'],
     category: 'cli',
     sidebar: [
       {
@@ -405,7 +405,7 @@ export const libraries: LibraryConfig[] = [
     description: 'Subscribe to Algorand blockchain events',
     color: '#06B6D4', // cyan
     versions: ['latest', 'v3.0.0'],
-    languages: ['TypeScript'],
+    languages: ['TypeScript', 'Python'],
     category: 'tool',
     sidebar: [
       {
@@ -450,7 +450,7 @@ export const libraries: LibraryConfig[] = [
     description: 'Tools for running Algorand nodes',
     color: '#EF4444', // red
     versions: ['latest'],
-    languages: [],
+    languages: ['Go', 'TUI'],
     category: 'tool',
     sidebar: [
       {

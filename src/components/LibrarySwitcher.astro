@@ -7,6 +7,7 @@
  * isolated docs section.
  */
 import { libraries, type LibraryConfig } from '../config/libraries';
+import { langIcons } from '../config/lang-icons';
 
 interface Props {
   currentPath: string;
@@ -51,6 +52,18 @@ const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
               >
                 <span class='library-dot' style={`--dot-color: ${lib.color}`} />
                 <span class='library-label'>{lib.label}</span>
+                {lib.languages.length > 0 && (
+                  <span class='library-badges'>
+                    {lib.languages.map(lang => {
+                      const icon = langIcons[lang];
+                      return icon ? (
+                        <span class='lang-icon' style={`color: ${icon.color}`} title={lang}>
+                          <Fragment set:html={icon.svg} />
+                        </span>
+                      ) : null;
+                    })}
+                  </span>
+                )}
               </a>
             </li>
           );
@@ -136,6 +149,24 @@ const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
   .library-label {
     flex: 1;
     min-width: 0;
+  }
+
+  .library-badges {
+    display: flex;
+    gap: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .lang-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    line-height: 0;
+  }
+
+  .lang-icon :global(svg) {
+    width: 14px;
+    height: 14px;
   }
 
   .switcher-divider {
