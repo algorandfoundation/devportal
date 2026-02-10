@@ -13,7 +13,7 @@ export default function AIChatTrigger() {
         display: 'flex',
         alignItems: 'center',
         gap: '0.35rem',
-        padding: '0.35rem 0.65rem',
+        padding: '0.4rem 0.75rem',
         border: '1px solid var(--sl-color-gray-5)',
         borderRadius: '0.5rem',
         background: isOpen ? 'var(--sl-color-gray-6)' : 'none',
