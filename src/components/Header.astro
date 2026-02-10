@@ -17,7 +17,7 @@ import { getLibraryFromPath } from '../config/libraries';
 const shouldRenderSearch =
   config.pagefind ||
   config.components.Search !== '@astrojs/starlight/components/Search.astro';
-const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+const isHomepage = Astro.locals.starlightRoute?.slug === '';
 const currentPath = Astro.url.pathname;
 const activeLibrary = getLibraryFromPath(currentPath);
 ---
@@ -28,7 +28,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
       <div class='grid w-full! max-w-[94px]! md:max-w-[113px]! h-[30px] md:h-[36px] mr-4! mb-[10px]!'>
         <SiteTitle />
       </div>
-      <div class='sl-flex gap-2 items-center'>
+      <div class='sl-flex gap-2 items-center search-group'>
         {shouldRenderSearch && <Search {...Astro.props} />}
         <AIChatTrigger client:idle />
       </div>
@@ -333,6 +333,10 @@ const activeLibrary = getLibraryFromPath(currentPath);
         /* 3 (right items): use the space that these need. */
         auto;
       align-content: center;
+    }
+
+    .search-group {
+      justify-self: start;
     }
   }
 
