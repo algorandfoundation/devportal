@@ -40,6 +40,7 @@ jobs:
         env:
           TSTRUCT_TOKEN: ${{ secrets.TSTRUCT_TOKEN }}
           PUBLIC_GTM_ID: ${{ secrets.PUBLIC_GTM_ID }}
+          PUBLIC_KAPA_INTEGRATION_ID: ${{ secrets.PUBLIC_KAPA_INTEGRATION_ID }}
 
       - name: Publish to Cloudflare Pages
         id: deploy

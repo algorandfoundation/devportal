@@ -1,0 +1,81 @@
+---
+title: AppClient
+description: API reference for the AppClient class
+---
+
+# AppClient
+
+High-level client for interacting with a specific Algorand smart contract application.
+
+## Creating an AppClient
+
+### From app ID
+
+```typescript
+const appClient = algorand.client.getAppClientById({
+  appId: 1234n,
+  appSpec: myAppSpec,
+});
+```
+
+### From creator address
+
+```typescript
+const appClient = algorand.client.getAppClientByCreatorAndName({
+  creatorAddress: creator.addr,
+  appSpec: myAppSpec,
+});
+```
+
+## Methods
+
+### `send.call(params)`
+
+Calls a method on the smart contract.
+
+| Parameter       | Type                       | Description        |
+| --------------- | -------------------------- | ------------------ |
+| `params.method` | `string`                   | ABI method name    |
+| `params.args`   | `any[]`                    | Method arguments   |
+| `params.sender` | `TransactionSignerAccount` | Transaction sender |
+
+```typescript
+const result = await appClient.send.call({
+  method: 'hello',
+  args: ['World'],
+  sender: myAccount,
+});
+console.log(result.return); // "Hello, World"
+```
+
+### `send.optIn(params)`
+
+Opts the sender into the application.
+
+```typescript
+await appClient.send.optIn({ sender: myAccount });
+```
+
+### `send.closeOut(params)`
+
+Closes out the sender from the application.
+
+```typescript
+await appClient.send.closeOut({ sender: myAccount });
+```
+
+### `getGlobalState()`
+
+Gets the current global state of the application.
+
+```typescript
+const state = await appClient.getGlobalState();
+```
+
+### `getLocalState(address)`
+
+Gets the local state for a specific account.
+
+```typescript
+const state = await appClient.getLocalState(myAccount.addr);
+```

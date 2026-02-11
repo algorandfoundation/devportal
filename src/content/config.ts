@@ -77,6 +77,9 @@ export const collections = {
           .enum(['tutorial', 'how-to', 'guide', 'reference'])
           .optional(),
         tags: z.array(z.string()).optional(),
+        // Virtual collection metadata (for library docs)
+        library: z.string().optional(),
+        version: z.string().optional(),
       }),
     }),
   }),

@@ -1,0 +1,452 @@
+---
+/**
+ * LibraryDocsSidebar - Isolated sidebar for library virtual collections.
+ *
+ * Replaces the main sidebar when viewing /docs/<library>/ pages.
+ * Features:
+ * - Language selector with SVG language icons (if library has variants)
+ * - Version selector with tag icon
+ * - Library-specific sidebar navigation tree
+ *
+ * The hamburger menu / library switcher panel has been moved to the Header.
+ */
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import {
+  toStarlightSidebar,
+  parseLibraryPath,
+  buildLibraryUrl,
+  getVersionBySlug,
+  type LibraryConfig,
+} from '../config/libraries';
+import { langIcons } from '../config/lang-icons';
+
+interface Props {
+  library: LibraryConfig;
+  currentPath: string;
+}
+
+const { library, currentPath } = Astro.props;
+
+// Parse current path to extract language/version context
+const parsed = parseLibraryPath(currentPath);
+const currentLanguage = parsed?.language || library.languages[0] || '';
+const currentVersionSlug = parsed?.version || library.versions[0].slug;
+const currentVersion =
+  getVersionBySlug(library, currentVersionSlug) || library.versions[0];
+const currentPagePath = parsed?.pagePath || '';
+
+// Track whether a language was explicitly selected in the URL
+const languageSelected = parsed?.languageFound ?? false;
+
+// Convert sidebar config with URL context for language/version prefixing
+const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath, {
+  library,
+  language: currentLanguage,
+  version: currentVersion.slug,
+});
+
+// Resolve the current language icon for the button display (only if language is selected)
+const currentIcon =
+  languageSelected && currentLanguage ? langIcons[currentLanguage] : null;
+
+// Show language picker only for multi-language libraries
+const isMultiLanguage = library.languages.length > 1;
+---
+
+<div class='library-docs-sidebar'>
+  <!-- Language / Version selectors (TanStack-style) -->
+  <div class='selectors'>
+    {
+      isMultiLanguage && (
+        <library-selector class='selector' data-type='language'>
+          <button
+            class='selector-btn'
+            aria-expanded='false'
+            aria-haspopup='listbox'
+            type='button'
+          >
+            <span class='selector-icon' aria-hidden='true'>
+              {currentIcon && (
+                <span
+                  class='selector-lang-icon'
+                  style={`color: ${currentIcon.color}`}
+                >
+                  <Fragment set:html={currentIcon.svg} />
+                </span>
+              )}
+            </span>
+            <span class='selector-label'>
+              {languageSelected ? currentLanguage : 'Language:'}
+            </span>
+            <span class='selector-chevron' aria-hidden='true'>
+              <svg width='12' height='12' viewBox='0 0 12 12' fill='none'>
+                <path
+                  d='M4 5L6 3L8 5'
+                  stroke='currentColor'
+                  stroke-width='1.5'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+                <path
+                  d='M4 7L6 9L8 7'
+                  stroke='currentColor'
+                  stroke-width='1.5'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                />
+              </svg>
+            </span>
+          </button>
+          <ul class='selector-dropdown' role='listbox' aria-hidden='true'>
+            {library.languages.map(lang => {
+              const icon = langIcons[lang];
+              const isActive = languageSelected && lang === currentLanguage;
+              const href = buildLibraryUrl(
+                library,
+                lang,
+                currentVersion.slug,
+                currentPagePath,
+              );
+              return (
+                <li
+                  role='option'
+                  class:list={['selector-option', { active: isActive }]}
+                  data-value={lang}
+                  data-href={href}
+                >
+                  {icon && (
+                    <span class='option-icon' style={`color: ${icon.color}`}>
+                      <Fragment set:html={icon.svg} />
+                    </span>
+                  )}
+                  <span class='option-label'>{lang}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </library-selector>
+      )
+    }
+    <library-selector class='selector' data-type='version'>
+      <button
+        class='selector-btn'
+        aria-expanded='false'
+        aria-haspopup='listbox'
+        type='button'
+      >
+        <span class='selector-icon' aria-hidden='true'>
+          <svg
+            width='16'
+            height='16'
+            viewBox='0 0 20 20'
+            fill='none'
+            aria-hidden='true'
+          >
+            <path
+              d='M3 10.5V4a1 1 0 011-1h6.5a1 1 0 01.7.3l5.5 5.5a1 1 0 010 1.4l-6.5 6.5a1 1 0 01-1.4 0L3.3 11.2a1 1 0 01-.3-.7z'
+              stroke='currentColor'
+              stroke-width='1.5'
+              stroke-linecap='round'
+              stroke-linejoin='round'></path>
+            <circle cx='7' cy='7' r='1' fill='currentColor'></circle>
+          </svg>
+        </span>
+        <span class='selector-label'>{currentVersion.label}</span>
+        <span class='selector-chevron' aria-hidden='true'>
+          <svg width='12' height='12' viewBox='0 0 12 12' fill='none'>
+            <path
+              d='M4 5L6 3L8 5'
+              stroke='currentColor'
+              stroke-width='1.5'
+              stroke-linecap='round'
+              stroke-linejoin='round'></path>
+            <path
+              d='M4 7L6 9L8 7'
+              stroke='currentColor'
+              stroke-width='1.5'
+              stroke-linecap='round'
+              stroke-linejoin='round'></path>
+          </svg>
+        </span>
+      </button>
+      <ul class='selector-dropdown' role='listbox' aria-hidden='true'>
+        {
+          library.versions.map(ver => {
+            const isActive = ver.slug === currentVersion.slug;
+            const href = buildLibraryUrl(
+              library,
+              currentLanguage,
+              ver.slug,
+              currentPagePath,
+            );
+            return (
+              <li
+                role='option'
+                class:list={['selector-option', { active: isActive }]}
+                data-value={ver.slug}
+                data-href={href}
+              >
+                <span class='option-label'>{ver.label}</span>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </library-selector>
+  </div>
+
+  <!-- Divider -->
+  <div class='section-divider'></div>
+
+  <!-- Library-specific sidebar navigation -->
+  <div class='library-nav'>
+    <SidebarSublist sublist={sidebarEntries} />
+  </div>
+</div>
+
+<script>
+  class LibrarySelector extends HTMLElement {
+    private btn!: HTMLButtonElement;
+    private dropdown!: HTMLElement;
+
+    connectedCallback() {
+      this.btn = this.querySelector('.selector-btn')!;
+      this.dropdown = this.querySelector('.selector-dropdown')!;
+      if (!this.btn || !this.dropdown) return;
+
+      this.btn.addEventListener('click', e => {
+        e.stopPropagation();
+        this.toggle();
+      });
+
+      this.dropdown.querySelectorAll('.selector-option').forEach(opt => {
+        opt.addEventListener('click', e => {
+          e.stopPropagation();
+          this.select(opt as HTMLElement);
+        });
+      });
+
+      document.addEventListener('click', () => {
+        if (this.isOpen()) this.close();
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && this.isOpen()) this.close();
+      });
+    }
+
+    isOpen() {
+      return this.btn.getAttribute('aria-expanded') === 'true';
+    }
+
+    toggle() {
+      if (this.isOpen()) this.close();
+      else this.open();
+    }
+
+    open() {
+      // Close any other open selectors first
+      document
+        .querySelectorAll(
+          'library-selector .selector-btn[aria-expanded="true"]',
+        )
+        .forEach(btn => {
+          if (btn !== this.btn) {
+            const parent = btn.closest('library-selector') as LibrarySelector;
+            if (parent) parent.close();
+          }
+        });
+      this.btn.setAttribute('aria-expanded', 'true');
+      this.dropdown.setAttribute('aria-hidden', 'false');
+    }
+
+    close() {
+      this.btn.setAttribute('aria-expanded', 'false');
+      this.dropdown.setAttribute('aria-hidden', 'true');
+    }
+
+    select(opt: HTMLElement) {
+      // Navigate to the target URL if available
+      const href = opt.dataset.href;
+      if (href) {
+        window.location.href = href;
+        return;
+      }
+      this.close();
+    }
+  }
+
+  customElements.define('library-selector', LibrarySelector);
+</script>
+
+<style>
+  .library-docs-sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Selectors (language + version pickers) - side by side */
+  .selectors {
+    display: flex;
+    flex-direction: row;
+    gap: 0.4rem;
+    padding: 0.25rem 0 0.5rem;
+  }
+
+  .selector {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Selector button */
+  .selector-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    background: none;
+    color: var(--sl-color-white);
+    cursor: pointer;
+    font-size: var(--sl-text-base);
+    font-weight: 500;
+    text-align: left;
+    transition:
+      background-color 0.15s,
+      border-color 0.15s;
+  }
+
+  @media (min-width: 50rem) {
+    .selector-btn {
+      font-size: var(--sl-text-sm);
+    }
+  }
+
+  .selector-btn:hover {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-4);
+  }
+
+  .selector-btn[aria-expanded='true'] {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-4);
+  }
+
+  .selector-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--sl-color-gray-3);
+  }
+
+  .selector-lang-icon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+  }
+
+  .selector-lang-icon :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  .selector-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .selector-chevron {
+    display: flex;
+    align-items: center;
+    opacity: 0.4;
+    color: var(--sl-color-gray-2);
+    flex-shrink: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+
+  .selector-btn:hover .selector-chevron {
+    opacity: 0.6;
+  }
+
+  /* Dropdown panel */
+  .selector-dropdown {
+    position: absolute;
+    top: calc(100% + 0.3rem);
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0.3rem;
+    background: var(--sl-color-bg-nav);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    list-style: none;
+    margin: 0;
+    display: none;
+  }
+
+  .selector-dropdown[aria-hidden='false'] {
+    display: block;
+  }
+
+  /* Dropdown option */
+  .selector-option {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.25rem;
+    color: var(--sl-color-gray-2);
+    cursor: pointer;
+    font-size: var(--sl-text-sm);
+    transition:
+      background-color 0.1s,
+      color 0.1s;
+  }
+
+  .selector-option:hover {
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-white);
+  }
+
+  .selector-option.active {
+    color: var(--sl-color-white);
+    font-weight: 600;
+  }
+
+  .option-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    line-height: 0;
+  }
+
+  .option-icon :global(svg) {
+    width: 14px;
+    height: 14px;
+  }
+
+  .option-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Divider */
+  .section-divider {
+    height: 1px;
+    background-color: var(--sl-color-hairline-light);
+    margin: 0.25rem 0.5rem 0.5rem;
+  }
+
+  /* Library nav tree */
+  .library-nav {
+    flex: 1;
+  }
+</style>

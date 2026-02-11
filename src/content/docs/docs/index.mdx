@@ -1,0 +1,104 @@
+---
+title: AlgoKit library docs
+description: Browse documentation for Algorand libraries, SDKs, and tools.
+prev: false
+next: false
+---
+
+import utilsLogo from '../../../assets/images/utils.svg';
+import cliLogo from '../../../assets/images/cli.svg';
+import algorandPythonLogo from '../../../assets/images/algorand-python.svg';
+import algorandTypeScriptLogo from '../../../assets/images/algorand-typescript.svg';
+import subscriberLogo from '../../../assets/images/subscriber.svg';
+import nodekitLogo from '../../../assets/images/nodekit.svg';
+
+Browse guides and API documentation for AlgoKit development libraries, SDKs, CLI tools, and REST APIs. Each library has its own isolated documentation section with version-specific content.
+
+## SDKs & Utilities
+
+<div class='library-cards'>
+  <a href='/docs/algokit-utils/' class='library-card'>
+    <img src={utilsLogo.src} alt='AlgoKit Utils' class='library-logo' />
+    <p>Utilities for building solutions on Algorand (TypeScript & Python)</p>
+  </a>
+</div>
+
+## CLI Tools
+
+<div class='library-cards'>
+  <a href='/docs/algokit-cli/' class='library-card'>
+    <img src={cliLogo.src} alt='AlgoKit CLI' class='library-logo' />
+    <p>The AlgoKit command-line interface</p>
+  </a>
+</div>
+
+## Smart Contract Languages
+
+<div class='library-cards'>
+  <a href='/docs/algorand-python/' class='library-card'>
+    <img src={algorandPythonLogo.src} alt='Algorand Python' class='library-logo' />
+    <p>Write Algorand smart contracts in Python</p>
+  </a>
+  <a href='/docs/algorand-typescript/' class='library-card'>
+    <img src={algorandTypeScriptLogo.src} alt='Algorand TypeScript' class='library-logo' />
+    <p>Write Algorand smart contracts in TypeScript</p>
+  </a>
+</div>
+
+## Libraries & Tools
+
+<div class='library-cards'>
+  <a href='/docs/algokit-subscriber/' class='library-card'>
+    <img src={subscriberLogo.src} alt='AlgoKit Subscriber' class='library-logo' />
+    <p>Subscribe to Algorand blockchain events</p>
+  </a>
+  <a href='/docs/nodekit/' class='library-card'>
+    <img src={nodekitLogo.src} alt='NodeKit' class='library-logo' />
+    <p>Tools for running Algorand nodes</p>
+  </a>
+</div>
+
+## REST APIs
+
+<div class='library-cards'>
+  <a href='/docs/rest-api/' class='library-card'>
+    <strong>REST APIs</strong>
+    <p>Algorand REST API reference (algod, indexer, kmd)</p>
+  </a>
+</div>
+
+<style>{`
+  .library-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .library-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .library-card:hover {
+    border-color: var(--sl-color-accent);
+    background: var(--sl-color-gray-7, rgba(255,255,255,0.03));
+  }
+  .library-logo {
+    height: 28px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
+  }
+  .library-card p {
+    margin: 0;
+    font-size: 0.875rem;
+    opacity: 0.8;
+  }
+`}</style>

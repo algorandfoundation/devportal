@@ -1,0 +1,82 @@
+---
+title: AlgorandClient
+description: API reference for the AlgorandClient class
+---
+
+# AlgorandClient
+
+The main entry point for interacting with the Algorand network. Provides access to all AlgoKit Utils functionality.
+
+## Constructor
+
+### `AlgorandClient.defaultLocalNet()`
+
+Creates a client configured for the default LocalNet.
+
+```typescript
+const algorand = AlgorandClient.defaultLocalNet();
+```
+
+### `AlgorandClient.testNet()`
+
+Creates a client configured for TestNet.
+
+```typescript
+const algorand = AlgorandClient.testNet();
+```
+
+### `AlgorandClient.mainNet()`
+
+Creates a client configured for MainNet.
+
+```typescript
+const algorand = AlgorandClient.mainNet();
+```
+
+### `AlgorandClient.fromConfig(config)`
+
+Creates a client from a custom configuration.
+
+| Parameter              | Type               | Description                    |
+| ---------------------- | ------------------ | ------------------------------ |
+| `config.algodConfig`   | `AlgoClientConfig` | Algod client configuration     |
+| `config.indexerConfig` | `AlgoClientConfig` | Optional indexer configuration |
+| `config.kmdConfig`     | `AlgoClientConfig` | Optional KMD configuration     |
+
+```typescript
+const algorand = AlgorandClient.fromConfig({
+  algodConfig: { server: 'http://localhost', port: 4001, token: 'a]'.repeat(32) },
+});
+```
+
+## Properties
+
+### `account`
+
+Returns an [`AccountManager`](/docs/algokit-utils/api/account-manager/) instance for managing accounts.
+
+### `app`
+
+Returns an [`AppManager`](/docs/algokit-utils/api/app-client/) instance for interacting with applications.
+
+### `send`
+
+Returns a transaction sender for submitting transactions.
+
+### `client`
+
+Provides access to the underlying algod, indexer, and KMD clients.
+
+## Methods
+
+### `newGroup()`
+
+Creates a new [`TransactionComposer`](/docs/algokit-utils/api/transaction-composer/) for building atomic transaction groups.
+
+```typescript
+const result = await algorand
+  .newGroup()
+  .addPayment({ sender: alice, receiver: bob, amount: (1).algo() })
+  .addAssetTransfer({ sender: alice, receiver: bob, assetId: 123n, amount: 1n })
+  .send();
+```

@@ -2,11 +2,13 @@
 import config from 'virtual:starlight/user-config';
 
 import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
-import Search from '@astrojs/starlight/components/Search.astro';
+import Search from './Search.astro';
 import SiteTitle from './SiteTitle.astro';
 import SocialIcons from './SocialIcons.astro';
 import ThemeSelect from './ThemeSelect.astro';
-import Default from '@astrojs/starlight/components/Header.astro';
+import LibrarySwitcher from './LibrarySwitcher.astro';
+import AIChatTrigger from './AIChatTrigger.tsx';
+import { getLibraryFromPath } from '../config/libraries';
 
 /**
  * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
@@ -14,7 +16,9 @@ import Default from '@astrojs/starlight/components/Header.astro';
 const shouldRenderSearch =
   config.pagefind ||
   config.components.Search !== '@astrojs/starlight/components/Search.astro';
-const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+const isHomepage = Astro.locals.starlightRoute?.slug === '';
+const currentPath = Astro.url.pathname;
+const activeLibrary = getLibraryFromPath(currentPath);
 ---
 
 {
@@ -23,10 +27,11 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
       <div class='grid w-full! max-w-[94px]! md:max-w-[113px]! h-[30px] md:h-[36px] mr-4! mb-[10px]!'>
         <SiteTitle />
       </div>
-      <div class='sl-flex ml-auto!'>
+      <div class='sl-flex gap-2 items-center search-group'>
         {shouldRenderSearch && <Search {...Astro.props} />}
+        <AIChatTrigger client:idle />
       </div>
-      <div class='sl-flex right-group gap-x-7! ml-7!'>
+      <div class='sl-flex right-group gap-x-7! ml-auto!'>
         <div class='sl-flex social-icons text-algo-lavender-400 dark:text-algo-teal-700'>
           <SocialIcons
             {...Astro.props}
@@ -38,12 +43,150 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
         <LanguageSelect {...Astro.props} />
       </div>
     </div>
+  ) : activeLibrary ? (
+    /* Library pages: custom header with hamburger nav to the left of logo */
+    <div class='header library-header'>
+      <div class='library-title-area sl-flex'>
+        <library-header-toggle class='library-nav-toggle'>
+          <button
+            class='library-nav-btn'
+            aria-expanded='false'
+            aria-controls='library-nav-panel'
+            title='Switch library'
+          >
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              aria-hidden='true'
+            >
+              <rect x='2' y='4' width='16' height='1.8' rx='0.9' />
+              <rect x='2' y='9.1' width='16' height='1.8' rx='0.9' />
+              <rect x='2' y='14.2' width='16' height='1.8' rx='0.9' />
+            </svg>
+          </button>
+          <div
+            class='library-nav-panel'
+            id='library-nav-panel'
+            aria-hidden='true'
+          >
+            <div class='library-nav-panel-inner'>
+              <a href='/getting-started/introduction/' class='panel-nav-link'>
+                <svg
+                  width='14'
+                  height='14'
+                  viewBox='0 0 14 14'
+                  fill='none'
+                  stroke='currentColor'
+                  stroke-width='1.5'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  aria-hidden='true'
+                >
+                  <path d='M7 1L1 6V13H5V9H9V13H13V6L7 1Z' />
+                </svg>
+                Learn Algorand
+              </a>
+              <a href='/docs/' class='panel-nav-link'>
+                <svg
+                  width='14'
+                  height='14'
+                  viewBox='0 0 14 14'
+                  fill='none'
+                  stroke='currentColor'
+                  stroke-width='1.5'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  aria-hidden='true'
+                >
+                  <path d='M2 2H9L12 5V12H2V2Z' />
+                  <path d='M5 7H9' />
+                  <path d='M5 9.5H9' />
+                </svg>
+                Library Docs
+              </a>
+              <div class='panel-divider' />
+              <LibrarySwitcher currentPath={currentPath} compact />
+            </div>
+          </div>
+        </library-header-toggle>
+        <SiteTitle />
+      </div>
+      <div class='sl-flex print:hidden gap-2 items-center'>
+        {shouldRenderSearch && <Search {...Astro.props} />}
+        <AIChatTrigger client:idle />
+      </div>
+      <div class='sl-hidden md:sl-flex print:hidden right-group'>
+        <div class='sl-flex social-icons'>
+          <SocialIcons {...Astro.props} />
+        </div>
+        <ThemeSelect />
+        <LanguageSelect {...Astro.props} />
+      </div>
+    </div>
   ) : (
-    <Default>
-      <slot />
-    </Default>
+    /* Default content pages: custom header with AI trigger next to search */
+    <div class='header content-header'>
+      <div class='title-wrapper'>
+        <SiteTitle />
+      </div>
+      <div class='sl-flex gap-2 items-center search-group'>
+        {shouldRenderSearch && <Search {...Astro.props} />}
+        <AIChatTrigger client:idle />
+      </div>
+      <div class='sl-hidden md:sl-flex print:hidden right-group'>
+        <div class='sl-flex social-icons'>
+          <SocialIcons {...Astro.props} />
+        </div>
+        <ThemeSelect />
+        <LanguageSelect {...Astro.props} />
+      </div>
+    </div>
   )
 }
+
+<script>
+  class LibraryHeaderToggle extends HTMLElement {
+    private btn!: HTMLButtonElement;
+    private panel!: HTMLElement;
+
+    connectedCallback() {
+      this.btn = this.querySelector('.library-nav-btn')!;
+      this.panel = this.querySelector('.library-nav-panel')!;
+      if (!this.btn || !this.panel) return;
+
+      this.btn.addEventListener('click', () => this.toggle());
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && this.isOpen()) this.close();
+      });
+      document.addEventListener('click', e => {
+        if (this.isOpen() && !this.contains(e.target as Node)) this.close();
+      });
+    }
+
+    isOpen() {
+      return this.btn.getAttribute('aria-expanded') === 'true';
+    }
+
+    toggle() {
+      if (this.isOpen()) this.close();
+      else this.open();
+    }
+
+    open() {
+      this.btn.setAttribute('aria-expanded', 'true');
+      this.panel.setAttribute('aria-hidden', 'false');
+    }
+
+    close() {
+      this.btn.setAttribute('aria-expanded', 'false');
+      this.panel.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  customElements.define('library-header-toggle', LibraryHeaderToggle);
+</script>
 
 <style>
   .header {
@@ -62,6 +205,103 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
   .social-icons {
     gap: 1rem;
     align-items: center;
+  }
+
+  .social-icons::after {
+    content: '';
+    height: 2rem;
+    border-inline-end: 1px solid var(--sl-color-gray-5);
+  }
+
+  /* Library header: hamburger + logo with no overflow:clip */
+  .library-header {
+    display: flex;
+  }
+
+  .library-title-area {
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  /* Library nav hamburger toggle */
+  .library-nav-toggle {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .library-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--sl-color-gray-2);
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 0.375rem;
+    transition:
+      color 0.15s,
+      background-color 0.15s;
+  }
+
+  .library-nav-btn:hover {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .library-nav-btn[aria-expanded='true'] {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-5);
+  }
+
+  /* Dropdown panel */
+  .library-nav-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    min-width: 240px;
+    background: var(--sl-color-bg-nav);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    margin-top: 0.5rem;
+    display: none;
+  }
+
+  .library-nav-panel[aria-hidden='false'] {
+    display: block;
+  }
+
+  .library-nav-panel-inner {
+    padding: 0.5rem;
+  }
+
+  .panel-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    transition:
+      color 0.15s,
+      background-color 0.15s;
+  }
+
+  .panel-nav-link:hover {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .panel-divider {
+    height: 1px;
+    background-color: var(--sl-color-hairline-light);
+    margin: 0.4rem 0;
   }
 
   @media (min-width: 50rem) {
@@ -87,7 +327,7 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
       );
       display: grid;
       grid-template-columns:
-        /* 1 (site title): runs up until the main content column’s left edge or the width of the title, whichever is the largest  */
+        /* 1 (site title): runs up until the main content column's left edge or the width of the title, whichever is the largest  */
         minmax(
           calc(
             var(--__sidebar-width) +
@@ -101,5 +341,14 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
         auto;
       align-content: center;
     }
+
+    .search-group {
+      justify-self: start;
+    }
+  }
+
+  /* Content pages header (non-homepage, non-library) */
+  .content-header {
+    display: flex;
   }
 </style>

@@ -1,0 +1,19 @@
+---
+title: Algorand Python
+description: Write Algorand smart contracts in Python
+---
+
+# Algorand Python
+
+Write Algorand smart contracts using native Python syntax. Algorand Python compiles your Python code to AVM bytecode via the Puya compiler.
+
+## Quick Example
+
+```python
+from algopy import ARC4Contract, arc4
+
+class HelloWorld(ARC4Contract):
+    @arc4.abimethod
+    def hello(self, name: arc4.String) -> arc4.String:
+        return "Hello, " + name
+```

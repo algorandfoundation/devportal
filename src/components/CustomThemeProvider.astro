@@ -1,5 +1,7 @@
 ---
 import Default from '@astrojs/starlight/components/ThemeProvider.astro';
+import AIChatPanel from './AIChatPanel.tsx';
+import { ViewTransitions } from 'astro:transitions';
 ---
 
 <script is:inline>
@@ -12,3 +14,11 @@ import Default from '@astrojs/starlight/components/ThemeProvider.astro';
 </script>
 
 <Default {...Astro.props}><slot /></Default>
+
+<!-- View Transitions enabled site-wide for smooth page navigation -->
+<ViewTransitions />
+
+<!-- Chat panel persists across navigation to maintain conversation state -->
+<div transition:persist='ai-chat-panel'>
+  <AIChatPanel client:only='react' />
+</div>
