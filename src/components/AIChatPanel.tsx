@@ -76,26 +76,29 @@ export default function AIChatPanel() {
         <button
           onClick={close}
           aria-label='Close chat'
+          className='chat-panel-btn'
           style={{
             position: 'absolute',
-            top: '0.6rem',
-            right: '0.6rem',
+            top: '0.75rem',
+            right: '0.75rem',
             zIndex: 1,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '0.35rem',
-            background: 'none',
-            border: 'none',
+            width: '28px',
+            height: '28px',
+            padding: 0,
+            background: 'var(--sl-color-gray-6)',
+            border: '1px solid var(--sl-color-gray-5)',
             color: 'var(--sl-color-gray-3)',
             cursor: 'pointer',
-            borderRadius: '0.25rem',
-            transition: 'color 0.15s',
+            borderRadius: '0.375rem',
+            transition: 'border-color 0.15s, color 0.15s',
           }}
         >
           <svg
-            width='16'
-            height='16'
+            width='14'
+            height='14'
             viewBox='0 0 16 16'
             fill='none'
             stroke='currentColor'
@@ -105,6 +108,12 @@ export default function AIChatPanel() {
             <path d='M4 4l8 8M12 4l-8 8' />
           </svg>
         </button>
+        <style>{`
+          .chat-panel-btn:hover {
+            color: #01DC94 !important;
+            border-color: #01DC94 !important;
+          }
+        `}</style>
 
         {/* Chat content */}
         {INTEGRATION_ID ? (

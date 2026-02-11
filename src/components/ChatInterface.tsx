@@ -188,21 +188,17 @@ export default function ChatInterface() {
                 resetConversation();
                 setFeedbackState({});
               }}
+              className='chat-panel-btn'
               style={styles.headerBtn}
               title='New conversation'
             >
               <svg
-                width='14'
-                height='14'
-                viewBox='0 0 16 16'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='1.5'
-                strokeLinecap='round'
-                strokeLinejoin='round'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='currentColor'
               >
-                <path d='M2.5 2.5v4h4' />
-                <path d='M2.8 10a5.5 5.5 0 108.4-6.6L6.5 6.5' />
+                <path d='M7.207 2.543a1 1 0 0 1 0 1.414L5.414 5.75h7.836a8 8 0 1 1-8 8a1 1 0 1 1 2 0a6 6 0 1 0 6-6H5.414l1.793 1.793a1 1 0 0 1-1.414 1.414l-3.5-3.5a1 1 0 0 1 0-1.414l3.5-3.5a1 1 0 0 1 1.414 0' />
               </svg>
             </button>
           )}
@@ -487,11 +483,15 @@ export default function ChatInterface() {
         </div>
       </div>
 
-      {/* Thinking animation keyframes */}
+      {/* Thinking animation keyframes + button hover */}
       <style>{`
         @keyframes kapa-pulse {
           0%, 80%, 100% { opacity: 0.3; }
           40% { opacity: 1; }
+        }
+        .chat-panel-btn:hover {
+          color: #01DC94 !important;
+          border-color: #01DC94 !important;
         }
       `}</style>
     </div>
@@ -510,7 +510,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0.75rem 2.5rem 0.75rem 1rem',
+    padding: '0.75rem 3rem 0.75rem 1rem',
     borderBottom: '1px solid var(--sl-color-gray-5)',
     flexShrink: 0,
   },
@@ -527,13 +527,15 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '0.3rem',
-    background: 'none',
-    border: 'none',
+    width: '28px',
+    height: '28px',
+    padding: 0,
+    background: 'var(--sl-color-gray-6)',
+    border: '1px solid var(--sl-color-gray-5)',
     color: 'var(--sl-color-gray-3)',
     cursor: 'pointer',
-    borderRadius: '0.25rem',
-    transition: 'color 0.15s',
+    borderRadius: '0.375rem',
+    transition: 'border-color 0.15s, color 0.15s',
   },
   messages: {
     flex: 1,
