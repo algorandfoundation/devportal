@@ -136,8 +136,33 @@ export const libraries: LibraryConfig[] = [
         entries: [
           {
             type: 'link',
-            label: 'Working with Accounts',
-            href: '/docs/algokit-utils/guides/accounts/',
+            label: 'AlgorandClient',
+            href: '/docs/algokit-utils/guides/algorand-client/',
+          },
+          {
+            type: 'link',
+            label: 'Account Manager',
+            href: '/docs/algokit-utils/guides/account-manager/',
+          },
+          {
+            type: 'link',
+            label: 'App Client',
+            href: '/docs/algokit-utils/guides/app-client/',
+          },
+          {
+            type: 'link',
+            label: 'App Deployer',
+            href: '/docs/algokit-utils/guides/app-deployer/',
+          },
+          {
+            type: 'link',
+            label: 'Asset Manager',
+            href: '/docs/algokit-utils/guides/asset-manager/',
+          },
+          {
+            type: 'link',
+            label: 'Transaction Composer',
+            href: '/docs/algokit-utils/guides/transaction-composer/',
           },
         ],
       },
