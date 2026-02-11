@@ -359,3 +359,62 @@ div.opcode-section table td {
   font-weight: bold;
   margin-top: 0.5rem;
 }
+
+/* ——— Pinnable AI Chat Panel ——— */
+:root {
+  --chat-panel-width: 500px;
+  --chat-panel-offset: 0px;
+}
+
+html.chat-pinned {
+  --chat-panel-offset: var(--chat-panel-width);
+}
+
+/* When chat is pinned, constrain the page width */
+html.chat-pinned body {
+  max-width: calc(100vw - var(--chat-panel-width));
+  overflow-x: hidden;
+  transition: max-width 0.25s ease;
+}
+
+/* Ensure header doesn't extend under the chat panel */
+html.chat-pinned .header {
+  width: calc(100% - var(--chat-panel-width));
+  transition: width 0.25s ease;
+}
+
+/* Hide the right sidebar (TOC) when chat is pinned - they compete for same space */
+html.chat-pinned .right-sidebar-container {
+  display: none;
+}
+
+/* Let main content expand to fill the space vacated by TOC */
+html.chat-pinned .main-pane {
+  width: 100% !important;
+}
+
+/* Disable pinned layout on smaller viewports */
+@media (max-width: 1199px) {
+  html.chat-pinned {
+    --chat-panel-offset: 0px;
+  }
+  html.chat-pinned body {
+    max-width: 100vw;
+  }
+  html.chat-pinned .header {
+    width: 100%;
+  }
+  html.chat-pinned .right-sidebar-container {
+    display: block;
+  }
+  html.chat-pinned .main-pane {
+    width: auto !important;
+  }
+}
+
+/* Print: hide chat panel */
+@media print {
+  .ai-chat-panel {
+    display: none !important;
+  }
+}

@@ -1,15 +1,49 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { KapaProvider } from '@kapaai/react-sdk';
-import { isChatOpen } from '../stores/chatStore';
+import {
+  isChatOpen,
+  isChatPinned,
+  initChatPinned,
+  PIN_BREAKPOINT,
+} from '../stores/chatStore';
 import ChatInterface from './ChatInterface';
 
 const INTEGRATION_ID = import.meta.env.PUBLIC_KAPA_INTEGRATION_ID ?? '';
 
 export default function AIChatPanel() {
   const isOpen = useStore(isChatOpen);
+  const isPinned = useStore(isChatPinned);
+  const [canPin, setCanPin] = useState(false);
 
   const close = useCallback(() => isChatOpen.set(false), []);
+
+  // Initialize pinned state from localStorage on mount
+  useEffect(() => {
+    initChatPinned();
+  }, []);
+
+  // Check if viewport supports pinning (≥ 1200px)
+  useEffect(() => {
+    const checkCanPin = () => {
+      setCanPin(window.innerWidth >= PIN_BREAKPOINT);
+    };
+    checkCanPin();
+    window.addEventListener('resize', checkCanPin);
+    return () => window.removeEventListener('resize', checkCanPin);
+  }, []);
+
+  // Sync `chat-pinned` class to document when pinned and open
+  useEffect(() => {
+    if (isOpen && isPinned && canPin) {
+      document.documentElement.classList.add('chat-pinned');
+    } else {
+      document.documentElement.classList.remove('chat-pinned');
+    }
+    return () => {
+      document.documentElement.classList.remove('chat-pinned');
+    };
+  }, [isOpen, isPinned, canPin]);
 
   // Escape key closes panel
   useEffect(() => {
@@ -20,9 +54,10 @@ export default function AIChatPanel() {
     return () => document.removeEventListener('keydown', handler);
   }, [isOpen, close]);
 
-  // Lock body scroll when open
+  // Lock body scroll when open in floating mode only
   useEffect(() => {
-    if (isOpen) {
+    const isFloating = !isPinned || !canPin;
+    if (isOpen && isFloating) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -30,11 +65,15 @@ export default function AIChatPanel() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen]);
+  }, [isOpen, isPinned, canPin]);
+
+  // Determine if we're in floating mode (show backdrop)
+  const isFloatingMode = !isPinned || !canPin;
+  const showBackdrop = isOpen && isFloatingMode;
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop - only in floating mode */}
       <div
         onClick={close}
         style={{
@@ -43,8 +82,8 @@ export default function AIChatPanel() {
           zIndex: 300,
           background: 'rgba(0, 0, 0, 0.5)',
           backdropFilter: 'blur(2px)',
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? 'auto' : 'none',
+          opacity: showBackdrop ? 1 : 0,
+          pointerEvents: showBackdrop ? 'auto' : 'none',
           transition: 'opacity 0.2s ease',
         }}
         aria-hidden='true'
@@ -55,13 +94,14 @@ export default function AIChatPanel() {
         role='dialog'
         aria-label='AI Chat Assistant'
         aria-hidden={!isOpen}
+        className='ai-chat-panel'
         style={{
           position: 'fixed',
           top: 0,
           right: 0,
           bottom: 0,
           zIndex: 301,
-          width: '540px',
+          width: '500px',
           maxWidth: '100vw',
           background: 'var(--sl-color-bg-nav)',
           borderLeft: '1px solid var(--sl-color-gray-5)',
@@ -76,26 +116,29 @@ export default function AIChatPanel() {
         <button
           onClick={close}
           aria-label='Close chat'
+          className='chat-panel-btn'
           style={{
             position: 'absolute',
-            top: '0.6rem',
-            right: '0.6rem',
+            top: '0.75rem',
+            right: '0.75rem',
             zIndex: 1,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '0.35rem',
-            background: 'none',
-            border: 'none',
+            width: '28px',
+            height: '28px',
+            padding: 0,
+            background: 'var(--sl-color-gray-6)',
+            border: '1px solid var(--sl-color-gray-5)',
             color: 'var(--sl-color-gray-3)',
             cursor: 'pointer',
-            borderRadius: '0.25rem',
-            transition: 'color 0.15s',
+            borderRadius: '0.375rem',
+            transition: 'border-color 0.15s, color 0.15s',
           }}
         >
           <svg
-            width='16'
-            height='16'
+            width='14'
+            height='14'
             viewBox='0 0 16 16'
             fill='none'
             stroke='currentColor'
@@ -105,6 +148,12 @@ export default function AIChatPanel() {
             <path d='M4 4l8 8M12 4l-8 8' />
           </svg>
         </button>
+        <style>{`
+          .chat-panel-btn:hover {
+            color: #01DC94 !important;
+            border-color: #01DC94 !important;
+          }
+        `}</style>
 
         {/* Chat content */}
         {INTEGRATION_ID ? (
@@ -119,7 +168,7 @@ export default function AIChatPanel() {
               },
             }}
           >
-            <ChatInterface />
+            <ChatInterface canPin={canPin} />
           </KapaProvider>
         ) : (
           <div
