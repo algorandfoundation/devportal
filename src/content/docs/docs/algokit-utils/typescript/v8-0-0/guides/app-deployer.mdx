@@ -1,0 +1,46 @@
+---
+title: AppDeployer
+description: API reference for the AppDeployer class
+---
+
+# AppDeployer
+
+Handles deployment and update lifecycle of Algorand smart contract applications.
+
+## Access
+
+```typescript
+const deployer = algorand.appDeployer;
+```
+
+## Methods
+
+### `deploy(params)`
+
+Deploys a new application or updates an existing one using an idempotent deploy pattern.
+
+| Parameter              | Type                                          | Description                   |
+| ---------------------- | --------------------------------------------- | ----------------------------- |
+| `params.appSpec`       | `AppSpec`                                     | Application specification     |
+| `params.sender`        | `TransactionSignerAccount`                    | Deployer account              |
+| `params.createParams`  | `object`                                      | Create transaction parameters |
+| `params.updateParams`  | `object`                                      | Update transaction parameters |
+| `params.deleteParams`  | `object`                                      | Delete transaction parameters |
+| `params.onSchemaBreak` | `'replace' \| 'fail' \| 'append'`             | Schema break behavior         |
+| `params.onUpdate`      | `'update' \| 'replace' \| 'fail' \| 'append'` | Update behavior               |
+
+```typescript
+const result = await algorand.appDeployer.deploy({
+  appSpec: myAppSpec,
+  sender: deployer,
+  createParams: { sender: deployer },
+  onUpdate: 'update',
+  onSchemaBreak: 'replace',
+});
+```
+
+**Returns:** `DeployResult` with fields:
+
+- `appId` - The application ID
+- `appAddress` - The application account address
+- `operationPerformed` - `'create'`, `'update'`, `'replace'`, or `'nothing'`
