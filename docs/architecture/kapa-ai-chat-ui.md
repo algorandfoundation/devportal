@@ -315,3 +315,67 @@ Uses `client:only="react"` because:
 6. **Copy code button** - Add button to copy code blocks
 
 7. **Message actions** - Copy answer, share link, etc.
+
+## Source Group Filtering
+
+Kapa supports filtering results to specific documentation sources via **Source Groups**. This could be used to scope AI answers to the current library when viewing library docs.
+
+### How it works
+
+1. **In Kapa Dashboard**: Organize data sources into groups (e.g., "AlgoKit Utils", "AlgoKit CLI", "Algorand Python")
+
+2. **React SDK**: Pass `sourceGroupIDsInclude` to `KapaProvider`:
+
+   ```tsx
+   <KapaProvider
+     integrationId="your-integration-id"
+     sourceGroupIDsInclude={["algokit-utils-group-id"]}
+   >
+   ```
+
+3. **Group hierarchy**: Specifying a subgroup also includes sources from parent groups, plus any "Global" sources
+
+### Implementation approach
+
+Extend the library configuration:
+
+```typescript
+// In libraries.ts
+interface LibraryConfig {
+  // ... existing fields
+  kapaSourceGroupId?: string;  // Kapa source group ID for this library
+}
+```
+
+Make `AIChatPanel.tsx` context-aware:
+
+```tsx
+// Get current library from URL
+const library = getLibraryFromPath(window.location.pathname);
+
+// Filter to library-specific sources if on a library page
+const sourceGroups = library?.kapaSourceGroupId
+  ? [library.kapaSourceGroupId]
+  : undefined;
+
+<KapaProvider
+  integrationId={integrationId}
+  sourceGroupIDsInclude={sourceGroups}
+>
+```
+
+### User toggle option
+
+For a toggle between "Library docs only" vs "All docs":
+
+1. Store the toggle state in `chatStore.ts`
+2. Re-render `KapaProvider` when it changes
+
+The widget API has `window.Kapa.setSourceGroupIDs()` for dynamic changes, but the React SDK may require remounting the provider when the filter changes.
+
+### Setup required in Kapa Dashboard
+
+1. Go to **Sources** → **Manage groups**
+2. Create groups for each library
+3. Assign documentation sources to the appropriate groups
+4. Copy the group IDs into `libraries.ts` config
