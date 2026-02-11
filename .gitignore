@@ -33,4 +33,4 @@ src/assets/diagrams/svg/
 
 # Lychee link checker cache
 .lycheecache
-lychee-report.md
+lychee-report.md.playwright-mcp/
