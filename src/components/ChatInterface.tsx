@@ -1,8 +1,127 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useChat, useDeepThinking } from '@kapaai/react-sdk';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { catppuccinMocha } from '../styles/catppuccin-mocha-prism';
+
+// Copy button component for code blocks
+function CopyButton({
+  text,
+  style,
+}: {
+  text: string;
+  style?: React.CSSProperties;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback for older browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }, [text]);
+
+  return (
+    <button
+      onClick={handleCopy}
+      style={{
+        ...copyButtonStyles.button,
+        ...style,
+      }}
+      title={copied ? 'Copied!' : 'Copy'}
+    >
+      {copied ? (
+        <svg
+          width='14'
+          height='14'
+          viewBox='0 0 16 16'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='2'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
+          <path d='M3 8.5l3 3 7-7' />
+        </svg>
+      ) : (
+        <svg
+          width='14'
+          height='14'
+          viewBox='0 0 16 16'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='1.5'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        >
+          <rect x='5' y='5' width='9' height='9' rx='1' />
+          <path d='M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2' />
+        </svg>
+      )}
+    </button>
+  );
+}
+
+const copyButtonStyles = {
+  button: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0.25rem',
+    background: 'var(--sl-color-gray-5)',
+    border: 'none',
+    borderRadius: '0.25rem',
+    color: 'var(--sl-color-gray-2)',
+    cursor: 'pointer',
+    transition: 'background 0.15s, color 0.15s',
+  } as React.CSSProperties,
+};
+
+// Code block with copy button
+function CodeBlock({ code, language }: { code: string; language: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      style={{ position: 'relative' }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <SyntaxHighlighter
+        style={catppuccinMocha}
+        language={language}
+        customStyle={{
+          margin: '0.5rem 0',
+          borderRadius: '0.375rem',
+          fontSize: '0.75rem',
+        }}
+      >
+        {code}
+      </SyntaxHighlighter>
+      <CopyButton
+        text={code}
+        style={{
+          position: 'absolute',
+          top: '0.75rem',
+          right: '0.5rem',
+          opacity: isHovered ? 1 : 0,
+          transition: 'opacity 0.15s',
+        }}
+      />
+    </div>
+  );
+}
 
 export default function ChatInterface() {
   const {
@@ -155,17 +274,7 @@ export default function ChatInterface() {
                             );
                             const code = String(children).replace(/\n$/, '');
                             return match ? (
-                              <SyntaxHighlighter
-                                style={catppuccinMocha}
-                                language={match[1]}
-                                customStyle={{
-                                  margin: '0.5rem 0',
-                                  borderRadius: '0.375rem',
-                                  fontSize: '0.75rem',
-                                }}
-                              >
-                                {code}
-                              </SyntaxHighlighter>
+                              <CodeBlock code={code} language={match[1]} />
                             ) : (
                               <code style={styles.inlineCode}>{children}</code>
                             );
@@ -211,7 +320,7 @@ export default function ChatInterface() {
                       </div>
                     )}
 
-                    {/* Feedback */}
+                    {/* Feedback & Copy */}
                     <div style={styles.feedback}>
                       <button
                         onClick={() => handleFeedback(qa.id, 'upvote')}
@@ -265,6 +374,13 @@ export default function ChatInterface() {
                           <path d='M12 9h-1.5l-2 5-.5.5h-1L7 12l.5-3H3l-.5-.5L4 3h7l1 1v5z' />
                         </svg>
                       </button>
+                      <CopyButton
+                        text={qa.answer}
+                        style={{
+                          ...styles.feedbackBtn,
+                          marginLeft: '0.25rem',
+                        }}
+                      />
                     </div>
                   </>
                 ) : (
