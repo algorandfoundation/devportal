@@ -11,7 +11,13 @@
  * The hamburger menu / library switcher panel has been moved to the Header.
  */
 import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
-import { toStarlightSidebar, type LibraryConfig } from '../config/libraries';
+import {
+  toStarlightSidebar,
+  parseLibraryPath,
+  buildLibraryUrl,
+  getVersionBySlug,
+  type LibraryConfig,
+} from '../config/libraries';
 import { langIcons } from '../config/lang-icons';
 
 interface Props {
@@ -21,19 +27,33 @@ interface Props {
 
 const { library, currentPath } = Astro.props;
 
-// Convert our library sidebar config to Starlight-compatible format
-const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath);
+// Parse current path to extract language/version context
+const parsed = parseLibraryPath(currentPath);
+const currentLanguage = parsed?.language || library.languages[0] || '';
+const currentVersionSlug = parsed?.version || library.versions[0].slug;
+const currentVersion =
+  getVersionBySlug(library, currentVersionSlug) || library.versions[0];
+const currentPagePath = parsed?.pagePath || '';
 
-// Resolve the first language icon for the button display
-const firstLang = library.languages[0];
-const firstIcon = firstLang ? langIcons[firstLang] : null;
+// Convert sidebar config with URL context for language/version prefixing
+const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath, {
+  library,
+  language: currentLanguage,
+  version: currentVersion.slug,
+});
+
+// Resolve the current language icon for the button display
+const currentIcon = currentLanguage ? langIcons[currentLanguage] : null;
+
+// Show language picker only for multi-language libraries
+const isMultiLanguage = library.languages.length > 1;
 ---
 
 <div class='library-docs-sidebar'>
   <!-- Language / Version selectors (TanStack-style) -->
   <div class='selectors'>
     {
-      library.languages.length > 0 && (
+      isMultiLanguage && (
         <library-selector class='selector' data-type='language'>
           <button
             class='selector-btn'
@@ -42,16 +62,16 @@ const firstIcon = firstLang ? langIcons[firstLang] : null;
             type='button'
           >
             <span class='selector-icon' aria-hidden='true'>
-              {firstIcon && (
+              {currentIcon && (
                 <span
                   class='selector-lang-icon'
-                  style={`color: ${firstIcon.color}`}
+                  style={`color: ${currentIcon.color}`}
                 >
-                  <Fragment set:html={firstIcon.svg} />
+                  <Fragment set:html={currentIcon.svg} />
                 </span>
               )}
             </span>
-            <span class='selector-label'>{firstLang}</span>
+            <span class='selector-label'>{currentLanguage}</span>
             <span class='selector-chevron' aria-hidden='true'>
               <svg width='12' height='12' viewBox='0 0 12 12' fill='none'>
                 <path
@@ -72,13 +92,21 @@ const firstIcon = firstLang ? langIcons[firstLang] : null;
             </span>
           </button>
           <ul class='selector-dropdown' role='listbox' aria-hidden='true'>
-            {library.languages.map((lang, i) => {
+            {library.languages.map(lang => {
               const icon = langIcons[lang];
+              const isActive = lang === currentLanguage;
+              const href = buildLibraryUrl(
+                library,
+                lang,
+                currentVersion.slug,
+                currentPagePath,
+              );
               return (
                 <li
                   role='option'
-                  class:list={['selector-option', { active: i === 0 }]}
+                  class:list={['selector-option', { active: isActive }]}
                   data-value={lang}
+                  data-href={href}
                 >
                   {icon && (
                     <span class='option-icon' style={`color: ${icon.color}`}>
@@ -117,9 +145,7 @@ const firstIcon = firstLang ? langIcons[firstLang] : null;
             <circle cx='7' cy='7' r='1' fill='currentColor'></circle>
           </svg>
         </span>
-        <span class='selector-label'>
-          {library.versions[0] === 'latest' ? 'Latest' : library.versions[0]}
-        </span>
+        <span class='selector-label'>{currentVersion.label}</span>
         <span class='selector-chevron' aria-hidden='true'>
           <svg width='12' height='12' viewBox='0 0 12 12' fill='none'>
             <path
@@ -139,17 +165,25 @@ const firstIcon = firstLang ? langIcons[firstLang] : null;
       </button>
       <ul class='selector-dropdown' role='listbox' aria-hidden='true'>
         {
-          library.versions.map((ver, i) => (
-            <li
-              role='option'
-              class:list={['selector-option', { active: i === 0 }]}
-              data-value={ver}
-            >
-              <span class='option-label'>
-                {ver === 'latest' ? 'Latest' : ver}
-              </span>
-            </li>
-          ))
+          library.versions.map(ver => {
+            const isActive = ver.slug === currentVersion.slug;
+            const href = buildLibraryUrl(
+              library,
+              currentLanguage,
+              ver.slug,
+              currentPagePath,
+            );
+            return (
+              <li
+                role='option'
+                class:list={['selector-option', { active: isActive }]}
+                data-value={ver.slug}
+                data-href={href}
+              >
+                <span class='option-label'>{ver.label}</span>
+              </li>
+            );
+          })
         }
       </ul>
     </library-selector>
@@ -168,14 +202,10 @@ const firstIcon = firstLang ? langIcons[firstLang] : null;
   class LibrarySelector extends HTMLElement {
     private btn!: HTMLButtonElement;
     private dropdown!: HTMLElement;
-    private label!: HTMLElement;
-    private iconSlot!: HTMLElement | null;
 
     connectedCallback() {
       this.btn = this.querySelector('.selector-btn')!;
       this.dropdown = this.querySelector('.selector-dropdown')!;
-      this.label = this.querySelector('.selector-label')!;
-      this.iconSlot = this.querySelector('.selector-icon .selector-lang-icon');
       if (!this.btn || !this.dropdown) return;
 
       this.btn.addEventListener('click', e => {
@@ -230,29 +260,12 @@ const firstIcon = firstLang ? langIcons[firstLang] : null;
     }
 
     select(opt: HTMLElement) {
-      // Update active state
-      this.dropdown.querySelectorAll('.selector-option').forEach(o => {
-        o.classList.toggle('active', o === opt);
-      });
-
-      // Update label text
-      const optLabel = opt.querySelector('.option-label');
-      if (optLabel) {
-        this.label.textContent = optLabel.textContent;
+      // Navigate to the target URL if available
+      const href = opt.dataset.href;
+      if (href) {
+        window.location.href = href;
+        return;
       }
-
-      // Update icon for language selector
-      if (this.iconSlot) {
-        const optIcon = opt.querySelector('.option-icon');
-        if (optIcon) {
-          this.iconSlot.innerHTML = optIcon.innerHTML;
-          this.iconSlot.setAttribute(
-            'style',
-            optIcon.getAttribute('style') || '',
-          );
-        }
-      }
-
       this.close();
     }
   }

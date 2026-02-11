@@ -10,6 +10,13 @@
  * single entry with a language selector, not as separate entries per language.
  */
 
+export interface VersionConfig {
+  /** URL slug (must match folder name, e.g. 'v800' not 'v8.0.0') */
+  slug: string;
+  /** Display label shown in picker (e.g. 'v8.0.0' or 'Latest') */
+  label: string;
+}
+
 export interface LibraryConfig {
   /** URL slug used in /docs/<slug>/ */
   slug: string;
@@ -20,7 +27,7 @@ export interface LibraryConfig {
   /** Accent color for the dot in the library list */
   color: string;
   /** Available versions (first is default) */
-  versions: string[];
+  versions: VersionConfig[];
   /** Available language/framework variants (empty = language-agnostic) */
   languages: string[];
   /** Category grouping */
@@ -56,19 +63,35 @@ export type LibrarySidebarEntry = LibrarySidebarLink | LibrarySidebarGroup;
 /**
  * Convert our library sidebar entries to Starlight-compatible SidebarEntry
  * objects, marking the current page.
+ *
+ * If urlContext is provided, sidebar hrefs are transformed to include
+ * the language/version prefix.
  */
 export function toStarlightSidebar(
   entries: LibrarySidebarEntry[],
   currentPath: string,
+  urlContext?: { library: LibraryConfig; language: string; version: string },
 ): any[] {
   return entries.map(entry => {
     if (entry.type === 'link') {
-      const normalizedHref = entry.href.replace(/\/$/, '');
+      let href = entry.href;
+
+      // Transform href to include language/version if context is provided
+      if (urlContext) {
+        const { library, language, version } = urlContext;
+        const basePattern = new RegExp(`^/docs/${library.slug}/`);
+        if (basePattern.test(href)) {
+          const pagePath = href.replace(basePattern, '').replace(/\/$/, '');
+          href = buildLibraryUrl(library, language, version, pagePath);
+        }
+      }
+
+      const normalizedHref = href.replace(/\/$/, '');
       const normalizedCurrent = currentPath.replace(/\/$/, '');
       return {
         type: 'link' as const,
         label: entry.label,
-        href: entry.href,
+        href,
         isCurrent: normalizedHref === normalizedCurrent,
         badge: entry.badge,
         attrs: entry.attrs || {},
@@ -77,7 +100,7 @@ export function toStarlightSidebar(
     return {
       type: 'group' as const,
       label: entry.label,
-      entries: toStarlightSidebar(entry.entries, currentPath),
+      entries: toStarlightSidebar(entry.entries, currentPath, urlContext),
       collapsed: entry.collapsed,
       badge: entry.badge,
     };
@@ -91,7 +114,10 @@ export const libraries: LibraryConfig[] = [
     label: 'AlgoKit Utils',
     description: 'Utilities for building solutions on Algorand',
     color: '#3B82F6', // blue
-    versions: ['latest', 'v8.0.0', 'v7.0.0'],
+    versions: [
+      { slug: 'latest', label: 'Latest' },
+      { slug: 'v8-0-0', label: 'v8.0.0' },
+    ],
     languages: ['TypeScript', 'Python'],
     category: 'sdk',
     sidebar: [
@@ -101,16 +127,6 @@ export const libraries: LibraryConfig[] = [
         collapsed: false,
         entries: [
           { type: 'link', label: 'Overview', href: '/docs/algokit-utils/' },
-          {
-            type: 'link',
-            label: 'Installation',
-            href: '/docs/algokit-utils/install/',
-          },
-          {
-            type: 'link',
-            label: 'Quick Start',
-            href: '/docs/algokit-utils/quick-start/',
-          },
         ],
       },
       {
@@ -120,87 +136,20 @@ export const libraries: LibraryConfig[] = [
         entries: [
           {
             type: 'link',
-            label: 'Account Management',
-            href: '/docs/algokit-utils/accounts/',
-          },
-          {
-            type: 'link',
-            label: 'Algorand Client',
-            href: '/docs/algokit-utils/algorand-client/',
-          },
-          {
-            type: 'link',
-            label: 'App Client',
-            href: '/docs/algokit-utils/app-client/',
-          },
-          {
-            type: 'link',
-            label: 'App Deployment',
-            href: '/docs/algokit-utils/app-deploy/',
-          },
-          {
-            type: 'link',
-            label: 'Transaction Composer',
-            href: '/docs/algokit-utils/transaction-composer/',
-          },
-          {
-            type: 'link',
-            label: 'Typed Clients',
-            href: '/docs/algokit-utils/typed-clients/',
+            label: 'Working with Accounts',
+            href: '/docs/algokit-utils/guides/accounts/',
           },
         ],
       },
       {
         type: 'group',
         label: 'API Reference',
-        collapsed: false,
+        collapsed: true,
         entries: [
           {
             type: 'link',
             label: 'AlgorandClient',
             href: '/docs/algokit-utils/api/algorand-client/',
-          },
-          {
-            type: 'link',
-            label: 'AccountManager',
-            href: '/docs/algokit-utils/api/account-manager/',
-          },
-          {
-            type: 'link',
-            label: 'AppClient',
-            href: '/docs/algokit-utils/api/app-client/',
-          },
-          {
-            type: 'link',
-            label: 'AppDeployer',
-            href: '/docs/algokit-utils/api/app-deployer/',
-          },
-          {
-            type: 'link',
-            label: 'TransactionComposer',
-            href: '/docs/algokit-utils/api/transaction-composer/',
-          },
-          {
-            type: 'link',
-            label: 'AssetManager',
-            href: '/docs/algokit-utils/api/asset-manager/',
-          },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'Migration',
-        collapsed: true,
-        entries: [
-          {
-            type: 'link',
-            label: 'v8 Migration Guide',
-            href: '/docs/algokit-utils/v8-migration/',
-          },
-          {
-            type: 'link',
-            label: 'v7 Migration Guide',
-            href: '/docs/algokit-utils/v7-migration/',
           },
         ],
       },
@@ -211,7 +160,10 @@ export const libraries: LibraryConfig[] = [
     label: 'AlgoKit CLI',
     description: 'The AlgoKit command-line interface',
     color: '#F59E0B', // amber
-    versions: ['latest', 'v3.0.0'],
+    versions: [
+      { slug: 'latest', label: 'Latest' },
+      { slug: 'v3-0-0', label: 'v3.0.0' },
+    ],
     languages: ['Python'],
     category: 'cli',
     sidebar: [
@@ -221,40 +173,30 @@ export const libraries: LibraryConfig[] = [
         collapsed: false,
         entries: [
           { type: 'link', label: 'Overview', href: '/docs/algokit-cli/' },
+        ],
+      },
+      {
+        type: 'group',
+        label: 'Guides',
+        collapsed: false,
+        entries: [
           {
             type: 'link',
-            label: 'Installation',
-            href: '/docs/algokit-cli/install/',
+            label: 'Getting Started',
+            href: '/docs/algokit-cli/guides/getting-started/',
           },
         ],
       },
       {
         type: 'group',
-        label: 'Commands',
-        collapsed: false,
+        label: 'API Reference',
+        collapsed: true,
         entries: [
           {
             type: 'link',
-            label: 'Compile',
-            href: '/docs/algokit-cli/compile/',
+            label: 'Commands',
+            href: '/docs/algokit-cli/api/commands/',
           },
-          { type: 'link', label: 'Init', href: '/docs/algokit-cli/init/' },
-          {
-            type: 'link',
-            label: 'Localnet',
-            href: '/docs/algokit-cli/localnet/',
-          },
-          {
-            type: 'link',
-            label: 'Generate',
-            href: '/docs/algokit-cli/generate/',
-          },
-          {
-            type: 'link',
-            label: 'Project',
-            href: '/docs/algokit-cli/project/',
-          },
-          { type: 'link', label: 'Tasks', href: '/docs/algokit-cli/tasks/' },
         ],
       },
     ],
@@ -264,7 +206,11 @@ export const libraries: LibraryConfig[] = [
     label: 'Algorand Python',
     description: 'Write Algorand smart contracts in Python',
     color: '#8B5CF6', // purple
-    versions: ['latest', 'v5.0.0', 'v4.0.0'],
+    versions: [
+      { slug: 'latest', label: 'Latest' },
+      { slug: 'v5-0-0', label: 'v5.0.0' },
+      { slug: 'v4-0-0', label: 'v4.0.0' },
+    ],
     languages: ['Python'],
     category: 'language',
     sidebar: [
@@ -337,7 +283,7 @@ export const libraries: LibraryConfig[] = [
     label: 'Algorand TypeScript',
     description: 'Write Algorand smart contracts in TypeScript',
     color: '#EC4899', // pink
-    versions: ['latest'],
+    versions: [{ slug: 'latest', label: 'Latest' }],
     languages: ['TypeScript'],
     category: 'language',
     sidebar: [
@@ -404,7 +350,10 @@ export const libraries: LibraryConfig[] = [
     label: 'AlgoKit Subscriber',
     description: 'Subscribe to Algorand blockchain events',
     color: '#06B6D4', // cyan
-    versions: ['latest', 'v3.0.0'],
+    versions: [
+      { slug: 'latest', label: 'Latest' },
+      { slug: 'v3-0-0', label: 'v3.0.0' },
+    ],
     languages: ['TypeScript', 'Python'],
     category: 'tool',
     sidebar: [
@@ -449,7 +398,7 @@ export const libraries: LibraryConfig[] = [
     label: 'NodeKit',
     description: 'Tools for running Algorand nodes',
     color: '#EF4444', // red
-    versions: ['latest'],
+    versions: [{ slug: 'latest', label: 'Latest' }],
     languages: ['Go', 'TUI'],
     category: 'tool',
     sidebar: [
@@ -481,7 +430,7 @@ export const libraries: LibraryConfig[] = [
     label: 'REST APIs',
     description: 'Algorand REST API reference (algod, indexer, kmd)',
     color: '#F97316', // orange
-    versions: ['latest'],
+    versions: [{ slug: 'latest', label: 'Latest' }],
     languages: ['REST'],
     category: 'api',
     sidebar: [
@@ -509,6 +458,14 @@ export function getLibraryBySlug(slug: string): LibraryConfig | undefined {
   return libraries.find(lib => lib.slug === slug);
 }
 
+/** Lookup a version config by its slug within a library */
+export function getVersionBySlug(
+  library: LibraryConfig,
+  slug: string,
+): VersionConfig | undefined {
+  return library.versions.find(v => v.slug === slug);
+}
+
 /**
  * Detect if a given URL path is inside a library virtual collection.
  * Returns the library config if matched, undefined otherwise.
@@ -517,6 +474,86 @@ export function getLibraryFromPath(path: string): LibraryConfig | undefined {
   const match = path.match(/^\/docs\/([^/]+)/);
   if (!match) return undefined;
   return getLibraryBySlug(match[1]);
+}
+
+/**
+ * Parsed components of a library URL path.
+ */
+export interface ParsedLibraryPath {
+  library: LibraryConfig;
+  language: string;
+  version: string;
+  /** Page path after language/version, e.g. "guides/accounts" */
+  pagePath: string;
+}
+
+/**
+ * Parse a library URL path to extract library, language, version, and page path.
+ *
+ * Multi-language URL: /docs/<library>/<language>/<version>/<page>/
+ * Single-language URL: /docs/<library>/<version>/<page>/
+ */
+export function parseLibraryPath(path: string): ParsedLibraryPath | undefined {
+  const match = path.match(/^\/docs\/([^/]+)(?:\/(.*))?$/);
+  if (!match) return undefined;
+
+  const librarySlug = match[1];
+  const library = getLibraryBySlug(librarySlug);
+  if (!library) return undefined;
+
+  const restPath = match[2] || '';
+  const segments = restPath.split('/').filter(Boolean);
+
+  const isMultiLanguage = library.languages.length > 1;
+
+  let language: string;
+  let version: string;
+  let pagePath: string;
+
+  if (isMultiLanguage) {
+    // Multi-language: /docs/<lib>/<lang>/<version>/<page>
+    const langSlug = segments[0]?.toLowerCase();
+    const foundLang = library.languages.find(l => l.toLowerCase() === langSlug);
+    language = foundLang || library.languages[0];
+
+    const versionSlug = segments[1];
+    const foundVersion = library.versions.find(v => v.slug === versionSlug);
+    version = foundVersion?.slug || library.versions[0].slug;
+
+    pagePath = foundLang && foundVersion ? segments.slice(2).join('/') : '';
+  } else {
+    // Single-language: /docs/<lib>/<version>/<page>
+    language = library.languages[0] || '';
+
+    const versionSlug = segments[0];
+    const foundVersion = library.versions.find(v => v.slug === versionSlug);
+    version = foundVersion?.slug || library.versions[0].slug;
+
+    pagePath = foundVersion ? segments.slice(1).join('/') : '';
+  }
+
+  return { library, language, version, pagePath };
+}
+
+/**
+ * Build a library URL with the given language/version.
+ */
+export function buildLibraryUrl(
+  library: LibraryConfig,
+  language: string,
+  version: string,
+  pagePath: string = '',
+): string {
+  const isMultiLanguage = library.languages.length > 1;
+
+  if (isMultiLanguage) {
+    const langSlug = language.toLowerCase();
+    const base = `/docs/${library.slug}/${langSlug}/${version}/`;
+    return pagePath ? `${base}${pagePath}/`.replace(/\/+$/, '/') : base;
+  } else {
+    const base = `/docs/${library.slug}/${version}/`;
+    return pagePath ? `${base}${pagePath}/`.replace(/\/+$/, '/') : base;
+  }
 }
 
 /** Group libraries by category */
