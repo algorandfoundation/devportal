@@ -418,3 +418,26 @@ html.chat-pinned .main-pane {
     display: none !important;
   }
 }
+
+/* ——— View Transitions ——— */
+
+/* Subtle cross-fade for page content */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 150ms;
+  animation-timing-function: ease-out;
+}
+
+/* Chat panel doesn't animate during transitions (it persists) */
+::view-transition-old(ai-chat-panel),
+::view-transition-new(ai-chat-panel) {
+  animation: none;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

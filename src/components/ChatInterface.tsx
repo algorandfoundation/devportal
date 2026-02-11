@@ -193,19 +193,22 @@ export default function ChatInterface({ canPin = false }: ChatInterfaceProps) {
           {canPin && (
             <button
               onClick={toggleChatPinned}
-              className='chat-panel-btn'
-              style={styles.headerBtn}
+              className={isPinned ? '' : 'chat-panel-btn'}
+              style={{
+                ...styles.headerBtn,
+                ...(isPinned ? styles.pinBtnActive : {}),
+              }}
               title={isPinned ? 'Unpin panel' : 'Pin panel'}
             >
               {isPinned ? (
                 // Unpinned icon (floating mode)
                 <svg
-                  width='16'
-                  height='16'
+                  width='14'
+                  height='14'
                   viewBox='0 0 24 24'
                   fill='none'
                   stroke='currentColor'
-                  strokeWidth='2'
+                  strokeWidth='1.5'
                   strokeLinecap='round'
                   strokeLinejoin='round'
                 >
@@ -215,12 +218,12 @@ export default function ChatInterface({ canPin = false }: ChatInterfaceProps) {
               ) : (
                 // Pinned icon (docked mode)
                 <svg
-                  width='16'
-                  height='16'
+                  width='14'
+                  height='14'
                   viewBox='0 0 24 24'
                   fill='none'
                   stroke='currentColor'
-                  strokeWidth='2'
+                  strokeWidth='1.5'
                   strokeLinecap='round'
                   strokeLinejoin='round'
                 >
@@ -582,10 +585,16 @@ const styles: Record<string, React.CSSProperties> = {
     padding: 0,
     background: 'var(--sl-color-gray-6)',
     border: '1px solid var(--sl-color-gray-5)',
+    borderColor: 'var(--sl-color-gray-5)', // Explicit to properly reset after active state
     color: 'var(--sl-color-gray-3)',
     cursor: 'pointer',
     borderRadius: '0.375rem',
-    transition: 'border-color 0.15s, color 0.15s',
+    transition: 'border-color 0.15s, color 0.15s, background 0.15s',
+  },
+  pinBtnActive: {
+    color: '#01DC94',
+    borderColor: '#01DC94',
+    background: 'rgba(255, 127, 72, 0.15)',
   },
   messages: {
     flex: 1,
