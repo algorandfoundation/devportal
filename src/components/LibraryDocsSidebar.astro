@@ -35,6 +35,9 @@ const currentVersion =
   getVersionBySlug(library, currentVersionSlug) || library.versions[0];
 const currentPagePath = parsed?.pagePath || '';
 
+// Track whether a language was explicitly selected in the URL
+const languageSelected = parsed?.languageFound ?? false;
+
 // Convert sidebar config with URL context for language/version prefixing
 const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath, {
   library,
@@ -42,8 +45,9 @@ const sidebarEntries = toStarlightSidebar(library.sidebar, currentPath, {
   version: currentVersion.slug,
 });
 
-// Resolve the current language icon for the button display
-const currentIcon = currentLanguage ? langIcons[currentLanguage] : null;
+// Resolve the current language icon for the button display (only if language is selected)
+const currentIcon =
+  languageSelected && currentLanguage ? langIcons[currentLanguage] : null;
 
 // Show language picker only for multi-language libraries
 const isMultiLanguage = library.languages.length > 1;
@@ -71,7 +75,9 @@ const isMultiLanguage = library.languages.length > 1;
                 </span>
               )}
             </span>
-            <span class='selector-label'>{currentLanguage}</span>
+            <span class='selector-label'>
+              {languageSelected ? currentLanguage : 'Select language'}
+            </span>
             <span class='selector-chevron' aria-hidden='true'>
               <svg width='12' height='12' viewBox='0 0 12 12' fill='none'>
                 <path
@@ -94,7 +100,7 @@ const isMultiLanguage = library.languages.length > 1;
           <ul class='selector-dropdown' role='listbox' aria-hidden='true'>
             {library.languages.map(lang => {
               const icon = langIcons[lang];
-              const isActive = lang === currentLanguage;
+              const isActive = languageSelected && lang === currentLanguage;
               const href = buildLibraryUrl(
                 library,
                 lang,

@@ -510,6 +510,8 @@ export interface ParsedLibraryPath {
   version: string;
   /** Page path after language/version, e.g. "guides/accounts" */
   pagePath: string;
+  /** Whether the language was explicitly found in the URL (vs defaulted) */
+  languageFound: boolean;
 }
 
 /**
@@ -535,11 +537,14 @@ export function parseLibraryPath(path: string): ParsedLibraryPath | undefined {
   let version: string;
   let pagePath: string;
 
+  let languageFound = false;
+
   if (isMultiLanguage) {
     // Multi-language: /docs/<lib>/<lang>/<version>/<page>
     const langSlug = segments[0]?.toLowerCase();
     const foundLang = library.languages.find(l => l.toLowerCase() === langSlug);
     language = foundLang || library.languages[0];
+    languageFound = !!foundLang;
 
     const versionSlug = segments[1];
     const foundVersion = library.versions.find(v => v.slug === versionSlug);
@@ -549,6 +554,7 @@ export function parseLibraryPath(path: string): ParsedLibraryPath | undefined {
   } else {
     // Single-language: /docs/<lib>/<version>/<page>
     language = library.languages[0] || '';
+    languageFound = true; // Single-language libraries always have language "selected"
 
     const versionSlug = segments[0];
     const foundVersion = library.versions.find(v => v.slug === versionSlug);
@@ -557,7 +563,7 @@ export function parseLibraryPath(path: string): ParsedLibraryPath | undefined {
     pagePath = foundVersion ? segments.slice(1).join('/') : '';
   }
 
-  return { library, language, version, pagePath };
+  return { library, language, version, pagePath, languageFound };
 }
 
 /**
