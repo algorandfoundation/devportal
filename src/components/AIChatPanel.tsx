@@ -61,7 +61,7 @@ export default function AIChatPanel() {
           right: 0,
           bottom: 0,
           zIndex: 301,
-          width: '540px',
+          width: '400px',
           maxWidth: '100vw',
           background: 'var(--sl-color-bg-nav)',
           borderLeft: '1px solid var(--sl-color-gray-5)',

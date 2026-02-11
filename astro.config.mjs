@@ -25,7 +25,6 @@ export default defineConfig({
   description:
     'The Algorand Developer Portal is the go-to resource for developers building on Algorand.',
   output: 'static',
-  viewTransitions: true,
   integrations: [
     starlight({
       title: 'Algorand Developer Portal',

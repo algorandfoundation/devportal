@@ -359,3 +359,38 @@ div.opcode-section table td {
   font-weight: bold;
   margin-top: 0.5rem;
 }
+
+/* ——— View Transition Animations ——— */
+
+/* Subtle cross-fade for page content */
+::view-transition-old(root) {
+  animation: 150ms ease-out both vtFadeOut;
+}
+::view-transition-new(root) {
+  animation: 150ms ease-in both vtFadeIn;
+}
+
+@keyframes vtFadeOut {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vtFadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Chat panel persists — skip transition animation */
+::view-transition-old(ai-chat-panel),
+::view-transition-new(ai-chat-panel) {
+  animation: none;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}

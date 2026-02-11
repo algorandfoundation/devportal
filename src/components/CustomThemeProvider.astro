@@ -1,7 +1,10 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import Default from '@astrojs/starlight/components/ThemeProvider.astro';
 import AIChatPanel from './AIChatPanel.tsx';
 ---
+
+<ClientRouter />
 
 <script is:inline>
   if (
@@ -13,4 +16,8 @@ import AIChatPanel from './AIChatPanel.tsx';
 </script>
 
 <Default {...Astro.props}><slot /></Default>
-<AIChatPanel client:only='react' />
+
+<!-- Chat panel persists across navigation to maintain conversation state -->
+<div transition:persist='ai-chat-panel'>
+  <AIChatPanel client:only='react' />
+</div>
