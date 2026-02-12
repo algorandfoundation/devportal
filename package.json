@@ -37,7 +37,7 @@
     "@astrojs/starlight": "^0.37.6",
     "@astrojs/starlight-tailwind": "^4.0.2",
     "@astrojs/tailwind": "^6.0.2",
-    "@catppuccin/palette": "^1.2.0",
+    "@catppuccin/palette": "^1.7.1",
     "@catppuccin/vscode": "^3.18.1",
     "@larkiny/astro-github-loader": "^0.11.3",
     "@tailwindcss/vite": "^4.1.18",
