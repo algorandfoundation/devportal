@@ -266,10 +266,18 @@ const isMultiLanguage = library.languages.length > 1;
     }
 
     select(opt: HTMLElement) {
-      // Navigate to the target URL if available
       const href = opt.dataset.href;
       if (href) {
-        window.location.href = href;
+        // Use a temporary <a> click so Astro's ClientRouter intercepts it
+        // and performs client-side navigation (preserving transition:persist state).
+        // Direct window.location assignment bypasses the router and causes a full
+        // page reload, which destroys the chat panel's React state.
+        const a = document.createElement('a');
+        a.href = href;
+        a.hidden = true;
+        document.body.append(a);
+        a.click();
+        a.remove();
         return;
       }
       this.close();
