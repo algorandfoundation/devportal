@@ -44,7 +44,7 @@
     "@types/js-yaml": "^4.0.9",
     "astro": "^5.17.1",
     "astro-d2": "^0.3.0",
-    "astro-icon": "^1.1.0",
+    "astro-icon": "^1.1.5",
     "astro-rehype-relative-markdown-links": "^0.18.1",
     "astro-remote": "^0.3.4",
     "js-yaml": "^4.1.1",
