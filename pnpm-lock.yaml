@@ -36,8 +36,8 @@ importers:
         specifier: ^3.18.1
         version: 3.18.1
       '@larkiny/astro-github-loader':
-        specifier: ^0.11.3
-        version: 0.11.3(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))
+        specifier: file:/Users/larkinyoung/dev/af/starlight-github-loader-fork/packages/astro-github-loader
+        version: file:../starlight-github-loader-fork/packages/astro-github-loader(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))
       '@tailwindcss/vite':
         specifier: ^4.1.18
         version: 4.1.18(vite@6.4.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.7.1))
@@ -944,8 +944,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@larkiny/astro-github-loader@0.11.3':
-    resolution: {integrity: sha512-urenZ8ngFBm5/fMvxnGvbMsTtzUEytXkJfAXUvewNQcEUN0kN5Xq24JD951uDYx6BeJecF6tXJlKTKkLIlBVBA==}
+  '@larkiny/astro-github-loader@file:../starlight-github-loader-fork/packages/astro-github-loader':
+    resolution: {directory: ../starlight-github-loader-fork/packages/astro-github-loader, type: directory}
     peerDependencies:
       astro: ^5.5.6
 
@@ -971,32 +971,16 @@ packages:
     resolution: {integrity: sha512-8j7sEpUYVj18dxvh0KWj6W/l6uAiVRBl1JBDVRqH1VHKAO/G5eRVl4yEoYACjakWers1DjUkcCHyJNQK47JqyQ==}
     engines: {node: '>= 20'}
 
-  '@octokit/auth-app@8.1.1':
-    resolution: {integrity: sha512-yW9YUy1cuqWlz8u7908ed498wJFt42VYsYWjvepjojM4BdZSp4t+5JehFds7LfvYi550O/GaUI94rgbhswvxfA==}
-    engines: {node: '>= 20'}
-
   '@octokit/auth-app@8.2.0':
     resolution: {integrity: sha512-vVjdtQQwomrZ4V46B9LaCsxsySxGoHsyw6IYBov/TqJVROrlYdyNgw5q6tQbB7KZt53v1l1W53RiqTvpzL907g==}
-    engines: {node: '>= 20'}
-
-  '@octokit/auth-oauth-app@9.0.2':
-    resolution: {integrity: sha512-vmjSHeuHuM+OxZLzOuoYkcY3OPZ8erJ5lfswdTmm+4XiAKB5PmCk70bA1is4uwSl/APhRVAv4KHsgevWfEKIPQ==}
     engines: {node: '>= 20'}
 
   '@octokit/auth-oauth-app@9.0.3':
     resolution: {integrity: sha512-+yoFQquaF8OxJSxTb7rnytBIC2ZLbLqA/yb71I4ZXT9+Slw4TziV9j/kyGhUFRRTF2+7WlnIWsePZCWHs+OGjg==}
     engines: {node: '>= 20'}
 
-  '@octokit/auth-oauth-device@8.0.2':
-    resolution: {integrity: sha512-KW7Ywrz7ei7JX+uClWD2DN1259fnkoKuVdhzfpQ3/GdETaCj4Tx0IjvuJrwhP/04OhcMu5yR6tjni0V6LBihdw==}
-    engines: {node: '>= 20'}
-
   '@octokit/auth-oauth-device@8.0.3':
     resolution: {integrity: sha512-zh2W0mKKMh/VWZhSqlaCzY7qFyrgd9oTWmTmHaXnHNeQRCZr/CXy2jCgHo4e4dJVTiuxP5dLa0YM5p5QVhJHbw==}
-    engines: {node: '>= 20'}
-
-  '@octokit/auth-oauth-user@6.0.1':
-    resolution: {integrity: sha512-vlKsL1KUUPvwXpv574zvmRd+/4JiDFXABIZNM39+S+5j2kODzGgjk7w5WtiQ1x24kRKNaE7v9DShNbw43UA3Hw==}
     engines: {node: '>= 20'}
 
   '@octokit/auth-oauth-user@6.0.2':
@@ -1013,10 +997,6 @@ packages:
 
   '@octokit/core@7.0.6':
     resolution: {integrity: sha512-DhGl4xMVFGVIyMwswXeyzdL4uXD5OGILGX5N8Y+f6W7LhC1Ze2poSNrkF/fedpVDHEEZ+PHFW0vL14I+mm8K3Q==}
-    engines: {node: '>= 20'}
-
-  '@octokit/endpoint@11.0.1':
-    resolution: {integrity: sha512-7P1dRAZxuWAOPI7kXfio88trNi/MegQ0IJD3vfgC3b+LZo1Qe6gRJc2v0mz2USWWJOKrB2h5spXCzGbw+fAdqA==}
     engines: {node: '>= 20'}
 
   '@octokit/endpoint@11.0.2':
@@ -1038,9 +1018,6 @@ packages:
   '@octokit/oauth-methods@6.0.2':
     resolution: {integrity: sha512-HiNOO3MqLxlt5Da5bZbLV8Zarnphi4y9XehrbaFMkcoJ+FL7sMxH/UlUsCVxpddVu4qvNDrBdaTVE2o4ITK8ng==}
     engines: {node: '>= 20'}
-
-  '@octokit/openapi-types@26.0.0':
-    resolution: {integrity: sha512-7AtcfKtpo77j7Ts73b4OWhOZHTKo/gGY8bB3bNBQz4H+GRSWqx2yvj8TXRsbdTE0eRmYmXOEY66jM7mJ7LzfsA==}
 
   '@octokit/openapi-types@27.0.0':
     resolution: {integrity: sha512-whrdktVs1h6gtR+09+QsNk2+FO+49j6ga1c55YZudfEG+oKJVvJLQi3zkOm5JjiUXAagWK2tI2kTGKJ2Ys7MGA==}
@@ -1082,16 +1059,9 @@ packages:
     resolution: {integrity: sha512-KMQIfq5sOPpkQYajXHwnhjCC0slzCNScLHs9JafXc4RAJI+9f+jNDlBNaIMTvazOPLgb4BnlhGJOTbnN0wIjPw==}
     engines: {node: '>= 20'}
 
-  '@octokit/request@10.0.5':
-    resolution: {integrity: sha512-TXnouHIYLtgDhKo+N6mXATnDBkV05VwbR0TtMWpgTHIoQdRQfCSzmy/LGqR1AbRMbijq/EckC/E3/ZNcU92NaQ==}
-    engines: {node: '>= 20'}
-
   '@octokit/request@10.0.7':
     resolution: {integrity: sha512-v93h0i1yu4idj8qFPZwjehoJx4j3Ntn+JhXsdJrG9pYaX6j/XRz2RmasMUHtNgQD39nrv/VwTWSqK0RNXR8upA==}
     engines: {node: '>= 20'}
-
-  '@octokit/types@15.0.2':
-    resolution: {integrity: sha512-rR+5VRjhYSer7sC51krfCctQhVTmjyUMAaShfPB8mscVa8tSoLyon3coxQmXu0ahJoLVWl8dSGD/3OGZlFV44Q==}
 
   '@octokit/types@16.0.0':
     resolution: {integrity: sha512-sKq+9r1Mm4efXW1FCk7hFSeJo4QKreL/tTbR0rz/qx/r1Oa2VV83LTA/H/MuCOX7uCIJmQVRKBcbmWoySjAnSg==}
@@ -5378,9 +5348,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@larkiny/astro-github-loader@0.11.3(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))':
+  '@larkiny/astro-github-loader@file:../starlight-github-loader-fork/packages/astro-github-loader(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))':
     dependencies:
-      '@octokit/auth-app': 8.1.1
+      '@octokit/auth-app': 8.2.0
       astro: 5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)
       github-slugger: 2.0.0
       octokit: 5.0.5
@@ -5442,17 +5412,6 @@ snapshots:
       '@octokit/types': 16.0.0
       '@octokit/webhooks': 14.2.0
 
-  '@octokit/auth-app@8.1.1':
-    dependencies:
-      '@octokit/auth-oauth-app': 9.0.2
-      '@octokit/auth-oauth-user': 6.0.1
-      '@octokit/request': 10.0.5
-      '@octokit/request-error': 7.1.0
-      '@octokit/types': 15.0.2
-      toad-cache: 3.7.0
-      universal-github-app-jwt: 2.2.2
-      universal-user-agent: 7.0.3
-
   '@octokit/auth-app@8.2.0':
     dependencies:
       '@octokit/auth-oauth-app': 9.0.3
@@ -5464,14 +5423,6 @@ snapshots:
       universal-github-app-jwt: 2.2.2
       universal-user-agent: 7.0.3
 
-  '@octokit/auth-oauth-app@9.0.2':
-    dependencies:
-      '@octokit/auth-oauth-device': 8.0.2
-      '@octokit/auth-oauth-user': 6.0.1
-      '@octokit/request': 10.0.5
-      '@octokit/types': 15.0.2
-      universal-user-agent: 7.0.3
-
   '@octokit/auth-oauth-app@9.0.3':
     dependencies:
       '@octokit/auth-oauth-device': 8.0.3
@@ -5480,26 +5431,11 @@ snapshots:
       '@octokit/types': 16.0.0
       universal-user-agent: 7.0.3
 
-  '@octokit/auth-oauth-device@8.0.2':
-    dependencies:
-      '@octokit/oauth-methods': 6.0.2
-      '@octokit/request': 10.0.7
-      '@octokit/types': 15.0.2
-      universal-user-agent: 7.0.3
-
   '@octokit/auth-oauth-device@8.0.3':
     dependencies:
       '@octokit/oauth-methods': 6.0.2
       '@octokit/request': 10.0.7
       '@octokit/types': 16.0.0
-      universal-user-agent: 7.0.3
-
-  '@octokit/auth-oauth-user@6.0.1':
-    dependencies:
-      '@octokit/auth-oauth-device': 8.0.2
-      '@octokit/oauth-methods': 6.0.2
-      '@octokit/request': 10.0.5
-      '@octokit/types': 15.0.2
       universal-user-agent: 7.0.3
 
   '@octokit/auth-oauth-user@6.0.2':
@@ -5525,11 +5461,6 @@ snapshots:
       '@octokit/request-error': 7.1.0
       '@octokit/types': 16.0.0
       before-after-hook: 4.0.0
-      universal-user-agent: 7.0.3
-
-  '@octokit/endpoint@11.0.1':
-    dependencies:
-      '@octokit/types': 15.0.2
       universal-user-agent: 7.0.3
 
   '@octokit/endpoint@11.0.2':
@@ -5562,8 +5493,6 @@ snapshots:
       '@octokit/request': 10.0.7
       '@octokit/request-error': 7.1.0
       '@octokit/types': 16.0.0
-
-  '@octokit/openapi-types@26.0.0': {}
 
   '@octokit/openapi-types@27.0.0': {}
 
@@ -5600,14 +5529,6 @@ snapshots:
     dependencies:
       '@octokit/types': 16.0.0
 
-  '@octokit/request@10.0.5':
-    dependencies:
-      '@octokit/endpoint': 11.0.1
-      '@octokit/request-error': 7.1.0
-      '@octokit/types': 15.0.2
-      fast-content-type-parse: 3.0.0
-      universal-user-agent: 7.0.3
-
   '@octokit/request@10.0.7':
     dependencies:
       '@octokit/endpoint': 11.0.2
@@ -5615,10 +5536,6 @@ snapshots:
       '@octokit/types': 16.0.0
       fast-content-type-parse: 3.0.0
       universal-user-agent: 7.0.3
-
-  '@octokit/types@15.0.2':
-    dependencies:
-      '@octokit/openapi-types': 26.0.0
 
   '@octokit/types@16.0.0':
     dependencies:
