@@ -1,25 +1,10 @@
 ---
-import type { ImageMetadata } from 'astro';
 // @ts-expect-error unusual error
 import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
-import UtilsLogo from '../assets/images/utils.svg';
-import CliLogo from '../assets/images/cli.svg';
-import AlgorandPythonLogo from '../assets/images/algorand-python.svg';
-import AlgorandTypeScriptLogo from '../assets/images/algorand-typescript.svg';
-import SubscriberLogo from '../assets/images/subscriber.svg';
-import NodeKitLogo from '../assets/images/nodekit.svg';
+import { libraryLogos } from '../../imports/configs/library-logos';
 import { getLibraryFromPath } from '../config/libraries';
-
-const libraryLogos: Record<string, ImageMetadata> = {
-  'algokit-utils': UtilsLogo,
-  'algokit-cli': CliLogo,
-  'algorand-python': AlgorandPythonLogo,
-  'algorand-typescript': AlgorandTypeScriptLogo,
-  'algokit-subscriber': SubscriberLogo,
-  nodekit: NodeKitLogo,
-};
 
 interface Props {
   isFooter?: boolean;
