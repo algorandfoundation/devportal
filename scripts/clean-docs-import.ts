@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { promises as fs } from 'fs';
 import type { ImportOptions } from '@larkiny/astro-github-loader';
-import * as exportedConfigs from '../imports/configs/index.js';
+import { REMOTE_CONTENT } from '../imports/configs/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,7 +12,9 @@ const PROJECT_ROOT = resolve(__dirname, '..');
 
 type RepoConfig = ImportOptions & { repo: string };
 
-const configs: RepoConfig[] = Object.values(exportedConfigs) as RepoConfig[];
+const configs: RepoConfig[] = REMOTE_CONTENT.filter(
+  (c): c is RepoConfig => 'repo' in c && typeof c.repo === 'string',
+);
 
 function parseRepoArg(): string {
   const [, , ...args] = process.argv;

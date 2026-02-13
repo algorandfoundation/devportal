@@ -3,41 +3,15 @@ import { docsSchema } from '@astrojs/starlight/schema';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { Octokit } from 'octokit';
 import { githubLoader } from '@larkiny/astro-github-loader';
+import type { LoaderContext } from '@larkiny/astro-github-loader';
 import { autoSidebarLoader } from 'starlight-auto-sidebar/loader';
 import { autoSidebarSchema } from 'starlight-auto-sidebar/schema';
-import type {
-  ImportOptions,
-  LoaderContext,
-} from '@larkiny/astro-github-loader';
-
-// Import external repo doc configs
-import {
-  arcStandardsConfig,
-  nodekitConfig,
-  algokitCLIConfig,
-  utilsTypescriptConfig,
-  utilsPythonConfig,
-  puyaTsConfig,
-  puyaPyConfig,
-  algokitSubscriberConfig,
-} from '../../imports/configs/index.js';
+import { REMOTE_CONTENT } from '../../imports/configs/index.js';
 
 const IMPORT_GITHUB = process.env.IMPORT_GITHUB === 'true';
 const IMPORT_DRY_RUN = process.env.IMPORT_DRY_RUN === 'true';
 const FORCE_IMPORT = process.env.FORCE_IMPORT === 'true';
 const GITHUB_API_CLIENT = new Octokit({ auth: import.meta.env.GITHUB_TOKEN });
-
-// List of remote content configs to import
-const REMOTE_CONTENT: ImportOptions[] = [
-  arcStandardsConfig,
-  nodekitConfig,
-  algokitCLIConfig,
-  utilsTypescriptConfig,
-  utilsPythonConfig,
-  puyaTsConfig,
-  puyaPyConfig,
-  algokitSubscriberConfig,
-];
 
 export const collections = {
   docs: defineCollection({
