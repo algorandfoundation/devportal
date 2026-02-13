@@ -54,16 +54,20 @@ import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
     const ac = new AbortController();
     button._dropdownAC = ac;
 
-    window.addEventListener('click', function (event) {
-      // The click is outside the menu and not a menu button
-      if (!menu.contains(event.target) && event.target !== button) {
-        button.setAttribute('aria-expanded', 'false');
-        menu.classList.replace('opacity-100', 'opacity-0');
-        if (!menu.classList.contains('hidden')) {
-          menu.classList.add('hidden');
+    window.addEventListener(
+      'click',
+      function (event) {
+        // The click is outside the menu and not a menu button
+        if (!menu.contains(event.target) && event.target !== button) {
+          button.setAttribute('aria-expanded', 'false');
+          menu.classList.replace('opacity-100', 'opacity-0');
+          if (!menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+          }
         }
-      }
-    }, { signal: ac.signal });
+      },
+      { signal: ac.signal },
+    );
 
     button.onclick = () => {
       const expanded = button.getAttribute('aria-expanded') === 'true';
