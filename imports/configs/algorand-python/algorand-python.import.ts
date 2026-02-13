@@ -18,11 +18,7 @@ export const config: LibraryImportConfig = {
   variants: [
     {
       language: 'Python',
-      versions: [
-        { slug: 'latest', label: 'Latest' },
-        { slug: 'v5-0-0', label: 'v5.0.0' },
-        { slug: 'v4-0-0', label: 'v4.0.0' },
-      ],
+      versions: [{ slug: 'latest', label: 'Latest' }],
       name: 'Algorand Python',
       owner: 'algorandfoundation',
       repo: 'puya',
