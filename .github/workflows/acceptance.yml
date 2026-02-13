@@ -5,7 +5,6 @@ on:
       - main
       - release*
       - staging
-      - devrel-content
       - refactor/library-enablement
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
