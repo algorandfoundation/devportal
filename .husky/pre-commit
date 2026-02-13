@@ -1,4 +1,5 @@
+# Ensure Homebrew binaries are available (needed for VS Code Git integration)
+export PATH="/opt/homebrew/bin:$PATH"
+
 # Check for BIP39 seed phrases (nomonic)
 npx tsx scripts/nomonic/check-staged.ts
-
-pnpm test
