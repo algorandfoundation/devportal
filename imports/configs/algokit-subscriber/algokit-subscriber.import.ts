@@ -18,10 +18,7 @@ export const config: LibraryImportConfig = {
   variants: [
     {
       language: 'TypeScript',
-      versions: [
-        { slug: 'latest', label: 'Latest' },
-        { slug: 'v3-0-0', label: 'v3.0.0' },
-      ],
+      versions: [{ slug: 'latest', label: 'Latest' }],
       name: 'Algokit Subscriber TS API Docs',
       owner: 'larkiny',
       repo: 'algokit-subscriber-ts',

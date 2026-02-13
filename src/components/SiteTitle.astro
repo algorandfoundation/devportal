@@ -1,8 +1,10 @@
 ---
-// @ts-expect-error unusual error
+// @ts-expect-error — virtual module has no type declarations
 import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
+import { libraryLogos } from '../../imports/configs/library-logos';
+import { getLibraryFromPath } from '../config/libraries';
 
 interface Props {
   isFooter?: boolean;
@@ -12,9 +14,40 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 
 const { isFooter } = Astro.props;
 const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+const currentPath = Astro.url.pathname;
+
+// Footer always shows the site logo, never a library logo
+const activeLibrary = !isFooter ? getLibraryFromPath(currentPath) : undefined;
+
+const libraryLogo = activeLibrary
+  ? libraryLogos[activeLibrary.slug]
+  : undefined;
+
+// Logo source priority: library logo > footer alt logo > site logo
+const darkLogoSrc = libraryLogo
+  ? libraryLogo.src
+  : isFooter
+    ? AltDarkLogo.src
+    : logos.dark.src;
+const lightLogoSrc = libraryLogo
+  ? libraryLogo.src
+  : isFooter
+    ? logos.dark.src
+    : logos.light?.src;
+
+// Use the library logo's own dimensions when active, otherwise fall back to
+// the site logo dimensions so the SVG isn't distorted.
+const darkWidth = libraryLogo?.width ?? logos.dark.width;
+const darkHeight = libraryLogo?.height ?? logos.dark.height;
+const lightWidth =
+  libraryLogo?.width ?? (isFooter ? logos.dark.width : logos.light?.width);
+const lightHeight =
+  libraryLogo?.height ?? (isFooter ? logos.dark.height : logos.light?.height);
+
+const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 ---
 
-<a href={siteTitleHref} class='site-title sl-flex'>
+<a href={logoHref} class='site-title sl-flex'>
   {
     config.logo && logos.dark && (
       <>
@@ -23,12 +56,15 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
             'light:sl-hidden print:hidden': !('src' in config.logo),
             'h-full!': isHomepage,
           }}
-          alt={`light theme ${config.logo.alt}`}
-          src={isFooter ? AltDarkLogo.src : logos.dark.src}
-          width={logos.dark.width}
-          height={logos.dark.height}
+          alt={
+            activeLibrary
+              ? activeLibrary.label
+              : `light theme ${config.logo.alt}`
+          }
+          src={darkLogoSrc}
+          width={darkWidth}
+          height={darkHeight}
         />
-        {/* Show light alternate if a user configure both light and dark logos. */}
         {!('src' in config.logo) && (
           <img
             class:list={[
@@ -37,10 +73,14 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
                 'h-full!': isHomepage,
               },
             ]}
-            alt={`dark theme ${config.logo.alt}`}
-            src={isFooter ? logos.dark.src : logos.light?.src}
-            width={isFooter ? logos.dark.width : logos.light?.width}
-            height={isFooter ? logos.dark.height : logos.light?.height}
+            alt={
+              activeLibrary
+                ? activeLibrary.label
+                : `dark theme ${config.logo.alt}`
+            }
+            src={lightLogoSrc}
+            width={lightWidth}
+            height={lightHeight}
           />
         )}
       </>

@@ -21,10 +21,7 @@ export const config: LibraryImportConfig = {
   variants: [
     {
       language: 'TypeScript',
-      versions: [
-        { slug: 'latest', label: 'Latest' },
-        { slug: 'v8-0-0', label: 'v8.0.0' },
-      ],
+      versions: [{ slug: 'latest', label: 'Latest' }],
       name: 'AlgoKit Utils TS Docs',
       owner: 'algorandfoundation',
       repo: 'algokit-utils-ts',
@@ -81,10 +78,7 @@ export const config: LibraryImportConfig = {
     },
     {
       language: 'Python',
-      versions: [
-        { slug: 'latest', label: 'Latest' },
-        { slug: 'v8-0-0', label: 'v8.0.0' },
-      ],
+      versions: [{ slug: 'latest', label: 'Latest' }],
       name: 'AlgoKit Utils Python Docs',
       owner: 'algorandfoundation',
       repo: 'algokit-utils-py',

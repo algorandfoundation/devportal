@@ -126,6 +126,9 @@ importers:
       '@types/node':
         specifier: ^25.2.2
         version: 25.2.2
+      '@types/picomatch':
+        specifier: ^4.0.2
+        version: 4.0.2
       '@typescript-eslint/parser':
         specifier: ^8.55.0
         version: 8.55.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
@@ -1466,6 +1469,9 @@ packages:
 
   '@types/picomatch@3.0.2':
     resolution: {integrity: sha512-n0i8TD3UDB7paoMMxA3Y65vUncFJXjcUf7lQY7YyKGl6031FNjfsLs6pdLFCy2GNFxItPJG8GvvpbZc2skH7WA==}
+
+  '@types/picomatch@4.0.2':
+    resolution: {integrity: sha512-qHHxQ+P9PysNEGbALT8f8YOSHW0KJu6l2xU8DYY0fu/EmGxXdVnuTLvFUvBgPJMSqXq29SYHveejeAha+4AYgA==}
 
   '@types/react-dom@19.1.9':
     resolution: {integrity: sha512-qXRuZaOsAdXKFyOhRBg6Lqqc0yay13vN7KrIg4L7N4aaHN68ma9OK3NE1BoDFgFOTfM7zg+3/8+2n8rLUH3OKQ==}
@@ -5886,6 +5892,8 @@ snapshots:
       undici-types: 7.16.0
 
   '@types/picomatch@3.0.2': {}
+
+  '@types/picomatch@4.0.2': {}
 
   '@types/react-dom@19.1.9(@types/react@19.1.12)':
     dependencies:
