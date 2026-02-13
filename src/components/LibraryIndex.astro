@@ -6,10 +6,7 @@
  * the config system. Adding a new library config automatically adds
  * a card here.
  */
-import {
-  getLibrariesByCategory,
-  categoryLabels,
-} from '../config/libraries.ts';
+import { getLibrariesByCategory, categoryLabels } from '../config/libraries.ts';
 import { libraryLogos } from '../../imports/configs/library-logos.ts';
 
 const categories = getLibrariesByCategory();
@@ -27,7 +24,11 @@ const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'] as const;
           {libs.map(lib => {
             const logo = libraryLogos[lib.slug];
             return (
-              <a href={`/docs/${lib.slug}/`} class='library-card' aria-label={`${lib.label} documentation`}>
+              <a
+                href={`/docs/${lib.slug}/`}
+                class='library-card'
+                aria-label={`${lib.label} documentation`}
+              >
                 {logo ? (
                   <img
                     src={logo.src}

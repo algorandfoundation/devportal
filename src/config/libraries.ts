@@ -59,6 +59,24 @@ export interface LibrarySidebarGroup {
 
 export type LibrarySidebarEntry = LibrarySidebarLink | LibrarySidebarGroup;
 
+/** Starlight-compatible sidebar entry shape (link or group). */
+export type StarlightSidebarEntry =
+  | {
+      type: 'link';
+      label: string;
+      href: string;
+      isCurrent: boolean;
+      badge?: LibrarySidebarLink['badge'];
+      attrs: Record<string, string>;
+    }
+  | {
+      type: 'group';
+      label: string;
+      entries: StarlightSidebarEntry[];
+      collapsed: boolean;
+      badge?: LibrarySidebarGroup['badge'];
+    };
+
 // ---------------------------------------------------------------------------
 // Registry builder
 // ---------------------------------------------------------------------------
@@ -212,7 +230,7 @@ export function toStarlightSidebar(
   entries: LibrarySidebarEntry[],
   currentPath: string,
   urlContext?: { library: LibraryConfig; language: string; version: string },
-): any[] {
+): StarlightSidebarEntry[] {
   return entries.map(entry => {
     if (entry.type === 'link') {
       let href = entry.href;
