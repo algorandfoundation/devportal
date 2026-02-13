@@ -16,7 +16,7 @@ import AIChatPanel from './AIChatPanel.tsx';
 
   // Prevent light-mode flash during View Transitions by copying
   // the theme to the incoming document before the DOM swap.
-  document.addEventListener('astro:before-swap', (e) => {
+  document.addEventListener('astro:before-swap', e => {
     const theme = document.documentElement.getAttribute('data-theme');
     if (theme) {
       e.newDocument.documentElement.setAttribute('data-theme', theme);
