@@ -30,3 +30,11 @@ repos:
         files: \.(astro|ts|tsx)$
         fail_fast: true
         require_serial: true
+
+      - id: prose-check
+        name: prose check
+        description: "prose check: Review Markdown for grammar and style using OpenAI"
+        entry: npx tsx scripts/prose-check.ts
+        language: node
+        files: ^src/content/docs/.*\.(md|mdx)$
+        require_serial: true
