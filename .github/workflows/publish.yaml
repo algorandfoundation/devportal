@@ -11,6 +11,7 @@ on:
     branches:
       - main
       - main-dist
+      - refactor/library-enablement
 jobs:
   deploy:
     runs-on: ubuntu-latest
