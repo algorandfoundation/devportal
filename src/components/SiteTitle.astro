@@ -39,8 +39,10 @@ const lightLogoSrc = libraryLogo
 // the site logo dimensions so the SVG isn't distorted.
 const darkWidth = libraryLogo?.width ?? logos.dark.width;
 const darkHeight = libraryLogo?.height ?? logos.dark.height;
-const lightWidth = libraryLogo?.width ?? (isFooter ? logos.dark.width : logos.light?.width);
-const lightHeight = libraryLogo?.height ?? (isFooter ? logos.dark.height : logos.light?.height);
+const lightWidth =
+  libraryLogo?.width ?? (isFooter ? logos.dark.width : logos.light?.width);
+const lightHeight =
+  libraryLogo?.height ?? (isFooter ? logos.dark.height : logos.light?.height);
 
 const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 ---
