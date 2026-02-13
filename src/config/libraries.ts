@@ -42,7 +42,7 @@ export interface LibrarySidebarLink {
   href: string;
   badge?: {
     text: string;
-    variant?: 'note' | 'tip' | 'caution' | 'danger' | 'default';
+    variant?: StarlightBadge['variant'];
   };
   attrs?: Record<string, string>;
 }
@@ -54,7 +54,7 @@ export interface LibrarySidebarGroup {
   collapsed: boolean;
   badge?: {
     text: string;
-    variant?: 'note' | 'tip' | 'caution' | 'danger' | 'default';
+    variant?: StarlightBadge['variant'];
   };
 }
 
@@ -62,6 +62,11 @@ export type LibrarySidebarEntry = LibrarySidebarLink | LibrarySidebarGroup;
 
 /** Sidebar entry type derived from Starlight's public API — stays in sync automatically. */
 export type StarlightSidebarEntry = StarlightRouteData['sidebar'][number];
+
+/** Badge type extracted from Starlight's sidebar entry. */
+type StarlightBadge = NonNullable<
+  Extract<StarlightSidebarEntry, { type: 'link' }>['badge']
+>;
 
 // ---------------------------------------------------------------------------
 // Registry builder
@@ -208,9 +213,11 @@ export function buildLibraryUrl(
 // ---------------------------------------------------------------------------
 
 /** Normalize our optional badge to Starlight's required-variant badge. */
-function toStarlightBadge(badge: LibrarySidebarLink['badge']) {
+function toStarlightBadge(
+  badge: LibrarySidebarLink['badge'],
+): StarlightBadge | undefined {
   if (!badge) return undefined;
-  return { text: badge.text, variant: badge.variant ?? 'default' } as const;
+  return { text: badge.text, variant: badge.variant ?? 'default' };
 }
 
 /**
@@ -261,18 +268,23 @@ export function toStarlightSidebar(
 // Category helpers
 // ---------------------------------------------------------------------------
 
+/** Category union derived from LibraryConfig */
+export type LibraryCategory = LibraryConfig['category'];
+
 /** Group libraries by category */
-export function getLibrariesByCategory(): Record<string, LibraryConfig[]> {
-  const grouped: Record<string, LibraryConfig[]> = {};
+export function getLibrariesByCategory(): Partial<
+  Record<LibraryCategory, LibraryConfig[]>
+> {
+  const grouped: Partial<Record<LibraryCategory, LibraryConfig[]>> = {};
   for (const lib of libraries) {
     if (!grouped[lib.category]) grouped[lib.category] = [];
-    grouped[lib.category].push(lib);
+    grouped[lib.category]!.push(lib);
   }
   return grouped;
 }
 
-/** Category display labels */
-export const categoryLabels: Record<string, string> = {
+/** Category display labels — compile error if a category is missing */
+export const categoryLabels: Record<LibraryCategory, string> = {
   sdk: 'SDKs & Utilities',
   cli: 'CLI Tools',
   language: 'Smart Contract Languages',

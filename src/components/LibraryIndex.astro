@@ -6,11 +6,18 @@
  * the config system. Adding a new library config automatically adds
  * a card here.
  */
+import type { LibraryCategory } from '../config/libraries.ts';
 import { getLibrariesByCategory, categoryLabels } from '../config/libraries.ts';
 import { libraryLogos } from '../../imports/configs/library-logos.ts';
 
 const categories = getLibrariesByCategory();
-const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'] as const;
+const categoryOrder: readonly LibraryCategory[] = [
+  'sdk',
+  'cli',
+  'language',
+  'tool',
+  'api',
+];
 ---
 
 {
