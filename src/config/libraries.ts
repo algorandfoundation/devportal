@@ -8,6 +8,7 @@
 
 import type { LibraryImportConfig } from '../../imports/types';
 import type { VersionConfig } from '../../imports/types';
+import type { StarlightRouteData } from '@astrojs/starlight/route-data';
 import { LIBRARY_CONFIGS } from '../../imports/configs/index.js';
 
 export type { VersionConfig };
@@ -59,23 +60,8 @@ export interface LibrarySidebarGroup {
 
 export type LibrarySidebarEntry = LibrarySidebarLink | LibrarySidebarGroup;
 
-/** Starlight-compatible sidebar entry shape (link or group). */
-export type StarlightSidebarEntry =
-  | {
-      type: 'link';
-      label: string;
-      href: string;
-      isCurrent: boolean;
-      badge?: LibrarySidebarLink['badge'];
-      attrs: Record<string, string>;
-    }
-  | {
-      type: 'group';
-      label: string;
-      entries: StarlightSidebarEntry[];
-      collapsed: boolean;
-      badge?: LibrarySidebarGroup['badge'];
-    };
+/** Sidebar entry type derived from Starlight's public API — stays in sync automatically. */
+export type StarlightSidebarEntry = StarlightRouteData['sidebar'][number];
 
 // ---------------------------------------------------------------------------
 // Registry builder
@@ -221,6 +207,12 @@ export function buildLibraryUrl(
 // Sidebar helpers
 // ---------------------------------------------------------------------------
 
+/** Normalize our optional badge to Starlight's required-variant badge. */
+function toStarlightBadge(badge: LibrarySidebarLink['badge']) {
+  if (!badge) return undefined;
+  return { text: badge.text, variant: badge.variant ?? 'default' } as const;
+}
+
 /**
  * Convert library sidebar entries to Starlight-compatible SidebarEntry objects,
  * marking the current page. If urlContext is provided, sidebar hrefs are
@@ -251,7 +243,7 @@ export function toStarlightSidebar(
         label: entry.label,
         href,
         isCurrent: normalizedHref === normalizedCurrent,
-        badge: entry.badge,
+        badge: toStarlightBadge(entry.badge),
         attrs: entry.attrs || {},
       };
     }
@@ -260,7 +252,7 @@ export function toStarlightSidebar(
       label: entry.label,
       entries: toStarlightSidebar(entry.entries, currentPath, urlContext),
       collapsed: entry.collapsed,
-      badge: entry.badge,
+      badge: toStarlightBadge(entry.badge),
     };
   });
 }
