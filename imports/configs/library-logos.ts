@@ -1,10 +1,11 @@
 /**
  * Library logo registry.
  *
- * Maps library slugs to their SVG logo assets for use in SiteTitle
- * and other components that need library branding.
+ * Maps library slugs to their SVG logo assets for use in SiteTitle.
+ * Adding a new library without a logo entry here will cause a compile error.
  */
 import type { ImageMetadata } from 'astro';
+import type { LibrarySlug } from '../types';
 
 import UtilsLogo from '../../src/assets/images/utils.svg';
 import CliLogo from '../../src/assets/images/cli.svg';
@@ -20,4 +21,4 @@ export const libraryLogos: Record<string, ImageMetadata> = {
   'algorand-typescript': AlgorandTypeScriptLogo,
   'algokit-subscriber': SubscriberLogo,
   nodekit: NodeKitLogo,
-};
+} satisfies Record<LibrarySlug, ImageMetadata>;

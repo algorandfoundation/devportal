@@ -13,6 +13,15 @@ import type {
 // Re-export loader types that config files need
 export type { ImportOptions, VersionConfig };
 
+/** Known library slugs — used for compile-time validation of logo maps, etc. */
+export type LibrarySlug =
+  | 'algokit-utils'
+  | 'algokit-cli'
+  | 'algorand-python'
+  | 'algorand-typescript'
+  | 'algokit-subscriber'
+  | 'nodekit';
+
 /** UI-facing metadata for a library. Displayed in navigation, cards, and pickers. */
 export interface LibraryMetadata {
   /** URL slug: /docs/<slug>/ */
