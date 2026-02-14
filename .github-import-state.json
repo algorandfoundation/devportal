@@ -3,8 +3,8 @@
     "algorandfoundation/arcs@devportal": {
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "4d13c733de1120ab1787541bd68bd267159bb928",
-      "lastImported": "2026-02-06T05:27:33.199Z",
+      "lastCommitSha": "7eea3b1e342b8a7ce9506f6fb5e56bf79a4f31cf",
+      "lastImported": "2026-02-14T10:07:29.017Z",
       "ref": "devportal"
     },
     "algorandfoundation/nodekit@main": {
@@ -20,20 +20,6 @@
       "lastCommitSha": "40762f855a87326e16ce94e94673c7fefac5c025",
       "lastImported": "2025-12-30T12:54:55.029Z",
       "ref": "chore/content-fix"
-    },
-    "algorandfoundation/algokit-utils-ts@chore/fix-docs": {
-      "name": "AlgoKit Utils TS Docs",
-      "repoId": "algorandfoundation/algokit-utils-ts@chore/fix-docs",
-      "lastCommitSha": "44369ef738406062d14080e5ca6b45871dcde5af",
-      "lastImported": "2025-12-30T12:55:45.115Z",
-      "ref": "chore/fix-docs"
-    },
-    "algorandfoundation/algokit-utils-py@main": {
-      "name": "AlgoKit Utils Python Docs",
-      "repoId": "algorandfoundation/algokit-utils-py@main",
-      "lastCommitSha": "6971b957fbe298facdda00dca158c0a7eb9690df",
-      "lastImported": "2025-12-30T12:55:57.801Z",
-      "ref": "main"
     },
     "algorandfoundation/puya@devportal": {
       "name": "Algorand Python",
@@ -55,6 +41,20 @@
       "lastCommitSha": "e47bd211ffe3de89a8ee6818ee9849b32802dc2f",
       "lastImported": "2026-01-07T13:29:06.454Z",
       "ref": "devportal"
+    },
+    "algorandfoundation/algokit-utils-ts@chore/fix-docs": {
+      "name": "AlgoKit Utils TS Docs",
+      "repoId": "algorandfoundation/algokit-utils-ts@chore/fix-docs",
+      "lastCommitSha": "44369ef738406062d14080e5ca6b45871dcde5af",
+      "lastImported": "2026-02-14T11:15:16.727Z",
+      "ref": "chore/fix-docs"
+    },
+    "algorandfoundation/algokit-utils-py@main": {
+      "name": "AlgoKit Utils Python Docs",
+      "repoId": "algorandfoundation/algokit-utils-py@main",
+      "lastCommitSha": "6971b957fbe298facdda00dca158c0a7eb9690df",
+      "lastImported": "2026-02-14T11:13:37.727Z",
+      "ref": "main"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"

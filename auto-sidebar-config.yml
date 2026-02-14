@@ -7,12 +7,12 @@ configs:
       collapsed: true
       cascade:
         - collapsed
-  - folder: reference/algokit-utils-ts/api
+  - folder: docs/algokit-utils/typescript/latest/api
     content: |
       collapsed: true
       cascade:
         - collapsed
-  - folder: reference/algokit-utils-py/api
+  - folder: docs/algokit-utils/python/latest/api
     content: |
       collapsed: true
       cascade:

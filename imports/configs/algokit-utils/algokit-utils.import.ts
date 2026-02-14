@@ -6,7 +6,6 @@ import {
   conditionalTransform,
   removeH1,
   extractH1ToSidebarAndTitle,
-  createContentBasedFrontmatterTransform,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 
@@ -26,22 +25,41 @@ export const config: LibraryImportConfig = {
       owner: 'algorandfoundation',
       repo: 'algokit-utils-ts',
       ref: 'chore/fix-docs',
-      assetsPath: 'src/assets/imports/algokit-utils-ts',
-      assetsBaseUrl: '@assets/imports/algokit-utils-ts',
       includes: [
         {
+          pattern: 'docs/README.md',
+          basePath: 'src/content/docs/docs/algokit-utils/typescript/latest',
+          pathMappings: {
+            'docs/README.md': 'index.md',
+          },
+          transforms: [
+            convertH1ToTitle,
+            conditionalTransform(
+              'docs/README.md',
+              removeH1,
+              createFrontmatterTransform({
+                frontmatter: {
+                  title: 'AlgoKit Utils TypeScript',
+                  sidebar: { label: 'Overview', order: 0 },
+                },
+                mode: 'merge',
+                preserveExisting: false,
+              }),
+            ),
+          ],
+        },
+        {
           pattern:
-            'docs/{capabilities/**/*.md,README.md,v7-migration.md,v8-migration.md}',
-          basePath: 'src/content/docs/algokit/utils/typescript',
+            'docs/{capabilities/**/*.md,v7-migration.md,v8-migration.md}',
+          basePath: 'src/content/docs/docs/algokit-utils/typescript/latest/guides',
           pathMappings: {
             'docs/capabilities/': '',
-            'docs/README.md': 'overview.md',
           },
           transforms: [convertH1ToTitle],
         },
         {
           pattern: 'docs/code/**/*',
-          basePath: 'src/content/docs/reference/algokit-utils-ts/api',
+          basePath: 'src/content/docs/docs/algokit-utils/typescript/latest/api',
           pathMappings: {
             'docs/code/': {
               target: '',
@@ -83,17 +101,12 @@ export const config: LibraryImportConfig = {
       owner: 'algorandfoundation',
       repo: 'algokit-utils-py',
       ref: 'main',
-      assetsPath: 'src/assets/imports/algokit-utils-py',
-      assetsBaseUrl: '@assets/imports/algokit-utils-py',
       includes: [
         {
-          pattern:
-            'docs/markdown/{capabilities/**/*.md,index.md,v3-migration-guide.md}',
-          basePath: 'src/content/docs/algokit/utils/python',
+          pattern: 'docs/markdown/index.md',
+          basePath: 'src/content/docs/docs/algokit-utils/python/latest',
           pathMappings: {
-            'docs/markdown/capabilities/': '',
-            'docs/markdown/index.md': 'overview.md',
-            'docs/markdown/v3-migration-guide.md': 'v3-migration-guide.md',
+            'docs/markdown/index.md': 'index.md',
           },
           transforms: [
             convertH1ToTitle,
@@ -102,13 +115,25 @@ export const config: LibraryImportConfig = {
               removeH1,
               createFrontmatterTransform({
                 frontmatter: {
-                  title: 'AlgoKit Utils API Reference',
+                  title: 'AlgoKit Utils Python',
                   sidebar: { label: 'Overview', order: 0 },
                 },
                 mode: 'merge',
                 preserveExisting: false,
               }),
             ),
+          ],
+        },
+        {
+          pattern:
+            'docs/markdown/{capabilities/**/*.md,v3-migration-guide.md}',
+          basePath: 'src/content/docs/docs/algokit-utils/python/latest/guides',
+          pathMappings: {
+            'docs/markdown/capabilities/': '',
+            'docs/markdown/v3-migration-guide.md': 'v3-migration-guide.md',
+          },
+          transforms: [
+            convertH1ToTitle,
             conditionalTransform(
               'docs/markdown/v3-migration-guide.md',
               removeH1,
@@ -125,7 +150,7 @@ export const config: LibraryImportConfig = {
         },
         {
           pattern: 'docs/markdown/autoapi/algokit_utils/**/*',
-          basePath: 'src/content/docs/reference/algokit-utils-py/api',
+          basePath: 'src/content/docs/docs/algokit-utils/python/latest/api',
           pathMappings: {
             'docs/markdown/autoapi/algokit_utils/': {
               target: '',
