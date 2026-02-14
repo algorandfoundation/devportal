@@ -30,11 +30,11 @@ The name of the box
 The name of the box as a string.
 If the name can’t be decoded from UTF-8, the string representation of the bytes is returned instead.
 
-#### name_raw _: bytes_
+#### name*raw *: bytes\_
 
 The name of the box as raw bytes
 
-#### name_base64 _: str_
+#### name*base64 *: str\_
 
 The name of the box as a base64 encoded string
 
@@ -60,9 +60,9 @@ Enum where members are also (and must be) ints
 
 #### UINT _= 2_
 
-### _type_ algokit_utils.models.state.TealTemplateParams _= Mapping[str, str | int | bytes] | dict[str, str | int | bytes]_
+### _type_ algokit*utils.models.state.TealTemplateParams *= Mapping[str, str | int | bytes] | dict[str, str | int | bytes]\_
 
-### _type_ algokit_utils.models.state.BoxIdentifier _= str | bytes | AccountTransactionSigner_
+### _type_ algokit*utils.models.state.BoxIdentifier *= str | bytes | AccountTransactionSigner\_
 
 ### _class_ algokit_utils.models.state.BoxReference(app_id: int, name: bytes | str)
 

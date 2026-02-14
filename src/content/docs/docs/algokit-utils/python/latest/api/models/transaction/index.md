@@ -29,7 +29,7 @@ Bases: `TypedDict`
 
 Base ARC-0002 transaction note structure
 
-#### dapp_name _: str_
+#### dapp*name *: str\_
 
 ### _class_ algokit_utils.models.transaction.StringFormatArc2Note
 
@@ -67,15 +67,15 @@ Wrapper around algosdk.transaction.Transaction with optional property validators
 
 #### _property_ keyreg _: algosdk.transaction.KeyregTxn_
 
-#### _property_ asset_config _: algosdk.transaction.AssetConfigTxn_
+#### _property_ asset*config *: algosdk.transaction.AssetConfigTxn\_
 
-#### _property_ asset_transfer _: algosdk.transaction.AssetTransferTxn_
+#### _property_ asset*transfer *: algosdk.transaction.AssetTransferTxn\_
 
-#### _property_ asset_freeze _: algosdk.transaction.AssetFreezeTxn_
+#### _property_ asset*freeze *: algosdk.transaction.AssetFreezeTxn\_
 
-#### _property_ application_call _: algosdk.transaction.ApplicationCallTxn_
+#### _property_ application*call *: algosdk.transaction.ApplicationCallTxn\_
 
-#### _property_ state_proof _: algosdk.transaction.StateProofTxn_
+#### _property_ state*proof *: algosdk.transaction.StateProofTxn\_
 
 ### _class_ algokit_utils.models.transaction.SendParams
 
@@ -83,10 +83,10 @@ Bases: `TypedDict`
 
 Parameters for sending a transaction
 
-#### max_rounds_to_wait _: int | None_
+#### max*rounds_to_wait *: int | None\_
 
-#### suppress_log _: bool | None_
+#### suppress*log *: bool | None\_
 
-#### populate_app_call_resources _: bool | None_
+#### populate*app_call_resources *: bool | None\_
 
-#### cover_app_call_inner_transaction_fees _: bool | None_
+#### cover*app_call_inner_transaction_fees *: bool | None\_

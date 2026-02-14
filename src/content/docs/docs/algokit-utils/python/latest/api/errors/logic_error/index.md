@@ -47,7 +47,7 @@ dict(
 kwargs) -> new dictionary initialized with the name=value pairs
 : in the keyword argument list. For example: dict(one=1, two=2)
 
-#### transaction_id _: str_
+#### transaction*id *: str\_
 
 #### message _: str_
 
@@ -61,7 +61,7 @@ Bases: `Exception`
 
 Common base class for all non-exit exceptions.
 
-#### logic_error _= None_
+#### logic*error *= None\_
 
 #### logic_error_str
 
