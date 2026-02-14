@@ -1,9 +1,8 @@
 ---
 title: types/app-manager
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/app-manager
-
-
 
 ## Table of contents
 
@@ -29,10 +28,11 @@ title: types/app-manager
 Ƭ **BoxIdentifier**: `string` \| `Uint8Array` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)
 
 Something that identifies an app box name - either a:
- * `Uint8Array` (the actual binary of the box name)
- * `string` (that will be encoded to a `Uint8Array`)
- * `TransactionSignerAccount` (that will be encoded into the
-   public key address of the corresponding account)
+
+- `Uint8Array` (the actual binary of the box name)
+- `string` (that will be encoded to a `Uint8Array`)
+- `TransactionSignerAccount` (that will be encoded into the
+  public key address of the corresponding account)
 
 #### Defined in
 

@@ -1,9 +1,8 @@
 ---
 title: ReservedSchemaValueSpec
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / ReservedSchemaValueSpec
-
-
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).ReservedSchemaValueSpec
 
@@ -14,7 +13,7 @@ Reserved schema value specification
 ### Properties
 
 - [descr](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specreservedschemavaluespec/#descr)
-- [max\_keys](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specreservedschemavaluespec/#max_keys)
+- [max_keys](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specreservedschemavaluespec/#max_keys)
 - [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specreservedschemavaluespec/#type)
 
 ## Properties
@@ -29,11 +28,11 @@ The description of the reserved storage space
 
 [src/types/app-spec.ts:287](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L287)
 
-___
+---
 
-### max\_keys
+### max_keys
 
-• **max\_keys**: `number`
+• **max_keys**: `number`
 
 The maximum number of slots to reserve
 
@@ -41,7 +40,7 @@ The maximum number of slots to reserve
 
 [src/types/app-spec.ts:289](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L289)
 
-___
+---
 
 ### type
 

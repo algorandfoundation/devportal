@@ -1,9 +1,8 @@
 ---
 title: TealSourcesDebugEventData
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/) / TealSourcesDebugEventData
-
-
 
 [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/).TealSourcesDebugEventData
 

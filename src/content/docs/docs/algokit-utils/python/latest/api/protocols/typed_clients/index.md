@@ -4,15 +4,16 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Classes
 
-| [`TypedAppClientProtocol`](#algokit_utils.protocols.typed_clients.TypedAppClientProtocol)   | Base class for protocol classes.   |
-|---------------------------------------------------------------------------------------------|------------------------------------|
-| [`TypedAppFactoryProtocol`](#algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol) | Base class for protocol classes.   |
+| [`TypedAppClientProtocol`](#algokit_utils.protocols.typed_clients.TypedAppClientProtocol)   | Base class for protocol classes. |
+| ------------------------------------------------------------------------------------------- | -------------------------------- |
+| [`TypedAppFactoryProtocol`](#algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol) | Base class for protocol classes. |
 
 ## Module Contents
 
-### *class* algokit_utils.protocols.typed_clients.TypedAppClientProtocol(\*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, algorand: [algokit_utils.algorand.AlgorandClient](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient), approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None)
+### _class_ algokit_utils.protocols.typed_clients.TypedAppClientProtocol(\*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, algorand: [algokit_utils.algorand.AlgorandClient](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient), approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None)
 
 Bases: `Protocol`
 
@@ -53,11 +54,11 @@ class GenProto[T](/docs/algokit-utils/python/latest/api/protocols/typed_clients/
         ...
 ```
 
-#### *classmethod* from_creator_and_name(\*, creator_address: str, app_name: str, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](/docs/algokit-utils/python/latest/api/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, algorand: [algokit_utils.algorand.AlgorandClient](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient)) → typing_extensions.Self
+#### _classmethod_ from_creator_and_name(\*, creator_address: str, app_name: str, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, ignore_cache: bool | None = None, app_lookup_cache: [algokit_utils.applications.app_deployer.ApplicationLookup](/docs/algokit-utils/python/latest/api/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, algorand: [algokit_utils.algorand.AlgorandClient](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient)) → typing_extensions.Self
 
-#### *classmethod* from_network(\*, app_name: str | None = None, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None, algorand: [algokit_utils.algorand.AlgorandClient](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient)) → typing_extensions.Self
+#### _classmethod_ from_network(\*, app_name: str | None = None, default_sender: str | None = None, default_signer: algosdk.atomic_transaction_composer.TransactionSigner | None = None, approval_source_map: algosdk.source_map.SourceMap | None = None, clear_source_map: algosdk.source_map.SourceMap | None = None, algorand: [algokit_utils.algorand.AlgorandClient](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient)) → typing_extensions.Self
 
-### *class* algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol(algorand: [algokit_utils.algorand.AlgorandClient](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient), \*\*kwargs: Any)
+### _class_ algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol(algorand: [algokit_utils.algorand.AlgorandClient](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient), \*\*kwargs: Any)
 
 Bases: `Protocol`, `Generic`[`CreateParamsT`, `UpdateParamsT`, `DeleteParamsT`]
 

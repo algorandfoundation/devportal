@@ -1,9 +1,8 @@
 ---
 title: SignatureType
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / SignatureType
-
-
 
 [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/).SignatureType
 
@@ -21,7 +20,7 @@ Type of signature used by an account
 
 ### lsig
 
-• **lsig** = ``"lsig"``
+• **lsig** = `"lsig"`
 
 Logic signature
 
@@ -29,11 +28,11 @@ Logic signature
 
 [src/types/indexer.ts:185](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L185)
 
-___
+---
 
 ### msig
 
-• **msig** = ``"msig"``
+• **msig** = `"msig"`
 
 Multisig
 
@@ -41,11 +40,11 @@ Multisig
 
 [src/types/indexer.ts:183](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L183)
 
-___
+---
 
 ### sig
 
-• **sig** = ``"sig"``
+• **sig** = `"sig"`
 
 Normal signature
 

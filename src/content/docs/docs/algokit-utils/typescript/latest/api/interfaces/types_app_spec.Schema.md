@@ -1,9 +1,8 @@
 ---
 title: Schema
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / Schema
-
-
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).Schema
 
@@ -28,7 +27,7 @@ Declared storage schema
 
 [src/types/app-spec.ts:303](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L303)
 
-___
+---
 
 ### reserved
 

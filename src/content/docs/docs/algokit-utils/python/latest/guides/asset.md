@@ -1,6 +1,7 @@
 ---
 title: Assets
 ---
+
 The Algorand Standard Asset (ASA) management functions include creating, opting in and transferring assets, which are fundamental to asset interaction in a blockchain environment.
 
 ## `AssetManager`

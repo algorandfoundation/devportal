@@ -1,9 +1,8 @@
 ---
 title: AdditionalAtomicTransactionComposerContext
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / AdditionalAtomicTransactionComposerContext
-
-
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).AdditionalAtomicTransactionComposerContext
 
@@ -28,11 +27,11 @@ A map of transaction index in the `AtomicTransactionComposer` to the max fee tha
 
 [src/types/transaction.ts:148](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L148)
 
-___
+---
 
 ### suggestedParams
 
-• **suggestedParams**: `Pick`\<`SuggestedParams`, ``"fee"`` \| ``"minFee"``\>
+• **suggestedParams**: `Pick`\<`SuggestedParams`, `"fee"` \| `"minFee"`\>
 
 #### Defined in
 

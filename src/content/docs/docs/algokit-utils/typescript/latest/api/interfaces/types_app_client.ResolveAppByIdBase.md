@@ -1,9 +1,8 @@
 ---
 title: ResolveAppByIdBase
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / ResolveAppByIdBase
-
-
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).ResolveAppByIdBase
 
@@ -34,7 +33,7 @@ The id of an existing app to call using this client, or 0 if the app hasn't been
 
 [src/types/app-client.ts:115](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L115)
 
-___
+---
 
 ### name
 

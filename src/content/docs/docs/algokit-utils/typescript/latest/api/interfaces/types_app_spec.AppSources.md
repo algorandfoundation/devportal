@@ -1,9 +1,8 @@
 ---
 title: AppSources
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / AppSources
-
-
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).AppSources
 
@@ -28,7 +27,7 @@ The TEAL source of the approval program
 
 [src/types/app-spec.ts:172](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L172)
 
-___
+---
 
 ### clear
 

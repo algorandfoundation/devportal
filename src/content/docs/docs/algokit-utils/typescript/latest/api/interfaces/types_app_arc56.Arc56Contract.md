@@ -1,9 +1,8 @@
 ---
 title: Arc56Contract
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / Arc56Contract
-
-
 
 [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/).Arc56Contract
 
@@ -41,7 +40,7 @@ The ARCs used and/or supported by this contract. All contracts implicitly suppor
 
 [src/types/app-arc56.ts:250](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L250)
 
-___
+---
 
 ### bareActions
 
@@ -51,16 +50,16 @@ Supported bare actions for the contract. An action is a combination of call/crea
 
 #### Type declaration
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `call` | (``"NoOp"`` \| ``"OptIn"`` \| ``"DeleteApplication"`` \| ``"CloseOut"`` \| ``"ClearState"`` \| ``"UpdateApplication"``)[] | OnCompletes this method allows when appID !== 0 |
-| `create` | (``"NoOp"`` \| ``"OptIn"`` \| ``"DeleteApplication"``)[] | OnCompletes this method allows when appID === 0 |
+| Name     | Type                                                                                                          | Description                                     |
+| :------- | :------------------------------------------------------------------------------------------------------------ | :---------------------------------------------- |
+| `call`   | (`"NoOp"` \| `"OptIn"` \| `"DeleteApplication"` \| `"CloseOut"` \| `"ClearState"` \| `"UpdateApplication"`)[] | OnCompletes this method allows when appID !== 0 |
+| `create` | (`"NoOp"` \| `"OptIn"` \| `"DeleteApplication"`)[]                                                            | OnCompletes this method allows when appID === 0 |
 
 #### Defined in
 
 [src/types/app-arc56.ts:298](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L298)
 
-___
+---
 
 ### byteCode
 
@@ -70,16 +69,16 @@ The compiled bytecode for the application. MUST be omitted if included as part o
 
 #### Type declaration
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name       | Type     | Description          |
+| :--------- | :------- | :------------------- |
 | `approval` | `string` | The approval program |
-| `clear` | `string` | The clear program |
+| `clear`    | `string` | The clear program    |
 
 #### Defined in
 
 [src/types/app-arc56.ts:319](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L319)
 
-___
+---
 
 ### compilerInfo
 
@@ -89,20 +88,20 @@ Information used to get the given byteCode and/or PC values in sourceInfo. MUST 
 
 #### Type declaration
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `compiler` | ``"algod"`` \| ``"puya"`` | The name of the compiler |
-| `compilerVersion` | \{ `commitHash?`: `string` ; `major`: `number` ; `minor`: `number` ; `patch`: `number`  } | Compiler version information |
-| `compilerVersion.commitHash?` | `string` | - |
-| `compilerVersion.major` | `number` | - |
-| `compilerVersion.minor` | `number` | - |
-| `compilerVersion.patch` | `number` | - |
+| Name                          | Type                                                                                     | Description                  |
+| :---------------------------- | :--------------------------------------------------------------------------------------- | :--------------------------- |
+| `compiler`                    | `"algod"` \| `"puya"`                                                                    | The name of the compiler     |
+| `compilerVersion`             | \{ `commitHash?`: `string` ; `major`: `number` ; `minor`: `number` ; `patch`: `number` } | Compiler version information |
+| `compilerVersion.commitHash?` | `string`                                                                                 | -                            |
+| `compilerVersion.major`       | `number`                                                                                 | -                            |
+| `compilerVersion.minor`       | `number`                                                                                 | -                            |
+| `compilerVersion.patch`       | `number`                                                                                 | -                            |
 
 #### Defined in
 
 [src/types/app-arc56.ts:326](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L326)
 
-___
+---
 
 ### desc
 
@@ -114,7 +113,7 @@ Optional, user-friendly description for the interface
 
 [src/types/app-arc56.ts:254](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L254)
 
-___
+---
 
 ### events
 
@@ -126,7 +125,7 @@ ARC-28 events that MAY be emitted by this contract
 
 [src/types/app-arc56.ts:338](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L338)
 
-___
+---
 
 ### methods
 
@@ -138,7 +137,7 @@ All of the methods that the contract implements
 
 [src/types/app-arc56.ts:271](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L271)
 
-___
+---
 
 ### name
 
@@ -150,7 +149,7 @@ A user-friendly name for the contract
 
 [src/types/app-arc56.ts:252](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L252)
 
-___
+---
 
 ### networks
 
@@ -164,13 +163,13 @@ included, but the corresponding genesis hash key MUST also be defined
 
 #### Index signature
 
-▪ [network: `string`]: \{ `appID`: `number`  }
+▪ [network: `string`]: \{ `appID`: `number` }
 
 #### Defined in
 
 [src/types/app-arc56.ts:262](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L262)
 
-___
+---
 
 ### scratchVariables
 
@@ -180,13 +179,13 @@ The scratch variables used during runtime
 
 #### Index signature
 
-▪ [name: `string`]: \{ `slot`: `number` ; `type`: [`ABIType`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#abitype) \| [`AVMType`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#avmtype) \| [`StructName`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#structname)  }
+▪ [name: `string`]: \{ `slot`: `number` ; `type`: [`ABIType`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#abitype) \| [`AVMType`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#avmtype) \| [`StructName`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#structname) }
 
 #### Defined in
 
 [src/types/app-arc56.ts:349](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L349)
 
-___
+---
 
 ### source
 
@@ -196,16 +195,16 @@ The pre-compiled TEAL that may contain template variables. MUST be omitted if in
 
 #### Type declaration
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name       | Type     | Description          |
+| :--------- | :------- | :------------------- |
 | `approval` | `string` | The approval program |
-| `clear` | `string` | The clear program |
+| `clear`    | `string` | The clear program    |
 
 #### Defined in
 
 [src/types/app-arc56.ts:312](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L312)
 
-___
+---
 
 ### sourceInfo
 
@@ -215,16 +214,16 @@ Information about the TEAL programs
 
 #### Type declaration
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name       | Type                                                                                                          | Description                  |
+| :--------- | :------------------------------------------------------------------------------------------------------------ | :--------------------------- |
 | `approval` | [`ProgramSourceInfo`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56programsourceinfo/) | Approval program information |
-| `clear` | [`ProgramSourceInfo`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56programsourceinfo/) | Clear program information |
+| `clear`    | [`ProgramSourceInfo`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56programsourceinfo/) | Clear program information    |
 
 #### Defined in
 
 [src/types/app-arc56.ts:305](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L305)
 
-___
+---
 
 ### state
 
@@ -232,29 +231,29 @@ ___
 
 #### Type declaration
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `keys` | \{ `box`: \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/);  } ; `global`: \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/);  } ; `local`: \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/);  }  } | Mapping of human-readable names to StorageKey objects |
-| `keys.box` | \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/);  } | - |
-| `keys.global` | \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/);  } | - |
-| `keys.local` | \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/);  } | - |
-| `maps` | \{ `box`: \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/);  } ; `global`: \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/);  } ; `local`: \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/);  }  } | Mapping of human-readable names to StorageMap objects |
-| `maps.box` | \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/);  } | - |
-| `maps.global` | \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/);  } | - |
-| `maps.local` | \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/);  } | - |
-| `schema` | \{ `global`: \{ `bytes`: `number` ; `ints`: `number`  } ; `local`: \{ `bytes`: `number` ; `ints`: `number`  }  } | Defines the values that should be used for GlobalNumUint, GlobalNumByteSlice, LocalNumUint, and LocalNumByteSlice when creating the application |
-| `schema.global` | \{ `bytes`: `number` ; `ints`: `number`  } | - |
-| `schema.global.bytes` | `number` | - |
-| `schema.global.ints` | `number` | - |
-| `schema.local` | \{ `bytes`: `number` ; `ints`: `number`  } | - |
-| `schema.local.bytes` | `number` | - |
-| `schema.local.ints` | `number` | - |
+| Name                  | Type                                                                                                                                                                                                                                                                                                                                                                                                       | Description                                                                                                                                     |
+| :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `keys`                | \{ `box`: \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/); } ; `global`: \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/); } ; `local`: \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/); } } | Mapping of human-readable names to StorageKey objects                                                                                           |
+| `keys.box`            | \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/); }                                                                                                                                                                                                                                                                                    | -                                                                                                                                               |
+| `keys.global`         | \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/); }                                                                                                                                                                                                                                                                                    | -                                                                                                                                               |
+| `keys.local`          | \{ `[name: string]`: [`StorageKey`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/); }                                                                                                                                                                                                                                                                                    | -                                                                                                                                               |
+| `maps`                | \{ `box`: \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/); } ; `global`: \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/); } ; `local`: \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/); } } | Mapping of human-readable names to StorageMap objects                                                                                           |
+| `maps.box`            | \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/); }                                                                                                                                                                                                                                                                                    | -                                                                                                                                               |
+| `maps.global`         | \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/); }                                                                                                                                                                                                                                                                                    | -                                                                                                                                               |
+| `maps.local`          | \{ `[name: string]`: [`StorageMap`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/); }                                                                                                                                                                                                                                                                                    | -                                                                                                                                               |
+| `schema`              | \{ `global`: \{ `bytes`: `number` ; `ints`: `number` } ; `local`: \{ `bytes`: `number` ; `ints`: `number` } }                                                                                                                                                                                                                                                                                              | Defines the values that should be used for GlobalNumUint, GlobalNumByteSlice, LocalNumUint, and LocalNumByteSlice when creating the application |
+| `schema.global`       | \{ `bytes`: `number` ; `ints`: `number` }                                                                                                                                                                                                                                                                                                                                                                  | -                                                                                                                                               |
+| `schema.global.bytes` | `number`                                                                                                                                                                                                                                                                                                                                                                                                   | -                                                                                                                                               |
+| `schema.global.ints`  | `number`                                                                                                                                                                                                                                                                                                                                                                                                   | -                                                                                                                                               |
+| `schema.local`        | \{ `bytes`: `number` ; `ints`: `number` }                                                                                                                                                                                                                                                                                                                                                                  | -                                                                                                                                               |
+| `schema.local.bytes`  | `number`                                                                                                                                                                                                                                                                                                                                                                                                   | -                                                                                                                                               |
+| `schema.local.ints`   | `number`                                                                                                                                                                                                                                                                                                                                                                                                   | -                                                                                                                                               |
 
 #### Defined in
 
 [src/types/app-arc56.ts:272](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L272)
 
-___
+---
 
 ### structs
 
@@ -270,17 +269,17 @@ Named structs used by the application. Each struct field appears in the same ord
 
 [src/types/app-arc56.ts:269](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-arc56.ts#L269)
 
-___
+---
 
 ### templateVariables
 
 • `Optional` **templateVariables**: `Object`
 
-A mapping of template variable names as they appear in the TEAL (not including TMPL_ prefix) to their respective types and values (if applicable)
+A mapping of template variable names as they appear in the TEAL (not including TMPL\_ prefix) to their respective types and values (if applicable)
 
 #### Index signature
 
-▪ [name: `string`]: \{ `type`: [`ABIType`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#abitype) \| [`AVMType`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#avmtype) \| [`StructName`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#structname) ; `value?`: `string`  }
+▪ [name: `string`]: \{ `type`: [`ABIType`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#abitype) \| [`AVMType`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#avmtype) \| [`StructName`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#structname) ; `value?`: `string` }
 
 #### Defined in
 

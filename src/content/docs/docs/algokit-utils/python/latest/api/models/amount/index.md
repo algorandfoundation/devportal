@@ -4,32 +4,33 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Attributes
 
-| [`ALGORAND_MIN_TX_FEE`](#algokit_utils.models.amount.ALGORAND_MIN_TX_FEE)   |    |
-|-----------------------------------------------------------------------------|----|
+| [`ALGORAND_MIN_TX_FEE`](#algokit_utils.models.amount.ALGORAND_MIN_TX_FEE) |     |
+| ------------------------------------------------------------------------- | --- |
 
 ## Classes
 
-| [`AlgoAmount`](#algokit_utils.models.amount.AlgoAmount)   | Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbers.   |
-|-----------------------------------------------------------|--------------------------------------------------------------------------------------|
+| [`AlgoAmount`](#algokit_utils.models.amount.AlgoAmount) | Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbers. |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 
 ## Functions
 
 | [`algo`](#algokit_utils.models.amount.algo)(→ AlgoAmount)                         | Create an AlgoAmount object representing the given number of Algo.       |
-|-----------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | [`micro_algo`](#algokit_utils.models.amount.micro_algo)(→ AlgoAmount)             | Create an AlgoAmount object representing the given number of µAlgo.      |
 | [`transaction_fees`](#algokit_utils.models.amount.transaction_fees)(→ AlgoAmount) | Calculate the total transaction fees for a given number of transactions. |
 
 ## Module Contents
 
-### *class* algokit_utils.models.amount.AlgoAmount(\*, micro_algo: int)
+### _class_ algokit_utils.models.amount.AlgoAmount(\*, micro_algo: int)
 
-### *class* algokit_utils.models.amount.AlgoAmount(\*, algo: int | decimal.Decimal)
+### _class_ algokit_utils.models.amount.AlgoAmount(\*, algo: int | decimal.Decimal)
 
 Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbers.
 
-* **Example:**
+- **Example:**
   ```python
   amount = AlgoAmount(algo=1)
   amount = AlgoAmount.from_algo(1)
@@ -37,42 +38,42 @@ Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbe
   amount = AlgoAmount.from_micro_algo(1_000_000)
   ```
 
-#### *property* micro_algo *: int*
+#### _property_ micro_algo _: int_
 
 Return the amount as a number in µAlgo.
 
-* **Returns:**
+- **Returns:**
   The amount in µAlgo.
 
-#### *property* algo *: decimal.Decimal*
+#### _property_ algo _: decimal.Decimal_
 
 Return the amount as a number in Algo.
 
-* **Returns:**
+- **Returns:**
   The amount in Algo.
 
-#### *static* from_algo(amount: int | decimal.Decimal) → [AlgoAmount](#algokit_utils.models.amount.AlgoAmount)
+#### _static_ from_algo(amount: int | decimal.Decimal) → [AlgoAmount](#algokit_utils.models.amount.AlgoAmount)
 
 Create an AlgoAmount object representing the given number of Algo.
 
-* **Parameters:**
+- **Parameters:**
   **amount** – The amount in Algo.
-* **Returns:**
+- **Returns:**
   An AlgoAmount instance.
-* **Example:**
+- **Example:**
   ```python
   amount = AlgoAmount.from_algo(1)
   ```
 
-#### *static* from_micro_algo(amount: int) → [AlgoAmount](#algokit_utils.models.amount.AlgoAmount)
+#### _static_ from_micro_algo(amount: int) → [AlgoAmount](#algokit_utils.models.amount.AlgoAmount)
 
 Create an AlgoAmount object representing the given number of µAlgo.
 
-* **Parameters:**
+- **Parameters:**
   **amount** – The amount in µAlgo.
-* **Returns:**
+- **Returns:**
   An AlgoAmount instance.
-* **Example:**
+- **Example:**
   ```python
   amount = AlgoAmount.from_micro_algo(1_000_000)
   ```
@@ -81,18 +82,18 @@ Create an AlgoAmount object representing the given number of µAlgo.
 
 Create an AlgoAmount object representing the given number of Algo.
 
-* **Parameters:**
+- **Parameters:**
   **algo** – The number of Algo to create an AlgoAmount object for.
-* **Returns:**
+- **Returns:**
   An AlgoAmount object representing the given number of Algo.
 
 ### algokit_utils.models.amount.micro_algo(micro_algo: int) → [AlgoAmount](#algokit_utils.models.amount.AlgoAmount)
 
 Create an AlgoAmount object representing the given number of µAlgo.
 
-* **Parameters:**
+- **Parameters:**
   **micro_algo** – The number of µAlgo to create an AlgoAmount object for.
-* **Returns:**
+- **Returns:**
   An AlgoAmount object representing the given number of µAlgo.
 
 ### algokit_utils.models.amount.ALGORAND_MIN_TX_FEE
@@ -101,7 +102,7 @@ Create an AlgoAmount object representing the given number of µAlgo.
 
 Calculate the total transaction fees for a given number of transactions.
 
-* **Parameters:**
+- **Parameters:**
   **number_of_transactions** – The number of transactions to calculate the fees for.
-* **Returns:**
+- **Returns:**
   The total transaction fees.

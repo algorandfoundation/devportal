@@ -1,9 +1,8 @@
 ---
 title: ConfirmedTransactionResult
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / ConfirmedTransactionResult
-
-
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).ConfirmedTransactionResult
 
@@ -38,7 +37,7 @@ The response from sending and waiting for the transaction
 
 [src/types/transaction.ts:87](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L87)
 
-___
+---
 
 ### transaction
 

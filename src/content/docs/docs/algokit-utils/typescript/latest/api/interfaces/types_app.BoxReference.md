@@ -1,9 +1,8 @@
 ---
 title: BoxReference
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / BoxReference
-
-
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).BoxReference
 
@@ -32,7 +31,7 @@ A unique application id
 
 [src/types/app.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L55)
 
-___
+---
 
 ### name
 

@@ -4,37 +4,38 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Classes
 
-| [`AlgoClientNetworkConfig`](#algokit_utils.models.network.AlgoClientNetworkConfig)   | Connection details for connecting to an {py:class}\`algosdk.v2client.algod.AlgodClient\` or   |
-|--------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| [`AlgoClientConfigs`](#algokit_utils.models.network.AlgoClientConfigs)               |                                                                                               |
+| [`AlgoClientNetworkConfig`](#algokit_utils.models.network.AlgoClientNetworkConfig) | Connection details for connecting to an {py:class}\`algosdk.v2client.algod.AlgodClient\` or |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [`AlgoClientConfigs`](#algokit_utils.models.network.AlgoClientConfigs)             |                                                                                             |
 
 ## Module Contents
 
-### *class* algokit_utils.models.network.AlgoClientNetworkConfig
+### _class_ algokit_utils.models.network.AlgoClientNetworkConfig
 
 Connection details for connecting to an {py:class}\`algosdk.v2client.algod.AlgodClient\` or
 {py:class}\`algosdk.v2client.indexer.IndexerClient\`
 
-#### server *: str*
+#### server _: str_
 
 URL for the service e.g. http://localhost or https://testnet-api.algonode.cloud
 
-#### token *: str | None* *= None*
+#### token _: str | None_ _= None_
 
 API Token to authenticate with the service e.g ‘4001’ or ‘8980’
 
-#### port *: str | int | None* *= None*
+#### port _: str | int | None_ _= None_
 
 #### full_url() → str
 
 Returns the full URL for the service
 
-### *class* algokit_utils.models.network.AlgoClientConfigs
+### _class_ algokit_utils.models.network.AlgoClientConfigs
 
-#### algod_config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig)*
+#### algod_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig)_
 
-#### indexer_config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None*
+#### indexer_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None_
 
-#### kmd_config *: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None*
+#### kmd_config _: [AlgoClientNetworkConfig](#algokit_utils.models.network.AlgoClientNetworkConfig) | None_

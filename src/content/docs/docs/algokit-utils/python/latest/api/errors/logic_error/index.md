@@ -4,24 +4,25 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Exceptions
 
-| [`LogicError`](#algokit_utils.errors.logic_error.LogicError)   | Common base class for all non-exit exceptions.   |
-|----------------------------------------------------------------|--------------------------------------------------|
+| [`LogicError`](#algokit_utils.errors.logic_error.LogicError) | Common base class for all non-exit exceptions. |
+| ------------------------------------------------------------ | ---------------------------------------------- |
 
 ## Classes
 
-| [`LogicErrorData`](#algokit_utils.errors.logic_error.LogicErrorData)   | dict() -> new empty dictionary   |
-|------------------------------------------------------------------------|----------------------------------|
+| [`LogicErrorData`](#algokit_utils.errors.logic_error.LogicErrorData) | dict() -> new empty dictionary |
+| -------------------------------------------------------------------- | ------------------------------ |
 
 ## Functions
 
-| [`parse_logic_error`](#algokit_utils.errors.logic_error.parse_logic_error)(→ LogicErrorData | None)   |    |
-|-------------------------------------------------------------------------------------------------------|----|
+| [`parse_logic_error`](#algokit_utils.errors.logic_error.parse_logic_error)(→ LogicErrorData | None) |     |
+| ------------------------------------------------------------------------------------------- | ----- | --- |
 
 ## Module Contents
 
-### *class* algokit_utils.errors.logic_error.LogicErrorData
+### _class_ algokit_utils.errors.logic_error.LogicErrorData
 
 Bases: `TypedDict`
 
@@ -32,7 +33,8 @@ dict(mapping) -> new dictionary initialized from a mapping object’s
 
 dict(iterable) -> new dictionary initialized as if via:
 : d = {}
-  for k, v in iterable:
+for k, v in iterable:
+
   <br/>
   > d[k] = v
 
@@ -43,23 +45,23 @@ dict(
 ```
 
 kwargs) -> new dictionary initialized with the name=value pairs
-: in the keyword argument list.  For example:  dict(one=1, two=2)
+: in the keyword argument list. For example: dict(one=1, two=2)
 
-#### transaction_id *: str*
+#### transaction_id _: str_
 
-#### message *: str*
+#### message _: str_
 
-#### pc *: int*
+#### pc _: int_
 
 ### algokit_utils.errors.logic_error.parse_logic_error(error_str: str) → [LogicErrorData](#algokit_utils.errors.logic_error.LogicErrorData) | None
 
-### *exception* algokit_utils.errors.logic_error.LogicError(\*, logic_error_str: str, program: str, source_map: AlgoSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[[algokit_utils.models.simulate.SimulationTrace](/docs/algokit-utils/python/latest/api/models/simulate/#algokit_utils.models.simulate.SimulationTrace)] | None = None, get_line_for_pc: collections.abc.Callable[[int], int | None] | None = None)
+### _exception_ algokit_utils.errors.logic_error.LogicError(\*, logic_error_str: str, program: str, source_map: AlgoSourceMap | None, transaction_id: str, message: str, pc: int, logic_error: Exception | None = None, traces: list[[algokit_utils.models.simulate.SimulationTrace](/docs/algokit-utils/python/latest/api/models/simulate/#algokit_utils.models.simulate.SimulationTrace)] | None = None, get_line_for_pc: collections.abc.Callable[[int], int | None] | None = None)
 
 Bases: `Exception`
 
 Common base class for all non-exit exceptions.
 
-#### logic_error *= None*
+#### logic_error _= None_
 
 #### logic_error_str
 
@@ -73,7 +75,7 @@ Common base class for all non-exit exceptions.
 
 #### pc
 
-#### traces *= None*
+#### traces _= None_
 
 #### line_no
 

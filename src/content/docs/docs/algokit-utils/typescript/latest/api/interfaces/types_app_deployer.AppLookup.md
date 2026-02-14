@@ -1,9 +1,8 @@
 ---
 title: AppLookup
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-deployer](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/) / AppLookup
-
-
 
 [types/app-deployer](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/).AppLookup
 
@@ -32,7 +31,7 @@ A hash map of app name to app metadata
 
 [src/types/app-deployer.ts:94](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-deployer.ts#L94)
 
-___
+---
 
 ### creator
 

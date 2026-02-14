@@ -1,9 +1,8 @@
 ---
 title: AppCompilationResult
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppCompilationResult
-
-
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppCompilationResult
 
@@ -28,7 +27,7 @@ The result of compiling the approval program
 
 [src/types/app.ts:335](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app.ts#L335)
 
-___
+---
 
 ### compiledClear
 

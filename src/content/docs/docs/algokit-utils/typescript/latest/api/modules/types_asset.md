@@ -1,9 +1,8 @@
 ---
 title: types/asset
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/asset
-
-
 
 ## Table of contents
 

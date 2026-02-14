@@ -4,109 +4,109 @@ sidebar:
   label: Overview
   order: 0
 ---
+
 A set of core Algorand utilities written in Python and released via PyPi that make it easier to build solutions on Algorand. This project is part of [AlgoKit](https://github.com/algorandfoundation/algokit-cli).
 
 The goal of this library is to provide intuitive, productive utility functions that make it easier, quicker and safer to build applications on Algorand. Largely these functions wrap the underlying Algorand SDK, but provide a higher level interface with sensible defaults and capabilities for common tasks.
 
 #### NOTE
+
 If you prefer TypeScript there’s an equivalent [TypeScript utility library](https://github.com/algorandfoundation/algokit-utils-ts).
 
 [Core principles](#core-principles) | [Installation](#installation) | [Usage](#usage) | [Config and logging](#config-logging) | [Capabilities](#capabilities) | [Reference docs](#reference-documentation)
 
+- [Account management](/docs/algokit-utils/python/latest/guides/account/)
+  - [`AccountManager`](/docs/algokit-utils/python/latest/guides/account/#accountmanager)
+  - [`TransactionSignerAccountProtocol`](/docs/algokit-utils/python/latest/guides/account/#transactionsigneraccountprotocol)
+  - [Registering a signer](/docs/algokit-utils/python/latest/guides/account/#registering-a-signer)
+  - [Default signer](/docs/algokit-utils/python/latest/guides/account/#default-signer)
+  - [Get a signer](/docs/algokit-utils/python/latest/guides/account/#get-a-signer)
+  - [Accounts](/docs/algokit-utils/python/latest/guides/account/#accounts)
+  - [Rekey account](/docs/algokit-utils/python/latest/guides/account/#rekey-account)
+  - [KMD account management](/docs/algokit-utils/python/latest/guides/account/#kmd-account-management)
+- [Algorand client](/docs/algokit-utils/python/latest/guides/algorand-client/)
+  - [Accessing SDK clients](/docs/algokit-utils/python/latest/guides/algorand-client/#accessing-sdk-clients)
+  - [Accessing manager class instances](/docs/algokit-utils/python/latest/guides/algorand-client/#accessing-manager-class-instances)
+  - [Creating and issuing transactions](/docs/algokit-utils/python/latest/guides/algorand-client/#creating-and-issuing-transactions)
+- [Algo amount handling](/docs/algokit-utils/python/latest/guides/amount/)
+  - [`AlgoAmount`](/docs/algokit-utils/python/latest/guides/amount/#algoamount)
+- [App client and App factory](/docs/algokit-utils/python/latest/guides/app-client/)
+  - [`AppFactory`](/docs/algokit-utils/python/latest/guides/app-client/#appfactory)
+  - [`AppClient`](/docs/algokit-utils/python/latest/guides/app-client/#appclient)
+  - [Dynamically creating clients for a given app spec](/docs/algokit-utils/python/latest/guides/app-client/#dynamically-creating-clients-for-a-given-app-spec)
+  - [Creating and deploying an app](/docs/algokit-utils/python/latest/guides/app-client/#creating-and-deploying-an-app)
+  - [Updating and deleting an app](/docs/algokit-utils/python/latest/guides/app-client/#updating-and-deleting-an-app)
+  - [Calling the app](/docs/algokit-utils/python/latest/guides/app-client/#calling-the-app)
+  - [Funding the app account](/docs/algokit-utils/python/latest/guides/app-client/#funding-the-app-account)
+  - [Reading state](/docs/algokit-utils/python/latest/guides/app-client/#reading-state)
+  - [Handling logic errors and diagnosing errors](/docs/algokit-utils/python/latest/guides/app-client/#handling-logic-errors-and-diagnosing-errors)
+  - [Default arguments](/docs/algokit-utils/python/latest/guides/app-client/#default-arguments)
+- [App deployment](/docs/algokit-utils/python/latest/guides/app-deploy/)
+  - [Smart contract development lifecycle](/docs/algokit-utils/python/latest/guides/app-deploy/#smart-contract-development-lifecycle)
+  - [`AppDeployer`](/docs/algokit-utils/python/latest/guides/app-deploy/#appdeployer)
+  - [Deployment metadata](/docs/algokit-utils/python/latest/guides/app-deploy/#deployment-metadata)
+  - [Lookup deployed apps by name](/docs/algokit-utils/python/latest/guides/app-deploy/#lookup-deployed-apps-by-name)
+  - [Performing a deployment](/docs/algokit-utils/python/latest/guides/app-deploy/#performing-a-deployment)
+- [App management](/docs/algokit-utils/python/latest/guides/app/)
+  - [`AppManager`](/docs/algokit-utils/python/latest/guides/app/#appmanager)
+  - [Calling apps](/docs/algokit-utils/python/latest/guides/app/#calling-apps)
+  - [Accessing state](/docs/algokit-utils/python/latest/guides/app/#accessing-state)
+  - [Getting app information](/docs/algokit-utils/python/latest/guides/app/#getting-app-information)
+  - [Box references](/docs/algokit-utils/python/latest/guides/app/#box-references)
+  - [Common app parameters](/docs/algokit-utils/python/latest/guides/app/#common-app-parameters)
+- [Assets](/docs/algokit-utils/python/latest/guides/asset/)
+  - [`AssetManager`](/docs/algokit-utils/python/latest/guides/asset/#assetmanager)
+  - [Asset Information](/docs/algokit-utils/python/latest/guides/asset/#asset-information)
+  - [Bulk Operations](/docs/algokit-utils/python/latest/guides/asset/#bulk-operations)
+  - [Get Asset Information](/docs/algokit-utils/python/latest/guides/asset/#get-asset-information)
+- [Client management](/docs/algokit-utils/python/latest/guides/client/)
+  - [`ClientManager`](/docs/algokit-utils/python/latest/guides/client/#clientmanager)
+  - [Network configuration](/docs/algokit-utils/python/latest/guides/client/#network-configuration)
+  - [Clients](/docs/algokit-utils/python/latest/guides/client/#clients)
+  - [Automatic retry](/docs/algokit-utils/python/latest/guides/client/#automatic-retry)
+  - [Network information](/docs/algokit-utils/python/latest/guides/client/#network-information)
+- [Debugger](/docs/algokit-utils/python/latest/guides/debugging/)
+  - [Configuration](/docs/algokit-utils/python/latest/guides/debugging/#configuration)
+  - [`AlgoKitLogger`](/docs/algokit-utils/python/latest/guides/debugging/#algokitlogger)
+  - [Debugging Utilities](/docs/algokit-utils/python/latest/guides/debugging/#debugging-utilities)
+- [TestNet Dispenser Client](/docs/algokit-utils/python/latest/guides/dispenser-client/)
+  - [Creating a Dispenser Client](/docs/algokit-utils/python/latest/guides/dispenser-client/#creating-a-dispenser-client)
+  - [Funding an Account](/docs/algokit-utils/python/latest/guides/dispenser-client/#funding-an-account)
+  - [Registering a Refund](/docs/algokit-utils/python/latest/guides/dispenser-client/#registering-a-refund)
+  - [Getting Current Limit](/docs/algokit-utils/python/latest/guides/dispenser-client/#getting-current-limit)
+  - [Error Handling](/docs/algokit-utils/python/latest/guides/dispenser-client/#error-handling)
+- [Testing](/docs/algokit-utils/python/latest/guides/testing/)
+  - [Basic Test Setup](/docs/algokit-utils/python/latest/guides/testing/#basic-test-setup)
+  - [Creating Test Assets](/docs/algokit-utils/python/latest/guides/testing/#creating-test-assets)
+  - [Testing Application Deployments](/docs/algokit-utils/python/latest/guides/testing/#testing-application-deployments)
+  - [Testing Asset Transfers](/docs/algokit-utils/python/latest/guides/testing/#testing-asset-transfers)
+  - [Testing Application Calls](/docs/algokit-utils/python/latest/guides/testing/#testing-application-calls)
+  - [Testing Box Storage](/docs/algokit-utils/python/latest/guides/testing/#testing-box-storage)
+- [Transaction composer](/docs/algokit-utils/python/latest/guides/transaction-composer/)
+  - [Constructing a transaction](/docs/algokit-utils/python/latest/guides/transaction-composer/#constructing-a-transaction)
+  - [Simulating a transaction](/docs/algokit-utils/python/latest/guides/transaction-composer/#simulating-a-transaction)
+  - [Error Transformers](/docs/algokit-utils/python/latest/guides/transaction-composer/#error-transformers)
+- [Transaction management](/docs/algokit-utils/python/latest/guides/transaction/)
+  - [Transaction Results](/docs/algokit-utils/python/latest/guides/transaction/#transaction-results)
+  - [Further reading](/docs/algokit-utils/python/latest/guides/transaction/#further-reading)
+- [Algo transfers (payments)](/docs/algokit-utils/python/latest/guides/transfer/)
+  - [`payment`](/docs/algokit-utils/python/latest/guides/transfer/#payment)
+  - [`ensure_funded`](/docs/algokit-utils/python/latest/guides/transfer/#ensure-funded)
+  - [Dispenser](/docs/algokit-utils/python/latest/guides/transfer/#dispenser)
+- [Typed application clients](/docs/algokit-utils/python/latest/guides/typed-app-clients/)
+  - [Generating an app spec](/docs/algokit-utils/python/latest/guides/typed-app-clients/#generating-an-app-spec)
+  - [Generating a typed client](/docs/algokit-utils/python/latest/guides/typed-app-clients/#generating-a-typed-client)
+  - [Getting a typed client instance](/docs/algokit-utils/python/latest/guides/typed-app-clients/#getting-a-typed-client-instance)
+  - [Client usage](/docs/algokit-utils/python/latest/guides/typed-app-clients/#client-usage)
+- [Migration Guide - v3](/docs/algokit-utils/python/latest/guides/v3-migration-guide/)
+  - [Migration Steps](/docs/algokit-utils/python/latest/guides/v3-migration-guide/#migration-steps)
+  - [Breaking Changes](/docs/algokit-utils/python/latest/guides/v3-migration-guide/#breaking-changes)
+  - [Best Practices](/docs/algokit-utils/python/latest/guides/v3-migration-guide/#best-practices)
+  - [Troubleshooting](/docs/algokit-utils/python/latest/guides/v3-migration-guide/#troubleshooting)
+- [API Reference](docs/markdown/autoapi/)
+  - [algokit_utils](/docs/algokit-utils/python/latest/api/)
 
-
-* [Account management](/docs/algokit-utils/python/latest/guides/account/)
-  * [`AccountManager`](/docs/algokit-utils/python/latest/guides/account/#accountmanager)
-  * [`TransactionSignerAccountProtocol`](/docs/algokit-utils/python/latest/guides/account/#transactionsigneraccountprotocol)
-  * [Registering a signer](/docs/algokit-utils/python/latest/guides/account/#registering-a-signer)
-  * [Default signer](/docs/algokit-utils/python/latest/guides/account/#default-signer)
-  * [Get a signer](/docs/algokit-utils/python/latest/guides/account/#get-a-signer)
-  * [Accounts](/docs/algokit-utils/python/latest/guides/account/#accounts)
-  * [Rekey account](/docs/algokit-utils/python/latest/guides/account/#rekey-account)
-  * [KMD account management](/docs/algokit-utils/python/latest/guides/account/#kmd-account-management)
-* [Algorand client](/docs/algokit-utils/python/latest/guides/algorand-client/)
-  * [Accessing SDK clients](/docs/algokit-utils/python/latest/guides/algorand-client/#accessing-sdk-clients)
-  * [Accessing manager class instances](/docs/algokit-utils/python/latest/guides/algorand-client/#accessing-manager-class-instances)
-  * [Creating and issuing transactions](/docs/algokit-utils/python/latest/guides/algorand-client/#creating-and-issuing-transactions)
-* [Algo amount handling](/docs/algokit-utils/python/latest/guides/amount/)
-  * [`AlgoAmount`](/docs/algokit-utils/python/latest/guides/amount/#algoamount)
-* [App client and App factory](/docs/algokit-utils/python/latest/guides/app-client/)
-  * [`AppFactory`](/docs/algokit-utils/python/latest/guides/app-client/#appfactory)
-  * [`AppClient`](/docs/algokit-utils/python/latest/guides/app-client/#appclient)
-  * [Dynamically creating clients for a given app spec](/docs/algokit-utils/python/latest/guides/app-client/#dynamically-creating-clients-for-a-given-app-spec)
-  * [Creating and deploying an app](/docs/algokit-utils/python/latest/guides/app-client/#creating-and-deploying-an-app)
-  * [Updating and deleting an app](/docs/algokit-utils/python/latest/guides/app-client/#updating-and-deleting-an-app)
-  * [Calling the app](/docs/algokit-utils/python/latest/guides/app-client/#calling-the-app)
-  * [Funding the app account](/docs/algokit-utils/python/latest/guides/app-client/#funding-the-app-account)
-  * [Reading state](/docs/algokit-utils/python/latest/guides/app-client/#reading-state)
-  * [Handling logic errors and diagnosing errors](/docs/algokit-utils/python/latest/guides/app-client/#handling-logic-errors-and-diagnosing-errors)
-  * [Default arguments](/docs/algokit-utils/python/latest/guides/app-client/#default-arguments)
-* [App deployment](/docs/algokit-utils/python/latest/guides/app-deploy/)
-  * [Smart contract development lifecycle](/docs/algokit-utils/python/latest/guides/app-deploy/#smart-contract-development-lifecycle)
-  * [`AppDeployer`](/docs/algokit-utils/python/latest/guides/app-deploy/#appdeployer)
-  * [Deployment metadata](/docs/algokit-utils/python/latest/guides/app-deploy/#deployment-metadata)
-  * [Lookup deployed apps by name](/docs/algokit-utils/python/latest/guides/app-deploy/#lookup-deployed-apps-by-name)
-  * [Performing a deployment](/docs/algokit-utils/python/latest/guides/app-deploy/#performing-a-deployment)
-* [App management](/docs/algokit-utils/python/latest/guides/app/)
-  * [`AppManager`](/docs/algokit-utils/python/latest/guides/app/#appmanager)
-  * [Calling apps](/docs/algokit-utils/python/latest/guides/app/#calling-apps)
-  * [Accessing state](/docs/algokit-utils/python/latest/guides/app/#accessing-state)
-  * [Getting app information](/docs/algokit-utils/python/latest/guides/app/#getting-app-information)
-  * [Box references](/docs/algokit-utils/python/latest/guides/app/#box-references)
-  * [Common app parameters](/docs/algokit-utils/python/latest/guides/app/#common-app-parameters)
-* [Assets](/docs/algokit-utils/python/latest/guides/asset/)
-  * [`AssetManager`](/docs/algokit-utils/python/latest/guides/asset/#assetmanager)
-  * [Asset Information](/docs/algokit-utils/python/latest/guides/asset/#asset-information)
-  * [Bulk Operations](/docs/algokit-utils/python/latest/guides/asset/#bulk-operations)
-  * [Get Asset Information](/docs/algokit-utils/python/latest/guides/asset/#get-asset-information)
-* [Client management](/docs/algokit-utils/python/latest/guides/client/)
-  * [`ClientManager`](/docs/algokit-utils/python/latest/guides/client/#clientmanager)
-  * [Network configuration](/docs/algokit-utils/python/latest/guides/client/#network-configuration)
-  * [Clients](/docs/algokit-utils/python/latest/guides/client/#clients)
-  * [Automatic retry](/docs/algokit-utils/python/latest/guides/client/#automatic-retry)
-  * [Network information](/docs/algokit-utils/python/latest/guides/client/#network-information)
-* [Debugger](/docs/algokit-utils/python/latest/guides/debugging/)
-  * [Configuration](/docs/algokit-utils/python/latest/guides/debugging/#configuration)
-  * [`AlgoKitLogger`](/docs/algokit-utils/python/latest/guides/debugging/#algokitlogger)
-  * [Debugging Utilities](/docs/algokit-utils/python/latest/guides/debugging/#debugging-utilities)
-* [TestNet Dispenser Client](/docs/algokit-utils/python/latest/guides/dispenser-client/)
-  * [Creating a Dispenser Client](/docs/algokit-utils/python/latest/guides/dispenser-client/#creating-a-dispenser-client)
-  * [Funding an Account](/docs/algokit-utils/python/latest/guides/dispenser-client/#funding-an-account)
-  * [Registering a Refund](/docs/algokit-utils/python/latest/guides/dispenser-client/#registering-a-refund)
-  * [Getting Current Limit](/docs/algokit-utils/python/latest/guides/dispenser-client/#getting-current-limit)
-  * [Error Handling](/docs/algokit-utils/python/latest/guides/dispenser-client/#error-handling)
-* [Testing](/docs/algokit-utils/python/latest/guides/testing/)
-  * [Basic Test Setup](/docs/algokit-utils/python/latest/guides/testing/#basic-test-setup)
-  * [Creating Test Assets](/docs/algokit-utils/python/latest/guides/testing/#creating-test-assets)
-  * [Testing Application Deployments](/docs/algokit-utils/python/latest/guides/testing/#testing-application-deployments)
-  * [Testing Asset Transfers](/docs/algokit-utils/python/latest/guides/testing/#testing-asset-transfers)
-  * [Testing Application Calls](/docs/algokit-utils/python/latest/guides/testing/#testing-application-calls)
-  * [Testing Box Storage](/docs/algokit-utils/python/latest/guides/testing/#testing-box-storage)
-* [Transaction composer](/docs/algokit-utils/python/latest/guides/transaction-composer/)
-  * [Constructing a transaction](/docs/algokit-utils/python/latest/guides/transaction-composer/#constructing-a-transaction)
-  * [Simulating a transaction](/docs/algokit-utils/python/latest/guides/transaction-composer/#simulating-a-transaction)
-  * [Error Transformers](/docs/algokit-utils/python/latest/guides/transaction-composer/#error-transformers)
-* [Transaction management](/docs/algokit-utils/python/latest/guides/transaction/)
-  * [Transaction Results](/docs/algokit-utils/python/latest/guides/transaction/#transaction-results)
-  * [Further reading](/docs/algokit-utils/python/latest/guides/transaction/#further-reading)
-* [Algo transfers (payments)](/docs/algokit-utils/python/latest/guides/transfer/)
-  * [`payment`](/docs/algokit-utils/python/latest/guides/transfer/#payment)
-  * [`ensure_funded`](/docs/algokit-utils/python/latest/guides/transfer/#ensure-funded)
-  * [Dispenser](/docs/algokit-utils/python/latest/guides/transfer/#dispenser)
-* [Typed application clients](/docs/algokit-utils/python/latest/guides/typed-app-clients/)
-  * [Generating an app spec](/docs/algokit-utils/python/latest/guides/typed-app-clients/#generating-an-app-spec)
-  * [Generating a typed client](/docs/algokit-utils/python/latest/guides/typed-app-clients/#generating-a-typed-client)
-  * [Getting a typed client instance](/docs/algokit-utils/python/latest/guides/typed-app-clients/#getting-a-typed-client-instance)
-  * [Client usage](/docs/algokit-utils/python/latest/guides/typed-app-clients/#client-usage)
-* [Migration Guide - v3](/docs/algokit-utils/python/latest/guides/v3-migration-guide/)
-  * [Migration Steps](/docs/algokit-utils/python/latest/guides/v3-migration-guide/#migration-steps)
-  * [Breaking Changes](/docs/algokit-utils/python/latest/guides/v3-migration-guide/#breaking-changes)
-  * [Best Practices](/docs/algokit-utils/python/latest/guides/v3-migration-guide/#best-practices)
-  * [Troubleshooting](/docs/algokit-utils/python/latest/guides/v3-migration-guide/#troubleshooting)
-* [API Reference](docs/markdown/autoapi/)
-  * [algokit_utils](/docs/algokit-utils/python/latest/api/)
-
-<a id="core-principles"></a>
+<a id='core-principles'></a>
 
 # Core principles
 
@@ -116,7 +116,7 @@ This library follows the [Guiding Principles of AlgoKit](https://github.com/algo
 - **Type-safety** - This library provides strong type hints with effort put into creating types that provide good type safety and intellisense when used with tools like MyPy.
 - **Productivity** - This library is built to make solution developers highly productive; it has a number of mechanisms to make common code easier and terser to write.
 
-<a id="installation"></a>
+<a id='installation'></a>
 
 # Installation
 
@@ -128,7 +128,7 @@ pip install algokit-utils
 poetry add algokit-utils
 ```
 
-<a id="usage"></a>
+<a id='usage'></a>
 
 # Usage
 
@@ -170,7 +170,7 @@ The library leverages Python’s native type hints and is fully compatible with 
 
 All public abstractions and methods are organized in logical modules matching their domain functionality. You can import types either directly from the root module or from their source submodules. Refer to [API documentation](docs/markdown/autoapi/) for more details.
 
-<a id="config-logging"></a>
+<a id='config-logging'></a>
 
 # Config and logging
 
@@ -199,7 +199,7 @@ To retrieve the current debug state you can use `debug` property.
 
 This will turn on things like automatic tracing, more verbose logging and [advanced debugging](/docs/algokit-utils/python/latest/guides/debugging/). It’s likely this option will result in extra HTTP calls to algod and it’s worth being careful when it’s turned on.
 
-<a id="capabilities"></a>
+<a id='capabilities'></a>
 
 # Capabilities
 
@@ -220,7 +220,7 @@ The library helps you interact with and develop against the Algorand blockchain 
   - [**Algo transfers (payments)**](/docs/algokit-utils/python/latest/guides/transfer/) - Ability to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding
   - [**Automated testing**](/docs/algokit-utils/python/latest/guides/testing/) - Reusable snippets to leverage AlgoKit Utils abstractions in a manner that are useful for when writing tests in tools like [Pytest](https://docs.pytest.org/en/latest/).
 
-<a id="reference-documentation"></a>
+<a id='reference-documentation'></a>
 
 # Reference documentation
 

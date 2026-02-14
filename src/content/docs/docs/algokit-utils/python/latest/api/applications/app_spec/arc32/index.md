@@ -4,10 +4,11 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Attributes
 
 | [`AppSpecStateDict`](#algokit_utils.applications.app_spec.arc32.AppSpecStateDict)         | Type defining Application Specification state entries                                                           |
-|-------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | [`OnCompleteActionName`](#algokit_utils.applications.app_spec.arc32.OnCompleteActionName) | String literals representing on completion transaction types                                                    |
 | [`MethodConfigDict`](#algokit_utils.applications.app_spec.arc32.MethodConfigDict)         | Dictionary of dict[OnCompletionActionName, CallConfig] representing allowed actions for each on completion type |
 | [`DefaultArgumentType`](#algokit_utils.applications.app_spec.arc32.DefaultArgumentType)   | Literal values describing the types of default argument sources                                                 |
@@ -15,42 +16,42 @@ sidebar:
 
 ## Classes
 
-| [`CallConfig`](#algokit_utils.applications.app_spec.arc32.CallConfig)                   | Describes the type of calls a method can be used for based on {py:class}\`algosdk.transaction.OnComplete\` type   |
-|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| [`StructArgDict`](#algokit_utils.applications.app_spec.arc32.StructArgDict)             | dict() -> new empty dictionary                                                                                    |
-| [`DefaultArgumentDict`](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict) | DefaultArgument is a container for any arguments that may                                                         |
-| [`MethodHints`](#algokit_utils.applications.app_spec.arc32.MethodHints)                 | MethodHints provides hints to the caller about how to call the method                                             |
-| [`Arc32Contract`](#algokit_utils.applications.app_spec.arc32.Arc32Contract)             | ARC-0032 application specification                                                                                |
+| [`CallConfig`](#algokit_utils.applications.app_spec.arc32.CallConfig)                   | Describes the type of calls a method can be used for based on {py:class}\`algosdk.transaction.OnComplete\` type |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| [`StructArgDict`](#algokit_utils.applications.app_spec.arc32.StructArgDict)             | dict() -> new empty dictionary                                                                                  |
+| [`DefaultArgumentDict`](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict) | DefaultArgument is a container for any arguments that may                                                       |
+| [`MethodHints`](#algokit_utils.applications.app_spec.arc32.MethodHints)                 | MethodHints provides hints to the caller about how to call the method                                           |
+| [`Arc32Contract`](#algokit_utils.applications.app_spec.arc32.Arc32Contract)             | ARC-0032 application specification                                                                              |
 
 ## Module Contents
 
-### *type* algokit_utils.applications.app_spec.arc32.AppSpecStateDict *= dict[str, dict[str, dict]]*
+### _type_ algokit_utils.applications.app_spec.arc32.AppSpecStateDict _= dict[str, dict[str, dict]]_
 
 Type defining Application Specification state entries
 
-### *class* algokit_utils.applications.app_spec.arc32.CallConfig
+### _class_ algokit_utils.applications.app_spec.arc32.CallConfig
 
 Bases: `enum.IntFlag`
 
 Describes the type of calls a method can be used for based on {py:class}\`algosdk.transaction.OnComplete\` type
 
-#### NEVER *= 0*
+#### NEVER _= 0_
 
 Never handle the specified on completion type
 
-#### CALL *= 1*
+#### CALL _= 1_
 
 Only handle the specified on completion type for application calls
 
-#### CREATE *= 2*
+#### CREATE _= 2_
 
 Only handle the specified on completion type for application create calls
 
-#### ALL *= 3*
+#### ALL _= 3_
 
 Handle the specified on completion type for both create and normal application calls
 
-### *class* algokit_utils.applications.app_spec.arc32.StructArgDict
+### _class_ algokit_utils.applications.app_spec.arc32.StructArgDict
 
 Bases: `TypedDict`
 
@@ -61,7 +62,8 @@ dict(mapping) -> new dictionary initialized from a mapping object’s
 
 dict(iterable) -> new dictionary initialized as if via:
 : d = {}
-  for k, v in iterable:
+for k, v in iterable:
+
   <br/>
   > d[k] = v
 
@@ -72,82 +74,82 @@ dict(
 ```
 
 kwargs) -> new dictionary initialized with the name=value pairs
-: in the keyword argument list.  For example:  dict(one=1, two=2)
+: in the keyword argument list. For example: dict(one=1, two=2)
 
-#### name *: str*
+#### name _: str_
 
-#### elements *: list[list[str]]*
+#### elements _: list[list[str]]_
 
-### *type* algokit_utils.applications.app_spec.arc32.OnCompleteActionName *= Literal['no_op', 'opt_in', 'close_out', 'clear_state', 'update_application', 'delete_application']*
+### _type_ algokit_utils.applications.app_spec.arc32.OnCompleteActionName _= Literal['no_op', 'opt_in', 'close_out', 'clear_state', 'update_application', 'delete_application']_
 
 String literals representing on completion transaction types
 
-### *type* algokit_utils.applications.app_spec.arc32.MethodConfigDict *= dict[OnCompleteActionName, [CallConfig](#algokit_utils.applications.app_spec.arc32.CallConfig)]*
+### _type_ algokit_utils.applications.app_spec.arc32.MethodConfigDict _= dict[OnCompleteActionName, [CallConfig](#algokit_utils.applications.app_spec.arc32.CallConfig)]_
 
 Dictionary of dict[OnCompletionActionName, CallConfig] representing allowed actions for each on completion type
 
-### *type* algokit_utils.applications.app_spec.arc32.DefaultArgumentType *= Literal['abi-method', 'local-state', 'global-state', 'constant']*
+### _type_ algokit_utils.applications.app_spec.arc32.DefaultArgumentType _= Literal['abi-method', 'local-state', 'global-state', 'constant']_
 
 Literal values describing the types of default argument sources
 
-### *class* algokit_utils.applications.app_spec.arc32.DefaultArgumentDict
+### _class_ algokit_utils.applications.app_spec.arc32.DefaultArgumentDict
 
 Bases: `TypedDict`
 
 DefaultArgument is a container for any arguments that may
 be resolved prior to calling some target method
 
-#### source *: DefaultArgumentType*
+#### source _: DefaultArgumentType_
 
-#### data *: int | str | bytes | algosdk.abi.method.MethodDict*
+#### data _: int | str | bytes | algosdk.abi.method.MethodDict_
 
 ### algokit_utils.applications.app_spec.arc32.StateDict
 
-### *class* algokit_utils.applications.app_spec.arc32.MethodHints
+### _class_ algokit_utils.applications.app_spec.arc32.MethodHints
 
 MethodHints provides hints to the caller about how to call the method
 
-#### read_only *: bool* *= False*
+#### read_only _: bool_ _= False_
 
-#### structs *: dict[str, [StructArgDict](#algokit_utils.applications.app_spec.arc32.StructArgDict)]*
+#### structs _: dict[str, [StructArgDict](#algokit_utils.applications.app_spec.arc32.StructArgDict)]_
 
-#### default_arguments *: dict[str, [DefaultArgumentDict](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]*
+#### default_arguments _: dict[str, [DefaultArgumentDict](#algokit_utils.applications.app_spec.arc32.DefaultArgumentDict)]_
 
-#### call_config *: MethodConfigDict*
+#### call_config _: MethodConfigDict_
 
 #### empty() → bool
 
 #### dictify() → dict[str, Any]
 
-#### *static* undictify(data: dict[str, Any]) → [MethodHints](#algokit_utils.applications.app_spec.arc32.MethodHints)
+#### _static_ undictify(data: dict[str, Any]) → [MethodHints](#algokit_utils.applications.app_spec.arc32.MethodHints)
 
-### *class* algokit_utils.applications.app_spec.arc32.Arc32Contract
+### _class_ algokit_utils.applications.app_spec.arc32.Arc32Contract
 
 ARC-0032 application specification
 
 See <[https://github.com/algorandfoundation/ARCs/pull/150](https://github.com/algorandfoundation/ARCs/pull/150)>
 
-#### approval_program *: str*
+#### approval_program _: str_
 
-#### clear_program *: str*
+#### clear_program _: str_
 
-#### contract *: algosdk.abi.Contract*
+#### contract _: algosdk.abi.Contract_
 
-#### hints *: dict[str, [MethodHints](#algokit_utils.applications.app_spec.arc32.MethodHints)]*
+#### hints _: dict[str, [MethodHints](#algokit_utils.applications.app_spec.arc32.MethodHints)]_
 
-#### schema *: StateDict*
+#### schema _: StateDict_
 
-#### global_state_schema *: algosdk.transaction.StateSchema*
+#### global_state_schema _: algosdk.transaction.StateSchema_
 
-#### local_state_schema *: algosdk.transaction.StateSchema*
+#### local_state_schema _: algosdk.transaction.StateSchema_
 
-#### bare_call_config *: MethodConfigDict*
+#### bare_call_config _: MethodConfigDict_
 
 #### dictify() → dict
 
 #### to_json(indent: int | None = None) → str
 
-#### *static* from_json(application_spec: str) → [Arc32Contract](#algokit_utils.applications.app_spec.arc32.Arc32Contract)
+#### _static_ from_json(application_spec: str) → [Arc32Contract](#algokit_utils.applications.app_spec.arc32.Arc32Contract)
 
 #### export(directory: pathlib.Path | str | None = None) → None
 
@@ -156,6 +158,6 @@ Write out the artifacts generated by the application to disk.
 Writes the approval program, clear program, contract specification and application specification
 to files in the specified directory.
 
-* **Parameters:**
+- **Parameters:**
   **directory** – Path to the directory where the artifacts should be written. If not specified,
   uses the current working directory

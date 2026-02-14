@@ -1,9 +1,8 @@
 ---
 title: types/transaction
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/transaction
-
-
 
 ## Table of contents
 
@@ -33,7 +32,7 @@ title: types/transaction
 
 ### Arc2TransactionNote
 
-Ƭ **Arc2TransactionNote**: \{ `dAppName`: `string` ; `data`: `string` ; `format`: ``"m"`` \| ``"b"`` \| ``"u"``  } \| \{ `dAppName`: `string` ; `data`: [`TransactionNoteData`](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/#transactionnotedata) ; `format`: ``"j"``  }
+Ƭ **Arc2TransactionNote**: \{ `dAppName`: `string` ; `data`: `string` ; `format`: `"m"` \| `"b"` \| `"u"` } \| \{ `dAppName`: `string` ; `data`: [`TransactionNoteData`](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/#transactionnotedata) ; `format`: `"j"` }
 
 ARC-0002 compatible transaction note components https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md
 
@@ -41,7 +40,7 @@ ARC-0002 compatible transaction note components https://github.com/algorandfound
 
 [src/types/transaction.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L16)
 
-___
+---
 
 ### SendSingleTransactionResult
 
@@ -53,7 +52,7 @@ Result from sending a single transaction.
 
 [src/types/transaction.ts:50](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L50)
 
-___
+---
 
 ### SendTransactionFrom
 
@@ -63,17 +62,18 @@ Core account abstraction when signing/sending transactions
 
 This type is used across the entire AlgoKit Utils library and allows you to pass through
 many types of accounts, including:
-* `Account` - The in-built `algosdk.Account` type for mnemonic accounts
-* `SigningAccount` - An AlgoKit Utils class that wraps Account to provide support for rekeyed accounts
-* `LogicSigAccount` - The in-built `algosdk.LogicSigAccount` type for logic signatures
-* `MultisigAccount` - An AlgoKit Utils class that wraps a multisig account and provides mechanisms to get a multisig account
-* `TransactionSignerAccount` - An AlgoKit Utils class that wraps the in-built `algosdk.TransactionSigner` along with the sender address
+
+- `Account` - The in-built `algosdk.Account` type for mnemonic accounts
+- `SigningAccount` - An AlgoKit Utils class that wraps Account to provide support for rekeyed accounts
+- `LogicSigAccount` - The in-built `algosdk.LogicSigAccount` type for logic signatures
+- `MultisigAccount` - An AlgoKit Utils class that wraps a multisig account and provides mechanisms to get a multisig account
+- `TransactionSignerAccount` - An AlgoKit Utils class that wraps the in-built `algosdk.TransactionSigner` along with the sender address
 
 #### Defined in
 
 [src/types/transaction.ts:108](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L108)
 
-___
+---
 
 ### TransactionNote
 
@@ -83,11 +83,11 @@ ___
 
 [src/types/transaction.ts:12](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L12)
 
-___
+---
 
 ### TransactionNoteData
 
-Ƭ **TransactionNoteData**: `string` \| ``null`` \| `undefined` \| `number` \| `any`[] \| `Record`\<`string`, `any`\>
+Ƭ **TransactionNoteData**: `string` \| `null` \| `undefined` \| `number` \| `any`[] \| `Record`\<`string`, `any`\>
 
 #### Defined in
 

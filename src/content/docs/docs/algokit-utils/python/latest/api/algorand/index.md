@@ -4,14 +4,15 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Classes
 
-| [`AlgorandClient`](#algokit_utils.algorand.AlgorandClient)   | A client that brokers easy access to Algorand functionality.   |
-|--------------------------------------------------------------|----------------------------------------------------------------|
+| [`AlgorandClient`](#algokit_utils.algorand.AlgorandClient) | A client that brokers easy access to Algorand functionality. |
+| ---------------------------------------------------------- | ------------------------------------------------------------ |
 
 ## Module Contents
 
-### *class* algokit_utils.algorand.AlgorandClient(config: [algokit_utils.models.network.AlgoClientConfigs](/docs/algokit-utils/python/latest/api/models/network/#algokit_utils.models.network.AlgoClientConfigs) | [algokit_utils.clients.client_manager.AlgoSdkClients](/docs/algokit-utils/python/latest/api/clients/client_manager/#algokit_utils.clients.client_manager.AlgoSdkClients))
+### _class_ algokit_utils.algorand.AlgorandClient(config: [algokit_utils.models.network.AlgoClientConfigs](/docs/algokit-utils/python/latest/api/models/network/#algokit_utils.models.network.AlgoClientConfigs) | [algokit_utils.clients.client_manager.AlgoSdkClients](/docs/algokit-utils/python/latest/api/clients/client_manager/#algokit_utils.clients.client_manager.AlgoSdkClients))
 
 A client that brokers easy access to Algorand functionality.
 
@@ -19,11 +20,11 @@ A client that brokers easy access to Algorand functionality.
 
 Sets the default validity window for transactions.
 
-* **Parameters:**
+- **Parameters:**
   **validity_window** – The number of rounds between the first and last valid rounds
-* **Returns:**
+- **Returns:**
   The AlgorandClient so method calls can be chained
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.mainnet().set_default_validity_window(1000);
   ```
@@ -32,11 +33,11 @@ Sets the default validity window for transactions.
 
 Sets the default signer to use if no other signer is specified.
 
-* **Parameters:**
+- **Parameters:**
   **signer** – The signer to use, either a TransactionSigner or a TransactionSignerAccountProtocol
-* **Returns:**
+- **Returns:**
   The AlgorandClient so method calls can be chained
-* **Example:**
+- **Example:**
   ```python
   signer = SigningAccount(private_key=..., address=...)
   algorand = AlgorandClient.mainnet().set_default_signer(signer)
@@ -46,12 +47,12 @@ Sets the default signer to use if no other signer is specified.
 
 Tracks the given account for later signing.
 
-* **Parameters:**
-  * **sender** – The sender address to use this signer for
-  * **signer** – The signer to sign transactions with for the given sender
-* **Returns:**
+- **Parameters:**
+  - **sender** – The sender address to use this signer for
+  - **signer** – The signer to sign transactions with for the given sender
+- **Returns:**
   The AlgorandClient so method calls can be chained
-* **Example:**
+- **Example:**
   ```python
   signer = SigningAccount(private_key=..., address=...)
   algorand = AlgorandClient.mainnet().set_signer(signer.addr, signer.signer)
@@ -61,11 +62,11 @@ Tracks the given account for later signing.
 
 Sets the default signer to use if no other signer is specified.
 
-* **Parameters:**
+- **Parameters:**
   **signer** – The signer to use, either a TransactionSigner or a TransactionSignerAccountProtocol
-* **Returns:**
+- **Returns:**
   The AlgorandClient so method calls can be chained
-* **Example:**
+- **Example:**
   ```python
   accountManager = AlgorandClient.mainnet()
   accountManager.set_signer_from_account(TransactionSignerAccount(address=..., signer=...))
@@ -79,12 +80,12 @@ Sets the default signer to use if no other signer is specified.
 
 Sets a cache value to use for suggested params.
 
-* **Parameters:**
-  * **suggested_params** – The suggested params to use
-  * **until** – A timestamp until which to cache, or if not specified then the timeout is used
-* **Returns:**
+- **Parameters:**
+  - **suggested_params** – The suggested params to use
+  - **until** – A timestamp until which to cache, or if not specified then the timeout is used
+- **Returns:**
   The AlgorandClient so method calls can be chained
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.mainnet().set_suggested_params_cache(suggested_params, time.time() + 3.6e6)
   ```
@@ -93,11 +94,11 @@ Sets a cache value to use for suggested params.
 
 Sets the timeout for caching suggested params.
 
-* **Parameters:**
+- **Parameters:**
   **timeout** – The timeout in milliseconds
-* **Returns:**
+- **Returns:**
   The AlgorandClient so method calls can be chained
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.mainnet().set_suggested_params_cache_timeout(10_000)
   ```
@@ -106,7 +107,7 @@ Sets the timeout for caching suggested params.
 
 Get suggested params for a transaction (either cached or from algod if the cache is stale or empty)
 
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.mainnet().get_suggested_params()
   ```
@@ -116,80 +117,80 @@ Get suggested params for a transaction (either cached or from algod if the cache
 Register a function that will be used to transform an error caught when simulating or executing
 composed transaction groups made from new_group
 
-* **Parameters:**
+- **Parameters:**
   **transformer** – The error transformer function
-* **Returns:**
+- **Returns:**
   The AlgorandClient so you can chain method calls
 
 #### unregister_error_transformer(transformer: algokit_utils.transactions.transaction_composer.ErrorTransformer) → typing_extensions.Self
 
 Unregister an error transformer function
 
-* **Parameters:**
+- **Parameters:**
   **transformer** – The error transformer function to remove
-* **Returns:**
+- **Returns:**
   The AlgorandClient so you can chain method calls
 
 #### new_group() → [algokit_utils.transactions.transaction_composer.TransactionComposer](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Start a new TransactionComposer transaction group
 
-* **Example:**
+- **Example:**
   ```python
   composer = AlgorandClient.mainnet().new_group()
   result = await composer.add_transaction(payment).send()
   ```
 
-#### *property* client *: [algokit_utils.clients.client_manager.ClientManager](/docs/algokit-utils/python/latest/api/clients/client_manager/#algokit_utils.clients.client_manager.ClientManager)*
+#### _property_ client _: [algokit_utils.clients.client_manager.ClientManager](/docs/algokit-utils/python/latest/api/clients/client_manager/#algokit_utils.clients.client_manager.ClientManager)_
 
 Get clients, including algosdk clients and app clients.
 
-* **Example:**
+- **Example:**
   ```python
   clientManager = AlgorandClient.mainnet().client
   ```
 
-#### *property* account *: [algokit_utils.accounts.account_manager.AccountManager](/docs/algokit-utils/python/latest/api/accounts/account_manager/#algokit_utils.accounts.account_manager.AccountManager)*
+#### _property_ account _: [algokit_utils.accounts.account_manager.AccountManager](/docs/algokit-utils/python/latest/api/accounts/account_manager/#algokit_utils.accounts.account_manager.AccountManager)_
 
 Get or create accounts that can sign transactions.
 
-* **Example:**
+- **Example:**
   ```python
   accountManager = AlgorandClient.mainnet().account
   ```
 
-#### *property* asset *: [algokit_utils.assets.asset_manager.AssetManager](/docs/algokit-utils/python/latest/api/assets/asset_manager/#algokit_utils.assets.asset_manager.AssetManager)*
+#### _property_ asset _: [algokit_utils.assets.asset_manager.AssetManager](/docs/algokit-utils/python/latest/api/assets/asset_manager/#algokit_utils.assets.asset_manager.AssetManager)_
 
 Get or create assets.
 
-* **Example:**
+- **Example:**
   ```python
   assetManager = AlgorandClient.mainnet().asset
   ```
 
-#### *property* app *: [algokit_utils.applications.app_manager.AppManager](/docs/algokit-utils/python/latest/api/applications/app_manager/#algokit_utils.applications.app_manager.AppManager)*
+#### _property_ app _: [algokit_utils.applications.app_manager.AppManager](/docs/algokit-utils/python/latest/api/applications/app_manager/#algokit_utils.applications.app_manager.AppManager)_
 
 Get or create applications.
 
-* **Example:**
+- **Example:**
   ```python
   appManager = AlgorandClient.mainnet().app
   ```
 
-#### *property* app_deployer *: [algokit_utils.applications.app_deployer.AppDeployer](/docs/algokit-utils/python/latest/api/applications/app_deployer/#algokit_utils.applications.app_deployer.AppDeployer)*
+#### _property_ app_deployer _: [algokit_utils.applications.app_deployer.AppDeployer](/docs/algokit-utils/python/latest/api/applications/app_deployer/#algokit_utils.applications.app_deployer.AppDeployer)_
 
 Get or create applications.
 
-* **Example:**
+- **Example:**
   ```python
   appDeployer = AlgorandClient.mainnet().app_deployer
   ```
 
-#### *property* send *: [algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender](/docs/algokit-utils/python/latest/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender)*
+#### _property_ send _: [algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender](/docs/algokit-utils/python/latest/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender)_
 
 Methods for sending a transaction and waiting for confirmation
 
-* **Example:**
+- **Example:**
   ```python
   result = await AlgorandClient.mainnet().send.payment(
   PaymentParams(
@@ -199,11 +200,11 @@ Methods for sending a transaction and waiting for confirmation
   ))
   ```
 
-#### *property* create_transaction *: [algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator](/docs/algokit-utils/python/latest/api/transactions/transaction_creator/#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)*
+#### _property_ create_transaction _: [algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator](/docs/algokit-utils/python/latest/api/transactions/transaction_creator/#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)_
 
 Methods for building transactions
 
-* **Example:**
+- **Example:**
   ```python
   transaction = AlgorandClient.mainnet().create_transaction.payment(
   PaymentParams(
@@ -213,55 +214,55 @@ Methods for building transactions
   ))
   ```
 
-#### *static* default_localnet() → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+#### _static_ default_localnet() → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an AlgorandClient pointing at default LocalNet ports and API token.
 
-* **Returns:**
+- **Returns:**
   The AlgorandClient
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.default_localnet()
   ```
 
-#### *static* testnet() → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+#### _static_ testnet() → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an AlgorandClient pointing at TestNet using AlgoNode.
 
-* **Returns:**
+- **Returns:**
   The AlgorandClient
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.testnet()
   ```
 
-#### *static* mainnet() → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+#### _static_ mainnet() → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an AlgorandClient pointing at MainNet using AlgoNode.
 
-* **Returns:**
+- **Returns:**
   The AlgorandClient
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.mainnet()
   ```
 
-#### *static* from_clients(algod: algosdk.v2client.algod.AlgodClient, indexer: algosdk.v2client.indexer.IndexerClient | None = None, kmd: algosdk.kmd.KMDClient | None = None) → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+#### _static_ from_clients(algod: algosdk.v2client.algod.AlgodClient, indexer: algosdk.v2client.indexer.IndexerClient | None = None, kmd: algosdk.kmd.KMDClient | None = None) → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an AlgorandClient pointing to the given client(s).
 
-* **Parameters:**
-  * **algod** – The algod client to use
-  * **indexer** – The indexer client to use
-  * **kmd** – The kmd client to use
-* **Returns:**
+- **Parameters:**
+  - **algod** – The algod client to use
+  - **indexer** – The indexer client to use
+  - **kmd** – The kmd client to use
+- **Returns:**
   The AlgorandClient
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.from_clients(algod, indexer, kmd)
   ```
 
-#### *static* from_environment() → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+#### _static_ from_environment() → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an AlgorandClient loading the configuration from environment variables.
 
@@ -269,24 +270,24 @@ Retrieve configurations from environment variables when defined or get defaults.
 
 Expects to be called from a Python environment.
 
-* **Returns:**
+- **Returns:**
   The AlgorandClient
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.from_environment()
   ```
 
-#### *static* from_config(algod_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig), indexer_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None, kmd_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None) → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+#### _static_ from_config(algod_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig), indexer_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None, kmd_config: [algokit_utils.models.network.AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None) → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an AlgorandClient from the given config.
 
-* **Parameters:**
-  * **algod_config** – The config to use for the algod client
-  * **indexer_config** – The config to use for the indexer client
-  * **kmd_config** – The config to use for the kmd client
-* **Returns:**
+- **Parameters:**
+  - **algod_config** – The config to use for the algod client
+  - **indexer_config** – The config to use for the indexer client
+  - **kmd_config** – The config to use for the kmd client
+- **Returns:**
   The AlgorandClient
-* **Example:**
+- **Example:**
   ```python
   algorand = AlgorandClient.from_config(algod_config, indexer_config, kmd_config)
   ```

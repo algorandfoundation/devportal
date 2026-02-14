@@ -1,9 +1,8 @@
 ---
 title: types/transfer
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/transfer
-
-
 
 ## Table of contents
 

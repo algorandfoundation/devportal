@@ -1,9 +1,8 @@
 ---
 title: types/config
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/config
-
-
 
 ## Table of contents
 

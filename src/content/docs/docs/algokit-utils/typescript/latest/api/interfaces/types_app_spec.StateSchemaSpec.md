@@ -1,9 +1,8 @@
 ---
 title: StateSchemaSpec
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / StateSchemaSpec
-
-
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).StateSchemaSpec
 
@@ -28,7 +27,7 @@ Global storage spec
 
 [src/types/app-spec.ts:311](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L311)
 
-___
+---
 
 ### local
 

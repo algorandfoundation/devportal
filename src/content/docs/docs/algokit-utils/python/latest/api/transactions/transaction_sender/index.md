@@ -4,10 +4,11 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Classes
 
 | [`SendSingleTransactionResult`](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)                       | Base class for transaction results.                     |
-|-----------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
+| --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
 | [`SendSingleAssetCreateTransactionResult`](#algokit_utils.transactions.transaction_sender.SendSingleAssetCreateTransactionResult) | Result of creating a new ASA (Algorand Standard Asset). |
 | [`SendAppTransactionResult`](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)                             | Result of an application transaction.                   |
 | [`SendAppUpdateTransactionResult`](#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)                 | Result of updating an application.                      |
@@ -16,47 +17,47 @@ sidebar:
 
 ## Module Contents
 
-### *class* algokit_utils.transactions.transaction_sender.SendSingleTransactionResult
+### _class_ algokit_utils.transactions.transaction_sender.SendSingleTransactionResult
 
 Base class for transaction results.
 
 Represents the result of sending a single transaction.
 
-#### transaction *: [algokit_utils.models.transaction.TransactionWrapper](/docs/algokit-utils/python/latest/api/models/transaction/#algokit_utils.models.transaction.TransactionWrapper)*
+#### transaction _: [algokit_utils.models.transaction.TransactionWrapper](/docs/algokit-utils/python/latest/api/models/transaction/#algokit_utils.models.transaction.TransactionWrapper)_
 
 The last transaction
 
-#### confirmation *: algosdk.v2client.algod.AlgodResponseType*
+#### confirmation _: algosdk.v2client.algod.AlgodResponseType_
 
 The last confirmation
 
-#### group_id *: str*
+#### group_id _: str_
 
 The group ID
 
-#### tx_id *: str | None* *= None*
+#### tx_id _: str | None_ _= None_
 
 The transaction ID
 
-#### tx_ids *: list[str]*
+#### tx_ids _: list[str]_
 
 The full array of transaction IDs
 
-#### transactions *: list[[algokit_utils.models.transaction.TransactionWrapper](/docs/algokit-utils/python/latest/api/models/transaction/#algokit_utils.models.transaction.TransactionWrapper)]*
+#### transactions _: list[[algokit_utils.models.transaction.TransactionWrapper](/docs/algokit-utils/python/latest/api/models/transaction/#algokit_utils.models.transaction.TransactionWrapper)]_
 
 The full array of transactions
 
-#### confirmations *: list[algosdk.v2client.algod.AlgodResponseType]*
+#### confirmations _: list[algosdk.v2client.algod.AlgodResponseType]_
 
 The full array of confirmations
 
-#### returns *: list[[algokit_utils.applications.abi.ABIReturn](/docs/algokit-utils/python/latest/api/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### returns _: list[[algokit_utils.applications.abi.ABIReturn](/docs/algokit-utils/python/latest/api/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None_ _= None_
 
 The ABI return value if applicable
 
-#### *classmethod* from_composer_result(result: [algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults), \*, is_abi: bool = False, index: int = -1) → typing_extensions.Self
+#### _classmethod_ from_composer_result(result: [algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.SendAtomicTransactionComposerResults), \*, is_abi: bool = False, index: int = -1) → typing_extensions.Self
 
-### *class* algokit_utils.transactions.transaction_sender.SendSingleAssetCreateTransactionResult
+### _class_ algokit_utils.transactions.transaction_sender.SendSingleAssetCreateTransactionResult
 
 Bases: [`SendSingleTransactionResult`](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
@@ -64,11 +65,11 @@ Result of creating a new ASA (Algorand Standard Asset).
 
 Contains the asset ID of the newly created asset.
 
-#### asset_id *: int*
+#### asset_id _: int_
 
 The ID of the newly created asset
 
-### *class* algokit_utils.transactions.transaction_sender.SendAppTransactionResult
+### _class_ algokit_utils.transactions.transaction_sender.SendAppTransactionResult
 
 Bases: [`SendSingleTransactionResult`](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult), `Generic`[`ABIReturnT`]
 
@@ -76,11 +77,11 @@ Result of an application transaction.
 
 Contains the ABI return value if applicable.
 
-#### abi_return *: ABIReturnT | None* *= None*
+#### abi_return _: ABIReturnT | None_ _= None_
 
 The ABI return value if applicable
 
-### *class* algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult
+### _class_ algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult
 
 Bases: [`SendAppTransactionResult`](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[`ABIReturnT`]
 
@@ -88,15 +89,15 @@ Result of updating an application.
 
 Contains the compiled approval and clear programs.
 
-#### compiled_approval *: Any | None* *= None*
+#### compiled_approval _: Any | None_ _= None_
 
 The compiled approval program
 
-#### compiled_clear *: Any | None* *= None*
+#### compiled_clear _: Any | None_ _= None_
 
 The compiled clear state program
 
-### *class* algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult
+### _class_ algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult
 
 Bases: [`SendAppUpdateTransactionResult`](#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[`ABIReturnT`]
 
@@ -104,15 +105,15 @@ Result of creating a new application.
 
 Contains the app ID and address of the newly created application.
 
-#### app_id *: int*
+#### app_id _: int_
 
 The ID of the newly created application
 
-#### app_address *: str*
+#### app_address _: str_
 
 The address of the newly created application
 
-### *class* algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender(new_group: collections.abc.Callable[[], [algokit_utils.transactions.transaction_composer.TransactionComposer](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)], asset_manager: [algokit_utils.assets.asset_manager.AssetManager](/docs/algokit-utils/python/latest/api/assets/asset_manager/#algokit_utils.assets.asset_manager.AssetManager), app_manager: [algokit_utils.applications.app_manager.AppManager](/docs/algokit-utils/python/latest/api/applications/app_manager/#algokit_utils.applications.app_manager.AppManager), algod_client: algosdk.v2client.algod.AlgodClient)
+### _class_ algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender(new_group: collections.abc.Callable[[], [algokit_utils.transactions.transaction_composer.TransactionComposer](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)], asset_manager: [algokit_utils.assets.asset_manager.AssetManager](/docs/algokit-utils/python/latest/api/assets/asset_manager/#algokit_utils.assets.asset_manager.AssetManager), app_manager: [algokit_utils.applications.app_manager.AppManager](/docs/algokit-utils/python/latest/api/applications/app_manager/#algokit_utils.applications.app_manager.AppManager), algod_client: algosdk.v2client.algod.AlgodClient)
 
 Orchestrates sending transactions for AlgorandClient.
 
@@ -123,9 +124,9 @@ asset operations, and application calls.
 
 Create a new transaction group.
 
-* **Returns:**
+- **Returns:**
   A new TransactionComposer instance
-* **Example:**
+- **Example:**
   ```python
   sender = AlgorandClientTransactionSender(new_group, asset_manager, app_manager, algod_client)
   composer = sender.new_group()
@@ -137,12 +138,13 @@ Create a new transaction group.
 
 Send a payment transaction to transfer Algo between accounts.
 
-* **Parameters:**
-  * **params** – Payment transaction parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Payment transaction parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the payment transaction
-* **Example:**
+- **Example:**
+
   ```python
   result = algorand.send.payment(PaymentParams(
    sender="SENDERADDRESS",
@@ -177,12 +179,13 @@ Send a payment transaction to transfer Algo between accounts.
 
 Create a new Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset creation parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset creation parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the new asset ID
-* **Example:**
+- **Example:**
+
   ```python
   result = algorand.send.asset_create(AssetCreateParams(
    sender="SENDERADDRESS",
@@ -231,12 +234,12 @@ Create a new Algorand Standard Asset.
 
 Configure an existing Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset configuration parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset configuration parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the configuration transaction
-* **Example:**
+- **Example:**
   ```python
   result = algorand.send.asset_config(AssetConfigParams(
    sender="MANAGERADDRESS",
@@ -269,12 +272,13 @@ Configure an existing Algorand Standard Asset.
 
 Freeze or unfreeze an Algorand Standard Asset for an account.
 
-* **Parameters:**
-  * **params** – Asset freeze parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset freeze parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the freeze transaction
-* **Example:**
+- **Example:**
+
   ```python
   result = algorand.send.asset_freeze(AssetFreezeParams(
    sender="MANAGERADDRESS",
@@ -315,12 +319,13 @@ Freeze or unfreeze an Algorand Standard Asset for an account.
 
 Destroys an Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset destruction parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset destruction parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the destroy transaction
-* **Example:**
+- **Example:**
+
   ```python
   result = algorand.send.asset_destroy(AssetDestroyParams(
    sender="MANAGERADDRESS",
@@ -357,12 +362,13 @@ Destroys an Algorand Standard Asset.
 
 Transfer an Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset transfer parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset transfer parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the transfer transaction
-* **Example:**
+- **Example:**
+
   ```python
   result = algorand.send.asset_transfer(AssetTransferParams(
    sender="HOLDERADDRESS",
@@ -406,12 +412,13 @@ Transfer an Algorand Standard Asset.
 
 Opt an account into an Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset opt-in parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Asset opt-in parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the opt-in transaction
-* **Example:**
+- **Example:**
+
   ```python
   result = algorand.send.asset_opt_in(AssetOptInParams(
    sender="SENDERADDRESS",
@@ -448,15 +455,16 @@ Opt an account into an Algorand Standard Asset.
 
 Opt an account out of an Algorand Standard Asset.
 
-* **Parameters:**
-  * **params** – Asset opt-out parameters
-  * **send_params** – Send parameters
-  * **ensure_zero_balance** – Check if account has zero balance before opt-out, defaults to True
-* **Raises:**
+- **Parameters:**
+  - **params** – Asset opt-out parameters
+  - **send_params** – Send parameters
+  - **ensure_zero_balance** – Check if account has zero balance before opt-out, defaults to True
+- **Raises:**
   **ValueError** – If account has non-zero balance or is not opted in
-* **Returns:**
+- **Returns:**
   Result of the opt-out transaction
-* **Example:**
+- **Example:**
+
   ```python
   result = algorand.send.asset_opt_out(AssetOptOutParams(
    sender="SENDERADDRESS",
@@ -497,12 +505,13 @@ Opt an account out of an Algorand Standard Asset.
 
 Create a new application.
 
-* **Parameters:**
-  * **params** – Application creation parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Application creation parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the new application ID and address
-* **Example:**
+- **Example:**
+
   ```python
   result = algorand.send.app_create(AppCreateParams(
    sender="CREATORADDRESS",
@@ -559,12 +568,12 @@ Create a new application.
 
 Update an application.
 
-* **Parameters:**
-  * **params** – Application update parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Application update parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the compiled programs
-* **Example:**
+- **Example:**
   ```python
   # Basic example
   algorand.send.app_update(AppUpdateParams(
@@ -607,12 +616,12 @@ Update an application.
 
 Delete an application.
 
-* **Parameters:**
-  * **params** – Application deletion parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Application deletion parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the deletion transaction
-* **Example:**
+- **Example:**
   ```python
   # Basic example
   algorand.send.app_delete(AppDeleteParams(
@@ -652,12 +661,12 @@ Delete an application.
 
 Call an application.
 
-* **Parameters:**
-  * **params** – Application call parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Application call parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing any ABI return value
-* **Example:**
+- **Example:**
   ```python
   # Basic example
   algorand.send.app_call(AppCallParams(
@@ -697,12 +706,12 @@ Call an application.
 
 Call an application’s create method.
 
-* **Parameters:**
-  * **params** – Method call parameters for application creation
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Method call parameters for application creation
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the new application ID and address
-* **Example:**
+- **Example:**
   ```python
   # Note: you may prefer to use `algorand.client` to get an app client for more advanced functionality.
   #
@@ -769,12 +778,13 @@ Call an application’s create method.
 
 Call an application’s update method.
 
-* **Parameters:**
-  * **params** – Method call parameters for application update
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Method call parameters for application update
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing the compiled programs
-* **Example:**
+- **Example:**
+
   ```python
   # Basic example:
   method = algorand.abi.Method(
@@ -820,12 +830,13 @@ Call an application’s update method.
 
 Call an application’s delete method.
 
-* **Parameters:**
-  * **params** – Method call parameters for application deletion
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Method call parameters for application deletion
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the deletion transaction
-* **Example:**
+- **Example:**
+
   ```python
   # Basic example:
   method = algorand.abi.Method(
@@ -865,12 +876,13 @@ Call an application’s delete method.
 
 Call an application’s call method.
 
-* **Parameters:**
-  * **params** – Method call parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Method call parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result containing any ABI return value
-* **Example:**
+- **Example:**
+
   ```python
   # Basic example:
   method = algorand.abi.Method(
@@ -912,12 +924,13 @@ Call an application’s call method.
 
 Register an online key.
 
-* **Parameters:**
-  * **params** – Key registration parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Key registration parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the registration transaction
-* **Example:**
+- **Example:**
+
   ```python
   # Basic example:
   params = OnlineKeyRegistrationParams(
@@ -951,12 +964,13 @@ Register an online key.
 
 Register an offline key.
 
-* **Parameters:**
-  * **params** – Key registration parameters
-  * **send_params** – Send parameters
-* **Returns:**
+- **Parameters:**
+  - **params** – Key registration parameters
+  - **send_params** – Send parameters
+- **Returns:**
   Result of the registration transaction
-* **Example:**
+- **Example:**
+
   ```python
   # Basic example:
   params = OfflineKeyRegistrationParams(

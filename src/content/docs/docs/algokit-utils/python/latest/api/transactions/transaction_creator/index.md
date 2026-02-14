@@ -4,39 +4,40 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Classes
 
-| [`AlgorandClientTransactionCreator`](#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)   | A creator for Algorand transactions.   |
-|--------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
+| [`AlgorandClientTransactionCreator`](#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator) | A creator for Algorand transactions. |
+| ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
 
 ## Module Contents
 
-### *class* algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator(new_group: collections.abc.Callable[[], [algokit_utils.transactions.transaction_composer.TransactionComposer](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)])
+### _class_ algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator(new_group: collections.abc.Callable[[], [algokit_utils.transactions.transaction_composer.TransactionComposer](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)])
 
 A creator for Algorand transactions.
 
 Provides methods to create various types of Algorand transactions including payments,
 asset operations, application calls and key registrations.
 
-* **Parameters:**
+- **Parameters:**
   **new_group** – A lambda that starts a new TransactionComposer transaction group
-* **Example:**
+- **Example:**
   ```python
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   creator.payment(PaymentParams(sender="sender", receiver="receiver", amount=AlgoAmount.from_algo(1)))
   ```
 
-#### *property* payment *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.PaymentParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.PaymentParams)], algosdk.transaction.Transaction]*
+#### _property_ payment _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.PaymentParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.PaymentParams)], algosdk.transaction.Transaction]_
 
 Create a payment transaction to transfer Algo between accounts.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   creator.payment(PaymentParams(sender="sender", receiver="receiver", amount=AlgoAmount.from_algo(4)))
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.payment(PaymentParams(
@@ -55,18 +56,18 @@ Create a payment transaction to transfer Algo between accounts.
       ))
   ```
 
-#### *property* asset_create *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetCreateParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetCreateParams)], algosdk.transaction.Transaction]*
+#### _property_ asset_create _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetCreateParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetCreateParams)], algosdk.transaction.Transaction]_
 
 Create a create Algorand Standard Asset transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AssetCreateParams(sender="SENDER_ADDRESS", total=1000)
   txn = creator.asset_create(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.asset_create(AssetCreateParams(
@@ -92,18 +93,18 @@ Create a create Algorand Standard Asset transaction.
   ))
   ```
 
-#### *property* asset_config *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetConfigParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetConfigParams)], algosdk.transaction.Transaction]*
+#### _property_ asset_config _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetConfigParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetConfigParams)], algosdk.transaction.Transaction]_
 
 Create an asset config transaction to reconfigure an existing Algorand Standard Asset.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AssetConfigParams(sender="SENDER_ADDRESS", asset_id=123456, manager="NEW_MANAGER_ADDRESS")
   txn = creator.asset_config(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.asset_config(AssetConfigParams(
@@ -124,11 +125,11 @@ Create an asset config transaction to reconfigure an existing Algorand Standard 
   ))
   ```
 
-#### *property* asset_freeze *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetFreezeParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetFreezeParams)], algosdk.transaction.Transaction]*
+#### _property_ asset_freeze _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetFreezeParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetFreezeParams)], algosdk.transaction.Transaction]_
 
 Create an Algorand Standard Asset freeze transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
@@ -138,7 +139,7 @@ Create an Algorand Standard Asset freeze transaction.
       frozen=True)
   txn = creator.asset_freeze(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.asset_freeze(AssetFreezeParams(
@@ -157,18 +158,18 @@ Create an Algorand Standard Asset freeze transaction.
   ))
   ```
 
-#### *property* asset_destroy *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetDestroyParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetDestroyParams)], algosdk.transaction.Transaction]*
+#### _property_ asset_destroy _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetDestroyParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetDestroyParams)], algosdk.transaction.Transaction]_
 
 Create an Algorand Standard Asset destroy transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AssetDestroyParams(sender="SENDER_ADDRESS", asset_id=123456)
   txn = creator.asset_destroy(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.asset_destroy(AssetDestroyParams(
@@ -185,11 +186,11 @@ Create an Algorand Standard Asset destroy transaction.
   ))
   ```
 
-#### *property* asset_transfer *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetTransferParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetTransferParams)], algosdk.transaction.Transaction]*
+#### _property_ asset_transfer _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetTransferParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetTransferParams)], algosdk.transaction.Transaction]_
 
 Create an Algorand Standard Asset transfer transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
@@ -199,7 +200,7 @@ Create an Algorand Standard Asset transfer transaction.
       receiver="RECEIVER_ADDRESS")
   txn = creator.asset_transfer(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.asset_transfer(AssetTransferParams(
@@ -220,18 +221,18 @@ Create an Algorand Standard Asset transfer transaction.
   ))
   ```
 
-#### *property* asset_opt_in *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetOptInParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetOptInParams)], algosdk.transaction.Transaction]*
+#### _property_ asset_opt_in _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetOptInParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetOptInParams)], algosdk.transaction.Transaction]_
 
 Create an Algorand Standard Asset opt-in transaction.
 
-* **Example:**
+- **Example:**
   ```python
   # Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AssetOptInParams(sender="SENDER_ADDRESS", asset_id=123456)
   txn = creator.asset_opt_in(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   # Advanced example
   creator.asset_opt_in(AssetOptInParams(
@@ -248,18 +249,18 @@ Create an Algorand Standard Asset opt-in transaction.
   ))
   ```
 
-#### *property* asset_opt_out *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetOptOutParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetOptOutParams)], algosdk.transaction.Transaction]*
+#### _property_ asset_opt_out _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AssetOptOutParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AssetOptOutParams)], algosdk.transaction.Transaction]_
 
 Create an asset opt-out transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AssetOptOutParams(sender="SENDER_ADDRESS", asset_id=123456, creator="CREATOR_ADDRESS")
   txn = creator.asset_opt_out(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.asset_opt_out(AssetOptOutParams(
@@ -277,11 +278,11 @@ Create an asset opt-out transaction.
   ))
   ```
 
-#### *property* app_create *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCreateParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCreateParams)], algosdk.transaction.Transaction]*
+#### _property_ app_create _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCreateParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCreateParams)], algosdk.transaction.Transaction]_
 
 Create an application create transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
@@ -298,7 +299,7 @@ Create an application create transaction.
   )
   txn = creator.app_create(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.app_create(AppCreateParams(
@@ -324,11 +325,11 @@ Create an application create transaction.
   ))
   ```
 
-#### *property* app_update *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppUpdateParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppUpdateParams)], algosdk.transaction.Transaction]*
+#### _property_ app_update _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppUpdateParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppUpdateParams)], algosdk.transaction.Transaction]_
 
 Create an application update transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
@@ -338,7 +339,7 @@ Create an application update transaction.
       clear_state_program="TEAL_NEW_CLEAR_CODE",
       args=[b'new_arg1', b'new_arg2']))
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.app_update(AppUpdateParams(
@@ -363,18 +364,18 @@ Create an application update transaction.
   ))
   ```
 
-#### *property* app_delete *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppDeleteParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppDeleteParams)], algosdk.transaction.Transaction]*
+#### _property_ app_delete _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppDeleteParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppDeleteParams)], algosdk.transaction.Transaction]_
 
 Create an application delete transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AppDeleteParams(sender="SENDER_ADDRESS", app_id=789, args=[b'delete_arg'])
   txn = creator.app_delete(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.app_delete(AppDeleteParams(
@@ -397,11 +398,11 @@ Create an application delete transaction.
   ))
   ```
 
-#### *property* app_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCallParams)], algosdk.transaction.Transaction]*
+#### _property_ app_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCallParams)], algosdk.transaction.Transaction]_
 
 Create an application call transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
@@ -426,7 +427,7 @@ Create an application call transaction.
   )
   txn = creator.app_call(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.app_call(AppCallParams(
@@ -453,18 +454,18 @@ Create an application call transaction.
   ))
   ```
 
-#### *property* app_create_method_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
+#### _property_ app_create_method_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCreateMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
 
 Create an application create call with ABI method call transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AppCreateMethodCallParams(sender="SENDER_ADDRESS", app_id=0, method=some_abi_method_object)
   built_txns = creator.app_create_method_call(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.app_create_method_call(AppCreateMethodCallParams(
@@ -492,18 +493,18 @@ Create an application create call with ABI method call transaction.
   ))
   ```
 
-#### *property* app_update_method_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
+#### _property_ app_update_method_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppUpdateMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
 
 Create an application update call with ABI method call transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AppUpdateMethodCallParams(sender="SENDER_ADDRESS", app_id=789, method=some_abi_method_object)
   built_txns = creator.app_update_method_call(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.app_update_method_call(AppUpdateMethodCallParams(
@@ -530,18 +531,18 @@ Create an application update call with ABI method call transaction.
   ))
   ```
 
-#### *property* app_delete_method_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
+#### _property_ app_delete_method_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppDeleteMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
 
 Create an application delete call with ABI method call transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AppDeleteMethodCallParams(sender="SENDER_ADDRESS", app_id=789, method=some_abi_method_object)
   built_txns = creator.app_delete_method_call(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.app_delete_method_call(AppDeleteMethodCallParams(
@@ -564,18 +565,19 @@ Create an application delete call with ABI method call transaction.
   ))
   ```
 
-#### *property* app_call_method_call *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCallMethodCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
+#### _property_ app_call_method_call _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.AppCallMethodCallParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.AppCallMethodCallParams)], [algokit_utils.transactions.transaction_composer.BuiltTransactions](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]_
 
 Create an application call with ABI method call transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   params = AppCallMethodCallParams(sender="SENDER_ADDRESS", app_id=789, method=some_abi_method_object)
   built_txns = creator.app_call_method_call(params)
   ```
-* **Example:**
+- **Example:**
+
   ```python
   Advanced example
   creator.app_call_method_call(AppCallMethodCallParams(
@@ -600,11 +602,11 @@ Create an application call with ABI method call transaction.
 
   ))
 
-#### *property* online_key_registration *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)], algosdk.transaction.Transaction]*
+#### _property_ online_key_registration _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.OnlineKeyRegistrationParams)], algosdk.transaction.Transaction]_
 
 Create an online key registration transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
@@ -619,7 +621,7 @@ Create an online key registration transaction.
   )
   txn = creator.online_key_registration(params)
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.online_key_registration(OnlineKeyRegistrationParams(
@@ -641,18 +643,18 @@ Create an online key registration transaction.
   ))
   ```
 
-#### *property* offline_key_registration *: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)], algosdk.transaction.Transaction]*
+#### _property_ offline_key_registration _: collections.abc.Callable[[[algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams](/docs/algokit-utils/python/latest/api/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.OfflineKeyRegistrationParams)], algosdk.transaction.Transaction]_
 
 Create an offline key registration transaction.
 
-* **Example:**
+- **Example:**
   ```python
   #Basic example
   creator = AlgorandClientTransactionCreator(lambda: TransactionComposer())
   txn = creator.offline_key_registration(OfflineKeyRegistrationParams(sender="SENDER_ADDRESS",
       prevent_account_from_ever_participating_again=True))
   ```
-* **Example:**
+- **Example:**
   ```python
   #Advanced example
   creator.offline_key_registration(OfflineKeyRegistrationParams(

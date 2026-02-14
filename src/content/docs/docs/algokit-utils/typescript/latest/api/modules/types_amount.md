@@ -1,9 +1,8 @@
 ---
 title: types/amount
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/amount
-
-
 
 ## Table of contents
 

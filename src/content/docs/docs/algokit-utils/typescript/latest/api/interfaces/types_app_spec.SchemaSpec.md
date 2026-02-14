@@ -1,9 +1,8 @@
 ---
 title: SchemaSpec
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / SchemaSpec
-
-
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).SchemaSpec
 
@@ -28,7 +27,7 @@ The global storage schema
 
 [src/types/app-spec.ts:297](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L297)
 
-___
+---
 
 ### local
 

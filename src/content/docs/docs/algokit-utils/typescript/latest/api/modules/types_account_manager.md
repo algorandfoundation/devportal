@@ -1,9 +1,8 @@
 ---
 title: types/account-manager
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/account-manager
-
-
 
 ## Table of contents
 
@@ -30,8 +29,8 @@ This function has memoization, so will return the same transaction signer for a 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                                                                                                                                                                                                                                                                                                                                                                      |
+| :---- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `val` | [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount` |
 
 #### Returns
@@ -43,7 +42,7 @@ A transaction signer
 **`Example`**
 
 ```typescript
-const signer = getAccountTransactionSigner(account)
+const signer = getAccountTransactionSigner(account);
 ```
 
 #### Defined in

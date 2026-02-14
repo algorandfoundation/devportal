@@ -4,175 +4,176 @@ sidebar:
   label: Index
   order: 0
 ---
+
 ## Classes
 
 | [`EnsureFundedResult`](#algokit_utils.accounts.account_manager.EnsureFundedResult)                                               | Result from performing an ensure funded call.                                                 |
-|----------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | [`EnsureFundedFromTestnetDispenserApiResult`](#algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult) | Result from performing an ensure funded call using TestNet dispenser API.                     |
 | [`AccountInformation`](#algokit_utils.accounts.account_manager.AccountInformation)                                               | Information about an Algorand account's current status, balance and other properties.         |
 | [`AccountManager`](#algokit_utils.accounts.account_manager.AccountManager)                                                       | Creates and keeps track of signing accounts that can sign transactions for a sending address. |
 
 ## Module Contents
 
-### *class* algokit_utils.accounts.account_manager.EnsureFundedResult
+### _class_ algokit_utils.accounts.account_manager.EnsureFundedResult
 
 Bases: [`algokit_utils.transactions.transaction_sender.SendSingleTransactionResult`](/docs/algokit-utils/python/latest/api/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult), `_CommonEnsureFundedParams`
 
 Result from performing an ensure funded call.
 
-### *class* algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult
+### _class_ algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult
 
 Bases: `_CommonEnsureFundedParams`
 
 Result from performing an ensure funded call using TestNet dispenser API.
 
-### *class* algokit_utils.accounts.account_manager.AccountInformation
+### _class_ algokit_utils.accounts.account_manager.AccountInformation
 
 Information about an Algorand account’s current status, balance and other properties.
 
 See https://dev.algorand.co/reference/rest-apis/algod/#account for detailed field descriptions.
 
-#### address *: str*
+#### address _: str_
 
 The account’s address
 
-#### amount *: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### amount _: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)_
 
 The account’s current balance
 
-#### amount_without_pending_rewards *: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### amount_without_pending_rewards _: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)_
 
 The account’s balance without the pending rewards
 
-#### min_balance *: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### min_balance _: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)_
 
 The account’s minimum required balance
 
-#### pending_rewards *: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### pending_rewards _: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)_
 
 The amount of pending rewards
 
-#### rewards *: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### rewards _: [algokit_utils.models.amount.AlgoAmount](/docs/algokit-utils/python/latest/api/models/amount/#algokit_utils.models.amount.AlgoAmount)_
 
 The amount of rewards earned
 
-#### round *: int*
+#### round _: int_
 
 The round for which this information is relevant
 
-#### status *: str*
+#### status _: str_
 
 The account’s status (e.g., ‘Offline’, ‘Online’)
 
-#### total_apps_opted_in *: int | None* *= None*
+#### total_apps_opted_in _: int | None_ _= None_
 
 Number of applications this account has opted into
 
-#### total_assets_opted_in *: int | None* *= None*
+#### total_assets_opted_in _: int | None_ _= None_
 
 Number of assets this account has opted into
 
-#### total_box_bytes *: int | None* *= None*
+#### total_box_bytes _: int | None_ _= None_
 
 Total number of box bytes used by this account
 
-#### total_boxes *: int | None* *= None*
+#### total_boxes _: int | None_ _= None_
 
 Total number of boxes used by this account
 
-#### total_created_apps *: int | None* *= None*
+#### total_created_apps _: int | None_ _= None_
 
 Number of applications created by this account
 
-#### total_created_assets *: int | None* *= None*
+#### total_created_assets _: int | None_ _= None_
 
 Number of assets created by this account
 
-#### apps_local_state *: list[dict] | None* *= None*
+#### apps_local_state _: list[dict] | None_ _= None_
 
 Local state of applications this account has opted into
 
-#### apps_total_extra_pages *: int | None* *= None*
+#### apps_total_extra_pages _: int | None_ _= None_
 
 Number of extra pages allocated to applications
 
-#### apps_total_schema *: dict | None* *= None*
+#### apps_total_schema _: dict | None_ _= None_
 
 Total schema for all applications
 
-#### assets *: list[dict] | None* *= None*
+#### assets _: list[dict] | None_ _= None_
 
 Assets held by this account
 
-#### auth_addr *: str | None* *= None*
+#### auth_addr _: str | None_ _= None_
 
 If rekeyed, the authorized address
 
-#### closed_at_round *: int | None* *= None*
+#### closed_at_round _: int | None_ _= None_
 
 Round when this account was closed
 
-#### created_apps *: list[dict] | None* *= None*
+#### created_apps _: list[dict] | None_ _= None_
 
 Applications created by this account
 
-#### created_assets *: list[dict] | None* *= None*
+#### created_assets _: list[dict] | None_ _= None_
 
 Assets created by this account
 
-#### created_at_round *: int | None* *= None*
+#### created_at_round _: int | None_ _= None_
 
 Round when this account was created
 
-#### deleted *: bool | None* *= None*
+#### deleted _: bool | None_ _= None_
 
 Whether this account is deleted
 
-#### incentive_eligible *: bool | None* *= None*
+#### incentive_eligible _: bool | None_ _= None_
 
 Whether this account is eligible for incentives
 
-#### last_heartbeat *: int | None* *= None*
+#### last_heartbeat _: int | None_ _= None_
 
 Last heartbeat round for this account
 
-#### last_proposed *: int | None* *= None*
+#### last_proposed _: int | None_ _= None_
 
 Last round this account proposed a block
 
-#### participation *: dict | None* *= None*
+#### participation _: dict | None_ _= None_
 
 Participation information for this account
 
-#### reward_base *: int | None* *= None*
+#### reward_base _: int | None_ _= None_
 
 Base reward for this account
 
-#### sig_type *: str | None* *= None*
+#### sig_type _: str | None_ _= None_
 
 Signature type for this account
 
-### *class* algokit_utils.accounts.account_manager.AccountManager(client_manager: [algokit_utils.clients.client_manager.ClientManager](/docs/algokit-utils/python/latest/api/clients/client_manager/#algokit_utils.clients.client_manager.ClientManager))
+### _class_ algokit_utils.accounts.account_manager.AccountManager(client_manager: [algokit_utils.clients.client_manager.ClientManager](/docs/algokit-utils/python/latest/api/clients/client_manager/#algokit_utils.clients.client_manager.ClientManager))
 
 Creates and keeps track of signing accounts that can sign transactions for a sending address.
 
 This class provides functionality to create, track, and manage various types of accounts including
 mnemonic-based, rekeyed, multisig, and logic signature accounts.
 
-* **Parameters:**
+- **Parameters:**
   **client_manager** – The ClientManager client to use for algod and kmd clients
-* **Example:**
+- **Example:**
   ```python
   account_manager = AccountManager(client_manager)
   ```
 
-#### *property* kmd *: [algokit_utils.accounts.kmd_account_manager.KmdAccountManager](/docs/algokit-utils/python/latest/api/accounts/kmd_account_manager/#algokit_utils.accounts.kmd_account_manager.KmdAccountManager)*
+#### _property_ kmd _: [algokit_utils.accounts.kmd_account_manager.KmdAccountManager](/docs/algokit-utils/python/latest/api/accounts/kmd_account_manager/#algokit_utils.accounts.kmd_account_manager.KmdAccountManager)_
 
 KMD account manager that allows you to easily get and create accounts using KMD.
 
-* **Return KmdAccountManager:**
+- **Return KmdAccountManager:**
   The ‘KmdAccountManager’ instance
-* **Example:**
+- **Example:**
   ```python
   kmd_manager = account_manager.kmd
   ```
@@ -184,11 +185,11 @@ Sets the default signer to use if no other signer is specified.
 If this isn’t set and a transaction needs signing for a given sender
 then an error will be thrown from get_signer / get_account.
 
-* **Parameters:**
+- **Parameters:**
   **signer** – A TransactionSigner signer to use.
-* **Returns:**
+- **Returns:**
   The AccountManager so method calls can be chained
-* **Example:**
+- **Example:**
   ```python
   signer_account = account_manager.random()
   account_manager.set_default_signer(signer_account)
@@ -198,12 +199,12 @@ then an error will be thrown from get_signer / get_account.
 
 Tracks the given TransactionSigner against the given sender address for later signing.
 
-* **Parameters:**
-  * **sender** – The sender address to use this signer for
-  * **signer** – The TransactionSigner to sign transactions with for the given sender
-* **Returns:**
+- **Parameters:**
+  - **sender** – The sender address to use this signer for
+  - **signer** – The TransactionSigner to sign transactions with for the given sender
+- **Returns:**
   The AccountManager instance for method chaining
-* **Example:**
+- **Example:**
   ```python
   account_manager.set_signer("SENDERADDRESS", transaction_signer)
   ```
@@ -212,12 +213,12 @@ Tracks the given TransactionSigner against the given sender address for later si
 
 Merges the given AccountManager into this one.
 
-* **Parameters:**
-  * **another_account_manager** – The AccountManager to merge into this one
-  * **overwrite_existing** – Whether to overwrite existing signers in this manager
-* **Returns:**
+- **Parameters:**
+  - **another_account_manager** – The AccountManager to merge into this one
+  - **overwrite_existing** – Whether to overwrite existing signers in this manager
+- **Returns:**
   The AccountManager instance for method chaining
-* **Example:**
+- **Example:**
   ```python
   accountManager2.set_signers(accountManager1)
   ```
@@ -234,19 +235,21 @@ Note: If you are generating accounts via the various methods on AccountManager
 The method accepts either a positional argument or a keyword argument named ‘account’ or ‘signer’.
 The ‘signer’ parameter is deprecated and will show a warning when used.
 
-* **Parameters:**
-  * **\*args** – 
+- **Parameters:**
+  - **\*args** –
 
     Variable positional arguments. The first argument should be a TransactionSignerAccountProtocol.
-  * **\*\*kwargs** – 
+
+  - **\*\*kwargs** –
 
     Variable keyword arguments. Can include ‘account’ or ‘signer’ (deprecated) as
     TransactionSignerAccountProtocol.
-* **Returns:**
+
+- **Returns:**
   The AccountManager instance for method chaining
-* **Raises:**
+- **Raises:**
   **ValueError** – If no account or signer argument is provided
-* **Example:**
+- **Example:**
   ```python
   account_manager = AccountManager(client_manager)
   # Using positional argument
@@ -269,13 +272,13 @@ Returns the TransactionSigner for the given sender address.
 
 If no signer has been registered for that address then the default signer is used if registered.
 
-* **Parameters:**
+- **Parameters:**
   **sender** – The sender address or account
-* **Returns:**
+- **Returns:**
   The TransactionSigner
-* **Raises:**
+- **Raises:**
   **ValueError** – If no signer is found and no default signer is set
-* **Example:**
+- **Example:**
   ```python
   signer = account_manager.get_signer("SENDERADDRESS")
   ```
@@ -284,13 +287,13 @@ If no signer has been registered for that address then the default signer is use
 
 Returns the TransactionSignerAccountProtocol for the given sender address.
 
-* **Parameters:**
+- **Parameters:**
   **sender** – The sender address
-* **Returns:**
+- **Returns:**
   The TransactionSignerAccountProtocol
-* **Raises:**
+- **Raises:**
   **ValueError** – If no account is found or if the account is not a regular account
-* **Example:**
+- **Example:**
   ```python
   sender = account_manager.random().address
   # ...
@@ -305,11 +308,11 @@ Returns the given sender account’s current status, balance and spendable amoun
 See [https://dev.algorand.co/reference/rest-apis/algod/#account](https://dev.algorand.co/reference/rest-apis/algod/#account)
 for response data schema details.
 
-* **Parameters:**
+- **Parameters:**
   **sender** – The address or account compliant with TransactionSignerAccountProtocol protocol to look up
-* **Returns:**
+- **Returns:**
   The account information
-* **Example:**
+- **Example:**
   ```python
   address = "XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA"
   account_info = account_manager.get_information(address)
@@ -319,17 +322,18 @@ for response data schema details.
 
 Tracks and returns an Algorand account with secret key loaded by taking the mnemonic secret.
 
-* **Parameters:**
-  * **mnemonic** – The mnemonic secret representing the private key of an account
-  * **sender** – Optional address to use as the sender
-* **Returns:**
+- **Parameters:**
+  - **mnemonic** – The mnemonic secret representing the private key of an account
+  - **sender** – Optional address to use as the sender
+- **Returns:**
   The account
 
 #### WARNING
+
 Be careful how the mnemonic is handled. Never commit it into source control and ideally load it
 from the environment (ideally via a secret storage service) rather than the file system.
 
-* **Example:**
+- **Example:**
   ```python
   account = account_manager.from_mnemonic("mnemonic secret ...")
   ```
@@ -341,24 +345,26 @@ Tracks and returns an Algorand account with private key loaded by convention fro
 This allows you to write code that will work seamlessly in production and local development (LocalNet)
 without manual config locally (including when you reset the LocalNet).
 
-* **Parameters:**
-  * **name** – The name identifier of the account
-  * **fund_with** – Optional amount to fund the account with when it gets created
+- **Parameters:**
+  - **name** – The name identifier of the account
+  - **fund_with** – Optional amount to fund the account with when it gets created
     (when targeting LocalNet)
-* **Returns:**
+- **Returns:**
   The account
-* **Raises:**
-  **ValueError** – If environment variable {NAME}_MNEMONIC is missing when looking for account {NAME}
+- **Raises:**
+  **ValueError** – If environment variable {NAME}\_MNEMONIC is missing when looking for account {NAME}
 
 #### NOTE
-Convention:
-: * **Non-LocalNet:** will load {NAME}_MNEMONIC as a mnemonic secret.
-    If {NAME}_SENDER is defined then it will use that for the sender address
-    (i.e. to support rekeyed accounts)
-  * **LocalNet:** will load the account from a KMD wallet called {NAME} and if that wallet doesn’t exist
-    it will create it and fund the account for you
 
-* **Example:**
+Convention:
+: \* **Non-LocalNet:** will load {NAME}\_MNEMONIC as a mnemonic secret.
+If {NAME}\_SENDER is defined then it will use that for the sender address
+(i.e. to support rekeyed accounts)
+
+- **LocalNet:** will load the account from a KMD wallet called {NAME} and if that wallet doesn’t exist
+  it will create it and fund the account for you
+
+- **Example:**
   ```python
   # If you have a mnemonic secret loaded into `MY_ACCOUNT_MNEMONIC` then you can call:
   account = account_manager.from_environment('MY_ACCOUNT')
@@ -370,15 +376,15 @@ Convention:
 
 Tracks and returns an Algorand account with private key loaded from the given KMD wallet.
 
-* **Parameters:**
-  * **name** – The name of the wallet to retrieve an account from
-  * **predicate** – Optional filter to use to find the account
-  * **sender** – Optional sender address to use this signer for (aka a rekeyed account)
-* **Returns:**
+- **Parameters:**
+  - **name** – The name of the wallet to retrieve an account from
+  - **predicate** – Optional filter to use to find the account
+  - **sender** – Optional sender address to use this signer for (aka a rekeyed account)
+- **Returns:**
   The account
-* **Raises:**
+- **Raises:**
   **ValueError** – If unable to find KMD account with given name and predicate
-* **Example:**
+- **Example:**
   ```python
   # Get default funded account in a LocalNet:
   defaultDispenserAccount = account.from_kmd('unencrypted-default-wallet',
@@ -390,12 +396,12 @@ Tracks and returns an Algorand account with private key loaded from the given KM
 
 Tracks and returns an account that represents a logic signature.
 
-* **Parameters:**
-  * **program** – The bytes that make up the compiled logic signature
-  * **args** – Optional (binary) arguments to pass into the logic signature
-* **Returns:**
+- **Parameters:**
+  - **program** – The bytes that make up the compiled logic signature
+  - **args** – Optional (binary) arguments to pass into the logic signature
+- **Returns:**
   A logic signature account wrapper
-* **Example:**
+- **Example:**
   ```python
   account = account.logicsig(program, [new Uint8Array(3, ...)])
   ```
@@ -404,12 +410,12 @@ Tracks and returns an account that represents a logic signature.
 
 Tracks and returns an account that supports partial or full multisig signing.
 
-* **Parameters:**
-  * **metadata** – The metadata for the multisig account
-  * **signing_accounts** – The signers that are currently present
-* **Returns:**
+- **Parameters:**
+  - **metadata** – The metadata for the multisig account
+  - **signing_accounts** – The signers that are currently present
+- **Returns:**
   A multisig account wrapper
-* **Example:**
+- **Example:**
   ```python
   account = account_manager.multi_sig(
       version=1,
@@ -423,9 +429,9 @@ Tracks and returns an account that supports partial or full multisig signing.
 
 Tracks and returns a new, random Algorand account.
 
-* **Returns:**
+- **Returns:**
   The account
-* **Example:**
+- **Example:**
   ```python
   account = account_manager.random()
   ```
@@ -436,9 +442,9 @@ Returns an Algorand account with private key loaded for the default LocalNet dis
 
 This account can be used to fund other accounts.
 
-* **Returns:**
+- **Returns:**
   The account
-* **Example:**
+- **Example:**
   ```python
   account = account_manager.localnet_dispenser()
   ```
@@ -449,9 +455,9 @@ Returns an account (with private key loaded) that can act as a dispenser from en
 
 If environment variables are not present, returns the default LocalNet dispenser account.
 
-* **Returns:**
+- **Returns:**
   The account
-* **Example:**
+- **Example:**
   ```python
   account = account_manager.dispenser_from_environment()
   ```
@@ -460,12 +466,12 @@ If environment variables are not present, returns the default LocalNet dispenser
 
 Tracks and returns an Algorand account that is a rekeyed version of the given account to a new sender.
 
-* **Parameters:**
-  * **sender** – The account or address to use as the sender
-  * **account** – The account to use as the signer for this new rekeyed account
-* **Returns:**
+- **Parameters:**
+  - **sender** – The account or address to use as the sender
+  - **account** – The account to use as the signer for this new rekeyed account
+- **Returns:**
   The rekeyed account
-* **Example:**
+- **Example:**
   ```python
   account = account.from_mnemonic("mnemonic secret ...")
   rekeyed_account = account_manager.rekeyed(account, "SENDERADDRESS...")
@@ -475,27 +481,28 @@ Tracks and returns an Algorand account that is a rekeyed version of the given ac
 
 Rekey an account to a new address.
 
-* **Parameters:**
-  * **account** – The account to rekey
-  * **rekey_to** – The address or account to rekey to
-  * **signer** – Optional transaction signer
-  * **note** – Optional transaction note
-  * **lease** – Optional transaction lease
-  * **static_fee** – Optional static fee
-  * **extra_fee** – Optional extra fee
-  * **max_fee** – Optional max fee
-  * **validity_window** – Optional validity window
-  * **first_valid_round** – Optional first valid round
-  * **last_valid_round** – Optional last valid round
-  * **suppress_log** – Optional flag to suppress logging
-* **Returns:**
+- **Parameters:**
+  - **account** – The account to rekey
+  - **rekey_to** – The address or account to rekey to
+  - **signer** – Optional transaction signer
+  - **note** – Optional transaction note
+  - **lease** – Optional transaction lease
+  - **static_fee** – Optional static fee
+  - **extra_fee** – Optional extra fee
+  - **max_fee** – Optional max fee
+  - **validity_window** – Optional validity window
+  - **first_valid_round** – Optional first valid round
+  - **last_valid_round** – Optional last valid round
+  - **suppress_log** – Optional flag to suppress logging
+- **Returns:**
   The result of the transaction and the transaction that was sent
 
 #### WARNING
+
 Please be careful with this function and be sure to read the
 [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying).
 
-* **Example:**
+- **Example:**
   ```python
   # Basic example (with string addresses):
   algorand.account.rekey_account("ACCOUNTADDRESS", "NEWADDRESS")
@@ -525,27 +532,27 @@ Algo locked in minimum balance requirement).
 
 See [https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr](https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr) for details.
 
-* **Parameters:**
-  * **account_to_fund** – The account to fund
-  * **dispenser_account** – The account to use as a dispenser funding source
-  * **min_spending_balance** – The minimum balance of Algo that the account
+- **Parameters:**
+  - **account_to_fund** – The account to fund
+  - **dispenser_account** – The account to use as a dispenser funding source
+  - **min_spending_balance** – The minimum balance of Algo that the account
     should have available to spend
-  * **min_funding_increment** – Optional minimum funding increment
-  * **send_params** – Parameters for the send operation, defaults to None
-  * **signer** – Optional transaction signer
-  * **rekey_to** – Optional rekey address
-  * **note** – Optional transaction note
-  * **lease** – Optional transaction lease
-  * **static_fee** – Optional static fee
-  * **extra_fee** – Optional extra fee
-  * **max_fee** – Optional maximum fee
-  * **validity_window** – Optional validity window
-  * **first_valid_round** – Optional first valid round
-  * **last_valid_round** – Optional last valid round
-* **Returns:**
+  - **min_funding_increment** – Optional minimum funding increment
+  - **send_params** – Parameters for the send operation, defaults to None
+  - **signer** – Optional transaction signer
+  - **rekey_to** – Optional rekey address
+  - **note** – Optional transaction note
+  - **lease** – Optional transaction lease
+  - **static_fee** – Optional static fee
+  - **extra_fee** – Optional extra fee
+  - **max_fee** – Optional maximum fee
+  - **validity_window** – Optional validity window
+  - **first_valid_round** – Optional first valid round
+  - **last_valid_round** – Optional last valid round
+- **Returns:**
   The result of executing the dispensing transaction and the amountFunded if funds were needed,
   or None if no funds were needed
-* **Example:**
+- **Example:**
   ```python
   # Basic example:
   algorand.account.ensure_funded("ACCOUNTADDRESS", "DISPENSERADDRESS", AlgoAmount.from_algo(1))
@@ -570,32 +577,33 @@ as a funding source such that the given account has a certain amount of Algo fre
 
 See [https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr](https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr) for details.
 
-* **Parameters:**
-  * **account_to_fund** – The account to fund
-  * **min_spending_balance** – The minimum balance of Algo that the account should have available to
+- **Parameters:**
+  - **account_to_fund** – The account to fund
+  - **min_spending_balance** – The minimum balance of Algo that the account should have available to
     spend
-  * **min_funding_increment** – Optional minimum funding increment
-  * **send_params** – Parameters for the send operation, defaults to None
-  * **signer** – Optional transaction signer
-  * **rekey_to** – Optional rekey address
-  * **note** – Optional transaction note
-  * **lease** – Optional transaction lease
-  * **static_fee** – Optional static fee
-  * **extra_fee** – Optional extra fee
-  * **max_fee** – Optional maximum fee
-  * **validity_window** – Optional validity window
-  * **first_valid_round** – Optional first valid round
-  * **last_valid_round** – Optional last valid round
-* **Returns:**
+  - **min_funding_increment** – Optional minimum funding increment
+  - **send_params** – Parameters for the send operation, defaults to None
+  - **signer** – Optional transaction signer
+  - **rekey_to** – Optional rekey address
+  - **note** – Optional transaction note
+  - **lease** – Optional transaction lease
+  - **static_fee** – Optional static fee
+  - **extra_fee** – Optional extra fee
+  - **max_fee** – Optional maximum fee
+  - **validity_window** – Optional validity window
+  - **first_valid_round** – Optional first valid round
+  - **last_valid_round** – Optional last valid round
+- **Returns:**
   The result of executing the dispensing transaction and the amountFunded if funds were needed, or
   None if no funds were needed
 
 #### NOTE
+
 The dispenser account is retrieved from the account mnemonic stored in
 process.env.DISPENSER_MNEMONIC and optionally process.env.DISPENSER_SENDER
 if it’s a rekeyed account, or against default LocalNet if no environment variables present.
 
-* **Example:**
+- **Example:**
   ```python
   # Basic example:
   algorand.account.ensure_funded_from_environment("ACCOUNTADDRESS", AlgoAmount.from_algo(1))
@@ -618,18 +626,18 @@ of Algo free to spend (accounting for Algo locked in minimum balance requirement
 
 See [https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr](https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr) for details.
 
-* **Parameters:**
-  * **account_to_fund** – The account to fund
-  * **dispenser_client** – The TestNet dispenser funding client
-  * **min_spending_balance** – The minimum balance of Algo that the account should have
+- **Parameters:**
+  - **account_to_fund** – The account to fund
+  - **dispenser_client** – The TestNet dispenser funding client
+  - **min_spending_balance** – The minimum balance of Algo that the account should have
     available to spend
-  * **min_funding_increment** – Optional minimum funding increment
-* **Returns:**
+  - **min_funding_increment** – Optional minimum funding increment
+- **Returns:**
   The result of executing the dispensing transaction and the amountFunded if funds were needed, or
   None if no funds were needed
-* **Raises:**
+- **Raises:**
   **ValueError** – If attempting to fund on non-TestNet network
-* **Example:**
+- **Example:**
   ```python
   # Basic example:
   account_manager.ensure_funded_from_testnet_dispenser_api(

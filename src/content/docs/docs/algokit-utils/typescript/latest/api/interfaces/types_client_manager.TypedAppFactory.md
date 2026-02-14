@@ -1,9 +1,8 @@
 ---
 title: TypedAppFactory\<TClient\>
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/) / TypedAppFactory
-
-
 
 [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/).TypedAppFactory
 
@@ -11,8 +10,8 @@ Interface to identify a typed factory that can be used to create and deploy an a
 
 ## Type parameters
 
-| Name |
-| :------ |
+| Name      |
+| :-------- |
 | `TClient` |
 
 ## Table of contents
@@ -29,9 +28,9 @@ Interface to identify a typed factory that can be used to create and deploy an a
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | `Omit`\<[`AppFactoryParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/), ``"appSpec"``\> |
+| Name     | Type                                                                                                                                 |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| `params` | `Omit`\<[`AppFactoryParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/), `"appSpec"`\> |
 
 #### Returns
 

@@ -1,9 +1,8 @@
 ---
 title: EventType
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/lifecycle-events](/docs/algokit-utils/typescript/latest/api/modules/types_lifecycle_events/) / EventType
-
-
 
 [types/lifecycle-events](/docs/algokit-utils/typescript/latest/api/modules/types_lifecycle_events/).EventType
 
@@ -18,17 +17,17 @@ title: EventType
 
 ### AppCompiled
 
-• **AppCompiled** = ``"AppCompiled"``
+• **AppCompiled** = `"AppCompiled"`
 
 #### Defined in
 
 [src/types/lifecycle-events.ts:5](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/lifecycle-events.ts#L5)
 
-___
+---
 
 ### TxnGroupSimulated
 
-• **TxnGroupSimulated** = ``"TxnGroupSimulated"``
+• **TxnGroupSimulated** = `"TxnGroupSimulated"`
 
 #### Defined in
 

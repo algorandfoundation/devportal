@@ -1,9 +1,8 @@
 ---
 title: LookupAssetHoldingsOptions
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / LookupAssetHoldingsOptions
-
-
 
 [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/).LookupAssetHoldingsOptions
 
@@ -29,7 +28,7 @@ Results should have a decimal units amount greater than this value.
 
 [src/types/indexer.ts:27](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L27)
 
-___
+---
 
 ### currencyLessThan
 
@@ -41,7 +40,7 @@ Results should have a decimal units amount less than this value.
 
 [src/types/indexer.ts:25](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L25)
 
-___
+---
 
 ### includeAll
 

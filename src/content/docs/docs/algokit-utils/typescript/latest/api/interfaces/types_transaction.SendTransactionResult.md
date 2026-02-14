@@ -1,9 +1,8 @@
 ---
 title: SendTransactionResult
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendTransactionResult
-
-
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).SendTransactionResult
 
@@ -38,7 +37,7 @@ The response if the transaction was sent and waited for
 
 [src/types/transaction.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/transaction.ts#L57)
 
-___
+---
 
 ### transaction
 

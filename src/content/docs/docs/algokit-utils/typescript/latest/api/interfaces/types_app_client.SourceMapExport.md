@@ -1,9 +1,8 @@
 ---
 title: SourceMapExport
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / SourceMapExport
-
-
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).SourceMapExport
 
@@ -26,7 +25,7 @@ title: SourceMapExport
 
 [src/types/app-client.ts:275](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L275)
 
-___
+---
 
 ### names
 
@@ -36,7 +35,7 @@ ___
 
 [src/types/app-client.ts:274](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L274)
 
-___
+---
 
 ### sources
 
@@ -46,7 +45,7 @@ ___
 
 [src/types/app-client.ts:273](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L273)
 
-___
+---
 
 ### version
 

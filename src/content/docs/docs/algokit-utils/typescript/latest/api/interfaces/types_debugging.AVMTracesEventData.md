@@ -1,9 +1,8 @@
 ---
 title: AVMTracesEventData
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/) / AVMTracesEventData
-
-
 
 [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/).AVMTracesEventData
 

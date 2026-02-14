@@ -1,6 +1,7 @@
 ---
 title: Algorand client
 ---
+
 `AlgorandClient` is a client class that brokers easy access to Algorand functionality. It’s the [default entrypoint](/docs/algokit-utils/python/latest/#id3) into AlgoKit Utils functionality.
 
 The main entrypoint to the bulk of the functionality in AlgoKit Utils is the `AlgorandClient` class, most of the time you can get started by typing `AlgorandClient.` and choosing one of the static initialisation methods to create an [`algokit_utils.algorand.AlgorandClient`](/docs/algokit-utils/python/latest/api/algorand/#algokit_utils.algorand.AlgorandClient), e.g.:

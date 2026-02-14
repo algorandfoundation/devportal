@@ -1,9 +1,8 @@
 ---
 title: FundAppAccountParams
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / FundAppAccountParams
-
-
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).FundAppAccountParams
 
@@ -28,7 +27,7 @@ Parameters for funding an app account
 
 [src/types/app-client.ts:254](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L254)
 
-___
+---
 
 ### note
 
@@ -40,7 +39,7 @@ The transaction note for the smart contract call
 
 [src/types/app-client.ts:258](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L258)
 
-___
+---
 
 ### sendParams
 
@@ -52,7 +51,7 @@ Parameters to control transaction sending
 
 [src/types/app-client.ts:260](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-client.ts#L260)
 
-___
+---
 
 ### sender
 

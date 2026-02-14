@@ -1,9 +1,8 @@
 ---
 title: Hint
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / Hint
-
-
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).Hint
 
@@ -13,42 +12,42 @@ Hint information for a given method call to allow client generation
 
 ### Properties
 
-- [call\_config](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#call_config)
-- [default\_arguments](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#default_arguments)
-- [read\_only](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#read_only)
+- [call_config](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#call_config)
+- [default_arguments](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#default_arguments)
+- [read_only](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#read_only)
 - [structs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#structs)
 
 ## Properties
 
-### call\_config
+### call_config
 
-• **call\_config**: [`CallConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/)
+• **call_config**: [`CallConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/)
 
 #### Defined in
 
 [src/types/app-spec.ts:205](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L205)
 
-___
+---
 
-### default\_arguments
+### default_arguments
 
-• `Optional` **default\_arguments**: `Record`\<`string`, [`DefaultArgument`](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/#defaultargument)\>
+• `Optional` **default_arguments**: `Record`\<`string`, [`DefaultArgument`](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/#defaultargument)\>
 
 #### Defined in
 
 [src/types/app-spec.ts:204](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L204)
 
-___
+---
 
-### read\_only
+### read_only
 
-• `Optional` **read\_only**: `boolean`
+• `Optional` **read_only**: `boolean`
 
 #### Defined in
 
 [src/types/app-spec.ts:203](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/app-spec.ts#L203)
 
-___
+---
 
 ### structs
 

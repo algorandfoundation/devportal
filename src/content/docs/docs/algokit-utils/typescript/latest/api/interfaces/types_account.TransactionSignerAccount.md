@@ -1,9 +1,8 @@
 ---
 title: TransactionSignerAccount
 ---
+
 [@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/) / TransactionSignerAccount
-
-
 
 [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/).TransactionSignerAccount
 
@@ -26,7 +25,7 @@ A wrapper around `TransactionSigner` that also has the sender address.
 
 [src/types/account.ts:124](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/account.ts#L124)
 
-___
+---
 
 ### signer
 
