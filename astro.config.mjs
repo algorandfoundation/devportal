@@ -1312,6 +1312,15 @@ export default defineConfig({
             },
           ],
         },
+        // Library sidebars — consumed by LibraryDocsSidebar, hidden from main sidebar
+        {
+          label: '_lib:algokit-utils:python:latest',
+          autogenerate: { directory: 'docs/algokit-utils/python/latest' },
+        },
+        {
+          label: '_lib:algokit-utils:typescript:latest',
+          autogenerate: { directory: 'docs/algokit-utils/typescript/latest' },
+        },
       ],
     }),
     icon(),
