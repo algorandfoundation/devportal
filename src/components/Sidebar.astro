@@ -22,6 +22,11 @@ import { getLibraryFromPath } from '../config/libraries';
 const { sidebar } = Astro.locals.starlightRoute;
 const currentPath = Astro.url.pathname;
 const activeLibrary = getLibraryFromPath(currentPath);
+
+// Filter out _lib: groups (library autogenerate entries) from the main sidebar
+const mainSidebar = sidebar.filter(
+  entry => entry.type !== 'group' || !entry.label.startsWith('_lib:'),
+);
 ---
 
 {
@@ -33,7 +38,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
     <>
       <LibraryPicker currentPath={currentPath} />
       <SidebarPersister>
-        <SidebarSublist sublist={sidebar} />
+        <SidebarSublist sublist={mainSidebar} />
       </SidebarPersister>
     </>
   )
