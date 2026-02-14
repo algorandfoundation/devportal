@@ -1,0 +1,53 @@
+---
+title: AlgoSdkClients
+---
+
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/) / AlgoSdkClients
+
+[types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/).AlgoSdkClients
+
+Clients from algosdk that interact with the official Algorand APIs
+
+## Table of contents
+
+### Properties
+
+- [algod](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/#algod)
+- [indexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/#indexer)
+- [kmd](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/#kmd)
+
+## Properties
+
+### algod
+
+• **algod**: `AlgodClient`
+
+Algod client, see https://dev.algorand.co/reference/rest-apis/algod/
+
+#### Defined in
+
+[src/types/client-manager.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L16)
+
+---
+
+### indexer
+
+• `Optional` **indexer**: `IndexerClient`
+
+Optional indexer client, see https://dev.algorand.co/reference/rest-apis/indexer
+
+#### Defined in
+
+[src/types/client-manager.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L18)
+
+---
+
+### kmd
+
+• `Optional` **kmd**: `KmdClient`
+
+Optional KMD client, see https://dev.algorand.co/reference/rest-apis/kmd/
+
+#### Defined in
+
+[src/types/client-manager.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/client-manager.ts#L20)
