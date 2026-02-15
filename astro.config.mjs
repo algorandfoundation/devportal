@@ -42,12 +42,6 @@ export default defineConfig({
             '**/reference/rest-api/**',
             '**/reference/sdk/**',
             '**/docs/algorand-typescript/**/api/**', // TypeDoc cross-refs to excluded /modules/ paths
-            // TEMPORARY: Old guide content (algokit/cli/, algokit/languages/, algokit/subscriber/)
-            // still links to these deleted reference paths. Remove when main sidebar is migrated.
-            '**/reference/algokit-cli/**',
-            '**/reference/algorand-python/**',
-            '**/reference/algorand-typescript/**',
-            '**/reference/algokit-subscriber-ts/**',
           ],
         }),
         starlightLlmsTxt({
