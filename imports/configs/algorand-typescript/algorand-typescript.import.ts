@@ -83,6 +83,24 @@ export const config: LibraryImportConfig = {
             removeH1,
           ],
         },
+        // Dual target: old guide path (keeps algokit/languages/typescript/ content fresh with fixed links)
+        {
+          pattern:
+            'docs/{lg-itxns,lg-ops,lg-program-structure,lg-storage,lg-types,migration-guides,guiding-principles,readme,language-guide}.md',
+          basePath: 'src/content/docs/algokit/languages/typescript',
+          pathMappings: {
+            'docs/readme.md': 'overview.md',
+          },
+          transforms: [
+            convertH1ToTitle,
+            conditionalTransform(
+              'docs/readme.md',
+              createRemoveLineContaining('- [CLI Guide](./cli.md)'),
+              createRemoveLineContaining('- [Reference Docs](./reference.md)'),
+            ),
+            removeH1,
+          ],
+        },
       ],
       linkTransform: {
         stripPrefixes: ['src/content/docs'],
