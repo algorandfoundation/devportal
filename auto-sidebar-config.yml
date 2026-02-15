@@ -2,7 +2,7 @@
 # Each entry defines a folder and its _meta.yml content
 
 configs:
-  - folder: algokit/cli
+  - folder: docs/algokit-cli/python/latest/guides
     content: |
       collapsed: true
       cascade:
@@ -17,17 +17,17 @@ configs:
       collapsed: true
       cascade:
         - collapsed
-  - folder: reference/algorand-typescript/api
+  - folder: docs/algorand-typescript/typescript/latest/api
     content: |
       collapsed: true
       cascade:
         - collapsed
-  - folder: reference/algorand-python/api
+  - folder: docs/algorand-python/python/latest/api
     content: |
       collapsed: true
       cascade:
         - collapsed
-  - folder: reference/algorand-python/api/front-end-guide
+  - folder: docs/algorand-python/python/latest/api/front-end-guide
     content: |
       label: Front-end Guide
       collapsed: true

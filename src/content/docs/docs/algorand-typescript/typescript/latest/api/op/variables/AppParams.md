@@ -1,0 +1,189 @@
+---
+title: AppParams
+type: doc
+version: 1.0.0
+generated: 2025-10-31T00:00:00.000Z
+repo: puya-ts
+---
+
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+
+---
+
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / AppParams
+
+> `const` **AppParams**: `object`
+
+Defined in: [op.ts:332](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L332)
+
+## Type declaration
+
+### appAddress()
+
+> **appAddress**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+
+Address for which this application has authority
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+
+### appApprovalProgram()
+
+> **appApprovalProgram**(`a`): readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
+
+Bytecode of Approval Program
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
+
+### appClearStateProgram()
+
+> **appClearStateProgram**(`a`): readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
+
+Bytecode of Clear State Program
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
+
+### appCreator()
+
+> **appCreator**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+
+Creator address
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+
+### appExtraProgramPages()
+
+> **appExtraProgramPages**(`a`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+Number of Extra Program Pages of code space
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+### appGlobalNumByteSlice()
+
+> **appGlobalNumByteSlice**(`a`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+Number of byte array values allowed in Global State
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+### appGlobalNumUint()
+
+> **appGlobalNumUint**(`a`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+Number of uint64 values allowed in Global State
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+### appLocalNumByteSlice()
+
+> **appLocalNumByteSlice**(`a`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+Number of byte array values allowed in Local State
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+### appLocalNumUint()
+
+> **appLocalNumUint**(`a`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+Number of uint64 values allowed in Local State
+Min AVM version: 5
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+### appVersion()
+
+> **appVersion**(`a`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+
+Version of the app, incremented each time the approval or clear program changes
+Min AVM version: 12
+
+#### Parameters
+
+##### a
+
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+
+#### Returns
+
+readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
