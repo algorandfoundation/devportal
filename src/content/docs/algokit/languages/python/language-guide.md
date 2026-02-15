@@ -42,11 +42,11 @@ being statically typed, these interfaces are also statically typed, and require 
 well.
 
 The most basic types on the AVM are `uint64` and `bytes[]`, representing unsigned 64-bit integers
-and byte arrays respectively. These are represented by [`UInt64`](/reference/algorand-python/api/api-algopy/#algopy.UInt64) and
-[`Bytes`](/reference/algorand-python/api/api-algopy/#algopy.Bytes) in Algorand Python. There are further “bounded” types supported by the AVM
+and byte arrays respectively. These are represented by [`UInt64`](docs/_build/markdown/api-algopy#algopy.UInt64) and
+[`Bytes`](docs/_build/markdown/api-algopy#algopy.Bytes) in Algorand Python. There are further “bounded” types supported by the AVM
 which are backed by these two simple primitives. For example, `bigint` represents a variably sized
 (up to 512-bits), unsigned integer, but is actually backed by a `bytes[]`. This is represented by
-[`BigUInt`](/reference/algorand-python/api/api-algopy/#algopy.BigUInt) in Algorand Python.
+[`BigUInt`](docs/_build/markdown/api-algopy#algopy.BigUInt) in Algorand Python.
 
 Unfortunately, none of these types map to standard Python primitives. In Python, an `int` is
 unsigned, and effectively unbounded. A `bytes` similarly is limited only by the memory available,

@@ -128,7 +128,7 @@ FourBytes: t.TypeAlias = arc4.StaticArray[arc4.Byte, t.Literal[4]]
 **Type:** `algopy.arc4.Address`<br />
 \\\\
 **Encoding:** A byte array 32 bytes long
-**Native equivalent:** [`algopy.Account`](/reference/algorand-python/api/api-algopy/#algopy.Account)
+**Native equivalent:** [`algopy.Account`](docs/_build/markdown/api-algopy#algopy.Account)
 
 Address represents an Algorand address’s public key, and can be used instead of `algopy.Account` when needing to
 reference an address in an ARC-4 struct, tuple or return type. It is a subclass of `arc4.StaticArray[arc4.Byte, typing.Literal[32]]`

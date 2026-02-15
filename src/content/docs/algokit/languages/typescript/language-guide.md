@@ -26,8 +26,8 @@ If you are interested in learning about the design of Algorand TypeScript, you c
 
 ## Table of Contents
 
-- [Program Structure](lg-program-structure)
-- [Basic Types](lg-types)
-- [Storage](lg-storage)
-- [Ops](lg-ops)
-- [Inner Transactions](lg-itxns)
+- [Program Structure](/algokit/languages/typescript/lg-program-structure/)
+- [Basic Types](/algokit/languages/typescript/lg-types/)
+- [Storage](/algokit/languages/typescript/lg-storage/)
+- [Ops](/algokit/languages/typescript/lg-ops/)
+- [Inner Transactions](/algokit/languages/typescript/lg-itxns/)
