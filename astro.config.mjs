@@ -12,6 +12,7 @@ import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
+import { sidebarEntries as algokitUtilsSidebar } from './imports/configs/algokit-utils/sidebar.config.js';
 
 const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -1313,14 +1314,7 @@ export default defineConfig({
           ],
         },
         // Library sidebars — consumed by LibraryDocsSidebar, hidden from main sidebar
-        {
-          label: '_lib:algokit-utils:python:latest',
-          autogenerate: { directory: 'docs/algokit-utils/python/latest' },
-        },
-        {
-          label: '_lib:algokit-utils:typescript:latest',
-          autogenerate: { directory: 'docs/algokit-utils/typescript/latest' },
-        },
+        ...algokitUtilsSidebar,
       ],
     }),
     icon(),
