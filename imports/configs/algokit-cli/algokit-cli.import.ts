@@ -54,6 +54,28 @@ export const config: LibraryImportConfig = {
           },
           transforms: [createRemoveContentUpToHeading(/^# algokit$/m)],
         },
+        // Dual target: old guide path (keeps algokit/cli/ content fresh with fixed links)
+        {
+          pattern: 'docs/{features/**/*.md,algokit.md}',
+          basePath: 'src/content/docs/algokit/cli',
+          pathMappings: {
+            'docs/features/': '',
+            'docs/algokit.md': 'overview.md',
+          },
+          transforms: [
+            conditionalTransform(
+              'docs/algokit.md',
+              createFrontmatterTransform({
+                frontmatter: {
+                  title: 'AlgoKit CLI Overview',
+                  sidebar: { label: 'Overview', order: 0 },
+                },
+                mode: 'merge',
+                preserveExisting: false,
+              }),
+            ),
+          ],
+        },
       ],
       transforms: [convertH1ToTitle],
       linkTransform: {
