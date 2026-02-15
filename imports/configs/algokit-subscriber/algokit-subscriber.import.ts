@@ -57,6 +57,12 @@ export const config: LibraryImportConfig = {
           basePath: 'src/content/docs/docs/algokit-subscriber/typescript/latest/guides',
           transforms: [convertH1ToTitle],
         },
+        // Dual target: old guide path (keeps algokit/subscriber/typescript/ content fresh)
+        {
+          pattern: 'latest/guides/**/*',
+          basePath: 'src/content/docs/algokit/subscriber/typescript',
+          transforms: [convertH1ToTitle],
+        },
       ],
       enabled: true,
       clear: true,
