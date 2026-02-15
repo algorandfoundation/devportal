@@ -1,0 +1,79 @@
+---
+/**
+ * LinkChip — A compact, chip-style link component.
+ *
+ * Supports text-only or icon + text. Designed for tight spaces like
+ * the LibraryPicker sidebar where full-size LinkButtons are too large.
+ */
+interface Props {
+  href: string;
+  label: string;
+  icon?: string;
+  accentColor?: string;
+  class?: string;
+}
+
+const { href, label, icon, accentColor, class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['link-chip', className]}
+  title={label}
+  style={accentColor ? `--chip-accent: ${accentColor}` : undefined}
+>
+  {
+    icon && (
+      <span class='link-chip-icon'>
+        <Fragment set:html={icon} />
+      </span>
+    )
+  }
+  <span class='link-chip-label'>{label}</span>
+</a>
+
+<style>
+  .link-chip {
+    --_accent: var(--chip-accent, var(--sl-color-gray-2));
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.4rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.25rem;
+    font-size: var(--sl-text-3xs);
+    line-height: 1.2;
+    text-decoration: none;
+    color: var(--_accent);
+    transition:
+      border-color 0.15s,
+      background-color 0.15s,
+      color 0.15s;
+  }
+
+  .link-chip:hover {
+    border-color: var(--sl-color-gray-4);
+    background-color: var(--sl-color-gray-6);
+    color: var(--sl-color-white);
+  }
+
+  .link-chip:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 1px;
+  }
+
+  .link-chip-icon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+  }
+
+  .link-chip-icon :global(svg) {
+    width: 12px;
+    height: 12px;
+  }
+
+  .link-chip-label {
+    white-space: nowrap;
+  }
+</style>
