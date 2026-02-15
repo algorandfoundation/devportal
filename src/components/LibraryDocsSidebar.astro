@@ -32,7 +32,6 @@ const currentLanguage = parsed?.language || library.languages[0] || '';
 const currentVersionSlug = parsed?.version || library.versions[0].slug;
 const currentVersion =
   getVersionBySlug(library, currentVersionSlug) || library.versions[0];
-const currentPagePath = parsed?.pagePath || '';
 
 // Track whether a language was explicitly selected in the URL
 const languageSelected = parsed?.languageFound ?? false;
