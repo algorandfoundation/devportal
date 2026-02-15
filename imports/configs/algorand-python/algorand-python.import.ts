@@ -88,6 +88,16 @@ export const config: LibraryImportConfig = {
             ),
           ],
         },
+        // Dual target: old guide path (keeps algokit/languages/python/ content fresh with fixed links)
+        {
+          pattern:
+            'docs/_build/markdown/{!(api*|front-end-guide).md,**/!(api*|front-end-guide)/*.md}',
+          basePath: 'src/content/docs/algokit/languages/python',
+          pathMappings: {
+            'docs/_build/markdown/index.md': 'overview.md',
+          },
+          transforms: [convertH1ToTitle],
+        },
       ],
       linkTransform: {
         stripPrefixes: ['src/content/docs'],
