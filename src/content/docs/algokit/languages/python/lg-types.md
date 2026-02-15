@@ -39,7 +39,7 @@ backed by a `bytes[]`. This is represented by [`BigUInt`]() in Algorand Python.
 
 ### UInt64
 
-[`algopy.UInt64`](/reference/algorand-python/api/api-algopy/#algopy.UInt64) represents the underlying AVM `uint64` type.
+[`algopy.UInt64`](docs/_build/markdown/api-algopy#algopy.UInt64) represents the underlying AVM `uint64` type.
 
 It supports all the same operators as `int`, except for `/`, you must use `//` for truncating
 division instead.
@@ -66,7 +66,7 @@ num2 = num + 200 // 3
 
 ### Bytes
 
-[`algopy.Bytes`](/reference/algorand-python/api/api-algopy/#algopy.Bytes) represents the underlying AVM `bytes[]` type. It is intended
+[`algopy.Bytes`](docs/_build/markdown/api-algopy#algopy.Bytes) represents the underlying AVM `bytes[]` type. It is intended
 to represent binary data, for UTF-8 it might be preferable to use [String]().
 
 ```python
@@ -116,7 +116,7 @@ See [Python builtins](/algokit/languages/python/lg-builtins/#len---length) for a
 
 ### String
 
-[`String`](/reference/algorand-python/api/api-algopy/#algopy.String) is a special Algorand Python type that represents a UTF-8 encoded string.
+[`String`](docs/_build/markdown/api-algopy#algopy.String) is a special Algorand Python type that represents a UTF-8 encoded string.
 It’s backed by `Bytes`, which can be accessed through the `.bytes` property.
 
 It works similarly to `Bytes`, except that it works with `str` literals rather than `bytes`
@@ -152,7 +152,7 @@ assert abc.bytes == b"abc"
 
 ### BigUInt
 
-[`algopy.BigUInt`](/reference/algorand-python/api/api-algopy/#algopy.BigUInt) represents a variable length (max 512-bit) unsigned integer stored
+[`algopy.BigUInt`](docs/_build/markdown/api-algopy#algopy.BigUInt) represents a variable length (max 512-bit) unsigned integer stored
 as `bytes[]` in the AVM.
 
 It supports all the same operators as `int`, except for power (`**`), left and right shift (`<<`
@@ -160,7 +160,7 @@ and `>>`) and `/` (as with `UInt64`, you must use `//` for truncating division i
 
 Note that the op code costs for `bigint` math are an order of magnitude higher than those for
 `uint64` math. If you just need to handle overflow, take a look at the wide ops such as `addw`,
-`mulw`, etc - all of which are exposed through the [`algopy.op`](/reference/algorand-python/api/api-algopyop/#module-algopy.op) module.
+`mulw`, etc - all of which are exposed through the [`algopy.op`](docs/_build/markdown/api-algopy.op#module-algopy.op) module.
 
 Another contrast between `bigint` and `uint64` math is that `bigint` math ops don’t immediately
 error on overflow - if the result exceeds 512-bits, then you can still access the value via
@@ -220,19 +220,19 @@ if a:
 
 ### Account
 
-[`Account`](/reference/algorand-python/api/api-algopy/#algopy.Account) represents a logical Account, backed by a `bytes[32]` representing the
+[`Account`](docs/_build/markdown/api-algopy#algopy.Account) represents a logical Account, backed by a `bytes[32]` representing the
 bytes of the public key (without the checksum). It has various account related methods that can be called from the type.
 
-Also see [`algopy.arc4.Address`](/reference/algorand-python/api/api-algopyarc4/#algopy.arc4.Address) if needing to represent the address as a distinct type.
+Also see [`algopy.arc4.Address`](docs/_build/markdown/api-algopy.arc4#algopy.arc4.Address) if needing to represent the address as a distinct type.
 
 ### Asset
 
-[`Asset`](/reference/algorand-python/api/api-algopy/#algopy.Asset) represents a logical Asset, backed by a `uint64` ID.
+[`Asset`](docs/_build/markdown/api-algopy#algopy.Asset) represents a logical Asset, backed by a `uint64` ID.
 It has various asset related methods that can be called from the type.
 
 ### Application
 
-[`Application`](/reference/algorand-python/api/api-algopy/#algopy.Application) represents a logical Application, backed by a `uint64` ID.
+[`Application`](docs/_build/markdown/api-algopy#algopy.Application) represents a logical Application, backed by a `uint64` ID.
 It has various application related methods that can be called from the type.
 
 ## Python built-in types
@@ -321,7 +321,7 @@ that expects either an integer value or an encoded bytes value. This behaviour e
 matches what
 [AlgoKit Utils expects](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/docs/capabilities/app-deploy.md#compilation-and-template-substitution).
 
-For more information look at the API reference for [`TemplateVar`](/reference/algorand-python/api/api-algopy/#algopy.TemplateVar).
+For more information look at the API reference for [`TemplateVar`](docs/_build/markdown/api-algopy#algopy.TemplateVar).
 
 ## ARC-4 types
 
@@ -332,7 +332,7 @@ often it may make sense to convert the ARC-4 value to a native AVM type, in whic
 the `native` property to retrieve the value. Most of the ARC-4 types also allow for mutation e.g.
 you can edit values in arrays by index.
 
-Please see the [reference documentation](/reference/algorand-python/api/api-algopyarc4/) for the different classes that can
+Please see the [reference documentation](docs/_build/markdown/api-algopy.arc4) for the different classes that can
 be used to represent ARC-4 values or the [ARC-4 documentation](/algokit/languages/python/lg-arc4/) for more information
 about ARC-4.
 

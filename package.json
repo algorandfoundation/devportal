@@ -39,7 +39,7 @@
     "@astrojs/tailwind": "^6.0.2",
     "@catppuccin/palette": "^1.7.1",
     "@catppuccin/vscode": "^3.18.1",
-    "@larkiny/astro-github-loader": "^0.12.0",
+    "@larkiny/astro-github-loader": "^0.13.0",
     "@tailwindcss/vite": "^4.1.18",
     "@types/js-yaml": "^4.0.9",
     "astro": "^5.17.1",

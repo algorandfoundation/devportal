@@ -1,9 +1,8 @@
+import type { ImportOptions } from '@larkiny/astro-github-loader';
 import type { LibraryImportConfig } from '../../types';
 import {
   conditionalTransform,
   convertH1ToTitle,
-  convertH1ToTitleMatch,
-  removeH1,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 
@@ -57,15 +56,27 @@ export const config: LibraryImportConfig = {
           basePath: 'src/content/docs/docs/algokit-subscriber/typescript/latest/guides',
           transforms: [convertH1ToTitle],
         },
-        // Dual target: old guide path (keeps algokit/subscriber/typescript/ content fresh)
-        {
-          pattern: 'latest/guides/**/*',
-          basePath: 'src/content/docs/algokit/subscriber/typescript',
-          transforms: [convertH1ToTitle],
-        },
       ],
       enabled: true,
       clear: true,
     },
   ],
+};
+
+/** Separate import for legacy guide path at algokit/subscriber/typescript/ */
+export const legacyGuideConfig: ImportOptions = {
+  name: 'AlgoKit Subscriber Legacy Guides',
+  stateKey: 'algokit-subscriber-legacy-guides',
+  owner: 'larkiny',
+  repo: 'algokit-subscriber-ts',
+  ref: 'docs-dist',
+  includes: [
+    {
+      pattern: 'latest/guides/**/*',
+      basePath: 'src/content/docs/algokit/subscriber/typescript',
+      transforms: [convertH1ToTitle],
+    },
+  ],
+  clear: true,
+  enabled: true,
 };

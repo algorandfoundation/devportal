@@ -164,8 +164,7 @@ export function parseLibraryPath(path: string): ParsedLibraryPath | undefined {
   const foundVersion = library.versions.find(v => v.slug === versionSlug);
   const version = foundVersion?.slug || library.versions[0].slug;
 
-  const pagePath =
-    foundLang && foundVersion ? segments.slice(2).join('/') : '';
+  const pagePath = foundLang && foundVersion ? segments.slice(2).join('/') : '';
 
   return { library, language, version, pagePath, languageFound };
 }

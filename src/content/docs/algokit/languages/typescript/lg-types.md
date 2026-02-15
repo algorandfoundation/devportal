@@ -181,7 +181,7 @@ They can also be used in ABI method parameters where they will be created refere
 
 ### Group Transactions
 
-The group transaction types expose properties and methods for reading attributes of other transactions in the group. They can be created explicitly by calling `gtxn.Transaction(n)` where `n` is the index of the desired transaction in the group, or they can be used in ABI method signatures where the ARC4 router will take care of providing the relevant transaction specified by the client. They should not be confused with the [itxn](lg-itxns) namespace which contains types for composing inner transactions
+The group transaction types expose properties and methods for reading attributes of other transactions in the group. They can be created explicitly by calling `gtxn.Transaction(n)` where `n` is the index of the desired transaction in the group, or they can be used in ABI method signatures where the ARC4 router will take care of providing the relevant transaction specified by the client. They should not be confused with the [itxn](/algokit/languages/typescript/lg-itxns/) namespace which contains types for composing inner transactions
 
 ```ts
 import { gtxn, Contract } from '@algorandfoundation/algorand-typescript';

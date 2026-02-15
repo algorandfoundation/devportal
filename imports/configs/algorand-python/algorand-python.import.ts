@@ -1,3 +1,4 @@
+import type { ImportOptions } from '@larkiny/astro-github-loader';
 import type { LibraryImportConfig } from '../../types';
 import {
   convertH1ToTitle,
@@ -88,16 +89,6 @@ export const config: LibraryImportConfig = {
             ),
           ],
         },
-        // Dual target: old guide path (keeps algokit/languages/python/ content fresh with fixed links)
-        {
-          pattern:
-            'docs/_build/markdown/{!(api*|front-end-guide).md,**/!(api*|front-end-guide)/*.md}',
-          basePath: 'src/content/docs/algokit/languages/python',
-          pathMappings: {
-            'docs/_build/markdown/index.md': 'overview.md',
-          },
-          transforms: [convertH1ToTitle],
-        },
       ],
       linkTransform: {
         stripPrefixes: ['src/content/docs'],
@@ -107,4 +98,30 @@ export const config: LibraryImportConfig = {
       clear: true,
     },
   ],
+};
+
+/** Separate import for legacy guide path at algokit/languages/python/ */
+export const legacyGuideConfig: ImportOptions = {
+  name: 'Algorand Python Legacy Guides',
+  stateKey: 'algorand-python-legacy-guides',
+  owner: 'algorandfoundation',
+  repo: 'puya',
+  ref: 'devportal',
+  includes: [
+    {
+      pattern:
+        'docs/_build/markdown/{!(api*|front-end-guide).md,**/!(api*|front-end-guide)/*.md}',
+      basePath: 'src/content/docs/algokit/languages/python',
+      pathMappings: {
+        'docs/_build/markdown/index.md': 'overview.md',
+      },
+      transforms: [convertH1ToTitle],
+    },
+  ],
+  linkTransform: {
+    stripPrefixes: ['src/content/docs'],
+    linkMappings: [...generateStarlightLinkMappings()],
+  },
+  clear: true,
+  enabled: true,
 };
