@@ -141,8 +141,8 @@ export interface ParsedLibraryPath {
 /**
  * Parse a library URL path to extract library, language, version, and page path.
  *
- * Multi-language URL: /docs/<library>/<language>/<version>/<page>/
- * Single-language URL: /docs/<library>/<version>/<page>/
+ * URL format: /docs/<library>/<language>/<version>/<page>/
+ * Language segment is always present to match content directory structure.
  */
 export function parseLibraryPath(path: string): ParsedLibraryPath | undefined {
   const match = path.match(/^\/docs\/([^/]+)(?:\/(.*))?$/);
@@ -155,40 +155,24 @@ export function parseLibraryPath(path: string): ParsedLibraryPath | undefined {
   const restPath = match[2] || '';
   const segments = restPath.split('/').filter(Boolean);
 
-  const isMultiLanguage = library.languages.length > 1;
+  const langSlug = segments[0]?.toLowerCase();
+  const foundLang = library.languages.find(l => l.toLowerCase() === langSlug);
+  const language = foundLang || library.languages[0];
+  const languageFound = !!foundLang;
 
-  let language: string;
-  let version: string;
-  let pagePath: string;
-  let languageFound = false;
+  const versionSlug = segments[1];
+  const foundVersion = library.versions.find(v => v.slug === versionSlug);
+  const version = foundVersion?.slug || library.versions[0].slug;
 
-  if (isMultiLanguage) {
-    const langSlug = segments[0]?.toLowerCase();
-    const foundLang = library.languages.find(l => l.toLowerCase() === langSlug);
-    language = foundLang || library.languages[0];
-    languageFound = !!foundLang;
-
-    const versionSlug = segments[1];
-    const foundVersion = library.versions.find(v => v.slug === versionSlug);
-    version = foundVersion?.slug || library.versions[0].slug;
-
-    pagePath = foundLang && foundVersion ? segments.slice(2).join('/') : '';
-  } else {
-    language = library.languages[0] || '';
-    languageFound = true;
-
-    const versionSlug = segments[0];
-    const foundVersion = library.versions.find(v => v.slug === versionSlug);
-    version = foundVersion?.slug || library.versions[0].slug;
-
-    pagePath = foundVersion ? segments.slice(1).join('/') : '';
-  }
+  const pagePath =
+    foundLang && foundVersion ? segments.slice(2).join('/') : '';
 
   return { library, language, version, pagePath, languageFound };
 }
 
 /**
  * Build a library URL with the given language/version.
+ * Always includes the language segment to match content directory structure.
  */
 export function buildLibraryUrl(
   library: LibraryConfig,
@@ -196,16 +180,9 @@ export function buildLibraryUrl(
   version: string,
   pagePath: string = '',
 ): string {
-  const isMultiLanguage = library.languages.length > 1;
-
-  if (isMultiLanguage) {
-    const langSlug = language.toLowerCase();
-    const base = `/docs/${library.slug}/${langSlug}/${version}/`;
-    return pagePath ? `${base}${pagePath}/`.replace(/\/+$/, '/') : base;
-  } else {
-    const base = `/docs/${library.slug}/${version}/`;
-    return pagePath ? `${base}${pagePath}/`.replace(/\/+$/, '/') : base;
-  }
+  const langSlug = language.toLowerCase();
+  const base = `/docs/${library.slug}/${langSlug}/${version}/`;
+  return pagePath ? `${base}${pagePath}/`.replace(/\/+$/, '/') : base;
 }
 
 // ---------------------------------------------------------------------------
