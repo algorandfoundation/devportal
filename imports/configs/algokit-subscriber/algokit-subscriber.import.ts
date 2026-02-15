@@ -23,12 +23,10 @@ export const config: LibraryImportConfig = {
       owner: 'larkiny',
       repo: 'algokit-subscriber-ts',
       ref: 'docs-dist',
-      assetsPath: 'src/assets/imports/algokit-subscriber-ts',
-      assetsBaseUrl: '@assets/imports/algokit-subscriber-ts',
       includes: [
         {
           pattern: 'latest/api/**/*',
-          basePath: 'src/content/docs/reference/algokit-subscriber-ts/api',
+          basePath: 'src/content/docs/docs/algokit-subscriber/typescript/latest/api',
           transforms: [
             convertH1ToTitle,
             conditionalTransform(
@@ -56,7 +54,7 @@ export const config: LibraryImportConfig = {
         },
         {
           pattern: 'latest/guides/**/*',
-          basePath: 'src/content/docs/algokit/subscriber/typescript',
+          basePath: 'src/content/docs/docs/algokit-subscriber/typescript/latest/guides',
           transforms: [convertH1ToTitle],
         },
       ],

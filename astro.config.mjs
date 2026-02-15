@@ -13,6 +13,11 @@ import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
 import { sidebarEntries as algokitUtilsSidebar } from './imports/configs/algokit-utils/sidebar.config.js';
+import { sidebarEntries as algokitCliSidebar } from './imports/configs/algokit-cli/sidebar.config.js';
+import { sidebarEntries as algorandPythonSidebar } from './imports/configs/algorand-python/sidebar.config.js';
+import { sidebarEntries as algorandTypescriptSidebar } from './imports/configs/algorand-typescript/sidebar.config.js';
+import { sidebarEntries as algokitSubscriberSidebar } from './imports/configs/algokit-subscriber/sidebar.config.js';
+import { sidebarEntries as nodekitSidebar } from './imports/configs/nodekit/sidebar.config.js';
 
 const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -33,7 +38,17 @@ export default defineConfig({
           errorOnRelativeLinks: false,
           errorOnInvalidHashes: false,
           errorOnLocalLinks: false,
-          exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
+          exclude: [
+            '**/reference/rest-api/**',
+            '**/reference/sdk/**',
+            '**/docs/algorand-typescript/**/api/**', // TypeDoc cross-refs to excluded /modules/ paths
+            // TEMPORARY: Old guide content (algokit/cli/, algokit/languages/, algokit/subscriber/)
+            // still links to these deleted reference paths. Remove when main sidebar is migrated.
+            '**/reference/algokit-cli/**',
+            '**/reference/algorand-python/**',
+            '**/reference/algorand-typescript/**',
+            '**/reference/algokit-subscriber-ts/**',
+          ],
         }),
         starlightLlmsTxt({
           minify: {
@@ -48,22 +63,22 @@ export default defineConfig({
             {
               label: 'Typescript - Reference',
               description: 'Algorand Developer Portal - Typescript Reference Docs',
-              paths: ['reference/algorand-typescript/**'],
+              paths: ['docs/algorand-typescript/typescript/latest/api/**'],
             },
             {
               label: 'Python - Reference',
               description: 'Algorand Developer Portal - Python Reference Docs',
-              paths: ['reference/algorand-python/**'],
+              paths: ['docs/algorand-python/python/latest/api/**'],
             },
             {
               label: 'Typescript',
               description: 'Algorand Developer Portal - Typescript Docs',
-              paths: ['algokit/languages/typescript/**'],
+              paths: ['docs/algorand-typescript/typescript/latest/**'],
             },
             {
               label: 'Python',
               description: 'Algorand Developer Portal - Python Docs',
-              paths: ['algokit/languages/python/**'],
+              paths: ['docs/algorand-python/python/latest/**'],
             },
           ],
         }),
@@ -1183,7 +1198,7 @@ export default defineConfig({
             },
             {
               label: 'NodeKit Reference',
-              link: 'nodes/nodekit-reference/commands',
+              link: 'docs/nodekit/go/latest/commands',
             },
           ],
         },
@@ -1195,13 +1210,13 @@ export default defineConfig({
               label: 'Algorand Python',
               collapsed: true,
               autogenerate: {
-                directory: 'reference/algorand-python/api',
+                directory: 'docs/algorand-python/python/latest/api',
               },
             },
             {
               label: 'Algorand Typescript',
               autogenerate: {
-                directory: 'reference/algorand-typescript/api',
+                directory: 'docs/algorand-typescript/typescript/latest/api',
               },
               collapsed: true,
             },
@@ -1211,7 +1226,7 @@ export default defineConfig({
               items: [
                 {
                   label: 'Command Reference',
-                  link: 'reference/algokit-cli',
+                  link: 'docs/algokit-cli/python/latest',
                 },
               ],
             },
@@ -1315,6 +1330,11 @@ export default defineConfig({
         },
         // Library sidebars — consumed by LibraryDocsSidebar, hidden from main sidebar
         ...algokitUtilsSidebar,
+        ...algokitCliSidebar,
+        ...algorandPythonSidebar,
+        ...algorandTypescriptSidebar,
+        ...algokitSubscriberSidebar,
+        ...nodekitSidebar,
       ],
     }),
     icon(),

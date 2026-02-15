@@ -23,13 +23,11 @@ export const config: LibraryImportConfig = {
       owner: 'algorandfoundation',
       repo: 'puya',
       ref: 'devportal',
-      assetsPath: 'src/assets/imports/puya',
-      assetsBaseUrl: '@assets/imports/puya',
       includes: [
         {
           pattern:
             'docs/_build/markdown/{!(api*|front-end-guide).md,**/!(api*|front-end-guide)/*.md}',
-          basePath: 'src/content/docs/algokit/languages/python',
+          basePath: 'src/content/docs/docs/algorand-python/python/latest/guides',
           pathMappings: {
             'docs/_build/markdown/index.md': 'overview.md',
           },
@@ -37,7 +35,7 @@ export const config: LibraryImportConfig = {
         },
         {
           pattern: 'docs/_build/markdown/api*.md',
-          basePath: 'src/content/docs/reference/algorand-python/api',
+          basePath: 'src/content/docs/docs/algorand-python/python/latest/api',
           pathMappings: {
             'docs/_build/markdown/api.md': 'index.md',
           },
@@ -72,7 +70,7 @@ export const config: LibraryImportConfig = {
         {
           pattern: 'docs/_build/markdown/front-end-guide/**/*.md',
           basePath:
-            'src/content/docs/reference/algorand-python/api/front-end-guide',
+            'src/content/docs/docs/algorand-python/python/latest/api/front-end-guide',
           pathMappings: {
             'docs/_build/markdown/front-end-guide/index.md': 'overview.md',
           },

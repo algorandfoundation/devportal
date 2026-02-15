@@ -23,12 +23,10 @@ export const config: LibraryImportConfig = {
       owner: 'algorandfoundation',
       repo: 'algokit-cli',
       ref: 'chore/content-fix',
-      assetsPath: 'src/assets/imports/algokit/cli',
-      assetsBaseUrl: '@assets/imports/algokit/cli',
       includes: [
         {
           pattern: 'docs/{features/**/*.md,algokit.md}',
-          basePath: 'src/content/docs/algokit/cli',
+          basePath: 'src/content/docs/docs/algokit-cli/python/latest/guides',
           pathMappings: {
             'docs/features/': '',
             'docs/algokit.md': 'overview.md',
@@ -50,7 +48,7 @@ export const config: LibraryImportConfig = {
         },
         {
           pattern: 'docs/cli/index.md',
-          basePath: 'src/content/docs/reference/algokit-cli/',
+          basePath: 'src/content/docs/docs/algokit-cli/python/latest',
           pathMappings: {
             'docs/cli/index.md': 'index.md',
           },
@@ -64,7 +62,7 @@ export const config: LibraryImportConfig = {
           ...generateStarlightLinkMappings(),
           {
             pattern: /^\.\.\/cli\/?$/,
-            replacement: `/reference/algokit-cli`,
+            replacement: `/docs/algokit-cli/python/latest`,
             global: true,
           },
           {

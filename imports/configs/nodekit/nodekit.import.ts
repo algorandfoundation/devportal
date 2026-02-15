@@ -16,18 +16,16 @@ export const config: LibraryImportConfig = {
       name: 'NodeKit Command Reference',
       owner: 'algorandfoundation',
       repo: 'nodekit',
-      assetsPath: 'src/assets/imports/nodekit',
-      assetsBaseUrl: '@assets/imports/nodekit',
       includes: [
         {
           pattern: '.devportal/**/*',
-          basePath: 'src/content/docs/nodes/nodekit-reference',
+          basePath: 'src/content/docs/docs/nodekit/go/latest',
           transforms: [
             createFrontmatterTransform({
               frontmatter: {
                 title: 'NodeKit Command Reference',
                 sidebar: { label: 'NodeKit Reference' },
-                slug: 'nodes/nodekit-reference/commands',
+                slug: 'docs/nodekit/go/latest/commands',
               },
               mode: 'merge',
               preserveExisting: true,

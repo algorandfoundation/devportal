@@ -26,13 +26,11 @@ export const config: LibraryImportConfig = {
       owner: 'algorandfoundation',
       repo: 'puya-ts',
       ref: 'devportal',
-      assetsPath: 'src/assets/imports/puya-ts',
-      assetsBaseUrl: '@assets/imports/puya-ts',
       includes: [
         {
           pattern:
             'docs/{lg-itxns,lg-ops,lg-program-structure,lg-storage,lg-types,migration-guides,guiding-principles,readme,language-guide}.md',
-          basePath: 'src/content/docs/algokit/languages/typescript',
+          basePath: 'src/content/docs/docs/algorand-typescript/typescript/latest/guides',
           pathMappings: {
             'docs/readme.md': 'overview.md',
           },
@@ -48,7 +46,7 @@ export const config: LibraryImportConfig = {
         },
         {
           pattern: 'docs/_md/{!(modules).md,**/!(_media|documents)/*.md}',
-          basePath: 'src/content/docs/reference/algorand-typescript/api',
+          basePath: 'src/content/docs/docs/algorand-typescript/typescript/latest/api',
           pathMappings: {
             'docs/_md/': '',
           },
@@ -75,11 +73,11 @@ export const config: LibraryImportConfig = {
               createRemoveLineContaining('**Algorand TypeScript**'),
               createReplace(
                 '(documents/Algorand-TypeScript-Language-Guide.md)',
-                '(/algokit/languages/typescript/language-guide)',
+                '(/docs/algorand-typescript/typescript/latest/guides/language-guide)',
               ),
               createReplace(
                 '(documents/Algorand-TypeScript-Migration-Guides.md)',
-                '(/algokit/languages/typescript/migration-guides)',
+                '(/docs/algorand-typescript/typescript/latest/guides/migration-guides)',
               ),
             ),
             removeH1,
@@ -91,7 +89,7 @@ export const config: LibraryImportConfig = {
         linkMappings: [...generateStarlightLinkMappings()],
       },
       enabled: true,
-      clear: false,
+      clear: true,
     },
   ],
 };
