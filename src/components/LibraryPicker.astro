@@ -4,11 +4,16 @@
  *
  * Renders as a button that expands to show the full library list with:
  * - Colored dot per library
- * - Library name
- * - Language badges for multi-language libraries (e.g. "TS", "Py")
+ * - Library name (links to library root)
+ * - Clickable language icons that link directly to each variant
  */
-import { libraries, type LibraryConfig } from '../config/libraries';
+import {
+  libraries,
+  buildLibraryUrl,
+  type LibraryConfig,
+} from '../config/libraries';
 import { langIcons } from '../config/lang-icons';
+import LinkChip from './LinkChip.astro';
 
 interface Props {
   currentPath: string;
@@ -72,37 +77,40 @@ for (const lib of libraries) {
       {
         categoryOrder.map(cat =>
           categories[cat]?.map(lib => {
-            const href = `/docs/${lib.slug}/`;
-            const isActive = currentPath.startsWith(href);
+            const rootHref = `/docs/${lib.slug}/`;
+            const isActive = currentPath.startsWith(rootHref);
+            const defaultVersion = lib.versions[0]?.slug ?? 'latest';
             return (
-              <li>
+              <li class:list={['picker-item', { active: isActive }]}>
+                <span class='picker-dot' style={`--dot-color: ${lib.color}`} />
                 <a
-                  href={href}
-                  class:list={['picker-item', { active: isActive }]}
-                  aria-current={isActive ? 'true' : undefined}
+                  href={rootHref}
+                  class='picker-item-label'
+                  aria-current={isActive ? 'page' : undefined}
                 >
-                  <span
-                    class='picker-dot'
-                    style={`--dot-color: ${lib.color}`}
-                  />
-                  <span class='picker-item-label'>{lib.label}</span>
-                  {lib.languages.length > 0 && (
-                    <span class='picker-badges'>
-                      {lib.languages.map(lang => {
-                        const icon = langIcons[lang];
-                        return icon ? (
-                          <span
-                            class='lang-icon'
-                            style={`color: ${icon.color}`}
-                            title={lang}
-                          >
-                            <Fragment set:html={icon.svg} />
-                          </span>
-                        ) : null;
-                      })}
-                    </span>
-                  )}
+                  {lib.label}
                 </a>
+                {lib.languages.length > 0 && (
+                  <span class='picker-variants'>
+                    {lib.languages.map(lang => {
+                      const icon = langIcons[lang];
+                      if (!icon) return null;
+                      const variantHref = buildLibraryUrl(
+                        lib,
+                        lang,
+                        defaultVersion,
+                      );
+                      return (
+                        <LinkChip
+                          href={variantHref}
+                          label={lang}
+                          icon={icon.svg}
+                          accentColor={icon.color}
+                        />
+                      );
+                    })}
+                  </span>
+                )}
               </li>
             );
           }),
@@ -247,13 +255,9 @@ for (const lib of libraries) {
     gap: 0.5rem;
     padding: 0.35rem 0.5rem;
     border-radius: 0.25rem;
-    text-decoration: none;
     color: var(--sl-color-gray-2);
     font-size: var(--sl-text-base);
     line-height: 1.4;
-    transition:
-      color 0.15s,
-      background-color 0.15s;
   }
 
   @media (min-width: 50rem) {
@@ -262,16 +266,13 @@ for (const lib of libraries) {
     }
   }
 
-  .picker-item:hover,
-  .picker-item:focus {
-    color: var(--sl-color-white);
+  .picker-item:has(:hover) {
     background-color: var(--sl-color-gray-6);
   }
 
   .picker-item.active {
     color: var(--sl-color-white);
     background-color: var(--sl-color-gray-5);
-    font-weight: 600;
   }
 
   .picker-dot {
@@ -282,26 +283,33 @@ for (const lib of libraries) {
     flex-shrink: 0;
   }
 
+  /* Library name link */
   .picker-item-label {
+    flex: 1;
     min-width: 0;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s;
   }
 
-  /* Language badges */
-  .picker-badges {
+  .picker-item-label:hover {
+    color: var(--sl-color-white);
+  }
+
+  .picker-item-label:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 1px;
+  }
+
+  .picker-item.active .picker-item-label {
+    font-weight: 600;
+  }
+
+  /* Language variant links */
+  .picker-variants {
     display: flex;
-    gap: 0.25rem;
+    gap: 0.3rem;
     flex-shrink: 0;
-  }
-
-  .lang-icon {
-    display: inline-flex;
-    align-items: center;
-    flex-shrink: 0;
-    line-height: 0;
-  }
-
-  .lang-icon :global(svg) {
-    width: 14px;
-    height: 14px;
+    margin-inline-start: auto;
   }
 </style>
