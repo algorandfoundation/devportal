@@ -1207,51 +1207,6 @@ export default defineConfig({
           collapsed: true,
           items: [
             {
-              label: 'Algorand Python',
-              collapsed: true,
-              autogenerate: {
-                directory: 'docs/algorand-python/python/latest/api',
-              },
-            },
-            {
-              label: 'Algorand Typescript',
-              autogenerate: {
-                directory: 'docs/algorand-typescript/typescript/latest/api',
-              },
-              collapsed: true,
-            },
-            {
-              label: 'AlgoKit CLI',
-              collapsed: true,
-              items: [
-                {
-                  label: 'Command Reference',
-                  link: 'docs/algokit-cli/python/latest',
-                },
-              ],
-            },
-            {
-              label: 'AlgoKit Utils (Python)',
-              collapsed: true,
-              autogenerate: {
-                directory: 'reference/algokit-utils-py/api',
-              },
-            },
-            {
-              label: 'AlgoKit Utils (Typescript)',
-              collapsed: true,
-              autogenerate: {
-                directory: 'reference/algokit-utils-ts/api',
-              },
-            },
-            // {
-            //   label: 'AlgoKit Subscriber (Typescript)',
-            //   collapsed: true,
-            //   autogenerate: {
-            //     directory: 'reference/algokit-subscriber-ts/api',
-            //   },
-            // },
-            {
               label: 'Algorand TEAL',
               collapsed: true,
               items: [
