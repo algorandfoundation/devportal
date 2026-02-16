@@ -60,7 +60,6 @@ export const config: LibraryImportConfig = {
       ],
       transforms: [convertH1ToTitle],
       linkTransform: {
-        stripPrefixes: ['src/content/docs'],
         linkMappings: [
           ...generateStarlightLinkMappings(),
           {
@@ -113,7 +112,6 @@ export const legacyGuideConfig: ImportOptions = {
   ],
   transforms: [convertH1ToTitle],
   linkTransform: {
-    stripPrefixes: ['src/content/docs'],
     linkMappings: [
       ...generateStarlightLinkMappings(),
       {

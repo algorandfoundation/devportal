@@ -36,8 +36,8 @@ importers:
         specifier: ^3.18.1
         version: 3.18.1
       '@larkiny/astro-github-loader':
-        specifier: ^0.14.0
-        version: 0.14.0(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))
+        specifier: ^0.14.1
+        version: 0.14.1(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))
       '@tailwindcss/vite':
         specifier: ^4.1.18
         version: 4.1.18(vite@6.4.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.7.1))
@@ -947,8 +947,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@larkiny/astro-github-loader@0.14.0':
-    resolution: {integrity: sha512-IyQPIogCBcEsHtybvOoxJfyZspziYWdE7oOWfEVgmXwVcg8kYMXtNh81ZueFGtTl7ggNv/IBfBzG/teQd90Jqw==}
+  '@larkiny/astro-github-loader@0.14.1':
+    resolution: {integrity: sha512-+jdxSZSmFqbwCWSnyQ2HdTLkqQwU2NGjeo3iD1J2atyj3YKQkvecVWTDtUOWvPRltCpPhkjAh67m+FiHYz3Y4g==}
     peerDependencies:
       astro: ^5.5.6
 
@@ -5354,7 +5354,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@larkiny/astro-github-loader@0.14.0(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))':
+  '@larkiny/astro-github-loader@0.14.1(astro@5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1))':
     dependencies:
       '@octokit/auth-app': 8.2.0
       astro: 5.17.1(@types/node@25.2.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.7.1)

@@ -91,7 +91,6 @@ export const config: LibraryImportConfig = {
         },
       ],
       linkTransform: {
-        stripPrefixes: ['src/content/docs'],
         linkMappings: [...generateStarlightLinkMappings()],
       },
       clear: true,
@@ -189,7 +188,6 @@ export const config: LibraryImportConfig = {
         },
       ],
       linkTransform: {
-        stripPrefixes: ['src/content/docs'],
         linkMappings: [...generateStarlightLinkMappings()],
       },
       enabled: true,
@@ -237,7 +235,6 @@ export const legacyTsGuideConfig: ImportOptions = {
     },
   ],
   linkTransform: {
-    stripPrefixes: ['src/content/docs'],
     linkMappings: [...generateStarlightLinkMappings()],
   },
   clear: true,
@@ -285,7 +282,6 @@ export const legacyPyGuideConfig: ImportOptions = {
     },
   ],
   linkTransform: {
-    stripPrefixes: ['src/content/docs'],
     linkMappings: [...generateStarlightLinkMappings()],
   },
   enabled: true,

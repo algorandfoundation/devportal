@@ -37,7 +37,6 @@ export const config: LibraryImportConfig = {
         },
       ],
       linkTransform: {
-        stripPrefixes: ['src/content/docs'],
         linkMappings: [...generateStarlightLinkMappings()],
       },
       enabled: true,
