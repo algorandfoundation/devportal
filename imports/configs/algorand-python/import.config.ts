@@ -93,7 +93,14 @@ export const config: LibraryImportConfig = {
         },
       ],
       linkTransform: {
-        linkMappings: [...generateStarlightLinkMappings()],
+        linkMappings: [
+          ...generateStarlightLinkMappings(),
+          {
+            pattern: /^docs\/_build\/markdown\/(api-.+)/,
+            replacement: '/docs/algorand-python/python/latest/api/$1',
+            global: true,
+          },
+        ],
       },
       enabled: true,
       clear: true,
@@ -120,7 +127,14 @@ export const legacyGuideConfig: ImportOptions = {
     },
   ],
   linkTransform: {
-    linkMappings: [...generateStarlightLinkMappings()],
+    linkMappings: [
+      ...generateStarlightLinkMappings(),
+      {
+        pattern: /^docs\/_build\/markdown\/(api-.+)/,
+        replacement: '/docs/algorand-python/python/latest/api/$1',
+        global: true,
+      },
+    ],
   },
   clear: true,
   enabled: true,

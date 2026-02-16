@@ -1,13 +1,11 @@
 ---
 title: AlgoKit Generate
-sidebar:
-  label: Generate
 ---
-The `algokit generate` [command](docs/cli/#generate) is used to generate components used in an AlgoKit project. It also allows for custom generate commands which are loaded from the .algokit.toml file in your project directory.
+The `algokit generate` [command](/docs/algokit-cli/python/latest/#generate) is used to generate components used in an AlgoKit project. It also allows for custom generate commands which are loaded from the .algokit.toml file in your project directory.
 
 ## 1. Typed clients
 
-The `algokit generate client` [command](docs/cli/#client) can be used to generate a typed client from an [ARC-0032](https://arc.algorand.foundation/ARCs/arc-0032) or [ARC-0056](https://github.com/algorandfoundation/ARCs/pull/258) application specification with both Python and TypeScript available as target languages.
+The `algokit generate client` [command](/docs/algokit-cli/python/latest/#client) can be used to generate a typed client from an [ARC-0032](https://arc.algorand.foundation/ARCs/arc-0032) or [ARC-0056](https://github.com/algorandfoundation/ARCs/pull/258) application specification with both Python and TypeScript available as target languages.
 
 ### Prerequisites
 
@@ -25,7 +23,7 @@ You can either specify a path to an ARC-0032 JSON file, an ARC-0056 JSON file or
 The output path is interpreted as relative to the current working directory, however an absolute path may also be specified e.g.
 `algokit generate client application.json --output /absolute/path/to/client.py`
 
-There are two tokens available for use with the `-o`, `--output` [option](docs/cli/#-o---output-):
+There are two tokens available for use with the `-o`, `--output` [option](/docs/algokit-cli/python/latest/#-o---output-):
 
 - `{contract_name}`: This will resolve to a name based on the ARC-0032/ARC-0056 contract name, formatted appropriately for the target language.
 - `{app_spec_dir}`: This will resolve to the parent directory of the `application.json`, `*.arc32.json`, `*.arc56.json` file which can be useful to output a client relative to its source file.

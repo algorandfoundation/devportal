@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Task Analyze
-sidebar:
-  label: Analyze
 ---
 The `analyze` task is a command-line utility that analyzes TEAL programs for common vulnerabilities using [Tealer](https://github.com/crytic/tealer) integration. It allows you to detect a range of common vulnerabilities in code written in TEAL. For full list of vulnerability detectors refer to [Tealer documentation](https://github.com/crytic/tealer?tab=readme-ov-file#detectors).
 

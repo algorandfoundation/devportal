@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Task NFD Lookup
-sidebar:
-  label: NFD Lookup
 ---
 The AlgoKit NFD Lookup feature allows you to perform a lookup via NFD domain or address, returning the associated address or domain respectively using the AlgoKit CLI. The feature is powered by [NFDomains MainNet API](https://api-docs.nf.domains/).
 
@@ -45,4 +43,4 @@ If the lookup is successful, the result will be output to the console in a JSON 
 
 ## Further Reading
 
-For in-depth details, visit the [nfd-lookup section](docs/cli/#nfd-lookup) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [nfd-lookup section](/docs/algokit-cli/python/latest/#nfd-lookup) in the AlgoKit CLI reference documentation.

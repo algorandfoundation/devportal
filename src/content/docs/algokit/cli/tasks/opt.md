@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Task Asset opt-(in|out)
-sidebar:
-  label: Asset opt-(in|out)
 ---
 AlgoKit Task Asset opt-(in|out) allows you to opt-in or opt-out of Algorand Asset(s). This task supports single or multiple assets.
 
@@ -71,4 +69,4 @@ $ algokit task opt-out --account {YOUR_ACCOUNT} --all
 
 ## Further Reading
 
-For in-depth details, visit the [opt-in](docs/cli/#opt-in) and [opt-out](docs/cli/#opt-out) sections in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [opt-in](/docs/algokit-cli/python/latest/#opt-in) and [opt-out](/docs/algokit-cli/python/latest/#opt-out) sections in the AlgoKit CLI reference documentation.

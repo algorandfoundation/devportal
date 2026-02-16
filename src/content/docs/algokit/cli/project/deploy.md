@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Project Deploy
-sidebar:
-  label: Deploy
 ---
 Deploy your smart contracts effortlessly to various networks with the algokit project deploy feature. This feature is essential for automation in CI/CD pipelines and for seamless deployment to various Algorand network environments.
 
@@ -211,4 +209,4 @@ This example shows how to deploy smart contracts to the testnet using a custom d
 
 ## Further Reading
 
-For in-depth details, visit the [deploy](docs/cli/#deploy) section in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [deploy](/docs/algokit-cli/python/latest/#deploy) section in the AlgoKit CLI reference documentation.

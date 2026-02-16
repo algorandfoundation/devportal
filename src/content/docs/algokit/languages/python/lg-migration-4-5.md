@@ -1,7 +1,5 @@
 ---
 title: PuyaPy migration from 4.x to 5.0
-sidebar:
-  label: Migration Guide v4.x to 5.0
 ---
 
 PuyaPy 5.0 and the accompanying Algorand Python 3.0 `algopy` stubs have some breaking changes from prior versions, this document outlines those changes and how to resolve them

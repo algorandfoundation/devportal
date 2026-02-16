@@ -7,15 +7,15 @@ creating and submitting inner transactions from your smart contract.
 
 The following types are available:
 
-| Group Transactions                                                                                        | Inner Transaction Field sets                                                          | Inner Transaction                                                                                                   |
-| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| [PaymentTransaction](docs/_build/markdown/api-algopy.gtxn#algopy.gtxn.PaymentTransaction)                 | [Payment](docs/_build/markdown/api-algopy.itxn#algopy.itxn.Payment)                   | [PaymentInnerTransaction](docs/_build/markdown/api-algopy.itxn#algopy.itxn.PaymentInnerTransaction)                 |
-| [KeyRegistrationTransaction](docs/_build/markdown/api-algopy.gtxn#algopy.gtxn.KeyRegistrationTransaction) | [KeyRegistration](docs/_build/markdown/api-algopy.itxn#algopy.itxn.KeyRegistration)   | [KeyRegistrationInnerTransaction](docs/_build/markdown/api-algopy.itxn#algopy.itxn.KeyRegistrationInnerTransaction) |
-| [AssetConfigTransaction](docs/_build/markdown/api-algopy.gtxn#algopy.gtxn.AssetConfigTransaction)         | [AssetConfig](docs/_build/markdown/api-algopy.itxn#algopy.itxn.AssetConfig)           | [AssetConfigInnerTransaction](docs/_build/markdown/api-algopy.itxn#algopy.itxn.AssetConfigInnerTransaction)         |
-| [AssetTransferTransaction](docs/_build/markdown/api-algopy.gtxn#algopy.gtxn.AssetTransferTransaction)     | [AssetTransfer](docs/_build/markdown/api-algopy.itxn#algopy.itxn.AssetTransfer)       | [AssetTransferInnerTransaction](docs/_build/markdown/api-algopy.itxn#algopy.itxn.AssetTransferInnerTransaction)     |
-| [AssetFreezeTransaction](docs/_build/markdown/api-algopy.gtxn#algopy.gtxn.AssetFreezeTransaction)         | [AssetFreeze](docs/_build/markdown/api-algopy.itxn#algopy.itxn.AssetFreeze)           | [AssetFreezeInnerTransaction](docs/_build/markdown/api-algopy.itxn#algopy.itxn.AssetFreezeInnerTransaction)         |
-| [ApplicationCallTransaction](docs/_build/markdown/api-algopy.gtxn#algopy.gtxn.ApplicationCallTransaction) | [ApplicationCall](docs/_build/markdown/api-algopy.itxn#algopy.itxn.ApplicationCall)   | [ApplicationCallInnerTransaction](docs/_build/markdown/api-algopy.itxn#algopy.itxn.ApplicationCallInnerTransaction) |
-| [Transaction](docs/_build/markdown/api-algopy.gtxn#algopy.gtxn.Transaction)                               | [InnerTransaction](docs/_build/markdown/api-algopy.itxn#algopy.itxn.InnerTransaction) | [InnerTransactionResult](docs/_build/markdown/api-algopy.itxn#algopy.itxn.InnerTransactionResult)                   |
+| Group Transactions                                                                                                           | Inner Transaction Field sets                                                                             | Inner Transaction                                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| [PaymentTransaction](/docs/algorand-python/python/latest/api/api-algopy.gtxn#algopy.gtxn.PaymentTransaction)                 | [Payment](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.Payment)                   | [PaymentInnerTransaction](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.PaymentInnerTransaction)                 |
+| [KeyRegistrationTransaction](/docs/algorand-python/python/latest/api/api-algopy.gtxn#algopy.gtxn.KeyRegistrationTransaction) | [KeyRegistration](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.KeyRegistration)   | [KeyRegistrationInnerTransaction](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.KeyRegistrationInnerTransaction) |
+| [AssetConfigTransaction](/docs/algorand-python/python/latest/api/api-algopy.gtxn#algopy.gtxn.AssetConfigTransaction)         | [AssetConfig](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.AssetConfig)           | [AssetConfigInnerTransaction](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.AssetConfigInnerTransaction)         |
+| [AssetTransferTransaction](/docs/algorand-python/python/latest/api/api-algopy.gtxn#algopy.gtxn.AssetTransferTransaction)     | [AssetTransfer](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.AssetTransfer)       | [AssetTransferInnerTransaction](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.AssetTransferInnerTransaction)     |
+| [AssetFreezeTransaction](/docs/algorand-python/python/latest/api/api-algopy.gtxn#algopy.gtxn.AssetFreezeTransaction)         | [AssetFreeze](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.AssetFreeze)           | [AssetFreezeInnerTransaction](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.AssetFreezeInnerTransaction)         |
+| [ApplicationCallTransaction](/docs/algorand-python/python/latest/api/api-algopy.gtxn#algopy.gtxn.ApplicationCallTransaction) | [ApplicationCall](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.ApplicationCall)   | [ApplicationCallInnerTransaction](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.ApplicationCallInnerTransaction) |
+| [Transaction](/docs/algorand-python/python/latest/api/api-algopy.gtxn#algopy.gtxn.Transaction)                               | [InnerTransaction](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.InnerTransaction) | [InnerTransactionResult](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.InnerTransactionResult)                   |
 
 ## Group Transactions
 
@@ -42,7 +42,7 @@ class MyContract(algopy.ARC4Contract):
 
 Group transactions can also be created using the group index of the transaction.
 If instantiating one of the type specific transactions they will be checked to ensure the transaction is of the expected type.
-[Transaction](docs/_build/markdown/api-algopy.gtxn#algopy.gtxn.Transaction) is not checked for a specific type and provides access to all transaction fields
+[Transaction](/docs/algorand-python/python/latest/api/api-algopy.gtxn#algopy.gtxn.Transaction) is not checked for a specific type and provides access to all transaction fields
 
 For example, to obtain a reference to a payment transaction:
 
@@ -59,7 +59,7 @@ def process_payment(group_index: algopy.UInt64) -> None:
 ## Inner Transactions
 
 Inner transactions are defined using the parameter types, and can then be submitted individually by calling the
-`.submit()` method, or as a group by calling [`submit_txns`](docs/_build/markdown/api-algopy.itxn#algopy.itxn.submit_txns)
+`.submit()` method, or as a group by calling [`submit_txns`](/docs/algorand-python/python/latest/api/api-algopy.itxn#algopy.itxn.submit_txns)
 
 ### Examples
 

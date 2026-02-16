@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Config
-sidebar:
-  label: Config
 ---
 The `algokit config` command allows you to manage various global settings used by AlgoKit CLI. This feature is essential for customizing your AlgoKit environment to suit your needs.
 
@@ -63,4 +61,4 @@ If no package manager is specified, AlgoKit will prompt you to select one intera
 
 ## Further Reading
 
-For in-depth details, visit the [configuration section](docs/cli/#config) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [configuration section](/docs/algokit-cli/python/latest/#config) in the AlgoKit CLI reference documentation.

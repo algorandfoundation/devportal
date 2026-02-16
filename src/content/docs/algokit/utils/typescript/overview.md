@@ -49,7 +49,7 @@ To use this library simply include the following at the top of your file:
 import { AlgorandClient, Config } from '@algorandfoundation/algokit-utils';
 ```
 
-As well as `AlgorandClient` and `Config`, you can use intellisense to auto-complete the various types that you can import within the `{}` in your favourite Integrated Development Environment (IDE), or you can refer to the [reference documentation](docs/code/modules/).
+As well as `AlgorandClient` and `Config`, you can use intellisense to auto-complete the various types that you can import within the `{}` in your favourite Integrated Development Environment (IDE), or you can refer to the [reference documentation](/docs/algokit-utils/typescript/latest/api/modules/).
 
 > [!WARNING]
 > Previous versions of AlgoKit Utils encouraged you to include an import that looks like this (note the subtle difference of the extra `* as algokit`):
@@ -101,7 +101,7 @@ Or, you can generally get away with just importing the `algorandFixture` since i
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
-To see how to use it consult the [testing capability page](/algokit/utils/typescript/testing/) or to see what's available look at the [reference documentation](docs/code/modules/testing).
+To see how to use it consult the [testing capability page](/algokit/utils/typescript/testing/) or to see what's available look at the [reference documentation](/docs/algokit-utils/typescript/latest/api/modules/testing).
 
 ## Types
 
@@ -111,7 +111,7 @@ If you want to extend or pass around any of the types the various functions take
 import {<type>} from '@algorandfoundation/types/<module>'
 ```
 
-Where `<type>` would be replaced with the type and `<module>` would be replaced with the module. You can use intellisense to discover the modules and types in your favourite IDE, or you can explore the [types modules in the reference documentation](docs/code/README#modules).
+Where `<type>` would be replaced with the type and `<module>` would be replaced with the module. You can use intellisense to discover the modules and types in your favourite IDE, or you can explore the [types modules in the reference documentation](/docs/algokit-utils/typescript/latest/api/#modules).
 
 # Config and logging
 
@@ -121,7 +121,7 @@ To configure the AlgoKit Utils library you can make use of the `Config` object, 
 
 AlgoKit has an in-built logging abstraction that allows the library to issue log messages without coupling the library to a particular logging library. This means you can access the AlgoKit Utils logs within your existing logging library if you have one.
 
-To do this you need to create a logging translator that exposes the following interface ([`Logger`](docs/code/modules/types_logging#logger)):
+To do this you need to create a logging translator that exposes the following interface ([`Logger`](/docs/algokit-utils/typescript/latest/api/modules/types_logging#logger)):
 
 ```typescript
 export type Logger = {
@@ -135,7 +135,7 @@ export type Logger = {
 
 Note: this interface type is directly compatible with [Winston](https://github.com/winstonjs/winston) so you should be able to pass AlgoKit a Winston logger.
 
-By default, the [`consoleLogger`](docs/code/modules/types_logging#consolelogger) is set as the logger, which will send log messages to the various `console.*` methods for all logs apart from verbose logs. There is also a [`nullLogger`](docs/code/modules/types_logging#nulllogger) if you want to disable logging, or various leveled console loggers: [`verboseConsoleLogger`](docs/code/modules/types_logging#verboseconsolelogger) (also outputs verbose logs), [`infoConsoleLogger`](docs/code/modules/types_logging#infoconsolelogger) (only outputs info, warning and error logs), [`warningConsoleLogger`](docs/code/modules/types_logging#warningconsolelogger) (only outputs warning and error logs).
+By default, the [`consoleLogger`](/docs/algokit-utils/typescript/latest/api/modules/types_logging#consolelogger) is set as the logger, which will send log messages to the various `console.*` methods for all logs apart from verbose logs. There is also a [`nullLogger`](/docs/algokit-utils/typescript/latest/api/modules/types_logging#nulllogger) if you want to disable logging, or various leveled console loggers: [`verboseConsoleLogger`](/docs/algokit-utils/typescript/latest/api/modules/types_logging#verboseconsolelogger) (also outputs verbose logs), [`infoConsoleLogger`](/docs/algokit-utils/typescript/latest/api/modules/types_logging#infoconsolelogger) (only outputs info, warning and error logs), [`warningConsoleLogger`](/docs/algokit-utils/typescript/latest/api/modules/types_logging#warningconsolelogger) (only outputs warning and error logs).
 
 If you want to override the logger you can use the following:
 
@@ -143,7 +143,7 @@ If you want to override the logger you can use the following:
 Config.configure({ logger: myLogger });
 ```
 
-To retrieve the current debug state you can use [`Config.logger`](docs/code/interfaces/types_config.Config). To get a logger that is optionally set to the null logger based on a boolean flag you can use the [`Config.getLogger(useNullLogger)`](docs/code/classes/types_config.UpdatableConfig#getlogger) function.
+To retrieve the current debug state you can use [`Config.logger`](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config). To get a logger that is optionally set to the null logger based on a boolean flag you can use the [`Config.getLogger(useNullLogger)`](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig#getlogger) function.
 
 ## Debug mode
 
@@ -153,11 +153,11 @@ To turn on debug mode you can use the following:
 Config.configure({ debug: true });
 ```
 
-To retrieve the current debug state you can use [`Config.debug`](docs/code/interfaces/types_config.Config).
+To retrieve the current debug state you can use [`Config.debug`](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config).
 
 This will turn on things like automatic tracing, more verbose logging and [advanced debugging](/algokit/utils/typescript/debugging/). It's likely this option will result in extra HTTP calls to algod so worth being careful when it's turned on.
 
-If you want to temporarily turn it on you can use the [`withDebug`](docs/code/classes/types_config.UpdatableConfig#withdebug) function:
+If you want to temporarily turn it on you can use the [`withDebug`](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig#withdebug) function:
 
 ```typescript
 Config.withDebug(() => {
@@ -187,4 +187,4 @@ The library helps you interact with and develop against the Algorand blockchain 
 
 # Reference documentation
 
-We have [auto-generated reference documentation for the code](docs/code/README).
+We have [auto-generated reference documentation for the code](/docs/algokit-utils/typescript/latest/api/).

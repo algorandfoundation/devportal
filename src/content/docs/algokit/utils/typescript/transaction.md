@@ -1,14 +1,12 @@
 ---
 title: Transaction management
-sidebar:
-  label: Transaction
 ---
 
 Transaction management is one of the core capabilities provided by AlgoKit Utils. It allows you to construct, simulate and send single, or grouped transactions with consistent and highly configurable semantics, including configurable control of transaction notes, logging, fees, multiple sender account types, and sending behaviour.
 
 ## `ConfirmedTransactionResult`
 
-All AlgoKit Utils functions that send a transaction will generally return a variant of the [`ConfirmedTransactionResult` interface](docs/code/interfaces/types_transaction.ConfirmedTransactionResult) or some superset of that. This provides a consistent mechanism to interpret the results of a transaction send.
+All AlgoKit Utils functions that send a transaction will generally return a variant of the [`ConfirmedTransactionResult` interface](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResult) or some superset of that. This provides a consistent mechanism to interpret the results of a transaction send.
 
 It consists of two properties:
 
@@ -17,10 +15,10 @@ It consists of two properties:
 
 There are various variations of the `ConfirmedTransactionResult` that are exposed by various functions within AlgoKit Utils, including:
 
-- [`ConfirmedTransactionResults`](docs/code/interfaces/types_transaction.ConfirmedTransactionResults) - Where it's both guaranteed that a confirmation will be returned, there is a primary driving transaction, but multiple transactions may be sent (e.g. when making an ABI app call which has dependant transactions)
-- [`SendTransactionResults`](docs/code/interfaces/types_transaction.SendTransactionResults) - Where multiple transactions are being sent (`transactions` and `confirmations` are arrays that replace the singular `transaction` and `confirmation`)
-- [`SendAtomicTransactionComposerResults`](docs/code/interfaces/types_transaction.SendAtomicTransactionComposerResults) - The result from sending the transactions within an `AtomicTransactionComposer`, it extends `SendTransactionResults` and adds a few other useful properties
-- [`AppCallTransactionResult`](docs/code/interfaces/types_app.AppCallTransactionResultOfType) - Result from calling a single app call (which potentially may result in multiple other transaction calls if it was an ABI method with dependant transactions)
+- [`ConfirmedTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResults) - Where it's both guaranteed that a confirmation will be returned, there is a primary driving transaction, but multiple transactions may be sent (e.g. when making an ABI app call which has dependant transactions)
+- [`SendTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults) - Where multiple transactions are being sent (`transactions` and `confirmations` are arrays that replace the singular `transaction` and `confirmation`)
+- [`SendAtomicTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults) - The result from sending the transactions within an `AtomicTransactionComposer`, it extends `SendTransactionResults` and adds a few other useful properties
+- [`AppCallTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallTransactionResultOfType) - Result from calling a single app call (which potentially may result in multiple other transaction calls if it was an ABI method with dependant transactions)
 
 ## Further reading
 

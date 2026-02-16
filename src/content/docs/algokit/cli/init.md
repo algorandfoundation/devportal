@@ -1,9 +1,7 @@
 ---
 title: AlgoKit Init
-sidebar:
-  label: Init
 ---
-The `algokit init` [command](docs/cli/#init) is used to quickly initialize new projects using official Algorand Templates or community provided templates. It supports a fully guided command line wizard experience, as well as fully scriptable / non-interactive functionality via command options.
+The `algokit init` [command](/docs/algokit-cli/python/latest/#init) is used to quickly initialize new projects using official Algorand Templates or community provided templates. It supports a fully guided command line wizard experience, as well as fully scriptable / non-interactive functionality via command options.
 
 ## Quick start
 
@@ -39,7 +37,7 @@ For more details on workspaces and standalone projects, refer to the [AlgoKit Pr
 
 ## Bootstrapping
 
-You will also be prompted if you wish to run the [bootstrap](docs/cli/#bootstrap) command, this is useful if you plan to immediately begin developing in the new project. If you passed in `--defaults` or `--bootstrap` then it will automatically run bootstrapping unless you passed in `--no-bootstrap`.
+You will also be prompted if you wish to run the [bootstrap](/docs/algokit-cli/python/latest/#bootstrap) command, this is useful if you plan to immediately begin developing in the new project. If you passed in `--defaults` or `--bootstrap` then it will automatically run bootstrapping unless you passed in `--no-bootstrap`.
 
 ```
 
@@ -76,7 +74,7 @@ After bootstrapping you are also given the opportunity to initialize a git repo,
 
 ## Options
 
-There are a number of options that can be used to provide answers to the template prompts. Some of the options requiring further explanation are detailed below, but consult the CLI reference for all available [options](docs/cli/#init).
+There are a number of options that can be used to provide answers to the template prompts. Some of the options requiring further explanation are detailed below, but consult the CLI reference for all available [options](/docs/algokit-cli/python/latest/#init).
 
 ## Community Templates
 
@@ -160,4 +158,4 @@ To explore what examples are available before initializing, you can run the inte
 
 After initializing an example, AlgoKit automatically attempts to open the project in your default IDE to help you quickly start exploring and modifying the code.
 
-For more details about the `AlgoKit init` command, please refer to the [AlgoKit CLI reference documentation](docs/cli/#init).
+For more details about the `AlgoKit init` command, please refer to the [AlgoKit CLI reference documentation](/docs/algokit-cli/python/latest/#init).

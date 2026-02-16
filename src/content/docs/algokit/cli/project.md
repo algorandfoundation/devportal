@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Project
-sidebar:
-  label: Overview
 ---
 `algokit project` is a collection of commands and command groups useful for managing algokit compliant [project workspaces](/algokit/cli/init/#workspaces).
 

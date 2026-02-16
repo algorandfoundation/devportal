@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Project Bootstrap
-sidebar:
-  label: Bootstrap
 ---
 The AlgoKit Project Bootstrap feature allows you to bootstrap different project dependencies by looking up specific files in your current directory and immediate sub directories by convention.
 
@@ -248,4 +246,4 @@ These new flags enhance the flexibility and efficiency of the bootstrapping proc
 
 ## Further Reading
 
-To learn more about the `algokit project bootstrap` command, please refer to [bootstrap](docs/cli/#bootstrap) in the AlgoKit CLI reference documentation.
+To learn more about the `algokit project bootstrap` command, please refer to [bootstrap](/docs/algokit-cli/python/latest/#bootstrap) in the AlgoKit CLI reference documentation.

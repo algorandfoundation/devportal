@@ -1,7 +1,5 @@
 ---
 title: Principles & Background
-sidebar:
-  label: Guiding Principles
 ---
 
 ## Background

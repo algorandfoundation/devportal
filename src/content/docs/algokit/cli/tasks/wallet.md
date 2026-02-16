@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Task Wallet
-sidebar:
-  label: Wallet
 ---
 Manage your Algorand addresses and accounts effortlessly with the AlgoKit Wallet feature. This feature allows you to create short aliases for your addresses and accounts on AlgoKit CLI.
 
@@ -97,4 +95,4 @@ WSL2 environments don't have a keyring backend installed by default. If you want
 
 ## Further Reading
 
-For in-depth details, visit the [wallet section](docs/cli/#wallet) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [wallet section](/docs/algokit-cli/python/latest/#wallet) in the AlgoKit CLI reference documentation.

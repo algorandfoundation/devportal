@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Project Run
-sidebar:
-  label: Run
 ---
 The `algokit project run` command allows defining custom commands to execute at standalone project level or being orchestrated from a workspace containing multiple standalone projects.
 
@@ -184,4 +182,4 @@ In this example, if the `hello` command in `.algokit.toml` is defined as `echo "
 
 ## Further Reading
 
-To learn more about the `algokit project run` command, please refer to [run](docs/cli/#run) in the AlgoKit CLI reference documentation.
+To learn more about the `algokit project run` command, please refer to [run](/docs/algokit-cli/python/latest/#run) in the AlgoKit CLI reference documentation.

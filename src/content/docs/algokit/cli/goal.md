@@ -1,7 +1,5 @@
 ---
 title: AlgoKit goal
-sidebar:
-  label: Goal
 ---
 AlgoKit goal command provides the user with a mechanism to run [goal cli](https://dev.algorand.co/algokit/algokit-cli/goal/) commands against the current [AlgoKit LocalNet](/algokit/cli/localnet/).
 
@@ -139,4 +137,4 @@ Would you like to see it now? (Y/n): n
 
 This is particularly useful when you know a command will require user input, such as creating new accounts, importing keys, or signing transactions.
 
-For more details about the `AlgoKit goal` command, please refer to the [AlgoKit CLI reference documentation](docs/cli/#goal).
+For more details about the `AlgoKit goal` command, please refer to the [AlgoKit CLI reference documentation](/docs/algokit-cli/python/latest/#goal).

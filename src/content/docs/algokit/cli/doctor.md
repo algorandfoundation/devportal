@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Doctor
-sidebar:
-  label: Doctor
 ---
 The AlgoKit Doctor feature allows you to check your AlgoKit installation along with its dependencies. This is useful for diagnosing potential issues with using AlgoKit.
 
@@ -55,4 +53,4 @@ docker compose: 2.1.3
   install via https://docs.docker.com/compose/install/
 ```
 
-For more details about the `AlgoKit doctor` command, please refer to the [AlgoKit CLI reference documentation](docs/cli/#doctor).
+For more details about the `AlgoKit doctor` command, please refer to the [AlgoKit CLI reference documentation](/docs/algokit-cli/python/latest/#doctor).

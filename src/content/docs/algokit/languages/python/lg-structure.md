@@ -1,7 +1,5 @@
 ---
 title: Program structure
-sidebar:
-  label: Program Structure
 ---
 
 An Algorand Python smart contract is defined within a single class. You can extend other
@@ -106,7 +104,7 @@ deploy the same contract class multiple times, each will become a distinct and i
 
 Contract classes can optionally implement an `__init__` method, which will be executed exactly
 once, on first deployment. This method takes no arguments, but can contain arbitrary code,
-including reading directly from the transaction arguments via [`Txn`](docs/_build/markdown/api-algopy.op#algopy.op.Txn). This makes
+including reading directly from the transaction arguments via [`Txn`](/docs/algorand-python/python/latest/api/api-algopy.op#algopy.op.Txn). This makes
 it a good place to put common initialisation code, particularly in ARC-4 contracts with multiple
 methods that allow for creation.
 
@@ -135,7 +133,7 @@ abstract methods are unimplemented.
 ### Contract class configuration
 
 When defining a contract subclass you can pass configuration options to the `algopy.Contract`
-base class [per the API documentation](docs/_build/markdown/api-algopy#algopy.Contract).
+base class [per the API documentation](/docs/algorand-python/python/latest/api/api-algopy#algopy.Contract).
 
 Namely you can pass in:
 

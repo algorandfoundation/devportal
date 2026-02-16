@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Task Vanity Address
-sidebar:
-  label: Vanity Address
 ---
 The AlgoKit Vanity Address feature allows you to generate a vanity Algorand address. A vanity address is an address that contains a specific keyword in it. The keyword can only include uppercase letters A-Z and numbers 2-7. The longer the keyword, the longer it may take to generate a matching address.
 
@@ -56,4 +54,4 @@ $ ~ algokit task vanity-address ALGO -o alias -a my-vanity-address
 
 ## Further Reading
 
-For in-depth details, visit the [vanity-address section](docs/cli/#vanity-address) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [vanity-address section](/docs/algokit-cli/python/latest/#vanity-address) in the AlgoKit CLI reference documentation.

@@ -1,7 +1,5 @@
 ---
 title: Transaction composer
-sidebar:
-  label: Transaction Composer
 ---
 
 The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.
@@ -30,9 +28,9 @@ const composerFromConstructorWithOptionalParams = new TransactionComposer({
 
 ## Constructing a transaction
 
-To construct a transaction you need to add it to the composer, passing in the relevant [params object](docs/code/modules/types_composer#type-aliases) for that transaction. Params are normal JavaScript objects and all of them extend the [common call parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters).
+To construct a transaction you need to add it to the composer, passing in the relevant [params object](/docs/algokit-utils/typescript/latest/api/modules/types_composer#type-aliases) for that transaction. Params are normal JavaScript objects and all of them extend the [common call parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters).
 
-The [methods to construct a transaction](docs/code/classes/types_composer.TransactionComposer#methods) are all named `add{TransactionType}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
+The [methods to construct a transaction](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer#methods) are all named `add{TransactionType}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
 
 For example:
 

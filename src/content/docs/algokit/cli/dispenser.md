@@ -1,7 +1,5 @@
 ---
 title: AlgoKit TestNet Dispenser
-sidebar:
-  label: TestNet Dispenser
 ---
 The AlgoKit Dispenser feature allows you to interact with the AlgoKit TestNet Dispenser. This feature is essential for funding your wallet with TestNet ALGOs, refunding ALGOs back to the dispenser wallet, and getting information about current fund limits on your account.
 
@@ -90,4 +88,4 @@ Options
 
 ## Further Reading
 
-For in-depth details, visit the [dispenser section](docs/cli/#dispenser) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [dispenser section](/docs/algokit-cli/python/latest/#dispenser) in the AlgoKit CLI reference documentation.

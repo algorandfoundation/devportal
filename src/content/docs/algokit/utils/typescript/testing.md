@@ -1,7 +1,5 @@
 ---
 title: Automated testing
-sidebar:
-  label: Testing
 ---
 
 Automated testing is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It allows you to use terse, robust automated testing primitives that work across any testing framework (including jest and vitest) to facilitate fixture management, quickly generating isolated and funded test accounts, transaction logging, indexer wait management and log capture.
@@ -10,9 +8,9 @@ To see some usage examples check out the all of the [automated tests](src/testin
 
 ## Module import
 
-The testing capability is not exposed from the [root algokit module](docs/code/modules/) so there is a clear separation between testing functionality and non-testing functionality.
+The testing capability is not exposed from the [root algokit module](/docs/algokit-utils/typescript/latest/api/modules/) so there is a clear separation between testing functionality and non-testing functionality.
 
-To access all of the functionality in the testing capability individually, you can import the [testing module](docs/code/modules/testing):
+To access all of the functionality in the testing capability individually, you can import the [testing module](/docs/algokit-utils/typescript/latest/api/modules/testing):
 
 ```typescript
 import * as algotesting from '@algorandfoundation/algokit-utils/testing';
@@ -126,7 +124,7 @@ When calling `algorandFixture()` you can optionally pass in some fixture configu
 
 ### Using the fixture context
 
-The `fixture.context` property is of type [`AlgorandTestAutomationContext`](docs/code/interfaces/types_testing.AlgorandTestAutomationContext) exposes the following properties from which you can pick which ones you want in a given test using an object [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
+The `fixture.context` property is of type [`AlgorandTestAutomationContext`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext) exposes the following properties from which you can pick which ones you want in a given test using an object [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
 
 - `algorand: AlgorandClient` - An [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) instance
 - `algod: Algodv2` - Proxy Algod client instance that will log sent transactions in `transactionLogger`
@@ -146,7 +144,7 @@ If you want to capture log messages from AlgoKit that are issued within your tes
 import { algoKitLogCaptureFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
-The log capture fixture works by setting the logger within the AlgoKit configuration to be a [`TestLogger`](docs/code/classes/testing.TestLogger) during the test run.
+The log capture fixture works by setting the logger within the AlgoKit configuration to be a [`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger) during the test run.
 
 ### Using with Jest
 
@@ -230,7 +228,7 @@ The testing capability provides mechanisms for waiting for indexer to catch up, 
 
 When testing, it can be useful to capture all of the transactions that have been issued with a given test run. They can then be asserted on, or used for [waiting for indexer](#waiting-for-indexer), etc.
 
-The testing capability provides the ability to capture transactions via the [`TransactionLogger`](docs/code/classes/testing.TransactionLogger) class.
+The testing capability provides the ability to capture transactions via the [`TransactionLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger) class.
 
 The `TransactionLogger` has the following methods:
 
@@ -250,11 +248,11 @@ The key when generating a test account is getting hold of a [dispenser](/algokit
 
 To make it easier to quickly get a test account the testing capability provides the following mechanisms:
 
-- [`algotesting.getTestAccount(testAccountParams, algod, kmd?)`](docs/code/modules/testing#gettestaccount) - Generates a random new account, logs the mnemonic of the account (unless suppressed), funds it from the [dispenser](/algokit/utils/typescript/transfer/#dispenser)
+- [`algotesting.getTestAccount(testAccountParams, algod, kmd?)`](/docs/algokit-utils/typescript/latest/api/modules/testing#gettestaccount) - Generates a random new account, logs the mnemonic of the account (unless suppressed), funds it from the [dispenser](/algokit/utils/typescript/transfer/#dispenser)
 - `algorandFixture.testAccount` - A test account that is always generated for every test (log output suppressed to reduce noise, but worth noting that means the mnemonic isn't logged for this account), by default it is given 10 Algo unless overridden in the [fixture config](#fixture-configuration)
-- [`algorandFixture.generateAccount(testAccountParams)`](docs/code/interfaces/types_testing.AlgorandTestAutomationContext#generateaccount) - Allows you to quickly generate a test account with the `algod` and `kmd` instances that are part of the given fixture
+- [`algorandFixture.generateAccount(testAccountParams)`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext#generateaccount) - Allows you to quickly generate a test account with the `algod` and `kmd` instances that are part of the given fixture
 
-The parameters object that controls test account generation, [`GetTestAccountParams`](docs/code/interfaces/types_testing.GetTestAccountParams), has the following properties:
+The parameters object that controls test account generation, [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.GetTestAccountParams), has the following properties:
 
 - `initialFunds: AlgoAmount` - Initial funds to ensure the account has
 - `suppressLog?: boolean` - Whether to suppress the log (which includes a mnemonic) or not (default: do not suppress the log)

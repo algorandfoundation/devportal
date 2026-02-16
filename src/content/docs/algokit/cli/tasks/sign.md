@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Task Sign
-sidebar:
-  label: Sign
 ---
 The AlgoKit Sign feature allows you to sign Algorand transaction(s) using the AlgoKit CLI. This feature supports signing single or multiple transactions, either provided directly as a base64 encoded string or from a binary file.
 
@@ -94,4 +92,4 @@ Buffer.from(algosdk.encodeObj({ txn: txn.get_obj_for_encoding() })).toString(
 
 ## Further Reading
 
-For in-depth details, visit the [sign section](docs/cli/#sign) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [sign section](/docs/algokit-cli/python/latest/#sign) in the AlgoKit CLI reference documentation.

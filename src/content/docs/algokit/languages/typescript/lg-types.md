@@ -1,7 +1,5 @@
 ---
 title: Types
-sidebar:
-  label: Basic Types
 ---
 
 Types in Algorand TypeScript can be divided into two camps, 'native' AVM types where the implementation is opaque, and it is up to the compiler and the AVM how the type is represented in memory; and 'ARC4 Encoded types' where the in-memory representation is always a byte array, and the exact format is determined by the [ARC4 Spec](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0004.md#encoding).

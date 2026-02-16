@@ -1,25 +1,23 @@
 ---
 title: Python builtins
-sidebar:
-  label: Python Built-Ins
 ---
 
-Some common python builtins have equivalent `algopy` versions, that use an [`UInt64`](docs/_build/markdown/api-algopy#algopy.UInt64) instead of a native `int`.
+Some common python builtins have equivalent `algopy` versions, that use an [`UInt64`](/docs/algorand-python/python/latest/api/api-algopy#algopy.UInt64) instead of a native `int`.
 
 ## len
 
-The `len()` builtin is not supported. Instead, `algopy` types that have a length have a `.length` property of type [`UInt64`](docs/_build/markdown/api-algopy#algopy.UInt64). This is primarily
+The `len()` builtin is not supported. Instead, `algopy` types that have a length have a `.length` property of type [`UInt64`](/docs/algorand-python/python/latest/api/api-algopy#algopy.UInt64). This is primarily
 due to `len()` always returning `int` and the CPython implementation enforcing that it returns _exactly_ `int`.
 
 ## range
 
-The `range()` builtin has an equivalent [`algopy.urange`](docs/_build/markdown/api-algopy#algopy.urange). This behaves the same as the python builtin except that it returns
-an iteration of [`UInt64`](docs/_build/markdown/api-algopy#algopy.UInt64) values instead of `int`.
+The `range()` builtin has an equivalent [`algopy.urange`](/docs/algorand-python/python/latest/api/api-algopy#algopy.urange). This behaves the same as the python builtin except that it returns
+an iteration of [`UInt64`](/docs/algorand-python/python/latest/api/api-algopy#algopy.UInt64) values instead of `int`.
 
 ## enumerate
 
-The `enumerate()` builtin has an equivalent [`algopy.uenumerate`](docs/_build/markdown/api-algopy#algopy.uenumerate). This behaves the same as the python builtin except that it returns
-an iteration of [`UInt64`](docs/_build/markdown/api-algopy#algopy.UInt64) index values and the corresponding item.
+The `enumerate()` builtin has an equivalent [`algopy.uenumerate`](/docs/algorand-python/python/latest/api/api-algopy#algopy.uenumerate). This behaves the same as the python builtin except that it returns
+an iteration of [`UInt64`](/docs/algorand-python/python/latest/api/api-algopy#algopy.UInt64) index values and the corresponding item.
 
 ## reversed
 

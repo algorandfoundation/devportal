@@ -1,7 +1,5 @@
 ---
 title: Error handling and assertions
-sidebar:
-  label: Error Handling and Assertions
 ---
 
 In Algorand Python, error handling and assertions play a crucial role in ensuring the correctness and robustness of smart contracts.
@@ -27,10 +25,10 @@ The (optional) string value provided with an assertion, if provided, will be add
 ## Explicit failure
 
 For scenarios where you need to fail a contract explicitly, you can use
-the [`op.err()`](docs/_build/markdown/api-algopy.op#algopy.op.err) operation. This operation causes the TEAL program to immediately
+the [`op.err()`](/docs/algorand-python/python/latest/api/api-algopy.op#algopy.op.err) operation. This operation causes the TEAL program to immediately
 and unconditionally fail.
 
-Alternatively [`op.exit(0)`](docs/_build/markdown/api-algopy.op#algopy.op.exit) will achieve the same result. A non-zero value will
+Alternatively [`op.exit(0)`](/docs/algorand-python/python/latest/api/api-algopy.op#algopy.op.exit) will achieve the same result. A non-zero value will
 do the opposite and immediately succeed.
 
 ## Exception handling

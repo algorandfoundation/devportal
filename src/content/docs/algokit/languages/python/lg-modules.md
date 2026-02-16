@@ -1,7 +1,5 @@
 ---
 title: Module level constructs
-sidebar:
-  label: Module Level Constructs
 ---
 
 You can write compile-time constant code at a module level and then use them in place of [Python built-in literal types](/algokit/languages/python/lg-types/#python-built-in-types).

@@ -1,7 +1,5 @@
 ---
 title: AlgoKit Task Transfer
-sidebar:
-  label: Transfer
 ---
 The AlgoKit Transfer feature allows you to transfer algos and assets between two accounts.
 
@@ -54,4 +52,4 @@ By default:
 
 ## Further Reading
 
-For in-depth details, visit the [transfer section](docs/cli/#transfer) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [transfer section](/docs/algokit-cli/python/latest/#transfer) in the AlgoKit CLI reference documentation.

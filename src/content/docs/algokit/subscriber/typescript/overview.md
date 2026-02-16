@@ -1,7 +1,5 @@
 ---
 title: Algorand transaction subscription / indexing
-sidebar:
-  label: Overview
 ---
 
 ## Quick start

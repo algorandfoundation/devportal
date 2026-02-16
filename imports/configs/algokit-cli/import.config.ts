@@ -72,6 +72,11 @@ export const config: LibraryImportConfig = {
             replacement: `/algokit/algokit-intro`,
             global: true,
           },
+          {
+            pattern: /^docs\/cli\/(#.*)?$/,
+            replacement: '/docs/algokit-cli/python/latest/$1',
+            global: true,
+          },
         ],
       },
       clear: true,
@@ -122,6 +127,11 @@ export const legacyGuideConfig: ImportOptions = {
       {
         pattern: /^\.\.\/\.\.\/README\.md$/,
         replacement: `/algokit/algokit-intro`,
+        global: true,
+      },
+      {
+        pattern: /^docs\/cli\/(#.*)?$/,
+        replacement: '/docs/algokit-cli/python/latest/$1',
         global: true,
       },
     ],
