@@ -1,4 +1,3 @@
+#!/usr/bin/env sh
 # Check for BIP39 seed phrases (nomonic)
 npx tsx scripts/nomonic/check-staged.ts
-
-pnpm test
