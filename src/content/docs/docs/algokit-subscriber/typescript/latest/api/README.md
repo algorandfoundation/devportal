@@ -33,7 +33,7 @@ npm install algosdk@^3.1.0 @algorandfoundation/algokit-utils @algorandfoundation
 
 Whilst we aim to minimise breaking changes, there are situations where they are required.
 
-If you're migrating from an older version to v3, please refer to the [v3 migration guide](./docs/v3-migration.md).
+If you're migrating from an older version to v3, please refer to the [v3 migration guide](latest/api/docs/v3-migration).
 
 ## Quick start
 

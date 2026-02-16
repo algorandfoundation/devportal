@@ -31,6 +31,13 @@ export function generateCommonLinkMappings(): LinkMapping[] {
  */
 export function generateStarlightLinkMappings(): LinkMapping[] {
   return [
+    // Strip .md extensions from relative links (Starlight uses extensionless routes)
+    // Example: './subscriber.md' -> './subscriber', 'subscriptions.md#foo' -> 'subscriptions#foo'
+    {
+      pattern: /\.md(#|$)/,
+      replacement: '$1',
+      global: true,
+    },
     // Strip /index.md and /index (Starlight treats these specially)
     // Example: 'modules/index.md#some-anchor' -> 'modules/#some-anchor'
     {

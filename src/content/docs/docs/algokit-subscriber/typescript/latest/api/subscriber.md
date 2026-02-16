@@ -24,11 +24,11 @@ Create a new `AlgorandSubscriber`.
 
 ###### Parameters
 
-| Parameter  | Type                                                                         | Description                                                                                         |
-| ---------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `config`   | [`AlgorandSubscriberConfig`](types/subscription.md#algorandsubscriberconfig) | The subscriber configuration                                                                        |
-| `algod`    | `AlgodClient`                                                                | An algod client                                                                                     |
-| `indexer?` | `IndexerClient`                                                              | An (optional) indexer client; only needed if `subscription.syncBehaviour` is `catchup-with-indexer` |
+| Parameter  | Type                                                                                                                      | Description                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `config`   | [`AlgorandSubscriberConfig`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#algorandsubscriberconfig) | The subscriber configuration                                                                        |
+| `algod`    | `AlgodClient`                                                                                                             | An algod client                                                                                     |
+| `indexer?` | `IndexerClient`                                                                                                           | An (optional) indexer client; only needed if `subscription.syncBehaviour` is `catchup-with-indexer` |
 
 ###### Returns
 
@@ -48,16 +48,16 @@ The listener can be async and it will be awaited if so.
 
 ###### Type Parameters
 
-| Type Parameter | Default type                                                           |
-| -------------- | ---------------------------------------------------------------------- |
-| `T`            | [`SubscribedTransaction`](types/subscription.md#subscribedtransaction) |
+| Type Parameter | Default type                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `T`            | [`SubscribedTransaction`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#subscribedtransaction) |
 
 ###### Parameters
 
-| Parameter    | Type                                                                              | Description                                               |
-| ------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `filterName` | `string`                                                                          | The name of the filter to subscribe to                    |
-| `listener`   | [`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<`T`\> | The listener function to invoke with the subscribed event |
+| Parameter    | Type                                                                                                                           | Description                                               |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| `filterName` | `string`                                                                                                                       | The name of the filter to subscribe to                    |
+| `listener`   | [`TypedAsyncEventListener`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#typedasynceventlistener)\<`T`\> | The listener function to invoke with the subscribed event |
 
 ###### Returns
 
@@ -94,16 +94,16 @@ The listener can be async and it will be awaited if so.
 
 ###### Type Parameters
 
-| Type Parameter | Default type                                                           |
-| -------------- | ---------------------------------------------------------------------- |
-| `T`            | [`SubscribedTransaction`](types/subscription.md#subscribedtransaction) |
+| Type Parameter | Default type                                                                                                        |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `T`            | [`SubscribedTransaction`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#subscribedtransaction) |
 
 ###### Parameters
 
-| Parameter    | Type                                                                                | Description                                                |
-| ------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `filterName` | `string`                                                                            | The name of the filter to subscribe to                     |
-| `listener`   | [`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<`T`[]\> | The listener function to invoke with the subscribed events |
+| Parameter    | Type                                                                                                                             | Description                                                |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `filterName` | `string`                                                                                                                         | The name of the filter to subscribe to                     |
+| `listener`   | [`TypedAsyncEventListener`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#typedasynceventlistener)\<`T`[]\> | The listener function to invoke with the subscribed events |
 
 ###### Returns
 
@@ -138,9 +138,9 @@ The listener can be async and it will be awaited if so.
 
 ###### Parameters
 
-| Parameter  | Type                                                                                                                                           | Description                                                |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `listener` | [`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<[`BeforePollMetadata`](types/subscription.md#beforepollmetadata)\> | The listener function to invoke with the pre-poll metadata |
+| Parameter  | Type                                                                                                                                                                                                                                     | Description                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `listener` | [`TypedAsyncEventListener`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#typedasynceventlistener)\<[`BeforePollMetadata`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#beforepollmetadata)\> | The listener function to invoke with the pre-poll metadata |
 
 ###### Returns
 
@@ -170,9 +170,9 @@ The listener can be async and it will be awaited if so.
 
 ###### Parameters
 
-| Parameter  | Type                                                   | Description                                                    |
-| ---------- | ------------------------------------------------------ | -------------------------------------------------------------- |
-| `listener` | [`ErrorListener`](types/subscription.md#errorlistener) | The listener function to invoke with the error that was thrown |
+| Parameter  | Type                                                                                                | Description                                                    |
+| ---------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `listener` | [`ErrorListener`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#errorlistener) | The listener function to invoke with the error that was thrown |
 
 ###### Returns
 
@@ -220,9 +220,9 @@ The listener can be async and it will be awaited if so.
 
 ###### Parameters
 
-| Parameter  | Type                                                                                                                                                                 | Description                                          |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| `listener` | [`TypedAsyncEventListener`](types/subscription.md#typedasynceventlistener)\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\> | The listener function to invoke with the poll result |
+| Parameter  | Type                                                                                                                                                                                                                                                           | Description                                          |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `listener` | [`TypedAsyncEventListener`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#typedasynceventlistener)\<[`TransactionSubscriptionResult`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#transactionsubscriptionresult)\> | The listener function to invoke with the poll result |
 
 ###### Returns
 
@@ -240,7 +240,7 @@ subscriber.onPoll(async pollResult => {
 
 ##### pollOnce()
 
-> **pollOnce**(): `Promise`\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
+> **pollOnce**(): `Promise`\<[`TransactionSubscriptionResult`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#transactionsubscriptionresult)\>
 
 Defined in: [src/subscriber.ts:67](https://github.com/larkiny/algokit-subscriber-ts/blob/main/src/subscriber.ts#L67)
 
@@ -251,7 +251,7 @@ triggered by a recurring schedule / cron.
 
 ###### Returns
 
-`Promise`\<[`TransactionSubscriptionResult`](types/subscription.md#transactionsubscriptionresult)\>
+`Promise`\<[`TransactionSubscriptionResult`](/docs/algokit-subscriber/typescript/latest/api/types/subscription/#transactionsubscriptionresult)\>
 
 The poll result
 

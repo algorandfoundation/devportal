@@ -6,12 +6,12 @@ title: '@algorandfoundation/algokit-subscriber'
 
 ## Modules
 
-| Module                                                    | Description |
-| --------------------------------------------------------- | ----------- |
-| [subscriber](subscriber.md)                               | -           |
-| [subscriptions](subscriptions.md)                         | -           |
-| [types](types.md)                                         | -           |
-| [types/arc-28](types/arc-28.md)                           | -           |
-| [types/async-event-emitter](types/async-event-emitter.md) | -           |
-| [types/block](types/block.md)                             | -           |
-| [types/subscription](types/subscription.md)               | -           |
+| Module                                                                                                 | Description |
+| ------------------------------------------------------------------------------------------------------ | ----------- |
+| [subscriber](/docs/algokit-subscriber/typescript/latest/api/subscriber/)                               | -           |
+| [subscriptions](/docs/algokit-subscriber/typescript/latest/api/subscriptions/)                         | -           |
+| [types](/docs/algokit-subscriber/typescript/latest/api/types/)                                         | -           |
+| [types/arc-28](/docs/algokit-subscriber/typescript/latest/api/types/arc-28/)                           | -           |
+| [types/async-event-emitter](/docs/algokit-subscriber/typescript/latest/api/types/async-event-emitter/) | -           |
+| [types/block](/docs/algokit-subscriber/typescript/latest/api/types/block/)                             | -           |
+| [types/subscription](/docs/algokit-subscriber/typescript/latest/api/types/subscription/)               | -           |

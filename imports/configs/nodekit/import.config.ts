@@ -1,5 +1,6 @@
 import type { LibraryImportConfig } from '../../types';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
+import { generateStarlightLinkMappings } from '../../transforms/links.js';
 import logo from './logo.svg?raw';
 
 export const config: LibraryImportConfig = {
@@ -35,6 +36,10 @@ export const config: LibraryImportConfig = {
           ],
         },
       ],
+      linkTransform: {
+        stripPrefixes: ['src/content/docs'],
+        linkMappings: [...generateStarlightLinkMappings()],
+      },
       enabled: true,
       clear: true,
     },

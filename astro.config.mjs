@@ -35,7 +35,7 @@ export default defineConfig({
       plugins: [
         starlightImageZoom(),
         starlightLinksValidator({
-          errorOnRelativeLinks: false,
+          errorOnRelativeLinks: true,
           errorOnInvalidHashes: false,
           errorOnLocalLinks: false,
           exclude: [

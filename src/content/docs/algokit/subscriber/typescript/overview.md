@@ -1,7 +1,5 @@
 ---
 title: Algorand transaction subscription / indexing
-sidebar:
-  label: Overview
 ---
 
 ## Quick start
@@ -45,29 +43,30 @@ subscriber.pollOnce();
 
 ## Capabilities
 
-- [Quick start](#quick-start)
-- [Capabilities](#capabilities)
-  - [Notification _and_ indexing](#notification-and-indexing)
-  - [Low latency processing](#low-latency-processing)
-  - [Watermarking and resilience](#watermarking-and-resilience)
-  - [Extensive subscription filtering](#extensive-subscription-filtering)
-  - [ARC-28 event subscription and reads](#arc-28-event-subscription-and-reads)
-  - [First-class inner transaction support](#first-class-inner-transaction-support)
-  - [State-proof support](#state-proof-support)
-  - [Simple programming model](#simple-programming-model)
-  - [Easy to deploy](#easy-to-deploy)
-  - [Fast initial index](#fast-initial-index)
-- [Entry points](#entry-points)
-- [Reference docs](#reference-docs)
-- [Emit ARC-28 events](#emit-arc-28-events)
-  - [Algorand Python](#algorand-python)
-  - [TealScript](#tealscript)
-  - [PyTEAL](#pyteal)
-  - [TEAL](#teal)
+- [Algorand transaction subscription / indexing](#algorand-transaction-subscription--indexing)
+  - [Quick start](#quick-start)
+  - [Capabilities](#capabilities)
+    - [Notification _and_ indexing](#notification-and-indexing)
+    - [Low latency processing](#low-latency-processing)
+    - [Watermarking and resilience](#watermarking-and-resilience)
+    - [Extensive subscription filtering](#extensive-subscription-filtering)
+    - [ARC-28 event subscription and reads](#arc-28-event-subscription-and-reads)
+    - [First-class inner transaction support](#first-class-inner-transaction-support)
+    - [State-proof support](#state-proof-support)
+    - [Simple programming model](#simple-programming-model)
+    - [Easy to deploy](#easy-to-deploy)
+    - [Fast initial index](#fast-initial-index)
+  - [Entry points](#entry-points)
+  - [Reference docs](#reference-docs)
+  - [Emit ARC-28 events](#emit-arc-28-events)
+    - [Algorand Python](#algorand-python)
+    - [TealScript](#tealscript)
+    - [PyTEAL](#pyteal)
+    - [TEAL](#teal)
 
 ### Notification _and_ indexing
 
-This library supports the ability to stay at the tip of the chain and power notification / alerting type scenarios through the use of the `syncBehaviour` parameter in both [`AlgorandSubscriber`](./subscriber.md) and [`getSubscribedTransactions`](./subscriptions.md). For example to stay at the tip of the chain for notification/alerting scenarios you could do:
+This library supports the ability to stay at the tip of the chain and power notification / alerting type scenarios through the use of the `syncBehaviour` parameter in both [`AlgorandSubscriber`](/algokit/subscriber/typescript/subscriber/) and [`getSubscribedTransactions`](/algokit/subscriber/typescript/subscriptions/). For example to stay at the tip of the chain for notification/alerting scenarios you could do:
 
 ```typescript
 const subscriber = new AlgorandSubscriber({syncBehaviour: 'skip-sync-newest', maxRoundsToSync: 100, ...}, ...)
@@ -87,7 +86,7 @@ The `syncBehaviour` parameter can also be set to `sync-oldest`, which is a more 
 
 ### Low latency processing
 
-You can control the polling semantics of the library when using the [`AlgorandSubscriber`](./subscriber.md) by either specifying the `frequencyInSeconds` parameter to control the duration between polls or you can use the `waitForBlockWhenAtTip` parameter to indicate the subscriber should [call algod to ask it to inform the subscriber when a new round is available](https://dev.algorand.co/reference/rest-apis/algod/#waitforblock) so the subscriber can immediately process that round with a much lower-latency. When this mode is set, the subscriber intelligently uses this option only when it's caught up to the tip of the chain, but otherwise uses `frequencyInSeconds` while catching up to the tip of the chain.
+You can control the polling semantics of the library when using the [`AlgorandSubscriber`](/algokit/subscriber/typescript/subscriber/) by either specifying the `frequencyInSeconds` parameter to control the duration between polls or you can use the `waitForBlockWhenAtTip` parameter to indicate the subscriber should [call algod to ask it to inform the subscriber when a new round is available](https://dev.algorand.co/reference/rest-apis/algod/#waitforblock) so the subscriber can immediately process that round with a much lower-latency. When this mode is set, the subscriber intelligently uses this option only when it's caught up to the tip of the chain, but otherwise uses `frequencyInSeconds` while catching up to the tip of the chain.
 
 e.g.
 
@@ -98,7 +97,7 @@ const subscriber = new AlgorandSubscriber({frequencyInSeconds: 1, waitForBlockWh
 subscriber.start()
 ```
 
-If you are using [`getSubscribedTransactions`](./subscriptions.md) or the `pollOnce` method on `AlgorandSubscriber` then you can use your infrastructure and/or surrounding orchestration code to take control of the polling duration.
+If you are using [`getSubscribedTransactions`](/algokit/subscriber/typescript/subscriptions/) or the `pollOnce` method on `AlgorandSubscriber` then you can use your infrastructure and/or surrounding orchestration code to take control of the polling duration.
 
 If you want to manually run code that waits for a given round to become available you can execute the following algosdk code:
 
@@ -124,7 +123,7 @@ If you want to hook this up to Node.js process signals you can include code like
 
 You can create reliable syncing / indexing services through a simple round watermarking capability that allows you to create resilient syncing services that can recover from an outage.
 
-This works through the use of the `watermarkPersistence` parameter in [`AlgorandSubscriber`](./subscriber.md) and `watermark` parameter in [`getSubscribedTransactions`](./subscriptions.md):
+This works through the use of the `watermarkPersistence` parameter in [`AlgorandSubscriber`](/algokit/subscriber/typescript/subscriber/) and `watermark` parameter in [`getSubscribedTransactions`](/algokit/subscriber/typescript/subscriptions/):
 
 ```typescript
 async function getSavedWatermark(): Promise<bigint> {
@@ -171,7 +170,7 @@ watermark = result.newWatermark
 
 This library has extensive filtering options available to you so you can have fine-grained control over which transactions you are interested in.
 
-There is a core type that is used to specify the filters [`TransactionFilter`](subscriptions.md#transactionfilter):
+There is a core type that is used to specify the filters [`TransactionFilter`](/algokit/subscriber/typescript/subscriptions/#transactionfilter):
 
 ```typescript
 const subscriber = new AlgorandSubscriber({filters: [{name: 'filterName', filter: {/* Filter properties */}}], ...}, ...)
@@ -216,15 +215,15 @@ Currently this allows you filter based on any combination (AND logic) of:
   - Amount transferred (min and/or max) e.g. `filter: { type: TransactionType.pay, minAmount: 1, maxAmount: 100 }`
   - Balance changes (sender, receiver, close to, min and/or max change) e.g. `filter: { balanceChanges: [{roles: [BalanceChangeRole.sender], address: "ABC...", minAmount: 1, maxAmount: 2}]}`
 
-You can supply multiple, named filters via the [`NamedTransactionFilter`](subscriptions.md#namedtransactionfilter) type. When subscribed transactions are returned each transaction will have a `filtersMatched` property that will have an array of any filter(s) that caused that transaction to be returned. When using [`AlgorandSubscriber`](./subscriber.md), you can subscribe to events that are emitted with the filter name.
+You can supply multiple, named filters via the [`NamedTransactionFilter`](/algokit/subscriber/typescript/subscriptions/#namedtransactionfilter) type. When subscribed transactions are returned each transaction will have a `filtersMatched` property that will have an array of any filter(s) that caused that transaction to be returned. When using [`AlgorandSubscriber`](/algokit/subscriber/typescript/subscriber/), you can subscribe to events that are emitted with the filter name.
 
 ### ARC-28 event subscription and reads
 
 You can [subscribe to ARC-28 events](#extensive-subscription-filtering) for a smart contract, similar to how you can [subscribe to events in Ethereum](https://docs.web3js.org/guides/events_subscriptions/).
 
-Furthermore, you can receive any ARC-28 events that a smart contract call you subscribe to emitted in the [subscribed transaction object](subscriptions.md#subscribedtransaction).
+Furthermore, you can receive any ARC-28 events that a smart contract call you subscribe to emitted in the [subscribed transaction object](/algokit/subscriber/typescript/subscriptions/#subscribedtransaction).
 
-Both subscription and receiving ARC-28 events work through the use of the `arc28Events` parameter in [`AlgorandSubscriber`](./subscriber.md) and [`getSubscribedTransactions`](./subscriptions.md):
+Both subscription and receiving ARC-28 events work through the use of the `arc28Events` parameter in [`AlgorandSubscriber`](/algokit/subscriber/typescript/subscriber/) and [`getSubscribedTransactions`](/algokit/subscriber/typescript/subscriptions/):
 
 ```typescript
 const group1Events: Arc28EventGroup = {
@@ -294,33 +293,33 @@ If you want to emit an ARC-28 event from your smart contract you can follow the 
 
 ### First-class inner transaction support
 
-When you subscribe to transactions any subscriptions that cover an inner transaction will pick up that inner transaction and [return](subscriptions.md#subscribedtransaction) it to you correctly.
+When you subscribe to transactions any subscriptions that cover an inner transaction will pick up that inner transaction and [return](/algokit/subscriber/typescript/subscriptions/#subscribedtransaction) it to you correctly.
 
 Note: the behaviour Algorand Indexer has is to return the parent transaction, not the inner transaction; this library will always return the actual transaction you subscribed to.
 
-If you [receive](subscriptions.md#subscribedtransaction) an inner transaction then there will be a `parentTransactionId` field populated that allows you to see that it was an inner transaction and how to identify the parent transaction.
+If you [receive](/algokit/subscriber/typescript/subscriptions/#subscribedtransaction) an inner transaction then there will be a `parentTransactionId` field populated that allows you to see that it was an inner transaction and how to identify the parent transaction.
 
 The `id` of an inner transaction will be set to `{parentTransactionId}/inner/{index-of-child-within-parent}` where `{index-of-child-within-parent}` is calculated based on uniquely walking the tree of potentially nested inner transactions. [This transaction in Allo.info](https://allo.info/tx/group/cHiEEvBCRGnUhz9409gHl%2Fvn00lYDZnJoppC3YexRr0%3D) is a good illustration of how inner transaction indexes are allocated (this library uses the same approach).
 
-All [returned](subscriptions.md#subscribedtransaction) transactions will have an `inner-txns` property with any inner transactions of that transaction populated (recursively).
+All [returned](/algokit/subscriber/typescript/subscriptions/#subscribedtransaction) transactions will have an `inner-txns` property with any inner transactions of that transaction populated (recursively).
 
-The `intra-round-offset` field in a [subscribed transaction or inner transaction within](subscriptions.md#subscribedtransaction) is calculated by walking the full tree depth-first from the first transaction in the block, through any inner transactions recursively starting from an index of 0. This algorithm matches the one in Algorand Indexer and ensures that all transactions have a unique index, but the top level transaction in the block don't necessarily have a sequential index.
+The `intra-round-offset` field in a [subscribed transaction or inner transaction within](/algokit/subscriber/typescript/subscriptions/#subscribedtransaction) is calculated by walking the full tree depth-first from the first transaction in the block, through any inner transactions recursively starting from an index of 0. This algorithm matches the one in Algorand Indexer and ensures that all transactions have a unique index, but the top level transaction in the block don't necessarily have a sequential index.
 
 ### State-proof support
 
 You can subscribe to [state proof](https://dev.algorand.co/concepts/protocol/stateproofs) transactions using this subscriber library. At the time of writing state proof transactions are not supported by algosdk v2 and custom handling has been added to ensure this valuable type of transaction can be subscribed to.
 
-The field level documentation of the [returned state proof transaction](subscriptions.md#subscribedtransaction) is comprehensively documented via [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L277).
+The field level documentation of the [returned state proof transaction](/algokit/subscriber/typescript/subscriptions/#subscribedtransaction) is comprehensively documented via [AlgoKit Utils](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/types/indexer.ts#L277).
 
 By exposing this functionality, this library can be used to create a [light client](https://dev.algorand.co/concepts/protocol/stateproofs).
 
 ### Simple programming model
 
-This library is easy to use and consume through [easy to use, type-safe TypeScript methods and objects](#entry-points) and subscribed transactions have a [comprehensive and familiar model type](subscriptions.md#subscribedtransaction) with all relevant/useful information about that transaction (including things like transaction id, round number, created asset/app id, app logs, etc.) modelled on the indexer data model (which is used regardless of whether the transactions come from indexer or algod so it's a consistent experience).
+This library is easy to use and consume through [easy to use, type-safe TypeScript methods and objects](#entry-points) and subscribed transactions have a [comprehensive and familiar model type](/algokit/subscriber/typescript/subscriptions/#subscribedtransaction) with all relevant/useful information about that transaction (including things like transaction id, round number, created asset/app id, app logs, etc.) modelled on the indexer data model (which is used regardless of whether the transactions come from indexer or algod so it's a consistent experience).
 
 Furthermore, the `AlgorandSubscriber` class has a familiar programming model based on the [Node.js EventEmitter](https://nodejs.org/en/learn/asynchronous-work/the-nodejs-event-emitter), but with async methods.
 
-For more examples of how to use it see the [relevant documentation](subscriber.md).
+For more examples of how to use it see the [relevant documentation](/algokit/subscriber/typescript/subscriber/).
 
 ### Easy to deploy
 
@@ -361,13 +360,13 @@ To understand how the indexer behaviour works to know if you are likely to gener
 
 ## Entry points
 
-There are two entry points into the subscriber functionality. The lower level [`getSubscribedTransactions`](./subscriptions.md) method that contains the raw subscription logic for a single "poll", and the [`AlgorandSubscriber`](./subscriber.md) class that provides a higher level interface that is easier to use and takes care of a lot more orchestration logic for you (particularly around the ability to continuously poll).
+There are two entry points into the subscriber functionality. The lower level [`getSubscribedTransactions`](/algokit/subscriber/typescript/subscriptions/) method that contains the raw subscription logic for a single "poll", and the [`AlgorandSubscriber`](/algokit/subscriber/typescript/subscriber/) class that provides a higher level interface that is easier to use and takes care of a lot more orchestration logic for you (particularly around the ability to continuously poll).
 
 Both are first-class supported ways of using this library, but we generally recommend starting with the `AlgorandSubscriber` since it's easier to use and will cover the majority of use cases.
 
 ## Reference docs
 
-[See reference docs](./code/README.md).
+[See reference docs](latest/guides/code/README).
 
 ## Emit ARC-28 events
 

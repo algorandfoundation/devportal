@@ -5,6 +5,7 @@ import {
   convertH1ToTitle,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
+import { generateStarlightLinkMappings } from '../../transforms/links.js';
 import logo from './logo.svg?raw';
 
 export const config: LibraryImportConfig = {
@@ -59,7 +60,11 @@ export const config: LibraryImportConfig = {
           transforms: [convertH1ToTitle],
         },
       ],
-      enabled: false,
+      linkTransform: {
+        stripPrefixes: ['src/content/docs'],
+        linkMappings: [...generateStarlightLinkMappings()],
+      },
+      enabled: true,
       clear: true,
     },
   ],
@@ -82,6 +87,10 @@ export const legacyGuideConfig: ImportOptions = {
       transforms: [convertH1ToTitle],
     },
   ],
+  linkTransform: {
+    stripPrefixes: ['src/content/docs'],
+    linkMappings: [...generateStarlightLinkMappings()],
+  },
   clear: true,
-  enabled: false,
+  enabled: true,
 };
