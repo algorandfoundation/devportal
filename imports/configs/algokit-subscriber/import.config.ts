@@ -76,6 +76,9 @@ export const legacyGuideConfig: ImportOptions = {
     {
       pattern: 'latest/guides/**/*',
       basePath: 'src/content/docs/algokit/subscriber/typescript',
+      pathMappings: {
+        'latest/guides/README.md': 'overview.md',
+      },
       transforms: [convertH1ToTitle],
     },
   ],

@@ -10,7 +10,11 @@ import type { ImportOptions } from '@larkiny/astro-github-loader';
 import type { LibraryImportConfig } from '../types';
 
 // Per-library configs
-import { config as algokitUtils } from './algokit-utils/import.config.js';
+import {
+  config as algokitUtils,
+  legacyTsGuideConfig as algokitUtilsTsLegacy,
+  legacyPyGuideConfig as algokitUtilsPyLegacy,
+} from './algokit-utils/import.config.js';
 import {
   config as algokitCli,
   legacyGuideConfig as algokitCliLegacy,
@@ -30,7 +34,7 @@ import {
 import { config as nodekit } from './nodekit/import.config.js';
 
 // Standalone imports (not libraries)
-import { arcStandardsConfig } from './arc-standards.js';
+import { arcStandardsConfig } from './arc-standards/import.config.js';
 
 /** Full library configs for the UI registry (navigation, pickers, cards). */
 export const LIBRARY_CONFIGS: LibraryImportConfig[] = [
@@ -56,4 +60,6 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   algorandPythonLegacy,
   algorandTypescriptLegacy,
   algokitSubscriberLegacy,
+  algokitUtilsTsLegacy,
+  algokitUtilsPyLegacy,
 ];
