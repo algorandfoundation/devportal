@@ -6,6 +6,7 @@
  * import from this file and don't need to know about the config structure.
  */
 
+import type { ImageMetadata } from 'astro';
 import type { LibraryImportConfig } from '../../imports/types';
 import type { VersionConfig } from '../../imports/types';
 import type { StarlightRouteData } from '@astrojs/starlight/route-data';
@@ -32,6 +33,10 @@ export interface LibraryConfig {
   languages: string[];
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
+  /** Logo SVG image metadata (header/cards) */
+  logo?: ImageMetadata;
+  /** Small icon SVG image metadata (compact views) */
+  icon?: ImageMetadata;
   /** Sidebar tree for this library's docs (populated by sidebar configs) */
   sidebar: LibrarySidebarEntry[];
 }
@@ -74,18 +79,25 @@ type StarlightBadge = NonNullable<
 
 function buildRegistry(configs: LibraryImportConfig[]): LibraryConfig[] {
   return configs.map(config => {
-    // Use the first variant's versions for the flat array. Per-variant
-    // version filtering happens at the component level (version picker).
-    const versions =
-      config.variants.length > 0 ? config.variants[0].versions : [];
-
-    const languages = config.variants.map(v => v.language);
+    // Aggregate versions across all variants (supports multiple variants
+    // per language when different versions come from different refs).
+    // Deduplicate by slug — multiple variants often share the same version.
+    const allVersions = config.variants.flatMap(v => v.versions);
+    const seen = new Set<string>();
+    const versions = allVersions.filter(v => {
+      if (seen.has(v.slug)) return false;
+      seen.add(v.slug);
+      return true;
+    });
+    const languages = [...new Set(config.variants.map(v => v.language))];
 
     return {
       slug: config.metadata.slug,
       label: config.metadata.label,
       description: config.metadata.description,
       color: config.metadata.color,
+      logo: config.metadata.logo,
+      icon: config.metadata.icon,
       versions,
       languages,
       category: config.metadata.category,

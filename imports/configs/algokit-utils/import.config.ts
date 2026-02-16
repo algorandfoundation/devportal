@@ -8,6 +8,7 @@ import {
   extractH1ToSidebarAndTitle,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
+import logo from './logo.svg';
 
 export const config: LibraryImportConfig = {
   metadata: {
@@ -15,6 +16,7 @@ export const config: LibraryImportConfig = {
     label: 'AlgoKit Utils',
     description: 'Utilities for building solutions on Algorand',
     color: '#3B82F6',
+    logo,
     category: 'sdk',
   },
   variants: [

@@ -1,5 +1,5 @@
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
-import { config } from './algokit-cli.import.js';
+import { config } from './import.config.js';
 
 /**
  * Sidebar autogenerate entries for algokit-cli.

@@ -8,7 +8,6 @@
  */
 import type { LibraryCategory } from '../config/libraries.ts';
 import { getLibrariesByCategory, categoryLabels } from '../config/libraries.ts';
-import { libraryLogos } from '../../imports/configs/library-logos.ts';
 
 const categories = getLibrariesByCategory();
 const categoryOrder: readonly LibraryCategory[] = [
@@ -29,7 +28,7 @@ const categoryOrder: readonly LibraryCategory[] = [
         <h2>{categoryLabels[cat]}</h2>
         <div class='library-cards'>
           {libs.map(lib => {
-            const logo = libraryLogos[lib.slug];
+            const logo = lib.logo;
             return (
               <a
                 href={`/docs/${lib.slug}/`}

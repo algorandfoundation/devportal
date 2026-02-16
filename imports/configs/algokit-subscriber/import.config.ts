@@ -5,6 +5,7 @@ import {
   convertH1ToTitle,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
+import logo from './logo.svg';
 
 export const config: LibraryImportConfig = {
   metadata: {
@@ -12,6 +13,7 @@ export const config: LibraryImportConfig = {
     label: 'AlgoKit Subscriber',
     description: 'Subscribe to Algorand blockchain events',
     color: '#06B6D4',
+    logo,
     category: 'tool',
   },
   variants: [

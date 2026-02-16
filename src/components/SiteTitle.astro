@@ -3,7 +3,6 @@
 import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
-import { libraryLogos } from '../../imports/configs/library-logos';
 import { getLibraryFromPath } from '../config/libraries';
 
 interface Props {
@@ -19,9 +18,7 @@ const currentPath = Astro.url.pathname;
 // Footer always shows the site logo, never a library logo
 const activeLibrary = !isFooter ? getLibraryFromPath(currentPath) : undefined;
 
-const libraryLogo = activeLibrary
-  ? libraryLogos[activeLibrary.slug]
-  : undefined;
+const libraryLogo = activeLibrary?.logo;
 
 // Logo source priority: library logo > footer alt logo > site logo
 const darkLogoSrc = libraryLogo

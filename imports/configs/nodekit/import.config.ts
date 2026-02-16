@@ -1,5 +1,6 @@
 import type { LibraryImportConfig } from '../../types';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
+import logo from './logo.svg';
 
 export const config: LibraryImportConfig = {
   metadata: {
@@ -7,6 +8,7 @@ export const config: LibraryImportConfig = {
     label: 'NodeKit',
     description: 'Tools for running Algorand nodes',
     color: '#EF4444',
+    logo,
     category: 'tool',
   },
   variants: [
