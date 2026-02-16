@@ -4,7 +4,7 @@
  *
  * Renders as a button that expands to show the full library list with:
  * - Colored dot per library
- * - Library name (links to library root)
+ * - Library name (plain text label)
  * - Clickable language icons that link directly to each variant
  */
 import {
@@ -17,9 +17,11 @@ import LinkChip from './LinkChip.astro';
 
 interface Props {
   currentPath: string;
+  /** When true, hides the toggle button and renders the library list directly (used inside HeaderMenu). */
+  compact?: boolean;
 }
 
-const { currentPath } = Astro.props;
+const { currentPath, compact = false } = Astro.props;
 
 const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
 const categories: Record<string, LibraryConfig[]> = {};
@@ -29,53 +31,11 @@ for (const lib of libraries) {
 }
 ---
 
-<library-picker class='library-picker'>
-  <button
-    class='picker-btn'
-    aria-expanded='false'
-    aria-controls='library-picker-panel'
-  >
-    <svg
-      class='picker-icon'
-      width='16'
-      height='16'
-      viewBox='0 0 16 16'
-      fill='none'
-      stroke='currentColor'
-      stroke-width='1.5'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      aria-hidden='true'
-    >
-      <path d='M2 3H14'></path>
-      <path d='M2 8H14'></path>
-      <path d='M2 13H14'></path>
-      <circle cx='5' cy='3' r='1.5' fill='currentColor' stroke='none'></circle>
-      <circle cx='10' cy='8' r='1.5' fill='currentColor' stroke='none'></circle>
-      <circle cx='7' cy='13' r='1.5' fill='currentColor' stroke='none'></circle>
-    </svg>
-    <span class='picker-label'>APIs & Tools</span>
-    <svg
-      class='picker-chevron'
-      width='12'
-      height='12'
-      viewBox='0 0 12 12'
-      fill='none'
-      aria-hidden='true'
-    >
-      <path
-        d='M3 5L6 8L9 5'
-        stroke='currentColor'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'></path>
-    </svg>
-  </button>
-
-  <div class='picker-panel' id='library-picker-panel' aria-hidden='true'>
-    <ul class='picker-list' role='list'>
-      {
-        categoryOrder.map(cat =>
+{
+  compact ? (
+    <div class='library-picker compact'>
+      <ul class='picker-list' role='list'>
+        {categoryOrder.map(cat =>
           categories[cat]?.map(lib => {
             const rootHref = `/docs/${lib.slug}/`;
             const isActive = currentPath.startsWith(rootHref);
@@ -83,13 +43,7 @@ for (const lib of libraries) {
             return (
               <li class:list={['picker-item', { active: isActive }]}>
                 <span class='picker-dot' style={`--dot-color: ${lib.color}`} />
-                <a
-                  href={rootHref}
-                  class='picker-item-label'
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  {lib.label}
-                </a>
+                <span class='picker-item-label'>{lib.label}</span>
                 {lib.languages.length > 0 && (
                   <span class='picker-variants'>
                     {lib.languages.map(lang => {
@@ -114,11 +68,98 @@ for (const lib of libraries) {
               </li>
             );
           }),
-        )
-      }
-    </ul>
-  </div>
-</library-picker>
+        )}
+      </ul>
+    </div>
+  ) : (
+    <library-picker class='library-picker'>
+      <button
+        class='picker-btn'
+        aria-expanded='false'
+        aria-controls='library-picker-panel'
+      >
+        <svg
+          class='picker-icon'
+          width='16'
+          height='16'
+          viewBox='0 0 16 16'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='1.5'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          aria-hidden='true'
+        >
+          <path d='M2 3H14' />
+          <path d='M2 8H14' />
+          <path d='M2 13H14' />
+          <circle cx='5' cy='3' r='1.5' fill='currentColor' stroke='none' />
+          <circle cx='10' cy='8' r='1.5' fill='currentColor' stroke='none' />
+          <circle cx='7' cy='13' r='1.5' fill='currentColor' stroke='none' />
+        </svg>
+        <span class='picker-label'>APIs & Tools</span>
+        <svg
+          class='picker-chevron'
+          width='12'
+          height='12'
+          viewBox='0 0 12 12'
+          fill='none'
+          aria-hidden='true'
+        >
+          <path
+            d='M3 5L6 8L9 5'
+            stroke='currentColor'
+            stroke-width='1.5'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          />
+        </svg>
+      </button>
+
+      <div class='picker-panel' id='library-picker-panel' aria-hidden='true'>
+        <ul class='picker-list' role='list'>
+          {categoryOrder.map(cat =>
+            categories[cat]?.map(lib => {
+              const rootHref = `/docs/${lib.slug}/`;
+              const isActive = currentPath.startsWith(rootHref);
+              const defaultVersion = lib.versions[0]?.slug ?? 'latest';
+              return (
+                <li class:list={['picker-item', { active: isActive }]}>
+                  <span
+                    class='picker-dot'
+                    style={`--dot-color: ${lib.color}`}
+                  />
+                  <span class='picker-item-label'>{lib.label}</span>
+                  {lib.languages.length > 0 && (
+                    <span class='picker-variants'>
+                      {lib.languages.map(lang => {
+                        const icon = langIcons[lang];
+                        if (!icon) return null;
+                        const variantHref = buildLibraryUrl(
+                          lib,
+                          lang,
+                          defaultVersion,
+                        );
+                        return (
+                          <LinkChip
+                            href={variantHref}
+                            label={lang}
+                            icon={icon.svg}
+                            accentColor={icon.color}
+                          />
+                        );
+                      })}
+                    </span>
+                  )}
+                </li>
+              );
+            }),
+          )}
+        </ul>
+      </div>
+    </library-picker>
+  )
+}
 
 <script>
   class LibraryPicker extends HTMLElement {
@@ -166,6 +207,10 @@ for (const lib of libraries) {
   .library-picker {
     display: block;
     padding: 0 0 0.5rem;
+  }
+
+  .library-picker.compact {
+    padding: 0;
   }
 
   /* Trigger button */
@@ -283,22 +328,11 @@ for (const lib of libraries) {
     flex-shrink: 0;
   }
 
-  /* Library name link */
+  /* Library name label */
   .picker-item-label {
     flex: 1;
     min-width: 0;
-    text-decoration: none;
     color: inherit;
-    transition: color 0.15s;
-  }
-
-  .picker-item-label:hover {
-    color: var(--sl-color-white);
-  }
-
-  .picker-item-label:focus-visible {
-    outline: 2px solid var(--sl-color-accent);
-    outline-offset: 1px;
   }
 
   .picker-item.active .picker-item-label {
