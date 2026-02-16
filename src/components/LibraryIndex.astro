@@ -27,7 +27,7 @@ const categoryOrder: readonly LibraryCategory[] = [
     return (
       <section>
         <h2>{categoryLabels[cat]}</h2>
-        <div class='library-cards'>
+        <div class='library-cards not-content'>
           {libs.map(lib => (
             <LibraryLinkCard lib={lib} />
           ))}
@@ -41,6 +41,7 @@ const categoryOrder: readonly LibraryCategory[] = [
   .library-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    align-items: start;
     gap: 1rem;
     margin: 1rem 0;
   }

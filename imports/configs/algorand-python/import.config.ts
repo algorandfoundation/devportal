@@ -13,7 +13,7 @@ export const config: LibraryImportConfig = {
   metadata: {
     slug: 'algorand-python',
     label: 'Algorand Python',
-    description: 'Write Algorand smart contracts in Python',
+    description: 'Build smart contracts on Algorand using Python',
     color: '#8B5CF6',
     logo,
     category: 'language',
