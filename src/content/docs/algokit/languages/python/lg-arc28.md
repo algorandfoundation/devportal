@@ -1,5 +1,7 @@
 ---
 title: 'ARC-28: Structured event logging'
+sidebar:
+  label: 'ARC-28: Structured Event Logging'
 ---
 
 [ARC-28](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0028.md) provides a methodology for structured logging by Algorand smart contracts. It introduces the concept of Events, where data contained in logs may be categorized and structured.

@@ -1,5 +1,7 @@
 ---
 title: Error handling and assertions
+sidebar:
+  label: Error Handling and Assertions
 ---
 
 In Algorand Python, error handling and assertions play a crucial role in ensuring the correctness and robustness of smart contracts.

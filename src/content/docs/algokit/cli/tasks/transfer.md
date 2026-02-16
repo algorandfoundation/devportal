@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Task Transfer
+sidebar:
+  label: Transfer
 ---
 The AlgoKit Transfer feature allows you to transfer algos and assets between two accounts.
 

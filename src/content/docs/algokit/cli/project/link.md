@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Project Link Command
+sidebar:
+  label: Link
 ---
 The `algokit project link` command is a powerful feature designed to streamline the integration between `frontend` and `contract` typed projects within the AlgoKit ecosystem. This command facilitates the automatic path resolution and invocation of [`algokit generate client`](/algokit/cli/generate/#1-typed-clients) on `contract` projects available in the workspace, making it easier to integrate smart contracts with frontend applications.
 

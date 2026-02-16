@@ -1,5 +1,7 @@
 ---
 title: Algorand TypeScript
+sidebar:
+  label: Overview
 ---
 
 Algorand TypeScript is a partial implementation of the TypeScript programming language that runs on the Algorand Virtual Machine (AVM). It includes a statically typed framework for the development of Algorand smart contracts and logic signatures, with TypeScript interfaces to underlying AVM functionality that work with standard TypeScript tooling.

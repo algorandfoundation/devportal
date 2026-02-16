@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Project Run
+sidebar:
+  label: Run
 ---
 The `algokit project run` command allows defining custom commands to execute at standalone project level or being orchestrated from a workspace containing multiple standalone projects.
 

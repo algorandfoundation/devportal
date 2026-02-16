@@ -1,5 +1,7 @@
 ---
 title: AlgoKit explore
+sidebar:
+  label: Explore
 ---
 AlgoKit provides a quick shortcut to [explore](docs/cli/#explore) various Algorand networks using [lora](https://lora.algokit.io/) including [AlgoKit LocalNet](/algokit/cli/localnet/)!
 

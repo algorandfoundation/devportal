@@ -1,5 +1,7 @@
 ---
 title: Algorand TypeScript Migration Guides
+sidebar:
+  label: Migration Guides
 ---
 
 This page contains migration guides for updating to Algorand TypeScript 1.0.

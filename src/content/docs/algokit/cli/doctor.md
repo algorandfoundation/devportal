@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Doctor
+sidebar:
+  label: Doctor
 ---
 The AlgoKit Doctor feature allows you to check your AlgoKit installation along with its dependencies. This is useful for diagnosing potential issues with using AlgoKit.
 

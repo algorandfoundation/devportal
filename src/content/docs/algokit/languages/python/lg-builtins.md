@@ -1,5 +1,7 @@
 ---
 title: Python builtins
+sidebar:
+  label: Python Built-Ins
 ---
 
 Some common python builtins have equivalent `algopy` versions, that use an [`UInt64`](docs/_build/markdown/api-algopy#algopy.UInt64) instead of a native `int`.

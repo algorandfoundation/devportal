@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Project Bootstrap
+sidebar:
+  label: Bootstrap
 ---
 The AlgoKit Project Bootstrap feature allows you to bootstrap different project dependencies by looking up specific files in your current directory and immediate sub directories by convention.
 

@@ -1,5 +1,7 @@
 ---
 title: Transaction composer
+sidebar:
+  label: Transaction Composer
 ---
 
 The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.

@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Completions
+sidebar:
+  label: Completions
 ---
 AlgoKit supports shell completions for zsh and bash shells, e.g.
 

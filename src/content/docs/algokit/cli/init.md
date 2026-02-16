@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Init
+sidebar:
+  label: Init
 ---
 The `algokit init` [command](docs/cli/#init) is used to quickly initialize new projects using official Algorand Templates or community provided templates. It supports a fully guided command line wizard experience, as well as fully scriptable / non-interactive functionality via command options.
 

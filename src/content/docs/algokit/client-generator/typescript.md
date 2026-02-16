@@ -1,5 +1,7 @@
 ---
 title: Application Client Usage
+sidebar:
+  label: Typescript
 ---
 
 After using the cli tool to generate an application client you will end up with a TypeScript file containing several type definitions, an application factory class and an application client class that is named after the target smart contract. For example, if the contract name is `HelloWorldApp` then you will end up with `HelloWorldAppFactory` and `HelloWorldAppClient` classes. The contract name will also be used to prefix a number of other types in the generated file which allows you to generate clients for multiple smart contracts in the one project without ambiguous type names.

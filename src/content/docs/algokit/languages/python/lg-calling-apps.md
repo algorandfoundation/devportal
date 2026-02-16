@@ -1,5 +1,7 @@
 ---
 title: Calling other applications
+sidebar:
+  label: Calling Other Applicaitons
 ---
 
 The preferred way to call other smart contracts is using [`algopy.arc4.abi_call`](), [`algopy.arc4.arc4_create`]() or

@@ -1,5 +1,7 @@
 ---
 title: Storing data on-chain
+sidebar:
+  label: Storing Data On-Chain
 ---
 
 Algorand smart contracts can utilise [three different types of on-chain storage](https://dev.algorand.co/concepts/smart-contracts/storage/overview): [Global storage](), [Local storage](), and [Box Storage](). They also have access to a transient form of storage in [Scratch space]().

@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Generate
+sidebar:
+  label: Generate
 ---
 The `algokit generate` [command](docs/cli/#generate) is used to generate components used in an AlgoKit project. It also allows for custom generate commands which are loaded from the .algokit.toml file in your project directory.
 

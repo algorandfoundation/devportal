@@ -1,5 +1,7 @@
 ---
 title: Typed application clients
+sidebar:
+  label: Typed Application Clients
 ---
 
 Typed application clients are automatically generated, typed Python deployment and invocation clients for smart contracts that have a defined [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) or [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application specification so that the development experience is easier with less upskill ramp-up and less deployment errors. These clients give you a type-safe, intellisense-driven experience for invoking the smart contract.

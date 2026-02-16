@@ -188,11 +188,8 @@ export default defineConfig({
           label: 'Getting Started',
           collapsed: false,
           items: [
-            { label: 'Portal Guide', link: '/getting-started/portal-guide' },
-            {
-              label: 'Tutorial: Your First Smart Contract',
-              link: 'getting-started/algokit-quick-start',
-            },
+            { slug: 'getting-started/portal-guide' },
+            { slug: 'getting-started/algokit-quick-start' },
             {
               label: 'AlgoKit Examples Gallery',
               link: 'https://examples.dev.algorand.co',
@@ -208,14 +205,8 @@ export default defineConfig({
               link: 'https://youtube.com/playlist?list=PLwRyHoehE4356E8tPKxC2XJtFEyLOHHEB&si=kfoKgu0jVObIJGWO',
               attrs: { target: '_blank', rel: 'noopener' },
             },
-            {
-              label: 'Why Algorand?',
-              link: 'getting-started/why-algorand',
-            },
-            {
-              label: 'From Ethereum to Algorand',
-              link: 'getting-started/ethereum-to-algorand',
-            },
+            { slug: 'getting-started/why-algorand' },
+            { slug: 'getting-started/ethereum-to-algorand' },
           ],
         },
         {
@@ -226,86 +217,35 @@ export default defineConfig({
               label: 'Accounts',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'concepts/accounts/overview',
-                },
-                {
-                  label: 'Creating Accounts',
-                  link: 'concepts/accounts/create',
-                },
-                {
-                  label: 'Funding Accounts',
-                  link: 'concepts/accounts/funding',
-                },
-                {
-                  label: 'Keys & Signing',
-                  link: 'concepts/accounts/keys-signing',
-                },
-                {
-                  label: 'Rekeying Accounts',
-                  link: 'concepts/accounts/rekeying',
-                },
-                {
-                  label: 'Multisignature Accounts',
-                  link: 'concepts/accounts/multisig',
-                },
+                { slug: 'concepts/accounts/overview' },
+                { slug: 'concepts/accounts/create' },
+                { slug: 'concepts/accounts/funding' },
+                { slug: 'concepts/accounts/keys-signing' },
+                { slug: 'concepts/accounts/rekeying' },
+                { slug: 'concepts/accounts/multisig' },
               ],
             },
             {
               label: 'Transactions',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'concepts/transactions/overview',
-                },
-                {
-                  label: 'Transaction Types',
-                  link: 'concepts/transactions/types',
-                },
-                {
-                  label: 'Fees',
-                  link: 'concepts/transactions/fees',
-                },
-                {
-                  label: 'Atomic Transaction Groups',
-                  link: 'concepts/transactions/atomic-txn-groups',
-                },
-                {
-                  label: 'Signing Transactions',
-                  link: 'concepts/transactions/signing',
-                },
-                {
-                  label: 'Blocks',
-                  link: 'concepts/transactions/blocks',
-                },
-                {
-                  label: 'Leases',
-                  link: 'concepts/transactions/leases',
-                },
-                {
-                  label: 'URI Scheme',
-                  link: 'concepts/transactions/uri-scheme',
-                },
-                {
-                  label: 'Transaction Reference',
-                  link: 'concepts/transactions/reference',
-                },
+                { slug: 'concepts/transactions/overview' },
+                { slug: 'concepts/transactions/types' },
+                { slug: 'concepts/transactions/fees' },
+                { slug: 'concepts/transactions/atomic-txn-groups' },
+                { slug: 'concepts/transactions/signing' },
+                { slug: 'concepts/transactions/blocks' },
+                { slug: 'concepts/transactions/leases' },
+                { slug: 'concepts/transactions/uri-scheme' },
+                { slug: 'concepts/transactions/reference' },
               ],
             },
             {
               label: 'Assets',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'concepts/assets/overview',
-                },
-                {
-                  label: 'Asset Operations',
-                  link: 'concepts/assets/asset-operations',
-                },
+                { slug: 'concepts/assets/overview' },
+                { slug: 'concepts/assets/asset-operations' },
                 // {
                 //   label: 'Assets Metadata',
                 //   link: 'concepts/assets/asset-metadata',
@@ -320,102 +260,39 @@ export default defineConfig({
               label: 'Smart Contracts',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'concepts/smart-contracts/overview',
-                },
-                {
-                  label: 'Algorand Virtual Machine',
-                  link: 'concepts/smart-contracts/avm',
-                },
+                { slug: 'concepts/smart-contracts/overview' },
+                { slug: 'concepts/smart-contracts/avm' },
                 {
                   label: 'Languages',
                   collapsed: false,
                   items: [
-                    {
-                      label: 'Python',
-                      link: 'concepts/smart-contracts/languages/python',
-                    },
-                    {
-                      label: 'Typescript',
-                      link: 'concepts/smart-contracts/languages/typescript',
-                    },
-                    {
-                      label: 'TEAL',
-                      link: 'concepts/smart-contracts/languages/teal',
-                    },
+                    { slug: 'concepts/smart-contracts/languages/python' },
+                    { slug: 'concepts/smart-contracts/languages/typescript' },
+                    { slug: 'concepts/smart-contracts/languages/teal' },
                   ],
                 },
-                {
-                  label: 'Applications',
-                  link: 'concepts/smart-contracts/apps',
-                },
-                {
-                  label: 'ABI',
-                  link: 'concepts/smart-contracts/abi',
-                },
-                {
-                  label: 'Control Flow',
-                  link: 'concepts/smart-contracts/control-flow',
-                },
-                {
-                  label: 'Inner Transactions',
-                  link: 'concepts/smart-contracts/inner-txn',
-                },
-                {
-                  label: 'Resource Usage',
-                  link: 'concepts/smart-contracts/resource-usage',
-                },
-                {
-                  label: 'Opcodes Overview',
-                  link: 'concepts/smart-contracts/opcodes-overview',
-                },
-                {
-                  label: 'Logic Signatures',
-                  link: 'concepts/smart-contracts/logic-sigs',
-                },
-                {
-                  label: 'Costs & Constraints',
-                  link: 'concepts/smart-contracts/costs-constraints',
-                },
+                { slug: 'concepts/smart-contracts/apps' },
+                { slug: 'concepts/smart-contracts/abi' },
+                { slug: 'concepts/smart-contracts/control-flow' },
+                { slug: 'concepts/smart-contracts/inner-txn' },
+                { slug: 'concepts/smart-contracts/resource-usage' },
+                { slug: 'concepts/smart-contracts/opcodes-overview' },
+                { slug: 'concepts/smart-contracts/logic-sigs' },
+                { slug: 'concepts/smart-contracts/costs-constraints' },
                 {
                   label: 'Data Storage',
                   collapsed: true,
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'concepts/smart-contracts/storage/overview',
-                    },
-                    {
-                      label: 'Local Storage',
-                      link: 'concepts/smart-contracts/storage/local',
-                    },
-                    {
-                      label: 'Global Storage',
-                      link: 'concepts/smart-contracts/storage/global',
-                    },
-                    {
-                      label: 'Box Storage',
-                      link: 'concepts/smart-contracts/storage/box',
-                    },
-                    {
-                      label: 'Scratch Space',
-                      link: 'concepts/smart-contracts/storage/scratch',
-                    },
-                    {
-                      label: 'Encoding/Decoding',
-                      link: 'concepts/smart-contracts/storage/encoding-decoding',
-                    },
+                    { slug: 'concepts/smart-contracts/storage/overview' },
+                    { slug: 'concepts/smart-contracts/storage/local' },
+                    { slug: 'concepts/smart-contracts/storage/global' },
+                    { slug: 'concepts/smart-contracts/storage/box' },
+                    { slug: 'concepts/smart-contracts/storage/scratch' },
+                    { slug: 'concepts/smart-contracts/storage/encoding-decoding' },
                   ],
                 },
-                {
-                  label: 'Cryptographic Tools',
-                  link: 'concepts/smart-contracts/cryptographic-tools',
-                },
-                {
-                  label: 'Development Lifecycle',
-                  link: 'concepts/smart-contracts/lifecycle',
-                },
+                { slug: 'concepts/smart-contracts/cryptographic-tools' },
+                { slug: 'concepts/smart-contracts/lifecycle' },
                 // {
                 //   label: 'Deployment',
                 //   link: 'concepts/smart-contracts/deployment',
@@ -426,38 +303,14 @@ export default defineConfig({
               label: 'Consensus Protocol',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'concepts/protocol/overview',
-                },
-                {
-                  label: 'Protocol Parameters',
-                  link: 'concepts/protocol/protocol-parameters',
-                },
-                {
-                  label: 'Participation Key Management',
-                  link: 'concepts/protocol/partkey-management',
-                },
-                {
-                  label: 'Account Registration',
-                  link: 'concepts/protocol/registration',
-                },
-                {
-                  label: 'Staking Rewards',
-                  link: 'concepts/protocol/staking-rewards',
-                },
-                {
-                  label: 'State Proofs',
-                  link: 'concepts/protocol/state-proofs',
-                },
-                {
-                  label: 'Networks',
-                  link: 'concepts/protocol/networks',
-                },
-                {
-                  label: 'Randomness',
-                  link: 'concepts/protocol/randomness',
-                },
+                { slug: 'concepts/protocol/overview' },
+                { slug: 'concepts/protocol/protocol-parameters' },
+                { slug: 'concepts/protocol/partkey-management' },
+                { slug: 'concepts/protocol/registration' },
+                { slug: 'concepts/protocol/staking-rewards' },
+                { slug: 'concepts/protocol/state-proofs' },
+                { slug: 'concepts/protocol/networks' },
+                { slug: 'concepts/protocol/randomness' },
               ],
             },
           ],
@@ -466,136 +319,49 @@ export default defineConfig({
           label: 'Build With AlgoKit',
           collapsed: false,
           items: [
-            {
-              label: 'Intro to AlgoKit',
-              link: 'algokit/algokit-intro',
-            },
+            { slug: 'algokit/algokit-intro' },
             {
               label: 'CLI Tools',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'algokit/cli/overview',
-                },
-                {
-                  label: 'Compile',
-                  link: 'algokit/cli/compile',
-                },
-                {
-                  label: 'Completions',
-                  link: 'algokit/cli/completions',
-                },
-                {
-                  label: 'Config',
-                  link: 'algokit/cli/config',
-                },
-                {
-                  label: 'TestNet Dispenser',
-                  link: 'algokit/cli/dispenser',
-                },
-                {
-                  label: 'Doctor',
-                  link: 'algokit/cli/doctor',
-                },
-                {
-                  label: 'Explore',
-                  link: 'algokit/cli/explore',
-                },
-                {
-                  label: 'Generate',
-                  link: 'algokit/cli/generate',
-                },
-                {
-                  label: 'Goal',
-                  link: 'algokit/cli/goal',
-                },
-                {
-                  label: 'Init',
-                  link: 'algokit/cli/init',
-                },
-                {
-                  label: 'Localnet',
-                  link: 'algokit/cli/localnet',
-                },
+                { slug: 'algokit/cli/overview' },
+                { slug: 'algokit/cli/compile' },
+                { slug: 'algokit/cli/completions' },
+                { slug: 'algokit/cli/config' },
+                { slug: 'algokit/cli/dispenser' },
+                { slug: 'algokit/cli/doctor' },
+                { slug: 'algokit/cli/explore' },
+                { slug: 'algokit/cli/generate' },
+                { slug: 'algokit/cli/goal' },
+                { slug: 'algokit/cli/init' },
+                { slug: 'algokit/cli/localnet' },
                 {
                   label: 'Project',
                   collapsed: true,
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/cli/project',
-                    },
-                    {
-                      label: 'Bootstrap',
-                      link: 'algokit/cli/project/bootstrap',
-                    },
-                    {
-                      label: 'Deploy',
-                      link: 'algokit/cli/project/deploy',
-                    },
-                    {
-                      label: 'Link',
-                      link: 'algokit/cli/project/link',
-                    },
-                    {
-                      label: 'List',
-                      link: 'algokit/cli/project/list',
-                    },
-                    {
-                      label: 'Run',
-                      link: 'algokit/cli/project/run',
-                    },
+                    { slug: 'algokit/cli/project' },
+                    { slug: 'algokit/cli/project/bootstrap' },
+                    { slug: 'algokit/cli/project/deploy' },
+                    { slug: 'algokit/cli/project/link' },
+                    { slug: 'algokit/cli/project/list' },
+                    { slug: 'algokit/cli/project/run' },
                   ],
                 },
                 {
                   label: 'Tasks',
                   collapsed: true,
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/cli/tasks',
-                    },
-                    {
-                      label: 'Analyze',
-                      link: 'algokit/cli/tasks/analyze',
-                    },
-                    {
-                      label: 'IPFS',
-                      link: 'algokit/cli/tasks/ipfs',
-                    },
-                    {
-                      label: 'Mint',
-                      link: 'algokit/cli/tasks/mint',
-                    },
-                    {
-                      label: 'NFD Lookup',
-                      link: 'algokit/cli/tasks/nfd',
-                    },
-                    {
-                      label: 'Asset opt-(in|out)',
-                      link: 'algokit/cli/tasks/opt',
-                    },
-                    {
-                      label: 'Send',
-                      link: 'algokit/cli/tasks/send',
-                    },
-                    {
-                      label: 'Sign',
-                      link: 'algokit/cli/tasks/sign',
-                    },
-                    {
-                      label: 'Transfer',
-                      link: 'algokit/cli/tasks/transfer',
-                    },
-                    {
-                      label: 'Vanity Address',
-                      link: 'algokit/cli/tasks/vanity_address',
-                    },
-                    {
-                      label: 'Wallet',
-                      link: 'algokit/cli/tasks/wallet',
-                    },
+                    { slug: 'algokit/cli/tasks' },
+                    { slug: 'algokit/cli/tasks/analyze' },
+                    { slug: 'algokit/cli/tasks/ipfs' },
+                    { slug: 'algokit/cli/tasks/mint' },
+                    { slug: 'algokit/cli/tasks/nfd' },
+                    { slug: 'algokit/cli/tasks/opt' },
+                    { slug: 'algokit/cli/tasks/send' },
+                    { slug: 'algokit/cli/tasks/sign' },
+                    { slug: 'algokit/cli/tasks/transfer' },
+                    { slug: 'algokit/cli/tasks/vanity_address' },
+                    { slug: 'algokit/cli/tasks/wallet' },
                   ],
                 },
               ],
@@ -604,190 +370,67 @@ export default defineConfig({
               label: 'LORA the Explorer',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'algokit/lora/overview',
-                },
+                { slug: 'algokit/lora/overview' },
               ],
             },
             {
               label: 'Project Templates',
               collapsed: true,
               items: [
-                {
-                  label: 'Project Structure',
-                  link: 'algokit/project-structure',
-                },
-                {
-                  label: 'Official AlgoKit Templates',
-                  link: 'algokit/official-algokit-templates',
-                },
-                {
-                  label: 'Custom AlgoKit Templates',
-                  link: 'algokit/custom-algokit-templates',
-                },
+                { slug: 'algokit/project-structure' },
+                { slug: 'algokit/official-algokit-templates' },
+                { slug: 'algokit/custom-algokit-templates' },
               ],
             },
             {
               label: 'AlgoKit Utils',
               collapsed: true,
               items: [
-                {
-                  label: 'AlgoKit Clients',
-                  link: 'algokit/utils/algokit-clients',
-                },
+                { slug: 'algokit/utils/algokit-clients' },
                 {
                   label: 'TypeScript',
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/utils/typescript/overview',
-                    },
-                    {
-                      label: 'Account Management',
-                      link: 'algokit/utils/typescript/account',
-                    },
-                    {
-                      label: 'Algorand Client',
-                      link: 'algokit/utils/typescript/algorand-client',
-                    },
-                    {
-                      label: 'Amount',
-                      link: 'algokit/utils/typescript/amount',
-                    },
-                    {
-                      label: 'App Client',
-                      link: 'algokit/utils/typescript/app-client',
-                    },
-                    {
-                      label: 'App Deployment',
-                      link: 'algokit/utils/typescript/app-deploy',
-                    },
-                    {
-                      label: 'Asset',
-                      link: 'algokit/utils/typescript/asset',
-                    },
-                    {
-                      label: 'Client',
-                      link: 'algokit/utils/typescript/client',
-                    },
-                    {
-                      label: 'Debugging',
-                      link: 'algokit/utils/typescript/debugging',
-                    },
-                    {
-                      label: 'Dispenser Client',
-                      link: 'algokit/utils/typescript/dispenser-client',
-                    },
-                    {
-                      label: 'Event Emitter',
-                      link: 'algokit/utils/typescript/event-emitter',
-                    },
-                    {
-                      label: 'Indexer',
-                      link: 'algokit/utils/typescript/indexer',
-                    },
-                    {
-                      label: 'Testnet Dispenser Client',
-                      link: 'algokit/utils/typescript/dispenser-client',
-                    },
-                    {
-                      label: 'Testing',
-                      link: 'algokit/utils/typescript/testing',
-                    },
-                    {
-                      label: 'Transaction Composer',
-                      link: 'algokit/utils/typescript/transaction-composer',
-                    },
-                    {
-                      label: 'Transaction',
-                      link: 'algokit/utils/typescript/transaction',
-                    },
-                    {
-                      label: 'Transfer',
-                      link: 'algokit/utils/typescript/transfer',
-                    },
-                    {
-                      label: 'Typed Clients',
-                      link: 'algokit/utils/typescript/typed-app-clients',
-                    },
-                    {
-                      label: 'v7 Migration Guide',
-                      link: 'algokit/utils/typescript/v7-migration',
-                    },
-                    {
-                      label: 'v8 Migration Guide',
-                      link: 'algokit/utils/typescript/v8-migration',
-                    },
+                    { slug: 'algokit/utils/typescript/overview' },
+                    { slug: 'algokit/utils/typescript/account' },
+                    { slug: 'algokit/utils/typescript/algorand-client' },
+                    { slug: 'algokit/utils/typescript/amount' },
+                    { slug: 'algokit/utils/typescript/app-client' },
+                    { slug: 'algokit/utils/typescript/app-deploy' },
+                    { slug: 'algokit/utils/typescript/asset' },
+                    { slug: 'algokit/utils/typescript/client' },
+                    { slug: 'algokit/utils/typescript/debugging' },
+                    { slug: 'algokit/utils/typescript/dispenser-client' },
+                    { slug: 'algokit/utils/typescript/event-emitter' },
+                    { slug: 'algokit/utils/typescript/indexer' },
+                    { slug: 'algokit/utils/typescript/dispenser-client' },
+                    { slug: 'algokit/utils/typescript/testing' },
+                    { slug: 'algokit/utils/typescript/transaction-composer' },
+                    { slug: 'algokit/utils/typescript/transaction' },
+                    { slug: 'algokit/utils/typescript/transfer' },
+                    { slug: 'algokit/utils/typescript/typed-app-clients' },
+                    { slug: 'algokit/utils/typescript/v7-migration' },
+                    { slug: 'algokit/utils/typescript/v8-migration' },
                   ],
                 },
                 {
                   label: 'Python',
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/utils/python/overview',
-                    },
-                    {
-                      label: 'Account Management',
-                      link: 'algokit/utils/python/account',
-                    },
-                    {
-                      label: 'Algorand Client',
-                      link: 'algokit/utils/python/algorand-client',
-                    },
-                    {
-                      label: 'Algo Amount Handling',
-                      link: 'algokit/utils/python/amount',
-                    },
-                    {
-                      label: 'App Client and Factory',
-                      link: 'algokit/utils/python/app-client',
-                    },
-                    {
-                      label: 'App Deployment',
-                      link: 'algokit/utils/python/app-deploy',
-                    },
-                    {
-                      label: 'App Management',
-                      link: 'algokit/utils/python/app',
-                    },
-                    {
-                      label: 'Assets',
-                      link: 'algokit/utils/python/asset',
-                    },
-                    {
-                      label: 'Client Management',
-                      link: 'algokit/utils/python/client',
-                    },
-                    {
-                      label: 'Debugger',
-                      link: 'algokit/utils/python/debugging',
-                    },
-                    {
-                      label: 'Testnet Dispenser Client',
-                      link: 'algokit/utils/python/dispenser-client',
-                    },
-                    {
-                      label: 'Testing',
-                      link: 'algokit/utils/python/testing',
-                    },
-                    {
-                      label: 'Transaction Composer',
-                      link: 'algokit/utils/python/transaction-composer',
-                    },
-                    {
-                      label: 'Transaction Management',
-                      link: 'algokit/utils/python/transaction',
-                    },
-                    {
-                      label: 'Algo Transfers (Payments)',
-                      link: 'algokit/utils/python/transfer',
-                    },
-                    {
-                      label: 'Typed Application Clients',
-                      link: 'algokit/utils/python/typed-app-clients',
-                    },
+                    { slug: 'algokit/utils/python/overview' },
+                    { slug: 'algokit/utils/python/account' },
+                    { slug: 'algokit/utils/python/algorand-client' },
+                    { slug: 'algokit/utils/python/amount' },
+                    { slug: 'algokit/utils/python/app-client' },
+                    { slug: 'algokit/utils/python/app-deploy' },
+                    { slug: 'algokit/utils/python/app' },
+                    { slug: 'algokit/utils/python/asset' },
+                    { slug: 'algokit/utils/python/client' },
+                    { slug: 'algokit/utils/python/debugging' },
+                    { slug: 'algokit/utils/python/dispenser-client' },
+                    { slug: 'algokit/utils/python/testing' },
+                    { slug: 'algokit/utils/python/transaction-composer' },
+                    { slug: 'algokit/utils/python/transaction' },
+                    { slug: 'algokit/utils/python/transfer' },
+                    { slug: 'algokit/utils/python/typed-app-clients' },
                   ],
                 },
               ],
@@ -799,127 +442,40 @@ export default defineConfig({
                 {
                   label: 'Algorand TypeScript',
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/languages/typescript/overview',
-                    },
-                    {
-                      label: 'Language Guide',
-                      link: 'algokit/languages/typescript/language-guide',
-                    },
-                    {
-                      label: 'Program Structure',
-                      link: 'algokit/languages/typescript/lg-program-structure',
-                    },
-                    {
-                      label: 'Basic Types',
-                      link: 'algokit/languages/typescript/lg-types',
-                    },
-                    {
-                      label: 'Storage',
-                      link: 'algokit/languages/typescript/lg-storage',
-                    },
-                    {
-                      label: 'Ops',
-                      link: 'algokit/languages/typescript/lg-ops',
-                    },
-                    {
-                      label: 'Guiding Principles',
-                      link: 'algokit/languages/typescript/guiding-principles',
-                    },
-                    {
-                      label: 'Migration Guides',
-                      link: 'algokit/languages/typescript/migration-guides',
-                    },
+                    { slug: 'algokit/languages/typescript/overview' },
+                    { slug: 'algokit/languages/typescript/language-guide' },
+                    { slug: 'algokit/languages/typescript/lg-program-structure' },
+                    { slug: 'algokit/languages/typescript/lg-types' },
+                    { slug: 'algokit/languages/typescript/lg-storage' },
+                    { slug: 'algokit/languages/typescript/lg-ops' },
+                    { slug: 'algokit/languages/typescript/guiding-principles' },
+                    { slug: 'algokit/languages/typescript/migration-guides' },
                   ],
                 },
                 {
                   label: 'Algorand Python',
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/languages/python/overview',
-                    },
-                    {
-                      label: 'Migration Guide v4.x to 5.0',
-                      link: 'algokit/languages/python/lg-migration-4-5',
-                    },
-                    {
-                      label: 'Language Guide',
-                      link: 'algokit/languages/python/language-guide',
-                    },
-                    {
-                      label: 'Guiding Principles',
-                      link: 'algokit/languages/python/principles',
-                    },
-                    {
-                      label: 'Program Structure',
-                      link: 'algokit/languages/python/lg-structure',
-                    },
-                    {
-                      label: 'Types',
-                      link: 'algokit/languages/python/lg-types',
-                    },
-                    {
-                      label: 'Control Flow Structures',
-                      link: 'algokit/languages/python/lg-control',
-                    },
-                    {
-                      label: 'Module Level Constructs',
-                      link: 'algokit/languages/python/lg-modules',
-                    },
-                    {
-                      label: 'Python Built-Ins',
-                      link: 'algokit/languages/python/lg-builtins',
-                    },
-                    {
-                      label: 'Error Handling and Assertions',
-                      link: 'algokit/languages/python/lg-errors',
-                    },
-                    {
-                      label: 'Data Structures',
-                      link: 'algokit/languages/python/lg-data-structures',
-                    },
-                    {
-                      label: 'Storing Data On-Chain',
-                      link: 'algokit/languages/python/lg-storage',
-                    },
-                    {
-                      label: 'Logging',
-                      link: 'algokit/languages/python/lg-logs',
-                    },
-                    {
-                      label: 'Transactions',
-                      link: 'algokit/languages/python/lg-transactions',
-                    },
-                    {
-                      label: 'AVM Operations',
-                      link: 'algokit/languages/python/lg-ops',
-                    },
-                    {
-                      label: 'Opcode Budgets',
-                      link: 'algokit/languages/python/lg-opcode-budget',
-                    },
-                    {
-                      label: 'ARC-4: Application Binary Interface',
-                      link: 'algokit/languages/python/lg-arc4',
-                    },
-                    {
-                      label: 'ARC-28: Structured Event Logging',
-                      link: 'algokit/languages/python/lg-arc28',
-                    },
-                    {
-                      label: 'Calling Other Applicaitons',
-                      link: 'algokit/languages/python/lg-calling-apps',
-                    },
-                    {
-                      label: 'Compiling to AVM bytecode',
-                      link: 'algokit/languages/python/overview',
-                    },
-                    {
-                      label: 'Unsupported Python Features',
-                      link: 'algokit/languages/python/lg-unsupported-python-features',
-                    },
+                    { slug: 'algokit/languages/python/overview' },
+                    { slug: 'algokit/languages/python/lg-migration-4-5' },
+                    { slug: 'algokit/languages/python/language-guide' },
+                    { slug: 'algokit/languages/python/principles' },
+                    { slug: 'algokit/languages/python/lg-structure' },
+                    { slug: 'algokit/languages/python/lg-types' },
+                    { slug: 'algokit/languages/python/lg-control' },
+                    { slug: 'algokit/languages/python/lg-modules' },
+                    { slug: 'algokit/languages/python/lg-builtins' },
+                    { slug: 'algokit/languages/python/lg-errors' },
+                    { slug: 'algokit/languages/python/lg-data-structures' },
+                    { slug: 'algokit/languages/python/lg-storage' },
+                    { slug: 'algokit/languages/python/lg-logs' },
+                    { slug: 'algokit/languages/python/lg-transactions' },
+                    { slug: 'algokit/languages/python/lg-ops' },
+                    { slug: 'algokit/languages/python/lg-opcode-budget' },
+                    { slug: 'algokit/languages/python/lg-arc4' },
+                    { slug: 'algokit/languages/python/lg-arc28' },
+                    { slug: 'algokit/languages/python/lg-calling-apps' },
+                    { slug: 'algokit/languages/python/overview' },
+                    { slug: 'algokit/languages/python/lg-unsupported-python-features' },
                   ],
                 },
               ],
@@ -931,87 +487,30 @@ export default defineConfig({
                 {
                   label: 'TypeScript Unit Testing ',
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/unit-testing/typescript/overview',
-                    },
-                    {
-                      label: 'Concepts',
-                      link: 'algokit/unit-testing/typescript/concepts',
-                    },
-                    {
-                      label: 'AVM Types',
-                      link: 'algokit/unit-testing/typescript/avm-types',
-                    },
-                    {
-                      label: 'ARC4 Types',
-                      link: 'algokit/unit-testing/typescript/arc4-types',
-                    },
-                    {
-                      label: 'Transactions',
-                      link: 'algokit/unit-testing/typescript/transactions',
-                    },
-                    {
-                      label: 'Smart Contract Testing',
-                      link: 'algokit/unit-testing/typescript/contract-testing',
-                    },
-                    {
-                      label: 'Smart Signature Testing',
-                      link: 'algokit/unit-testing/typescript/signature-testing',
-                    },
-                    {
-                      label: 'State Management',
-                      link: 'algokit/unit-testing/typescript/state-management',
-                    },
-                    {
-                      label: 'AVM Opcodes',
-                      link: 'algokit/unit-testing/typescript/opcodes',
-                    },
+                    { slug: 'algokit/unit-testing/typescript/overview' },
+                    { slug: 'algokit/unit-testing/typescript/concepts' },
+                    { slug: 'algokit/unit-testing/typescript/avm-types' },
+                    { slug: 'algokit/unit-testing/typescript/arc4-types' },
+                    { slug: 'algokit/unit-testing/typescript/transactions' },
+                    { slug: 'algokit/unit-testing/typescript/contract-testing' },
+                    { slug: 'algokit/unit-testing/typescript/signature-testing' },
+                    { slug: 'algokit/unit-testing/typescript/state-management' },
+                    { slug: 'algokit/unit-testing/typescript/opcodes' },
                   ],
                 },
                 {
                   label: 'Python Unit Testing',
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/unit-testing/python/overview',
-                    },
-                    {
-                      label: 'Concepts',
-                      link: 'algokit/unit-testing/python/concepts',
-                    },
-                    {
-                      label: 'AVM Types',
-                      link: 'algokit/unit-testing/python/avm-types',
-                    },
-                    {
-                      label: 'ARC4 Types',
-                      link: 'algokit/unit-testing/python/arc4-types',
-                    },
-                    {
-                      label: 'Transactions',
-                      link: 'algokit/unit-testing/python/transactions',
-                    },
-                    {
-                      label: 'Smart Contract Testing',
-                      link: 'algokit/unit-testing/python/contract-testing',
-                    },
-                    {
-                      label: 'Smart Signature Testing',
-                      link: 'algokit/unit-testing/python/signature-testing',
-                    },
-                    {
-                      label: 'State Management',
-                      link: 'algokit/unit-testing/python/state-management',
-                    },
-                    {
-                      label: 'Subroutines',
-                      link: 'algokit/unit-testing/python/subroutines',
-                    },
-                    {
-                      label: 'AVM Opcodes',
-                      link: 'algokit/unit-testing/python/opcodes',
-                    },
+                    { slug: 'algokit/unit-testing/python/overview' },
+                    { slug: 'algokit/unit-testing/python/concepts' },
+                    { slug: 'algokit/unit-testing/python/avm-types' },
+                    { slug: 'algokit/unit-testing/python/arc4-types' },
+                    { slug: 'algokit/unit-testing/python/transactions' },
+                    { slug: 'algokit/unit-testing/python/contract-testing' },
+                    { slug: 'algokit/unit-testing/python/signature-testing' },
+                    { slug: 'algokit/unit-testing/python/state-management' },
+                    { slug: 'algokit/unit-testing/python/subroutines' },
+                    { slug: 'algokit/unit-testing/python/opcodes' },
                   ],
                 },
               ],
@@ -1020,24 +519,15 @@ export default defineConfig({
               label: 'AVM Debugger',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'algokit/avm-debugger',
-                },
+                { slug: 'algokit/avm-debugger' },
               ],
             },
             {
               label: 'Language Servers',
               collapsed: true,
               items: [
-                {
-                  label: 'Algorand Python',
-                  link: 'algokit/language-servers/algorand-python',
-                },
-                {
-                  label: 'Algorand TypeScript',
-                  link: 'algokit/language-servers/algorand-typescript',
-                },
+                { slug: 'algokit/language-servers/algorand-python' },
+                { slug: 'algokit/language-servers/algorand-typescript' },
               ],
             },
             {
@@ -1047,39 +537,18 @@ export default defineConfig({
                 {
                   label: 'Subscriber TypeScript',
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/subscriber/typescript/overview',
-                    },
-                    {
-                      label: 'Subscriber',
-                      link: 'algokit/subscriber/typescript/subscriber',
-                    },
-                    {
-                      label: 'Subscriptions',
-                      link: 'algokit/subscriber/typescript/subscriptions',
-                    },
-                    {
-                      label: 'v3 Migration Guide',
-                      link: 'algokit/subscriber/typescript/v3-migration',
-                    },
+                    { slug: 'algokit/subscriber/typescript/overview' },
+                    { slug: 'algokit/subscriber/typescript/subscriber' },
+                    { slug: 'algokit/subscriber/typescript/subscriptions' },
+                    // { slug: 'algokit/subscriber/typescript/v3-migration' }, // content not in source repo
                   ],
                 },
                 {
                   label: 'Subscriber Python',
                   items: [
-                    {
-                      label: 'Overview',
-                      link: 'algokit/subscriber/python/overview',
-                    },
-                    {
-                      label: 'Subsciber',
-                      link: 'algokit/subscriber/python/subscriber',
-                    },
-                    {
-                      label: 'Subscriptions',
-                      link: 'algokit/subscriber/python/subscriptions',
-                    },
+                    { slug: 'algokit/subscriber/python/overview' },
+                    { slug: 'algokit/subscriber/python/subscriber' },
+                    { slug: 'algokit/subscriber/python/subscriptions' },
                   ],
                 },
               ],
@@ -1088,14 +557,8 @@ export default defineConfig({
               label: 'Client Generators',
               collapsed: true,
               items: [
-                {
-                  label: 'Typescript',
-                  link: 'algokit/client-generator/typescript',
-                },
-                {
-                  label: 'Python',
-                  link: 'algokit/client-generator/python',
-                },
+                { slug: 'algokit/client-generator/typescript' },
+                { slug: 'algokit/client-generator/python' },
               ],
             },
           ],
@@ -1104,96 +567,42 @@ export default defineConfig({
           label: 'Running A Node',
           collapsed: false,
           items: [
-            {
-              label: 'Overview',
-              link: 'nodes/overview',
-            },
-            {
-              label: 'NodeKit Overview',
-              link: 'nodes/nodekit-overview',
-            },
-            {
-              label: 'NodeKit Quick Start',
-              link: 'nodes/nodekit-quick-start',
-            },
-            {
-              label: 'Node Types',
-              link: 'nodes/types',
-            },
+            { slug: 'nodes/overview' },
+            { slug: 'nodes/nodekit-overview' },
+            { slug: 'nodes/nodekit-quick-start' },
+            { slug: 'nodes/types' },
             {
               label: 'Direct Installation',
               collapsed: true,
               items: [
-                {
-                  label: 'Manual Installation',
-                  link: 'nodes/installation/manual-installation',
-                },
-                {
-                  label: 'Catchup & Status',
-                  link: 'nodes/installation/catchup-status',
-                },
-                {
-                  label: 'Indexer Installation',
-                  link: 'nodes/installation/indexer-installation',
-                },
-                {
-                  label: 'Conduit Installation',
-                  link: 'nodes/installation/conduit-installation',
-                },
-                {
-                  label: 'Node Troubleshooting',
-                  link: 'nodes/installation/troubleshooting',
-                },
+                { slug: 'nodes/installation/manual-installation' },
+                { slug: 'nodes/installation/catchup-status' },
+                { slug: 'nodes/installation/indexer-installation' },
+                { slug: 'nodes/installation/conduit-installation' },
+                { slug: 'nodes/installation/troubleshooting' },
               ],
             },
             {
               label: 'Node Management',
               collapsed: true,
               items: [
-                {
-                  label: 'Best Practices',
-                  link: 'nodes/management/best-practices',
-                },
-                {
-                  label: 'Software Updates',
-                  link: 'nodes/management/software-updates',
-                },
-                {
-                  label: 'Switching Networks',
-                  link: 'nodes/management/switch-networks',
-                },
-                {
-                  label: 'Configuring P2P',
-                  link: 'nodes/management/p2p-config',
-                },
+                { slug: 'nodes/management/best-practices' },
+                { slug: 'nodes/management/software-updates' },
+                { slug: 'nodes/management/switch-networks' },
+                { slug: 'nodes/management/p2p-config' },
               ],
             },
             {
               label: 'Node Reference',
               collapsed: true,
               items: [
-                {
-                  label: 'Node Artifacts',
-                  link: 'nodes/reference/artifacts',
-                },
-                {
-                  label: 'Configuration Settings',
-                  link: 'nodes/reference/config-settings',
-                },
-                {
-                  label: 'Repeater Node Configuration',
-                  link: 'nodes/reference/repeater-config',
-                },
-                {
-                  label: 'Telemetry Configuration',
-                  link: 'nodes/reference/telemetry-config',
-                },
+                { slug: 'nodes/reference/artifacts' },
+                { slug: 'nodes/reference/config-settings' },
+                { slug: 'nodes/reference/repeater-config' },
+                { slug: 'nodes/reference/telemetry-config' },
               ],
             },
-            {
-              label: 'NodeKit Reference',
-              link: 'docs/nodekit/go/latest/commands',
-            },
+            { slug: 'docs/nodekit/go/latest/commands' },
           ],
         },
         {
@@ -1204,30 +613,21 @@ export default defineConfig({
               label: 'Algorand TEAL',
               collapsed: true,
               items: [
-                {
-                  label: 'AVM Opcodes',
-                  link: 'reference/algorand-teal/opcodes',
-                },
+                { slug: 'reference/algorand-teal/opcodes' },
               ],
             },
             {
               label: 'SDK',
               collapsed: true,
               items: [
-                {
-                  label: 'Algorand SDK List',
-                  link: 'reference/sdk/sdk-list',
-                },
+                { slug: 'reference/sdk/sdk-list' },
               ],
             },
             {
               label: 'REST API',
               collapsed: true,
               items: [
-                {
-                  label: 'Overview',
-                  link: 'reference/rest-api/overview',
-                },
+                { slug: 'reference/rest-api/overview' },
                 algodAPIDocsSidebarGroup,
                 indexerAPIDocsSidebarGroup,
                 kmdAPIDocsSidebarGroup,
@@ -1254,27 +654,15 @@ export default defineConfig({
           label: 'Additional Resources',
           collapsed: true,
           items: [
-            {
-              label: 'Overview',
-              link: 'resources/overview',
-            },
-            {
-              label: 'Liquid Auth',
-              link: 'resources/liquid-auth',
-            },
-            {
-              label: 'Bridging',
-              link: 'resources/bridging',
-            },
+            { slug: 'resources/overview' },
+            { slug: 'resources/liquid-auth' },
+            { slug: 'resources/bridging' },
             {
               label: 'Algorand Specifications',
               link: 'https://specs.algorand.co',
               attrs: { target: '_blank', rel: 'noopener' },
             },
-            {
-              label: 'Configuring P2P on FUNC',
-              link: 'resources/p2p-func',
-            },
+            { slug: 'resources/p2p-func' },
           ],
         },
         // Library sidebars — consumed by LibraryDocsSidebar, hidden from main sidebar

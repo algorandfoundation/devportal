@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Compile
+sidebar:
+  label: Compile
 ---
 The AlgoKit Compile feature enables you to compile smart contracts (apps) and smart signatures (logic signatures) written in a supported high-level language to a format deployable on the Algorand Virtual Machine (AVM).
 

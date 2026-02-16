@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Project Deploy
+sidebar:
+  label: Deploy
 ---
 Deploy your smart contracts effortlessly to various networks with the algokit project deploy feature. This feature is essential for automation in CI/CD pipelines and for seamless deployment to various Algorand network environments.
 

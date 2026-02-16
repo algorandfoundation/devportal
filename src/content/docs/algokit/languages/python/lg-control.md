@@ -1,5 +1,7 @@
 ---
 title: Control flow structures
+sidebar:
+  label: Control Flow Structures
 ---
 
 Control flow in Algorand Python is similar to standard Python control flow, with support for if statements, while loops, for loops, and match statements.

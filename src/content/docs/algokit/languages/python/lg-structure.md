@@ -1,5 +1,7 @@
 ---
 title: Program structure
+sidebar:
+  label: Program Structure
 ---
 
 An Algorand Python smart contract is defined within a single class. You can extend other

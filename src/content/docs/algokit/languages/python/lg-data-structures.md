@@ -1,5 +1,7 @@
 ---
 title: Data structures
+sidebar:
+  label: Data Structures
 ---
 
 In terms of data structures, Algorand Python currently provides support for

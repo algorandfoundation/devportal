@@ -1,5 +1,7 @@
 ---
 title: Unsupported Python features
+sidebar:
+  label: Unsupported Python Features
 ---
 
 ## raise, try/except/finally

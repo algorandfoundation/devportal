@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Tasks
+sidebar:
+  label: Overview
 ---
 AlgoKit Tasks are a collection of handy tasks that can be used to perform various operations on Algorand blockchain.
 

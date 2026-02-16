@@ -1,5 +1,7 @@
 ---
 title: AVM Operations
+sidebar:
+  label: Ops
 ---
 
 Algorand TypeScript allows you to express [every op code the AVM has available](https://dev.algorand.co/reference/algorand-teal/opcodes/), excluding those that manipulate the stack or control execution, as these would interfere with the compiler. These are all exported from the [ops module](modules/op.html). It is possible to import ops individually or via the entire namespace.

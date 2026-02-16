@@ -1,5 +1,7 @@
 ---
 title: App client and App factory
+sidebar:
+  label: App Client and Factory
 ---
 
 > [!NOTE]

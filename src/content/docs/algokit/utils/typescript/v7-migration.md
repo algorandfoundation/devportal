@@ -1,5 +1,7 @@
 ---
 title: v7 migration
+sidebar:
+  label: v7 Migration Guide
 ---
 
 Version 7 of AlgoKit Utils moved from a stateless function-based interface to a stateful class-based interface. Doing this allowed for a much easier and simpler consumption experience guided by intellisense, involves less passing around of redundant values (e.g. `algod` client) and is more performant since commonly retrieved values like transaction parameters are able to be cached.

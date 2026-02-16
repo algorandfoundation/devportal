@@ -1,5 +1,7 @@
 ---
 title: Algorand Python
+sidebar:
+  label: Overview
 ---
 
 Algorand Python is a partial implementation of the Python programming language that runs on the AVM. It includes a statically typed framework for development of Algorand smart contracts and logic signatures, with Pythonic interfaces to underlying AVM functionality that works with standard Python tooling.

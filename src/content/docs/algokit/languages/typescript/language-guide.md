@@ -1,5 +1,7 @@
 ---
 title: Algorand TypeScript Language Guide
+sidebar:
+  label: Language Guide
 children:
   - ./lg-program-structure.md
   - ./lg-types.md

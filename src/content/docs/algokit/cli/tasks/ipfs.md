@@ -1,5 +1,7 @@
 ---
 title: AlgoKit Task IPFS
+sidebar:
+  label: IPFS
 ---
 The AlgoKit IPFS feature allows you to interact with the IPFS [InterPlanetary File System](https://ipfs.tech/) using the [Piñata provider](https://www.pinata.cloud/). This feature supports logging in and out of the Piñata provider, and uploading files to IPFS.
 

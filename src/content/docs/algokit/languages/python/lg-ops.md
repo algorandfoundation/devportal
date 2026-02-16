@@ -1,5 +1,7 @@
 ---
 title: AVM operations
+sidebar:
+  label: AVM Operations
 ---
 
 Algorand Python allows you to do express [every op code the AVM has available](https://dev.algorand.co/concepts/smart-contracts/avm/#operations) apart from ops that manipulate the stack (to avoid conflicts with the compiler), and `log` (to avoid confusion with the superior [Algorand Python log function](/algokit/languages/python/lg-logs/)). These ops are exposed via the [`algopy.op`](docs/_build/markdown/api-algopy.op#module-algopy.op) submodule.
