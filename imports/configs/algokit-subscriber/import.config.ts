@@ -5,7 +5,7 @@ import {
   convertH1ToTitle,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
-import logo from './logo.svg';
+import logo from './logo.svg?raw';
 
 export const config: LibraryImportConfig = {
   metadata: {
