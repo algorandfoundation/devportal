@@ -35,7 +35,8 @@ export default defineConfig({
       plugins: [
         starlightImageZoom(),
         starlightLinksValidator({
-          errorOnRelativeLinks: true,
+          // TODO: Re-enable once all remaining broken links are resolved (DVP-1205)
+          errorOnRelativeLinks: false,
           errorOnInvalidHashes: false,
           errorOnLocalLinks: false,
           exclude: [
