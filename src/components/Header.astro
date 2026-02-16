@@ -43,27 +43,22 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
     </div>
   ) : activeLibrary ? (
-    <Fragment>
-      <script is:inline>
-        document.documentElement.setAttribute('data-library-page', '');
-      </script>
-      <div class='header library-header'>
-        <div class='library-title-area sl-flex'>
-          <HeaderMenu currentPath={currentPath} />
-          <SiteTitle />
-        </div>
-        <div class='sl-flex print:hidden items-center'>
-          {shouldRenderSearch && <Search {...Astro.props} />}
-        </div>
-        <div class='sl-hidden md:sl-flex print:hidden right-group'>
-          <div class='sl-flex social-icons'>
-            <SocialIcons {...Astro.props} />
-          </div>
-          <ThemeSelect />
-          <LanguageSelect {...Astro.props} />
-        </div>
+    <div class='header library-header'>
+      <div class='library-title-area sl-flex'>
+        <HeaderMenu currentPath={currentPath} />
+        <SiteTitle />
       </div>
-    </Fragment>
+      <div class='sl-flex print:hidden items-center'>
+        {shouldRenderSearch && <Search {...Astro.props} />}
+      </div>
+      <div class='sl-hidden md:sl-flex print:hidden right-group'>
+        <div class='sl-flex social-icons'>
+          <SocialIcons {...Astro.props} />
+        </div>
+        <ThemeSelect />
+        <LanguageSelect {...Astro.props} />
+      </div>
+    </div>
   ) : (
     <Default>
       <slot />
@@ -92,10 +87,6 @@ const activeLibrary = getLibraryFromPath(currentPath);
 
   .library-header {
     display: flex;
-    gap: var(--sl-nav-gap);
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
   }
 
   .library-title-area {

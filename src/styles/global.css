@@ -362,7 +362,8 @@ div.opcode-section table td {
 }
 
 /* Hide Starlight's mobile sidebar toggle on library pages —
-   replaced by the HeaderMenu hamburger. */
-:root[data-library-page] starlight-menu-button {
+   replaced by the HeaderMenu hamburger. Uses :has() so it's
+   reactive to View Transition DOM swaps without JS cleanup. */
+:root:has(.library-header) starlight-menu-button {
   display: none !important;
 }

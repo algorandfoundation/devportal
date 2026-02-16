@@ -81,6 +81,12 @@ const { currentPath } = Astro.props;
   class LibraryHeaderMenu extends HTMLElement {
     private btn!: HTMLButtonElement;
     private panel!: HTMLElement;
+    private onKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && this.isOpen()) this.close();
+    };
+    private onClickOutside = (e: MouseEvent) => {
+      if (this.isOpen() && !this.contains(e.target as Node)) this.close();
+    };
 
     connectedCallback() {
       this.btn = this.querySelector('.menu-btn')!;
@@ -88,12 +94,13 @@ const { currentPath } = Astro.props;
       if (!this.btn || !this.panel) return;
 
       this.btn.addEventListener('click', () => this.toggle());
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && this.isOpen()) this.close();
-      });
-      document.addEventListener('click', e => {
-        if (this.isOpen() && !this.contains(e.target as Node)) this.close();
-      });
+      document.addEventListener('keydown', this.onKeydown);
+      document.addEventListener('click', this.onClickOutside);
+    }
+
+    disconnectedCallback() {
+      document.removeEventListener('keydown', this.onKeydown);
+      document.removeEventListener('click', this.onClickOutside);
     }
 
     isOpen() {
