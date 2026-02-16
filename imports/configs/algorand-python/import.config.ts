@@ -7,6 +7,7 @@ import {
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../../transforms/links.js';
+import logo from './logo.svg';
 
 export const config: LibraryImportConfig = {
   metadata: {
@@ -14,6 +15,7 @@ export const config: LibraryImportConfig = {
     label: 'Algorand Python',
     description: 'Write Algorand smart contracts in Python',
     color: '#8B5CF6',
+    logo,
     category: 'language',
   },
   variants: [

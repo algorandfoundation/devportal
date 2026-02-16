@@ -1,5 +1,5 @@
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
-import { config } from './algorand-typescript.import.js';
+import { config } from './import.config.js';
 
 /**
  * Sidebar autogenerate entries for algorand-typescript.

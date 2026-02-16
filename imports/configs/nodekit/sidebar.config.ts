@@ -1,5 +1,5 @@
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
-import { config } from './nodekit.import.js';
+import { config } from './import.config.js';
 
 /**
  * Sidebar autogenerate entries for nodekit.

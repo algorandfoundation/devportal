@@ -5,6 +5,7 @@
  * content import pipeline and the UI (navigation, pickers, cards).
  */
 
+import type { ImageMetadata } from 'astro';
 import type {
   ImportOptions,
   VersionConfig,
@@ -32,10 +33,10 @@ export interface LibraryMetadata {
   description: string;
   /** Accent color (hex) for library dot/badge */
   color: string;
-  /** Path to logo SVG (header/cards) */
-  logo?: string;
-  /** Path to small icon SVG (compact views) */
-  icon?: string;
+  /** Logo SVG image metadata (header/cards) */
+  logo?: ImageMetadata;
+  /** Small icon SVG image metadata (compact views) */
+  icon?: ImageMetadata;
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
 }
@@ -54,7 +55,7 @@ export interface VariantImportConfig extends ImportOptions {
   versions: VersionConfig[];
 }
 
-/** Top-level config exported by each {library}.import.ts file. */
+/** Top-level config exported by each library's import.config.ts file. */
 export interface LibraryImportConfig {
   metadata: LibraryMetadata;
   variants: VariantImportConfig[];
