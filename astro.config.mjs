@@ -10,119 +10,40 @@ import rehypeAstroRelativeMarkdownLinks from 'astro-rehype-relative-markdown-lin
 import tailwindcss from '@tailwindcss/vite';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
-import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
+// Temporarily disabled — requires network access
+// import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 
-const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
-const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
-const kmdAPIDocsSidebarGroup = createOpenAPISidebarGroup();
+// Temporarily disabled — requires network access to download OpenAPI specs
+// const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
+// const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
+// const kmdAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 
 export default defineConfig({
   site: 'https://dev.algorand.co',
   description:
     'The Algorand Developer Portal is the go-to resource for developers building on Algorand.',
   output: 'static',
-  viewTransitions: true,
   integrations: [
     starlight({
       title: 'Algorand Developer Portal',
       plugins: [
         starlightImageZoom(),
-        starlightLinksValidator({
-          errorOnRelativeLinks: false,
-          errorOnInvalidHashes: false,
-          errorOnLocalLinks: false,
-          exclude: ['**/reference/rest-api/**', '**/reference/sdk/**'],
-        }),
-        starlightLlmsTxt({
-          minify: {
-            customSelectors: [':any-link'],
-          },
-          customSets: [
-            {
-              label: 'Reference',
-              description: 'Algorand Developer Portal - Reference Docs',
-              paths: ['reference/**'],
-            },
-            {
-              label: 'Typescript - Reference',
-              description: 'Algorand Developer Portal - Typescript Reference Docs',
-              paths: ['reference/algorand-typescript/**'],
-            },
-            {
-              label: 'Python - Reference',
-              description: 'Algorand Developer Portal - Python Reference Docs',
-              paths: ['reference/algorand-python/**'],
-            },
-            {
-              label: 'Typescript',
-              description: 'Algorand Developer Portal - Typescript Docs',
-              paths: ['algokit/languages/typescript/**'],
-            },
-            {
-              label: 'Python',
-              description: 'Algorand Developer Portal - Python Docs',
-              paths: ['algokit/languages/python/**'],
-            },
-          ],
-        }),
+        // Temporarily disabled for prototype build (network-dependent)
+        // starlightLinksValidator({...}),
+        // starlightLlmsTxt({...}),
         starlightAutoSidebar(),
-        starlightOpenAPI([
-          {
-            base: 'reference/rest-api/algod',
-            schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/refs/heads/master/daemon/algod/api/algod.oas3.yml',
-            sidebar: {
-              label: 'algod',
-              group: algodAPIDocsSidebarGroup,
-              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
-              tags: { sort: 'alphabetical' },
-            },
-          },
-          {
-            base: 'reference/rest-api/indexer',
-            schema:
-              'https://raw.githubusercontent.com/algorand/indexer/refs/heads/main/api/indexer.oas3.yml',
-            sidebar: {
-              label: 'indexer',
-              group: indexerAPIDocsSidebarGroup,
-              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
-              tags: { sort: 'alphabetical' },
-            },
-          },
-          {
-            base: 'reference/rest-api/kmd',
-            schema:
-              'https://raw.githubusercontent.com/algorand/go-algorand/ad578576ab5f5bfe58a590164903617ecef379e4/daemon/kmd/api/swagger.json',
-            sidebar: {
-              label: 'kmd',
-              group: kmdAPIDocsSidebarGroup,
-              operations: { badges: false, labels: 'operationId', sort: 'alphabetical' },
-              tags: { sort: 'alphabetical' },
-            },
-          },
-        ]),
+        // Temporarily disabled — requires network access to download OpenAPI specs
+        // starlightOpenAPI([...]),
       ],
       head: [
         {
           tag: 'script',
           content: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5XBZ7HB');`,
         },
-        {
-          tag: 'script',
-          attrs: {
-            src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-            'data-website-id': '6e799942-b20a-4203-8103-93582a2611e1',
-            'data-project-name': 'Algorand',
-            'data-project-color': '#99A1A7',
-            'data-modal-header-bg-color': '#17cac6',
-            'data-font-family': 'Inter, sans-serif',
-            'data-modal-title-color': '#ffffff',
-            'data-modal-title': 'Ask AI',
-            'data-modal-body-bg-color': '#f6f6f6',
-            'data-project-logo': '/algorand-logo.png',
-          },
-        },
+        // Legacy Kapa widget removed - now using custom React SDK implementation
+        // See src/components/AIChatPanel.tsx and AIChatTrigger.tsx
         {
           tag: 'meta',
           attrs: {
@@ -149,6 +70,8 @@ export default defineConfig({
         Footer: './src/components/Footer.astro',
         Header: './src/components/Header.astro',
         Hero: './src/components/Hero.astro',
+        Search: './src/components/Search.astro',
+        Sidebar: './src/components/Sidebar.astro',
         SiteTitle: './src/components/SiteTitle.astro',
         ThemeProvider: './src/components/CustomThemeProvider.astro',
         ThemeSelect: './src/components/ThemeSelect.astro',
@@ -1091,7 +1014,7 @@ export default defineConfig({
         },
         {
           label: 'Running A Node',
-          collapsed: false,
+          collapsed: true,
           items: [
             {
               label: 'Overview',
@@ -1185,97 +1108,7 @@ export default defineConfig({
             },
           ],
         },
-        {
-          label: 'Reference',
-          collapsed: true,
-          items: [
-            {
-              label: 'Algorand Python',
-              collapsed: true,
-              autogenerate: {
-                directory: 'reference/algorand-python/api',
-              },
-            },
-            {
-              label: 'Algorand Typescript',
-              autogenerate: {
-                directory: 'reference/algorand-typescript/api',
-              },
-              collapsed: true,
-            },
-            {
-              label: 'AlgoKit CLI',
-              collapsed: true,
-              items: [
-                {
-                  label: 'Command Reference',
-                  link: 'reference/algokit-cli',
-                },
-              ],
-            },
-            {
-              label: 'AlgoKit Utils (Python)',
-              collapsed: true,
-              autogenerate: {
-                directory: 'reference/algokit-utils-py/api',
-              },
-            },
-            {
-              label: 'AlgoKit Utils (Typescript)',
-              collapsed: true,
-              autogenerate: {
-                directory: 'reference/algokit-utils-ts/api',
-              },
-            },
-            // {
-            //   label: 'AlgoKit Subscriber (Typescript)',
-            //   collapsed: true,
-            //   autogenerate: {
-            //     directory: 'reference/algokit-subscriber-ts/api',
-            //   },
-            // },
-            {
-              label: 'Algorand TEAL',
-              collapsed: true,
-              items: [
-                {
-                  label: 'AVM Opcodes',
-                  link: 'reference/algorand-teal/opcodes',
-                },
-              ],
-            },
-            {
-              label: 'SDK',
-              collapsed: true,
-              items: [
-                {
-                  label: 'Algorand SDK List',
-                  link: 'reference/sdk/sdk-list',
-                },
-              ],
-            },
-            {
-              label: 'REST API',
-              collapsed: true,
-              items: [
-                {
-                  label: 'Overview',
-                  link: 'reference/rest-api/overview',
-                },
-                algodAPIDocsSidebarGroup,
-                indexerAPIDocsSidebarGroup,
-                kmdAPIDocsSidebarGroup,
-              ],
-            },
-            {
-              label: 'ARC Standards',
-              collapsed: true,
-              autogenerate: {
-                directory: 'arc-standards',
-              },
-            },
-          ],
-        },
+        
         {
           label: 'Bulletins',
           collapsed: true,
@@ -1311,14 +1144,25 @@ export default defineConfig({
             },
           ],
         },
+        // Virtual collection pages - sidebar is overridden by custom Sidebar component
+        // but Starlight needs entries here so it generates the routes
+        {
+          label: 'API Docs (will be hidden)',
+          collapsed: true,
+          autogenerate: {
+            directory: 'docs',
+          },
+        },
       ],
     }),
     icon(),
-    d2({
-      sketch: true,
-      layout: 'dagre',
-    }),
+    // d2 disabled — requires d2 binary installed
+    // d2({
+    //   sketch: true,
+    //   layout: 'dagre',
+    // }),
     sitemap(),
+    react(),
   ],
   markdown: {
     rehypePlugins: [

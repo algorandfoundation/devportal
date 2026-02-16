@@ -1,0 +1,21 @@
+---
+title: Algorand Client
+description: Using the AlgorandClient class
+---
+
+# Algorand Client
+
+The `AlgorandClient` is the main entry point for interacting with the Algorand network.
+
+## Creating a Client
+
+```typescript
+// LocalNet
+const algorand = AlgorandClient.defaultLocalNet();
+
+// TestNet
+const algorand = AlgorandClient.testNet();
+
+// MainNet
+const algorand = AlgorandClient.mainNet();
+```

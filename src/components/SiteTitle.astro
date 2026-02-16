@@ -1,8 +1,25 @@
 ---
+import type { ImageMetadata } from 'astro';
 // @ts-expect-error unusual error
 import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
+import UtilsLogo from '../assets/images/utils.svg';
+import CliLogo from '../assets/images/cli.svg';
+import AlgorandPythonLogo from '../assets/images/algorand-python.svg';
+import AlgorandTypeScriptLogo from '../assets/images/algorand-typescript.svg';
+import SubscriberLogo from '../assets/images/subscriber.svg';
+import NodeKitLogo from '../assets/images/nodekit.svg';
+import { getLibraryFromPath } from '../config/libraries';
+
+const libraryLogos: Record<string, ImageMetadata> = {
+  'algokit-utils': UtilsLogo,
+  'algokit-cli': CliLogo,
+  'algorand-python': AlgorandPythonLogo,
+  'algorand-typescript': AlgorandTypeScriptLogo,
+  'algokit-subscriber': SubscriberLogo,
+  nodekit: NodeKitLogo,
+};
 
 interface Props {
   isFooter?: boolean;
@@ -12,9 +29,27 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 
 const { isFooter } = Astro.props;
 const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+const currentPath = Astro.url.pathname;
+const activeLibrary = !isFooter ? getLibraryFromPath(currentPath) : undefined;
+
+// Use library logo when on a library page, otherwise use the default site logo
+const libraryLogo = activeLibrary
+  ? libraryLogos[activeLibrary.slug]
+  : undefined;
+const darkLogoSrc = libraryLogo
+  ? libraryLogo.src
+  : isFooter
+    ? AltDarkLogo.src
+    : logos.dark.src;
+const lightLogoSrc = libraryLogo
+  ? libraryLogo.src
+  : isFooter
+    ? logos.dark.src
+    : logos.light?.src;
+const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 ---
 
-<a href={siteTitleHref} class='site-title sl-flex'>
+<a href={logoHref} class='site-title sl-flex'>
   {
     config.logo && logos.dark && (
       <>
@@ -23,12 +58,15 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
             'light:sl-hidden print:hidden': !('src' in config.logo),
             'h-full!': isHomepage,
           }}
-          alt={`light theme ${config.logo.alt}`}
-          src={isFooter ? AltDarkLogo.src : logos.dark.src}
+          alt={
+            activeLibrary
+              ? activeLibrary.label
+              : `light theme ${config.logo.alt}`
+          }
+          src={darkLogoSrc}
           width={logos.dark.width}
           height={logos.dark.height}
         />
-        {/* Show light alternate if a user configure both light and dark logos. */}
         {!('src' in config.logo) && (
           <img
             class:list={[
@@ -37,8 +75,12 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
                 'h-full!': isHomepage,
               },
             ]}
-            alt={`dark theme ${config.logo.alt}`}
-            src={isFooter ? logos.dark.src : logos.light?.src}
+            alt={
+              activeLibrary
+                ? activeLibrary.label
+                : `dark theme ${config.logo.alt}`
+            }
+            src={lightLogoSrc}
             width={isFooter ? logos.dark.width : logos.light?.width}
             height={isFooter ? logos.dark.height : logos.light?.height}
           />

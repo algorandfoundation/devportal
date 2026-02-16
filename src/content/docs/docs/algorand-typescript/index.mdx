@@ -1,0 +1,20 @@
+---
+title: Algorand TypeScript
+description: Write Algorand smart contracts in TypeScript
+---
+
+# Algorand TypeScript
+
+Write Algorand smart contracts using native TypeScript syntax.
+
+## Quick Example
+
+```typescript
+import { Contract } from '@algorandfoundation/algorand-typescript';
+
+class HelloWorld extends Contract {
+  hello(name: string): string {
+    return `Hello, ${name}`;
+  }
+}
+```
