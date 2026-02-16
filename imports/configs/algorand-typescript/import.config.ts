@@ -17,7 +17,7 @@ export const config: LibraryImportConfig = {
   metadata: {
     slug: 'algorand-typescript',
     label: 'Algorand TypeScript',
-    description: 'Write Algorand smart contracts in TypeScript',
+    description: 'Build smart contracts on Algorand using TypeScript',
     color: '#EC4899',
     logo,
     category: 'language',
