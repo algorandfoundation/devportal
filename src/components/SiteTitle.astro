@@ -34,7 +34,12 @@ const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 <a href={logoHref} class='site-title sl-flex'>
   {
     libraryLogo ? (
-      <span class='library-logo' role='img' aria-label={activeLibrary?.label} set:html={libraryLogo} />
+      <span
+        class='library-logo'
+        role='img'
+        aria-label={activeLibrary?.label}
+        set:html={libraryLogo}
+      />
     ) : config.logo && logos.dark ? (
       <>
         <img
