@@ -360,3 +360,9 @@ div.opcode-section table td {
   font-weight: bold;
   margin-top: 0.5rem;
 }
+
+/* Hide Starlight's mobile sidebar toggle on library pages —
+   replaced by the HeaderMenu hamburger. */
+:root[data-library-page] starlight-menu-button {
+  display: none !important;
+}
