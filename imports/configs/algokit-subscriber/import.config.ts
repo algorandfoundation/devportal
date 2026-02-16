@@ -59,7 +59,7 @@ export const config: LibraryImportConfig = {
           transforms: [convertH1ToTitle],
         },
       ],
-      enabled: true,
+      enabled: false,
       clear: true,
     },
   ],
@@ -83,5 +83,5 @@ export const legacyGuideConfig: ImportOptions = {
     },
   ],
   clear: true,
-  enabled: true,
+  enabled: false,
 };

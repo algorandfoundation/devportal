@@ -1,5 +1,7 @@
 ---
 title: Algorand transaction subscription / indexing
+sidebar:
+  label: Overview
 ---
 
 ## Quick start
@@ -43,26 +45,25 @@ subscriber.pollOnce();
 
 ## Capabilities
 
-- [Algorand transaction subscription / indexing](#algorand-transaction-subscription--indexing)
-  - [Quick start](#quick-start)
-  - [Capabilities](#capabilities)
-    - [Notification _and_ indexing](#notification-and-indexing)
-    - [Low latency processing](#low-latency-processing)
-    - [Watermarking and resilience](#watermarking-and-resilience)
-    - [Extensive subscription filtering](#extensive-subscription-filtering)
-    - [ARC-28 event subscription and reads](#arc-28-event-subscription-and-reads)
-    - [First-class inner transaction support](#first-class-inner-transaction-support)
-    - [State-proof support](#state-proof-support)
-    - [Simple programming model](#simple-programming-model)
-    - [Easy to deploy](#easy-to-deploy)
-    - [Fast initial index](#fast-initial-index)
-  - [Entry points](#entry-points)
-  - [Reference docs](#reference-docs)
-  - [Emit ARC-28 events](#emit-arc-28-events)
-    - [Algorand Python](#algorand-python)
-    - [TealScript](#tealscript)
-    - [PyTEAL](#pyteal)
-    - [TEAL](#teal)
+- [Quick start](#quick-start)
+- [Capabilities](#capabilities)
+  - [Notification _and_ indexing](#notification-and-indexing)
+  - [Low latency processing](#low-latency-processing)
+  - [Watermarking and resilience](#watermarking-and-resilience)
+  - [Extensive subscription filtering](#extensive-subscription-filtering)
+  - [ARC-28 event subscription and reads](#arc-28-event-subscription-and-reads)
+  - [First-class inner transaction support](#first-class-inner-transaction-support)
+  - [State-proof support](#state-proof-support)
+  - [Simple programming model](#simple-programming-model)
+  - [Easy to deploy](#easy-to-deploy)
+  - [Fast initial index](#fast-initial-index)
+- [Entry points](#entry-points)
+- [Reference docs](#reference-docs)
+- [Emit ARC-28 events](#emit-arc-28-events)
+  - [Algorand Python](#algorand-python)
+  - [TealScript](#tealscript)
+  - [PyTEAL](#pyteal)
+  - [TEAL](#teal)
 
 ### Notification _and_ indexing
 

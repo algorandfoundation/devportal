@@ -42,7 +42,7 @@ export const LIBRARY_CONFIGS: LibraryImportConfig[] = [
   algokitCli,
   algorandPython,
   algorandTypescript,
-  algokitSubscriber,
+  // algokitSubscriber, // hidden — docs not yet ready
   nodekit,
 ];
 
@@ -52,14 +52,14 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   ...algokitCli.variants,
   ...algorandPython.variants,
   ...algorandTypescript.variants,
-  ...algokitSubscriber.variants,
+  // ...algokitSubscriber.variants, // hidden — docs not yet ready
   ...nodekit.variants,
   arcStandardsConfig,
   // Legacy guide targets — keep old algokit/* paths in sync via stateKey
   algokitCliLegacy,
   algorandPythonLegacy,
   algorandTypescriptLegacy,
-  algokitSubscriberLegacy,
+  // algokitSubscriberLegacy, // hidden — docs not yet ready
   algokitUtilsTsLegacy,
   algokitUtilsPyLegacy,
 ];
