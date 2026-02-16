@@ -4,7 +4,7 @@
  *
  * Renders as a button that expands to show the full library list with:
  * - Colored dot per library
- * - Library name (links to library root)
+ * - Library name (plain text label)
  * - Clickable language icons that link directly to each variant
  */
 import {
@@ -43,13 +43,7 @@ for (const lib of libraries) {
             return (
               <li class:list={['picker-item', { active: isActive }]}>
                 <span class='picker-dot' style={`--dot-color: ${lib.color}`} />
-                <a
-                  href={rootHref}
-                  class='picker-item-label'
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  {lib.label}
-                </a>
+                <span class='picker-item-label'>{lib.label}</span>
                 {lib.languages.length > 0 && (
                   <span class='picker-variants'>
                     {lib.languages.map(lang => {
@@ -135,13 +129,7 @@ for (const lib of libraries) {
                     class='picker-dot'
                     style={`--dot-color: ${lib.color}`}
                   />
-                  <a
-                    href={rootHref}
-                    class='picker-item-label'
-                    aria-current={isActive ? 'page' : undefined}
-                  >
-                    {lib.label}
-                  </a>
+                  <span class='picker-item-label'>{lib.label}</span>
                   {lib.languages.length > 0 && (
                     <span class='picker-variants'>
                       {lib.languages.map(lang => {
@@ -340,22 +328,11 @@ for (const lib of libraries) {
     flex-shrink: 0;
   }
 
-  /* Library name link */
+  /* Library name label */
   .picker-item-label {
     flex: 1;
     min-width: 0;
-    text-decoration: none;
     color: inherit;
-    transition: color 0.15s;
-  }
-
-  .picker-item-label:hover {
-    color: var(--sl-color-white);
-  }
-
-  .picker-item-label:focus-visible {
-    outline: 2px solid var(--sl-color-accent);
-    outline-offset: 1px;
   }
 
   .picker-item.active .picker-item-label {
