@@ -42,7 +42,7 @@
     "@larkiny/astro-github-loader": "^0.11.3",
     "@tailwindcss/vite": "^4.1.18",
     "@types/js-yaml": "^4.0.9",
-    "astro": "^5.17.1",
+    "astro": "^5.17.2",
     "astro-d2": "^0.9.0",
     "astro-icon": "^1.1.5",
     "astro-rehype-relative-markdown-links": "^0.18.1",
