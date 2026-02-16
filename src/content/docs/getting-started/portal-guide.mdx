@@ -1,0 +1,167 @@
+---
+title: Portal Guide & AI Tools
+---
+
+import { LinkCard, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Welcome to the Algorand Developer Portal. Whether you have been waiting for this or are surprised by it, please have a look around. We think you're going to enjoy reading — or chatting with — these docs.
+
+## What You'll Find Here
+
+<CardGrid>
+  <LinkCard
+    title='Getting Started'
+    href='/getting-started/algokit-quick-start'
+    description='Install AlgoKit, deploy your first smart contract, and explore example projects.'
+  />
+  <LinkCard
+    title='Concepts'
+    href='/concepts/accounts/overview'
+    description='Build your mental model of accounts, transactions, assets, smart contracts, and consensus.'
+  />
+  <LinkCard
+    title='Build With AlgoKit'
+    href='/algokit/algokit-intro'
+    description='Docs for AlgoKit tools — CLI, Lora, smart contract languages, and code libraries.'
+  />
+  <LinkCard
+    title='Running A Node'
+    href='/nodes/overview'
+    description='Set up and manage Algorand nodes with NodeKit, Indexer, and more.'
+  />
+  <LinkCard
+    title='Reference'
+    href='/reference/algorand-python/api/'
+    description='API reference docs, ARC standards, and specifications for Algorand tools and libraries.'
+  />
+</CardGrid>
+
+## Build with AI
+
+The Algorand developer ecosystem provides AI tools that help you code faster, find answers instantly, and follow best practices. Whether you prefer chatting in the browser or using an AI assistant in your IDE, there are options for you.
+
+### Ask AI on This Site
+
+Click the **Ask AI** button on any page to chat with an AI assistant that has been trained on the full contents of this portal. It can answer questions about Algorand concepts, code patterns, and tooling.
+
+### Kapa MCP Server
+
+The same AI that powers the chatbot on this site is available as an MCP server, bringing Algorand documentation search directly into your coding assistant.
+
+- **URL:** `https://algorand-docs.mcp.kapa.ai/`
+- **Authentication:** OAuth (you'll be prompted on first use)
+
+Add the Kapa MCP server to your configuration:
+
+<Tabs>
+<TabItem label="Claude Code">
+Add to `.mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "algorand-docs-kapa": {
+      "type": "http",
+      "url": "https://algorand-docs.mcp.kapa.ai/"
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem label="Cursor">
+Add to `.cursor/mcp.json` in your project:
+
+```json
+{
+  "mcpServers": {
+    "algorand-docs-kapa": {
+      "url": "https://algorand-docs.mcp.kapa.ai/"
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem label="Codex">
+Add to `~/.codex/config.toml` or `.codex/config.toml` in your project:
+
+```toml
+[mcp_servers.algorand-docs-kapa]
+url = "https://algorand-docs.mcp.kapa.ai/"
+```
+
+</TabItem>
+<TabItem label="VS Code">
+Add to `.vscode/mcp.json` in your project:
+
+```json
+{
+  "servers": {
+    "algorand-docs-kapa": {
+      "type": "http",
+      "url": "https://algorand-docs.mcp.kapa.ai/"
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem label="OpenCode">
+Add to `opencode.json` in your project root:
+
+```json
+{
+  "mcp": {
+    "algorand-docs-kapa": {
+      "type": "remote",
+      "url": "https://algorand-docs.mcp.kapa.ai/",
+      "enabled": true
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Algorand Agent Skills
+
+[Algorand Agent Skills](https://github.com/algorand-devrel/algorand-agent-skills) are a collection of skill files that teach AI coding assistants how to build on Algorand. They cover the full development lifecycle — from project initialization and smart contract development to testing, deployment, and troubleshooting. Skills are available for Claude Code, Cursor, OpenCode, and GitHub Copilot.
+
+<LinkCard
+  title='Algorand Agent Skills'
+  href='https://github.com/algorand-devrel/algorand-agent-skills'
+  description='Full documentation, skill files, and setup instructions for all supported tools.'
+/>
+
+### LLM-Optimized Content
+
+If you want to feed Algorand documentation directly into your AI tools, the full site content is available in plain text:
+
+- [`/llms-small.txt`](/llms-small.txt) — abridged site contents
+- [`/llms-full.txt`](/llms-full.txt) — complete site content
+
+## About This Portal
+
+In reimagining the Algorand Developer Portal, we set out to address challenges from the past, cater to what developers expect today, and plan for how technical documentation will be used in the future. Our work has been guided by a set of key principles:
+
+1. **One-stop shop:** The portal should consolidate all of the resources developers need to build with Algorand technologies. If something cannot be found, it may as well not exist. Therefore, the portal should colocate documentation and examples for all of our tools, libraries, and languages under a single site. In some cases, content is directly imported from external repositories; in other cases, we aim to include links to a rich array of external resources, from community-maintained SDKs to third-party learning materials.
+2. **Correct and current:** The content of the documentation needs to accurately reflect the current state of the art of Algorand code and tools. The old portal did not always include the latest libraries, abstractions, and paths-of-least-resistance that are available. Also, this site no longer showcases examples using old or deprecated languages and libraries. Rather, you will learn how to apply various concepts using the latest versions of AlgoKit libraries, which we believe to be the happiest path for developers to follow.
+3. **[Diataxis](https://diataxis.fr/) framework:** These docs have been designed loosely following the Diataxis approach to technical documentation, which conceptualizes content along the axes of action vs. cognition and acquisition vs. application. The four quadrants which emerge from a plot of these axes are:
+   - **Tutorials**, for learning, such as in the Getting Started section
+   - **How-To Guides**, for accomplishing specific goals, such as the Running a Node section
+   - **Explanation**, for understanding concepts, in the Concepts section
+   - **Reference**, for finding information, in the Reference section
+
+This site is built using the [Starlight](https://starlight.astro.build/) documentation theme for [Astro](https://astro.build/), an industry-leading static site generation framework. The integrated AI bot is provided by [kapa.ai](https://www.kapa.ai/).
+
+## Feedback
+
+If you're reading this portal, then the portal is for you. Whether you are actively building applications on Algorand, performing formal research, or just following your curiosity, we appreciate your feedback. All our docs are open source under the Algorand Foundation organization on GitHub.
+
+<LinkCard
+  title='Submit Feedback'
+  href='https://github.com/algorandfoundation/devportal/issues/new/choose'
+  description='Report issues, suggest improvements, or contribute to the documentation.'
+/>

@@ -3,8 +3,8 @@
     "algorandfoundation/arcs@devportal": {
       "name": "ARC Standards",
       "repoId": "algorandfoundation/arcs@devportal",
-      "lastCommitSha": "4d13c733de1120ab1787541bd68bd267159bb928",
-      "lastImported": "2026-02-06T05:27:33.199Z",
+      "lastCommitSha": "7eea3b1e342b8a7ce9506f6fb5e56bf79a4f31cf",
+      "lastImported": "2026-02-15T09:21:16.909Z",
       "ref": "devportal"
     },
     "algorandfoundation/nodekit@main": {

@@ -177,7 +177,7 @@ export default defineConfig({
           label: 'Getting Started',
           collapsed: false,
           items: [
-            { label: 'Introduction', link: '/getting-started/introduction' },
+            { label: 'Portal Guide', link: '/getting-started/portal-guide' },
             {
               label: 'Tutorial: Your First Smart Contract',
               link: 'getting-started/algokit-quick-start',
