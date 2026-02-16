@@ -7,7 +7,7 @@ import {
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../../transforms/links.js';
-import logo from './logo.svg';
+import logo from './logo.svg?raw';
 
 export const config: LibraryImportConfig = {
   metadata: {

@@ -6,7 +6,6 @@
  * import from this file and don't need to know about the config structure.
  */
 
-import type { ImageMetadata } from 'astro';
 import type { LibraryImportConfig } from '../../imports/types';
 import type { VersionConfig } from '../../imports/types';
 import type { StarlightRouteData } from '@astrojs/starlight/route-data';
@@ -33,10 +32,10 @@ export interface LibraryConfig {
   languages: string[];
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
-  /** Logo SVG image metadata (header/cards) */
-  logo?: ImageMetadata;
-  /** Small icon SVG image metadata (compact views) */
-  icon?: ImageMetadata;
+  /** Raw SVG markup for inline rendering (import with ?raw) */
+  logo?: string;
+  /** Raw SVG markup for compact icon (import with ?raw) */
+  icon?: string;
   /** Sidebar tree for this library's docs (populated by sidebar configs) */
   sidebar: LibrarySidebarEntry[];
 }

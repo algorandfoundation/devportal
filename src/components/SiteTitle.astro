@@ -20,44 +20,29 @@ const activeLibrary = !isFooter ? getLibraryFromPath(currentPath) : undefined;
 
 const libraryLogo = activeLibrary?.logo;
 
-// Logo source priority: library logo > footer alt logo > site logo
-const darkLogoSrc = libraryLogo
-  ? libraryLogo.src
-  : isFooter
-    ? AltDarkLogo.src
-    : logos.dark.src;
-const lightLogoSrc = libraryLogo
-  ? libraryLogo.src
-  : isFooter
-    ? logos.dark.src
-    : logos.light?.src;
-
-// Use the library logo's own dimensions when active, otherwise fall back to
-// the site logo dimensions so the SVG isn't distorted.
-const darkWidth = libraryLogo?.width ?? logos.dark.width;
-const darkHeight = libraryLogo?.height ?? logos.dark.height;
-const lightWidth =
-  libraryLogo?.width ?? (isFooter ? logos.dark.width : logos.light?.width);
-const lightHeight =
-  libraryLogo?.height ?? (isFooter ? logos.dark.height : logos.light?.height);
+// Site logo sources (library logo renders separately as inline SVG)
+const darkLogoSrc = isFooter ? AltDarkLogo.src : logos.dark.src;
+const lightLogoSrc = isFooter ? logos.dark.src : logos.light?.src;
+const darkWidth = logos.dark.width;
+const darkHeight = logos.dark.height;
+const lightWidth = isFooter ? logos.dark.width : logos.light?.width;
+const lightHeight = isFooter ? logos.dark.height : logos.light?.height;
 
 const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 ---
 
 <a href={logoHref} class='site-title sl-flex'>
   {
-    config.logo && logos.dark && (
+    libraryLogo ? (
+      <span class='library-logo' role='img' aria-label={activeLibrary?.label} set:html={libraryLogo} />
+    ) : config.logo && logos.dark ? (
       <>
         <img
           class:list={{
             'light:sl-hidden print:hidden': !('src' in config.logo),
             'h-full!': isHomepage,
           }}
-          alt={
-            activeLibrary
-              ? activeLibrary.label
-              : `light theme ${config.logo.alt}`
-          }
+          alt={`light theme ${config.logo.alt}`}
           src={darkLogoSrc}
           width={darkWidth}
           height={darkHeight}
@@ -70,18 +55,14 @@ const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
                 'h-full!': isHomepage,
               },
             ]}
-            alt={
-              activeLibrary
-                ? activeLibrary.label
-                : `dark theme ${config.logo.alt}`
-            }
+            alt={`dark theme ${config.logo.alt}`}
             src={lightLogoSrc}
             width={lightWidth}
             height={lightHeight}
           />
         )}
       </>
-    )
+    ) : null
   }
   <span class:list={{ 'sr-only': config.logo?.replacesTitle }} translate='no'>
     {siteTitle}
@@ -104,5 +85,15 @@ const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
     max-width: 100%;
     object-fit: contain;
     object-position: 0 50%;
+  }
+  .library-logo {
+    display: flex;
+    align-items: center;
+    height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
+    line-height: 0;
+  }
+  .library-logo :global(svg) {
+    height: 100%;
+    width: auto;
   }
 </style>

@@ -22,13 +22,7 @@ const defaultVersion = lib.versions[0]?.slug ?? 'latest';
 <div class='library-link-card not-content'>
   {
     logo ? (
-      <img
-        src={logo.src}
-        alt=''
-        class='library-link-card-logo'
-        width={logo.width}
-        height={logo.height}
-      />
+      <span class='library-link-card-logo' role='img' aria-label={lib.label} set:html={logo} />
     ) : (
       <strong>{lib.label}</strong>
     )
@@ -67,11 +61,13 @@ const defaultVersion = lib.versions[0]?.slug ?? 'latest';
   }
 
   .library-link-card-logo {
+    display: block;
     height: 28px;
+    line-height: 0;
+  }
+  .library-link-card-logo :global(svg) {
+    height: 100%;
     width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    object-position: left center;
   }
 
   .library-link-card p {
