@@ -7,6 +7,8 @@ import SiteTitle from './SiteTitle.astro';
 import SocialIcons from './SocialIcons.astro';
 import ThemeSelect from './ThemeSelect.astro';
 import Default from '@astrojs/starlight/components/Header.astro';
+import HeaderMenu from './HeaderMenu.astro';
+import { getLibraryFromPath } from '../config/libraries';
 
 /**
  * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
@@ -15,6 +17,8 @@ const shouldRenderSearch =
   config.pagefind ||
   config.components.Search !== '@astrojs/starlight/components/Search.astro';
 const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
+const currentPath = Astro.url.pathname;
+const activeLibrary = getLibraryFromPath(currentPath);
 ---
 
 {
@@ -38,6 +42,26 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
         <LanguageSelect {...Astro.props} />
       </div>
     </div>
+  ) : activeLibrary ? (
+    <Fragment>
+      <script is:inline>document.documentElement.setAttribute('data-library-page', '');</script>
+      <div class='header library-header'>
+        <div class='library-title-area sl-flex'>
+          <HeaderMenu currentPath={currentPath} />
+          <SiteTitle />
+        </div>
+        <div class='sl-flex print:hidden items-center'>
+          {shouldRenderSearch && <Search {...Astro.props} />}
+        </div>
+        <div class='sl-hidden md:sl-flex print:hidden right-group'>
+          <div class='sl-flex social-icons'>
+            <SocialIcons {...Astro.props} />
+          </div>
+          <ThemeSelect />
+          <LanguageSelect {...Astro.props} />
+        </div>
+      </div>
+    </Fragment>
   ) : (
     <Default>
       <slot />
@@ -62,6 +86,20 @@ const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
   .social-icons {
     gap: 1rem;
     align-items: center;
+  }
+
+  .library-header {
+    display: flex;
+    gap: var(--sl-nav-gap);
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  .library-title-area {
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
   }
 
   @media (min-width: 50rem) {
