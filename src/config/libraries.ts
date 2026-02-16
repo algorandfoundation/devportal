@@ -81,7 +81,14 @@ function buildRegistry(configs: LibraryImportConfig[]): LibraryConfig[] {
   return configs.map(config => {
     // Aggregate versions across all variants (supports multiple variants
     // per language when different versions come from different refs).
-    const versions = config.variants.flatMap(v => v.versions);
+    // Deduplicate by slug — multiple variants often share the same version.
+    const allVersions = config.variants.flatMap(v => v.versions);
+    const seen = new Set<string>();
+    const versions = allVersions.filter(v => {
+      if (seen.has(v.slug)) return false;
+      seen.add(v.slug);
+      return true;
+    });
     const languages = [...new Set(config.variants.map(v => v.language))];
 
     return {
