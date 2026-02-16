@@ -59,7 +59,7 @@ export const config: LibraryImportConfig = {
           transforms: [convertH1ToTitle],
         },
       ],
-      enabled: true,
+      enabled: false,
       clear: true,
     },
   ],
@@ -76,9 +76,12 @@ export const legacyGuideConfig: ImportOptions = {
     {
       pattern: 'latest/guides/**/*',
       basePath: 'src/content/docs/algokit/subscriber/typescript',
+      pathMappings: {
+        'latest/guides/README.md': 'overview.md',
+      },
       transforms: [convertH1ToTitle],
     },
   ],
   clear: true,
-  enabled: true,
+  enabled: false,
 };

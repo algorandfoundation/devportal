@@ -83,6 +83,20 @@
       "lastCommitSha": "c1babecd1a695a320814efec0d6cb08771c77b4c",
       "lastImported": "2026-02-15T14:29:37.486Z",
       "ref": "docs-dist"
+    },
+    "algokit-utils-ts-legacy-guides": {
+      "name": "AlgoKit Utils TS Legacy Guides",
+      "repoId": "algokit-utils-ts-legacy-guides",
+      "lastCommitSha": "44369ef738406062d14080e5ca6b45871dcde5af",
+      "lastImported": "2026-02-16T14:19:09.960Z",
+      "ref": "chore/fix-docs"
+    },
+    "algokit-utils-py-legacy-guides": {
+      "name": "AlgoKit Utils Python Legacy Guides",
+      "repoId": "algokit-utils-py-legacy-guides",
+      "lastCommitSha": "6971b957fbe298facdda00dca158c0a7eb9690df",
+      "lastImported": "2026-02-16T14:19:15.548Z",
+      "ref": "main"
     }
   },
   "lastChecked": "2025-09-25T10:01:53.956Z"

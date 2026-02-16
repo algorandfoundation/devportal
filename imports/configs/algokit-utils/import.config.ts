@@ -1,3 +1,4 @@
+import type { ImportOptions } from '@larkiny/astro-github-loader';
 import type { LibraryImportConfig } from '../../types';
 import { generateStarlightLinkMappings } from '../../transforms/links.js';
 import {
@@ -194,4 +195,98 @@ export const config: LibraryImportConfig = {
       enabled: true,
     },
   ],
+};
+
+/** Separate import for legacy guide path at algokit/utils/typescript/ */
+export const legacyTsGuideConfig: ImportOptions = {
+  name: 'AlgoKit Utils TS Legacy Guides',
+  stateKey: 'algokit-utils-ts-legacy-guides',
+  owner: 'algorandfoundation',
+  repo: 'algokit-utils-ts',
+  ref: 'chore/fix-docs',
+  includes: [
+    {
+      pattern: 'docs/README.md',
+      basePath: 'src/content/docs/algokit/utils/typescript',
+      pathMappings: {
+        'docs/README.md': 'overview.md',
+      },
+      transforms: [
+        convertH1ToTitle,
+        conditionalTransform(
+          'docs/README.md',
+          removeH1,
+          createFrontmatterTransform({
+            frontmatter: {
+              title: 'AlgoKit Utils TypeScript',
+              sidebar: { label: 'Overview', order: 0 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+        ),
+      ],
+    },
+    {
+      pattern: 'docs/{capabilities/**/*.md,v7-migration.md,v8-migration.md}',
+      basePath: 'src/content/docs/algokit/utils/typescript',
+      pathMappings: {
+        'docs/capabilities/': '',
+      },
+      transforms: [convertH1ToTitle],
+    },
+  ],
+  linkTransform: {
+    stripPrefixes: ['src/content/docs'],
+    linkMappings: [...generateStarlightLinkMappings()],
+  },
+  clear: true,
+  enabled: true,
+};
+
+/** Separate import for legacy guide path at algokit/utils/python/ */
+export const legacyPyGuideConfig: ImportOptions = {
+  name: 'AlgoKit Utils Python Legacy Guides',
+  stateKey: 'algokit-utils-py-legacy-guides',
+  owner: 'algorandfoundation',
+  repo: 'algokit-utils-py',
+  ref: 'main',
+  includes: [
+    {
+      pattern: 'docs/markdown/index.md',
+      basePath: 'src/content/docs/algokit/utils/python',
+      pathMappings: {
+        'docs/markdown/index.md': 'overview.md',
+      },
+      transforms: [
+        convertH1ToTitle,
+        conditionalTransform(
+          'docs/markdown/index.md',
+          removeH1,
+          createFrontmatterTransform({
+            frontmatter: {
+              title: 'AlgoKit Utils Python',
+              sidebar: { label: 'Overview', order: 0 },
+            },
+            mode: 'merge',
+            preserveExisting: false,
+          }),
+        ),
+      ],
+    },
+    {
+      pattern: 'docs/markdown/{capabilities/**/*.md,v3-migration-guide.md}',
+      basePath: 'src/content/docs/algokit/utils/python',
+      pathMappings: {
+        'docs/markdown/capabilities/': '',
+        'docs/markdown/v3-migration-guide.md': 'v3-migration-guide.md',
+      },
+      transforms: [convertH1ToTitle],
+    },
+  ],
+  linkTransform: {
+    stripPrefixes: ['src/content/docs'],
+    linkMappings: [...generateStarlightLinkMappings()],
+  },
+  enabled: true,
 };

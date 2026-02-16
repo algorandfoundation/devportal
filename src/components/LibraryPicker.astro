@@ -330,8 +330,7 @@ for (const lib of libraries) {
 
   /* Library name label */
   .picker-item-label {
-    flex: 1;
-    min-width: 0;
+    white-space: nowrap;
     color: inherit;
   }
 
@@ -342,8 +341,9 @@ for (const lib of libraries) {
   /* Language variant links */
   .picker-variants {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     gap: 0.3rem;
-    flex-shrink: 0;
     margin-inline-start: auto;
   }
 </style>
