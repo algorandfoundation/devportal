@@ -1,18 +1,15 @@
-import type { StarlightUserConfig } from '@astrojs/starlight/types';
 import type { SidebarMetadata } from '../../types.js';
+import { buildSidebarEntries } from '../../sidebar.js';
 
 /**
- * Sidebar autogenerate entries for algokit-subscriber.
+ * Sidebar config for algokit-subscriber.
  *
- * Interim solution: hardcoded autogenerate groups for each variant/version.
+ * Interim solution: declarative variant list for autogenerate groups.
  * When the library ships its own Starlight sidebar config, replace this with
  * a direct import of that config.
  */
-export const sidebarEntries: NonNullable<StarlightUserConfig['sidebar']> = [
-  {
-    label: '_lib:algokit-subscriber:typescript:latest',
-    autogenerate: { directory: 'docs/algokit-subscriber/typescript/latest' },
-  },
-];
+export const sidebarEntries = buildSidebarEntries('algokit-subscriber', [
+  { language: 'typescript', version: 'latest' },
+]);
 
-export const sidebarMetadata: SidebarMetadata = { items: [] };
+export const sidebarMetadata: SidebarMetadata = { includes: [] };

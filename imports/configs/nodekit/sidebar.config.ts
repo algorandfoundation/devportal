@@ -1,18 +1,15 @@
-import type { StarlightUserConfig } from '@astrojs/starlight/types';
 import type { SidebarMetadata } from '../../types.js';
+import { buildSidebarEntries } from '../../sidebar.js';
 
 /**
- * Sidebar autogenerate entries for nodekit.
+ * Sidebar config for nodekit.
  *
- * Interim solution: hardcoded autogenerate groups for each variant/version.
+ * Interim solution: declarative variant list for autogenerate groups.
  * When the library ships its own Starlight sidebar config, replace this with
  * a direct import of that config.
  */
-export const sidebarEntries: NonNullable<StarlightUserConfig['sidebar']> = [
-  {
-    label: '_lib:nodekit:go:latest',
-    autogenerate: { directory: 'docs/nodekit/go/latest' },
-  },
-];
+export const sidebarEntries = buildSidebarEntries('nodekit', [
+  { language: 'go', version: 'latest' },
+]);
 
-export const sidebarMetadata: SidebarMetadata = { items: [] };
+export const sidebarMetadata: SidebarMetadata = { includes: [] };
