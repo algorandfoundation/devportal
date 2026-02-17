@@ -2,18 +2,18 @@
 title: types/app-deployer
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/app-deployer
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/app-deployer
 
 ## Table of contents
 
 ### Classes
 
-- [AppDeployer](/docs/algokit-utils/typescript/latest/api/classes/types_app_deployerappdeployer/)
+- [AppDeployer](/docs/algokit-utils/typescript/latest/api/classes/types_app_deployer.AppDeployer/)
 
 ### Interfaces
 
-- [AppLookup](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerapplookup/)
-- [AppMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerappmetadata/)
+- [AppLookup](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppLookup/)
+- [AppMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppMetadata/)
 
 ### Type Aliases
 
@@ -28,7 +28,7 @@ title: types/app-deployer
 
 ### AppDeployParams
 
-Ƭ **AppDeployParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/) & \{ `createParams`: [`AppCreateParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#appcreateparams) \| [`AppCreateMethodCall`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#appcreatemethodcall) ; `deleteParams`: [`DeployAppDeleteParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/#deployappdeleteparams) \| [`DeployAppDeleteMethodCall`](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/#deployappdeletemethodcall) ; `deployTimeParams?`: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/) ; `existingDeployments?`: [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerapplookup/) ; `ignoreCache?`: `boolean` ; `metadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/) ; `onSchemaBreak?`: `"replace"` \| `"fail"` \| `"append"` \| [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/enums/types_apponschemabreak/) ; `onUpdate?`: `"update"` \| `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/) ; `updateParams`: [`DeployAppUpdateParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/#deployappupdateparams) \| [`DeployAppUpdateMethodCall`](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/#deployappupdatemethodcall) }\>
+Ƭ **AppDeployParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/) & \{ `createParams`: [`AppCreateParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#appcreateparams) \| [`AppCreateMethodCall`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#appcreatemethodcall) ; `deleteParams`: [`DeployAppDeleteParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/#deployappdeleteparams) \| [`DeployAppDeleteMethodCall`](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/#deployappdeletemethodcall) ; `deployTimeParams?`: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/) ; `existingDeployments?`: [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppLookup/) ; `ignoreCache?`: `boolean` ; `metadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/) ; `onSchemaBreak?`: `"replace"` \| `"fail"` \| `"append"` \| [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnSchemaBreak/) ; `onUpdate?`: `"update"` \| `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/) ; `updateParams`: [`DeployAppUpdateParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/#deployappupdateparams) \| [`DeployAppUpdateMethodCall`](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/#deployappupdatemethodcall) }\>
 
 The parameters to idempotently deploy an app
 
@@ -40,7 +40,7 @@ The parameters to idempotently deploy an app
 
 ### AppDeployResult
 
-Ƭ **AppDeployResult**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<\{ `operationPerformed`: `"create"` } & `Omit`\<[`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerappmetadata/), `"appId"` \| `"appAddress"`\> & [`SendAppCreateTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#sendappcreatetransactionresult)\> \| [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<\{ `operationPerformed`: `"update"` } & [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerappmetadata/) & [`SendAppUpdateTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#sendappupdatetransactionresult)\> \| [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<\{ `operationPerformed`: `"replace"` } & `Omit`\<[`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerappmetadata/), `"appId"` \| `"appAddress"`\> & [`SendAppCreateTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#sendappcreatetransactionresult) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) }\> \| [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<\{ `operationPerformed`: `"nothing"` } & [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerappmetadata/)\>
+Ƭ **AppDeployResult**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<\{ `operationPerformed`: `"create"` } & `Omit`\<[`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppMetadata/), `"appId"` \| `"appAddress"`\> & [`SendAppCreateTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#sendappcreatetransactionresult)\> \| [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<\{ `operationPerformed`: `"update"` } & [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppMetadata/) & [`SendAppUpdateTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#sendappupdatetransactionresult)\> \| [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<\{ `operationPerformed`: `"replace"` } & `Omit`\<[`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppMetadata/), `"appId"` \| `"appAddress"`\> & [`SendAppCreateTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#sendappcreatetransactionresult) & \{ `deleteResult`: [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResult/) ; `deleteReturn?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) }\> \| [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<\{ `operationPerformed`: `"nothing"` } & [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppMetadata/)\>
 
 #### Defined in
 

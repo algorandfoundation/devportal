@@ -2,7 +2,7 @@
 title: BoxReference
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / BoxReference
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / BoxReference
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).BoxReference
 
@@ -16,8 +16,8 @@ A grouping of the app ID and name of the box in an Uint8Array
 
 ### Properties
 
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxreference/#appid)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxreference/#name)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxReference/#appid)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxReference/#name)
 
 ## Properties
 

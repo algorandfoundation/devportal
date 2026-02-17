@@ -2,7 +2,7 @@
 title: LogicErrorDetails
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/logic-error](/docs/algokit-utils/typescript/latest/api/modules/types_logic_error/) / LogicErrorDetails
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/logic-error](/docs/algokit-utils/typescript/latest/api/modules/types_logic_error/) / LogicErrorDetails
 
 [types/logic-error](/docs/algokit-utils/typescript/latest/api/modules/types_logic_error/).LogicErrorDetails
 
@@ -12,11 +12,11 @@ Details about a smart contract logic error
 
 ### Properties
 
-- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/#desc)
-- [msg](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/#msg)
-- [pc](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/#pc)
-- [traces](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/#traces)
-- [txId](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/#txid)
+- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/#desc)
+- [msg](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/#msg)
+- [pc](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/#pc)
+- [traces](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/#traces)
+- [txId](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/#txid)
 
 ## Properties
 

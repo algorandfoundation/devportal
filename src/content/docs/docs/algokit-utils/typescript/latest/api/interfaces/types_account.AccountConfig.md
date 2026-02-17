@@ -2,7 +2,7 @@
 title: AccountConfig
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/) / AccountConfig
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/) / AccountConfig
 
 [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/).AccountConfig
 
@@ -15,10 +15,10 @@ Config for an account config
 
 ### Properties
 
-- [accountMnemonic](/docs/algokit-utils/typescript/latest/api/interfaces/types_accountaccountconfig/#accountmnemonic)
-- [accountName](/docs/algokit-utils/typescript/latest/api/interfaces/types_accountaccountconfig/#accountname)
-- [senderAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_accountaccountconfig/#senderaddress)
-- [senderMnemonic](/docs/algokit-utils/typescript/latest/api/interfaces/types_accountaccountconfig/#sendermnemonic)
+- [accountMnemonic](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.AccountConfig/#accountmnemonic)
+- [accountName](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.AccountConfig/#accountname)
+- [senderAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.AccountConfig/#senderaddress)
+- [senderMnemonic](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.AccountConfig/#sendermnemonic)
 
 ## Properties
 

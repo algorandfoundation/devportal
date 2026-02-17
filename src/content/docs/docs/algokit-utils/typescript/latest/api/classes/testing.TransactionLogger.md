@@ -2,7 +2,7 @@
 title: TransactionLogger
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [testing](/docs/algokit-utils/typescript/latest/api/modules/testing/) / TransactionLogger
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [testing](/docs/algokit-utils/typescript/latest/api/modules/testing/) / TransactionLogger
 
 [testing](/docs/algokit-utils/typescript/latest/api/modules/testing/).TransactionLogger
 
@@ -13,34 +13,34 @@ Useful for automated tests.
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#constructor)
 
 ### Properties
 
-- [\_latestLastValidRound](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#_latestlastvalidround)
-- [\_sentTransactionIds](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#_senttransactionids)
+- [\_latestLastValidRound](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#_latestlastvalidround)
+- [\_sentTransactionIds](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#_senttransactionids)
 
 ### Accessors
 
-- [sentTransactionIds](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#senttransactionids)
+- [sentTransactionIds](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#senttransactionids)
 
 ### Methods
 
-- [\_pushTxn](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#_pushtxn)
-- [capture](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#capture)
-- [clear](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#clear)
-- [logRawTransaction](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#lograwtransaction)
-- [waitForIndexer](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/#waitforindexer)
+- [\_pushTxn](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#_pushtxn)
+- [capture](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#capture)
+- [clear](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#clear)
+- [logRawTransaction](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#lograwtransaction)
+- [waitForIndexer](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/#waitforindexer)
 
 ## Constructors
 
 ### constructor
 
-• **new TransactionLogger**(): [`TransactionLogger`](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/)
+• **new TransactionLogger**(): [`TransactionLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/)
 
 #### Returns
 
-[`TransactionLogger`](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/)
+[`TransactionLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/)
 
 ## Properties
 

@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / match
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / match
 
 > **match**\<`T`\>(`subject`, `test`): `boolean`
 
@@ -36,7 +36,7 @@ An object or tuple to be tested
 
 ### test
 
-[`MatchTest`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/matchtest/)\<`T`\>
+[`MatchTest`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/MatchTest/)\<`T`\>
 
 An object containing one or more tests to be applied to the subject
 

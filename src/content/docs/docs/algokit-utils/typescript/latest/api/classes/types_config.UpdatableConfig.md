@@ -2,7 +2,7 @@
 title: UpdatableConfig
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/config](/docs/algokit-utils/typescript/latest/api/modules/types_config/) / UpdatableConfig
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/config](/docs/algokit-utils/typescript/latest/api/modules/types_config/) / UpdatableConfig
 
 [types/config](/docs/algokit-utils/typescript/latest/api/modules/types_config/).UpdatableConfig
 
@@ -10,44 +10,44 @@ Updatable AlgoKit config
 
 ## Implements
 
-- `Readonly`\<[`Config`](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/)\>
+- `Readonly`\<[`Config`](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/)\>
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#constructor)
 
 ### Properties
 
-- [config](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#config)
+- [config](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#config)
 
 ### Accessors
 
-- [debug](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#debug)
-- [events](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#events)
-- [logger](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#logger)
-- [maxSearchDepth](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#maxsearchdepth)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#populateappcallresources)
-- [projectRoot](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#projectroot)
-- [traceAll](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#traceall)
-- [traceBufferSizeMb](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#tracebuffersizemb)
+- [debug](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#debug)
+- [events](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#events)
+- [logger](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#logger)
+- [maxSearchDepth](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#maxsearchdepth)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#populateappcallresources)
+- [projectRoot](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#projectroot)
+- [traceAll](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#traceall)
+- [traceBufferSizeMb](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#tracebuffersizemb)
 
 ### Methods
 
-- [configure](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#configure)
-- [getLogger](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#getlogger)
-- [withDebug](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/#withdebug)
+- [configure](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#configure)
+- [getLogger](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#getlogger)
+- [withDebug](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/#withdebug)
 
 ## Constructors
 
 ### constructor
 
-• **new UpdatableConfig**(): [`UpdatableConfig`](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/)
+• **new UpdatableConfig**(): [`UpdatableConfig`](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/)
 
 #### Returns
 
-[`UpdatableConfig`](/docs/algokit-utils/typescript/latest/api/classes/types_configupdatableconfig/)
+[`UpdatableConfig`](/docs/algokit-utils/typescript/latest/api/classes/types_config.UpdatableConfig/)
 
 #### Defined in
 
@@ -57,7 +57,7 @@ Updatable AlgoKit config
 
 ### config
 
-• `Private` **config**: [`Config`](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/)
+• `Private` **config**: [`Config`](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/)
 
 #### Defined in
 
@@ -85,11 +85,11 @@ Readonly.debug
 
 ### events
 
-• `get` **events**(): [`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitterasynceventemitter/)
+• `get` **events**(): [`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitter.AsyncEventEmitter/)
 
 #### Returns
 
-[`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitterasynceventemitter/)
+[`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitter.AsyncEventEmitter/)
 
 #### Implementation of
 
@@ -217,9 +217,9 @@ Update the AlgoKit configuration with your own configuration settings
 
 #### Parameters
 
-| Name        | Type                                                                                              | Description                           |
-| :---------- | :------------------------------------------------------------------------------------------------ | :------------------------------------ |
-| `newConfig` | `Partial`\<[`Config`](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/)\> | Partial or complete config to replace |
+| Name        | Type                                                                                               | Description                           |
+| :---------- | :------------------------------------------------------------------------------------------------- | :------------------------------------ |
+| `newConfig` | `Partial`\<[`Config`](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/)\> | Partial or complete config to replace |
 
 #### Returns
 

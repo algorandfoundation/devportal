@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/readme/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/readme/) / KeyRegistrationTxn
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/README/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/README/) / KeyRegistrationTxn
 
 Defined in: [gtxn.ts:605](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L605)
 
@@ -101,7 +101,7 @@ Any data up to 1024 bytes
 
 ### rekeyTo
 
-> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [gtxn.ts:132](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L132)
 
@@ -121,7 +121,7 @@ Defined in: [gtxn.ts:140](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ### sender
 
-> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [gtxn.ts:87](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L87)
 
@@ -151,7 +151,7 @@ The computed ID for this transaction. 32 bytes.
 
 ### type
 
-> `readonly` **type**: [`KeyRegistration`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/#keyregistration)
+> `readonly` **type**: [`KeyRegistration`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/#keyregistration)
 
 Defined in: [gtxn.ts:119](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L119)
 

@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/readme/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/readme/) / PaymentInnerTxn
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/README/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/README/) / PaymentInnerTxn
 
 Defined in: [itxn.ts:13](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L13)
 
@@ -30,7 +30,7 @@ microalgos
 
 ### closeRemainderTo
 
-> `readonly` **closeRemainderTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **closeRemainderTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [itxn.ts:76](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L76)
 
@@ -111,7 +111,7 @@ Any data up to 1024 bytes
 
 ### receiver
 
-> `readonly` **receiver**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **receiver**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [itxn.ts:68](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L68)
 
@@ -121,7 +121,7 @@ Defined in: [itxn.ts:68](https://github.com/algorandfoundation/puya-ts/blob/main
 
 ### rekeyTo
 
-> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [itxn.ts:64](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L64)
 
@@ -131,7 +131,7 @@ Defined in: [itxn.ts:64](https://github.com/algorandfoundation/puya-ts/blob/main
 
 ### sender
 
-> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [itxn.ts:19](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L19)
 
@@ -151,7 +151,7 @@ The computed ID for this transaction. 32 bytes.
 
 ### type
 
-> `readonly` **type**: [`Payment`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/#payment)
+> `readonly` **type**: [`Payment`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/#payment)
 
 Defined in: [itxn.ts:51](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L51)
 

@@ -2,7 +2,7 @@
 title: SourceMapExport
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / SourceMapExport
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / SourceMapExport
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).SourceMapExport
 
@@ -10,10 +10,10 @@ title: SourceMapExport
 
 ### Properties
 
-- [mappings](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientsourcemapexport/#mappings)
-- [names](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientsourcemapexport/#names)
-- [sources](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientsourcemapexport/#sources)
-- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientsourcemapexport/#version)
+- [mappings](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.SourceMapExport/#mappings)
+- [names](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.SourceMapExport/#names)
+- [sources](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.SourceMapExport/#sources)
+- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.SourceMapExport/#version)
 
 ## Properties
 

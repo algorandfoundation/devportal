@@ -2,7 +2,7 @@
 title: AppClientDeployCoreParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientDeployCoreParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientDeployCoreParams
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppClientDeployCoreParams
 
@@ -12,19 +12,19 @@ Core parameters to pass into ApplicationClient.deploy
 
 - **`AppClientDeployCoreParams`**
 
-  ↳ [`AppClientDeployParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/)
+  ↳ [`AppClientDeployParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/)
 
 ## Table of contents
 
 ### Properties
 
-- [allowDelete](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#allowdelete)
-- [allowUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#allowupdate)
-- [onSchemaBreak](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#onschemabreak)
-- [onUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#onupdate)
-- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#sendparams)
-- [sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#sender)
-- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#version)
+- [allowDelete](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#allowdelete)
+- [allowUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#allowupdate)
+- [onSchemaBreak](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#onschemabreak)
+- [onUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#onupdate)
+- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#sendparams)
+- [sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#sender)
+- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#version)
 
 ## Properties
 
@@ -56,7 +56,7 @@ If this is not specified then it will automatically be determined based on the A
 
 ### onSchemaBreak
 
-• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/enums/types_apponschemabreak/) \| `"replace"` \| `"fail"` \| `"append"`
+• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnSchemaBreak/) \| `"replace"` \| `"fail"` \| `"append"`
 
 What action to perform if a schema break is detected
 
@@ -68,7 +68,7 @@ What action to perform if a schema break is detected
 
 ### onUpdate
 
-• `Optional` **onUpdate**: `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/) \| `"update"`
+• `Optional` **onUpdate**: `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/) \| `"update"`
 
 What action to perform if a TEAL update is detected
 
@@ -80,7 +80,7 @@ What action to perform if a TEAL update is detected
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/), `"skipSending"` \| `"skipWaiting"`\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/), `"skipSending"` \| `"skipWaiting"`\>
 
 Parameters to control transaction sending
 

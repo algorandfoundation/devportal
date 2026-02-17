@@ -2,7 +2,7 @@
 title: AlgoConfig
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/) / AlgoConfig
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/) / AlgoConfig
 
 [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/).AlgoConfig
 
@@ -12,15 +12,15 @@ Configuration for algod, indexer and kmd clients.
 
 ### Properties
 
-- [algodConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/#algodconfig)
-- [indexerConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/#indexerconfig)
-- [kmdConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/#kmdconfig)
+- [algodConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/#algodconfig)
+- [indexerConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/#indexerconfig)
+- [kmdConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/#kmdconfig)
 
 ## Properties
 
 ### algodConfig
 
-• **algodConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+• **algodConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Algod client configuration
 
@@ -32,7 +32,7 @@ Algod client configuration
 
 ### indexerConfig
 
-• `Optional` **indexerConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+• `Optional` **indexerConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Indexer client configuration
 
@@ -44,7 +44,7 @@ Indexer client configuration
 
 ### kmdConfig
 
-• `Optional` **kmdConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+• `Optional` **kmdConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Kmd configuration
 

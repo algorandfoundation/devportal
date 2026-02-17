@@ -2,7 +2,7 @@
 title: AppSources
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / AppSources
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / AppSources
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).AppSources
 
@@ -12,8 +12,8 @@ The TEAL source of a contract
 
 ### Properties
 
-- [approval](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappsources/#approval)
-- [clear](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappsources/#clear)
+- [approval](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSources/#approval)
+- [clear](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSources/#clear)
 
 ## Properties
 

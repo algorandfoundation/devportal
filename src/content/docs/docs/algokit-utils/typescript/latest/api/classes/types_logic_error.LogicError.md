@@ -2,7 +2,7 @@
 title: LogicError
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/logic-error](/docs/algokit-utils/typescript/latest/api/modules/types_logic_error/) / LogicError
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/logic-error](/docs/algokit-utils/typescript/latest/api/modules/types_logic_error/) / LogicError
 
 [types/logic-error](/docs/algokit-utils/typescript/latest/api/modules/types_logic_error/).LogicError
 
@@ -18,45 +18,45 @@ Wraps key functionality around processing logic errors
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#constructor)
 
 ### Properties
 
-- [cause](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#cause)
-- [led](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#led)
-- [lines](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#lines)
-- [message](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#message)
-- [name](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#name)
-- [program](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#program)
-- [stack](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#stack)
-- [teal_line](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#teal_line)
-- [prepareStackTrace](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#preparestacktrace)
-- [stackTraceLimit](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#stacktracelimit)
+- [cause](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#cause)
+- [led](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#led)
+- [lines](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#lines)
+- [message](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#message)
+- [name](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#name)
+- [program](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#program)
+- [stack](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#stack)
+- [teal_line](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#teal_line)
+- [prepareStackTrace](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#preparestacktrace)
+- [stackTraceLimit](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#stacktracelimit)
 
 ### Methods
 
-- [captureStackTrace](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#capturestacktrace)
-- [parseLogicError](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/#parselogicerror)
+- [captureStackTrace](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#capturestacktrace)
+- [parseLogicError](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/#parselogicerror)
 
 ## Constructors
 
 ### constructor
 
-• **new LogicError**(`errorDetails`, `program`, `getLineForPc`): [`LogicError`](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/)
+• **new LogicError**(`errorDetails`, `program`, `getLineForPc`): [`LogicError`](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/)
 
 Create a new logic error object.
 
 #### Parameters
 
-| Name           | Type                                                                                                            | Description                            |
-| :------------- | :-------------------------------------------------------------------------------------------------------------- | :------------------------------------- |
-| `errorDetails` | [`LogicErrorDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/) | The details of the logic error         |
-| `program`      | `string`[]                                                                                                      | The TEAL source code, split by line    |
-| `getLineForPc` | (`pc`: `number`) => `undefined` \| `number`                                                                     | The source map of the TEAL source code |
+| Name           | Type                                                                                                             | Description                            |
+| :------------- | :--------------------------------------------------------------------------------------------------------------- | :------------------------------------- |
+| `errorDetails` | [`LogicErrorDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/) | The details of the logic error         |
+| `program`      | `string`[]                                                                                                       | The TEAL source code, split by line    |
+| `getLineForPc` | (`pc`: `number`) => `undefined` \| `number`                                                                      | The source map of the TEAL source code |
 
 #### Returns
 
-[`LogicError`](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/)
+[`LogicError`](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/)
 
 #### Overrides
 
@@ -84,7 +84,7 @@ node_modules/typescript/lib/lib.es2022.error.d.ts:24
 
 ### led
 
-• **led**: [`LogicErrorDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/)
+• **led**: [`LogicErrorDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/)
 
 #### Defined in
 
@@ -242,7 +242,7 @@ node_modules/@types/node/globals.d.ts:21
 
 ### parseLogicError
 
-▸ **parseLogicError**(`error`): `undefined` \| [`LogicErrorDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/)
+▸ **parseLogicError**(`error`): `undefined` \| [`LogicErrorDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/)
 
 Takes an error message and parses out the details of any logic errors in there.
 
@@ -254,7 +254,7 @@ Takes an error message and parses out the details of any logic errors in there.
 
 #### Returns
 
-`undefined` \| [`LogicErrorDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/)
+`undefined` \| [`LogicErrorDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/)
 
 The logic error details if any, or undefined
 

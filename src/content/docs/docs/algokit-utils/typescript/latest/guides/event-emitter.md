@@ -6,7 +6,7 @@ The Event Emitter is a capability provided by AlgoKit Utils that allows for asyn
 
 ## `AsyncEventEmitter`
 
-The [`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitterasynceventemitter/) is a class that manages asynchronous event emission and subscription.
+The [`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitter.AsyncEventEmitter/) is a class that manages asynchronous event emission and subscription.
 
 To use the `AsyncEventEmitter`, you can import it directly:
 

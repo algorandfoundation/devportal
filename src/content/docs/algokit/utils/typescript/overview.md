@@ -111,7 +111,7 @@ If you want to extend or pass around any of the types the various functions take
 import {<type>} from '@algorandfoundation/types/<module>'
 ```
 
-Where `<type>` would be replaced with the type and `<module>` would be replaced with the module. You can use intellisense to discover the modules and types in your favourite IDE, or you can explore the [types modules in the reference documentation](/docs/algokit-utils/typescript/latest/api/#modules).
+Where `<type>` would be replaced with the type and `<module>` would be replaced with the module. You can use intellisense to discover the modules and types in your favourite IDE, or you can explore the [types modules in the reference documentation](/docs/algokit-utils/typescript/latest/api/README/#modules).
 
 # Config and logging
 
@@ -187,4 +187,4 @@ The library helps you interact with and develop against the Algorand blockchain 
 
 # Reference documentation
 
-We have [auto-generated reference documentation for the code](/docs/algokit-utils/typescript/latest/api/).
+We have [auto-generated reference documentation for the code](/docs/algokit-utils/typescript/latest/api/README/).

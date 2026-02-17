@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / CompileLogicSigOptions
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / CompileLogicSigOptions
 
 > **CompileLogicSigOptions** = `object`
 
@@ -22,7 +22,7 @@ Options for compiling a logic signature
 
 ### templateVars?
 
-> `optional` **templateVars**: `Record`\<`string`, [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/deliberateany/)\>
+> `optional` **templateVars**: `Record`\<`string`, [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/DeliberateAny/)\>
 
 Defined in: [compiled.ts:95](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L95)
 

@@ -2,7 +2,7 @@
 title: AppClientDeployParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientDeployParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientDeployParams
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppClientDeployParams
 
@@ -10,9 +10,9 @@ Parameters to pass into ApplicationClient.deploy
 
 ## Hierarchy
 
-- [`AppClientDeployCoreParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/)
+- [`AppClientDeployCoreParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/)
 
-- [`AppClientDeployCallInterfaceParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/)
+- [`AppClientDeployCallInterfaceParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/)
 
   ↳ **`AppClientDeployParams`**
 
@@ -20,19 +20,19 @@ Parameters to pass into ApplicationClient.deploy
 
 ### Properties
 
-- [allowDelete](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#allowdelete)
-- [allowUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#allowupdate)
-- [createArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#createargs)
-- [createOnCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#createoncompleteaction)
-- [deleteArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#deleteargs)
-- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#deploytimeparams)
-- [onSchemaBreak](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#onschemabreak)
-- [onUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#onupdate)
-- [schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#schema)
-- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#sendparams)
-- [sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#sender)
-- [updateArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#updateargs)
-- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/#version)
+- [allowDelete](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#allowdelete)
+- [allowUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#allowupdate)
+- [createArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#createargs)
+- [createOnCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#createoncompleteaction)
+- [deleteArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#deleteargs)
+- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#deploytimeparams)
+- [onSchemaBreak](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#onschemabreak)
+- [onUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#onupdate)
+- [schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#schema)
+- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#sendparams)
+- [sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#sender)
+- [updateArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#updateargs)
+- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/#version)
 
 ## Properties
 
@@ -45,7 +45,7 @@ If this is not specified then it will automatically be determined based on the A
 
 #### Inherited from
 
-[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/).[allowDelete](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#allowdelete)
+[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/).[allowDelete](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#allowdelete)
 
 #### Defined in
 
@@ -62,7 +62,7 @@ If this is not specified then it will automatically be determined based on the A
 
 #### Inherited from
 
-[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/).[allowUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#allowupdate)
+[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/).[allowUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#allowupdate)
 
 #### Defined in
 
@@ -78,7 +78,7 @@ Any args to pass to any create transaction that is issued as part of deployment
 
 #### Inherited from
 
-[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/).[createArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#createargs)
+[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/).[createArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#createargs)
 
 #### Defined in
 
@@ -94,7 +94,7 @@ Override the on-completion action for the create call; defaults to NoOp
 
 #### Inherited from
 
-[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/).[createOnCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#createoncompleteaction)
+[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/).[createOnCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#createoncompleteaction)
 
 #### Defined in
 
@@ -110,7 +110,7 @@ Any args to pass to any delete transaction that is issued as part of deployment
 
 #### Inherited from
 
-[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/).[deleteArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#deleteargs)
+[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/).[deleteArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#deleteargs)
 
 #### Defined in
 
@@ -120,13 +120,13 @@ Any args to pass to any delete transaction that is issued as part of deployment
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)
 
 Any deploy-time parameters to replace in the TEAL code
 
 #### Inherited from
 
-[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/).[deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#deploytimeparams)
+[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/).[deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#deploytimeparams)
 
 #### Defined in
 
@@ -136,13 +136,13 @@ Any deploy-time parameters to replace in the TEAL code
 
 ### onSchemaBreak
 
-• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/enums/types_apponschemabreak/) \| `"replace"` \| `"fail"` \| `"append"`
+• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnSchemaBreak/) \| `"replace"` \| `"fail"` \| `"append"`
 
 What action to perform if a schema break is detected
 
 #### Inherited from
 
-[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/).[onSchemaBreak](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#onschemabreak)
+[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/).[onSchemaBreak](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#onschemabreak)
 
 #### Defined in
 
@@ -152,13 +152,13 @@ What action to perform if a schema break is detected
 
 ### onUpdate
 
-• `Optional` **onUpdate**: `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/) \| `"update"`
+• `Optional` **onUpdate**: `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/) \| `"update"`
 
 What action to perform if a TEAL update is detected
 
 #### Inherited from
 
-[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/).[onUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#onupdate)
+[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/).[onUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#onupdate)
 
 #### Defined in
 
@@ -168,7 +168,7 @@ What action to perform if a TEAL update is detected
 
 ### schema
 
-• `Optional` **schema**: `Partial`\<[`AppStorageSchema`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/)\>
+• `Optional` **schema**: `Partial`\<[`AppStorageSchema`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/)\>
 
 Any overrides for the storage schema to request for the created app; by default the schema indicated by the app spec is used.
 
@@ -180,13 +180,13 @@ Any overrides for the storage schema to request for the created app; by default 
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/), `"skipSending"` \| `"skipWaiting"`\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/), `"skipSending"` \| `"skipWaiting"`\>
 
 Parameters to control transaction sending
 
 #### Inherited from
 
-[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/).[sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#sendparams)
+[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/).[sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#sendparams)
 
 #### Defined in
 
@@ -202,7 +202,7 @@ The optional sender to send the transaction from, will use the application clien
 
 #### Inherited from
 
-[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/).[sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#sender)
+[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/).[sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#sender)
 
 #### Defined in
 
@@ -218,7 +218,7 @@ Any args to pass to any update transaction that is issued as part of deployment
 
 #### Inherited from
 
-[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/).[updateArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#updateargs)
+[AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/).[updateArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#updateargs)
 
 #### Defined in
 
@@ -234,7 +234,7 @@ The version of the contract, uses "1.0" by default
 
 #### Inherited from
 
-[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/).[version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/#version)
+[AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/).[version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/#version)
 
 #### Defined in
 

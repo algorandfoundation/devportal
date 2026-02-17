@@ -2,23 +2,23 @@
 title: types/app-arc56
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/app-arc56
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/app-arc56
 
 ## Table of contents
 
 ### Classes
 
-- [Arc56Method](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/)
+- [Arc56Method](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/)
 
 ### Interfaces
 
-- [Arc56Contract](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/)
-- [Event](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56event/)
-- [Method](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/)
-- [ProgramSourceInfo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56programsourceinfo/)
-- [StorageKey](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/)
-- [StorageMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/)
-- [StructField](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)
+- [Arc56Contract](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/)
+- [Event](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Event/)
+- [Method](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/)
+- [ProgramSourceInfo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.ProgramSourceInfo/)
+- [StorageKey](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageKey/)
+- [StorageMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageMap/)
+- [StructField](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)
 
 ### Type Aliases
 
@@ -122,7 +122,7 @@ A 64-bit unsigned integer
 
 ### Arc56MethodArg
 
-Ƭ **Arc56MethodArg**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/)[`"args"`][`number`], `"type"`\> & \{ `type`: `algosdk.ABIArgumentType` }\>
+Ƭ **Arc56MethodArg**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/)[`"args"`][`number`], `"type"`\> & \{ `type`: `algosdk.ABIArgumentType` }\>
 
 Type to describe an argument within an `Arc56Method`.
 
@@ -134,7 +134,7 @@ Type to describe an argument within an `Arc56Method`.
 
 ### Arc56MethodReturnType
 
-Ƭ **Arc56MethodReturnType**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/)[``"returns"``], `"type"`\> & \{ `type`: `algosdk.ABIReturnType` }\>
+Ƭ **Arc56MethodReturnType**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/)[``"returns"``], `"type"`\> & \{ `type`: `algosdk.ABIReturnType` }\>
 
 Type to describe a return type within an `Arc56Method`.
 
@@ -165,11 +165,11 @@ for the given raw Algorand value given an ARC-56 type and defined ARC-56 structs
 
 #### Parameters
 
-| Name      | Type                                                                                                                      | Description                                                  |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------- |
-| `value`   | `number` \| `bigint` \| `Uint8Array`                                                                                      | The raw Algorand value (bytes or uint64)                     |
-| `type`    | `string`                                                                                                                  | The ARC-56 type - either an ABI Type string or a struct name |
-| `structs` | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]\> | The defined ARC-56 structs                                   |
+| Name      | Type                                                                                                                       | Description                                                  |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------- |
+| `value`   | `number` \| `bigint` \| `Uint8Array`                                                                                       | The raw Algorand value (bytes or uint64)                     |
+| `type`    | `string`                                                                                                                   | The ARC-56 type - either an ABI Type string or a struct name |
+| `structs` | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]\> | The defined ARC-56 structs                                   |
 
 #### Returns
 
@@ -191,11 +191,11 @@ Returns the ABI-encoded value for the given value.
 
 #### Parameters
 
-| Name      | Type                                                                                                                      | Description                                                                                                       |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------- |
-| `value`   | `ABIValue` \| [`ABIStruct`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#abistruct)                 | The value to encode either already in encoded binary form (`Uint8Array`), a decoded ABI value or an ARC-56 struct |
-| `type`    | `string`                                                                                                                  | The ARC-56 type - either an ABI Type string or a struct name                                                      |
-| `structs` | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]\> | The defined ARC-56 structs                                                                                        |
+| Name      | Type                                                                                                                       | Description                                                                                                       |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------- |
+| `value`   | `ABIValue` \| [`ABIStruct`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#abistruct)                  | The value to encode either already in encoded binary form (`Uint8Array`), a decoded ABI value or an ARC-56 struct |
+| `type`    | `string`                                                                                                                   | The ARC-56 type - either an ABI Type string or a struct name                                                      |
+| `structs` | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]\> | The defined ARC-56 structs                                                                                        |
 
 #### Returns
 
@@ -223,11 +223,11 @@ Converts a decoded ABI tuple as a struct.
 
 #### Parameters
 
-| Name              | Type                                                                                                                      | Description                               |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------- |
-| `decodedABITuple` | `ABIValue`[]                                                                                                              | The decoded ABI tuple value               |
-| `structFields`    | [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]                       | The struct fields from an ARC-56 app spec |
-| `structs`         | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]\> | -                                         |
+| Name              | Type                                                                                                                       | Description                               |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------- |
+| `decodedABITuple` | `ABIValue`[]                                                                                                               | The decoded ABI tuple value               |
+| `structFields`    | [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]                       | The struct fields from an ARC-56 app spec |
+| `structs`         | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]\> | -                                         |
 
 #### Returns
 
@@ -249,11 +249,11 @@ Converts an ARC-56 struct as an ABI tuple.
 
 #### Parameters
 
-| Name           | Type                                                                                                                      | Description                               |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------- |
-| `struct`       | [`ABIStruct`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#abistruct)                               | The struct to convert                     |
-| `structFields` | [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]                       | The struct fields from an ARC-56 app spec |
-| `structs`      | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]\> | -                                         |
+| Name           | Type                                                                                                                       | Description                               |
+| :------------- | :------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------- |
+| `struct`       | [`ABIStruct`](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/#abistruct)                                | The struct to convert                     |
+| `structFields` | [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]                       | The struct fields from an ARC-56 app spec |
+| `structs`      | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]\> | -                                         |
 
 #### Returns
 
@@ -275,10 +275,10 @@ Returns the `ABITupleType` for the given ARC-56 struct definition
 
 #### Parameters
 
-| Name      | Type                                                                                                                      | Description                  |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------ | :--------------------------- |
-| `struct`  | [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]                       | The ARC-56 struct definition |
-| `structs` | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]\> | -                            |
+| Name      | Type                                                                                                                       | Description                  |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------- | :--------------------------- |
+| `struct`  | [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]                       | The ARC-56 struct definition |
+| `structs` | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]\> | -                            |
 
 #### Returns
 
@@ -294,20 +294,20 @@ The `ABITupleType`
 
 ### getArc56Method
 
-▸ **getArc56Method**(`methodNameOrSignature`, `appSpec`): [`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/)
+▸ **getArc56Method**(`methodNameOrSignature`, `appSpec`): [`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/)
 
 Returns the ARC-56 ABI method object for a given method name or signature and ARC-56 app spec.
 
 #### Parameters
 
-| Name                    | Type                                                                                                  | Description                                                                                                                      |
-| :---------------------- | :---------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| `methodNameOrSignature` | `string`                                                                                              | The method name or method signature to call if an ABI call is being emitted. e.g. `my_method` or `my_method(unit64,string)bytes` |
-| `appSpec`               | [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/) | The app spec for the app                                                                                                         |
+| Name                    | Type                                                                                                   | Description                                                                                                                      |
+| :---------------------- | :----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
+| `methodNameOrSignature` | `string`                                                                                               | The method name or method signature to call if an ABI call is being emitted. e.g. `my_method` or `my_method(unit64,string)bytes` |
+| `appSpec`               | [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/) | The app spec for the app                                                                                                         |
 
 #### Returns
 
-[`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/)
+[`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/)
 
 The `Arc56Method`
 
@@ -331,11 +331,11 @@ Checks for decode errors on the AppCallTransactionResult and maps the return val
 
 #### Parameters
 
-| Name          | Type                                                                                                                                                                                      | Description                         |
-| :------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------- |
-| `returnValue` | `undefined` \| [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)                                                                                      | The smart contract response         |
-| `method`      | [`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/) \| [`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/) | The method that was called          |
-| `structs`     | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]\>                                                                 | The struct fields from the app spec |
+| Name          | Type                                                                                                                                                                                        | Description                         |
+| :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------------- |
+| `returnValue` | `undefined` \| [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)                                                                                        | The smart contract response         |
+| `method`      | [`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/) \| [`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/) | The method that was called          |
+| `structs`     | `Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]\>                                                                  | The struct fields from the app spec |
 
 #### Returns
 

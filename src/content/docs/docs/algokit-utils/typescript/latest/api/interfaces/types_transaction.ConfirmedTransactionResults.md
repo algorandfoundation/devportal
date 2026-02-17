@@ -2,7 +2,7 @@
 title: ConfirmedTransactionResults
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / ConfirmedTransactionResults
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / ConfirmedTransactionResults
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).ConfirmedTransactionResults
 
@@ -10,9 +10,9 @@ The result of sending and confirming one or more transactions, but where there i
 
 ## Hierarchy
 
-- [`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/)
+- [`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/)
 
-- [`SendTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/)
+- [`SendTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/)
 
   ↳ **`ConfirmedTransactionResults`**
 
@@ -20,10 +20,10 @@ The result of sending and confirming one or more transactions, but where there i
 
 ### Properties
 
-- [confirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresults/#confirmation)
-- [confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresults/#confirmations)
-- [transaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresults/#transaction)
-- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresults/#transactions)
+- [confirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResults/#confirmation)
+- [confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResults/#confirmations)
+- [transaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResults/#transaction)
+- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResults/#transactions)
 
 ## Properties
 
@@ -35,7 +35,7 @@ The response from sending and waiting for the primary transaction
 
 #### Overrides
 
-[SendTransactionResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/).[confirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/#confirmation)
+[SendTransactionResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/).[confirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/#confirmation)
 
 #### Defined in
 
@@ -51,7 +51,7 @@ The response from sending and waiting for the transactions
 
 #### Overrides
 
-[SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/).[confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/#confirmations)
+[SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/).[confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/#confirmations)
 
 #### Defined in
 
@@ -67,7 +67,7 @@ The transaction
 
 #### Inherited from
 
-[SendTransactionResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/).[transaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/#transaction)
+[SendTransactionResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/).[transaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/#transaction)
 
 #### Defined in
 
@@ -83,7 +83,7 @@ The transactions that have been prepared and/or sent
 
 #### Inherited from
 
-[SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/).[transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/#transactions)
+[SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/).[transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/#transactions)
 
 #### Defined in
 

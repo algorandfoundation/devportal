@@ -2,7 +2,7 @@
 title: AppCallParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppCallParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppCallParams
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppCallParams
 
@@ -10,7 +10,7 @@ Parameters representing a call to an app.
 
 ## Hierarchy
 
-- [`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/)
+- [`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/)
 
   ↳ **`AppCallParams`**
 
@@ -18,20 +18,20 @@ Parameters representing a call to an app.
 
 ### Properties
 
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#appid)
-- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#args)
-- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#atc)
-- [callType](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#calltype)
-- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#fee)
-- [from](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#from)
-- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#maxfee)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#maxroundstowaitforconfirmation)
-- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#note)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#populateappcallresources)
-- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#skipsending)
-- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#skipwaiting)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#suppresslog)
-- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/#transactionparams)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#appid)
+- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#args)
+- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#atc)
+- [callType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#calltype)
+- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#fee)
+- [from](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#from)
+- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#maxroundstowaitforconfirmation)
+- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#note)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#populateappcallresources)
+- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#skipsending)
+- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#skipwaiting)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#suppresslog)
+- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/#transactionparams)
 
 ## Properties
 
@@ -67,7 +67,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#atc)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#atc)
 
 #### Defined in
 
@@ -89,13 +89,13 @@ The type of call, everything except create (see `createApp`) and update (see `up
 
 ### fee
 
-• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The flat fee you want to pay, useful for covering extra fees in a transaction group or app call
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#fee)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#fee)
 
 #### Defined in
 
@@ -117,13 +117,13 @@ The account to make the call from
 
 ### maxFee
 
-• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The maximum fee that you are happy to pay (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#maxfee)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#maxfee)
 
 #### Defined in
 
@@ -139,7 +139,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#maxroundstowaitforconfirmation)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -167,7 +167,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#populateappcallresources)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#populateappcallresources)
 
 #### Defined in
 
@@ -184,7 +184,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#skipsending)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#skipsending)
 
 #### Defined in
 
@@ -200,7 +200,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#skipwaiting)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#skipwaiting)
 
 #### Defined in
 
@@ -216,7 +216,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#suppresslog)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#suppresslog)
 
 #### Defined in
 

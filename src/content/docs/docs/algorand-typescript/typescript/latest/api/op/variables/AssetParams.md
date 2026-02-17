@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / AssetParams
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / AssetParams
 
 > `const` **AssetParams**: `object`
 
@@ -20,7 +20,7 @@ Defined in: [op.ts:440](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 ### assetClawback()
 
-> **assetClawback**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+> **assetClawback**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 Clawback address
 Min AVM version: 2
@@ -29,15 +29,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
-readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 ### assetCreator()
 
-> **assetCreator**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+> **assetCreator**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 Creator address
 Min AVM version: 5
@@ -46,11 +46,11 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
-readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 ### assetDecimals()
 
@@ -63,7 +63,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
@@ -80,7 +80,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
@@ -88,7 +88,7 @@ readonly \[`boolean`, `boolean`\]
 
 ### assetFreeze()
 
-> **assetFreeze**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+> **assetFreeze**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 Freeze address
 Min AVM version: 2
@@ -97,15 +97,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
-readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 ### assetManager()
 
-> **assetManager**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+> **assetManager**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 Manager address
 Min AVM version: 2
@@ -114,11 +114,11 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
-readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 ### assetMetadataHash()
 
@@ -131,7 +131,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
@@ -148,7 +148,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
@@ -156,7 +156,7 @@ readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-
 
 ### assetReserve()
 
-> **assetReserve**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+> **assetReserve**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 Reserve address
 Min AVM version: 2
@@ -165,11 +165,11 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
-readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 ### assetTotal()
 
@@ -182,7 +182,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
@@ -199,7 +199,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 
@@ -216,7 +216,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 #### Returns
 

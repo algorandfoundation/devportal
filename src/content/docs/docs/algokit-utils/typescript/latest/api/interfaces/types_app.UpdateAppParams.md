@@ -2,7 +2,7 @@
 title: UpdateAppParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / UpdateAppParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / UpdateAppParams
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).UpdateAppParams
 
@@ -22,21 +22,21 @@ Parameters that are passed in when updating an app.
 
 ### Properties
 
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#appid)
-- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#approvalprogram)
-- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#args)
-- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#atc)
-- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#clearstateprogram)
-- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#fee)
-- [from](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#from)
-- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#maxfee)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#maxroundstowaitforconfirmation)
-- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#note)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#populateappcallresources)
-- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#skipsending)
-- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#skipwaiting)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#suppresslog)
-- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/#transactionparams)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#appid)
+- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#approvalprogram)
+- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#args)
+- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#atc)
+- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#clearstateprogram)
+- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#fee)
+- [from](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#from)
+- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#maxroundstowaitforconfirmation)
+- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#note)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#populateappcallresources)
+- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#skipsending)
+- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#skipwaiting)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#suppresslog)
+- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/#transactionparams)
 
 ## Properties
 
@@ -118,7 +118,7 @@ CreateOrUpdateAppParams.clearStateProgram
 
 ### fee
 
-• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The flat fee you want to pay, useful for covering extra fees in a transaction group or app call
 
@@ -150,7 +150,7 @@ CreateOrUpdateAppParams.from
 
 ### maxFee
 
-• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The maximum fee that you are happy to pay (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 

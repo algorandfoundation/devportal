@@ -2,7 +2,7 @@
 title: AssetManager
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/) / AssetManager
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/) / AssetManager
 
 [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/).AssetManager
 
@@ -12,38 +12,38 @@ Allows management of asset information.
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#constructor)
 
 ### Properties
 
-- [\_algod](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#_algod)
-- [\_newGroup](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#_newgroup)
+- [\_algod](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#_algod)
+- [\_newGroup](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#_newgroup)
 
 ### Methods
 
-- [bulkOptIn](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#bulkoptin)
-- [bulkOptOut](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#bulkoptout)
-- [getAccountInformation](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#getaccountinformation)
-- [getById](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#getbyid)
+- [bulkOptIn](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#bulkoptin)
+- [bulkOptOut](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#bulkoptout)
+- [getAccountInformation](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#getaccountinformation)
+- [getById](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#getbyid)
 
 ## Constructors
 
 ### constructor
 
-• **new AssetManager**(`algod`, `newGroup`): [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/)
+• **new AssetManager**(`algod`, `newGroup`): [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/)
 
 Create a new asset manager.
 
 #### Parameters
 
-| Name       | Type                                                                                                                | Description                                                           |
-| :--------- | :------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------- |
-| `algod`    | `AlgodClient`                                                                                                       | An algod client                                                       |
-| `newGroup` | () => [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composertransactioncomposer/) | A function that creates a new `TransactionComposer` transaction group |
+| Name       | Type                                                                                                                 | Description                                                           |
+| :--------- | :------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| `algod`    | `AlgodClient`                                                                                                        | An algod client                                                       |
+| `newGroup` | () => [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer/) | A function that creates a new `TransactionComposer` transaction group |
 
 #### Returns
 
-[`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/)
+[`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/)
 
 **`Example`**
 
@@ -69,15 +69,15 @@ const assetManager = new AssetManager(algod, () => new TransactionComposer({algo
 
 ### \_newGroup
 
-• `Private` **\_newGroup**: () => [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composertransactioncomposer/)
+• `Private` **\_newGroup**: () => [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer/)
 
 #### Type declaration
 
-▸ (): [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composertransactioncomposer/)
+▸ (): [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer/)
 
 ##### Returns
 
-[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composertransactioncomposer/)
+[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer/)
 
 #### Defined in
 
@@ -87,7 +87,7 @@ const assetManager = new AssetManager(algod, () => new TransactionComposer({algo
 
 ### bulkOptIn
 
-▸ **bulkOptIn**(`account`, `assetIds`, `options?`): `Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerbulkassetoptinoutresult/)[]\>
+▸ **bulkOptIn**(`account`, `assetIds`, `options?`): `Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.BulkAssetOptInOutResult/)[]\>
 
 Opt an account in to a list of Algorand Standard Assets.
 
@@ -95,15 +95,15 @@ Transactions will be sent in batches of 16 as transaction groups.
 
 #### Parameters
 
-| Name       | Type                                                                                                                                                                                                                                             | Description                                                               |
-| :--------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
-| `account`  | `string` \| `Address`                                                                                                                                                                                                                            | The account to opt-in                                                     |
-| `assetIds` | `bigint`[]                                                                                                                                                                                                                                       | The list of asset IDs to opt-in to                                        |
-| `options?` | `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/) | Any parameters to control the transaction or execution of the transaction |
+| Name       | Type                                                                                                                                                                                                                                              | Description                                                               |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------ |
+| `account`  | `string` \| `Address`                                                                                                                                                                                                                             | The account to opt-in                                                     |
+| `assetIds` | `bigint`[]                                                                                                                                                                                                                                        | The list of asset IDs to opt-in to                                        |
+| `options?` | `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/) | Any parameters to control the transaction or execution of the transaction |
 
 #### Returns
 
-`Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerbulkassetoptinoutresult/)[]\>
+`Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.BulkAssetOptInOutResult/)[]\>
 
 An array of records matching asset ID to transaction ID of the opt in
 
@@ -127,7 +127,7 @@ assetManager.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n], {
 
 ### bulkOptOut
 
-▸ **bulkOptOut**(`account`, `assetIds`, `options?`): `Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerbulkassetoptinoutresult/)[]\>
+▸ **bulkOptOut**(`account`, `assetIds`, `options?`): `Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.BulkAssetOptInOutResult/)[]\>
 
 Opt an account out of a list of Algorand Standard Assets.
 
@@ -135,15 +135,15 @@ Transactions will be sent in batches of 16 as transaction groups.
 
 #### Parameters
 
-| Name       | Type                                                                                                                                                                                                                                                                                    | Description                                                               |
-| :--------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
-| `account`  | `string` \| `Address`                                                                                                                                                                                                                                                                   | The account to opt-in                                                     |
-| `assetIds` | `bigint`[]                                                                                                                                                                                                                                                                              | The list of asset IDs to opt-out of                                       |
-| `options?` | `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/) & \{ `ensureZeroBalance?`: `boolean` } | Any parameters to control the transaction or execution of the transaction |
+| Name       | Type                                                                                                                                                                                                                                                                                     | Description                                                               |
+| :--------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
+| `account`  | `string` \| `Address`                                                                                                                                                                                                                                                                    | The account to opt-in                                                     |
+| `assetIds` | `bigint`[]                                                                                                                                                                                                                                                                               | The list of asset IDs to opt-out of                                       |
+| `options?` | `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/) & \{ `ensureZeroBalance?`: `boolean` } | Any parameters to control the transaction or execution of the transaction |
 
 #### Returns
 
-`Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerbulkassetoptinoutresult/)[]\>
+`Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.BulkAssetOptInOutResult/)[]\>
 
 An array of records matching asset ID to transaction ID of the opt in
 
@@ -203,7 +203,7 @@ const accountInfo = await assetManager.getAccountInformation(address, assetId);
 
 ### getById
 
-▸ **getById**(`assetId`): `Promise`\<[`AssetInformation`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/)\>
+▸ **getById**(`assetId`): `Promise`\<[`AssetInformation`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/)\>
 
 Returns the current asset information for the asset with the given ID.
 
@@ -215,7 +215,7 @@ Returns the current asset information for the asset with the given ID.
 
 #### Returns
 
-`Promise`\<[`AssetInformation`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/)\>
+`Promise`\<[`AssetInformation`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/)\>
 
 The asset information
 

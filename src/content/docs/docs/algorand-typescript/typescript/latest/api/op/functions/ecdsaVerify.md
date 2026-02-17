@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / ecdsaVerify
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / ecdsaVerify
 
 > **ecdsaVerify**(`v`, `a`, `b`, `c`, `d`, `e`): `boolean`
 
@@ -23,7 +23,7 @@ The 32 byte Y-component of a public key is the last element on the stack, preced
 
 ### v
 
-[`Ecdsa`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ecdsa/)
+[`Ecdsa`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ecdsa/)
 
 ### a
 

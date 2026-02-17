@@ -142,7 +142,7 @@ This is a regular python tuple
 
 - Can only contain other ARC-4 types
 - Can be immutable if all members are also immutable
-- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopyarc4/#algopy.arc4.Tuple.copy) when mutable and creating additional references
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy.arc4/#algopy.arc4.Tuple.copy) when mutable and creating additional references
 - Encoded as a single ARC-4 value on the stack
 
 ### `arc4.Struct`
@@ -150,7 +150,7 @@ This is a regular python tuple
 - Can only contain other ARC-4 types
 - Members are described by a field name and type
 - Can be immutable if using the `frozen` class option and all members are also immutable
-- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopyarc4/#algopy.arc4.Struct.copy) when mutable and creating additional references
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy.arc4/#algopy.arc4.Struct.copy) when mutable and creating additional references
 - Encoded as a single ARC-4 value on the stack
 
 ## Algorand Python array types
@@ -204,7 +204,7 @@ class SomeContract(algopy.arc4.ARC4Contract):
 - Only supports ARC-4 elements
 - Elements often require conversion to native types, use `algopy.Array` / `algopy.FixedArray` to avoid explict conversions
 - Dynamically sized types are efficient for reading, but not writing
-- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopyarc4/#algopy.arc4.DynamicArray) if making additional references to the array or mutable elements
+- Requires [`.copy()`](/docs/algorand-python/python/latest/api/api-algopy.arc4/#algopy.arc4.DynamicArray) if making additional references to the array or mutable elements
 
 ## Tips
 

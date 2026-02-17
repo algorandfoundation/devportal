@@ -2,7 +2,7 @@
 title: BoxValuesRequestParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/) / BoxValuesRequestParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/) / BoxValuesRequestParams
 
 [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/).BoxValuesRequestParams
 
@@ -12,9 +12,9 @@ Parameters to get and decode a box value as an ABI type.
 
 ### Properties
 
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerboxvaluesrequestparams/#appid)
-- [boxNames](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerboxvaluesrequestparams/#boxnames)
-- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerboxvaluesrequestparams/#type)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.BoxValuesRequestParams/#appid)
+- [boxNames](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.BoxValuesRequestParams/#boxnames)
+- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.BoxValuesRequestParams/#type)
 
 ## Properties
 

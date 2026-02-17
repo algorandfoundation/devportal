@@ -2,7 +2,7 @@
 title: MultisigAccount
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/) / MultisigAccount
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/) / MultisigAccount
 
 [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/).MultisigAccount
 
@@ -12,42 +12,42 @@ Account wrapper that supports partial or full multisig signing.
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#constructor)
 
 ### Properties
 
-- [\_addr](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#_addr)
-- [\_params](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#_params)
-- [\_signer](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#_signer)
-- [\_signingAccounts](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#_signingaccounts)
+- [\_addr](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#_addr)
+- [\_params](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#_params)
+- [\_signer](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#_signer)
+- [\_signingAccounts](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#_signingaccounts)
 
 ### Accessors
 
-- [addr](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#addr)
-- [params](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#params)
-- [signer](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#signer)
-- [signingAccounts](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#signingaccounts)
+- [addr](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#addr)
+- [params](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#params)
+- [signer](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#signer)
+- [signingAccounts](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#signingaccounts)
 
 ### Methods
 
-- [sign](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/#sign)
+- [sign](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/#sign)
 
 ## Constructors
 
 ### constructor
 
-• **new MultisigAccount**(`multisigParams`, `signingAccounts`): [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/)
+• **new MultisigAccount**(`multisigParams`, `signingAccounts`): [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/)
 
 #### Parameters
 
-| Name              | Type                                                                                                                |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------ |
-| `multisigParams`  | `MultisigMetadata`                                                                                                  |
-| `signingAccounts` | (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/))[] |
+| Name              | Type                                                                                                                 |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------- |
+| `multisigParams`  | `MultisigMetadata`                                                                                                   |
+| `signingAccounts` | (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/))[] |
 
 #### Returns
 
-[`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/)
+[`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/)
 
 #### Defined in
 
@@ -87,7 +87,7 @@ Account wrapper that supports partial or full multisig signing.
 
 ### \_signingAccounts
 
-• **\_signingAccounts**: (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/))[]
+• **\_signingAccounts**: (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/))[]
 
 #### Defined in
 
@@ -145,13 +145,13 @@ The transaction signer for the multisig account
 
 ### signingAccounts
 
-• `get` **signingAccounts**(): readonly (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/))[]
+• `get` **signingAccounts**(): readonly (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/))[]
 
 The list of accounts that are present to sign
 
 #### Returns
 
-readonly (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/))[]
+readonly (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/))[]
 
 #### Defined in
 

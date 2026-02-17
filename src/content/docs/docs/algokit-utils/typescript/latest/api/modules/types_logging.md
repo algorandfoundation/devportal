@@ -2,7 +2,7 @@
 title: types/logging
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/logging
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/logging
 
 ## Table of contents
 

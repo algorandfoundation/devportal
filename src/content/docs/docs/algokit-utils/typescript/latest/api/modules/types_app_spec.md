@@ -2,22 +2,22 @@
 title: types/app-spec
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/app-spec
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/app-spec
 
 ## Table of contents
 
 ### Interfaces
 
-- [AppSources](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappsources/)
-- [AppSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/)
-- [CallConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/)
-- [DeclaredSchemaValueSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specdeclaredschemavaluespec/)
-- [Hint](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/)
-- [ReservedSchemaValueSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specreservedschemavaluespec/)
-- [Schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specschema/)
-- [SchemaSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specschemaspec/)
-- [StateSchemaSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specstateschemaspec/)
-- [Struct](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specstruct/)
+- [AppSources](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSources/)
+- [AppSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/)
+- [CallConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.CallConfig/)
+- [DeclaredSchemaValueSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.DeclaredSchemaValueSpec/)
+- [Hint](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Hint/)
+- [ReservedSchemaValueSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.ReservedSchemaValueSpec/)
+- [Schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Schema/)
+- [SchemaSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.SchemaSpec/)
+- [StateSchemaSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.StateSchemaSpec/)
+- [Struct](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Struct/)
 
 ### Type Aliases
 
@@ -103,7 +103,7 @@ The name of a field
 
 ### HintSpec
 
-Ƭ **HintSpec**: `Record`\<`string`, [`Hint`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/)\>
+Ƭ **HintSpec**: `Record`\<`string`, [`Hint`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Hint/)\>
 
 A lookup of encoded method call spec to hint
 
@@ -146,19 +146,19 @@ The elements of the struct/tuple: `FieldName`, `ABIType`
 
 ### arc32ToArc56
 
-▸ **arc32ToArc56**(`appSpec`): [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/)
+▸ **arc32ToArc56**(`appSpec`): [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/)
 
 Converts an ARC-32 Application Specification to an ARC-56 Contract
 
 #### Parameters
 
-| Name      | Type                                                                                     | Description                          |
-| :-------- | :--------------------------------------------------------------------------------------- | :----------------------------------- |
-| `appSpec` | [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/) | The ARC-32 Application Specification |
+| Name      | Type                                                                                      | Description                          |
+| :-------- | :---------------------------------------------------------------------------------------- | :----------------------------------- |
+| `appSpec` | [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/) | The ARC-32 Application Specification |
 
 #### Returns
 
-[`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/)
+[`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/)
 
 The ARC-56 Contract
 

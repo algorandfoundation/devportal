@@ -6,13 +6,13 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / BoxMap
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / BoxMap
 
-> **BoxMap**\<`TKey`, `TValue`\>(`options`): [`BoxMap`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/boxmap/)\<`TKey`, `TValue`\>
+> **BoxMap**\<`TKey`, `TValue`\>(`options`): [`BoxMap`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BoxMap/)\<`TKey`, `TValue`\>
 
 Defined in: [box.ts:151](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L151)
 
@@ -36,10 +36,10 @@ The type of the data stored in the box. This value will be encoded to bytes when
 
 ### options
 
-[`CreateBoxMapOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/interfaces/createboxmapoptions/)
+[`CreateBoxMapOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/interfaces/CreateBoxMapOptions/)
 
 Options for creating the BoxMap proxy
 
 ## Returns
 
-[`BoxMap`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/boxmap/)\<`TKey`, `TValue`\>
+[`BoxMap`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BoxMap/)\<`TKey`, `TValue`\>

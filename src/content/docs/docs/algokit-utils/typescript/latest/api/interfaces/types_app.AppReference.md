@@ -2,7 +2,7 @@
 title: AppReference
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppReference
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppReference
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppReference
 
@@ -12,14 +12,14 @@ Information about an Algorand app
 
 - **`AppReference`**
 
-  ↳ [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/)
+  ↳ [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/)
 
 ## Table of contents
 
 ### Properties
 
-- [appAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/#appaddress)
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/#appid)
+- [appAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/#appaddress)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/#appid)
 
 ## Properties
 

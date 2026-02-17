@@ -2,7 +2,7 @@
 title: AppLookup
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-deployer](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/) / AppLookup
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-deployer](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/) / AppLookup
 
 [types/app-deployer](/docs/algokit-utils/typescript/latest/api/modules/types_app_deployer/).AppLookup
 
@@ -12,8 +12,8 @@ A lookup of name -> Algorand app for a creator
 
 ### Properties
 
-- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerapplookup/#apps)
-- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerapplookup/#creator)
+- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppLookup/#apps)
+- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppLookup/#creator)
 
 ## Properties
 
@@ -25,7 +25,7 @@ A hash map of app name to app metadata
 
 #### Index signature
 
-▪ [name: `string`]: [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerappmetadata/)
+▪ [name: `string`]: [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppMetadata/)
 
 #### Defined in
 

@@ -2,17 +2,17 @@
 title: types/app-factory
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/app-factory
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/app-factory
 
 ## Table of contents
 
 ### Classes
 
-- [AppFactory](/docs/algokit-utils/typescript/latest/api/classes/types_app_factoryappfactory/)
+- [AppFactory](/docs/algokit-utils/typescript/latest/api/classes/types_app_factory.AppFactory/)
 
 ### Interfaces
 
-- [AppFactoryParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/)
+- [AppFactoryParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/)
 
 ### Type Aliases
 
@@ -28,7 +28,7 @@ title: types/app-factory
 
 ### AppFactoryAppClientParams
 
-Ƭ **AppFactoryAppClientParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"`\>\>
+Ƭ **AppFactoryAppClientParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/), `"algorand"` \| `"appSpec"`\>\>
 
 Params to get an app client by ID from an app factory.
 
@@ -40,7 +40,7 @@ Params to get an app client by ID from an app factory.
 
 ### AppFactoryCreateMethodCallParams
 
-Ƭ **AppFactoryCreateMethodCallParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`AppClientMethodCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientmethodcallparams) & [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/) & [`CreateOnComplete`](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/#createoncomplete) & [`CreateSchema`](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/#createschema)\>
+Ƭ **AppFactoryCreateMethodCallParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`AppClientMethodCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientmethodcallparams) & [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/) & [`CreateOnComplete`](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/#createoncomplete) & [`CreateSchema`](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/#createschema)\>
 
 Params to specify a create method call for an app
 
@@ -52,7 +52,7 @@ Params to specify a create method call for an app
 
 ### AppFactoryCreateParams
 
-Ƭ **AppFactoryCreateParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`AppClientBareCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientbarecallparams) & [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/) & [`CreateOnComplete`](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/#createoncomplete) & [`CreateSchema`](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/#createschema)\>
+Ƭ **AppFactoryCreateParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`AppClientBareCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientbarecallparams) & [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/) & [`CreateOnComplete`](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/#createoncomplete) & [`CreateSchema`](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/#createschema)\>
 
 Params to specify a bare (raw) create call for an app
 

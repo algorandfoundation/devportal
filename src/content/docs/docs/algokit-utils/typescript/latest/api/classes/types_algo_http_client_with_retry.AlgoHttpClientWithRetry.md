@@ -2,7 +2,7 @@
 title: AlgoHttpClientWithRetry
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/algo-http-client-with-retry](/docs/algokit-utils/typescript/latest/api/modules/types_algo_http_client_with_retry/) / AlgoHttpClientWithRetry
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/algo-http-client-with-retry](/docs/algokit-utils/typescript/latest/api/modules/types_algo_http_client_with_retry/) / AlgoHttpClientWithRetry
 
 [types/algo-http-client-with-retry](/docs/algokit-utils/typescript/latest/api/modules/types_algo_http_client_with_retry/).AlgoHttpClientWithRetry
 
@@ -18,27 +18,27 @@ A HTTP Client that wraps the Algorand SDK HTTP Client with retries
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#constructor)
 
 ### Properties
 
-- [MAX_BACKOFF_MS](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#max_backoff_ms)
-- [MAX_TRIES](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#max_tries)
-- [RETRY_ERROR_CODES](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#retry_error_codes)
-- [RETRY_STATUS_CODES](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#retry_status_codes)
+- [MAX_BACKOFF_MS](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#max_backoff_ms)
+- [MAX_TRIES](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#max_tries)
+- [RETRY_ERROR_CODES](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#retry_error_codes)
+- [RETRY_STATUS_CODES](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#retry_status_codes)
 
 ### Methods
 
-- [callWithRetry](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#callwithretry)
-- [delete](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#delete)
-- [get](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#get)
-- [post](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/#post)
+- [callWithRetry](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#callwithretry)
+- [delete](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#delete)
+- [get](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#get)
+- [post](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/#post)
 
 ## Constructors
 
 ### constructor
 
-• **new AlgoHttpClientWithRetry**(`tokenHeader`, `baseServer`, `port?`, `defaultHeaders?`): [`AlgoHttpClientWithRetry`](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/)
+• **new AlgoHttpClientWithRetry**(`tokenHeader`, `baseServer`, `port?`, `defaultHeaders?`): [`AlgoHttpClientWithRetry`](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/)
 
 #### Parameters
 
@@ -51,7 +51,7 @@ A HTTP Client that wraps the Algorand SDK HTTP Client with retries
 
 #### Returns
 
-[`AlgoHttpClientWithRetry`](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retryalgohttpclientwithretry/)
+[`AlgoHttpClientWithRetry`](/docs/algokit-utils/typescript/latest/api/classes/types_algo_http_client_with_retry.AlgoHttpClientWithRetry/)
 
 #### Inherited from
 

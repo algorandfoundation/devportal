@@ -2,7 +2,7 @@
 title: AppMetadata
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppMetadata
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppMetadata
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppMetadata
 
@@ -10,9 +10,9 @@ The metadata that can be collected about a deployed app
 
 ## Hierarchy
 
-- [`AppReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/)
+- [`AppReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/)
 
-- [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/)
+- [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/)
 
   ↳ **`AppMetadata`**
 
@@ -20,16 +20,16 @@ The metadata that can be collected about a deployed app
 
 ### Properties
 
-- [appAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#appaddress)
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#appid)
-- [createdMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#createdmetadata)
-- [createdRound](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#createdround)
-- [deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#deletable)
-- [deleted](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#deleted)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#name)
-- [updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#updatable)
-- [updatedRound](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#updatedround)
-- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/#version)
+- [appAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#appaddress)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#appid)
+- [createdMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#createdmetadata)
+- [createdRound](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#createdround)
+- [deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#deletable)
+- [deleted](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#deleted)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#name)
+- [updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#updatable)
+- [updatedRound](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#updatedround)
+- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/#version)
 
 ## Properties
 
@@ -41,7 +41,7 @@ The Algorand address of the account associated with the app
 
 #### Inherited from
 
-[AppReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/).[appAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/#appaddress)
+[AppReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/).[appAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/#appaddress)
 
 #### Defined in
 
@@ -57,7 +57,7 @@ The id of the app
 
 #### Inherited from
 
-[AppReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/).[appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/#appid)
+[AppReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/).[appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/#appid)
 
 #### Defined in
 
@@ -67,7 +67,7 @@ The id of the app
 
 ### createdMetadata
 
-• **createdMetadata**: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/)
+• **createdMetadata**: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/)
 
 The metadata when the app was created
 
@@ -97,7 +97,7 @@ Whether or not the app is deletable / permanent / unspecified
 
 #### Inherited from
 
-[AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/).[deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/#deletable)
+[AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/).[deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/#deletable)
 
 #### Defined in
 
@@ -125,7 +125,7 @@ The unique name identifier of the app within the creator account
 
 #### Inherited from
 
-[AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/).[name](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/#name)
+[AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/).[name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/#name)
 
 #### Defined in
 
@@ -141,7 +141,7 @@ Whether or not the app is updatable / immutable / unspecified
 
 #### Inherited from
 
-[AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/).[updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/#updatable)
+[AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/).[updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/#updatable)
 
 #### Defined in
 
@@ -169,7 +169,7 @@ The version of app that is / will be deployed
 
 #### Inherited from
 
-[AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/).[version](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/#version)
+[AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/).[version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/#version)
 
 #### Defined in
 

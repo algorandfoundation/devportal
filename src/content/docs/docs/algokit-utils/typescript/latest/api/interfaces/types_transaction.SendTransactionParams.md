@@ -2,7 +2,7 @@
 title: SendTransactionParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendTransactionParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendTransactionParams
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).SendTransactionParams
 
@@ -12,32 +12,32 @@ The sending configuration for a transaction
 
 - **`SendTransactionParams`**
 
-  ↳ [`AppCallParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/)
+  ↳ [`AppCallParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/)
 
-  ↳ [`CreateAssetParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/)
+  ↳ [`CreateAssetParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/)
 
-  ↳ [`AssetOptInParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/)
+  ↳ [`AssetOptInParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/)
 
-  ↳ [`AlgoTransferParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferalgotransferparams/)
+  ↳ [`AlgoTransferParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.AlgoTransferParams/)
 
-  ↳ [`AlgoRekeyParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferalgorekeyparams/)
+  ↳ [`AlgoRekeyParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.AlgoRekeyParams/)
 
-  ↳ [`EnsureFundedParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferensurefundedparams/)
+  ↳ [`EnsureFundedParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.EnsureFundedParams/)
 
-  ↳ [`TransferAssetParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfertransferassetparams/)
+  ↳ [`TransferAssetParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.TransferAssetParams/)
 
 ## Table of contents
 
 ### Properties
 
-- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#atc)
-- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#fee)
-- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#maxfee)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#maxroundstowaitforconfirmation)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#populateappcallresources)
-- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#skipsending)
-- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#skipwaiting)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#suppresslog)
+- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#atc)
+- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#fee)
+- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#maxroundstowaitforconfirmation)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#populateappcallresources)
+- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#skipsending)
+- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#skipwaiting)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#suppresslog)
 
 ## Properties
 
@@ -55,7 +55,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 ### fee
 
-• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The flat fee you want to pay, useful for covering extra fees in a transaction group or app call
 
@@ -67,7 +67,7 @@ The flat fee you want to pay, useful for covering extra fees in a transaction gr
 
 ### maxFee
 
-• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The maximum fee that you are happy to pay (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 

@@ -6,13 +6,13 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / LocalState
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / LocalState
 
-> **LocalState**\<`ValueType`\> = (`account`) => [`LocalStateForAccount`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/localstateforaccount/)\<`ValueType`\>
+> **LocalState**\<`ValueType`\> = (`account`) => [`LocalStateForAccount`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/LocalStateForAccount/)\<`ValueType`\>
 
 Defined in: [state.ts:92](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L92)
 
@@ -30,13 +30,13 @@ Gets the LocalState proxy for a specific account
 
 ### account
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 The account to read or write state for. This account must be opted into the contract
 
 ## Returns
 
-[`LocalStateForAccount`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/localstateforaccount/)\<`ValueType`\>
+[`LocalStateForAccount`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/LocalStateForAccount/)\<`ValueType`\>
 
 ## Param
 

@@ -2,7 +2,7 @@
 title: AssetInformation
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/) / AssetInformation
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/) / AssetInformation
 
 [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/).AssetInformation
 
@@ -12,22 +12,22 @@ Information about an asset.
 
 ### Properties
 
-- [assetId](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#assetid)
-- [assetName](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#assetname)
-- [assetNameAsBytes](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#assetnameasbytes)
-- [clawback](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#clawback)
-- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#creator)
-- [decimals](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#decimals)
-- [defaultFrozen](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#defaultfrozen)
-- [freeze](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#freeze)
-- [manager](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#manager)
-- [metadataHash](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#metadatahash)
-- [reserve](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#reserve)
-- [total](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#total)
-- [unitName](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#unitname)
-- [unitNameAsBytes](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#unitnameasbytes)
-- [url](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#url)
-- [urlAsBytes](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerassetinformation/#urlasbytes)
+- [assetId](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#assetid)
+- [assetName](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#assetname)
+- [assetNameAsBytes](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#assetnameasbytes)
+- [clawback](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#clawback)
+- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#creator)
+- [decimals](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#decimals)
+- [defaultFrozen](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#defaultfrozen)
+- [freeze](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#freeze)
+- [manager](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#manager)
+- [metadataHash](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#metadatahash)
+- [reserve](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#reserve)
+- [total](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#total)
+- [unitName](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#unitname)
+- [unitNameAsBytes](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#unitnameasbytes)
+- [url](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#url)
+- [urlAsBytes](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.AssetInformation/#urlasbytes)
 
 ## Properties
 

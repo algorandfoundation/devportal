@@ -2,7 +2,7 @@
 title: DispenserFundResponse
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/) / DispenserFundResponse
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/) / DispenserFundResponse
 
 [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/).DispenserFundResponse
 
@@ -12,8 +12,8 @@ The TestNet Dispenser API response when funding.
 
 ### Properties
 
-- [amount](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clientdispenserfundresponse/#amount)
-- [txId](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clientdispenserfundresponse/#txid)
+- [amount](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.DispenserFundResponse/#amount)
+- [txId](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.DispenserFundResponse/#txid)
 
 ## Properties
 

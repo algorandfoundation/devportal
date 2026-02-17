@@ -6,15 +6,15 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / Application
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Application
 
 ## Call Signature
 
-> **Application**(): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> **Application**(): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 Defined in: [reference.ts:227](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L227)
 
@@ -22,11 +22,11 @@ Creates a new Application object represent the application id 0 (an invalid ID)
 
 ### Returns
 
-[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ## Call Signature
 
-> **Application**(`applicationId`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> **Application**(`applicationId`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 Defined in: [reference.ts:232](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L232)
 
@@ -42,4 +42,4 @@ The id of the application
 
 ### Returns
 
-[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)

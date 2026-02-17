@@ -25,10 +25,10 @@ The (optional) string value provided with an assertion, if provided, will be add
 ## Explicit failure
 
 For scenarios where you need to fail a contract explicitly, you can use
-the [`op.err()`](/docs/algorand-python/python/latest/api/api-algopyop/#algopy.op.err) operation. This operation causes the TEAL program to immediately
+the [`op.err()`](/docs/algorand-python/python/latest/api/api-algopy.op/#algopy.op.err) operation. This operation causes the TEAL program to immediately
 and unconditionally fail.
 
-Alternatively [`op.exit(0)`](/docs/algorand-python/python/latest/api/api-algopyop/#algopy.op.exit) will achieve the same result. A non-zero value will
+Alternatively [`op.exit(0)`](/docs/algorand-python/python/latest/api/api-algopy.op/#algopy.op.exit) will achieve the same result. A non-zero value will
 do the opposite and immediately succeed.
 
 ## Exception handling

@@ -2,7 +2,7 @@
 title: Hint
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / Hint
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / Hint
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).Hint
 
@@ -12,16 +12,16 @@ Hint information for a given method call to allow client generation
 
 ### Properties
 
-- [call_config](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#call_config)
-- [default_arguments](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#default_arguments)
-- [read_only](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#read_only)
-- [structs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spechint/#structs)
+- [call_config](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Hint/#call_config)
+- [default_arguments](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Hint/#default_arguments)
+- [read_only](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Hint/#read_only)
+- [structs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Hint/#structs)
 
 ## Properties
 
 ### call_config
 
-• **call_config**: [`CallConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/)
+• **call_config**: [`CallConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.CallConfig/)
 
 #### Defined in
 
@@ -51,7 +51,7 @@ Hint information for a given method call to allow client generation
 
 ### structs
 
-• `Optional` **structs**: `Record`\<`string`, [`Struct`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specstruct/)\>
+• `Optional` **structs**: `Record`\<`string`, [`Struct`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.Struct/)\>
 
 Any user-defined struct/tuple types used in the method call, keyed by parameter name or `output` for return type
 

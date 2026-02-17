@@ -2,7 +2,7 @@
 title: AlgorandFixture
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / AlgorandFixture
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / AlgorandFixture
 
 [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/).AlgorandFixture
 
@@ -12,13 +12,13 @@ An Algorand automated testing fixture
 
 ### Properties
 
-- [beforeEach](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixture/#beforeeach)
-- [newScope](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixture/#newscope)
+- [beforeEach](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixture/#beforeeach)
+- [newScope](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixture/#newscope)
 
 ### Accessors
 
-- [algorand](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixture/#algorand)
-- [context](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixture/#context)
+- [algorand](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixture/#algorand)
+- [context](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixture/#context)
 
 ## Properties
 
@@ -103,13 +103,13 @@ describe('MY MODULE', () => {
 
 ### algorand
 
-• `get` **algorand**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+• `get` **algorand**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Retrieve an `AlgorandClient` loaded with the current context, including testAccount and any generated accounts loaded as signers.
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 #### Defined in
 
@@ -119,7 +119,7 @@ Retrieve an `AlgorandClient` loaded with the current context, including testAcco
 
 ### context
 
-• `get` **context**(): [`AlgorandTestAutomationContext`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/)
+• `get` **context**(): [`AlgorandTestAutomationContext`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/)
 
 Retrieve the current context.
 Useful with destructuring.
@@ -128,7 +128,7 @@ If you haven't called `newScope` then this will throw an error.
 
 #### Returns
 
-[`AlgorandTestAutomationContext`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/)
+[`AlgorandTestAutomationContext`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/)
 
 **`Example`**
 

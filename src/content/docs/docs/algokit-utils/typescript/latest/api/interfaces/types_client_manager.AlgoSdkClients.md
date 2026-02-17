@@ -2,7 +2,7 @@
 title: AlgoSdkClients
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/) / AlgoSdkClients
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/) / AlgoSdkClients
 
 [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/).AlgoSdkClients
 
@@ -12,9 +12,9 @@ Clients from algosdk that interact with the official Algorand APIs
 
 ### Properties
 
-- [algod](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/#algod)
-- [indexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/#indexer)
-- [kmd](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/#kmd)
+- [algod](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.AlgoSdkClients/#algod)
+- [indexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.AlgoSdkClients/#indexer)
+- [kmd](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.AlgoSdkClients/#kmd)
 
 ## Properties
 

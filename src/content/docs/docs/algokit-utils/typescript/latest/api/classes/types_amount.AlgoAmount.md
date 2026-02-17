@@ -2,7 +2,7 @@
 title: AlgoAmount
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/amount](/docs/algokit-utils/typescript/latest/api/modules/types_amount/) / AlgoAmount
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/amount](/docs/algokit-utils/typescript/latest/api/modules/types_amount/) / AlgoAmount
 
 [types/amount](/docs/algokit-utils/typescript/latest/api/modules/types_amount/).AlgoAmount
 
@@ -12,33 +12,33 @@ Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbe
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#constructor)
 
 ### Properties
 
-- [amountInMicroAlgo](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#amountinmicroalgo)
+- [amountInMicroAlgo](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#amountinmicroalgo)
 
 ### Accessors
 
-- [algo](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#algo)
-- [algos](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#algos)
-- [microAlgo](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#microalgo)
-- [microAlgos](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#microalgos)
+- [algo](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#algo)
+- [algos](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#algos)
+- [microAlgo](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#microalgo)
+- [microAlgos](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#microalgos)
 
 ### Methods
 
-- [toString](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#tostring)
-- [valueOf](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#valueof)
-- [Algo](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#algo-1)
-- [Algos](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#algos-1)
-- [MicroAlgo](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#microalgo-1)
-- [MicroAlgos](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/#microalgos-1)
+- [toString](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#tostring)
+- [valueOf](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#valueof)
+- [Algo](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#algo-1)
+- [Algos](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#algos-1)
+- [MicroAlgo](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#microalgo-1)
+- [MicroAlgos](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/#microalgos-1)
 
 ## Constructors
 
 ### constructor
 
-• **new AlgoAmount**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• **new AlgoAmount**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 Create a new `AlgoAmount` instance.
 
@@ -50,7 +50,7 @@ Create a new `AlgoAmount` instance.
 
 #### Returns
 
-[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 A new instance of `AlgoAmount` representing the specified amount.
 
@@ -174,7 +174,7 @@ the algos or microAlgos properties
 
 ### Algo
 
-▸ **Algo**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+▸ **Algo**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 Create a `AlgoAmount` object representing the given number of Algo
 
@@ -186,7 +186,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 #### Returns
 
-[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 #### Defined in
 
@@ -196,7 +196,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 ### Algos
 
-▸ **Algos**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+▸ **Algos**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 Create a `AlgoAmount` object representing the given number of Algo
 
@@ -208,7 +208,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 #### Returns
 
-[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 #### Defined in
 
@@ -218,7 +218,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 ### MicroAlgo
 
-▸ **MicroAlgo**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+▸ **MicroAlgo**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 Create a `AlgoAmount` object representing the given number of µAlgo
 
@@ -230,7 +230,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 #### Returns
 
-[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 #### Defined in
 
@@ -240,7 +240,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 ### MicroAlgos
 
-▸ **MicroAlgos**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+▸ **MicroAlgos**(`amount`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 Create a `AlgoAmount` object representing the given number of µAlgo
 
@@ -252,7 +252,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 #### Returns
 
-[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 #### Defined in
 

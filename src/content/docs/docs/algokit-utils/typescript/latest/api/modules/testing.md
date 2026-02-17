@@ -2,14 +2,14 @@
 title: testing
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / testing
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / testing
 
 ## Table of contents
 
 ### Classes
 
-- [TestLogger](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/)
-- [TransactionLogger](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/)
+- [TestLogger](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/)
+- [TransactionLogger](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/)
 
 ### Functions
 
@@ -22,13 +22,13 @@ title: testing
 
 ### algoKitLogCaptureFixture
 
-▸ **algoKitLogCaptureFixture**(): [`AlgoKitLogCaptureFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgokitlogcapturefixture/)
+▸ **algoKitLogCaptureFixture**(): [`AlgoKitLogCaptureFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgoKitLogCaptureFixture/)
 
 Creates a test fixture for capturing AlgoKit logs.
 
 #### Returns
 
-[`AlgoKitLogCaptureFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgokitlogcapturefixture/)
+[`AlgoKitLogCaptureFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgoKitLogCaptureFixture/)
 
 The fixture
 
@@ -53,7 +53,7 @@ test('My test', () => {
 
 ### algorandFixture
 
-▸ **algorandFixture**(`fixtureConfig?`): [`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixture/)
+▸ **algorandFixture**(`fixtureConfig?`): [`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixture/)
 
 Creates a test fixture for automated testing against Algorand.
 By default it tests against an environment variable specified client
@@ -64,13 +64,13 @@ an explicitly defined network.
 
 #### Parameters
 
-| Name             | Type                                                                                                                | Description               |
-| :--------------- | :------------------------------------------------------------------------------------------------------------------ | :------------------------ |
-| `fixtureConfig?` | [`AlgorandFixtureConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/) | The fixture configuration |
+| Name             | Type                                                                                                                 | Description               |
+| :--------------- | :------------------------------------------------------------------------------------------------------------------- | :------------------------ |
+| `fixtureConfig?` | [`AlgorandFixtureConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/) | The fixture configuration |
 
 #### Returns
 
-[`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixture/)
+[`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixture/)
 
 The fixture
 
@@ -120,18 +120,18 @@ test('My test', async () => {
 
 [src/testing/fixtures/algorand-fixture.ts:60](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L60)
 
-▸ **algorandFixture**(`fixtureConfig`, `config`): [`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixture/)
+▸ **algorandFixture**(`fixtureConfig`, `config`): [`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixture/)
 
 #### Parameters
 
-| Name            | Type                                                                                                                               | Description               |
-| :-------------- | :--------------------------------------------------------------------------------------------------------------------------------- | :------------------------ |
-| `fixtureConfig` | `undefined` \| [`AlgorandFixtureConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/) | The fixture configuration |
-| `config`        | [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/)                               | The fixture configuration |
+| Name            | Type                                                                                                                                | Description               |
+| :-------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :------------------------ |
+| `fixtureConfig` | `undefined` \| [`AlgorandFixtureConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/) | The fixture configuration |
+| `config`        | [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/)                               | The fixture configuration |
 
 #### Returns
 
-[`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixture/)
+[`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixture/)
 
 The fixture
 
@@ -153,19 +153,19 @@ and/or kmd if you want to test against an explicitly defined network.
 
 ### getTestAccount
 
-▸ **getTestAccount**(`params`, `algod`, `kmd?`): `Promise`\<`Address` & `Account` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)\>
+▸ **getTestAccount**(`params`, `algod`, `kmd?`): `Promise`\<`Address` & `Account` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)\>
 
 #### Parameters
 
-| Name     | Type                                                                                                              | Description                                                                                                                                                     |
-| :------- | :---------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params` | [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinggettestaccountparams/) | The config for the test account to generate                                                                                                                     |
-| `algod`  | `AlgodClient`                                                                                                     | An algod client                                                                                                                                                 |
-| `kmd?`   | `KmdClient`                                                                                                       | A KMD client, if not specified then a default KMD client will be loaded from environment variables and if not found fallback to the default LocalNet KMD client |
+| Name     | Type                                                                                                               | Description                                                                                                                                                     |
+| :------- | :----------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params` | [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.GetTestAccountParams/) | The config for the test account to generate                                                                                                                     |
+| `algod`  | `AlgodClient`                                                                                                      | An algod client                                                                                                                                                 |
+| `kmd?`   | `KmdClient`                                                                                                        | A KMD client, if not specified then a default KMD client will be loaded from environment variables and if not found fallback to the default LocalNet KMD client |
 
 #### Returns
 
-`Promise`\<`Address` & `Account` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)\>
+`Promise`\<`Address` & `Account` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)\>
 
 The account, with private key loaded
 
@@ -182,7 +182,7 @@ Note: By default this will log the mnemonic of the account.
 
 [src/testing/account.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/account.ts#L21)
 
-▸ **getTestAccount**(`params`, `algorand`): `Promise`\<`Address` & `Account` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)\>
+▸ **getTestAccount**(`params`, `algorand`): `Promise`\<`Address` & `Account` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)\>
 
 Creates an ephemeral Algorand account for the purposes of testing.
 Returns a newly created random test account that is funded from the dispenser
@@ -191,14 +191,14 @@ Note: By default this will log the mnemonic of the account.
 
 #### Parameters
 
-| Name       | Type                                                                                                              | Description                                 |
-| :--------- | :---------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
-| `params`   | [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinggettestaccountparams/) | The config for the test account to generate |
-| `algorand` | [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)        | An AlgorandClient client                    |
+| Name       | Type                                                                                                               | Description                                 |
+| :--------- | :----------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
+| `params`   | [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.GetTestAccountParams/) | The config for the test account to generate |
+| `algorand` | [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)        | An AlgorandClient client                    |
 
 #### Returns
 
-`Promise`\<`Address` & `Account` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)\>
+`Promise`\<`Address` & `Account` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)\>
 
 The account, with private key loaded
 

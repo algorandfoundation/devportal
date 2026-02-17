@@ -2,7 +2,7 @@
 title: ResolveAppByIdBase
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / ResolveAppByIdBase
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / ResolveAppByIdBase
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).ResolveAppByIdBase
 
@@ -12,14 +12,14 @@ Configuration to resolve app by ID
 
 - **`ResolveAppByIdBase`**
 
-  ↳ [`ResolveAppById`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyid/)
+  ↳ [`ResolveAppById`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppById/)
 
 ## Table of contents
 
 ### Properties
 
-- [id](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/#id)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/#name)
+- [id](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/#id)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/#name)
 
 ## Properties
 

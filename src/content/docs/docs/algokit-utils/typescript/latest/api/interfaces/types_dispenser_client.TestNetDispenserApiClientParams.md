@@ -2,7 +2,7 @@
 title: TestNetDispenserApiClientParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/) / TestNetDispenserApiClientParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/) / TestNetDispenserApiClientParams
 
 [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/).TestNetDispenserApiClientParams
 
@@ -12,8 +12,8 @@ The parameters to construct a TestNet Dispenser API client.
 
 ### Properties
 
-- [authToken](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/#authtoken)
-- [requestTimeout](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/#requesttimeout)
+- [authToken](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.TestNetDispenserApiClientParams/#authtoken)
+- [requestTimeout](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.TestNetDispenserApiClientParams/#requesttimeout)
 
 ## Properties
 

@@ -2,7 +2,7 @@
 title: CallConfig
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / CallConfig
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / CallConfig
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).CallConfig
 
@@ -12,11 +12,11 @@ Call configuration for a method
 
 ### Properties
 
-- [close_out](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/#close_out)
-- [delete_application](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/#delete_application)
-- [no_op](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/#no_op)
-- [opt_in](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/#opt_in)
-- [update_application](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/#update_application)
+- [close_out](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.CallConfig/#close_out)
+- [delete_application](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.CallConfig/#delete_application)
+- [no_op](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.CallConfig/#no_op)
+- [opt_in](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.CallConfig/#opt_in)
+- [update_application](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.CallConfig/#update_application)
 
 ## Properties
 

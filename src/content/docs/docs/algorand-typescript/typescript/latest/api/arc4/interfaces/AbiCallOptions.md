@@ -6,17 +6,17 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / AbiCallOptions
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / AbiCallOptions
 
 Defined in: [arc4/c2c.ts:112](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L112)
 
 ## Extends
 
-- `Omit`\<[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/), `"appArgs"`\>
+- `Omit`\<[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/), `"appArgs"`\>
 
 ## Type Parameters
 
@@ -28,7 +28,7 @@ Defined in: [arc4/c2c.ts:112](https://github.com/algorandfoundation/puya-ts/blob
 
 ### accounts?
 
-> `optional` **accounts**: readonly ([`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/))[]
+> `optional` **accounts**: readonly ([`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/))[]
 
 Defined in: [itxn.ts:951](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L951)
 
@@ -46,7 +46,7 @@ Index of the account to get
 
 ### appId?
 
-> `optional` **appId**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> `optional` **appId**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 Defined in: [itxn.ts:907](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L907)
 
@@ -78,7 +78,7 @@ Index of the page to get
 
 ### apps?
 
-> `optional` **apps**: readonly ([`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/))[]
+> `optional` **apps**: readonly ([`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/))[]
 
 Defined in: [itxn.ts:961](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L961)
 
@@ -96,7 +96,7 @@ Index of the application to get
 
 ### args?
 
-> `readonly` `optional` **args**: `TMethod` _extends_ [`InstanceMethod`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/instancemethod/)\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/), `TParams`\> ? [`TypedApplicationArgs`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/typedapplicationargs/)\<`TParams`\> : `unknown`[]
+> `readonly` `optional` **args**: `TMethod` _extends_ [`InstanceMethod`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/InstanceMethod/)\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Contract/), `TParams`\> ? [`TypedApplicationArgs`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/TypedApplicationArgs/)\<`TParams`\> : `unknown`[]
 
 Defined in: [arc4/c2c.ts:114](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L114)
 
@@ -104,7 +104,7 @@ Defined in: [arc4/c2c.ts:114](https://github.com/algorandfoundation/puya-ts/blob
 
 ### assets?
 
-> `optional` **assets**: readonly ([`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/))[]
+> `optional` **assets**: readonly ([`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/))[]
 
 Defined in: [itxn.ts:956](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L956)
 
@@ -302,7 +302,7 @@ Any data up to 1024 bytes
 
 ### onCompletion?
 
-> `optional` **onCompletion**: [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/oncompleteaction/)
+> `optional` **onCompletion**: [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/OnCompleteAction/)
 
 Defined in: [itxn.ts:911](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L911)
 
@@ -330,7 +330,7 @@ Application version for which the txn must reject
 
 ### rekeyTo?
 
-> `optional` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:903](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L903)
 
@@ -344,7 +344,7 @@ Defined in: [itxn.ts:903](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ### sender?
 
-> `optional` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:875](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L875)
 

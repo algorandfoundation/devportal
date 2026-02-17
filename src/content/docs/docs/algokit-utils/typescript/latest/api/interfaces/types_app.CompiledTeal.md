@@ -2,7 +2,7 @@
 title: CompiledTeal
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / CompiledTeal
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / CompiledTeal
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).CompiledTeal
 
@@ -12,11 +12,11 @@ Information about a compiled teal program
 
 ### Properties
 
-- [compiled](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/#compiled)
-- [compiledBase64ToBytes](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/#compiledbase64tobytes)
-- [compiledHash](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/#compiledhash)
-- [sourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/#sourcemap)
-- [teal](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/#teal)
+- [compiled](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/#compiled)
+- [compiledBase64ToBytes](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/#compiledbase64tobytes)
+- [compiledHash](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/#compiledhash)
+- [sourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/#sourcemap)
+- [teal](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/#teal)
 
 ## Properties
 

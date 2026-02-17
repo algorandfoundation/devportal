@@ -2,7 +2,7 @@
 title: ApplicationOnComplete
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / ApplicationOnComplete
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / ApplicationOnComplete
 
 [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/).ApplicationOnComplete
 
@@ -12,12 +12,12 @@ Defines the what additional actions occur with the transaction https://dev.algor
 
 ### Enumeration Members
 
-- [clear](/docs/algokit-utils/typescript/latest/api/enums/types_indexerapplicationoncomplete/#clear)
-- [closeout](/docs/algokit-utils/typescript/latest/api/enums/types_indexerapplicationoncomplete/#closeout)
-- [delete](/docs/algokit-utils/typescript/latest/api/enums/types_indexerapplicationoncomplete/#delete)
-- [noop](/docs/algokit-utils/typescript/latest/api/enums/types_indexerapplicationoncomplete/#noop)
-- [optin](/docs/algokit-utils/typescript/latest/api/enums/types_indexerapplicationoncomplete/#optin)
-- [update](/docs/algokit-utils/typescript/latest/api/enums/types_indexerapplicationoncomplete/#update)
+- [clear](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.ApplicationOnComplete/#clear)
+- [closeout](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.ApplicationOnComplete/#closeout)
+- [delete](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.ApplicationOnComplete/#delete)
+- [noop](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.ApplicationOnComplete/#noop)
+- [optin](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.ApplicationOnComplete/#optin)
+- [update](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.ApplicationOnComplete/#update)
 
 ## Enumeration Members
 

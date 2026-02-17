@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / ItxnCompose
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / ItxnCompose
 
 > **ItxnCompose** = `object`
 
@@ -30,7 +30,7 @@ Defined in: [itxn-compose.ts:45](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`PaymentComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/paymentcomposefields/)
+[`PaymentComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/PaymentComposeFields/)
 
 ##### Returns
 
@@ -46,7 +46,7 @@ Defined in: [itxn-compose.ts:46](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`KeyRegistrationComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/keyregistrationcomposefields/)
+[`KeyRegistrationComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/KeyRegistrationComposeFields/)
 
 ##### Returns
 
@@ -62,7 +62,7 @@ Defined in: [itxn-compose.ts:47](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`AssetConfigComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assetconfigcomposefields/)
+[`AssetConfigComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/AssetConfigComposeFields/)
 
 ##### Returns
 
@@ -78,7 +78,7 @@ Defined in: [itxn-compose.ts:48](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`AssetTransferComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assettransfercomposefields/)
+[`AssetTransferComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/AssetTransferComposeFields/)
 
 ##### Returns
 
@@ -94,7 +94,7 @@ Defined in: [itxn-compose.ts:49](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`AssetFreezeComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assetfreezecomposefields/)
+[`AssetFreezeComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/AssetFreezeComposeFields/)
 
 ##### Returns
 
@@ -110,7 +110,7 @@ Defined in: [itxn-compose.ts:50](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`ApplicationCallComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/applicationcallcomposefields/)
+[`ApplicationCallComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/ApplicationCallComposeFields/)
 
 ##### Returns
 
@@ -126,7 +126,7 @@ Defined in: [itxn-compose.ts:51](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`AnyTransactionComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/anytransactioncomposefields/)
+[`AnyTransactionComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/AnyTransactionComposeFields/)
 
 ##### Returns
 
@@ -142,7 +142,7 @@ Defined in: [itxn-compose.ts:52](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`ComposeItxnParams`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/composeitxnparams/)
+[`ComposeItxnParams`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/ComposeItxnParams/)
 
 ##### Returns
 
@@ -164,11 +164,11 @@ Defined in: [itxn-compose.ts:53](https://github.com/algorandfoundation/puya-ts/b
 
 ###### method
 
-[`InstanceMethod`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/instancemethod/)\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/), `TArgs`\>
+[`InstanceMethod`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/InstanceMethod/)\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Contract/), `TArgs`\>
 
 ###### fields
 
-[`TypedApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/typedapplicationcallfields/)\<`TArgs`\>
+[`TypedApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/TypedApplicationCallFields/)\<`TArgs`\>
 
 ##### Returns
 
@@ -188,7 +188,7 @@ Defined in: [itxn-compose.ts:55](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`PaymentComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/paymentcomposefields/)
+[`PaymentComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/PaymentComposeFields/)
 
 ##### Returns
 
@@ -204,7 +204,7 @@ Defined in: [itxn-compose.ts:56](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`KeyRegistrationComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/keyregistrationcomposefields/)
+[`KeyRegistrationComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/KeyRegistrationComposeFields/)
 
 ##### Returns
 
@@ -220,7 +220,7 @@ Defined in: [itxn-compose.ts:57](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`AssetConfigComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assetconfigcomposefields/)
+[`AssetConfigComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/AssetConfigComposeFields/)
 
 ##### Returns
 
@@ -236,7 +236,7 @@ Defined in: [itxn-compose.ts:58](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`AssetTransferComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assettransfercomposefields/)
+[`AssetTransferComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/AssetTransferComposeFields/)
 
 ##### Returns
 
@@ -252,7 +252,7 @@ Defined in: [itxn-compose.ts:59](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`AssetFreezeComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/assetfreezecomposefields/)
+[`AssetFreezeComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/AssetFreezeComposeFields/)
 
 ##### Returns
 
@@ -268,7 +268,7 @@ Defined in: [itxn-compose.ts:60](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`ApplicationCallComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/applicationcallcomposefields/)
+[`ApplicationCallComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/ApplicationCallComposeFields/)
 
 ##### Returns
 
@@ -284,7 +284,7 @@ Defined in: [itxn-compose.ts:61](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`AnyTransactionComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/anytransactioncomposefields/)
+[`AnyTransactionComposeFields`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/AnyTransactionComposeFields/)
 
 ##### Returns
 
@@ -300,7 +300,7 @@ Defined in: [itxn-compose.ts:62](https://github.com/algorandfoundation/puya-ts/b
 
 ###### fields
 
-[`ComposeItxnParams`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/composeitxnparams/)
+[`ComposeItxnParams`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/ComposeItxnParams/)
 
 ##### Returns
 
@@ -322,11 +322,11 @@ Defined in: [itxn-compose.ts:63](https://github.com/algorandfoundation/puya-ts/b
 
 ###### method
 
-[`InstanceMethod`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/instancemethod/)\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/), `TArgs`\>
+[`InstanceMethod`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/InstanceMethod/)\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Contract/), `TArgs`\>
 
 ###### fields
 
-[`TypedApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/typedapplicationcallfields/)\<`TArgs`\>
+[`TypedApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/TypedApplicationCallFields/)\<`TArgs`\>
 
 ##### Returns
 

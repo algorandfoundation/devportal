@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / Account
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Account
 
 > **Account** = `object`
 
@@ -187,7 +187,7 @@ Note: Account and Asset/Application must be an available resource
 
 ##### assetOrApp
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 

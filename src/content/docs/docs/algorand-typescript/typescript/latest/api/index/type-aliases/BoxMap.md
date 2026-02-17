@@ -6,13 +6,13 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / BoxMap
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / BoxMap
 
-> **BoxMap**\<`TKey`, `TValue`\> = [`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/box/)\<`TValue`\>
+> **BoxMap**\<`TKey`, `TValue`\> = [`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Box/)\<`TValue`\>
 
 Defined in: [box.ts:151](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L151)
 
@@ -36,7 +36,7 @@ The type of the value used to key each box. This key will be encoded to bytes an
 
 The type of the data stored in the box. This value will be encoded to bytes when stored and decoded on retrieval.
 
-> **BoxMap**(`key`): [`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/box/)\<`TValue`\>
+> **BoxMap**(`key`): [`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Box/)\<`TValue`\>
 
 Defined in: [box.ts:113](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L113)
 
@@ -52,7 +52,7 @@ The key of the box to retrieve a proxy for
 
 ## Returns
 
-[`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/box/)\<`TValue`\>
+[`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Box/)\<`TValue`\>
 
 ## Properties
 

@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / Contract
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / Contract
 
 Defined in: [arc4/index.ts:14](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L14)
 
@@ -18,7 +18,7 @@ The base type for all ARC4 contracts in Algorand TypeScript
 
 ## Extends
 
-- [`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/)
+- [`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/BaseContract/)
 
 ## Constructors
 
@@ -32,7 +32,7 @@ The base type for all ARC4 contracts in Algorand TypeScript
 
 #### Inherited from
 
-[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/#constructor)
+[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/BaseContract/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/index/classes/BaseContract/#constructor)
 
 ## Methods
 
@@ -51,7 +51,7 @@ args and on completion actions
 
 #### Overrides
 
-[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/).[`approvalProgram`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/#approvalprogram)
+[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/BaseContract/).[`approvalProgram`](/docs/algorand-typescript/typescript/latest/api/index/classes/BaseContract/#approvalprogram)
 
 ---
 
@@ -69,4 +69,4 @@ The program to be run when the On Completion Action is == ClearState (3)
 
 #### Inherited from
 
-[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/).[`clearStateProgram`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/#clearstateprogram)
+[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/BaseContract/).[`clearStateProgram`](/docs/algorand-typescript/typescript/latest/api/index/classes/BaseContract/#clearstateprogram)

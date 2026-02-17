@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / CompileContractOptions
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / CompileContractOptions
 
 > **CompileContractOptions** = `object`
 
@@ -72,7 +72,7 @@ Number of local uint64s, defaults to value defined for contract
 
 ### templateVars?
 
-> `readonly` `optional` **templateVars**: `Record`\<`string`, [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/deliberateany/)\>
+> `readonly` `optional` **templateVars**: `Record`\<`string`, [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/DeliberateAny/)\>
 
 Defined in: [compiled.ts:80](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L80)
 

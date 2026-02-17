@@ -2,7 +2,7 @@
 title: AppSourceMaps
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppSourceMaps
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppSourceMaps
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppSourceMaps
 
@@ -12,14 +12,14 @@ Source maps for an Algorand app
 
 ### Properties
 
-- [approvalSourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappsourcemaps/#approvalsourcemap)
-- [clearSourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappsourcemaps/#clearsourcemap)
+- [approvalSourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppSourceMaps/#approvalsourcemap)
+- [clearSourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppSourceMaps/#clearsourcemap)
 
 ## Properties
 
 ### approvalSourceMap
 
-• **approvalSourceMap**: [`SourceMapExport`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientsourcemapexport/)
+• **approvalSourceMap**: [`SourceMapExport`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.SourceMapExport/)
 
 The source map of the approval program
 
@@ -31,7 +31,7 @@ The source map of the approval program
 
 ### clearSourceMap
 
-• **clearSourceMap**: [`SourceMapExport`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientsourcemapexport/)
+• **clearSourceMap**: [`SourceMapExport`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.SourceMapExport/)
 
 The source map of the clear program
 

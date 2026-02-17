@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/readme/) / LogicSigOptions
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/README/) / LogicSigOptions
 
 > **LogicSigOptions** = `object`
 
@@ -44,7 +44,7 @@ Defaults to the class name
 
 ### scratchSlots?
 
-> `optional` **scratchSlots**: (`number` \| [`NumberRange`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/numberrange-1/))[]
+> `optional` **scratchSlots**: (`number` \| [`NumberRange`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/NumberRange-1/))[]
 
 Defined in: [logic-sig.ts:49](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/logic-sig.ts#L49)
 

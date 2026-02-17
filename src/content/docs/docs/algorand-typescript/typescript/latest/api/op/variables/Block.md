@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / Block
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / Block
 
 > `const` **Block**: `object`
 
@@ -62,7 +62,7 @@ Defined in: [op.ts:569](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 ### blkFeeSink()
 
-> **blkFeeSink**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **blkFeeSink**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Parameters
 
@@ -72,11 +72,11 @@ Defined in: [op.ts:569](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### blkProposer()
 
-> **blkProposer**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **blkProposer**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Parameters
 
@@ -86,7 +86,7 @@ Defined in: [op.ts:569](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### blkProposerPayout()
 

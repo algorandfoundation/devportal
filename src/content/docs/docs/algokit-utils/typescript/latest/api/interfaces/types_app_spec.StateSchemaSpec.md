@@ -2,7 +2,7 @@
 title: StateSchemaSpec
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / StateSchemaSpec
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / StateSchemaSpec
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).StateSchemaSpec
 
@@ -12,8 +12,8 @@ The rolled-up schema allocation specification for local and global state
 
 ### Properties
 
-- [global](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specstateschemaspec/#global)
-- [local](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specstateschemaspec/#local)
+- [global](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.StateSchemaSpec/#global)
+- [local](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.StateSchemaSpec/#local)
 
 ## Properties
 

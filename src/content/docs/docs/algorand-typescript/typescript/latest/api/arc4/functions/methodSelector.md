@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / methodSelector
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / methodSelector
 
 ## Call Signature
 
@@ -25,7 +25,7 @@ Returns the ARC4 method selector for a given ARC4 method signature. The method s
 
 #### methodSignature
 
-[`InstanceMethod`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/instancemethod/)\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/)\>
+[`InstanceMethod`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/InstanceMethod/)\<[`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Contract/)\>
 
 An ARC4 contract method reference. (Eg. `MyContract.prototype.myMethod`)
 

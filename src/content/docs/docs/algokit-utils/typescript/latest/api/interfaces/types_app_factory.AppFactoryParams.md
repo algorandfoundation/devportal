@@ -2,7 +2,7 @@
 title: AppFactoryParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-factory](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/) / AppFactoryParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-factory](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/) / AppFactoryParams
 
 [types/app-factory](/docs/algokit-utils/typescript/latest/api/modules/types_app_factory/).AppFactoryParams
 
@@ -12,21 +12,21 @@ Parameters to create an app client
 
 ### Properties
 
-- [algorand](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#algorand)
-- [appName](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#appname)
-- [appSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#appspec)
-- [defaultSender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#defaultsender)
-- [defaultSigner](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#defaultsigner)
-- [deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#deletable)
-- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#deploytimeparams)
-- [updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#updatable)
-- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/#version)
+- [algorand](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#algorand)
+- [appName](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#appname)
+- [appSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#appspec)
+- [defaultSender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#defaultsender)
+- [defaultSigner](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#defaultsigner)
+- [deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#deletable)
+- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#deploytimeparams)
+- [updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#updatable)
+- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/#version)
 
 ## Properties
 
 ### algorand
 
-• **algorand**: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+• **algorand**: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 `AlgorandClient` instance
 
@@ -51,7 +51,7 @@ Defaults to the ARC-32/ARC-56 app spec name.
 
 ### appSpec
 
-• **appSpec**: `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/)
+• **appSpec**: `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/)
 
 The ARC-56 or ARC-32 application spec as either:
 
@@ -107,7 +107,7 @@ for each call.
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)
 
 Optional deploy-time TEAL template replacement parameters.
 If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls.

@@ -2,7 +2,7 @@
 title: BulkAssetOptInOutResult
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/) / BulkAssetOptInOutResult
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/) / BulkAssetOptInOutResult
 
 [types/asset-manager](/docs/algokit-utils/typescript/latest/api/modules/types_asset_manager/).BulkAssetOptInOutResult
 
@@ -12,8 +12,8 @@ Individual result from performing a bulk opt-in or bulk opt-out for an account a
 
 ### Properties
 
-- [assetId](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerbulkassetoptinoutresult/#assetid)
-- [transactionId](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_managerbulkassetoptinoutresult/#transactionid)
+- [assetId](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.BulkAssetOptInOutResult/#assetid)
+- [transactionId](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset_manager.BulkAssetOptInOutResult/#transactionid)
 
 ## Properties
 

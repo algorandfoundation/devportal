@@ -6,13 +6,13 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / NTuple
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / NTuple
 
-> **NTuple**\<`T`, `N`\> = `N` _extends_ `N` ? `number` _extends_ `N` ? `T`[] : [`_TupleOf`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/tupleof/)\<`T`, `N`, readonly \[\]\> : `never`
+> **NTuple**\<`T`, `N`\> = `N` _extends_ `N` ? `number` _extends_ `N` ? `T`[] : [`_TupleOf`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/TupleOf/)\<`T`, `N`, readonly \[\]\> : `never`
 
 Defined in: [primitives.ts:364](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L364)
 

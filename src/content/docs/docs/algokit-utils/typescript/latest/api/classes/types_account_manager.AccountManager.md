@@ -2,7 +2,7 @@
 title: AccountManager
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/account-manager](/docs/algokit-utils/typescript/latest/api/modules/types_account_manager/) / AccountManager
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/account-manager](/docs/algokit-utils/typescript/latest/api/modules/types_account_manager/) / AccountManager
 
 [types/account-manager](/docs/algokit-utils/typescript/latest/api/modules/types_account_manager/).AccountManager
 
@@ -12,62 +12,62 @@ Creates and keeps track of signing accounts that can sign transactions for a sen
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#constructor)
 
 ### Properties
 
-- [\_accounts](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#_accounts)
-- [\_clientManager](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#_clientmanager)
-- [\_defaultSigner](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#_defaultsigner)
-- [\_kmdAccountManager](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#_kmdaccountmanager)
+- [\_accounts](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#_accounts)
+- [\_clientManager](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#_clientmanager)
+- [\_defaultSigner](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#_defaultsigner)
+- [\_kmdAccountManager](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#_kmdaccountmanager)
 
 ### Accessors
 
-- [kmd](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#kmd)
+- [kmd](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#kmd)
 
 ### Methods
 
-- [\_getComposer](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#_getcomposer)
-- [\_getEnsureFundedAmount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#_getensurefundedamount)
-- [dispenserFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#dispenserfromenvironment)
-- [ensureFunded](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#ensurefunded)
-- [ensureFundedFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#ensurefundedfromenvironment)
-- [ensureFundedFromTestNetDispenserApi](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#ensurefundedfromtestnetdispenserapi)
-- [fromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#fromenvironment)
-- [fromKmd](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#fromkmd)
-- [fromMnemonic](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#frommnemonic)
-- [getAccount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#getaccount)
-- [getInformation](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#getinformation)
-- [getSigner](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#getsigner)
-- [localNetDispenser](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#localnetdispenser)
-- [logicsig](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#logicsig)
-- [multisig](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#multisig)
-- [random](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#random)
-- [rekeyAccount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#rekeyaccount)
-- [rekeyed](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#rekeyed)
-- [setDefaultSigner](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#setdefaultsigner)
-- [setSigner](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#setsigner)
-- [setSignerFromAccount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#setsignerfromaccount)
-- [setSigners](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#setsigners)
-- [signerAccount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/#signeraccount)
+- [\_getComposer](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#_getcomposer)
+- [\_getEnsureFundedAmount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#_getensurefundedamount)
+- [dispenserFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#dispenserfromenvironment)
+- [ensureFunded](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#ensurefunded)
+- [ensureFundedFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#ensurefundedfromenvironment)
+- [ensureFundedFromTestNetDispenserApi](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#ensurefundedfromtestnetdispenserapi)
+- [fromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#fromenvironment)
+- [fromKmd](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#fromkmd)
+- [fromMnemonic](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#frommnemonic)
+- [getAccount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#getaccount)
+- [getInformation](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#getinformation)
+- [getSigner](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#getsigner)
+- [localNetDispenser](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#localnetdispenser)
+- [logicsig](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#logicsig)
+- [multisig](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#multisig)
+- [random](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#random)
+- [rekeyAccount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#rekeyaccount)
+- [rekeyed](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#rekeyed)
+- [setDefaultSigner](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#setdefaultsigner)
+- [setSigner](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#setsigner)
+- [setSignerFromAccount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#setsignerfromaccount)
+- [setSigners](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#setsigners)
+- [signerAccount](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/#signeraccount)
 
 ## Constructors
 
 ### constructor
 
-• **new AccountManager**(`clientManager`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+• **new AccountManager**(`clientManager`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 Create a new account manager.
 
 #### Parameters
 
-| Name            | Type                                                                                                    | Description                                               |
-| :-------------- | :------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------- |
-| `clientManager` | [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/) | The ClientManager client to use for algod and kmd clients |
+| Name            | Type                                                                                                     | Description                                               |
+| :-------------- | :------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------- |
+| `clientManager` | [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/) | The ClientManager client to use for algod and kmd clients |
 
 #### Returns
 
-[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 **`Example`**
 
@@ -87,7 +87,7 @@ const accountManager = new AccountManager(clientManager);
 
 #### Index signature
 
-▪ [address: `string`]: [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)
+▪ [address: `string`]: [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)
 
 #### Defined in
 
@@ -97,7 +97,7 @@ const accountManager = new AccountManager(clientManager);
 
 ### \_clientManager
 
-• `Private` **\_clientManager**: [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/)
+• `Private` **\_clientManager**: [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/)
 
 #### Defined in
 
@@ -117,7 +117,7 @@ const accountManager = new AccountManager(clientManager);
 
 ### \_kmdAccountManager
 
-• `Private` **\_kmdAccountManager**: [`KmdAccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_kmd_account_managerkmdaccountmanager/)
+• `Private` **\_kmdAccountManager**: [`KmdAccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_kmd_account_manager.KmdAccountManager/)
 
 #### Defined in
 
@@ -127,13 +127,13 @@ const accountManager = new AccountManager(clientManager);
 
 ### kmd
 
-• `get` **kmd**(): [`KmdAccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_kmd_account_managerkmdaccountmanager/)
+• `get` **kmd**(): [`KmdAccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_kmd_account_manager.KmdAccountManager/)
 
 KMD account manager that allows you to easily get and create accounts using KMD.
 
 #### Returns
 
-[`KmdAccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_kmd_account_managerkmdaccountmanager/)
+[`KmdAccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_kmd_account_manager.KmdAccountManager/)
 
 The `KmdAccountManager` instance.
 
@@ -151,7 +151,7 @@ const kmdManager = accountManager.kmd;
 
 ### \_getComposer
 
-▸ **\_getComposer**(`getSuggestedParams?`): [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composertransactioncomposer/)
+▸ **\_getComposer**(`getSuggestedParams?`): [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer/)
 
 #### Parameters
 
@@ -161,7 +161,7 @@ const kmdManager = accountManager.kmd;
 
 #### Returns
 
-[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composertransactioncomposer/)
+[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer/)
 
 #### Defined in
 
@@ -171,19 +171,19 @@ const kmdManager = accountManager.kmd;
 
 ### \_getEnsureFundedAmount
 
-▸ **\_getEnsureFundedAmount**(`sender`, `minSpendingBalance`, `minFundingIncrement?`): `Promise`\<`undefined` \| [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)\>
+▸ **\_getEnsureFundedAmount**(`sender`, `minSpendingBalance`, `minFundingIncrement?`): `Promise`\<`undefined` \| [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)\>
 
 #### Parameters
 
-| Name                   | Type                                                                                      |
-| :--------------------- | :---------------------------------------------------------------------------------------- |
-| `sender`               | `Address`                                                                                 |
-| `minSpendingBalance`   | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/) |
-| `minFundingIncrement?` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/) |
+| Name                   | Type                                                                                       |
+| :--------------------- | :----------------------------------------------------------------------------------------- |
+| `sender`               | `Address`                                                                                  |
+| `minSpendingBalance`   | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/) |
+| `minFundingIncrement?` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/) |
 
 #### Returns
 
-`Promise`\<`undefined` \| [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)\>
+`Promise`\<`undefined` \| [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)\>
 
 #### Defined in
 
@@ -193,7 +193,7 @@ const kmdManager = accountManager.kmd;
 
 ### dispenserFromEnvironment
 
-▸ **dispenserFromEnvironment**(): `Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }\>
+▸ **dispenserFromEnvironment**(): `Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }\>
 
 Returns an account (with private key loaded) that can act as a dispenser from
 environment variables, or against default LocalNet if no environment variables present.
@@ -205,7 +205,7 @@ process.env.DISPENSER_SENDER if it's a rekeyed account.
 
 #### Returns
 
-`Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }\>
+`Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }\>
 
 The account
 
@@ -223,7 +223,7 @@ const account = await accountManager.dispenserFromEnvironment();
 
 ### ensureFunded
 
-▸ **ensureFunded**(`accountToFund`, `dispenserAccount`, `minSpendingBalance`, `options?`): `Promise`\<`undefined` \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/)\>
+▸ **ensureFunded**(`accountToFund`, `dispenserAccount`, `minSpendingBalance`, `options?`): `Promise`\<`undefined` \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/)\>
 
 Funds a given account using a dispenser account as a funding source such that
 the given account has a certain amount of Algo free to spend (accounting for
@@ -233,16 +233,16 @@ https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr
 
 #### Parameters
 
-| Name                 | Type                                                                                                                                                                                                                                                                                                                                                                      | Description                                                                                                              |
-| :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------- |
-| `accountToFund`      | `string` \| `Address`                                                                                                                                                                                                                                                                                                                                                     | The account to fund                                                                                                      |
-| `dispenserAccount`   | `string` \| `Address`                                                                                                                                                                                                                                                                                                                                                     | The account to use as a dispenser funding source                                                                         |
-| `minSpendingBalance` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)                                                                                                                                                                                                                                                                                 | The minimum balance of Algo that the account should have available to spend (i.e. on top of minimum balance requirement) |
-| `options?`           | \{ `minFundingIncrement?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/) } & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/) & `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> | Optional parameters to control the funding increment, transaction or execution of the transaction                        |
+| Name                 | Type                                                                                                                                                                                                                                                                                                                                                                        | Description                                                                                                              |
+| :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `accountToFund`      | `string` \| `Address`                                                                                                                                                                                                                                                                                                                                                       | The account to fund                                                                                                      |
+| `dispenserAccount`   | `string` \| `Address`                                                                                                                                                                                                                                                                                                                                                       | The account to use as a dispenser funding source                                                                         |
+| `minSpendingBalance` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)                                                                                                                                                                                                                                                                                  | The minimum balance of Algo that the account should have available to spend (i.e. on top of minimum balance requirement) |
+| `options?`           | \{ `minFundingIncrement?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/) } & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/) & `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> | Optional parameters to control the funding increment, transaction or execution of the transaction                        |
 
 #### Returns
 
-`Promise`\<`undefined` \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/)\>
+`Promise`\<`undefined` \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/)\>
 
 - The result of executing the dispensing transaction and the `amountFunded` if funds were needed.
 - `undefined` if no funds were needed.
@@ -268,7 +268,7 @@ await accountManager.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', algokit.
 
 ### ensureFundedFromEnvironment
 
-▸ **ensureFundedFromEnvironment**(`accountToFund`, `minSpendingBalance`, `options?`): `Promise`\<`undefined` \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/)\>
+▸ **ensureFundedFromEnvironment**(`accountToFund`, `minSpendingBalance`, `options?`): `Promise`\<`undefined` \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/)\>
 
 Funds a given account using a dispenser account retrieved from the environment,
 per the `dispenserFromEnvironment` method, as a funding source such that
@@ -285,15 +285,15 @@ https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr
 
 #### Parameters
 
-| Name                 | Type                                                                                                                                                                                                                                                                                                                                                                      | Description                                                                                                              |
-| :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------- |
-| `accountToFund`      | `string` \| `Address`                                                                                                                                                                                                                                                                                                                                                     | The account to fund                                                                                                      |
-| `minSpendingBalance` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)                                                                                                                                                                                                                                                                                 | The minimum balance of Algo that the account should have available to spend (i.e. on top of minimum balance requirement) |
-| `options?`           | \{ `minFundingIncrement?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/) } & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/) & `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> | Optional parameters to control the funding increment, transaction or execution of the transaction                        |
+| Name                 | Type                                                                                                                                                                                                                                                                                                                                                                        | Description                                                                                                              |
+| :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `accountToFund`      | `string` \| `Address`                                                                                                                                                                                                                                                                                                                                                       | The account to fund                                                                                                      |
+| `minSpendingBalance` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)                                                                                                                                                                                                                                                                                  | The minimum balance of Algo that the account should have available to spend (i.e. on top of minimum balance requirement) |
+| `options?`           | \{ `minFundingIncrement?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/) } & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/) & `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> | Optional parameters to control the funding increment, transaction or execution of the transaction                        |
 
 #### Returns
 
-`Promise`\<`undefined` \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/)\>
+`Promise`\<`undefined` \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/)\>
 
 - The result of executing the dispensing transaction and the `amountFunded` if funds were needed.
 - `undefined` if no funds were needed.
@@ -319,7 +319,7 @@ await accountManager.ensureFundedFromEnvironment('ACCOUNTADDRESS', algokit.algo(
 
 ### ensureFundedFromTestNetDispenserApi
 
-▸ **ensureFundedFromTestNetDispenserApi**(`accountToFund`, `dispenserClient`, `minSpendingBalance`, `options?`): `Promise`\<`undefined` \| [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/)\>
+▸ **ensureFundedFromTestNetDispenserApi**(`accountToFund`, `dispenserClient`, `minSpendingBalance`, `options?`): `Promise`\<`undefined` \| [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/)\>
 
 Funds a given account using the TestNet Dispenser API as a funding source such that
 the account has a certain amount of Algo free to spend (accounting for Algo locked
@@ -329,17 +329,17 @@ https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr
 
 #### Parameters
 
-| Name                           | Type                                                                                                                              | Description                                                                                                              |
-| :----------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| `accountToFund`                | `string` \| `Address`                                                                                                             | The account to fund                                                                                                      |
-| `dispenserClient`              | [`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/) | The TestNet dispenser funding client                                                                                     |
-| `minSpendingBalance`           | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)                                         | The minimum balance of Algo that the account should have available to spend (i.e. on top of minimum balance requirement) |
-| `options?`                     | `Object`                                                                                                                          | Optional parameters to control the funding increment, transaction or execution of the transaction                        |
-| `options.minFundingIncrement?` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)                                         | -                                                                                                                        |
+| Name                           | Type                                                                                                                               | Description                                                                                                              |
+| :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `accountToFund`                | `string` \| `Address`                                                                                                              | The account to fund                                                                                                      |
+| `dispenserClient`              | [`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/) | The TestNet dispenser funding client                                                                                     |
+| `minSpendingBalance`           | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)                                         | The minimum balance of Algo that the account should have available to spend (i.e. on top of minimum balance requirement) |
+| `options?`                     | `Object`                                                                                                                           | Optional parameters to control the funding increment, transaction or execution of the transaction                        |
+| `options.minFundingIncrement?` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)                                         | -                                                                                                                        |
 
 #### Returns
 
-`Promise`\<`undefined` \| [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/)\>
+`Promise`\<`undefined` \| [`EnsureFundedResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/)\>
 
 - The result of executing the dispensing transaction and the `amountFunded` if funds were needed.
 - `undefined` if no funds were needed.
@@ -370,7 +370,7 @@ await accountManager.ensureFundedFromTestNetDispenserApi(
 
 ### fromEnvironment
 
-▸ **fromEnvironment**(`name`, `fundWith?`): `Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }\>
+▸ **fromEnvironment**(`name`, `fundWith?`): `Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }\>
 
 Tracks and returns an Algorand account with private key loaded by convention from environment variables based on the given name identifier.
 
@@ -387,14 +387,14 @@ This allows you to write code that will work seamlessly in production and local 
 
 #### Parameters
 
-| Name        | Type                                                                                      | Description                                                                                                                                                            |
-| :---------- | :---------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`      | `string`                                                                                  | The name identifier of the account                                                                                                                                     |
-| `fundWith?` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/) | The optional amount to fund the account with when it gets created (when targeting LocalNet), if not specified then 1000 ALGO will be funded from the dispenser account |
+| Name        | Type                                                                                       | Description                                                                                                                                                            |
+| :---------- | :----------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`      | `string`                                                                                   | The name identifier of the account                                                                                                                                     |
+| `fundWith?` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/) | The optional amount to fund the account with when it gets created (when targeting LocalNet), if not specified then 1000 ALGO will be funded from the dispenser account |
 
 #### Returns
 
-`Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }\>
+`Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }\>
 
 The account
 
@@ -417,7 +417,7 @@ If not running against LocalNet then it will use proces.env.MY_ACCOUNT_MNEMONIC 
 
 ### fromKmd
 
-▸ **fromKmd**(`name`, `predicate?`, `sender?`): `Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }\>
+▸ **fromKmd**(`name`, `predicate?`, `sender?`): `Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }\>
 
 Tracks and returns an Algorand account with private key loaded from the given KMD wallet (identified by name).
 
@@ -431,7 +431,7 @@ Tracks and returns an Algorand account with private key loaded from the given KM
 
 #### Returns
 
-`Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }\>
+`Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }\>
 
 The account
 
@@ -452,7 +452,7 @@ const defaultDispenserAccount = await accountManager.fromKmd(
 
 ### fromMnemonic
 
-▸ **fromMnemonic**(`mnemonicSecret`, `sender?`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }
+▸ **fromMnemonic**(`mnemonicSecret`, `sender?`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }
 
 Tracks and returns an Algorand account with secret key loaded (i.e. that can sign transactions) by taking the mnemonic secret.
 
@@ -465,7 +465,7 @@ Tracks and returns an Algorand account with secret key loaded (i.e. that can sig
 
 #### Returns
 
-`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }
+`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }
 
 The account
 
@@ -484,7 +484,7 @@ const rekeyedAccount = accountManager.fromMnemonic('mnemonic secret ...', 'SENDE
 
 ### getAccount
 
-▸ **getAccount**(`sender`): [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)
+▸ **getAccount**(`sender`): [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)
 
 Returns the `TransactionSignerAccount` for the given sender address.
 
@@ -498,7 +498,7 @@ If no signer has been registered for that address then an error is thrown.
 
 #### Returns
 
-[`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)
+[`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)
 
 The `TransactionSignerAccount` or throws an error if not found
 
@@ -585,13 +585,13 @@ const signer = accountManager.getSigner('SENDERADDRESS');
 
 ### localNetDispenser
 
-▸ **localNetDispenser**(): `Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }\>
+▸ **localNetDispenser**(): `Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }\>
 
 Returns an Algorand account with private key loaded for the default LocalNet dispenser account (that can be used to fund other accounts).
 
 #### Returns
 
-`Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) }\>
+`Promise`\<`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) }\>
 
 The account
 
@@ -609,7 +609,7 @@ const account = await accountManager.localNetDispenser();
 
 ### logicsig
 
-▸ **logicsig**(`program`, `args?`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: `LogicSigAccount` }
+▸ **logicsig**(`program`, `args?`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: `LogicSigAccount` }
 
 Tracks and returns an account that represents a logic signature.
 
@@ -622,7 +622,7 @@ Tracks and returns an account that represents a logic signature.
 
 #### Returns
 
-`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: `LogicSigAccount` }
+`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: `LogicSigAccount` }
 
 A logic signature account wrapper
 
@@ -640,20 +640,20 @@ const account = accountManager.logicsig(program, [new Uint8Array(3, ...)])
 
 ### multisig
 
-▸ **multisig**(`multisigParams`, `signingAccounts`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) }
+▸ **multisig**(`multisigParams`, `signingAccounts`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/) }
 
 Tracks and returns an account that supports partial or full multisig signing.
 
 #### Parameters
 
-| Name              | Type                                                                                                                | Description                                     |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------- |
-| `multisigParams`  | `MultisigMetadata`                                                                                                  | The parameters that define the multisig account |
-| `signingAccounts` | (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/))[] | The signers that are currently present          |
+| Name              | Type                                                                                                                 | Description                                     |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------- |
+| `multisigParams`  | `MultisigMetadata`                                                                                                   | The parameters that define the multisig account |
+| `signingAccounts` | (`default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/))[] | The signers that are currently present          |
 
 #### Returns
 
-`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) }
+`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/) }
 
 A multisig account wrapper
 
@@ -674,13 +674,13 @@ const account = accountManager.multisig(
 
 ### random
 
-▸ **random**(): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: `default` }
+▸ **random**(): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: `default` }
 
 Tracks and returns a new, random Algorand account with secret key loaded.
 
 #### Returns
 
-`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: `default` }
+`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: `default` }
 
 The account
 
@@ -706,11 +706,11 @@ Rekey an account to a new address.
 
 #### Parameters
 
-| Name       | Type                                                                                                                                                                                                                                             | Description                                                                                                                                                                                                                                             |
-| :--------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `account`  | `string` \| `Address`                                                                                                                                                                                                                            | The account to rekey                                                                                                                                                                                                                                    |
-| `rekeyTo`  | `string` \| `Address` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)                                                                                               | The account address or signing account of the account that will be used to authorise transactions for the rekeyed account going forward. If a signing account is provided that will now be tracked as the signer for `account` in this `AccountManager` |
-| `options?` | `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/) | Any parameters to control the transaction or execution of the transaction                                                                                                                                                                               |
+| Name       | Type                                                                                                                                                                                                                                              | Description                                                                                                                                                                                                                                             |
+| :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `account`  | `string` \| `Address`                                                                                                                                                                                                                             | The account to rekey                                                                                                                                                                                                                                    |
+| `rekeyTo`  | `string` \| `Address` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)                                                                                               | The account address or signing account of the account that will be used to authorise transactions for the rekeyed account going forward. If a signing account is provided that will now be tracked as the signer for `account` in this `AccountManager` |
+| `options?` | `Omit`\<[`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#commontransactionparams), `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/) | Any parameters to control the transaction or execution of the transaction                                                                                                                                                                               |
 
 #### Returns
 
@@ -758,20 +758,20 @@ await accountManager.rekeyAccount({
 
 ### rekeyed
 
-▸ **rekeyed**(`sender`, `account`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: \{ `addr`: `Address` ; `signer`: `TransactionSigner` = account.signer } }
+▸ **rekeyed**(`sender`, `account`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: \{ `addr`: `Address` ; `signer`: `TransactionSigner` = account.signer } }
 
 Tracks and returns an Algorand account that is a rekeyed version of the given account to a new sender.
 
 #### Parameters
 
-| Name      | Type                                                                                                                      | Description                                                   |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------ |
-| `sender`  | `string` \| `Address`                                                                                                     | The sender address to use as the new sender                   |
-| `account` | [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) | The account to use as the signer for this new rekeyed account |
+| Name      | Type                                                                                                                       | Description                                                   |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------ |
+| `sender`  | `string` \| `Address`                                                                                                      | The sender address to use as the new sender                   |
+| `account` | [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) | The account to use as the signer for this new rekeyed account |
 
 #### Returns
 
-`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: \{ `addr`: `Address` ; `signer`: `TransactionSigner` = account.signer } }
+`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: \{ `addr`: `Address` ; `signer`: `TransactionSigner` = account.signer } }
 
 The account
 
@@ -790,7 +790,7 @@ const rekeyedAccount = accountManager.rekeyed(account, 'SENDERADDRESS...');
 
 ### setDefaultSigner
 
-▸ **setDefaultSigner**(`signer`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+▸ **setDefaultSigner**(`signer`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 Sets the default signer to use if no other signer is specified.
 
@@ -799,13 +799,13 @@ then an error will be thrown from `getSigner` / `getAccount`.
 
 #### Parameters
 
-| Name     | Type                                                                                                                                             | Description                                                                     |
-| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
-| `signer` | `TransactionSigner` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) | The signer to use, either a `TransactionSigner` or a `TransactionSignerAccount` |
+| Name     | Type                                                                                                                                              | Description                                                                     |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------ |
+| `signer` | `TransactionSigner` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) | The signer to use, either a `TransactionSigner` or a `TransactionSignerAccount` |
 
 #### Returns
 
-[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 The `AccountManager` so method calls can be chained
 
@@ -827,7 +827,7 @@ const signer = accountManager.getSigner('SENDERADDRESS');
 
 ### setSigner
 
-▸ **setSigner**(`sender`, `signer`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+▸ **setSigner**(`sender`, `signer`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 Tracks the given `algosdk.TransactionSigner` against the given sender address for later signing.
 
@@ -840,7 +840,7 @@ Tracks the given `algosdk.TransactionSigner` against the given sender address fo
 
 #### Returns
 
-[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 The `AccountManager` instance for method chaining
 
@@ -861,7 +861,7 @@ const accountManager = new AccountManager(clientManager).setSigner(
 
 ### setSignerFromAccount
 
-▸ **setSignerFromAccount**(`account`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+▸ **setSignerFromAccount**(`account`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 Tracks the given account for later signing.
 
@@ -870,13 +870,13 @@ Note: If you are generating accounts via the various methods on `AccountManager`
 
 #### Parameters
 
-| Name      | Type                                                                                                                                                                                                                                                                                                                                                                      | Description                                                                                                                                                 |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `account` | [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount` | The account to register, which can be a `TransactionSignerAccount` or a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount` |
+| Name      | Type                                                                                                                                                                                                                                                                                                                                                                         | Description                                                                                                                                                 |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `account` | [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) \| `LogicSigAccount` | The account to register, which can be a `TransactionSignerAccount` or a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount` |
 
 #### Returns
 
-[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 The `AccountManager` instance for method chaining
 
@@ -904,7 +904,7 @@ const accountManager = new AccountManager(clientManager)
 
 ### setSigners
 
-▸ **setSigners**(`anotherAccountManager`, `overwriteExisting?`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+▸ **setSigners**(`anotherAccountManager`, `overwriteExisting?`): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 Takes all registered signers from the given `AccountManager` and adds them to this `AccountManager`.
 
@@ -912,14 +912,14 @@ This is useful for situations where you have multiple contexts you are building 
 
 #### Parameters
 
-| Name                    | Type                                                                                                       | Default value | Description                                                                                                                                 |
-| :---------------------- | :--------------------------------------------------------------------------------------------------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| `anotherAccountManager` | [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/) | `undefined`   | Another account manager with signers registered                                                                                             |
-| `overwriteExisting`     | `boolean`                                                                                                  | `true`        | Whether or not to overwrite any signers that have the same sender address with the ones in the other account manager or not (default: true) |
+| Name                    | Type                                                                                                        | Default value | Description                                                                                                                                 |
+| :---------------------- | :---------------------------------------------------------------------------------------------------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| `anotherAccountManager` | [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/) | `undefined`   | Another account manager with signers registered                                                                                             |
+| `overwriteExisting`     | `boolean`                                                                                                   | `true`        | Whether or not to overwrite any signers that have the same sender address with the ones in the other account manager or not (default: true) |
 
 #### Returns
 
-[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 The `AccountManager` instance for method chaining
 
@@ -937,16 +937,16 @@ accountManager2.setSigners(accountManager1);
 
 ### signerAccount
 
-▸ **signerAccount**\<`T`\>(`account`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: `T` }
+▸ **signerAccount**\<`T`\>(`account`): `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: `T` }
 
 Records the given account (that can sign) against the address of the provided account for later
 retrieval and returns a `TransactionSignerAccount` along with the original account in an `account` property.
 
 #### Type parameters
 
-| Name | Type                                                                                                                                                                                                                                                                                                                                                                              |
-| :--- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `T`  | extends [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount` |
+| Name | Type                                                                                                                                                                                                                                                                                                                                                                                 |
+| :--- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) \| `LogicSigAccount` |
 
 #### Parameters
 
@@ -956,7 +956,7 @@ retrieval and returns a `TransactionSignerAccount` along with the original accou
 
 #### Returns
 
-`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & \{ `account`: `T` }
+`Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & \{ `account`: `T` }
 
 #### Defined in
 

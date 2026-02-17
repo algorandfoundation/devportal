@@ -6,15 +6,15 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / Asset
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Asset
 
 ## Call Signature
 
-> **Asset**(): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> **Asset**(): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Defined in: [reference.ts:127](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L127)
 
@@ -22,11 +22,11 @@ Creates a new Asset object represent the asset id 0 (an invalid ID)
 
 ### Returns
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 ## Call Signature
 
-> **Asset**(`assetId`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> **Asset**(`assetId`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Defined in: [reference.ts:132](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L132)
 
@@ -42,4 +42,4 @@ The id of the asset
 
 ### Returns
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)

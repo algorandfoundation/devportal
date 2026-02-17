@@ -2,7 +2,7 @@
 title: AppInformation
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/) / AppInformation
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/) / AppInformation
 
 [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/).AppInformation
 
@@ -12,17 +12,17 @@ Information about an app.
 
 ### Properties
 
-- [appAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#appaddress)
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#appid)
-- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#approvalprogram)
-- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#clearstateprogram)
-- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#creator)
-- [extraProgramPages](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#extraprogrampages)
-- [globalByteSlices](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#globalbyteslices)
-- [globalInts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#globalints)
-- [globalState](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#globalstate)
-- [localByteSlices](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#localbyteslices)
-- [localInts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/#localints)
+- [appAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#appaddress)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#appid)
+- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#approvalprogram)
+- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#clearstateprogram)
+- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#creator)
+- [extraProgramPages](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#extraprogrampages)
+- [globalByteSlices](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#globalbyteslices)
+- [globalInts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#globalints)
+- [globalState](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#globalstate)
+- [localByteSlices](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#localbyteslices)
+- [localInts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/#localints)
 
 ## Properties
 
@@ -125,7 +125,7 @@ The number of allocated ints in global state.
 
 ### globalState
 
-• **globalState**: [`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstate/)
+• **globalState**: [`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppState/)
 
 Current global state values.
 

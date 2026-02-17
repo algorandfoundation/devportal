@@ -160,7 +160,7 @@ and `>>`) and `/` (as with `UInt64`, you must use `//` for truncating division i
 
 Note that the op code costs for `bigint` math are an order of magnitude higher than those for
 `uint64` math. If you just need to handle overflow, take a look at the wide ops such as `addw`,
-`mulw`, etc - all of which are exposed through the [`algopy.op`](/docs/algorand-python/python/latest/api/api-algopyop/#module-algopy.op) module.
+`mulw`, etc - all of which are exposed through the [`algopy.op`](/docs/algorand-python/python/latest/api/api-algopy.op/#module-algopy.op) module.
 
 Another contrast between `bigint` and `uint64` math is that `bigint` math ops don’t immediately
 error on overflow - if the result exceeds 512-bits, then you can still access the value via
@@ -223,7 +223,7 @@ if a:
 [`Account`](/docs/algorand-python/python/latest/api/api-algopy/#algopy.Account) represents a logical Account, backed by a `bytes[32]` representing the
 bytes of the public key (without the checksum). It has various account related methods that can be called from the type.
 
-Also see [`algopy.arc4.Address`](/docs/algorand-python/python/latest/api/api-algopyarc4/#algopy.arc4.Address) if needing to represent the address as a distinct type.
+Also see [`algopy.arc4.Address`](/docs/algorand-python/python/latest/api/api-algopy.arc4/#algopy.arc4.Address) if needing to represent the address as a distinct type.
 
 ### Asset
 
@@ -332,7 +332,7 @@ often it may make sense to convert the ARC-4 value to a native AVM type, in whic
 the `native` property to retrieve the value. Most of the ARC-4 types also allow for mutation e.g.
 you can edit values in arrays by index.
 
-Please see the [reference documentation](/docs/algorand-python/python/latest/api/api-algopyarc4/) for the different classes that can
+Please see the [reference documentation](/docs/algorand-python/python/latest/api/api-algopy.arc4/) for the different classes that can
 be used to represent ARC-4 values or the [ARC-4 documentation](/docs/algorand-python/python/latest/guides/lg-arc4/) for more information
 about ARC-4.
 

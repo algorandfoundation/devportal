@@ -2,7 +2,7 @@
 title: Config
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/config](/docs/algokit-utils/typescript/latest/api/modules/types_config/) / Config
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/config](/docs/algokit-utils/typescript/latest/api/modules/types_config/) / Config
 
 [types/config](/docs/algokit-utils/typescript/latest/api/modules/types_config/).Config
 
@@ -12,14 +12,14 @@ The AlgoKit configuration type
 
 ### Properties
 
-- [debug](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/#debug)
-- [events](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/#events)
-- [logger](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/#logger)
-- [maxSearchDepth](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/#maxsearchdepth)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/#populateappcallresources)
-- [projectRoot](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/#projectroot)
-- [traceAll](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/#traceall)
-- [traceBufferSizeMb](/docs/algokit-utils/typescript/latest/api/interfaces/types_configconfig/#tracebuffersizemb)
+- [debug](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/#debug)
+- [events](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/#events)
+- [logger](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/#logger)
+- [maxSearchDepth](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/#maxsearchdepth)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/#populateappcallresources)
+- [projectRoot](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/#projectroot)
+- [traceAll](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/#traceall)
+- [traceBufferSizeMb](/docs/algokit-utils/typescript/latest/api/interfaces/types_config.Config/#tracebuffersizemb)
 
 ## Properties
 
@@ -37,7 +37,7 @@ Whether or not debug mode is enabled
 
 ### events
 
-• **events**: [`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitterasynceventemitter/)
+• **events**: [`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitter.AsyncEventEmitter/)
 
 #### Defined in
 

@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / Uint16
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / Uint16
 
 Defined in: [arc4/encoded-types.ts:173](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L173)
 
@@ -18,7 +18,7 @@ An alias for Uint<16>
 
 ## Extends
 
-- [`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/)\<`16`\>
+- [`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/)\<`16`\>
 
 ## Constructors
 
@@ -34,7 +34,7 @@ Create a new UintN instance
 
 ##### v?
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 The native uint64 or biguint value to initialize this UintN from
 
@@ -44,7 +44,7 @@ The native uint64 or biguint value to initialize this UintN from
 
 #### Inherited from
 
-[`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/#constructor)
+[`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/#constructor)
 
 ## Accessors
 
@@ -64,7 +64,7 @@ Retrieve the encoded bytes for this type
 
 #### Inherited from
 
-[`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/#bytes)
+[`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/#bytes)
 
 ## Methods
 
@@ -82,7 +82,7 @@ Retrieve the decoded native biguint
 
 #### Inherited from
 
-[`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/).[`asBigUint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/#asbiguint)
+[`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/).[`asBigUint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/#asbiguint)
 
 ---
 
@@ -100,4 +100,4 @@ Retrieve the decoded native uint64
 
 #### Inherited from
 
-[`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/).[`asUint64`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/uint/#asuint64)
+[`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/).[`asUint64`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/#asuint64)

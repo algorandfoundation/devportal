@@ -2,7 +2,7 @@
 title: ResolveAppById
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / ResolveAppById
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / ResolveAppById
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).ResolveAppById
 
@@ -10,7 +10,7 @@ Configuration to resolve app by ID
 
 ## Hierarchy
 
-- [`ResolveAppByIdBase`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/)
+- [`ResolveAppByIdBase`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/)
 
   ↳ **`ResolveAppById`**
 
@@ -18,9 +18,9 @@ Configuration to resolve app by ID
 
 ### Properties
 
-- [id](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyid/#id)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyid/#name)
-- [resolveBy](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyid/#resolveby)
+- [id](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppById/#id)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppById/#name)
+- [resolveBy](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppById/#resolveby)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The id of an existing app to call using this client, or 0 if the app hasn't been
 
 #### Inherited from
 
-[ResolveAppByIdBase](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/).[id](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/#id)
+[ResolveAppByIdBase](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/).[id](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/#id)
 
 #### Defined in
 
@@ -48,7 +48,7 @@ The optional name to use to mark the app when deploying `ApplicationClient.deplo
 
 #### Inherited from
 
-[ResolveAppByIdBase](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/).[name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/#name)
+[ResolveAppByIdBase](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/).[name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/#name)
 
 #### Defined in
 

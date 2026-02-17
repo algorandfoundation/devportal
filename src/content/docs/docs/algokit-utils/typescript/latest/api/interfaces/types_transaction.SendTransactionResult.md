@@ -2,7 +2,7 @@
 title: SendTransactionResult
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendTransactionResult
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendTransactionResult
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).SendTransactionResult
 
@@ -12,18 +12,18 @@ The result of sending a transaction
 
 - **`SendTransactionResult`**
 
-  ↳ [`AppCallTransactionResultOfType`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcalltransactionresultoftype/)
+  ↳ [`AppCallTransactionResultOfType`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallTransactionResultOfType/)
 
-  ↳ [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresult/)
+  ↳ [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResult/)
 
-  ↳ [`ConfirmedTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresults/)
+  ↳ [`ConfirmedTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResults/)
 
 ## Table of contents
 
 ### Properties
 
-- [confirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/#confirmation)
-- [transaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/#transaction)
+- [confirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/#confirmation)
+- [transaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/#transaction)
 
 ## Properties
 

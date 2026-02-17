@@ -2,15 +2,15 @@
 title: types/network-client
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/network-client
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/network-client
 
 ## Table of contents
 
 ### Interfaces
 
-- [AlgoClientConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
-- [AlgoConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/)
-- [NetworkDetails](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientnetworkdetails/)
+- [AlgoClientConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
+- [AlgoConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/)
+- [NetworkDetails](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.NetworkDetails/)
 
 ### Functions
 

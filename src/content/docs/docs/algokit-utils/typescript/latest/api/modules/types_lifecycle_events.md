@@ -2,13 +2,13 @@
 title: types/lifecycle-events
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/lifecycle-events
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/lifecycle-events
 
 ## Table of contents
 
 ### Enumerations
 
-- [EventType](/docs/algokit-utils/typescript/latest/api/enums/types_lifecycle_eventseventtype/)
+- [EventType](/docs/algokit-utils/typescript/latest/api/enums/types_lifecycle_events.EventType/)
 
 ### Type Aliases
 
@@ -26,10 +26,10 @@ title: types/lifecycle-events
 
 #### Type declaration
 
-| Name                | Type                                                                                                                          |
-| :------------------ | :---------------------------------------------------------------------------------------------------------------------------- |
-| `AppCompiled`       | [`TealSourcesDebugEventData`](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingtealsourcesdebugeventdata/) |
-| `TxnGroupSimulated` | [`AVMTracesEventData`](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingavmtraceseventdata/)               |
+| Name                | Type                                                                                                                           |
+| :------------------ | :----------------------------------------------------------------------------------------------------------------------------- |
+| `AppCompiled`       | [`TealSourcesDebugEventData`](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.TealSourcesDebugEventData/) |
+| `TxnGroupSimulated` | [`AVMTracesEventData`](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.AVMTracesEventData/)               |
 
 #### Defined in
 

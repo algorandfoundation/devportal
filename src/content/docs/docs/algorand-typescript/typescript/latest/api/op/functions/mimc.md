@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / mimc
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / mimc
 
 > **mimc**(`c`, `a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
 
@@ -24,7 +24,7 @@ The MiMC hash function has known collisions since any input which is a multiple 
 
 ### c
 
-[`MimcConfigurations`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/mimcconfigurations/)
+[`MimcConfigurations`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/MimcConfigurations/)
 
 ### a
 

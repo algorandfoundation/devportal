@@ -2,7 +2,7 @@
 title: OnSchemaBreak
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / OnSchemaBreak
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / OnSchemaBreak
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).OnSchemaBreak
 
@@ -12,9 +12,9 @@ What action to perform when deploying an app and a breaking schema change is det
 
 ### Enumeration Members
 
-- [AppendApp](/docs/algokit-utils/typescript/latest/api/enums/types_apponschemabreak/#appendapp)
-- [Fail](/docs/algokit-utils/typescript/latest/api/enums/types_apponschemabreak/#fail)
-- [ReplaceApp](/docs/algokit-utils/typescript/latest/api/enums/types_apponschemabreak/#replaceapp)
+- [AppendApp](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnSchemaBreak/#appendapp)
+- [Fail](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnSchemaBreak/#fail)
+- [ReplaceApp](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnSchemaBreak/#replaceapp)
 
 ## Enumeration Members
 

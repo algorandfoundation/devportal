@@ -2,19 +2,19 @@
 title: types/client-manager
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/client-manager
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/client-manager
 
 ## Table of contents
 
 ### Classes
 
-- [ClientManager](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/)
+- [ClientManager](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/)
 
 ### Interfaces
 
-- [AlgoSdkClients](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/)
-- [TypedAppClient](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_managertypedappclient/)
-- [TypedAppFactory](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_managertypedappfactory/)
+- [AlgoSdkClients](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.AlgoSdkClients/)
+- [TypedAppClient](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.TypedAppClient/)
+- [TypedAppFactory](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.TypedAppFactory/)
 
 ### Type Aliases
 
@@ -31,7 +31,7 @@ title: types/client-manager
 
 ### ClientAppClientByNetworkParams
 
-Ƭ **ClientAppClientByNetworkParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appId"`\>\>
+Ƭ **ClientAppClientByNetworkParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/), `"algorand"` \| `"appId"`\>\>
 
 Params to get an app client by network from `ClientManager`.
 
@@ -43,7 +43,7 @@ Params to get an app client by network from `ClientManager`.
 
 ### ClientAppClientParams
 
-Ƭ **ClientAppClientParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/), `"algorand"`\>\>
+Ƭ **ClientAppClientParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/), `"algorand"`\>\>
 
 Params to get an app client by ID from `ClientManager`.
 
@@ -55,7 +55,7 @@ Params to get an app client by ID from `ClientManager`.
 
 ### ClientAppFactoryParams
 
-Ƭ **ClientAppFactoryParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppFactoryParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/), `"algorand"`\>\>
+Ƭ **ClientAppFactoryParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppFactoryParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/), `"algorand"`\>\>
 
 Params to get an app factory from `ClientManager`.
 
@@ -91,7 +91,7 @@ Params to get a typed app client by creator address and name from `ClientManager
 
 ### ClientTypedAppClientByNetworkParams
 
-Ƭ **ClientTypedAppClientByNetworkParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"` \| `"appId"`\>\>
+Ƭ **ClientTypedAppClientByNetworkParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/), `"algorand"` \| `"appSpec"` \| `"appId"`\>\>
 
 Params to get a typed app client by network from `ClientManager`.
 
@@ -103,7 +103,7 @@ Params to get a typed app client by network from `ClientManager`.
 
 ### ClientTypedAppClientParams
 
-Ƭ **ClientTypedAppClientParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"`\>\>
+Ƭ **ClientTypedAppClientParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/), `"algorand"` \| `"appSpec"`\>\>
 
 Params to get a typed app client by ID from `ClientManager`.
 
@@ -115,7 +115,7 @@ Params to get a typed app client by ID from `ClientManager`.
 
 ### ClientTypedAppFactoryParams
 
-Ƭ **ClientTypedAppFactoryParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppFactoryParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factoryappfactoryparams/), `"algorand"` \| `"appSpec"`\>\>
+Ƭ **ClientTypedAppFactoryParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppFactoryParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_factory.AppFactoryParams/), `"algorand"` \| `"appSpec"`\>\>
 
 Params to get a typed app factory from `ClientManager`.
 

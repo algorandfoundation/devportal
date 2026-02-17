@@ -15,7 +15,7 @@ This `log` method is a superset of the [AVM `log` method](/docs/algorand-python/
   - `str` literals / module variables (encoded as UTF-8)
   - `bytes` literals / module variables (encoded as is)
   - `Bytes` values (encoded as is)
-  - `BytesBacked` values, which includes [`String`](/docs/algorand-python/python/latest/api/api-algopy/#algopy.String), [`BigUInt`](/docs/algorand-python/python/latest/api/api-algopy/#algopy.BigUInt), [`Account`](/docs/algorand-python/python/latest/api/api-algopy/#algopy.Account) and all of the [ARC-4 types](/docs/algorand-python/python/latest/api/api-algopyarc4/) (encoded as their underlying bytes values)
+  - `BytesBacked` values, which includes [`String`](/docs/algorand-python/python/latest/api/api-algopy/#algopy.String), [`BigUInt`](/docs/algorand-python/python/latest/api/api-algopy/#algopy.BigUInt), [`Account`](/docs/algorand-python/python/latest/api/api-algopy/#algopy.Account) and all of the [ARC-4 types](/docs/algorand-python/python/latest/api/api-algopy.arc4/) (encoded as their underlying bytes values)
 
 Logged values are [available to the calling client](https://dev.algorand.co/reference/rest-api/algod/#pendingtransactionresponse) and attached to the transaction record stored on the blockchain ledger.
 

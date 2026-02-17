@@ -8,7 +8,7 @@ To see some usage examples check out the [automated tests](src/types/algorand-cl
 
 ## `AssetManager`
 
-The [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/) is a class that is used to manage asset information.
+The [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/) is a class that is used to manage asset information.
 
 To get an instance of `AssetManager`, you can use either [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/algorand-client/) via `algorand.asset` or instantiate it directly:
 
@@ -292,7 +292,7 @@ await algorand.send.assetOptOut({
 
 ### `asset.bulkOptIn`
 
-The [`asset.bulkOptIn`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#bulkoptin) function facilitates the opt-in process for an account to multiple assets, allowing the account to receive and hold those assets.
+The [`asset.bulkOptIn`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#bulkoptin) function facilitates the opt-in process for an account to multiple assets, allowing the account to receive and hold those assets.
 
 ```typescript
 // Basic example
@@ -309,7 +309,7 @@ algorand.asset.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n], {
 
 ### `asset.bulkOptOut`
 
-The [`asset.bulkOptOut`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/#bulkoptout) function facilitates the opt-out process for an account from multiple assets, permitting the account to discontinue holding a group of assets.
+The [`asset.bulkOptOut`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/#bulkoptout) function facilitates the opt-out process for an account from multiple assets, permitting the account to discontinue holding a group of assets.
 
 ```typescript
 // Basic example

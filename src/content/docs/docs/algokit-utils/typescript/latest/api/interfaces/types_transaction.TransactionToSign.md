@@ -2,7 +2,7 @@
 title: TransactionToSign
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / TransactionToSign
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / TransactionToSign
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).TransactionToSign
 
@@ -12,8 +12,8 @@ Defines an unsigned transaction that will appear in a group of transactions alon
 
 ### Properties
 
-- [signer](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiontosign/#signer)
-- [transaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiontosign/#transaction)
+- [signer](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionToSign/#signer)
+- [transaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionToSign/#transaction)
 
 ## Properties
 

@@ -2,7 +2,7 @@
 title: AlgorandClient
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/algorand-client](/docs/algokit-utils/typescript/latest/api/modules/types_algorand_client/) / AlgorandClient
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/algorand-client](/docs/algokit-utils/typescript/latest/api/modules/types_algorand_client/) / AlgorandClient
 
 [types/algorand-client](/docs/algokit-utils/typescript/latest/api/modules/types_algorand_client/).AlgorandClient
 
@@ -12,67 +12,67 @@ A client that brokers easy access to Algorand functionality.
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#constructor)
 
 ### Properties
 
-- [\_accountManager](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_accountmanager)
-- [\_appDeployer](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_appdeployer)
-- [\_appManager](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_appmanager)
-- [\_assetManager](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_assetmanager)
-- [\_cachedSuggestedParams](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_cachedsuggestedparams)
-- [\_cachedSuggestedParamsExpiry](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_cachedsuggestedparamsexpiry)
-- [\_cachedSuggestedParamsTimeout](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_cachedsuggestedparamstimeout)
-- [\_clientManager](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_clientmanager)
-- [\_defaultValidityWindow](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_defaultvaliditywindow)
-- [\_errorTransformers](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_errortransformers)
-- [\_transactionCreator](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_transactioncreator)
-- [\_transactionSender](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#_transactionsender)
+- [\_accountManager](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_accountmanager)
+- [\_appDeployer](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_appdeployer)
+- [\_appManager](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_appmanager)
+- [\_assetManager](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_assetmanager)
+- [\_cachedSuggestedParams](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_cachedsuggestedparams)
+- [\_cachedSuggestedParamsExpiry](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_cachedsuggestedparamsexpiry)
+- [\_cachedSuggestedParamsTimeout](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_cachedsuggestedparamstimeout)
+- [\_clientManager](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_clientmanager)
+- [\_defaultValidityWindow](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_defaultvaliditywindow)
+- [\_errorTransformers](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_errortransformers)
+- [\_transactionCreator](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_transactioncreator)
+- [\_transactionSender](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#_transactionsender)
 
 ### Accessors
 
-- [account](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#account)
-- [app](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#app)
-- [appDeployer](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#appdeployer)
-- [asset](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#asset)
-- [client](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#client)
-- [createTransaction](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#createtransaction)
-- [send](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#send)
+- [account](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#account)
+- [app](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#app)
+- [appDeployer](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#appdeployer)
+- [asset](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#asset)
+- [client](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#client)
+- [createTransaction](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#createtransaction)
+- [send](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#send)
 
 ### Methods
 
-- [getSuggestedParams](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#getsuggestedparams)
-- [newGroup](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#newgroup)
-- [registerErrorTransformer](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#registererrortransformer)
-- [setDefaultSigner](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#setdefaultsigner)
-- [setDefaultValidityWindow](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#setdefaultvaliditywindow)
-- [setSigner](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#setsigner)
-- [setSignerFromAccount](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#setsignerfromaccount)
-- [setSuggestedParamsCache](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#setsuggestedparamscache)
-- [setSuggestedParamsCacheTimeout](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#setsuggestedparamscachetimeout)
-- [unregisterErrorTransformer](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#unregistererrortransformer)
-- [defaultLocalNet](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#defaultlocalnet)
-- [fromClients](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#fromclients)
-- [fromConfig](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#fromconfig)
-- [fromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#fromenvironment)
-- [mainNet](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#mainnet)
-- [testNet](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/#testnet)
+- [getSuggestedParams](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#getsuggestedparams)
+- [newGroup](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#newgroup)
+- [registerErrorTransformer](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#registererrortransformer)
+- [setDefaultSigner](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#setdefaultsigner)
+- [setDefaultValidityWindow](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#setdefaultvaliditywindow)
+- [setSigner](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#setsigner)
+- [setSignerFromAccount](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#setsignerfromaccount)
+- [setSuggestedParamsCache](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#setsuggestedparamscache)
+- [setSuggestedParamsCacheTimeout](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#setsuggestedparamscachetimeout)
+- [unregisterErrorTransformer](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#unregistererrortransformer)
+- [defaultLocalNet](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#defaultlocalnet)
+- [fromClients](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#fromclients)
+- [fromConfig](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#fromconfig)
+- [fromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#fromenvironment)
+- [mainNet](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#mainnet)
+- [testNet](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/#testnet)
 
 ## Constructors
 
 ### constructor
 
-• **new AlgorandClient**(`config`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+• **new AlgorandClient**(`config`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 #### Parameters
 
-| Name     | Type                                                                                                                                                                                                                 |
-| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `config` | [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/) \| [`AlgoSdkClients`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/) |
+| Name     | Type                                                                                                                                                                                                                   |
+| :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `config` | [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/) \| [`AlgoSdkClients`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.AlgoSdkClients/) |
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 #### Defined in
 
@@ -82,7 +82,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_accountManager
 
-• `Private` **\_accountManager**: [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+• `Private` **\_accountManager**: [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 #### Defined in
 
@@ -92,7 +92,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_appDeployer
 
-• `Private` **\_appDeployer**: [`AppDeployer`](/docs/algokit-utils/typescript/latest/api/classes/types_app_deployerappdeployer/)
+• `Private` **\_appDeployer**: [`AppDeployer`](/docs/algokit-utils/typescript/latest/api/classes/types_app_deployer.AppDeployer/)
 
 #### Defined in
 
@@ -102,7 +102,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_appManager
 
-• `Private` **\_appManager**: [`AppManager`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/)
+• `Private` **\_appManager**: [`AppManager`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/)
 
 #### Defined in
 
@@ -112,7 +112,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_assetManager
 
-• `Private` **\_assetManager**: [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/)
+• `Private` **\_assetManager**: [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/)
 
 #### Defined in
 
@@ -152,7 +152,7 @@ A client that brokers easy access to Algorand functionality.
 
 ### \_clientManager
 
-• `Private` **\_clientManager**: [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/)
+• `Private` **\_clientManager**: [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/)
 
 #### Defined in
 
@@ -186,7 +186,7 @@ error transformers from the set.
 
 ### \_transactionCreator
 
-• `Private` **\_transactionCreator**: [`AlgorandClientTransactionCreator`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_creatoralgorandclienttransactioncreator/)
+• `Private` **\_transactionCreator**: [`AlgorandClientTransactionCreator`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_creator.AlgorandClientTransactionCreator/)
 
 #### Defined in
 
@@ -196,7 +196,7 @@ error transformers from the set.
 
 ### \_transactionSender
 
-• `Private` **\_transactionSender**: [`AlgorandClientTransactionSender`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_senderalgorandclienttransactionsender/)
+• `Private` **\_transactionSender**: [`AlgorandClientTransactionSender`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_sender.AlgorandClientTransactionSender/)
 
 #### Defined in
 
@@ -206,13 +206,13 @@ error transformers from the set.
 
 ### account
 
-• `get` **account**(): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+• `get` **account**(): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 Get or create accounts that can sign transactions.
 
 #### Returns
 
-[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+[`AccountManager`](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 The `AccountManager` instance.
 
@@ -230,13 +230,13 @@ const accountManager = AlgorandClient.mainNet().account;
 
 ### app
 
-• `get` **app**(): [`AppManager`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/)
+• `get` **app**(): [`AppManager`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/)
 
 Methods for interacting with apps.
 
 #### Returns
 
-[`AppManager`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/)
+[`AppManager`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/)
 
 The `AppManager` instance.
 
@@ -254,13 +254,13 @@ const appManager = AlgorandClient.mainNet().app;
 
 ### appDeployer
 
-• `get` **appDeployer**(): [`AppDeployer`](/docs/algokit-utils/typescript/latest/api/classes/types_app_deployerappdeployer/)
+• `get` **appDeployer**(): [`AppDeployer`](/docs/algokit-utils/typescript/latest/api/classes/types_app_deployer.AppDeployer/)
 
 Methods for deploying apps and managing app deployment metadata.
 
 #### Returns
 
-[`AppDeployer`](/docs/algokit-utils/typescript/latest/api/classes/types_app_deployerappdeployer/)
+[`AppDeployer`](/docs/algokit-utils/typescript/latest/api/classes/types_app_deployer.AppDeployer/)
 
 The `AppDeployer` instance.
 
@@ -278,13 +278,13 @@ const deployer = AlgorandClient.mainNet().appDeployer;
 
 ### asset
 
-• `get` **asset**(): [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/)
+• `get` **asset**(): [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/)
 
 Methods for interacting with assets.
 
 #### Returns
 
-[`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_managerassetmanager/)
+[`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager/)
 
 The `AssetManager` instance.
 
@@ -302,13 +302,13 @@ const assetManager = AlgorandClient.mainNet().asset;
 
 ### client
 
-• `get` **client**(): [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/)
+• `get` **client**(): [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/)
 
 Get clients, including algosdk clients and app clients.
 
 #### Returns
 
-[`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/)
+[`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/)
 
 The `ClientManager` instance.
 
@@ -326,13 +326,13 @@ const clientManager = AlgorandClient.mainNet().client;
 
 ### createTransaction
 
-• `get` **createTransaction**(): [`AlgorandClientTransactionCreator`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_creatoralgorandclienttransactioncreator/)
+• `get` **createTransaction**(): [`AlgorandClientTransactionCreator`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_creator.AlgorandClientTransactionCreator/)
 
 Methods for creating a transaction.
 
 #### Returns
 
-[`AlgorandClientTransactionCreator`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_creatoralgorandclienttransactioncreator/)
+[`AlgorandClientTransactionCreator`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_creator.AlgorandClientTransactionCreator/)
 
 The `AlgorandClientTransactionCreator` instance.
 
@@ -354,13 +354,13 @@ const payment = await AlgorandClient.mainNet().createTransaction.payment({
 
 ### send
 
-• `get` **send**(): [`AlgorandClientTransactionSender`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_senderalgorandclienttransactionsender/)
+• `get` **send**(): [`AlgorandClientTransactionSender`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_sender.AlgorandClientTransactionSender/)
 
 Methods for sending a transaction.
 
 #### Returns
 
-[`AlgorandClientTransactionSender`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_senderalgorandclienttransactionsender/)
+[`AlgorandClientTransactionSender`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_sender.AlgorandClientTransactionSender/)
 
 The `AlgorandClientTransactionSender` instance.
 
@@ -406,13 +406,13 @@ const params = await AlgorandClient.mainNet().getSuggestedParams();
 
 ### newGroup
 
-▸ **newGroup**(): [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composertransactioncomposer/)
+▸ **newGroup**(): [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer/)
 
 Start a new `TransactionComposer` transaction group
 
 #### Returns
 
-[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composertransactioncomposer/)
+[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/classes/types_composer.TransactionComposer/)
 
 A new instance of `TransactionComposer`.
 
@@ -454,19 +454,19 @@ composed transaction groups made from `newGroup`
 
 ### setDefaultSigner
 
-▸ **setDefaultSigner**(`signer`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **setDefaultSigner**(`signer`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Sets the default signer to use if no other signer is specified.
 
 #### Parameters
 
-| Name     | Type                                                                                                                                             | Description                                                                     |
-| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
-| `signer` | `TransactionSigner` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) | The signer to use, either a `TransactionSigner` or a `TransactionSignerAccount` |
+| Name     | Type                                                                                                                                              | Description                                                                     |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------ |
+| `signer` | `TransactionSigner` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) | The signer to use, either a `TransactionSigner` or a `TransactionSignerAccount` |
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -485,7 +485,7 @@ const algorand = AlgorandClient.mainNet().setDefaultSigner(signer);
 
 ### setDefaultValidityWindow
 
-▸ **setDefaultValidityWindow**(`validityWindow`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **setDefaultValidityWindow**(`validityWindow`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Sets the default validity window for transactions.
 
@@ -497,7 +497,7 @@ Sets the default validity window for transactions.
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -515,7 +515,7 @@ const algorand = AlgorandClient.mainNet().setDefaultValidityWindow(1000);
 
 ### setSigner
 
-▸ **setSigner**(`sender`, `signer`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **setSigner**(`sender`, `signer`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Tracks the given signer against the given sender for later signing.
 
@@ -528,7 +528,7 @@ Tracks the given signer against the given sender for later signing.
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -547,19 +547,19 @@ const algorand = AlgorandClient.mainNet().setSigner(signer.addr, signer.signer);
 
 ### setSignerFromAccount
 
-▸ **setSignerFromAccount**(`account`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **setSignerFromAccount**(`account`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Tracks the given account (object that encapsulates an address and a signer) for later signing.
 
 #### Parameters
 
-| Name      | Type                                                                                                                                                                                                                                                                                                                                                                      | Description                                                                                                                                                 |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `account` | [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount` | The account to register, which can be a `TransactionSignerAccount` or a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount` |
+| Name      | Type                                                                                                                                                                                                                                                                                                                                                                         | Description                                                                                                                                                 |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `account` | [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) \| `LogicSigAccount` | The account to register, which can be a `TransactionSignerAccount` or a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount` |
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -587,7 +587,7 @@ const accountManager = AlgorandClient.mainNet()
 
 ### setSuggestedParamsCache
 
-▸ **setSuggestedParamsCache**(`suggestedParams`, `until?`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **setSuggestedParamsCache**(`suggestedParams`, `until?`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Sets a cache value to use for suggested transaction params.
 
@@ -600,7 +600,7 @@ Sets a cache value to use for suggested transaction params.
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -621,7 +621,7 @@ const algorand = AlgorandClient.mainNet().setSuggestedParamsCache(
 
 ### setSuggestedParamsCacheTimeout
 
-▸ **setSuggestedParamsCacheTimeout**(`timeout`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **setSuggestedParamsCacheTimeout**(`timeout`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Sets the timeout for caching suggested params.
 
@@ -633,7 +633,7 @@ Sets the timeout for caching suggested params.
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 The `AlgorandClient` so method calls can be chained
 
@@ -671,13 +671,13 @@ const algorand = AlgorandClient.mainNet().setSuggestedParamsCacheTimeout(10_000)
 
 ### defaultLocalNet
 
-▸ **defaultLocalNet**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **defaultLocalNet**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Creates an `AlgorandClient` pointing at default LocalNet ports and API token.
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 An instance of the `AlgorandClient`.
 
@@ -695,19 +695,19 @@ const algorand = AlgorandClient.defaultLocalNet();
 
 ### fromClients
 
-▸ **fromClients**(`clients`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **fromClients**(`clients`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Creates an `AlgorandClient` pointing to the given client(s).
 
 #### Parameters
 
-| Name      | Type                                                                                                         | Description         |
-| :-------- | :----------------------------------------------------------------------------------------------------------- | :------------------ |
-| `clients` | [`AlgoSdkClients`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/) | The clients to use. |
+| Name      | Type                                                                                                          | Description         |
+| :-------- | :------------------------------------------------------------------------------------------------------------ | :------------------ |
+| `clients` | [`AlgoSdkClients`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.AlgoSdkClients/) | The clients to use. |
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 An instance of the `AlgorandClient`.
 
@@ -725,19 +725,19 @@ const algorand = AlgorandClient.fromClients({ algod, indexer, kmd });
 
 ### fromConfig
 
-▸ **fromConfig**(`config`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **fromConfig**(`config`): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Creates an `AlgorandClient` from the given config.
 
 #### Parameters
 
-| Name     | Type                                                                                                 | Description        |
-| :------- | :--------------------------------------------------------------------------------------------------- | :----------------- |
-| `config` | [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/) | The config to use. |
+| Name     | Type                                                                                                  | Description        |
+| :------- | :---------------------------------------------------------------------------------------------------- | :----------------- |
+| `config` | [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/) | The config to use. |
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 An instance of the `AlgorandClient`.
 
@@ -755,7 +755,7 @@ const client = AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConfig
 
 ### fromEnvironment
 
-▸ **fromEnvironment**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **fromEnvironment**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Creates an `AlgorandClient` loading the configuration from environment variables.
 
@@ -774,7 +774,7 @@ otherwise it will use the default LocalNet config unless it detects testnet or m
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 An instance of the `AlgorandClient`.
 
@@ -792,13 +792,13 @@ const client = AlgorandClient.fromEnvironment();
 
 ### mainNet
 
-▸ **mainNet**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **mainNet**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Creates an `AlgorandClient` pointing at MainNet using AlgoNode.
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 An instance of the `AlgorandClient`.
 
@@ -816,13 +816,13 @@ const algorand = AlgorandClient.mainNet();
 
 ### testNet
 
-▸ **testNet**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+▸ **testNet**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 Creates an `AlgorandClient` pointing at TestNet using AlgoNode.
 
 #### Returns
 
-[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 An instance of the `AlgorandClient`.
 

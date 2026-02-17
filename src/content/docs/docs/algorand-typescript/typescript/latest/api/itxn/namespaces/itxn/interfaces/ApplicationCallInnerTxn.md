@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/readme/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/readme/) / ApplicationCallInnerTxn
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/README/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/README/) / ApplicationCallInnerTxn
 
 Defined in: [itxn.ts:417](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L417)
 
@@ -20,7 +20,7 @@ An inner transaction of type 'appl'
 
 ### appId
 
-> `readonly` **appId**: [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> `readonly` **appId**: [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 Defined in: [itxn.ts:472](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L472)
 
@@ -50,7 +50,7 @@ The first page of the Clear State program
 
 ### createdApp
 
-> `readonly` **createdApp**: [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> `readonly` **createdApp**: [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 Defined in: [itxn.ts:571](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L571)
 
@@ -261,7 +261,7 @@ Number of logs
 
 ### onCompletion
 
-> `readonly` **onCompletion**: [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/oncompleteaction/)
+> `readonly` **onCompletion**: [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/OnCompleteAction/)
 
 Defined in: [itxn.ts:476](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L476)
 
@@ -281,7 +281,7 @@ Application version for which the txn must reject
 
 ### rekeyTo
 
-> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [itxn.ts:468](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L468)
 
@@ -291,7 +291,7 @@ Defined in: [itxn.ts:468](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ### sender
 
-> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [itxn.ts:423](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L423)
 
@@ -311,7 +311,7 @@ The computed ID for this transaction. 32 bytes.
 
 ### type
 
-> `readonly` **type**: [`ApplicationCall`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/#applicationcall)
+> `readonly` **type**: [`ApplicationCall`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/#applicationcall)
 
 Defined in: [itxn.ts:455](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L455)
 
@@ -331,7 +331,7 @@ Transaction type as bytes
 
 ### accounts()
 
-> **accounts**(`index`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **accounts**(`index`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [itxn.ts:557](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L557)
 
@@ -347,7 +347,7 @@ Index of the account to get
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ---
 
@@ -397,7 +397,7 @@ Index of the page to get
 
 ### apps()
 
-> **apps**(`index`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> **apps**(`index`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 Defined in: [itxn.ts:567](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L567)
 
@@ -413,13 +413,13 @@ Index of the application to get
 
 #### Returns
 
-[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ---
 
 ### assets()
 
-> **assets**(`index`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> **assets**(`index`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Defined in: [itxn.ts:562](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L562)
 
@@ -435,7 +435,7 @@ Index of the asset to get
 
 #### Returns
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 ---
 

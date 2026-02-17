@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/readme/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/readme/) / KeyRegistrationItxnParams
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/README/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/README/) / KeyRegistrationItxnParams
 
 Defined in: [itxn.ts:1024](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1024)
 
@@ -54,7 +54,7 @@ Update one or more fields in this KeyRegistrationItxnParams object
 
 ##### fields
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/)
 
 #### Returns
 
@@ -64,7 +64,7 @@ Update one or more fields in this KeyRegistrationItxnParams object
 
 ### submit()
 
-> **submit**(): [`KeyRegistrationInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationinnertxn/)
+> **submit**(): [`KeyRegistrationInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationInnerTxn/)
 
 Defined in: [itxn.ts:1028](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1028)
 
@@ -72,4 +72,4 @@ Submit an itxn with these fields and return the KeyRegistrationInnerTxn result
 
 #### Returns
 
-[`KeyRegistrationInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationinnertxn/)
+[`KeyRegistrationInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationInnerTxn/)
