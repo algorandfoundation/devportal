@@ -1,7 +1,7 @@
 ---
-title: Building a front end for Puya
 sidebar:
   order: 0
+title: Building a front end for Puya
 ---
 
 This guide is for those looking to add support for a new front end language to Puya. It makes several assumptions about the reader.

@@ -22,9 +22,11 @@ export const collections = {
           generateId: ({ entry, data }) => {
             // Respect explicit slug frontmatter (same as Starlight's default behavior)
             if (typeof data.slug === 'string') return data.slug;
-            // Strip only file extension — preserve dots and case in filenames
-            // (Starlight's default uses github-slugger which removes dots)
-            return entry.replace(/\.mdx?$/, '');
+            // Strip file extension and /index suffix — preserve dots and case in filenames
+            // (Starlight's default uses github-slugger which removes dots;
+            //  /index must be stripped to align with Starlight's URL normalization
+            //  and starlight-auto-sidebar's entry lookup)
+            return entry.replace(/\.mdx?$/, '').replace(/\/index$/, '');
           },
         }).load(context);
 

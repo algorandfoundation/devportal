@@ -5,6 +5,7 @@ import {
   convertH1ToTitle,
   conditionalTransform,
   createRemoveContentUpToHeading,
+  overviewOrderTransform,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import logo from './logo.svg?raw';
@@ -58,7 +59,7 @@ export const config: LibraryImportConfig = {
           transforms: [createRemoveContentUpToHeading(/^# algokit$/m)],
         },
       ],
-      transforms: [convertH1ToTitle],
+      transforms: [convertH1ToTitle, overviewOrderTransform],
       linkTransform: {
         linkMappings: [
           ...generateStarlightLinkMappings(),
@@ -115,7 +116,7 @@ export const legacyGuideConfig: ImportOptions = {
       ],
     },
   ],
-  transforms: [convertH1ToTitle],
+  transforms: [convertH1ToTitle, overviewOrderTransform],
   linkTransform: {
     linkMappings: [
       ...generateStarlightLinkMappings(),

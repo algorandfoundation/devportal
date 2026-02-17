@@ -1,5 +1,7 @@
 ---
 title: AlgoKit CLI Reference Documentation
+sidebar:
+  order: 0
 ---
 
 AlgoKit is your one-stop shop to develop applications on the Algorand blockchain.

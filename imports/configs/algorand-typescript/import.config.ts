@@ -7,6 +7,7 @@ import {
   conditionalTransform,
   removeH1,
   createReplace,
+  overviewOrderTransform,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../../transforms/links.js';
@@ -88,6 +89,7 @@ export const config: LibraryImportConfig = {
           ],
         },
       ],
+      transforms: [overviewOrderTransform],
       linkTransform: {
         linkMappings: [...generateStarlightLinkMappings()],
       },
@@ -123,6 +125,7 @@ export const legacyGuideConfig: ImportOptions = {
       ],
     },
   ],
+  transforms: [overviewOrderTransform],
   linkTransform: {
     linkMappings: [...generateStarlightLinkMappings()],
   },

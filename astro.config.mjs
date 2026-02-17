@@ -84,6 +84,9 @@ export default defineConfig({
             // Algorand TypeScript API docs — TypeDoc cross-refs
             if (/^docs\/algorand-typescript\/.*\/api\//.test(slug)) return true;
 
+            // ARC standards — cross-references between ARC spec pages
+            if (slug.startsWith('arc-standards/') && /^\.\/arc-\d+/.test(link)) return true;
+
             return false;
           },
         }),

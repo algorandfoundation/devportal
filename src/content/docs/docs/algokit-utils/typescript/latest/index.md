@@ -1,8 +1,8 @@
 ---
-title: AlgoKit Utils TypeScript
 sidebar:
-  label: Overview
   order: 0
+  label: Overview
+title: AlgoKit Utils TypeScript
 ---
 
 A set of core Algorand utilities written in TypeScript and released via npm that make it easier to build, test and deploy solutions on the Algorand Blockchain, including APIs, console apps and dApps. This project is part of [AlgoKit](https://github.com/algorandfoundation/algokit-cli).

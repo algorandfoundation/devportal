@@ -49,6 +49,25 @@ export function matchesPath(pattern: string, path: string): boolean {
 }
 
 /**
+ * Matches overview/readme/index files (case-insensitive) to set sidebar.order: 0
+ */
+const OVERVIEW_FILES = /\/(overview|readme|index)\.md$/i;
+
+/**
+ * Global transform that sets sidebar.order: 0 on overview, readme, and index files.
+ * Add to a config's top-level `transforms` array so it applies to all included files.
+ * Include-specific transforms that also set sidebar properties will override via deep merge.
+ */
+export const overviewOrderTransform: TransformFunction = (content, context) => {
+  if (!OVERVIEW_FILES.test('/' + context.path)) return content;
+  return createFrontmatterTransform({
+    frontmatter: { sidebar: { order: 0 } },
+    mode: 'merge',
+    preserveExisting: false,
+  })(content, context);
+};
+
+/**
  * Converts the first H1 heading to frontmatter title and removes it from content
  * This is useful for markdown files that have titles as H1 headings instead of frontmatter
  */

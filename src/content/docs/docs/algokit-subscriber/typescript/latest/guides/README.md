@@ -1,4 +1,6 @@
 ---
+sidebar:
+  order: 0
 title: Algorand transaction subscription / indexing
 ---
 

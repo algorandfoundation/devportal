@@ -4,6 +4,8 @@ type: doc
 version: 1.0.0
 generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
+sidebar:
+  order: 0
 ---
 
 [**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
