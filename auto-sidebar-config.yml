@@ -7,11 +7,15 @@ configs:
       label: Getting started
       order: 5
       collapsed: false
-      cascade:
-        - collapsed
   - folder: docs/algokit-utils/typescript/latest/api
     content: |
       label: API Reference
+      order: 10
+      collapsed: true
+      cascade:
+        - collapsed
+  - folder: docs/algokit-utils/typescript/latest
+    content: |
       order: 10
       collapsed: true
       cascade:
