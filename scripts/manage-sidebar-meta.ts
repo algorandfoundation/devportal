@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx tsx --import ./scripts/register-svg-loader.mjs
+#!/usr/bin/env npx tsx
 /**
  * Starlight Auto-Sidebar Meta File Manager
  *
@@ -6,6 +6,10 @@
  * Each library's sidebar.config.ts exports glob-based metadata rules;
  * this script scans the content directory, matches folders against patterns,
  * and writes the corresponding _meta.yml files.
+ *
+ * Imports sidebarMetadata directly from each library's sidebar.config.ts
+ * (not via the barrel) to avoid triggering Astro/Vite-specific imports
+ * (e.g. .svg?raw) that don't work under tsx/Node.js.
  */
 
 import {
@@ -20,8 +24,24 @@ import { basename, dirname, join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { dump as yamlDump } from 'js-yaml';
 import picomatch from 'picomatch';
-import { SIDEBAR_METADATA } from '../imports/configs/index.js';
-import type { SidebarFolderMeta, SidebarMetadataItem } from '../imports/types.js';
+import type { SidebarFolderMeta, SidebarMetadata, SidebarMetadataItem } from '../imports/types.js';
+
+// Import sidebarMetadata directly from each library (bypasses barrel → import.config → SVG chain)
+import { sidebarMetadata as algokitUtilsMeta } from '../imports/configs/algokit-utils/sidebar.config.js';
+import { sidebarMetadata as algokitCliMeta } from '../imports/configs/algokit-cli/sidebar.config.js';
+import { sidebarMetadata as algorandPythonMeta } from '../imports/configs/algorand-python/sidebar.config.js';
+import { sidebarMetadata as algorandTypescriptMeta } from '../imports/configs/algorand-typescript/sidebar.config.js';
+import { sidebarMetadata as algokitSubscriberMeta } from '../imports/configs/algokit-subscriber/sidebar.config.js';
+import { sidebarMetadata as nodekitMeta } from '../imports/configs/nodekit/sidebar.config.js';
+
+const SIDEBAR_METADATA: SidebarMetadata[] = [
+  algokitUtilsMeta,
+  algokitCliMeta,
+  algorandPythonMeta,
+  algorandTypescriptMeta,
+  algokitSubscriberMeta,
+  nodekitMeta,
+];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

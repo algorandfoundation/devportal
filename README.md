@@ -80,7 +80,7 @@ Before you begin, ensure you have the following installed:
 ├── scripts/               # Build and utility scripts
 │   ├── clean-docs-import.ts       # Clear imported documentation
 │   ├── generate-opcode-list.js    # Generate Algorand opcodes list
-│   ├── manage-sidebar-meta.js     # Sidebar management
+│   ├── manage-sidebar-meta.ts     # Sidebar metadata generator
 │   └── prose-check.ts             # AI-powered prose quality checker
 ├── src/
 │   ├── assets/            # Images and media files
@@ -172,7 +172,7 @@ Documentation is imported from external GitHub repositories using `@larkiny/astr
 
 ### Auto-Sidebar Management
 
-The `starlight-auto-sidebar` plugin enables you to customize the order and appearance of auto-generated sidebar entries, including cascading frontmatter configuration to files within a folder. The following commands enable you to quickly generate the `_meta.yml` files from the config defined in `auto-sidebar-config.yml`.
+The `starlight-auto-sidebar` plugin enables you to customize the order and appearance of auto-generated sidebar entries, including cascading frontmatter configuration to files within a folder. The following commands generate `_meta.yml` files from the `sidebarMetadata` configs defined in each library's `imports/configs/{lib}/sidebar.config.ts`.
 
 | Command                      | Description                             |
 | ---------------------------- | --------------------------------------- |
