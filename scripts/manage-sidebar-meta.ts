@@ -26,7 +26,8 @@ import { dump as yamlDump } from 'js-yaml';
 import picomatch from 'picomatch';
 import type { SidebarFolderMeta, SidebarMetadata, SidebarMetadataItem } from '../imports/types.js';
 
-// Import sidebarMetadata directly from each library (bypasses barrel → import.config → SVG chain)
+// Import sidebarMetadata directly from each library (bypasses barrel → import.config → SVG chain).
+// NOTE: Keep in sync with SIDEBAR_METADATA in imports/configs/index.ts when adding libraries.
 import { sidebarMetadata as algokitUtilsMeta } from '../imports/configs/algokit-utils/sidebar.config.js';
 import { sidebarMetadata as algokitCliMeta } from '../imports/configs/algokit-cli/sidebar.config.js';
 import { sidebarMetadata as algorandPythonMeta } from '../imports/configs/algorand-python/sidebar.config.js';

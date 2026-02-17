@@ -84,7 +84,7 @@ export interface SidebarFolderMeta {
 
 /** A glob-based sidebar metadata rule matched against folder paths relative to src/content/docs/. */
 export interface SidebarMetadataItem {
-  // Glob pattern matched via picomatch (e.g. 'docs/algokit-utils/*/latest/api').
+  /** Glob pattern matched via picomatch, e.g. `docs/algokit-utils/&#42;/latest/api`. */
   pattern: string;
   /** Metadata to write to _meta.yml for matching folders. */
   meta: SidebarFolderMeta;
