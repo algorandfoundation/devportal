@@ -7,7 +7,7 @@
  */
 
 import type { ImportOptions } from '@larkiny/astro-github-loader';
-import type { LibraryImportConfig } from '../types';
+import type { LibraryImportConfig, SidebarMetadata } from '../types';
 
 // Per-library configs
 import {
@@ -32,6 +32,14 @@ import {
   legacyGuideConfig as algokitSubscriberLegacy,
 } from './algokit-subscriber/import.config.js';
 import { config as nodekit } from './nodekit/import.config.js';
+
+// Sidebar metadata (for _meta.yml generation)
+import { sidebarMetadata as algokitUtilsMeta } from './algokit-utils/sidebar.config.js';
+import { sidebarMetadata as algokitCliMeta } from './algokit-cli/sidebar.config.js';
+import { sidebarMetadata as algorandPythonMeta } from './algorand-python/sidebar.config.js';
+import { sidebarMetadata as algorandTypescriptMeta } from './algorand-typescript/sidebar.config.js';
+import { sidebarMetadata as algokitSubscriberMeta } from './algokit-subscriber/sidebar.config.js';
+import { sidebarMetadata as nodekitMeta } from './nodekit/sidebar.config.js';
 
 // Standalone imports (not libraries)
 import { arcStandardsConfig } from './arc-standards/import.config.js';
@@ -62,4 +70,15 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   algokitSubscriberLegacy, // hidden — docs not yet ready
   algokitUtilsTsLegacy,
   algokitUtilsPyLegacy,
+];
+
+/** All sidebar metadata rules for _meta.yml generation.
+ *  NOTE: When adding a library, also update scripts/manage-sidebar-meta.ts (duplicated due to SVG import chain). */
+export const SIDEBAR_METADATA: SidebarMetadata[] = [
+  algokitUtilsMeta,
+  algokitCliMeta,
+  algorandPythonMeta,
+  algorandTypescriptMeta,
+  algokitSubscriberMeta,
+  nodekitMeta,
 ];

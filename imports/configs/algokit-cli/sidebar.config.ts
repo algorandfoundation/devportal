@@ -1,21 +1,25 @@
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
-import { config } from './import.config.js';
+import type { SidebarMetadata } from '../../types.js';
 
 /**
  * Sidebar autogenerate entries for algokit-cli.
  *
- * Interim solution: generates sidebar trees by scanning content directories.
+ * Interim solution: hardcoded autogenerate groups for each variant/version.
  * When the library ships its own Starlight sidebar config, replace this with
  * a direct import of that config.
  */
-export const sidebarEntries: NonNullable<StarlightUserConfig['sidebar']> =
-  config.variants
-    .filter(v => v.enabled !== false)
-    .flatMap(v =>
-      v.versions.map(ver => ({
-        label: `_lib:${config.metadata.slug}:${v.language.toLowerCase()}:${ver.slug}`,
-        autogenerate: {
-          directory: `docs/${config.metadata.slug}/${v.language.toLowerCase()}/${ver.slug}`,
-        },
-      })),
-    );
+export const sidebarEntries: NonNullable<StarlightUserConfig['sidebar']> = [
+  {
+    label: '_lib:algokit-cli:python:latest',
+    autogenerate: { directory: 'docs/algokit-cli/python/latest' },
+  },
+];
+
+export const sidebarMetadata: SidebarMetadata = {
+  items: [
+    {
+      pattern: 'docs/algokit-cli/*/latest/guides',
+      meta: { label: 'Concepts', order: 5, collapsed: false },
+    },
+  ],
+};
