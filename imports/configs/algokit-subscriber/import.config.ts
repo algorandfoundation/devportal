@@ -3,6 +3,7 @@ import type { LibraryImportConfig } from '../../types';
 import {
   conditionalTransform,
   convertH1ToTitle,
+  overviewOrderTransform,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../../transforms/links.js';
@@ -60,6 +61,7 @@ export const config: LibraryImportConfig = {
           transforms: [convertH1ToTitle],
         },
       ],
+      transforms: [overviewOrderTransform],
       linkTransform: {
         linkMappings: [...generateStarlightLinkMappings()],
       },
@@ -86,6 +88,7 @@ export const legacyGuideConfig: ImportOptions = {
       transforms: [convertH1ToTitle],
     },
   ],
+  transforms: [overviewOrderTransform],
   linkTransform: {
     linkMappings: [...generateStarlightLinkMappings()],
   },

@@ -1,4 +1,5 @@
 import type { LibraryImportConfig } from '../../types';
+import { overviewOrderTransform } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../../transforms/links.js';
 import logo from './logo.svg?raw';
@@ -36,6 +37,7 @@ export const config: LibraryImportConfig = {
           ],
         },
       ],
+      transforms: [overviewOrderTransform],
       linkTransform: {
         linkMappings: [...generateStarlightLinkMappings()],
       },

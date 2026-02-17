@@ -7,6 +7,7 @@ import {
   conditionalTransform,
   removeH1,
   extractH1ToSidebarAndTitle,
+  overviewOrderTransform,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import logo from './logo.svg?raw';
@@ -28,6 +29,7 @@ export const config: LibraryImportConfig = {
       owner: 'algorandfoundation',
       repo: 'algokit-utils-ts',
       ref: 'chore/fix-docs',
+      transforms: [overviewOrderTransform],
       includes: [
         {
           pattern: 'docs/README.md',
@@ -115,6 +117,7 @@ export const config: LibraryImportConfig = {
       owner: 'algorandfoundation',
       repo: 'algokit-utils-py',
       ref: 'main',
+      transforms: [overviewOrderTransform],
       includes: [
         {
           pattern: 'docs/markdown/index.md',
@@ -226,6 +229,7 @@ export const legacyTsGuideConfig: ImportOptions = {
   owner: 'algorandfoundation',
   repo: 'algokit-utils-ts',
   ref: 'chore/fix-docs',
+  transforms: [overviewOrderTransform],
   includes: [
     {
       pattern: 'docs/README.md',
@@ -284,6 +288,7 @@ export const legacyPyGuideConfig: ImportOptions = {
   owner: 'algorandfoundation',
   repo: 'algokit-utils-py',
   ref: 'main',
+  transforms: [overviewOrderTransform],
   includes: [
     {
       pattern: 'docs/markdown/index.md',

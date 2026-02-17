@@ -4,32 +4,51 @@
 configs:
   - folder: docs/algokit-cli/python/latest/guides
     content: |
-      collapsed: true
+      label: Getting started
+      order: 5
+      collapsed: false
       cascade:
         - collapsed
   - folder: docs/algokit-utils/typescript/latest/api
     content: |
+      label: API Reference
+      order: 10
       collapsed: true
       cascade:
         - collapsed
+  - folder: docs/algokit-utils/typescript/latest/guides
+    content: |
+      label: Getting started
+      order: 5
+      collapsed: false
   - folder: docs/algokit-utils/python/latest/api
     content: |
+      label: API Reference
+      order: 10
       collapsed: true
       cascade:
         - collapsed
+  - folder: docs/algokit-utils/python/latest/guides
+    content: |
+      label: Getting started
+      order: 5
+      collapsed: false
   - folder: docs/algorand-typescript/typescript/latest/api
     content: |
+      label: API Reference
+      order: 10
       collapsed: true
       cascade:
         - collapsed
   - folder: docs/algorand-python/python/latest/api
     content: |
+      label: API Reference
+      order: 10
       collapsed: true
       cascade:
         - collapsed
   - folder: docs/algorand-python/python/latest/api/front-end-guide
     content: |
       label: Front-end Guide
-      collapsed: true
       cascade:
         - collapsed
