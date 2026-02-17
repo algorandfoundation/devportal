@@ -92,5 +92,5 @@ export interface SidebarMetadataItem {
 
 /** Sidebar metadata exported by a library's sidebar.config.ts. */
 export interface SidebarMetadata {
-  items: SidebarMetadataItem[];
+  includes: SidebarMetadataItem[];
 }

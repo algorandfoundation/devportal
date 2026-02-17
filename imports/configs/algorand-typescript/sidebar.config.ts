@@ -1,22 +1,19 @@
-import type { StarlightUserConfig } from '@astrojs/starlight/types';
 import type { SidebarMetadata } from '../../types.js';
+import { buildSidebarEntries } from '../../sidebar.js';
 
 /**
- * Sidebar autogenerate entries for algorand-typescript.
+ * Sidebar config for algorand-typescript.
  *
- * Interim solution: hardcoded autogenerate groups for each variant/version.
+ * Interim solution: declarative variant list for autogenerate groups.
  * When the library ships its own Starlight sidebar config, replace this with
  * a direct import of that config.
  */
-export const sidebarEntries: NonNullable<StarlightUserConfig['sidebar']> = [
-  {
-    label: '_lib:algorand-typescript:typescript:latest',
-    autogenerate: { directory: 'docs/algorand-typescript/typescript/latest' },
-  },
-];
+export const sidebarEntries = buildSidebarEntries('algorand-typescript', [
+  { language: 'typescript', version: 'latest' },
+]);
 
 export const sidebarMetadata: SidebarMetadata = {
-  items: [
+  includes: [
     {
       pattern: 'docs/algorand-typescript/*/latest/api',
       meta: { label: 'API Reference', order: 10, collapsed: true, cascade: ['collapsed'] },

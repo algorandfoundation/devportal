@@ -18,14 +18,15 @@ import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
 import LibraryDocsSidebar from './LibraryDocsSidebar.astro';
 import LibraryPicker from './LibraryPicker.astro';
 import { getLibraryFromPath } from '../config/libraries';
+import { isLibrarySidebarLabel } from '../../imports/sidebar';
 
 const { sidebar } = Astro.locals.starlightRoute;
 const currentPath = Astro.url.pathname;
 const activeLibrary = getLibraryFromPath(currentPath);
 
-// Filter out _lib: groups (library autogenerate entries) from the main sidebar
+// Filter out library autogenerate entries from the main sidebar
 const mainSidebar = sidebar.filter(
-  entry => entry.type !== 'group' || !entry.label.startsWith('_lib:'),
+  entry => entry.type !== 'group' || !isLibrarySidebarLabel(entry.label),
 );
 ---
 
