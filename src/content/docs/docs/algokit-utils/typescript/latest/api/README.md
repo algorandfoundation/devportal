@@ -1,8 +1,8 @@
 ---
-title: AlgoKit Utils API Reference
 sidebar:
-  label: Overview
   order: 0
+  label: Overview
+title: AlgoKit Utils API Reference
 ---
 
 @algorandfoundation/algokit-utils
