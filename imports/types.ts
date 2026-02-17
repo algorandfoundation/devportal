@@ -60,10 +60,37 @@ export interface LibraryImportConfig {
   variants: VariantImportConfig[];
 }
 
-/** Optional sidebar config for a library ({library}.sidebar.ts). */
-export interface LibrarySidebarConfig {
-  /** Starlight-compatible sidebar entries (groups, links, autogenerate) */
-  sidebar?: unknown[];
-  /** Auto-sidebar metadata, keyed by relative folder path within the library */
-  meta?: Record<string, Record<string, unknown>>;
+/**
+ * Metadata for a single sidebar folder.
+ * Mirrors starlight-auto-sidebar's _meta.yml schema.
+ * `label` can be a static string or a transform function resolved at generation time.
+ */
+export interface SidebarFolderMeta {
+  label?: string | ((folderName: string) => string);
+  order?: number;
+  collapsed?: boolean;
+  cascade?: ('collapsed' | 'sort')[];
+  badge?:
+    | string
+    | {
+        text: string;
+        variant?: 'note' | 'danger' | 'success' | 'caution' | 'tip' | 'default';
+        class?: string;
+      };
+  hidden?: boolean;
+  depth?: number;
+  sort?: 'slug' | 'reverse-slug';
+}
+
+/** A glob-based sidebar metadata rule matched against folder paths relative to src/content/docs/. */
+export interface SidebarMetadataItem {
+  // Glob pattern matched via picomatch (e.g. 'docs/algokit-utils/*/latest/api').
+  pattern: string;
+  /** Metadata to write to _meta.yml for matching folders. */
+  meta: SidebarFolderMeta;
+}
+
+/** Sidebar metadata exported by a library's sidebar.config.ts. */
+export interface SidebarMetadata {
+  items: SidebarMetadataItem[];
 }
