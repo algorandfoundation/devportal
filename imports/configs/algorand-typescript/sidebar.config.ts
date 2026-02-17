@@ -1,4 +1,5 @@
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
+import type { SidebarMetadata } from '../../types.js';
 import { config } from './import.config.js';
 
 /**
@@ -19,3 +20,12 @@ export const sidebarEntries: NonNullable<StarlightUserConfig['sidebar']> =
         },
       })),
     );
+
+export const sidebarMetadata: SidebarMetadata = {
+  items: [
+    {
+      pattern: 'docs/algorand-typescript/*/latest/api',
+      meta: { label: 'API Reference', order: 10, collapsed: true, cascade: ['collapsed'] },
+    },
+  ],
+};
