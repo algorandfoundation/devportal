@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/readme/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/readme/) / ApplicationCallItxnParams
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/README/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/README/) / ApplicationCallItxnParams
 
 Defined in: [itxn.ts:1140](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1140)
 
@@ -54,7 +54,7 @@ Update one or more fields in this ApplicationCallItxnParams object
 
 ##### fields
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/)
 
 #### Returns
 
@@ -64,7 +64,7 @@ Update one or more fields in this ApplicationCallItxnParams object
 
 ### submit()
 
-> **submit**(): [`ApplicationCallInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
+> **submit**(): [`ApplicationCallInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallInnerTxn/)
 
 Defined in: [itxn.ts:1144](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1144)
 
@@ -72,4 +72,4 @@ Submit an itxn with these fields and return the ApplicationCallInnerTxn result
 
 #### Returns
 
-[`ApplicationCallInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallinnertxn/)
+[`ApplicationCallInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallInnerTxn/)

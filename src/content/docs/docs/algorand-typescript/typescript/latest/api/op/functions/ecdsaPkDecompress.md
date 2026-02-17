@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / ecdsaPkDecompress
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / ecdsaPkDecompress
 
 > **ecdsaPkDecompress**(`v`, `a`): readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>, [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>\]
 
@@ -23,7 +23,7 @@ The 33 byte public key in a compressed form to be decompressed into X and Y (top
 
 ### v
 
-[`Ecdsa`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ecdsa/)
+[`Ecdsa`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ecdsa/)
 
 ### a
 

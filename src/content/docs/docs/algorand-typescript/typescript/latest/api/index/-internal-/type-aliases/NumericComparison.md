@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/readme/) / NumericComparison
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/README/) / NumericComparison
 
 > **NumericComparison**\<`T`\> = `T` \| \{ `lessThan`: `T`; \} \| \{ `greaterThan`: `T`; \} \| \{ `greaterThanEq`: `T`; \} \| \{ `lessThanEq`: `T`; \} \| \{ `between`: readonly \[`T`, `T`\]; \} \| \{ `not`: `T`; \}
 

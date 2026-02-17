@@ -2,7 +2,7 @@
 title: AppCompilationResult
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppCompilationResult
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppCompilationResult
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppCompilationResult
 
@@ -12,14 +12,14 @@ The result of compiling the approval and clear state TEAL programs for an app
 
 ### Properties
 
-- [compiledApproval](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcompilationresult/#compiledapproval)
-- [compiledClear](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcompilationresult/#compiledclear)
+- [compiledApproval](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCompilationResult/#compiledapproval)
+- [compiledClear](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCompilationResult/#compiledclear)
 
 ## Properties
 
 ### compiledApproval
 
-• **compiledApproval**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/)
+• **compiledApproval**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/)
 
 The result of compiling the approval program
 
@@ -31,7 +31,7 @@ The result of compiling the approval program
 
 ### compiledClear
 
-• **compiledClear**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/)
+• **compiledClear**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/)
 
 The result of compiling the clear state program
 

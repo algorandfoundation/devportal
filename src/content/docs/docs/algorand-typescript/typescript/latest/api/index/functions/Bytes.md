@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / Bytes
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Bytes
 
 ## Call Signature
 
@@ -28,7 +28,7 @@ Create a byte array from a string interpolation template and compatible replacem
 
 #### replacements
 
-...[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytescompat/)[]
+...[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)[]
 
 ### Returns
 
@@ -74,7 +74,7 @@ Create a byte array from a utf8 string
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/tofixedbytesoptions/)\<`TLength`\>
+[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
 
 ### Returns
 
@@ -120,7 +120,7 @@ No op, returns the provided byte array.
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/tofixedbytesoptions/)\<`TLength`\>
+[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
 
 ### Returns
 
@@ -166,7 +166,7 @@ Create a byte array from a biguint value encoded as a variable length big-endian
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/tofixedbytesoptions/)\<`TLength`\>
+[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
 
 ### Returns
 
@@ -212,7 +212,7 @@ Create a byte array from a uint64 value encoded as a a variable length 64-bit nu
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/tofixedbytesoptions/)\<`TLength`\>
+[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
 
 ### Returns
 
@@ -258,7 +258,7 @@ Create a byte array from an Iterable<uint64> where each item is interpreted as a
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/tofixedbytesoptions/)\<`TLength`\>
+[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
 
 ### Returns
 
@@ -294,7 +294,7 @@ Create an empty byte array
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/tofixedbytesoptions/)\<`TLength`\>
+[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
 
 ### Returns
 

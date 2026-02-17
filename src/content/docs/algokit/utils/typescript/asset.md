@@ -8,7 +8,7 @@ To see some usage examples check out the [automated tests](src/types/algorand-cl
 
 ## `AssetManager`
 
-The [`AssetManager`](docs/code/classes/types_asset_manager.AssetManager) is a class that is used to manage asset information.
+The [`AssetManager`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager) is a class that is used to manage asset information.
 
 To get an instance of `AssetManager`, you can use either [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) via `algorand.asset` or instantiate it directly:
 
@@ -23,7 +23,7 @@ const assetManager = new AssetManager(algod, () => new TransactionComposer({algo
 
 To create an asset you can use `algorand.send.assetCreate(params)` (immediately send a single asset creation transaction), `algorand.createTransaction.assetCreate(params)` (construct an asset creation transaction), or `algorand.newGroup().addAssetCreate(params)` (add asset creation to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying an asset creation transaction is [`AssetCreateParams`](docs/code/modules/types_composer#assetcreateparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
+The base type for specifying an asset creation transaction is [`AssetCreateParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer#assetcreateparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `total: bigint` - The total amount of the smallest divisible (decimal) unit to create. For example, if `decimals` is, say, 2, then for every 100 `total` there would be 1 whole unit. This field can only be specified upon asset creation.
 - `decimals: number` - The amount of decimal places the asset should have. If unspecified then the asset will be in whole units (i.e. `0`). If 0, the asset is not divisible. If 1, the base unit of the asset is in tenths, and so on up to 19 decimal places. This field can only be specified upon asset creation.
@@ -86,7 +86,7 @@ If you have a `manager` address set on an asset, that address can send a reconfi
 
 To reconfigure an asset you can use `algorand.send.assetConfig(params)` (immediately send a single asset config transaction), `algorand.createTransaction.assetConfig(params)` (construct an asset config transaction), or `algorand.newGroup().addAssetConfig(params)` (add asset config to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying an asset creation transaction is [`AssetConfigParams`](docs/code/modules/types_composer#assetconfigparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
+The base type for specifying an asset creation transaction is [`AssetConfigParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer#assetconfigparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `assetId: bigint` - ID of the asset to reconfigure
 - `manager: string | undefined` - The address of the optional account that can manage the configuration of the asset and destroy it. The configuration fields it can change are `manager`, `reserve`, `clawback`, and `freeze`. If not set (`undefined` or `""`) the asset will become permanently immutable.
@@ -139,7 +139,7 @@ To transfer unit(s) of an asset between accounts you can use `algorand.send.asse
 
 **Note:** For an account to receive an asset it needs to have [opted-in](#opt-inout).
 
-The base type for specifying an asset transfer transaction is [`AssetTransferParams`](docs/code/modules/types_composer#assettransferparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
+The base type for specifying an asset transfer transaction is [`AssetTransferParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer#assettransferparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `assetId: bigint` - ID of the asset to transfer.
 - `amount: bigint` - Amount of the asset to transfer (in smallest divisible (decimal) units).
@@ -197,7 +197,7 @@ AlgoKit Utils gives you functions that allow you to do opt-ins and opt-outs in b
 
 To opt-in to an asset you can use `algorand.send.assetOptIn(params)` (immediately send a single asset opt-in transaction), `algorand.createTransaction.assetOptIn(params)` (construct an asset opt-in transaction), or `algorand.newGroup().addAssetOptIn(params)` (add asset opt-in to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying an asset opt-in transaction is [`AssetOptInParams`](docs/code/modules/types_composer#assetoptinparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
+The base type for specifying an asset opt-in transaction is [`AssetOptInParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer#assetoptinparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `assetId: bigint` - The ID of the asset that will be opted-in to
 
@@ -234,7 +234,7 @@ await algorand.send.assetOptIn({
 
 To opt-out to an asset you can use `algorand.send.assetOptOut(params)` (immediately send a single asset opt-out transaction), `algorand.createTransaction.assetOptOut(params)` (construct an asset opt-out transaction), or `algorand.newGroup().addAssetOptOut(params)` (add asset opt-out to a group of transactions) per [`AlgorandClient`](/algokit/utils/typescript/algorand-client/) [transaction semantics](/algokit/utils/typescript/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying an asset opt-out transaction is [`AssetOptOutParams`](docs/code/modules/types_composer#assetoptoutparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
+The base type for specifying an asset opt-out transaction is [`AssetOptOutParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer#assetoptoutparams), which has the following parameters in addition to the [common transaction parameters](/algokit/utils/typescript/algorand-client/#transaction-parameters):
 
 - `assetId: bigint` - The ID of the asset that will be opted-out of
 - `creator: string` - The address of the asset creator account to close the asset position to (any remaining asset units will be sent to this account).
@@ -292,7 +292,7 @@ await algorand.send.assetOptOut({
 
 ### `asset.bulkOptIn`
 
-The [`asset.bulkOptIn`](docs/code/classes/types_asset_manager.AssetManager#bulkoptin) function facilitates the opt-in process for an account to multiple assets, allowing the account to receive and hold those assets.
+The [`asset.bulkOptIn`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager#bulkoptin) function facilitates the opt-in process for an account to multiple assets, allowing the account to receive and hold those assets.
 
 ```typescript
 // Basic example
@@ -309,7 +309,7 @@ algorand.asset.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n], {
 
 ### `asset.bulkOptOut`
 
-The [`asset.bulkOptOut`](docs/code/classes/types_asset_manager.AssetManager#bulkoptout) function facilitates the opt-out process for an account from multiple assets, permitting the account to discontinue holding a group of assets.
+The [`asset.bulkOptOut`](/docs/algokit-utils/typescript/latest/api/classes/types_asset_manager.AssetManager#bulkoptout) function facilitates the opt-out process for an account from multiple assets, permitting the account to discontinue holding a group of assets.
 
 ```typescript
 // Basic example

@@ -47,7 +47,7 @@ The third case pertains to **_Contract Accounts_**, where the program fully gove
 
 ## Computational Cost
 
-Smart contracts and logic signatures are also limited in opcode cost for optimal performance. This cost is evaluated when a smart contract runs and represents its computational expense. Every opcode executed by the AVM has a numeric value that represents its computational cost. Most opcodes have a computational cost of 1. Some, such as `SHA256` (cost 35) or `ed25519verify` (cost 1900) have substantially larger computational costs. The [TEAL Opcodes reference](reference/algorand-teal/opcodes) lists the opcode cost for every opcode.
+Smart contracts and logic signatures are also limited in opcode cost for optimal performance. This cost is evaluated when a smart contract runs and represents its computational expense. Every opcode executed by the AVM has a numeric value that represents its computational cost. Most opcodes have a computational cost of 1. Some, such as `SHA256` (cost 35) or `ed25519verify` (cost 1900) have substantially larger computational costs. The [TEAL Opcodes reference](/reference/algorand-teal/opcodes) lists the opcode cost for every opcode.
 Logic signatures are limited to 20,000 for total computational cost. In comparison, traditional applications can handle up to **_700 opcode cost per transaction_**, significantly increasing the computational flexibility, allowing for more complex operations per transaction than Algorand’s current limitations.
 
 ## Modes of Use

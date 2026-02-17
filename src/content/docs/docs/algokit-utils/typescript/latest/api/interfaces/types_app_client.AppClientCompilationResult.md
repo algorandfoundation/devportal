@@ -2,7 +2,7 @@
 title: AppClientCompilationResult
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientCompilationResult
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientCompilationResult
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppClientCompilationResult
 
@@ -12,7 +12,7 @@ Always contains the compiled bytecode, and may contain the result of compiling T
 
 ## Hierarchy
 
-- `Partial`\<[`AppCompilationResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcompilationresult/)\>
+- `Partial`\<[`AppCompilationResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCompilationResult/)\>
 
   ↳ **`AppClientCompilationResult`**
 
@@ -20,10 +20,10 @@ Always contains the compiled bytecode, and may contain the result of compiling T
 
 ### Properties
 
-- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationresult/#approvalprogram)
-- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationresult/#clearstateprogram)
-- [compiledApproval](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationresult/#compiledapproval)
-- [compiledClear](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationresult/#compiledclear)
+- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationResult/#approvalprogram)
+- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationResult/#clearstateprogram)
+- [compiledApproval](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationResult/#compiledapproval)
+- [compiledClear](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationResult/#compiledclear)
 
 ## Properties
 
@@ -53,7 +53,7 @@ The compiled bytecode of the clear state program, ready to deploy to algod
 
 ### compiledApproval
 
-• `Optional` **compiledApproval**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/)
+• `Optional` **compiledApproval**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/)
 
 The result of compiling the approval program
 
@@ -69,7 +69,7 @@ Partial.compiledApproval
 
 ### compiledClear
 
-• `Optional` **compiledClear**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/)
+• `Optional` **compiledClear**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/)
 
 The result of compiling the clear state program
 

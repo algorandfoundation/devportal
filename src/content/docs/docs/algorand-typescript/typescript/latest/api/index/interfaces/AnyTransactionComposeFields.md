@@ -6,23 +6,23 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / AnyTransactionComposeFields
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / AnyTransactionComposeFields
 
 Defined in: [itxn-compose.ts:26](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L26)
 
 ## Extends
 
-- [`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/)
+- [`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/).[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/)
 
 ## Properties
 
 ### accounts?
 
-> `optional` **accounts**: readonly ([`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/))[]
+> `optional` **accounts**: readonly ([`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/))[]
 
 Defined in: [itxn.ts:951](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L951)
 
@@ -34,7 +34,7 @@ Index of the account to get
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`accounts`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#accounts)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`accounts`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#accounts)
 
 ---
 
@@ -48,7 +48,7 @@ microalgos
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`amount`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentfields/#amount)
+[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`amount`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#amount)
 
 ---
 
@@ -66,13 +66,13 @@ Index of the arg to get
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`appArgs`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#appargs)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`appArgs`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#appargs)
 
 ---
 
 ### appId?
 
-> `optional` **appId**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> `optional` **appId**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 Defined in: [itxn.ts:907](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L907)
 
@@ -80,7 +80,7 @@ ApplicationID from ApplicationCall transaction
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`appId`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#appid)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`appId`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#appid)
 
 ---
 
@@ -98,13 +98,13 @@ Index of the page to get
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`approvalProgram`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#approvalprogram)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`approvalProgram`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#approvalprogram)
 
 ---
 
 ### apps?
 
-> `optional` **apps**: readonly ([`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/))[]
+> `optional` **apps**: readonly ([`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/))[]
 
 Defined in: [itxn.ts:961](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L961)
 
@@ -116,7 +116,7 @@ Index of the application to get
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`apps`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#apps)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`apps`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#apps)
 
 ---
 
@@ -130,13 +130,13 @@ value in Asset's units
 
 #### Inherited from
 
-[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetAmount`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetamount)
+[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/).[`assetAmount`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/#assetamount)
 
 ---
 
 ### assetCloseTo?
 
-> `optional` **assetCloseTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **assetCloseTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:823](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L823)
 
@@ -144,7 +144,7 @@ Defined in: [itxn.ts:823](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetCloseTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetcloseto)
+[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/).[`assetCloseTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/#assetcloseto)
 
 ---
 
@@ -158,13 +158,13 @@ The asset name
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`assetName`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#assetname)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`assetName`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#assetname)
 
 ---
 
 ### assetReceiver?
 
-> `optional` **assetReceiver**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **assetReceiver**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:819](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L819)
 
@@ -172,13 +172,13 @@ Defined in: [itxn.ts:819](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetReceiver`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetreceiver)
+[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/).[`assetReceiver`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/#assetreceiver)
 
 ---
 
 ### assets?
 
-> `optional` **assets**: readonly ([`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/))[]
+> `optional` **assets**: readonly ([`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/))[]
 
 Defined in: [itxn.ts:956](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L956)
 
@@ -190,13 +190,13 @@ Index of the asset to get
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`assets`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#assets)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`assets`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#assets)
 
 ---
 
 ### assetSender?
 
-> `optional` **assetSender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **assetSender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:815](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L815)
 
@@ -204,13 +204,13 @@ Defined in: [itxn.ts:815](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`assetSender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/#assetsender)
+[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/).[`assetSender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/#assetsender)
 
 ---
 
 ### clawback?
 
-> `optional` **clawback**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **clawback**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:769](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L769)
 
@@ -218,7 +218,7 @@ Defined in: [itxn.ts:769](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`clawback`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#clawback)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`clawback`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#clawback)
 
 ---
 
@@ -236,13 +236,13 @@ Index of the page to get
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`clearStateProgram`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#clearstateprogram)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`clearStateProgram`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#clearstateprogram)
 
 ---
 
 ### closeRemainderTo?
 
-> `optional` **closeRemainderTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **closeRemainderTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:625](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L625)
 
@@ -250,13 +250,13 @@ Defined in: [itxn.ts:625](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`closeRemainderTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentfields/#closeremainderto)
+[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`closeRemainderTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#closeremainderto)
 
 ---
 
 ### configAsset?
 
-> `optional` **configAsset**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> `optional` **configAsset**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Defined in: [itxn.ts:725](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L725)
 
@@ -264,7 +264,7 @@ Asset ID in asset config transaction
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`configAsset`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#configasset)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`configAsset`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#configasset)
 
 ---
 
@@ -278,7 +278,7 @@ Number of digits to display after the decimal place when displaying the asset
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`decimals`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#decimals)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`decimals`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#decimals)
 
 ---
 
@@ -292,7 +292,7 @@ Whether the asset's slots are frozen by default or not, 0 or 1
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`defaultFrozen`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#defaultfrozen)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`defaultFrozen`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#defaultfrozen)
 
 ---
 
@@ -306,7 +306,7 @@ Number of additional pages for each of the application's approval and clear stat
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`extraProgramPages`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#extraprogrampages)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`extraProgramPages`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#extraprogrampages)
 
 ---
 
@@ -320,7 +320,7 @@ microalgos
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`fee`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#fee)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`fee`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#fee)
 
 ---
 
@@ -334,7 +334,7 @@ round number
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`firstValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#firstvalid)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`firstValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#firstvalid)
 
 ---
 
@@ -348,13 +348,13 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`firstValidTime`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#firstvalidtime)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`firstValidTime`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#firstvalidtime)
 
 ---
 
 ### freeze?
 
-> `optional` **freeze**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **freeze**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:765](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L765)
 
@@ -362,13 +362,13 @@ Defined in: [itxn.ts:765](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`freeze`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#freeze)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`freeze`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#freeze)
 
 ---
 
 ### freezeAccount?
 
-> `optional` **freezeAccount**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **freezeAccount**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:865](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L865)
 
@@ -376,13 +376,13 @@ Defined in: [itxn.ts:865](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`freezeAccount`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#freezeaccount)
+[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`freezeAccount`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#freezeaccount)
 
 ---
 
 ### freezeAsset?
 
-> `optional` **freezeAsset**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> `optional` **freezeAsset**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Defined in: [itxn.ts:861](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L861)
 
@@ -390,7 +390,7 @@ Asset ID being frozen or un-frozen
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`freezeAsset`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#freezeasset)
+[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`freezeAsset`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#freezeasset)
 
 ---
 
@@ -404,7 +404,7 @@ The new frozen value
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`frozen`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#frozen)
+[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`frozen`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#frozen)
 
 ---
 
@@ -418,7 +418,7 @@ Number of global state byteslices this application makes use of.
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`globalNumBytes`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#globalnumbytes)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`globalNumBytes`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#globalnumbytes)
 
 ---
 
@@ -432,7 +432,7 @@ Number of global state integers this application makes use of.
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`globalNumUint`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#globalnumuint)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`globalNumUint`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#globalnumuint)
 
 ---
 
@@ -446,7 +446,7 @@ round number
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`lastValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#lastvalid)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`lastValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#lastvalid)
 
 ---
 
@@ -460,7 +460,7 @@ Defined in: [itxn.ts:609](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`lease`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#lease)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`lease`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#lease)
 
 ---
 
@@ -474,7 +474,7 @@ Number of local state byteslices this application makes use of.
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`localNumBytes`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#localnumbytes)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`localNumBytes`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#localnumbytes)
 
 ---
 
@@ -488,13 +488,13 @@ Number of local state integers this application makes use of.
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`localNumUint`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#localnumuint)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`localNumUint`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#localnumuint)
 
 ---
 
 ### manager?
 
-> `optional` **manager**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **manager**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:757](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L757)
 
@@ -502,7 +502,7 @@ Defined in: [itxn.ts:757](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`manager`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#manager)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`manager`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#manager)
 
 ---
 
@@ -516,7 +516,7 @@ Defined in: [itxn.ts:753](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`metadataHash`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#metadatahash)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`metadataHash`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#metadatahash)
 
 ---
 
@@ -530,7 +530,7 @@ Marks an account nonparticipating for rewards
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`nonparticipation`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#nonparticipation)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`nonparticipation`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#nonparticipation)
 
 ---
 
@@ -544,13 +544,13 @@ Any data up to 1024 bytes
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`note`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#note)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`note`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#note)
 
 ---
 
 ### onCompletion?
 
-> `optional` **onCompletion**: [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/oncompleteaction/)
+> `optional` **onCompletion**: [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/OnCompleteAction/)
 
 Defined in: [itxn.ts:911](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L911)
 
@@ -558,13 +558,13 @@ ApplicationCall transaction on completion action
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`onCompletion`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#oncompletion)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`onCompletion`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#oncompletion)
 
 ---
 
 ### receiver?
 
-> `optional` **receiver**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **receiver**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:617](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L617)
 
@@ -572,7 +572,7 @@ Defined in: [itxn.ts:617](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`receiver`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentfields/#receiver)
+[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`receiver`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#receiver)
 
 ---
 
@@ -586,13 +586,13 @@ Application version for which the txn must reject
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`rejectVersion`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#rejectversion)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`rejectVersion`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#rejectversion)
 
 ---
 
 ### rekeyTo?
 
-> `optional` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L613)
 
@@ -600,13 +600,13 @@ Defined in: [itxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`rekeyTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#rekeyto)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`rekeyTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#rekeyto)
 
 ---
 
 ### reserve?
 
-> `optional` **reserve**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **reserve**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:761](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L761)
 
@@ -614,7 +614,7 @@ Defined in: [itxn.ts:761](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`reserve`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#reserve)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`reserve`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#reserve)
 
 ---
 
@@ -628,13 +628,13 @@ Defined in: [itxn.ts:667](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`selectionKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#selectionkey)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`selectionKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#selectionkey)
 
 ---
 
 ### sender?
 
-> `optional` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:585](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L585)
 
@@ -642,7 +642,7 @@ Defined in: [itxn.ts:585](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/).[`sender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/applicationcallfields/#sender)
+[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/).[`sender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/#sender)
 
 ---
 
@@ -656,7 +656,7 @@ Defined in: [itxn.ts:687](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`stateProofKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#stateproofkey)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`stateProofKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#stateproofkey)
 
 ---
 
@@ -670,13 +670,13 @@ Total number of units of this asset created
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`total`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#total)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`total`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#total)
 
 ---
 
 ### type
 
-> **type**: [`TransactionType`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/)
+> **type**: [`TransactionType`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/)
 
 Defined in: [itxn-compose.ts:33](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L33)
 
@@ -692,7 +692,7 @@ Unit name of the asset
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`unitName`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#unitname)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`unitName`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#unitname)
 
 ---
 
@@ -706,7 +706,7 @@ URL
 
 #### Inherited from
 
-[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/).[`url`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assetconfigfields/#url)
+[`AssetConfigFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/).[`url`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetConfigFields/#url)
 
 ---
 
@@ -720,7 +720,7 @@ The first round that the participation key is valid.
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteFirst`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votefirst)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`voteFirst`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#votefirst)
 
 ---
 
@@ -734,7 +734,7 @@ Defined in: [itxn.ts:663](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votekey)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`voteKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#votekey)
 
 ---
 
@@ -748,7 +748,7 @@ Dilution for the 2-level participation key
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteKeyDilution`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votekeydilution)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`voteKeyDilution`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#votekeydilution)
 
 ---
 
@@ -762,13 +762,13 @@ The last round that the participation key is valid.
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteLast`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votelast)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`voteLast`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#votelast)
 
 ---
 
 ### xferAsset?
 
-> `optional` **xferAsset**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> `optional` **xferAsset**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Defined in: [itxn.ts:807](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L807)
 
@@ -776,4 +776,4 @@ Asset ID
 
 #### Inherited from
 
-[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/).[`xferAsset`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/assettransferfields/#xferasset)
+[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/).[`xferAsset`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/#xferasset)

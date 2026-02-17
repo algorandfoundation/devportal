@@ -2,7 +2,7 @@
 title: AppClientCallABIArgs
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientCallABIArgs
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientCallABIArgs
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppClientCallABIArgs
 
@@ -16,14 +16,14 @@ title: AppClientCallABIArgs
 
 ### Properties
 
-- [accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/#accounts)
-- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/#apps)
-- [assets](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/#assets)
-- [boxes](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/#boxes)
-- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/#lease)
-- [method](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/#method)
-- [methodArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/#methodargs)
-- [rekeyTo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/#rekeyto)
+- [accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/#accounts)
+- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/#apps)
+- [assets](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/#assets)
+- [boxes](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/#boxes)
+- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/#lease)
+- [method](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/#method)
+- [methodArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/#methodargs)
+- [rekeyTo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/#rekeyto)
 
 ## Properties
 
@@ -77,7 +77,7 @@ Omit.assets
 
 ### boxes
 
-• `Optional` **boxes**: ([`BoxReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxreference/) \| [`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
+• `Optional` **boxes**: ([`BoxReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxReference/) \| [`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
 
 Any box references to load
 

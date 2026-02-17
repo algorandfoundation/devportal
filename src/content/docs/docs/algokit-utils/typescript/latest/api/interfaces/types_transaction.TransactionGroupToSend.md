@@ -2,7 +2,7 @@
 title: TransactionGroupToSend
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / TransactionGroupToSend
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / TransactionGroupToSend
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).TransactionGroupToSend
 
@@ -13,15 +13,15 @@ https://dev.algorand.co/concepts/transactions/atomic-txn-groups/
 
 ### Properties
 
-- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiongrouptosend/#sendparams)
-- [signer](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiongrouptosend/#signer)
-- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiongrouptosend/#transactions)
+- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionGroupToSend/#sendparams)
+- [signer](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionGroupToSend/#signer)
+- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionGroupToSend/#transactions)
 
 ## Properties
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
 
 Any parameters to control the semantics of the send to the network
 
@@ -45,7 +45,7 @@ Optional signer to pass in, required if at least one transaction provided is jus
 
 ### transactions
 
-• **transactions**: (`Transaction` \| [`TransactionToSign`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiontosign/) \| `Promise`\<[`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/)\>)[]
+• **transactions**: (`Transaction` \| [`TransactionToSign`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionToSign/) \| `Promise`\<[`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/)\>)[]
 
 The list of transactions to send, which can either be a raw transaction (in which case `signer` is required),
 the async result of an AlgoKit utils method that returns a `SendTransactionResult` (saves unwrapping the promise, be sure to pass `skipSending: true`, `signer` is also required)

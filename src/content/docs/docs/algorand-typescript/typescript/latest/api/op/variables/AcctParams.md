@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / AcctParams
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / AcctParams
 
 > `const` **AcctParams**: `object`
 
@@ -20,7 +20,7 @@ Defined in: [op.ts:52](https://github.com/algorandfoundation/puya-ts/blob/main/p
 
 ### acctAuthAddr()
 
-> **acctAuthAddr**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+> **acctAuthAddr**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 Address the account is rekeyed to.
 Min AVM version: 6
@@ -29,11 +29,11 @@ Min AVM version: 6
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
-readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 ### acctBalance()
 
@@ -46,7 +46,7 @@ Min AVM version: 6
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -63,7 +63,7 @@ Min AVM version: 11
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -80,7 +80,7 @@ Min AVM version: 11
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -97,7 +97,7 @@ Min AVM version: 11
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -114,7 +114,7 @@ Min AVM version: 6
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -131,7 +131,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -148,7 +148,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -165,7 +165,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -182,7 +182,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -199,7 +199,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -216,7 +216,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -233,7 +233,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -250,7 +250,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 
@@ -267,7 +267,7 @@ Min AVM version: 8
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 #### Returns
 

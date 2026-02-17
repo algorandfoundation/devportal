@@ -2,7 +2,7 @@
 title: Event
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / Event
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / Event
 
 [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/).Event
 
@@ -12,9 +12,9 @@ ARC-28 event
 
 ### Properties
 
-- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56event/#args)
-- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56event/#desc)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56event/#name)
+- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Event/#args)
+- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Event/#desc)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Event/#name)
 
 ## Properties
 

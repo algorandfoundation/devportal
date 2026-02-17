@@ -88,4 +88,4 @@ Options
 
 ## Further Reading
 
-For in-depth details, visit the [dispenser section](docs/cli/#dispenser) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [dispenser section](/docs/algokit-cli/python/latest/#dispenser) in the AlgoKit CLI reference documentation.

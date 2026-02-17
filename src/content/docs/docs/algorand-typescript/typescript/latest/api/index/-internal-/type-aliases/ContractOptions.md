@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/readme/) / ContractOptions
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/README/) / ContractOptions
 
 > **ContractOptions** = `object`
 
@@ -44,7 +44,7 @@ Defaults to the class name
 
 ### scratchSlots?
 
-> `optional` **scratchSlots**: (`number` \| [`NumberRange`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/numberrange/))[]
+> `optional` **scratchSlots**: (`number` \| [`NumberRange`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/NumberRange/))[]
 
 Defined in: [base-contract.ts:65](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/base-contract.ts#L65)
 
@@ -63,7 +63,7 @@ contract all slots 0-10 will be marked as reserved.
 
 ### stateTotals?
 
-> `optional` **stateTotals**: [`StateTotals`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/statetotals/)
+> `optional` **stateTotals**: [`StateTotals`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/StateTotals/)
 
 Defined in: [base-contract.ts:79](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/base-contract.ts#L79)
 

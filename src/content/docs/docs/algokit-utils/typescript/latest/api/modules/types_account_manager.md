@@ -2,17 +2,17 @@
 title: types/account-manager
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/account-manager
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/account-manager
 
 ## Table of contents
 
 ### Classes
 
-- [AccountManager](/docs/algokit-utils/typescript/latest/api/classes/types_account_manageraccountmanager/)
+- [AccountManager](/docs/algokit-utils/typescript/latest/api/classes/types_account_manager.AccountManager/)
 
 ### Interfaces
 
-- [EnsureFundedResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/)
+- [EnsureFundedResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/)
 
 ### Functions
 
@@ -29,9 +29,9 @@ This function has memoization, so will return the same transaction signer for a 
 
 #### Parameters
 
-| Name  | Type                                                                                                                                                                                                                                                                                                                                                                      |
-| :---- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `val` | [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount` |
+| Name  | Type                                                                                                                                                                                                                                                                                                                                                                         |
+| :---- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `val` | [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) \| `LogicSigAccount` |
 
 #### Returns
 

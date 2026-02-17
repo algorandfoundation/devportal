@@ -2,7 +2,7 @@
 title: ApplicationClient
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / ApplicationClient
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / ApplicationClient
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).ApplicationClient
 
@@ -19,58 +19,58 @@ Application client - a class that wraps an ARC-0032 app spec and provides high p
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#constructor)
 
 ### Properties
 
-- [\_appAddress](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#_appaddress)
-- [\_appId](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#_appid)
-- [\_appName](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#_appname)
-- [\_approvalSourceMap](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#_approvalsourcemap)
-- [\_clearSourceMap](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#_clearsourcemap)
-- [\_creator](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#_creator)
-- [algod](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#algod)
-- [appSpec](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#appspec)
-- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#deploytimeparams)
-- [existingDeployments](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#existingdeployments)
-- [indexer](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#indexer)
-- [params](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#params)
-- [sender](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#sender)
+- [\_appAddress](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#_appaddress)
+- [\_appId](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#_appid)
+- [\_appName](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#_appname)
+- [\_approvalSourceMap](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#_approvalsourcemap)
+- [\_clearSourceMap](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#_clearsourcemap)
+- [\_creator](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#_creator)
+- [algod](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#algod)
+- [appSpec](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#appspec)
+- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#deploytimeparams)
+- [existingDeployments](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#existingdeployments)
+- [indexer](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#indexer)
+- [params](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#params)
+- [sender](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#sender)
 
 ### Methods
 
-- [call](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#call)
-- [callOfType](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#calloftype)
-- [clearState](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#clearstate)
-- [closeOut](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#closeout)
-- [compile](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#compile)
-- [create](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#create)
-- [delete](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#delete)
-- [deploy](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#deploy)
-- [exportSourceMaps](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#exportsourcemaps)
-- [exposeLogicError](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#exposelogicerror)
-- [fundAppAccount](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#fundappaccount)
-- [getABIMethod](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getabimethod)
-- [getABIMethodParams](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getabimethodparams)
-- [getABIMethodSignature](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getabimethodsignature)
-- [getAppReference](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getappreference)
-- [getBoxNames](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getboxnames)
-- [getBoxValue](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getboxvalue)
-- [getBoxValueFromABIType](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getboxvaluefromabitype)
-- [getBoxValues](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getboxvalues)
-- [getBoxValuesFromABIType](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getboxvaluesfromabitype)
-- [getCallArgs](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getcallargs)
-- [getGlobalState](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getglobalstate)
-- [getLocalState](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#getlocalstate)
-- [importSourceMaps](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#importsourcemaps)
-- [optIn](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#optin)
-- [update](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/#update)
+- [call](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#call)
+- [callOfType](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#calloftype)
+- [clearState](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#clearstate)
+- [closeOut](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#closeout)
+- [compile](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#compile)
+- [create](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#create)
+- [delete](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#delete)
+- [deploy](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#deploy)
+- [exportSourceMaps](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#exportsourcemaps)
+- [exposeLogicError](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#exposelogicerror)
+- [fundAppAccount](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#fundappaccount)
+- [getABIMethod](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getabimethod)
+- [getABIMethodParams](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getabimethodparams)
+- [getABIMethodSignature](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getabimethodsignature)
+- [getAppReference](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getappreference)
+- [getBoxNames](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getboxnames)
+- [getBoxValue](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getboxvalue)
+- [getBoxValueFromABIType](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getboxvaluefromabitype)
+- [getBoxValues](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getboxvalues)
+- [getBoxValuesFromABIType](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getboxvaluesfromabitype)
+- [getCallArgs](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getcallargs)
+- [getGlobalState](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getglobalstate)
+- [getLocalState](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#getlocalstate)
+- [importSourceMaps](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#importsourcemaps)
+- [optIn](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#optin)
+- [update](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/#update)
 
 ## Constructors
 
 ### constructor
 
-• **new ApplicationClient**(`appDetails`, `algod`): [`ApplicationClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/)
+• **new ApplicationClient**(`appDetails`, `algod`): [`ApplicationClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/)
 
 #### Parameters
 
@@ -81,7 +81,7 @@ Application client - a class that wraps an ARC-0032 app spec and provides high p
 
 #### Returns
 
-[`ApplicationClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/)
+[`ApplicationClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/)
 
 **`Deprecated`**
 
@@ -170,7 +170,7 @@ Create a new ApplicationClient instance
 
 ### appSpec
 
-• `Private` **appSpec**: [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/)
+• `Private` **appSpec**: [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/)
 
 #### Defined in
 
@@ -180,7 +180,7 @@ Create a new ApplicationClient instance
 
 ### deployTimeParams
 
-• `Private` `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)
+• `Private` `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)
 
 #### Defined in
 
@@ -190,7 +190,7 @@ Create a new ApplicationClient instance
 
 ### existingDeployments
 
-• `Private` **existingDeployments**: `undefined` \| [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appapplookup/)
+• `Private` **existingDeployments**: `undefined` \| [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppLookup/)
 
 #### Defined in
 
@@ -343,17 +343,17 @@ Issues a close_out call to the app.
 
 ### compile
 
-▸ **compile**(`compilation?`): `Promise`\<\{ `approvalCompiled`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `clearCompiled`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) }\>
+▸ **compile**(`compilation?`): `Promise`\<\{ `approvalCompiled`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `clearCompiled`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) }\>
 
 #### Parameters
 
-| Name           | Type                                                                                                                             | Description                                    |
-| :------------- | :------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------- |
-| `compilation?` | [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/) | The deploy-time parameters for the compilation |
+| Name           | Type                                                                                                                              | Description                                    |
+| :------------- | :-------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------- |
+| `compilation?` | [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/) | The deploy-time parameters for the compilation |
 
 #### Returns
 
-`Promise`\<\{ `approvalCompiled`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `clearCompiled`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) }\>
+`Promise`\<\{ `approvalCompiled`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `clearCompiled`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) }\>
 
 The compiled approval and clear state programs
 
@@ -371,7 +371,7 @@ Compiles the approval and clear state programs and sets up the source map.
 
 ### create
 
-▸ **create**(`create?`): `Promise`\<\{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `confirmation?`: `PendingTransactionResponse` ; `confirmations?`: `PendingTransactionResponse`[] ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] }\>
+▸ **create**(`create?`): `Promise`\<\{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `confirmation?`: `PendingTransactionResponse` ; `confirmations?`: `PendingTransactionResponse`[] ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] }\>
 
 #### Parameters
 
@@ -381,7 +381,7 @@ Compiles the approval and clear state programs and sets up the source map.
 
 #### Returns
 
-`Promise`\<\{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `confirmation?`: `PendingTransactionResponse` ; `confirmations?`: `PendingTransactionResponse`[] ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] }\>
+`Promise`\<\{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `confirmation?`: `PendingTransactionResponse` ; `confirmations?`: `PendingTransactionResponse`[] ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] }\>
 
 The details of the created app, or the transaction to create it if `skipSending` and the compilation result
 
@@ -427,17 +427,17 @@ Issues a delete_application call to the app.
 
 ### deploy
 
-▸ **deploy**(`deploy?`): `Promise`\<`Partial`\<[`AppCompilationResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcompilationresult/)\> & [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"nothing"` } \| \{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/) ; `createdRound`: `number` ; `deletable?`: `boolean` ; `deleted`: `boolean` ; `name`: `string` ; `operationPerformed`: `"update"` \| `"create"` ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `updatable?`: `boolean` ; `updatedRound`: `number` ; `version`: `string` } \| \{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/) ; `createdRound`: `number` ; `deletable?`: `boolean` ; `deleteResult`: [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `deleted`: `boolean` ; `name`: `string` ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `updatable?`: `boolean` ; `updatedRound`: `number` ; `version`: `string` }\>
+▸ **deploy**(`deploy?`): `Promise`\<`Partial`\<[`AppCompilationResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCompilationResult/)\> & [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/) & \{ `operationPerformed`: `"nothing"` } \| \{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/) ; `createdRound`: `number` ; `deletable?`: `boolean` ; `deleted`: `boolean` ; `name`: `string` ; `operationPerformed`: `"update"` \| `"create"` ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `updatable?`: `boolean` ; `updatedRound`: `number` ; `version`: `string` } \| \{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/) ; `createdRound`: `number` ; `deletable?`: `boolean` ; `deleteResult`: [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResult/) ; `deleteReturn?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `deleted`: `boolean` ; `name`: `string` ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `updatable?`: `boolean` ; `updatedRound`: `number` ; `version`: `string` }\>
 
 #### Parameters
 
-| Name      | Type                                                                                                                   | Description        |
-| :-------- | :--------------------------------------------------------------------------------------------------------------------- | :----------------- |
-| `deploy?` | [`AppClientDeployParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/) | Deployment details |
+| Name      | Type                                                                                                                    | Description        |
+| :-------- | :---------------------------------------------------------------------------------------------------------------------- | :----------------- |
+| `deploy?` | [`AppClientDeployParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/) | Deployment details |
 
 #### Returns
 
-`Promise`\<`Partial`\<[`AppCompilationResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcompilationresult/)\> & [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/) & \{ `operationPerformed`: `"nothing"` } \| \{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/) ; `createdRound`: `number` ; `deletable?`: `boolean` ; `deleted`: `boolean` ; `name`: `string` ; `operationPerformed`: `"update"` \| `"create"` ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `updatable?`: `boolean` ; `updatedRound`: `number` ; `version`: `string` } \| \{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/) ; `createdRound`: `number` ; `deletable?`: `boolean` ; `deleteResult`: [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresult/) ; `deleteReturn?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `deleted`: `boolean` ; `name`: `string` ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `updatable?`: `boolean` ; `updatedRound`: `number` ; `version`: `string` }\>
+`Promise`\<`Partial`\<[`AppCompilationResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCompilationResult/)\> & [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/) & \{ `operationPerformed`: `"nothing"` } \| \{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/) ; `createdRound`: `number` ; `deletable?`: `boolean` ; `deleted`: `boolean` ; `name`: `string` ; `operationPerformed`: `"update"` \| `"create"` ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `updatable?`: `boolean` ; `updatedRound`: `number` ; `version`: `string` } \| \{ `appAddress`: `string` ; `appId`: `number` \| `bigint` ; `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/) ; `createdRound`: `number` ; `deletable?`: `boolean` ; `deleteResult`: [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResult/) ; `deleteReturn?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `deleted`: `boolean` ; `name`: `string` ; `operationPerformed`: `"replace"` ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `updatable?`: `boolean` ; `updatedRound`: `number` ; `version`: `string` }\>
 
 The metadata and transaction result(s) of the deployment, or just the metadata if it didn't need to issue transactions
 
@@ -461,13 +461,13 @@ To understand the architecture decisions behind this functionality please see ht
 
 ### exportSourceMaps
 
-▸ **exportSourceMaps**(): [`AppSourceMaps`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappsourcemaps/)
+▸ **exportSourceMaps**(): [`AppSourceMaps`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppSourceMaps/)
 
 Export the current source maps for the app.
 
 #### Returns
 
-[`AppSourceMaps`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappsourcemaps/)
+[`AppSourceMaps`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppSourceMaps/)
 
 The source maps
 
@@ -506,19 +506,19 @@ The new error, or if there was no logic error or source map then the wrapped err
 
 ### fundAppAccount
 
-▸ **fundAppAccount**(`fund`): `Promise`\<[`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/) \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & \{ `transactions`: `Transaction`[] }\>
+▸ **fundAppAccount**(`fund`): `Promise`\<[`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/) \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & \{ `transactions`: `Transaction`[] }\>
 
 Funds Algo into the app account for this app.
 
 #### Parameters
 
-| Name   | Type                                                                                                                                                                                                              | Description                                          |
-| :----- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------- |
-| `fund` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/) \| [`FundAppAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientfundappaccountparams/) | The parameters for the funding or the funding amount |
+| Name   | Type                                                                                                                                                                                                                | Description                                          |
+| :----- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------- |
+| `fund` | [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/) \| [`FundAppAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.FundAppAccountParams/) | The parameters for the funding or the funding amount |
 
 #### Returns
 
-`Promise`\<[`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/) \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & \{ `transactions`: `Transaction`[] }\>
+`Promise`\<[`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/) \| \{ `confirmation`: `PendingTransactionResponse` ; `confirmations`: `PendingTransactionResponse`[] ; `groupId`: `string` ; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)[] ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] ; `txIds`: `string`[] } & \{ `transactions`: `Transaction`[] }\>
 
 The result of the funding
 
@@ -602,11 +602,11 @@ Returns the ABI Method parameters for the given method name string for the app r
 
 ### getAppReference
 
-▸ **getAppReference**(): `Promise`\<[`AppReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/) \| [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/)\>
+▸ **getAppReference**(): `Promise`\<[`AppReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/) \| [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/)\>
 
 #### Returns
 
-`Promise`\<[`AppReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/) \| [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/)\>
+`Promise`\<[`AppReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/) \| [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/)\>
 
 The app reference, or if deployed using the `deploy` method, the app metadata too
 
@@ -625,13 +625,13 @@ Gets the reference information for the current application instance.
 
 ### getBoxNames
 
-▸ **getBoxNames**(): `Promise`\<[`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/)[]\>
+▸ **getBoxNames**(): `Promise`\<[`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/)[]\>
 
 Returns the names of all current boxes for the current app.
 
 #### Returns
 
-`Promise`\<[`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/)[]\>
+`Promise`\<[`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/)[]\>
 
 The names of the boxes
 
@@ -649,9 +649,9 @@ Returns the value of the given box for the current app.
 
 #### Parameters
 
-| Name   | Type                                                                                                            | Description                                                                 |
-| :----- | :-------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
-| `name` | `string` \| `Uint8Array` \| [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/) | The name of the box to return either as a string, binary array or `BoxName` |
+| Name   | Type                                                                                                             | Description                                                                 |
+| :----- | :--------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `name` | `string` \| `Uint8Array` \| [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/) | The name of the box to return either as a string, binary array or `BoxName` |
 
 #### Returns
 
@@ -673,10 +673,10 @@ Returns the value of the given box for the current app.
 
 #### Parameters
 
-| Name   | Type                                                                                                            | Description                                                                 |
-| :----- | :-------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
-| `name` | `string` \| `Uint8Array` \| [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/) | The name of the box to return either as a string, binary array or `BoxName` |
-| `type` | `ABIType`                                                                                                       |                                                                             |
+| Name   | Type                                                                                                             | Description                                                                 |
+| :----- | :--------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `name` | `string` \| `Uint8Array` \| [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/) | The name of the box to return either as a string, binary array or `BoxName` |
+| `type` | `ABIType`                                                                                                        |                                                                             |
 
 #### Returns
 
@@ -692,20 +692,20 @@ The current box value as a byte array
 
 ### getBoxValues
 
-▸ **getBoxValues**(`filter?`): `Promise`\<\{ `name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/) ; `value`: `Uint8Array` }[]\>
+▸ **getBoxValues**(`filter?`): `Promise`\<\{ `name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/) ; `value`: `Uint8Array` }[]\>
 
 Returns the values of all current boxes for the current app.
 Note: This will issue multiple HTTP requests (one per box) and it's not an atomic operation so values may be out of sync.
 
 #### Parameters
 
-| Name      | Type                                                                                                       | Description                                                |
-| :-------- | :--------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
-| `filter?` | (`name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/)) => `boolean` | Optional filter to filter which boxes' values are returned |
+| Name      | Type                                                                                                        | Description                                                |
+| :-------- | :---------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
+| `filter?` | (`name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/)) => `boolean` | Optional filter to filter which boxes' values are returned |
 
 #### Returns
 
-`Promise`\<\{ `name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/) ; `value`: `Uint8Array` }[]\>
+`Promise`\<\{ `name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/) ; `value`: `Uint8Array` }[]\>
 
 The (name, value) pair of the boxes with values as raw byte arrays
 
@@ -717,21 +717,21 @@ The (name, value) pair of the boxes with values as raw byte arrays
 
 ### getBoxValuesFromABIType
 
-▸ **getBoxValuesFromABIType**(`type`, `filter?`): `Promise`\<\{ `name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/) ; `value`: `ABIValue` }[]\>
+▸ **getBoxValuesFromABIType**(`type`, `filter?`): `Promise`\<\{ `name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/) ; `value`: `ABIValue` }[]\>
 
 Returns the values of all current boxes for the current app decoded using an ABI Type.
 Note: This will issue multiple HTTP requests (one per box) and it's not an atomic operation so values may be out of sync.
 
 #### Parameters
 
-| Name      | Type                                                                                                       | Description                                                |
-| :-------- | :--------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
-| `type`    | `ABIType`                                                                                                  | The ABI type to decode the values with                     |
-| `filter?` | (`name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/)) => `boolean` | Optional filter to filter which boxes' values are returned |
+| Name      | Type                                                                                                        | Description                                                |
+| :-------- | :---------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------- |
+| `type`    | `ABIType`                                                                                                   | The ABI type to decode the values with                     |
+| `filter?` | (`name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/)) => `boolean` | Optional filter to filter which boxes' values are returned |
 
 #### Returns
 
-`Promise`\<\{ `name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/) ; `value`: `ABIValue` }[]\>
+`Promise`\<\{ `name`: [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/) ; `value`: `ABIValue` }[]\>
 
 The (name, value) pair of the boxes with values as the ABI Value
 
@@ -772,13 +772,13 @@ Returns the arguments for an app call for the given ABI method or raw method spe
 
 ### getGlobalState
 
-▸ **getGlobalState**(): `Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstate/)\>
+▸ **getGlobalState**(): `Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppState/)\>
 
 Returns global state for the current app.
 
 #### Returns
 
-`Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstate/)\>
+`Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppState/)\>
 
 The global state
 
@@ -790,7 +790,7 @@ The global state
 
 ### getLocalState
 
-▸ **getLocalState**(`account`): `Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstate/)\>
+▸ **getLocalState**(`account`): `Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppState/)\>
 
 Returns local state for the given account / account address.
 
@@ -802,7 +802,7 @@ Returns local state for the given account / account address.
 
 #### Returns
 
-`Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstate/)\>
+`Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppState/)\>
 
 The global state
 
@@ -820,9 +820,9 @@ Import source maps for the app.
 
 #### Parameters
 
-| Name         | Type                                                                                                   | Description               |
-| :----------- | :----------------------------------------------------------------------------------------------------- | :------------------------ |
-| `sourceMaps` | [`AppSourceMaps`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappsourcemaps/) | The source maps to import |
+| Name         | Type                                                                                                    | Description               |
+| :----------- | :------------------------------------------------------------------------------------------------------ | :------------------------ |
+| `sourceMaps` | [`AppSourceMaps`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppSourceMaps/) | The source maps to import |
 
 #### Returns
 
@@ -864,7 +864,7 @@ Issues a opt_in call to the app.
 
 ### update
 
-▸ **update**(`update?`): `Promise`\<\{ `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `confirmation?`: `PendingTransactionResponse` ; `confirmations?`: `PendingTransactionResponse`[] ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] }\>
+▸ **update**(`update?`): `Promise`\<\{ `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `confirmation?`: `PendingTransactionResponse` ; `confirmations?`: `PendingTransactionResponse`[] ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] }\>
 
 #### Parameters
 
@@ -874,7 +874,7 @@ Issues a opt_in call to the app.
 
 #### Returns
 
-`Promise`\<\{ `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/) ; `confirmation?`: `PendingTransactionResponse` ; `confirmations?`: `PendingTransactionResponse`[] ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] }\>
+`Promise`\<\{ `compiledApproval`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `compiledClear`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/) ; `confirmation?`: `PendingTransactionResponse` ; `confirmations?`: `PendingTransactionResponse`[] ; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn) ; `transaction`: `Transaction` ; `transactions`: `Transaction`[] }\>
 
 The transaction send result and the compilation result
 

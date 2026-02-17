@@ -2,7 +2,7 @@
 title: StorageKey
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / StorageKey
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / StorageKey
 
 [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/).StorageKey
 
@@ -12,10 +12,10 @@ Describes a single key in app storage
 
 ### Properties
 
-- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/#desc)
-- [key](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/#key)
-- [keyType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/#keytype)
-- [valueType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagekey/#valuetype)
+- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageKey/#desc)
+- [key](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageKey/#key)
+- [keyType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageKey/#keytype)
+- [valueType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageKey/#valuetype)
 
 ## Properties
 

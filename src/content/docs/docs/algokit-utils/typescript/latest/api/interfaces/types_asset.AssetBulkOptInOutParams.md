@@ -2,7 +2,7 @@
 title: AssetBulkOptInOutParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/) / AssetBulkOptInOutParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/) / AssetBulkOptInOutParams
 
 [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/).AssetBulkOptInOutParams
 
@@ -14,13 +14,13 @@ Parameters for `assetBulkOptIn` / `assetBulkOptOut` call.
 
 ### Properties
 
-- [account](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetbulkoptinoutparams/#account)
-- [assetIds](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetbulkoptinoutparams/#assetids)
-- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetbulkoptinoutparams/#maxfee)
-- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetbulkoptinoutparams/#note)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetbulkoptinoutparams/#suppresslog)
-- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetbulkoptinoutparams/#transactionparams)
-- [validateBalances](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetbulkoptinoutparams/#validatebalances)
+- [account](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetBulkOptInOutParams/#account)
+- [assetIds](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetBulkOptInOutParams/#assetids)
+- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetBulkOptInOutParams/#maxfee)
+- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetBulkOptInOutParams/#note)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetBulkOptInOutParams/#suppresslog)
+- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetBulkOptInOutParams/#transactionparams)
+- [validateBalances](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetBulkOptInOutParams/#validatebalances)
 
 ## Properties
 
@@ -50,7 +50,7 @@ The IDs of the assets to opt in for / out of
 
 ### maxFee
 
-• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The maximum fee that you are happy to pay per transaction (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 

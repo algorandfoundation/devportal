@@ -2,7 +2,7 @@
 title: AppClientDeployCallInterfaceParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientDeployCallInterfaceParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientDeployCallInterfaceParams
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppClientDeployCallInterfaceParams
 
@@ -12,17 +12,17 @@ Call interface parameters to pass into ApplicationClient.deploy
 
 - **`AppClientDeployCallInterfaceParams`**
 
-  ↳ [`AppClientDeployParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/)
+  ↳ [`AppClientDeployParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/)
 
 ## Table of contents
 
 ### Properties
 
-- [createArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#createargs)
-- [createOnCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#createoncompleteaction)
-- [deleteArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#deleteargs)
-- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#deploytimeparams)
-- [updateArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/#updateargs)
+- [createArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#createargs)
+- [createOnCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#createoncompleteaction)
+- [deleteArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#deleteargs)
+- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#deploytimeparams)
+- [updateArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/#updateargs)
 
 ## Properties
 
@@ -64,7 +64,7 @@ Any args to pass to any delete transaction that is issued as part of deployment
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)
 
 Any deploy-time parameters to replace in the TEAL code
 

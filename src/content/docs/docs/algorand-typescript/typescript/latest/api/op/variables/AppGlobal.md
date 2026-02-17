@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / AppGlobal
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / AppGlobal
 
 > `const` **AppGlobal**: `object`
 
@@ -81,7 +81,7 @@ X is the global state of application A, key B. Y is 1 if key existed, else 0
 
 Txn.ForeignApps offset (or, since v4, an _available_ application id), state key.
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ##### b
 
@@ -110,7 +110,7 @@ X is the global state of application A, key B. Y is 1 if key existed, else 0
 
 Txn.ForeignApps offset (or, since v4, an _available_ application id), state key.
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ##### b
 

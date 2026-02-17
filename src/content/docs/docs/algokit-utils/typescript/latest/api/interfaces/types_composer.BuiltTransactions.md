@@ -2,7 +2,7 @@
 title: BuiltTransactions
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/composer](/docs/algokit-utils/typescript/latest/api/modules/types_composer/) / BuiltTransactions
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/composer](/docs/algokit-utils/typescript/latest/api/modules/types_composer/) / BuiltTransactions
 
 [types/composer](/docs/algokit-utils/typescript/latest/api/modules/types_composer/).BuiltTransactions
 
@@ -12,9 +12,9 @@ Set of transactions built by `TransactionComposer`.
 
 ### Properties
 
-- [methodCalls](/docs/algokit-utils/typescript/latest/api/interfaces/types_composerbuilttransactions/#methodcalls)
-- [signers](/docs/algokit-utils/typescript/latest/api/interfaces/types_composerbuilttransactions/#signers)
-- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_composerbuilttransactions/#transactions)
+- [methodCalls](/docs/algokit-utils/typescript/latest/api/interfaces/types_composer.BuiltTransactions/#methodcalls)
+- [signers](/docs/algokit-utils/typescript/latest/api/interfaces/types_composer.BuiltTransactions/#signers)
+- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_composer.BuiltTransactions/#transactions)
 
 ## Properties
 

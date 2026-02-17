@@ -2,7 +2,7 @@
 title: AppDeployMetadata
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppDeployMetadata
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppDeployMetadata
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppDeployMetadata
 
@@ -12,18 +12,18 @@ The payload of the metadata to add to the transaction note when deploying an app
 
 - **`AppDeployMetadata`**
 
-  ↳ [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerappmetadata/)
+  ↳ [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppMetadata/)
 
-  ↳ [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/)
+  ↳ [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/)
 
 ## Table of contents
 
 ### Properties
 
-- [deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/#deletable)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/#name)
-- [updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/#updatable)
-- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/#version)
+- [deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/#deletable)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/#name)
+- [updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/#updatable)
+- [version](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/#version)
 
 ## Properties
 

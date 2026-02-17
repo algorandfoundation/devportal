@@ -56,7 +56,7 @@ The `AlgorandClient` has a number of manager class instances that help you quick
 
 ### Creating transactions
 
-You can compose a transaction via `algorand.createTransaction.`, which gives you an instance of the [`AlgorandClientTransactionCreator`](docs/code/classes/types_algorand_client_transaction_creator.AlgorandClientTransactionCreator) class. Intellisense will guide you on the different options.
+You can compose a transaction via `algorand.createTransaction.`, which gives you an instance of the [`AlgorandClientTransactionCreator`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_creator.AlgorandClientTransactionCreator) class. Intellisense will guide you on the different options.
 
 The signature for the calls to send a single transaction usually look like:
 
@@ -65,8 +65,8 @@ algorand.createTransaction.{method}(params: {ComposerTransactionTypeParams} & Co
 ```
 
 - To get intellisense on the params, open an object parenthesis (`{`) and use your IDE's intellisense keyboard shortcut (e.g. ctrl+space).
-- `{ComposerTransactionTypeParams}` will be the parameters that are specific to that transaction type e.g. `PaymentParams`, [see the full list](docs/code/modules/types_composer#type-aliases)
-- [`CommonTransactionParams`](docs/code/modules/types_composer#commontransactionparams) are the [common transaction parameters](#transaction-parameters) that can be specified for every single transaction
+- `{ComposerTransactionTypeParams}` will be the parameters that are specific to that transaction type e.g. `PaymentParams`, [see the full list](/docs/algokit-utils/typescript/latest/api/modules/types_composer#type-aliases)
+- [`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer#commontransactionparams) are the [common transaction parameters](#transaction-parameters) that can be specified for every single transaction
 - `Transaction` is an unsigned `algosdk.Transaction` object, ready to be signed and sent
 
 The return type for the ABI method call methods are slightly different:
@@ -92,7 +92,7 @@ This signifies the fact that an ABI method call can actually result in multiple 
 
 ### Sending a single transaction
 
-You can compose a single transaction via `algorand.send...`, which gives you an instance of the [`AlgorandClientTransactionSender`](docs/code/classes/types_algorand_client_transaction_sender.AlgorandClientTransactionSender) class. Intellisense will guide you on the different options.
+You can compose a single transaction via `algorand.send...`, which gives you an instance of the [`AlgorandClientTransactionSender`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client_transaction_sender.AlgorandClientTransactionSender) class. Intellisense will guide you on the different options.
 
 Further documentation is present in the related capabilities:
 
@@ -105,10 +105,10 @@ The signature for the calls to send a single transaction usually look like:
 `algorand.send.{method}(params: {ComposerTransactionTypeParams} & CommonAppCallParams & SendParams): SingleSendTransactionResult`
 
 - To get intellisense on the params, open an object parenthesis (`{`) and use your IDE's intellisense keyboard shortcut (e.g. ctrl+space).
-- `{ComposerTransactionTypeParams}` will be the parameters that are specific to that transaction type e.g. `PaymentParams`, [see the full list](docs/code/modules/types_composer#type-aliases)
-- [`CommonAppCallParams`](docs/code/modules/types_composer#commonappcallparams) are the [common app call transaction parameters](/algokit/utils/typescript/app/#common-app-parameters) that can be specified for every single app transaction
-- [`SendParams`](docs/code/interfaces/types_transaction.SendParams) are the [parameters](#transaction-parameters) that control execution semantics when sending transactions to the network
-- [`SendSingleTransactionResult`](docs/code/modules/types_algorand_client#sendsingletransactionresult) is all of the information that is relevant when sending a single transaction to the network.
+- `{ComposerTransactionTypeParams}` will be the parameters that are specific to that transaction type e.g. `PaymentParams`, [see the full list](/docs/algokit-utils/typescript/latest/api/modules/types_composer#type-aliases)
+- [`CommonAppCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer#commonappcallparams) are the [common app call transaction parameters](/algokit/utils/typescript/app/#common-app-parameters) that can be specified for every single app transaction
+- [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams) are the [parameters](#transaction-parameters) that control execution semantics when sending transactions to the network
+- [`SendSingleTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_algorand_client#sendsingletransactionresult) is all of the information that is relevant when sending a single transaction to the network.
 
 Generally, the functions to immediately send a single transaction will emit log messages before and/or after sending the transaction. You can opt-out of this by sending `suppressLog: true`.
 
@@ -132,7 +132,7 @@ To create a transaction you define a set of parameters as a plain TypeScript obj
 
 There are two common base interfaces that get reused:
 
-- [`CommonTransactionParams`](docs/code/modules/types_composer#commontransactionparams)
+- [`CommonTransactionParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer#commontransactionparams)
   - `sender: string` - The address of the account sending the transaction.
   - `signer?: algosdk.TransactionSigner | TransactionSignerAccount` - The function used to sign transaction(s); if not specified then an attempt will be made to find a registered signer for the given `sender` or use a default signer (if configured).
   - `rekeyTo?: string` - Change the signing key of the sender to the given address. **Warning:** Please be careful with this parameter and be sure to read the [official rekey guidance](https://dev.algorand.co/concepts/accounts/rekeying).
@@ -146,7 +146,7 @@ There are two common base interfaces that get reused:
     - `validityWindow?: number` - How many rounds the transaction should be valid for, if not specified then the registered default validity window will be used.
     - `firstValidRound?: bigint` - Set the first round this transaction is valid. If left undefined, the value from algod will be used. We recommend you only set this when you intentionally want this to be some time in the future.
     - `lastValidRound?: bigint` - The last round this transaction is valid. It is recommended to use `validityWindow` instead.
-- [`SendParams`](docs/code/interfaces/types_transaction.SendParams)
+- [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams)
   - `maxRoundsToWaitForConfirmation?: number` - The number of rounds to wait for confirmation. By default until the latest lastValid has past.
   - `suppressLog?: boolean` - Whether to suppress log messages from transaction send, default: do not suppress.
   - `populateAppCallResources?: boolean` - Whether to use simulate to automatically populate app call resources in the txn objects. Defaults to `Config.populateAppCallResources`.

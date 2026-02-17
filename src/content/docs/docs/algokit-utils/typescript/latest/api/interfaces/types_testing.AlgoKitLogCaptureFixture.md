@@ -2,7 +2,7 @@
 title: AlgoKitLogCaptureFixture
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / AlgoKitLogCaptureFixture
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / AlgoKitLogCaptureFixture
 
 [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/).AlgoKitLogCaptureFixture
 
@@ -10,12 +10,12 @@ title: AlgoKitLogCaptureFixture
 
 ### Properties
 
-- [afterEach](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgokitlogcapturefixture/#aftereach)
-- [beforeEach](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgokitlogcapturefixture/#beforeeach)
+- [afterEach](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgoKitLogCaptureFixture/#aftereach)
+- [beforeEach](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgoKitLogCaptureFixture/#beforeeach)
 
 ### Accessors
 
-- [testLogger](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgokitlogcapturefixture/#testlogger)
+- [testLogger](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgoKitLogCaptureFixture/#testlogger)
 
 ## Properties
 
@@ -61,13 +61,13 @@ Testing framework agnostic handler method to run before each test to prepare the
 
 ### testLogger
 
-• `get` **testLogger**(): [`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/)
+• `get` **testLogger**(): [`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/)
 
 The test logger instance for the current test
 
 #### Returns
 
-[`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/)
+[`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/)
 
 #### Defined in
 

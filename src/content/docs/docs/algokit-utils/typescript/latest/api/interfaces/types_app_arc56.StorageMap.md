@@ -2,7 +2,7 @@
 title: StorageMap
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / StorageMap
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / StorageMap
 
 [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/).StorageMap
 
@@ -12,10 +12,10 @@ Describes a mapping of key-value pairs in storage
 
 ### Properties
 
-- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/#desc)
-- [keyType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/#keytype)
-- [prefix](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/#prefix)
-- [valueType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56storagemap/#valuetype)
+- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageMap/#desc)
+- [keyType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageMap/#keytype)
+- [prefix](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageMap/#prefix)
+- [valueType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StorageMap/#valuetype)
 
 ## Properties
 

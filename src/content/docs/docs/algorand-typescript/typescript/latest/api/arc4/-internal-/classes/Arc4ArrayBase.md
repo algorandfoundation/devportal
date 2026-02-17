@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/readme/) / Arc4ArrayBase
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/README/) / Arc4ArrayBase
 
 Defined in: [arc4/encoded-types.ts:237](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L237)
 
@@ -18,21 +18,21 @@ A base type for arc4 array types
 
 ## Extends
 
-- [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/)
+- [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/)
 
 ## Extended by
 
-- [`StaticArray`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/staticarray/)
-- [`DynamicArray`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/dynamicarray/)
-- [`Address`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/address/)
-- [`DynamicBytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/dynamicbytes/)
-- [`StaticBytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/staticbytes/)
+- [`StaticArray`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/StaticArray/)
+- [`DynamicArray`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/DynamicArray/)
+- [`Address`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Address/)
+- [`DynamicBytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/DynamicBytes/)
+- [`StaticBytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/StaticBytes/)
 
 ## Type Parameters
 
 ### TItem
 
-`TItem` _extends_ [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/)
+`TItem` _extends_ [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/)
 
 ## Implements
 
@@ -59,7 +59,7 @@ Defined in: [arc4/encoded-types.ts:238](https://github.com/algorandfoundation/pu
 
 #### Overrides
 
-[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/#constructor)
+[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/#constructor)
 
 ## Accessors
 
@@ -79,7 +79,7 @@ Retrieve the encoded bytes for this type
 
 #### Inherited from
 
-[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/#bytes)
+[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/#bytes)
 
 ---
 
@@ -130,7 +130,7 @@ Negative indexes are taken from the end.
 
 ##### index
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 The index of the item to retrieve
 
@@ -228,7 +228,7 @@ Defined in: [arc4/encoded-types.ts:267](https://github.com/algorandfoundation/pu
 
 ###### end
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 An index in which to stop copying items.
 
@@ -256,13 +256,13 @@ Defined in: [arc4/encoded-types.ts:274](https://github.com/algorandfoundation/pu
 
 ###### start
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 An index in which to start copying items.
 
 ###### end
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 An index in which to stop copying items
 

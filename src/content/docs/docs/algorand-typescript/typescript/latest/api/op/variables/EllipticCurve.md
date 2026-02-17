@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / EllipticCurve
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / EllipticCurve
 
 > `const` **EllipticCurve**: `object`
 
@@ -38,7 +38,7 @@ Does _not_ check if A and B are in the main prime-order subgroup.
 
 ##### g
 
-[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ec/)
 
 ##### a
 
@@ -69,7 +69,7 @@ G1 element inputs are base field elements and G2 element inputs are quadratic fi
 
 ##### g
 
-[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ec/)
 
 ##### a
 
@@ -95,7 +95,7 @@ A and B are concatenated points, encoded and checked as described in `ec_add`. A
 
 ##### g
 
-[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ec/)
 
 ##### a
 
@@ -125,7 +125,7 @@ A is a curve point encoded and checked as described in `ec_add`. Scalar B is int
 
 ##### g
 
-[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ec/)
 
 ##### a
 
@@ -156,7 +156,7 @@ The name `ec_multi_scalar_mul` was chosen to reflect common usage, but a more co
 
 ##### g
 
-[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ec/)
 
 ##### a
 
@@ -185,7 +185,7 @@ Min AVM version: 10
 
 ##### g
 
-[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ec/)
+[`Ec`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ec/)
 
 ##### a
 

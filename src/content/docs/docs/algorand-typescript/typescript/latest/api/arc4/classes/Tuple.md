@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / Tuple
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / Tuple
 
 Defined in: [arc4/encoded-types.ts:408](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L408)
 
@@ -18,13 +18,13 @@ An arc4 encoded tuple of values
 
 ## Extends
 
-- [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/)
+- [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/)
 
 ## Type Parameters
 
 ### TTuple
 
-`TTuple` _extends_ readonly \[[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/), `...ARC4Encoded[]`\]
+`TTuple` _extends_ readonly \[[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/), `...ARC4Encoded[]`\]
 
 A type representing the native tuple of item types
 
@@ -44,7 +44,7 @@ Create a new Tuple with the default zero values for items
 
 #### Overrides
 
-[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/#constructor)
+[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/#constructor)
 
 ### Constructor
 
@@ -88,7 +88,7 @@ Retrieve the encoded bytes for this type
 
 #### Inherited from
 
-[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/#bytes)
+[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/#bytes)
 
 ---
 

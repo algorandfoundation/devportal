@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/readme/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/readme/) / AssetConfigTxn
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/README/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/README/) / AssetConfigTxn
 
 Defined in: [gtxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L613)
 
@@ -30,7 +30,7 @@ The asset name
 
 ### clawback
 
-> `readonly` **clawback**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **clawback**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [gtxn.ts:268](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L268)
 
@@ -40,7 +40,7 @@ Defined in: [gtxn.ts:268](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ### configAsset
 
-> `readonly` **configAsset**: [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> `readonly` **configAsset**: [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Defined in: [gtxn.ts:220](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L220)
 
@@ -50,7 +50,7 @@ Asset ID in asset config transaction
 
 ### createdAsset
 
-> `readonly` **createdAsset**: [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> `readonly` **createdAsset**: [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Defined in: [gtxn.ts:224](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L224)
 
@@ -110,7 +110,7 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 ### freeze
 
-> `readonly` **freeze**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **freeze**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [gtxn.ts:264](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L264)
 
@@ -151,7 +151,7 @@ Defined in: [gtxn.ts:195](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ### manager
 
-> `readonly` **manager**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **manager**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [gtxn.ts:256](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L256)
 
@@ -181,7 +181,7 @@ Any data up to 1024 bytes
 
 ### rekeyTo
 
-> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [gtxn.ts:216](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L216)
 
@@ -191,7 +191,7 @@ Defined in: [gtxn.ts:216](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ### reserve
 
-> `readonly` **reserve**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **reserve**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [gtxn.ts:260](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L260)
 
@@ -201,7 +201,7 @@ Defined in: [gtxn.ts:260](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 ### sender
 
-> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [gtxn.ts:171](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L171)
 
@@ -231,7 +231,7 @@ The computed ID for this transaction. 32 bytes.
 
 ### type
 
-> `readonly` **type**: [`AssetConfig`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/#assetconfig)
+> `readonly` **type**: [`AssetConfig`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/#assetconfig)
 
 Defined in: [gtxn.ts:203](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L203)
 

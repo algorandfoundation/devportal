@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / bytes
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / bytes
 
 > **bytes**\<`TLength`\> = `object`
 
@@ -50,7 +50,7 @@ Retrieve the byte at the index i
 
 ##### i
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 The index to read. Can be negative to read from the end
 
@@ -101,7 +101,7 @@ The shorter of the two values will be zero-left extended to the larger length.
 
 ###### other
 
-[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytescompat/)
+[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)
 
 The other bytes value
 
@@ -168,7 +168,7 @@ The shorter of the two values will be zero-left extended to the larger length.
 
 ###### other
 
-[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytescompat/)
+[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)
 
 The other bytes value
 
@@ -219,7 +219,7 @@ The shorter of the two values will be zero-left extended to the larger length.
 
 ###### other
 
-[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytescompat/)
+[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)
 
 The other bytes value
 
@@ -243,7 +243,7 @@ Concatenate this bytes value with another bytes value
 
 ##### other
 
-[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytescompat/)
+[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)
 
 The other bytes value
 
@@ -267,7 +267,7 @@ Compares this bytes value with another.
 
 ##### other
 
-[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytescompat/)
+[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)
 
 The other bytes value
 
@@ -305,7 +305,7 @@ Returns a slice of this bytes sequence from the specified start to the end
 
 ###### start
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 The index to start slicing from. Can be negative to count from the end.
 
@@ -325,13 +325,13 @@ Returns a slice of this bytes sequence from the specified start to the specified
 
 ###### start
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 The index to start slicing from. Can be negative to count from the end.
 
 ###### end
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 The index to end the slice. Can be negative to count from the end.
 
@@ -359,7 +359,7 @@ Change this unbounded bytes instance into a bounded one
 
 ##### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/tofixedbytesoptions/)\<`TNewLength`\>
+[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TNewLength`\>
 
 Options for the conversion
 

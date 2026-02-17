@@ -6,31 +6,31 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/readme/) / gtxn
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/README/) / gtxn
 
 ## Interfaces
 
-- [ApplicationCallTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/applicationcalltxn/)
-- [AssetConfigTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assetconfigtxn/)
-- [AssetFreezeTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assetfreezetxn/)
-- [AssetTransferTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/assettransfertxn/)
-- [KeyRegistrationTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/keyregistrationtxn/)
-- [PaymentTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/paymenttxn/)
+- [ApplicationCallTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/ApplicationCallTxn/)
+- [AssetConfigTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/AssetConfigTxn/)
+- [AssetFreezeTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/AssetFreezeTxn/)
+- [AssetTransferTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/AssetTransferTxn/)
+- [KeyRegistrationTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/KeyRegistrationTxn/)
+- [PaymentTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/PaymentTxn/)
 
 ## Type Aliases
 
-- [Transaction](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/type-aliases/transaction/)
+- [Transaction](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/type-aliases/Transaction/)
 
 ## Functions
 
-- [ApplicationCallTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/applicationcalltxn/)
-- [AssetConfigTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/assetconfigtxn/)
-- [AssetFreezeTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/assetfreezetxn/)
-- [AssetTransferTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/assettransfertxn/)
-- [KeyRegistrationTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/keyregistrationtxn/)
-- [PaymentTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/paymenttxn/)
-- [Transaction](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/transaction/)
+- [ApplicationCallTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/ApplicationCallTxn/)
+- [AssetConfigTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/AssetConfigTxn/)
+- [AssetFreezeTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/AssetFreezeTxn/)
+- [AssetTransferTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/AssetTransferTxn/)
+- [KeyRegistrationTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/KeyRegistrationTxn/)
+- [PaymentTxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/PaymentTxn/)
+- [Transaction](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/functions/Transaction/)

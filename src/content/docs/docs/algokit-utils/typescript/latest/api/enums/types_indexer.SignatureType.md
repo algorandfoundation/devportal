@@ -2,7 +2,7 @@
 title: SignatureType
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / SignatureType
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / SignatureType
 
 [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/).SignatureType
 
@@ -12,9 +12,9 @@ Type of signature used by an account
 
 ### Enumeration Members
 
-- [lsig](/docs/algokit-utils/typescript/latest/api/enums/types_indexersignaturetype/#lsig)
-- [msig](/docs/algokit-utils/typescript/latest/api/enums/types_indexersignaturetype/#msig)
-- [sig](/docs/algokit-utils/typescript/latest/api/enums/types_indexersignaturetype/#sig)
+- [lsig](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.SignatureType/#lsig)
+- [msig](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.SignatureType/#msig)
+- [sig](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.SignatureType/#sig)
 
 ## Enumeration Members
 

@@ -2,7 +2,7 @@
 title: AccountStatus
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / AccountStatus
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / AccountStatus
 
 [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/).AccountStatus
 
@@ -12,9 +12,9 @@ Delegation status of the account
 
 ### Enumeration Members
 
-- [NotParticipating](/docs/algokit-utils/typescript/latest/api/enums/types_indexeraccountstatus/#notparticipating)
-- [Offline](/docs/algokit-utils/typescript/latest/api/enums/types_indexeraccountstatus/#offline)
-- [Online](/docs/algokit-utils/typescript/latest/api/enums/types_indexeraccountstatus/#online)
+- [NotParticipating](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.AccountStatus/#notparticipating)
+- [Offline](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.AccountStatus/#offline)
+- [Online](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.AccountStatus/#online)
 
 ## Enumeration Members
 

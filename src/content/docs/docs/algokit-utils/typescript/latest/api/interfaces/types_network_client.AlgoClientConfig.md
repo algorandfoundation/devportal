@@ -2,7 +2,7 @@
 title: AlgoClientConfig
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/) / AlgoClientConfig
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/) / AlgoClientConfig
 
 [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/).AlgoClientConfig
 
@@ -12,9 +12,9 @@ Config for an Algorand SDK client.
 
 ### Properties
 
-- [port](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/#port)
-- [server](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/#server)
-- [token](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/#token)
+- [port](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/#port)
+- [server](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/#server)
+- [token](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/#token)
 
 ## Properties
 

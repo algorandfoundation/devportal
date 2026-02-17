@@ -2,7 +2,7 @@
 title: AppClientParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientParams
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppClientParams
 
@@ -12,20 +12,20 @@ Parameters to create an app client
 
 ### Properties
 
-- [algorand](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/#algorand)
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/#appid)
-- [appName](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/#appname)
-- [appSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/#appspec)
-- [approvalSourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/#approvalsourcemap)
-- [clearSourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/#clearsourcemap)
-- [defaultSender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/#defaultsender)
-- [defaultSigner](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/#defaultsigner)
+- [algorand](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/#algorand)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/#appid)
+- [appName](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/#appname)
+- [appSpec](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/#appspec)
+- [approvalSourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/#approvalsourcemap)
+- [clearSourceMap](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/#clearsourcemap)
+- [defaultSender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/#defaultsender)
+- [defaultSigner](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/#defaultsigner)
 
 ## Properties
 
 ### algorand
 
-• **algorand**: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+• **algorand**: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 An `AlgorandClient` instance
 
@@ -62,7 +62,7 @@ Defaults to the ARC-32/ARC-56 app spec name
 
 ### appSpec
 
-• **appSpec**: `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/)
+• **appSpec**: `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/)
 
 The ARC-56 or ARC-32 application spec as either:
 

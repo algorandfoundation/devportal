@@ -2,7 +2,7 @@
 title: AVMTracesEventData
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/) / AVMTracesEventData
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/) / AVMTracesEventData
 
 [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/).AVMTracesEventData
 
@@ -12,7 +12,7 @@ Represents the data for AVM traces debug events emitted whenever a transaction i
 
 ### Properties
 
-- [simulateResponse](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingavmtraceseventdata/#simulateresponse)
+- [simulateResponse](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.AVMTracesEventData/#simulateresponse)
 
 ## Properties
 

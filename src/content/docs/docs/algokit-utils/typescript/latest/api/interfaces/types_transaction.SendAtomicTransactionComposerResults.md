@@ -2,7 +2,7 @@
 title: SendAtomicTransactionComposerResults
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendAtomicTransactionComposerResults
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendAtomicTransactionComposerResults
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).SendAtomicTransactionComposerResults
 
@@ -10,7 +10,7 @@ The result of preparing and/or sending multiple transactions using an `AtomicTra
 
 ## Hierarchy
 
-- [`SendTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/)
+- [`SendTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/)
 
   ↳ **`SendAtomicTransactionComposerResults`**
 
@@ -18,11 +18,11 @@ The result of preparing and/or sending multiple transactions using an `AtomicTra
 
 ### Properties
 
-- [confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendatomictransactioncomposerresults/#confirmations)
-- [groupId](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendatomictransactioncomposerresults/#groupid)
-- [returns](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendatomictransactioncomposerresults/#returns)
-- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendatomictransactioncomposerresults/#transactions)
-- [txIds](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendatomictransactioncomposerresults/#txids)
+- [confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults/#confirmations)
+- [groupId](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults/#groupid)
+- [returns](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults/#returns)
+- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults/#transactions)
+- [txIds](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults/#txids)
 
 ## Properties
 
@@ -35,7 +35,7 @@ the index of the confirmation will match the index of the underlying transaction
 
 #### Overrides
 
-[SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/).[confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/#confirmations)
+[SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/).[confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/#confirmations)
 
 #### Defined in
 
@@ -75,7 +75,7 @@ The transactions that have been prepared and/or sent
 
 #### Inherited from
 
-[SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/).[transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/#transactions)
+[SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/).[transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/#transactions)
 
 #### Defined in
 

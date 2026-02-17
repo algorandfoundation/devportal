@@ -2,7 +2,7 @@
 title: TealSourcesDebugEventData
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/) / TealSourcesDebugEventData
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/) / TealSourcesDebugEventData
 
 [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/).TealSourcesDebugEventData
 
@@ -12,13 +12,13 @@ Represents the data for multiple TEAL sources debug events emitted whenever an a
 
 ### Properties
 
-- [sources](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingtealsourcesdebugeventdata/#sources)
+- [sources](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.TealSourcesDebugEventData/#sources)
 
 ## Properties
 
 ### sources
 
-• **sources**: [`TealSourceDebugEventData`](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingtealsourcedebugeventdata/)[]
+• **sources**: [`TealSourceDebugEventData`](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.TealSourceDebugEventData/)[]
 
 An array of TEAL source debug event data
 

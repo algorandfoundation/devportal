@@ -2,7 +2,7 @@
 title: CreateAppParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / CreateAppParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / CreateAppParams
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).CreateAppParams
 
@@ -22,22 +22,22 @@ Parameters that are passed in when creating an app.
 
 ### Properties
 
-- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#approvalprogram)
-- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#args)
-- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#atc)
-- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#clearstateprogram)
-- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#fee)
-- [from](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#from)
-- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#maxfee)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#maxroundstowaitforconfirmation)
-- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#note)
-- [onCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#oncompleteaction)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#populateappcallresources)
-- [schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#schema)
-- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#skipsending)
-- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#skipwaiting)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#suppresslog)
-- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/#transactionparams)
+- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#approvalprogram)
+- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#args)
+- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#atc)
+- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#clearstateprogram)
+- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#fee)
+- [from](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#from)
+- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#maxroundstowaitforconfirmation)
+- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#note)
+- [onCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#oncompleteaction)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#populateappcallresources)
+- [schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#schema)
+- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#skipsending)
+- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#skipwaiting)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#suppresslog)
+- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/#transactionparams)
 
 ## Properties
 
@@ -107,7 +107,7 @@ CreateOrUpdateAppParams.clearStateProgram
 
 ### fee
 
-• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The flat fee you want to pay, useful for covering extra fees in a transaction group or app call
 
@@ -139,7 +139,7 @@ CreateOrUpdateAppParams.from
 
 ### maxFee
 
-• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The maximum fee that you are happy to pay (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 
@@ -215,7 +215,7 @@ CreateOrUpdateAppParams.populateAppCallResources
 
 ### schema
 
-• **schema**: [`AppStorageSchema`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/)
+• **schema**: [`AppStorageSchema`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/)
 
 The storage schema to request for the created app
 

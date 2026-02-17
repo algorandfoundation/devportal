@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/readme/) / MatchTest
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/README/) / MatchTest
 
 > **MatchTest**\<`T`\> = `T` _extends_ `ConcatArray`\<infer TItem\> ? `object` & `object` : `{ [key in keyof T]?: ComparisonFor<T[key]> }`
 

@@ -2,20 +2,20 @@
 title: types/app-manager
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/app-manager
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/app-manager
 
 ## Table of contents
 
 ### Classes
 
-- [AppManager](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/)
+- [AppManager](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/)
 
 ### Interfaces
 
-- [AppInformation](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerappinformation/)
-- [BoxReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerboxreference/)
-- [BoxValueRequestParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerboxvaluerequestparams/)
-- [BoxValuesRequestParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerboxvaluesrequestparams/)
+- [AppInformation](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.AppInformation/)
+- [BoxReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.BoxReference/)
+- [BoxValueRequestParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.BoxValueRequestParams/)
+- [BoxValuesRequestParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.BoxValuesRequestParams/)
 
 ### Type Aliases
 
@@ -25,7 +25,7 @@ title: types/app-manager
 
 ### BoxIdentifier
 
-Ƭ **BoxIdentifier**: `string` \| `Uint8Array` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)
+Ƭ **BoxIdentifier**: `string` \| `Uint8Array` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)
 
 Something that identifies an app box name - either a:
 

@@ -2,7 +2,7 @@
 title: LookupAssetHoldingsOptions
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / LookupAssetHoldingsOptions
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/) / LookupAssetHoldingsOptions
 
 [types/indexer](/docs/algokit-utils/typescript/latest/api/modules/types_indexer/).LookupAssetHoldingsOptions
 
@@ -12,9 +12,9 @@ Options when looking up an asset's account holdings, https://dev.algorand.co/ref
 
 ### Properties
 
-- [currencyGreaterThan](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexerlookupassetholdingsoptions/#currencygreaterthan)
-- [currencyLessThan](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexerlookupassetholdingsoptions/#currencylessthan)
-- [includeAll](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexerlookupassetholdingsoptions/#includeall)
+- [currencyGreaterThan](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexer.LookupAssetHoldingsOptions/#currencygreaterthan)
+- [currencyLessThan](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexer.LookupAssetHoldingsOptions/#currencylessthan)
+- [includeAll](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexer.LookupAssetHoldingsOptions/#includeall)
 
 ## Properties
 

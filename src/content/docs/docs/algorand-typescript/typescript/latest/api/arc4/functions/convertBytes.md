@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / convertBytes
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / convertBytes
 
 > **convertBytes**\<`T`\>(`bytes`, `options`): `T`
 
@@ -22,13 +22,13 @@ Interpret the provided bytes as an ARC4 encoded type
 
 ### T
 
-`T` _extends_ [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/arc4encoded/)
+`T` _extends_ [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/)
 
 ## Parameters
 
 ### bytes
 
-[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytescompat/)
+[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)
 
 An arc4 encoded bytes value
 

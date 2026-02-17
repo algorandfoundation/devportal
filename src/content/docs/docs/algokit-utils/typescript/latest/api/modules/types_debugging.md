@@ -2,15 +2,15 @@
 title: types/debugging
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/debugging
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/debugging
 
 ## Table of contents
 
 ### Interfaces
 
-- [AVMTracesEventData](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingavmtraceseventdata/)
-- [TealSourceDebugEventData](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingtealsourcedebugeventdata/)
-- [TealSourcesDebugEventData](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingtealsourcesdebugeventdata/)
+- [AVMTracesEventData](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.AVMTracesEventData/)
+- [TealSourceDebugEventData](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.TealSourceDebugEventData/)
+- [TealSourcesDebugEventData](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.TealSourcesDebugEventData/)
 
 ### Variables
 

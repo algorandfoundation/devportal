@@ -2,7 +2,7 @@
 title: AppClientCompilationParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientCompilationParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientCompilationParams
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppClientCompilationParams
 
@@ -10,9 +10,9 @@ title: AppClientCompilationParams
 
 ### Properties
 
-- [deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/#deletable)
-- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/#deploytimeparams)
-- [updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/#updatable)
+- [deletable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/#deletable)
+- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/#deploytimeparams)
+- [updatable](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/#updatable)
 
 ## Properties
 
@@ -30,7 +30,7 @@ Whether or not the contract should have deploy-time permanence control set, unde
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)
 
 Any deploy-time parameters to replace in the TEAL code
 

@@ -2,7 +2,7 @@
 title: AppSpec
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / AppSpec
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / AppSpec
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).AppSpec
 
@@ -12,18 +12,18 @@ An ARC-0032 Application Specification see https://github.com/algorandfoundation/
 
 ### Properties
 
-- [bare_call_config](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/#bare_call_config)
-- [contract](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/#contract)
-- [hints](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/#hints)
-- [schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/#schema)
-- [source](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/#source)
-- [state](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/#state)
+- [bare_call_config](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/#bare_call_config)
+- [contract](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/#contract)
+- [hints](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/#hints)
+- [schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/#schema)
+- [source](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/#source)
+- [state](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/#state)
 
 ## Properties
 
 ### bare_call_config
 
-• **bare_call_config**: [`CallConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_speccallconfig/)
+• **bare_call_config**: [`CallConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.CallConfig/)
 
 The config of all BARE calls (i.e. non ABI calls with no args)
 
@@ -59,7 +59,7 @@ Method call hints
 
 ### schema
 
-• **schema**: [`SchemaSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specschemaspec/)
+• **schema**: [`SchemaSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.SchemaSpec/)
 
 The values that make up the local and global state
 
@@ -71,7 +71,7 @@ The values that make up the local and global state
 
 ### source
 
-• **source**: [`AppSources`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappsources/)
+• **source**: [`AppSources`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSources/)
 
 The TEAL source
 
@@ -83,7 +83,7 @@ The TEAL source
 
 ### state
 
-• **state**: [`StateSchemaSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specstateschemaspec/)
+• **state**: [`StateSchemaSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.StateSchemaSpec/)
 
 The rolled-up schema allocation values for local and global state
 

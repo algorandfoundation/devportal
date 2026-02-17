@@ -2,7 +2,7 @@
 title: EventType
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/lifecycle-events](/docs/algokit-utils/typescript/latest/api/modules/types_lifecycle_events/) / EventType
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/lifecycle-events](/docs/algokit-utils/typescript/latest/api/modules/types_lifecycle_events/) / EventType
 
 [types/lifecycle-events](/docs/algokit-utils/typescript/latest/api/modules/types_lifecycle_events/).EventType
 
@@ -10,8 +10,8 @@ title: EventType
 
 ### Enumeration Members
 
-- [AppCompiled](/docs/algokit-utils/typescript/latest/api/enums/types_lifecycle_eventseventtype/#appcompiled)
-- [TxnGroupSimulated](/docs/algokit-utils/typescript/latest/api/enums/types_lifecycle_eventseventtype/#txngroupsimulated)
+- [AppCompiled](/docs/algokit-utils/typescript/latest/api/enums/types_lifecycle_events.EventType/#appcompiled)
+- [TxnGroupSimulated](/docs/algokit-utils/typescript/latest/api/enums/types_lifecycle_events.EventType/#txngroupsimulated)
 
 ## Enumeration Members
 

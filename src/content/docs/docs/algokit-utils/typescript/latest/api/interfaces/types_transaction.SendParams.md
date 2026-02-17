@@ -2,7 +2,7 @@
 title: SendParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendParams
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).SendParams
 
@@ -12,16 +12,16 @@ Parameters to configure transaction sending.
 
 - **`SendParams`**
 
-  ↳ [`AtomicTransactionComposerToSend`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/)
+  ↳ [`AtomicTransactionComposerToSend`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/)
 
 ## Table of contents
 
 ### Properties
 
-- [coverAppCallInnerTransactionFees](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/#coverappcallinnertransactionfees)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/#maxroundstowaitforconfirmation)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/#populateappcallresources)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/#suppresslog)
+- [coverAppCallInnerTransactionFees](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/#coverappcallinnertransactionfees)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/#maxroundstowaitforconfirmation)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/#populateappcallresources)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/#suppresslog)
 
 ## Properties
 

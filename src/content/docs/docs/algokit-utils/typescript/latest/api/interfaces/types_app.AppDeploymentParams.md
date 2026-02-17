@@ -2,7 +2,7 @@
 title: AppDeploymentParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppDeploymentParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppDeploymentParams
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppDeploymentParams
 
@@ -10,7 +10,7 @@ The parameters to deploy an app
 
 ## Hierarchy
 
-- `Omit`\<[`CreateAppParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/), `"onCompleteAction"` \| `"args"` \| `"note"` \| `"skipSending"` \| `"skipWaiting"` \| `"atc"`\>
+- `Omit`\<[`CreateAppParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/), `"onCompleteAction"` \| `"args"` \| `"note"` \| `"skipSending"` \| `"skipWaiting"` \| `"atc"`\>
 
   ↳ **`AppDeploymentParams`**
 
@@ -18,25 +18,25 @@ The parameters to deploy an app
 
 ### Properties
 
-- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#approvalprogram)
-- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#clearstateprogram)
-- [createArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#createargs)
-- [createOnCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#createoncompleteaction)
-- [deleteArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#deleteargs)
-- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#deploytimeparams)
-- [existingDeployments](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#existingdeployments)
-- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#fee)
-- [from](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#from)
-- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#maxfee)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#maxroundstowaitforconfirmation)
-- [metadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#metadata)
-- [onSchemaBreak](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#onschemabreak)
-- [onUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#onupdate)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#populateappcallresources)
-- [schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#schema)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#suppresslog)
-- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#transactionparams)
-- [updateArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/#updateargs)
+- [approvalProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#approvalprogram)
+- [clearStateProgram](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#clearstateprogram)
+- [createArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#createargs)
+- [createOnCompleteAction](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#createoncompleteaction)
+- [deleteArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#deleteargs)
+- [deployTimeParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#deploytimeparams)
+- [existingDeployments](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#existingdeployments)
+- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#fee)
+- [from](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#from)
+- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#maxroundstowaitforconfirmation)
+- [metadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#metadata)
+- [onSchemaBreak](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#onschemabreak)
+- [onUpdate](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#onupdate)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#populateappcallresources)
+- [schema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#schema)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#suppresslog)
+- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#transactionparams)
+- [updateArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/#updateargs)
 
 ## Properties
 
@@ -110,7 +110,7 @@ Any args to pass to any delete transaction that is issued as part of deployment
 
 ### deployTimeParams
 
-• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)
+• `Optional` **deployTimeParams**: [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)
 
 Any deploy-time parameters to replace in the TEAL code
 
@@ -122,7 +122,7 @@ Any deploy-time parameters to replace in the TEAL code
 
 ### existingDeployments
 
-• `Optional` **existingDeployments**: [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appapplookup/)
+• `Optional` **existingDeployments**: [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppLookup/)
 
 Optional cached value of the existing apps for the given creator
 
@@ -134,7 +134,7 @@ Optional cached value of the existing apps for the given creator
 
 ### fee
 
-• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The flat fee you want to pay, useful for covering extra fees in a transaction group or app call
 
@@ -166,7 +166,7 @@ Omit.from
 
 ### maxFee
 
-• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The maximum fee that you are happy to pay (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 
@@ -198,7 +198,7 @@ Omit.maxRoundsToWaitForConfirmation
 
 ### metadata
 
-• **metadata**: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/)
+• **metadata**: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/)
 
 The deployment metadata
 
@@ -210,7 +210,7 @@ The deployment metadata
 
 ### onSchemaBreak
 
-• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/enums/types_apponschemabreak/) \| `"replace"` \| `"fail"` \| `"append"`
+• `Optional` **onSchemaBreak**: [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnSchemaBreak/) \| `"replace"` \| `"fail"` \| `"append"`
 
 What action to perform if a schema break is detected
 
@@ -222,7 +222,7 @@ What action to perform if a schema break is detected
 
 ### onUpdate
 
-• `Optional` **onUpdate**: `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/) \| `"update"`
+• `Optional` **onUpdate**: `"replace"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/) \| `"update"`
 
 What action to perform if a TEAL update is detected
 
@@ -250,7 +250,7 @@ Omit.populateAppCallResources
 
 ### schema
 
-• **schema**: [`AppStorageSchema`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/)
+• **schema**: [`AppStorageSchema`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/)
 
 The storage schema to request for the created app
 

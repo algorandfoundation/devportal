@@ -2,7 +2,7 @@
 title: Arc56Method
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / Arc56Method
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / Arc56Method
 
 [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/).Arc56Method
 
@@ -18,41 +18,41 @@ Wrapper around `algosdk.ABIMethod` that represents an ARC-56 ABI method.
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#constructor)
 
 ### Properties
 
-- [args](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#args)
-- [description](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#description)
-- [events](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#events)
-- [method](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#method)
-- [name](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#name)
-- [readonly](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#readonly)
-- [returns](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#returns)
+- [args](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#args)
+- [description](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#description)
+- [events](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#events)
+- [method](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#method)
+- [name](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#name)
+- [readonly](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#readonly)
+- [returns](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#returns)
 
 ### Methods
 
-- [getSelector](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#getselector)
-- [getSignature](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#getsignature)
-- [toJSON](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#tojson)
-- [txnCount](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#txncount)
-- [fromSignature](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/#fromsignature)
+- [getSelector](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#getselector)
+- [getSignature](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#getsignature)
+- [toJSON](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#tojson)
+- [txnCount](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#txncount)
+- [fromSignature](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/#fromsignature)
 
 ## Constructors
 
 ### constructor
 
-• **new Arc56Method**(`method`): [`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/)
+• **new Arc56Method**(`method`): [`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/)
 
 #### Parameters
 
-| Name     | Type                                                                                    |
-| :------- | :-------------------------------------------------------------------------------------- |
-| `method` | [`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/) |
+| Name     | Type                                                                                     |
+| :------- | :--------------------------------------------------------------------------------------- |
+| `method` | [`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/) |
 
 #### Returns
 
-[`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56arc56method/)
+[`Arc56Method`](/docs/algokit-utils/typescript/latest/api/classes/types_app_arc56.Arc56Method/)
 
 #### Overrides
 
@@ -108,7 +108,7 @@ node_modules/algosdk/dist/types/abi/method.d.ts:38
 
 ### method
 
-• **method**: [`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/)
+• **method**: [`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/)
 
 #### Defined in
 
@@ -204,11 +204,11 @@ node_modules/algosdk/dist/types/abi/method.d.ts:41
 
 ### toJSON
 
-▸ **toJSON**(): [`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/)
+▸ **toJSON**(): [`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/)
 
 #### Returns
 
-[`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/)
+[`Method`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/)
 
 #### Overrides
 

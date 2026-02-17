@@ -2,7 +2,7 @@
 title: CreateAssetParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/) / CreateAssetParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/) / CreateAssetParams
 
 [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/).CreateAssetParams
 
@@ -12,7 +12,7 @@ Parameters for `createAsset` call.
 
 ## Hierarchy
 
-- [`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/)
+- [`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/)
 
   ↳ **`CreateAssetParams`**
 
@@ -20,29 +20,29 @@ Parameters for `createAsset` call.
 
 ### Properties
 
-- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#atc)
-- [clawbackAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#clawbackaccount)
-- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#creator)
-- [decimals](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#decimals)
-- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#fee)
-- [freezeAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#freezeaccount)
-- [frozenByDefault](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#frozenbydefault)
-- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#lease)
-- [manager](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#manager)
-- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#maxfee)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#maxroundstowaitforconfirmation)
-- [metadataHash](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#metadatahash)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#name)
-- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#note)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#populateappcallresources)
-- [reserveAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#reserveaccount)
-- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#skipsending)
-- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#skipwaiting)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#suppresslog)
-- [total](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#total)
-- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#transactionparams)
-- [unit](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#unit)
-- [url](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetcreateassetparams/#url)
+- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#atc)
+- [clawbackAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#clawbackaccount)
+- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#creator)
+- [decimals](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#decimals)
+- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#fee)
+- [freezeAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#freezeaccount)
+- [frozenByDefault](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#frozenbydefault)
+- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#lease)
+- [manager](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#manager)
+- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#maxroundstowaitforconfirmation)
+- [metadataHash](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#metadatahash)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#name)
+- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#note)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#populateappcallresources)
+- [reserveAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#reserveaccount)
+- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#skipsending)
+- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#skipwaiting)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#suppresslog)
+- [total](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#total)
+- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#transactionparams)
+- [unit](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#unit)
+- [url](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.CreateAssetParams/#url)
 
 ## Properties
 
@@ -54,7 +54,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#atc)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#atc)
 
 #### Defined in
 
@@ -108,13 +108,13 @@ This field can only be specified upon asset creation.
 
 ### fee
 
-• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The flat fee you want to pay, useful for covering extra fees in a transaction group or app call
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#fee)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#fee)
 
 #### Defined in
 
@@ -174,13 +174,13 @@ If not set at asset creation or subsequently set to empty by the manager the ass
 
 ### maxFee
 
-• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The maximum fee that you are happy to pay (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#maxfee)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#maxfee)
 
 #### Defined in
 
@@ -196,7 +196,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#maxroundstowaitforconfirmation)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -249,7 +249,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#populateappcallresources)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#populateappcallresources)
 
 #### Defined in
 
@@ -281,7 +281,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#skipsending)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#skipsending)
 
 #### Defined in
 
@@ -297,7 +297,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#skipwaiting)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#skipwaiting)
 
 #### Defined in
 
@@ -313,7 +313,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/).[suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/#suppresslog)
+[SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/).[suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/#suppresslog)
 
 #### Defined in
 

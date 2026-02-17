@@ -2,7 +2,7 @@
 title: TealTemplateParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / TealTemplateParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / TealTemplateParams
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).TealTemplateParams
 

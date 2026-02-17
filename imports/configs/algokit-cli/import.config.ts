@@ -60,7 +60,6 @@ export const config: LibraryImportConfig = {
       ],
       transforms: [convertH1ToTitle],
       linkTransform: {
-        stripPrefixes: ['src/content/docs'],
         linkMappings: [
           ...generateStarlightLinkMappings(),
           {
@@ -71,6 +70,11 @@ export const config: LibraryImportConfig = {
           {
             pattern: /^\.\.\/\.\.\/README\.md$/,
             replacement: `/algokit/algokit-intro`,
+            global: true,
+          },
+          {
+            pattern: /^docs\/cli\/(#.*)?$/,
+            replacement: '/docs/algokit-cli/python/latest/$1',
             global: true,
           },
         ],
@@ -113,7 +117,6 @@ export const legacyGuideConfig: ImportOptions = {
   ],
   transforms: [convertH1ToTitle],
   linkTransform: {
-    stripPrefixes: ['src/content/docs'],
     linkMappings: [
       ...generateStarlightLinkMappings(),
       {
@@ -124,6 +127,11 @@ export const legacyGuideConfig: ImportOptions = {
       {
         pattern: /^\.\.\/\.\.\/README\.md$/,
         replacement: `/algokit/algokit-intro`,
+        global: true,
+      },
+      {
+        pattern: /^docs\/cli\/(#.*)?$/,
+        replacement: '/docs/algokit-cli/python/latest/$1',
         global: true,
       },
     ],

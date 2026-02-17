@@ -2,14 +2,14 @@
 title: types/transfer
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/transfer
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/transfer
 
 ## Table of contents
 
 ### Interfaces
 
-- [AlgoRekeyParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferalgorekeyparams/)
-- [AlgoTransferParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferalgotransferparams/)
-- [EnsureFundedParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferensurefundedparams/)
-- [EnsureFundedReturnType](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferensurefundedreturntype/)
-- [TransferAssetParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfertransferassetparams/)
+- [AlgoRekeyParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.AlgoRekeyParams/)
+- [AlgoTransferParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.AlgoTransferParams/)
+- [EnsureFundedParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.EnsureFundedParams/)
+- [EnsureFundedReturnType](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.EnsureFundedReturnType/)
+- [TransferAssetParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.TransferAssetParams/)

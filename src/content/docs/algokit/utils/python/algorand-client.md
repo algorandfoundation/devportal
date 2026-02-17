@@ -1,5 +1,7 @@
 ---
 title: Algorand client
+sidebar:
+  label: Algorand Client
 ---
 
 `AlgorandClient` is a client class that brokers easy access to Algorand functionality. It’s the [default entrypoint](/algokit/utils/python/overview/#id3) into AlgoKit Utils functionality.

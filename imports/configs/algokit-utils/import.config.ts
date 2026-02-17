@@ -91,8 +91,19 @@ export const config: LibraryImportConfig = {
         },
       ],
       linkTransform: {
-        stripPrefixes: ['src/content/docs'],
-        linkMappings: [...generateStarlightLinkMappings()],
+        linkMappings: [
+          ...generateStarlightLinkMappings(),
+          {
+            pattern: /^docs\/code\/README$/,
+            replacement: '/docs/algokit-utils/typescript/latest/api/',
+            global: true,
+          },
+          {
+            pattern: /^docs\/code\/(.+)/,
+            replacement: '/docs/algokit-utils/typescript/latest/api/$1',
+            global: true,
+          },
+        ],
       },
       clear: true,
       enabled: true,
@@ -189,8 +200,19 @@ export const config: LibraryImportConfig = {
         },
       ],
       linkTransform: {
-        stripPrefixes: ['src/content/docs'],
-        linkMappings: [...generateStarlightLinkMappings()],
+        linkMappings: [
+          ...generateStarlightLinkMappings(),
+          {
+            pattern: /^docs\/markdown\/autoapi\/algokit_utils\/(.+)/,
+            replacement: '/docs/algokit-utils/python/latest/api/$1',
+            global: true,
+          },
+          {
+            pattern: /^docs\/markdown\/autoapi\/?$/,
+            replacement: '/docs/algokit-utils/python/latest/api/',
+            global: true,
+          },
+        ],
       },
       enabled: true,
     },
@@ -237,8 +259,19 @@ export const legacyTsGuideConfig: ImportOptions = {
     },
   ],
   linkTransform: {
-    stripPrefixes: ['src/content/docs'],
-    linkMappings: [...generateStarlightLinkMappings()],
+    linkMappings: [
+      ...generateStarlightLinkMappings(),
+      {
+        pattern: /^docs\/code\/README$/,
+        replacement: '/docs/algokit-utils/typescript/latest/api/',
+        global: true,
+      },
+      {
+        pattern: /^docs\/code\/(.+)/,
+        replacement: '/docs/algokit-utils/typescript/latest/api/$1',
+        global: true,
+      },
+    ],
   },
   clear: true,
   enabled: true,
@@ -285,8 +318,19 @@ export const legacyPyGuideConfig: ImportOptions = {
     },
   ],
   linkTransform: {
-    stripPrefixes: ['src/content/docs'],
-    linkMappings: [...generateStarlightLinkMappings()],
+    linkMappings: [
+      ...generateStarlightLinkMappings(),
+      {
+        pattern: /^docs\/markdown\/autoapi\/algokit_utils\/(.+)/,
+        replacement: '/docs/algokit-utils/python/latest/api/$1',
+        global: true,
+      },
+      {
+        pattern: /^docs\/markdown\/autoapi\/?$/,
+        replacement: '/docs/algokit-utils/python/latest/api/',
+        global: true,
+      },
+    ],
   },
   enabled: true,
 };

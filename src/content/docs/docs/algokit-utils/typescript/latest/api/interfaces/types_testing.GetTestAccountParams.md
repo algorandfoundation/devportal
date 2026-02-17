@@ -2,7 +2,7 @@
 title: GetTestAccountParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / GetTestAccountParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / GetTestAccountParams
 
 [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/).GetTestAccountParams
 
@@ -12,15 +12,15 @@ Parameters for the `getTestAccount` function.
 
 ### Properties
 
-- [accountGetter](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinggettestaccountparams/#accountgetter)
-- [initialFunds](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinggettestaccountparams/#initialfunds)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinggettestaccountparams/#suppresslog)
+- [accountGetter](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.GetTestAccountParams/#accountgetter)
+- [initialFunds](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.GetTestAccountParams/#initialfunds)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.GetTestAccountParams/#suppresslog)
 
 ## Properties
 
 ### accountGetter
 
-• `Optional` **accountGetter**: (`algorand`: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)) => `Promise`\<`default`\>
+• `Optional` **accountGetter**: (`algorand`: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)) => `Promise`\<`default`\>
 
 Optional override for how to get a test account; this allows you to retrieve accounts from a known or cached list of accounts.
 
@@ -30,9 +30,9 @@ Optional override for how to get a test account; this allows you to retrieve acc
 
 ##### Parameters
 
-| Name       | Type                                                                                                       |
-| :--------- | :--------------------------------------------------------------------------------------------------------- |
-| `algorand` | [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/) |
+| Name       | Type                                                                                                        |
+| :--------- | :---------------------------------------------------------------------------------------------------------- |
+| `algorand` | [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/) |
 
 ##### Returns
 
@@ -46,7 +46,7 @@ Optional override for how to get a test account; this allows you to retrieve acc
 
 ### initialFunds
 
-• **initialFunds**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• **initialFunds**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 Initial funds to ensure the account has
 

@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / AbiMethodConfig
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / AbiMethodConfig
 
 > **AbiMethodConfig**\<`TContract`\> = `object`
 
@@ -22,7 +22,7 @@ Configuration options for an abi method
 
 ### TContract
 
-`TContract` _extends_ [`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/contract/)
+`TContract` _extends_ [`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Contract/)
 
 the type of the contract this method is a part of
 
@@ -30,7 +30,7 @@ the type of the contract this method is a part of
 
 ### allowActions?
 
-> `optional` **allowActions**: [`OnCompleteActionStr`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/oncompleteactionstr/) \| [`OnCompleteActionStr`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/oncompleteactionstr/)[]
+> `optional` **allowActions**: [`OnCompleteActionStr`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/OnCompleteActionStr/) \| [`OnCompleteActionStr`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/OnCompleteActionStr/)[]
 
 Defined in: [arc4/index.ts:108](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L108)
 
@@ -46,7 +46,7 @@ Which on complete action(s) are allowed when invoking this method.
 
 ### defaultArguments?
 
-> `optional` **defaultArguments**: `Record`\<`string`, [`DefaultArgument`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/defaultargument/)\<`TContract`\>\>
+> `optional` **defaultArguments**: `Record`\<`string`, [`DefaultArgument`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/DefaultArgument/)\<`TContract`\>\>
 
 Defined in: [arc4/index.ts:147](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L147)
 
@@ -68,7 +68,7 @@ Override the name used to generate the abi method selector
 
 ### onCreate?
 
-> `optional` **onCreate**: [`CreateOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/createoptions/)
+> `optional` **onCreate**: [`CreateOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/CreateOptions/)
 
 Defined in: [arc4/index.ts:113](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L113)
 
@@ -100,7 +100,7 @@ false;
 
 ### resourceEncoding?
 
-> `optional` **resourceEncoding**: [`ResourceEncodingOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/resourceencodingoptions/)
+> `optional` **resourceEncoding**: [`ResourceEncodingOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/ResourceEncodingOptions/)
 
 Defined in: [arc4/index.ts:131](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L131)
 
@@ -115,7 +115,7 @@ The resource must still be 'available' to this transaction but can take advantag
 
 ### validateEncoding?
 
-> `optional` **validateEncoding**: [`ValidateEncodingOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/validateencodingoptions/)
+> `optional` **validateEncoding**: [`ValidateEncodingOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/ValidateEncodingOptions/)
 
 Defined in: [arc4/index.ts:140](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L140)
 

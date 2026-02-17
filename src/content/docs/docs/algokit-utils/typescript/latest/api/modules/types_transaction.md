@@ -2,23 +2,23 @@
 title: types/transaction
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/transaction
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/transaction
 
 ## Table of contents
 
 ### Interfaces
 
-- [AdditionalAtomicTransactionComposerContext](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionadditionalatomictransactioncomposercontext/)
-- [AtomicTransactionComposerToSend](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/)
-- [ConfirmedTransactionResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresult/)
-- [ConfirmedTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresults/)
-- [SendAtomicTransactionComposerResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendatomictransactioncomposerresults/)
-- [SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/)
-- [SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/)
-- [SendTransactionResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/)
-- [SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/)
-- [TransactionGroupToSend](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiongrouptosend/)
-- [TransactionToSign](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiontosign/)
+- [AdditionalAtomicTransactionComposerContext](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AdditionalAtomicTransactionComposerContext/)
+- [AtomicTransactionComposerToSend](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/)
+- [ConfirmedTransactionResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResult/)
+- [ConfirmedTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResults/)
+- [SendAtomicTransactionComposerResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults/)
+- [SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/)
+- [SendTransactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/)
+- [SendTransactionResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/)
+- [SendTransactionResults](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/)
+- [TransactionGroupToSend](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionGroupToSend/)
+- [TransactionToSign](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionToSign/)
 
 ### Type Aliases
 
@@ -44,7 +44,7 @@ ARC-0002 compatible transaction note components https://github.com/algorandfound
 
 ### SendSingleTransactionResult
 
-Ƭ **SendSingleTransactionResult**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`SendAtomicTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendatomictransactioncomposerresults/) & [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresult/)\>
+Ƭ **SendSingleTransactionResult**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`SendAtomicTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults/) & [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResult/)\>
 
 Result from sending a single transaction.
 
@@ -56,7 +56,7 @@ Result from sending a single transaction.
 
 ### SendTransactionFrom
 
-Ƭ **SendTransactionFrom**: `Account` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) \| `LogicSigAccount` \| [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)
+Ƭ **SendTransactionFrom**: `Account` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) \| `LogicSigAccount` \| [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/) \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)
 
 Core account abstraction when signing/sending transactions
 

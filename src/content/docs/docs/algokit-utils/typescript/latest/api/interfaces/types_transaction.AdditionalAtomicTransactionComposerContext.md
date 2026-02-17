@@ -2,7 +2,7 @@
 title: AdditionalAtomicTransactionComposerContext
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / AdditionalAtomicTransactionComposerContext
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / AdditionalAtomicTransactionComposerContext
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).AdditionalAtomicTransactionComposerContext
 
@@ -12,14 +12,14 @@ Additional context about the `AtomicTransactionComposer`.
 
 ### Properties
 
-- [maxFees](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionadditionalatomictransactioncomposercontext/#maxfees)
-- [suggestedParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionadditionalatomictransactioncomposercontext/#suggestedparams)
+- [maxFees](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AdditionalAtomicTransactionComposerContext/#maxfees)
+- [suggestedParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AdditionalAtomicTransactionComposerContext/#suggestedparams)
 
 ## Properties
 
 ### maxFees
 
-• **maxFees**: `Map`\<`number`, [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)\>
+• **maxFees**: `Map`\<`number`, [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)\>
 
 A map of transaction index in the `AtomicTransactionComposer` to the max fee that can be calculated for a transaction in the group
 

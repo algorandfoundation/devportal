@@ -92,4 +92,4 @@ Buffer.from(algosdk.encodeObj({ txn: txn.get_obj_for_encoding() })).toString(
 
 ## Further Reading
 
-For in-depth details, visit the [sign section](docs/cli/#sign) in the AlgoKit CLI reference documentation.
+For in-depth details, visit the [sign section](/docs/algokit-cli/python/latest/#sign) in the AlgoKit CLI reference documentation.

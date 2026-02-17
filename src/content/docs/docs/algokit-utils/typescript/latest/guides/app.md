@@ -6,7 +6,7 @@ App management is a higher-order use case capability provided by AlgoKit Utils t
 
 ## `AppManager`
 
-The [`AppManager`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/) is a class that is used to manage app information.
+The [`AppManager`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/) is a class that is used to manage app information.
 
 To get an instance of `AppManager` you can use either [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/algorand-client/) via `algorand.app` or instantiate it directly (passing in an algod client instance):
 
@@ -73,7 +73,7 @@ The base type for specifying an app creation transaction is [`AppCreateParams`](
   - `localByteSlices: number` - The number of byte slices saved in local state.
 - `extraProgramPages?: number` - Number of extra pages required for the programs. This is immutable once the app is created.
 
-If you pass in `approvalProgram` or `clearStateProgram` as a string then it will automatically be compiled using Algod and the compilation result will be available via [`algorand.app.getCompilationResult`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/#getcompilationresult) (including the source map). To skip this behaviour you can pass in the compiled TEAL as `Uint8Array`.
+If you pass in `approvalProgram` or `clearStateProgram` as a string then it will automatically be compiled using Algod and the compilation result will be available via [`algorand.app.getCompilationResult`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/#getcompilationresult) (including the source map). To skip this behaviour you can pass in the compiled TEAL as `Uint8Array`.
 
 ```typescript
 // Basic raw example
@@ -144,7 +144,7 @@ The base type for specifying an app update transaction is [`AppUpdateParams`](/d
 - `approvalProgram: Uint8Array | string` - The program to execute for all OnCompletes other than ClearState as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).
 - `clearStateProgram: Uint8Array | string` - The program to execute for ClearState OnComplete as raw teal that will be compiled (string) or compiled teal (encoded as a byte array (Uint8Array)).
 
-If you pass in `approvalProgram` or `clearStateProgram` as a string then it will automatically be compiled using Algod and the compilation result will be available via [`algorand.app.getCompilationResult`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/#getcompilationresult) (including the source map). To skip this behaviour you can pass in the compiled TEAL as `Uint8Array`.
+If you pass in `approvalProgram` or `clearStateProgram` as a string then it will automatically be compiled using Algod and the compilation result will be available via [`algorand.app.getCompilationResult`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/#getcompilationresult) (including the source map). To skip this behaviour you can pass in the compiled TEAL as `Uint8Array`.
 
 ```typescript
 // Basic raw example
@@ -308,7 +308,7 @@ await algorand.send.appCallMethodCall({
 
 To access local state you can use the following method from an [`AppManager`](#appmanager) instance:
 
-- [`algorand.app.getGlobalState(appId)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/#getglobalstate) - Returns the current global state for the given app ID decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
+- [`algorand.app.getGlobalState(appId)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/#getglobalstate) - Returns the current global state for the given app ID decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
 
 ```typescript
 const globalState = await algorand.app.getGlobalState(12345n);
@@ -316,7 +316,7 @@ const globalState = await algorand.app.getGlobalState(12345n);
 
 Global state is parsed from the underlying algod response via the following static method from [`AppManager`](#appmanager):
 
-- [`AppManager.decodeAppState(state)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/#decodeappstate) - Takes the raw response from the algod API for global state and returns a friendly generic object keyed by the UTF-8 value of the key
+- [`AppManager.decodeAppState(state)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/#decodeappstate) - Takes the raw response from the algod API for global state and returns a friendly generic object keyed by the UTF-8 value of the key
 
 ```typescript
 const globalAppState = /* value from algod */
@@ -337,7 +337,7 @@ if (typeof appState['value1'].value === 'string') {
 
 To access local state you can use the following method from an [`AppManager`](#appmanager) instance:
 
-- [`algorand.app.getLocalState(appId, address)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/#getlocalstate) - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
+- [`algorand.app.getLocalState(appId, address)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/#getlocalstate) - Returns the current local state for the given app ID and account address decoded into an object keyed by the UTF-8 representation of the state key with various parsed versions of the value (base64, UTF-8 and raw binary)
 
 ```typescript
 const localState = await algorand.app.getLocalState(12345n, 'ACCOUNTADDRESS');
@@ -374,8 +374,8 @@ const boxABIValues = algorand.app.getBoxValuesFromABIType(
 
 To get reference information and metadata about an existing app you can use the following methods:
 
-- [`algorand.app.getById(appId)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_managerappmanager/#getbyid) - Returns current app information by app ID from an [`AppManager`](#appmanager) instance
-- [`indexer.lookupAccountCreatedApplicationByAddress(indexer, address, getAll?, paginationLimit?)`](/docs/algokit-utils/typescript/latest/api/modules/indexindexer/#lookupaccountcreatedapplicationbyaddress) - Returns all apps created by a given account from [indexer](/docs/algokit-utils/typescript/latest/guides/indexer/)
+- [`algorand.app.getById(appId)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_manager.AppManager/#getbyid) - Returns current app information by app ID from an [`AppManager`](#appmanager) instance
+- [`indexer.lookupAccountCreatedApplicationByAddress(indexer, address, getAll?, paginationLimit?)`](/docs/algokit-utils/typescript/latest/api/modules/index.indexer/#lookupaccountcreatedapplicationbyaddress) - Returns all apps created by a given account from [indexer](/docs/algokit-utils/typescript/latest/guides/indexer/)
 
 ## Common app parameters
 

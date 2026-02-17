@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / contract
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / contract
 
 > **contract**(`options`): \<`T`\>(`contract`, `ctx`) => `never`
 
@@ -22,7 +22,7 @@ The contract decorator can be used to specify additional configuration options f
 
 ### options
 
-[`ContractOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/contractoptions/)
+[`ContractOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ContractOptions/)
 
 An object containing the configuration options
 
@@ -34,7 +34,7 @@ An object containing the configuration options
 
 #### T
 
-`T` _extends_ [`ConstructorFor`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/constructorfor/)\<[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/basecontract/)\>
+`T` _extends_ [`ConstructorFor`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ConstructorFor/)\<[`BaseContract`](/docs/algorand-typescript/typescript/latest/api/index/classes/BaseContract/)\>
 
 ### Parameters
 

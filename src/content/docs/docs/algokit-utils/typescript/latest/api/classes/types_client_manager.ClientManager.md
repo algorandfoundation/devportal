@@ -2,7 +2,7 @@
 title: ClientManager
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/) / ClientManager
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/) / ClientManager
 
 [types/client-manager](/docs/algokit-utils/typescript/latest/api/modules/types_client_manager/).ClientManager
 
@@ -12,70 +12,70 @@ Exposes access to various API clients.
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#constructor)
 
 ### Properties
 
-- [\_algod](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#_algod)
-- [\_algorand](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#_algorand)
-- [\_getNetworkPromise](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#_getnetworkpromise)
-- [\_indexer](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#_indexer)
-- [\_kmd](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#_kmd)
+- [\_algod](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#_algod)
+- [\_algorand](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#_algorand)
+- [\_getNetworkPromise](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#_getnetworkpromise)
+- [\_indexer](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#_indexer)
+- [\_kmd](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#_kmd)
 
 ### Accessors
 
-- [algod](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#algod)
-- [indexer](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#indexer)
-- [indexerIfPresent](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#indexerifpresent)
-- [kmd](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#kmd)
+- [algod](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#algod)
+- [indexer](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#indexer)
+- [indexerIfPresent](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#indexerifpresent)
+- [kmd](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#kmd)
 
 ### Methods
 
-- [getAppClientByCreatorAndName](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getappclientbycreatorandname)
-- [getAppClientById](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getappclientbyid)
-- [getAppClientByNetwork](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getappclientbynetwork)
-- [getAppFactory](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getappfactory)
-- [getTestNetDispenser](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#gettestnetdispenser)
-- [getTestNetDispenserFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#gettestnetdispenserfromenvironment)
-- [getTypedAppClientByCreatorAndName](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#gettypedappclientbycreatorandname)
-- [getTypedAppClientById](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#gettypedappclientbyid)
-- [getTypedAppClientByNetwork](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#gettypedappclientbynetwork)
-- [getTypedAppFactory](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#gettypedappfactory)
-- [isLocalNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#islocalnet)
-- [isMainNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#ismainnet)
-- [isTestNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#istestnet)
-- [network](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#network)
-- [genesisIdIsLocalNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#genesisidislocalnet)
-- [getAlgoNodeConfig](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getalgonodeconfig)
-- [getAlgodClient](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getalgodclient)
-- [getAlgodClientFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getalgodclientfromenvironment)
-- [getAlgodConfigFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getalgodconfigfromenvironment)
-- [getConfigFromEnvironmentOrLocalNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getconfigfromenvironmentorlocalnet)
-- [getDefaultLocalNetConfig](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getdefaultlocalnetconfig)
-- [getIndexerClient](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getindexerclient)
-- [getIndexerClientFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getindexerclientfromenvironment)
-- [getIndexerConfigFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getindexerconfigfromenvironment)
-- [getKmdClient](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getkmdclient)
-- [getKmdClientFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/#getkmdclientfromenvironment)
+- [getAppClientByCreatorAndName](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getappclientbycreatorandname)
+- [getAppClientById](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getappclientbyid)
+- [getAppClientByNetwork](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getappclientbynetwork)
+- [getAppFactory](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getappfactory)
+- [getTestNetDispenser](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#gettestnetdispenser)
+- [getTestNetDispenserFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#gettestnetdispenserfromenvironment)
+- [getTypedAppClientByCreatorAndName](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#gettypedappclientbycreatorandname)
+- [getTypedAppClientById](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#gettypedappclientbyid)
+- [getTypedAppClientByNetwork](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#gettypedappclientbynetwork)
+- [getTypedAppFactory](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#gettypedappfactory)
+- [isLocalNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#islocalnet)
+- [isMainNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#ismainnet)
+- [isTestNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#istestnet)
+- [network](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#network)
+- [genesisIdIsLocalNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#genesisidislocalnet)
+- [getAlgoNodeConfig](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getalgonodeconfig)
+- [getAlgodClient](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getalgodclient)
+- [getAlgodClientFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getalgodclientfromenvironment)
+- [getAlgodConfigFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getalgodconfigfromenvironment)
+- [getConfigFromEnvironmentOrLocalNet](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getconfigfromenvironmentorlocalnet)
+- [getDefaultLocalNetConfig](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getdefaultlocalnetconfig)
+- [getIndexerClient](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getindexerclient)
+- [getIndexerClientFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getindexerclientfromenvironment)
+- [getIndexerConfigFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getindexerconfigfromenvironment)
+- [getKmdClient](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getkmdclient)
+- [getKmdClientFromEnvironment](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/#getkmdclientfromenvironment)
 
 ## Constructors
 
 ### constructor
 
-• **new ClientManager**(`clientsOrConfig`, `algorandClient?`): [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/)
+• **new ClientManager**(`clientsOrConfig`, `algorandClient?`): [`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/)
 
 algosdk clients or config for interacting with the official Algorand APIs.
 
 #### Parameters
 
-| Name              | Type                                                                                                                                                                                                                 | Description                  |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------- |
-| `clientsOrConfig` | [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/) \| [`AlgoSdkClients`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manageralgosdkclients/) | The clients or config to use |
-| `algorandClient?` | [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)                                                                                                           | -                            |
+| Name              | Type                                                                                                                                                                                                                   | Description                  |
+| :---------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------- |
+| `clientsOrConfig` | [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/) \| [`AlgoSdkClients`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.AlgoSdkClients/) | The clients or config to use |
+| `algorandClient?` | [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)                                                                                                            | -                            |
 
 #### Returns
 
-[`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_managerclientmanager/)
+[`ClientManager`](/docs/algokit-utils/typescript/latest/api/classes/types_client_manager.ClientManager/)
 
 **`Example`**
 
@@ -123,7 +123,7 @@ const clientManager = new ClientManager({ algodConfig, indexerConfig, kmdConfig 
 
 ### \_algorand
 
-• `Private` `Optional` **\_algorand**: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+• `Private` `Optional` **\_algorand**: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 #### Defined in
 
@@ -243,7 +243,7 @@ Error if no KMD client is configured
 
 ### getAppClientByCreatorAndName
 
-▸ **getAppClientByCreatorAndName**(`params`): `Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientappclient/)\>
+▸ **getAppClientByCreatorAndName**(`params`): `Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.AppClient/)\>
 
 Returns a new `AppClient` client for managing calls and state for an ARC-32/ARC-56 app.
 This method resolves the app ID by looking up the creator address and name
@@ -251,22 +251,22 @@ using AlgoKit app deployment semantics (i.e. looking for the app creation transa
 
 #### Parameters
 
-| Name                        | Type                                                                                                                                                                                                          | Description                                                                                                                                                                  |
-| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params`                    | `Object`                                                                                                                                                                                                      | The parameters to create the app client                                                                                                                                      |
-| `params.appLookupCache?`    | [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerapplookup/)                                                                                                              | An optional cached app lookup that matches a name to on-chain details; either this is needed or indexer is required to be passed in to this `ClientManager` on construction. |
-| `params.appName?`           | `string`                                                                                                                                                                                                      | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name                                                      |
-| `params.appSpec`            | `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/) | The ARC-56 or ARC-32 application spec as either: _ Parsed JSON ARC-56 `Contract` _ Parsed JSON ARC-32 `AppSpec` \* Raw JSON string (in either ARC-56 or ARC-32 format)       |
-| `params.approvalSourceMap?` | `ProgramSourceMap`                                                                                                                                                                                            | Optional source map for the approval program                                                                                                                                 |
-| `params.clearSourceMap?`    | `ProgramSourceMap`                                                                                                                                                                                            | Optional source map for the clear state program                                                                                                                              |
-| `params.creatorAddress`     | `string` \| `Address`                                                                                                                                                                                         | The address of the creator account for the app                                                                                                                               |
-| `params.defaultSender?`     | `string` \| `Address`                                                                                                                                                                                         | Optional address to use for the account to use as the default sender for calls.                                                                                              |
-| `params.defaultSigner?`     | `TransactionSigner`                                                                                                                                                                                           | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                             |
-| `params.ignoreCache?`       | `boolean`                                                                                                                                                                                                     | Whether or not to ignore the `AppDeployer` lookup cache and force an on-chain lookup, default: use any cached value                                                          |
+| Name                        | Type                                                                                                                                                                                                            | Description                                                                                                                                                                  |
+| :-------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`                    | `Object`                                                                                                                                                                                                        | The parameters to create the app client                                                                                                                                      |
+| `params.appLookupCache?`    | [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppLookup/)                                                                                                               | An optional cached app lookup that matches a name to on-chain details; either this is needed or indexer is required to be passed in to this `ClientManager` on construction. |
+| `params.appName?`           | `string`                                                                                                                                                                                                        | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name                                                      |
+| `params.appSpec`            | `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/) | The ARC-56 or ARC-32 application spec as either: _ Parsed JSON ARC-56 `Contract` _ Parsed JSON ARC-32 `AppSpec` \* Raw JSON string (in either ARC-56 or ARC-32 format)       |
+| `params.approvalSourceMap?` | `ProgramSourceMap`                                                                                                                                                                                              | Optional source map for the approval program                                                                                                                                 |
+| `params.clearSourceMap?`    | `ProgramSourceMap`                                                                                                                                                                                              | Optional source map for the clear state program                                                                                                                              |
+| `params.creatorAddress`     | `string` \| `Address`                                                                                                                                                                                           | The address of the creator account for the app                                                                                                                               |
+| `params.defaultSender?`     | `string` \| `Address`                                                                                                                                                                                           | Optional address to use for the account to use as the default sender for calls.                                                                                              |
+| `params.defaultSigner?`     | `TransactionSigner`                                                                                                                                                                                             | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                             |
+| `params.ignoreCache?`       | `boolean`                                                                                                                                                                                                       | Whether or not to ignore the `AppDeployer` lookup cache and force an on-chain lookup, default: use any cached value                                                          |
 
 #### Returns
 
-`Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientappclient/)\>
+`Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.AppClient/)\>
 
 The `AppClient` instance
 
@@ -288,26 +288,26 @@ const appClient = clientManager.getAppClientByCreatorAndName({
 
 ### getAppClientById
 
-▸ **getAppClientById**(`params`): [`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientappclient/)
+▸ **getAppClientById**(`params`): [`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.AppClient/)
 
 Returns a new `AppClient` client for managing calls and state for an ARC-32/ARC-56 app.
 
 #### Parameters
 
-| Name                        | Type                                                                                                                                                                                                          | Description                                                                                                                                                            |
-| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params`                    | `Object`                                                                                                                                                                                                      | The parameters to create the app client                                                                                                                                |
-| `params.appId`              | `bigint`                                                                                                                                                                                                      | The ID of the app instance this client should make calls against.                                                                                                      |
-| `params.appName?`           | `string`                                                                                                                                                                                                      | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name                                                |
-| `params.appSpec`            | `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/) | The ARC-56 or ARC-32 application spec as either: _ Parsed JSON ARC-56 `Contract` _ Parsed JSON ARC-32 `AppSpec` \* Raw JSON string (in either ARC-56 or ARC-32 format) |
-| `params.approvalSourceMap?` | `ProgramSourceMap`                                                                                                                                                                                            | Optional source map for the approval program                                                                                                                           |
-| `params.clearSourceMap?`    | `ProgramSourceMap`                                                                                                                                                                                            | Optional source map for the clear state program                                                                                                                        |
-| `params.defaultSender?`     | `string` \| `Address`                                                                                                                                                                                         | Optional address to use for the account to use as the default sender for calls.                                                                                        |
-| `params.defaultSigner?`     | `TransactionSigner`                                                                                                                                                                                           | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                       |
+| Name                        | Type                                                                                                                                                                                                            | Description                                                                                                                                                            |
+| :-------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`                    | `Object`                                                                                                                                                                                                        | The parameters to create the app client                                                                                                                                |
+| `params.appId`              | `bigint`                                                                                                                                                                                                        | The ID of the app instance this client should make calls against.                                                                                                      |
+| `params.appName?`           | `string`                                                                                                                                                                                                        | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name                                                |
+| `params.appSpec`            | `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/) | The ARC-56 or ARC-32 application spec as either: _ Parsed JSON ARC-56 `Contract` _ Parsed JSON ARC-32 `AppSpec` \* Raw JSON string (in either ARC-56 or ARC-32 format) |
+| `params.approvalSourceMap?` | `ProgramSourceMap`                                                                                                                                                                                              | Optional source map for the approval program                                                                                                                           |
+| `params.clearSourceMap?`    | `ProgramSourceMap`                                                                                                                                                                                              | Optional source map for the clear state program                                                                                                                        |
+| `params.defaultSender?`     | `string` \| `Address`                                                                                                                                                                                           | Optional address to use for the account to use as the default sender for calls.                                                                                        |
+| `params.defaultSigner?`     | `TransactionSigner`                                                                                                                                                                                             | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                       |
 
 #### Returns
 
-[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientappclient/)
+[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.AppClient/)
 
 The `AppClient` instance
 
@@ -328,7 +328,7 @@ const appClient = clientManager.getAppClientById({
 
 ### getAppClientByNetwork
 
-▸ **getAppClientByNetwork**(`params`): `Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientappclient/)\>
+▸ **getAppClientByNetwork**(`params`): `Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.AppClient/)\>
 
 Returns a new `AppClient` client for managing calls and state for an ARC-56 app.
 This method resolves the app ID for the current network based on
@@ -338,19 +338,19 @@ If no IDs are in the app spec or the network isn't recognised, an error is throw
 
 #### Parameters
 
-| Name                        | Type                                                                                                                                                                                                          | Description                                                                                                                                                            |
-| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params`                    | `Object`                                                                                                                                                                                                      | The parameters to create the app client                                                                                                                                |
-| `params.appName?`           | `string`                                                                                                                                                                                                      | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name                                                |
-| `params.appSpec`            | `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/) | The ARC-56 or ARC-32 application spec as either: _ Parsed JSON ARC-56 `Contract` _ Parsed JSON ARC-32 `AppSpec` \* Raw JSON string (in either ARC-56 or ARC-32 format) |
-| `params.approvalSourceMap?` | `ProgramSourceMap`                                                                                                                                                                                            | Optional source map for the approval program                                                                                                                           |
-| `params.clearSourceMap?`    | `ProgramSourceMap`                                                                                                                                                                                            | Optional source map for the clear state program                                                                                                                        |
-| `params.defaultSender?`     | `string` \| `Address`                                                                                                                                                                                         | Optional address to use for the account to use as the default sender for calls.                                                                                        |
-| `params.defaultSigner?`     | `TransactionSigner`                                                                                                                                                                                           | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                       |
+| Name                        | Type                                                                                                                                                                                                            | Description                                                                                                                                                            |
+| :-------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`                    | `Object`                                                                                                                                                                                                        | The parameters to create the app client                                                                                                                                |
+| `params.appName?`           | `string`                                                                                                                                                                                                        | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name                                                |
+| `params.appSpec`            | `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/) | The ARC-56 or ARC-32 application spec as either: _ Parsed JSON ARC-56 `Contract` _ Parsed JSON ARC-32 `AppSpec` \* Raw JSON string (in either ARC-56 or ARC-32 format) |
+| `params.approvalSourceMap?` | `ProgramSourceMap`                                                                                                                                                                                              | Optional source map for the approval program                                                                                                                           |
+| `params.clearSourceMap?`    | `ProgramSourceMap`                                                                                                                                                                                              | Optional source map for the clear state program                                                                                                                        |
+| `params.defaultSender?`     | `string` \| `Address`                                                                                                                                                                                           | Optional address to use for the account to use as the default sender for calls.                                                                                        |
+| `params.defaultSigner?`     | `TransactionSigner`                                                                                                                                                                                             | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                       |
 
 #### Returns
 
-`Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientappclient/)\>
+`Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.AppClient/)\>
 
 The `AppClient` instance
 
@@ -371,27 +371,27 @@ const appClient = clientManager.getAppClientByNetwork({
 
 ### getAppFactory
 
-▸ **getAppFactory**(`params`): [`AppFactory`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factoryappfactory/)
+▸ **getAppFactory**(`params`): [`AppFactory`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factory.AppFactory/)
 
 Returns a new `AppFactory` client
 
 #### Parameters
 
-| Name                       | Type                                                                                                                                                                                                          | Description                                                                                                                                                                                                                                                                                                                  |
-| :------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params`                   | `Object`                                                                                                                                                                                                      | The parameters to create the app factory                                                                                                                                                                                                                                                                                     |
-| `params.appName?`          | `string`                                                                                                                                                                                                      | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name.                                                                                                                                                                                                     |
-| `params.appSpec`           | `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56arc56contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/) | The ARC-56 or ARC-32 application spec as either: _ Parsed JSON ARC-56 `Contract` _ Parsed JSON ARC-32 `AppSpec` \* Raw JSON string (in either ARC-56 or ARC-32 format)                                                                                                                                                       |
-| `params.defaultSender?`    | `string` \| `Address`                                                                                                                                                                                         | Optional address to use for the account to use as the default sender for calls.                                                                                                                                                                                                                                              |
-| `params.defaultSigner?`    | `TransactionSigner`                                                                                                                                                                                           | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                                                                                                                                                                             |
-| `params.deletable?`        | `boolean`                                                                                                                                                                                                     | Whether or not the contract should have deploy-time permanence control set, undefined = ignore. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call.   |
-| `params.deployTimeParams?` | [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)                                                                                                     | Optional deploy-time TEAL template replacement parameters. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call.                                        |
-| `params.updatable?`        | `boolean`                                                                                                                                                                                                     | Whether or not the contract should have deploy-time immutability control set, undefined = ignore. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call. |
-| `params.version?`          | `string`                                                                                                                                                                                                      | The version of app that is / will be deployed; defaults to 1.0                                                                                                                                                                                                                                                               |
+| Name                       | Type                                                                                                                                                                                                            | Description                                                                                                                                                                                                                                                                                                                  |
+| :------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`                   | `Object`                                                                                                                                                                                                        | The parameters to create the app factory                                                                                                                                                                                                                                                                                     |
+| `params.appName?`          | `string`                                                                                                                                                                                                        | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name.                                                                                                                                                                                                     |
+| `params.appSpec`           | `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Arc56Contract/) \| [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/) | The ARC-56 or ARC-32 application spec as either: _ Parsed JSON ARC-56 `Contract` _ Parsed JSON ARC-32 `AppSpec` \* Raw JSON string (in either ARC-56 or ARC-32 format)                                                                                                                                                       |
+| `params.defaultSender?`    | `string` \| `Address`                                                                                                                                                                                           | Optional address to use for the account to use as the default sender for calls.                                                                                                                                                                                                                                              |
+| `params.defaultSigner?`    | `TransactionSigner`                                                                                                                                                                                             | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                                                                                                                                                                             |
+| `params.deletable?`        | `boolean`                                                                                                                                                                                                       | Whether or not the contract should have deploy-time permanence control set, undefined = ignore. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call.   |
+| `params.deployTimeParams?` | [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)                                                                                                      | Optional deploy-time TEAL template replacement parameters. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call.                                        |
+| `params.updatable?`        | `boolean`                                                                                                                                                                                                       | Whether or not the contract should have deploy-time immutability control set, undefined = ignore. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call. |
+| `params.version?`          | `string`                                                                                                                                                                                                        | The version of app that is / will be deployed; defaults to 1.0                                                                                                                                                                                                                                                               |
 
 #### Returns
 
-[`AppFactory`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factoryappfactory/)
+[`AppFactory`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factory.AppFactory/)
 
 The `AppFactory` instance
 
@@ -425,7 +425,7 @@ const factory = clientManager.getAppFactory({
 
 ### getTestNetDispenser
 
-▸ **getTestNetDispenser**(`params`): [`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
+▸ **getTestNetDispenser**(`params`): [`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/)
 
 Returns a TestNet Dispenser API client.
 
@@ -433,13 +433,13 @@ Refer to [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/tes
 
 #### Parameters
 
-| Name     | Type                                                                                                                                             | Description                                                              |
-| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------- |
-| `params` | [`TestNetDispenserApiClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/) | An object containing parameters for the TestNetDispenserApiClient class. |
+| Name     | Type                                                                                                                                              | Description                                                              |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------- |
+| `params` | [`TestNetDispenserApiClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.TestNetDispenserApiClientParams/) | An object containing parameters for the TestNetDispenserApiClient class. |
 
 #### Returns
 
-[`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
+[`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/)
 
 An instance of the TestNetDispenserApiClient class.
 
@@ -460,7 +460,7 @@ const client = clientManager.getTestNetDispenser({
 
 ### getTestNetDispenserFromEnvironment
 
-▸ **getTestNetDispenserFromEnvironment**(`params?`): [`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
+▸ **getTestNetDispenserFromEnvironment**(`params?`): [`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/)
 
 Returns a TestNet Dispenser API client, loading the auth token from `process.env.ALGOKIT_DISPENSER_ACCESS_TOKEN`.
 
@@ -468,13 +468,13 @@ Refer to [docs](https://github.com/algorandfoundation/algokit/blob/main/docs/tes
 
 #### Parameters
 
-| Name      | Type                                                                                                                                                                      | Description                                                              |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------- |
-| `params?` | `Omit`\<[`TestNetDispenserApiClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/), `"authToken"`\> | An object containing parameters for the TestNetDispenserApiClient class. |
+| Name      | Type                                                                                                                                                                       | Description                                                              |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------- |
+| `params?` | `Omit`\<[`TestNetDispenserApiClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.TestNetDispenserApiClientParams/), `"authToken"`\> | An object containing parameters for the TestNetDispenserApiClient class. |
 
 #### Returns
 
-[`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
+[`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/)
 
 An instance of the TestNetDispenserApiClient class.
 
@@ -500,24 +500,24 @@ Returns a new typed client, resolving the app by creator address and name.
 
 #### Type parameters
 
-| Name      | Type                                                                                                                                                |
-| :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TClient` | extends [`TypedAppClient`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_managertypedappclient/)\<`InstanceType`\<`TClient`\>\> |
+| Name      | Type                                                                                                                                                 |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TClient` | extends [`TypedAppClient`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.TypedAppClient/)\<`InstanceType`\<`TClient`\>\> |
 
 #### Parameters
 
-| Name                        | Type                                                                                             | Description                                                                                                                                                                  |
-| :-------------------------- | :----------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `typedClient`               | `TClient`                                                                                        | The typed client type to use                                                                                                                                                 |
-| `params`                    | `Object`                                                                                         | The params to resolve the app by creator address and name                                                                                                                    |
-| `params.appLookupCache?`    | [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerapplookup/) | An optional cached app lookup that matches a name to on-chain details; either this is needed or indexer is required to be passed in to this `ClientManager` on construction. |
-| `params.appName?`           | `string`                                                                                         | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name                                                      |
-| `params.approvalSourceMap?` | `ProgramSourceMap`                                                                               | Optional source map for the approval program                                                                                                                                 |
-| `params.clearSourceMap?`    | `ProgramSourceMap`                                                                               | Optional source map for the clear state program                                                                                                                              |
-| `params.creatorAddress`     | `string` \| `Address`                                                                            | The address of the creator account for the app                                                                                                                               |
-| `params.defaultSender?`     | `string` \| `Address`                                                                            | Optional address to use for the account to use as the default sender for calls.                                                                                              |
-| `params.defaultSigner?`     | `TransactionSigner`                                                                              | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                             |
-| `params.ignoreCache?`       | `boolean`                                                                                        | Whether or not to ignore the `AppDeployer` lookup cache and force an on-chain lookup, default: use any cached value                                                          |
+| Name                        | Type                                                                                              | Description                                                                                                                                                                  |
+| :-------------------------- | :------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `typedClient`               | `TClient`                                                                                         | The typed client type to use                                                                                                                                                 |
+| `params`                    | `Object`                                                                                          | The params to resolve the app by creator address and name                                                                                                                    |
+| `params.appLookupCache?`    | [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppLookup/) | An optional cached app lookup that matches a name to on-chain details; either this is needed or indexer is required to be passed in to this `ClientManager` on construction. |
+| `params.appName?`           | `string`                                                                                          | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name                                                      |
+| `params.approvalSourceMap?` | `ProgramSourceMap`                                                                                | Optional source map for the approval program                                                                                                                                 |
+| `params.clearSourceMap?`    | `ProgramSourceMap`                                                                                | Optional source map for the clear state program                                                                                                                              |
+| `params.creatorAddress`     | `string` \| `Address`                                                                             | The address of the creator account for the app                                                                                                                               |
+| `params.defaultSender?`     | `string` \| `Address`                                                                             | Optional address to use for the account to use as the default sender for calls.                                                                                              |
+| `params.defaultSigner?`     | `TransactionSigner`                                                                               | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                             |
+| `params.ignoreCache?`       | `boolean`                                                                                         | Whether or not to ignore the `AppDeployer` lookup cache and force an on-chain lookup, default: use any cached value                                                          |
 
 #### Returns
 
@@ -558,9 +558,9 @@ Returns a new typed client, resolving the app by app ID.
 
 #### Type parameters
 
-| Name      | Type                                                                                                                                                |
-| :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TClient` | extends [`TypedAppClient`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_managertypedappclient/)\<`InstanceType`\<`TClient`\>\> |
+| Name      | Type                                                                                                                                                 |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TClient` | extends [`TypedAppClient`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.TypedAppClient/)\<`InstanceType`\<`TClient`\>\> |
 
 #### Parameters
 
@@ -607,9 +607,9 @@ If no IDs are in the app spec or the network isn't recognised, an error is throw
 
 #### Type parameters
 
-| Name      | Type                                                                                                                                                |
-| :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TClient` | extends [`TypedAppClient`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_managertypedappclient/)\<`InstanceType`\<`TClient`\>\> |
+| Name      | Type                                                                                                                                                 |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TClient` | extends [`TypedAppClient`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.TypedAppClient/)\<`InstanceType`\<`TClient`\>\> |
 
 #### Parameters
 
@@ -657,17 +657,17 @@ Returns a new typed app factory.
 
 #### Parameters
 
-| Name                       | Type                                                                                                                        | Description                                                                                                                                                                                                                                                                                                                  |
-| :------------------------- | :-------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `typedFactory`             | [`TypedAppFactory`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_managertypedappfactory/)\<`TClient`\> | The typed factory type to use                                                                                                                                                                                                                                                                                                |
-| `params?`                  | `Object`                                                                                                                    | The params to resolve the factory by                                                                                                                                                                                                                                                                                         |
-| `params.appName?`          | `string`                                                                                                                    | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name.                                                                                                                                                                                                     |
-| `params.defaultSender?`    | `string` \| `Address`                                                                                                       | Optional address to use for the account to use as the default sender for calls.                                                                                                                                                                                                                                              |
-| `params.defaultSigner?`    | `TransactionSigner`                                                                                                         | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                                                                                                                                                                             |
-| `params.deletable?`        | `boolean`                                                                                                                   | Whether or not the contract should have deploy-time permanence control set, undefined = ignore. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call.   |
-| `params.deployTimeParams?` | [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)                   | Optional deploy-time TEAL template replacement parameters. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call.                                        |
-| `params.updatable?`        | `boolean`                                                                                                                   | Whether or not the contract should have deploy-time immutability control set, undefined = ignore. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call. |
-| `params.version?`          | `string`                                                                                                                    | The version of app that is / will be deployed; defaults to 1.0                                                                                                                                                                                                                                                               |
+| Name                       | Type                                                                                                                         | Description                                                                                                                                                                                                                                                                                                                  |
+| :------------------------- | :--------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `typedFactory`             | [`TypedAppFactory`](/docs/algokit-utils/typescript/latest/api/interfaces/types_client_manager.TypedAppFactory/)\<`TClient`\> | The typed factory type to use                                                                                                                                                                                                                                                                                                |
+| `params?`                  | `Object`                                                                                                                     | The params to resolve the factory by                                                                                                                                                                                                                                                                                         |
+| `params.appName?`          | `string`                                                                                                                     | Optional override for the app name; used for on-chain metadata and lookups. Defaults to the ARC-32/ARC-56 app spec name.                                                                                                                                                                                                     |
+| `params.defaultSender?`    | `string` \| `Address`                                                                                                        | Optional address to use for the account to use as the default sender for calls.                                                                                                                                                                                                                                              |
+| `params.defaultSigner?`    | `TransactionSigner`                                                                                                          | Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).                                                                                                                                                                             |
+| `params.deletable?`        | `boolean`                                                                                                                    | Whether or not the contract should have deploy-time permanence control set, undefined = ignore. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call.   |
+| `params.deployTimeParams?` | [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)                   | Optional deploy-time TEAL template replacement parameters. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call.                                        |
+| `params.updatable?`        | `boolean`                                                                                                                    | Whether or not the contract should have deploy-time immutability control set, undefined = ignore. If specified here will get used in calls to `deploy` and `create` calls unless overridden in those calls. Useful if you want to vend multiple contracts from the same factory without specifying this value for each call. |
+| `params.version?`          | `string`                                                                                                                     | The version of app that is / will be deployed; defaults to 1.0                                                                                                                                                                                                                                                               |
 
 #### Returns
 
@@ -763,13 +763,13 @@ const isTestNet = await clientManager.isTestNet();
 
 ### network
 
-▸ **network**(): `Promise`\<[`NetworkDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientnetworkdetails/)\>
+▸ **network**(): `Promise`\<[`NetworkDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.NetworkDetails/)\>
 
 Get details about the current network.
 
 #### Returns
 
-`Promise`\<[`NetworkDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientnetworkdetails/)\>
+`Promise`\<[`NetworkDetails`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.NetworkDetails/)\>
 
 The current network details
 
@@ -818,7 +818,7 @@ const isLocalNet = ClientManager.genesisIdIsLocalNet('testnet-v1.0');
 
 ### getAlgoNodeConfig
 
-▸ **getAlgoNodeConfig**(`network`, `config`): [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+▸ **getAlgoNodeConfig**(`network`, `config`): [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Returns the Algorand configuration to point to the free tier of the AlgoNode service.
 
@@ -831,7 +831,7 @@ Returns the Algorand configuration to point to the free tier of the AlgoNode ser
 
 #### Returns
 
-[`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+[`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 The AlgoNode client configuration
 
@@ -855,9 +855,9 @@ Returns an algod SDK client that automatically retries on idempotent calls.
 
 #### Parameters
 
-| Name     | Type                                                                                                             | Description              |
-| :------- | :--------------------------------------------------------------------------------------------------------------- | :----------------------- |
-| `config` | [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/) | The config of the client |
+| Name     | Type                                                                                                              | Description              |
+| :------- | :---------------------------------------------------------------------------------------------------------------- | :----------------------- |
+| `config` | [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/) | The config of the client |
 
 #### Returns
 
@@ -924,7 +924,7 @@ await algod.healthCheck().do();
 
 ### getAlgodConfigFromEnvironment
 
-▸ **getAlgodConfigFromEnvironment**(): [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+▸ **getAlgodConfigFromEnvironment**(): [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Retrieve the algod configuration from environment variables (expects to be called from a Node.js environment)
 
@@ -932,7 +932,7 @@ Expects `process.env.ALGOD_SERVER` to be defined, and you can also specify `proc
 
 #### Returns
 
-[`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+[`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 The Algod client configuration
 
@@ -954,7 +954,7 @@ const config = ClientManager.getAlgodConfigFromEnvironment();
 
 ### getConfigFromEnvironmentOrLocalNet
 
-▸ **getConfigFromEnvironmentOrLocalNet**(): [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/)
+▸ **getConfigFromEnvironmentOrLocalNet**(): [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/)
 
 Retrieve client configurations from environment variables when defined or get defaults (expects to be called from a Node.js environment)
 
@@ -969,7 +969,7 @@ otherwise it will use the default LocalNet config unless it detects testnet or m
 
 #### Returns
 
-[`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/)
+[`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/)
 
 The config for algod, indexer and kmd
 
@@ -987,7 +987,7 @@ const config = ClientManager.getConfigFromEnvironmentOrLocalNet();
 
 ### getDefaultLocalNetConfig
 
-▸ **getDefaultLocalNetConfig**(`configOrPort`): [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+▸ **getDefaultLocalNetConfig**(`configOrPort`): [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Returns the Algorand configuration to point to the default LocalNet.
 
@@ -999,7 +999,7 @@ Returns the Algorand configuration to point to the default LocalNet.
 
 #### Returns
 
-[`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+[`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 The LocalNet client configuration
 
@@ -1023,9 +1023,9 @@ Returns an indexer SDK client that automatically retries on idempotent calls
 
 #### Parameters
 
-| Name     | Type                                                                                                             | Description              |
-| :------- | :--------------------------------------------------------------------------------------------------------------- | :----------------------- |
-| `config` | [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/) | The config of the client |
+| Name     | Type                                                                                                              | Description              |
+| :------- | :---------------------------------------------------------------------------------------------------------------- | :----------------------- |
+| `config` | [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/) | The config of the client |
 
 #### Returns
 
@@ -1096,7 +1096,7 @@ await indexer.makeHealthCheck().do();
 
 ### getIndexerConfigFromEnvironment
 
-▸ **getIndexerConfigFromEnvironment**(): [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+▸ **getIndexerConfigFromEnvironment**(): [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Retrieve the indexer configuration from environment variables (expects to be called from a Node.js environment).
 
@@ -1104,7 +1104,7 @@ Expects `process.env.INDEXER_SERVER` to be defined, and you can also specify `pr
 
 #### Returns
 
-[`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+[`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 The Indexer client configuration
 
@@ -1134,9 +1134,9 @@ KMD client allows you to export private keys, which is useful to (for instance) 
 
 #### Parameters
 
-| Name     | Type                                                                                                             | Description               |
-| :------- | :--------------------------------------------------------------------------------------------------------------- | :------------------------ |
-| `config` | [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/) | The config for the client |
+| Name     | Type                                                                                                              | Description               |
+| :------- | :---------------------------------------------------------------------------------------------------------------- | :------------------------ |
+| `config` | [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/) | The config for the client |
 
 #### Returns
 

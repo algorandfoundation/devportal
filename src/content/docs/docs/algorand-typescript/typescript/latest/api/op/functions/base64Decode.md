@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / base64Decode
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / base64Decode
 
 > **base64Decode**(`e`, `a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
@@ -24,7 +24,7 @@ Decodes A using the base64 encoding E. Specify the encoding with an immediate ar
 
 ### e
 
-[`Base64`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/base64/)
+[`Base64`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Base64/)
 
 ### a
 

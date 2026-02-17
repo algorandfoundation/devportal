@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / Application
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Application
 
 > **Application** = `object`
 
@@ -22,7 +22,7 @@ Creates a new Application object represent the application id 0 (an invalid ID)
 
 ### address
 
-> `readonly` **address**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **address**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [reference.ts:288](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L288)
 
@@ -52,7 +52,7 @@ Bytecode of Clear State Program
 
 ### creator
 
-> `readonly` **creator**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **creator**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [reference.ts:283](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L283)
 

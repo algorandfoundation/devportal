@@ -2,7 +2,7 @@
 title: ReservedSchemaValueSpec
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / ReservedSchemaValueSpec
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / ReservedSchemaValueSpec
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).ReservedSchemaValueSpec
 
@@ -12,9 +12,9 @@ Reserved schema value specification
 
 ### Properties
 
-- [descr](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specreservedschemavaluespec/#descr)
-- [max_keys](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specreservedschemavaluespec/#max_keys)
-- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specreservedschemavaluespec/#type)
+- [descr](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.ReservedSchemaValueSpec/#descr)
+- [max_keys](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.ReservedSchemaValueSpec/#max_keys)
+- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.ReservedSchemaValueSpec/#type)
 
 ## Properties
 

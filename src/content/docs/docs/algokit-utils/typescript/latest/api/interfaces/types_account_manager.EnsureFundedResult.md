@@ -2,7 +2,7 @@
 title: EnsureFundedResult
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/account-manager](/docs/algokit-utils/typescript/latest/api/modules/types_account_manager/) / EnsureFundedResult
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/account-manager](/docs/algokit-utils/typescript/latest/api/modules/types_account_manager/) / EnsureFundedResult
 
 [types/account-manager](/docs/algokit-utils/typescript/latest/api/modules/types_account_manager/).EnsureFundedResult
 
@@ -12,14 +12,14 @@ Result from performing an ensureFunded call.
 
 ### Properties
 
-- [amountFunded](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/#amountfunded)
-- [transactionId](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_managerensurefundedresult/#transactionid)
+- [amountFunded](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/#amountfunded)
+- [transactionId](/docs/algokit-utils/typescript/latest/api/interfaces/types_account_manager.EnsureFundedResult/#transactionid)
 
 ## Properties
 
 ### amountFunded
 
-• **amountFunded**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• **amountFunded**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The amount that was sent to the account.
 

@@ -117,7 +117,7 @@ export interface CoreTransactionSubscriptionParams {
 
 `frequencyInSeconds` allows you to control the polling frequency and by association your latency tolerance for new events once you've caught up to the tip of the chain. Alternatively, you can set `waitForBlockWhenAtTip` to get the subscriber to ask algod to tell it when there is a new block ready to reduce latency when it's caught up to the tip of the chain.
 
-`arc28Events` are any [ARC-28 event definitions](subscriptions.md#arc-28-events).
+`arc28Events` are any [ARC-28 event definitions](/docs/algokit-subscriber/typescript/latest/guides/subscriptions/#arc-28-events).
 
 Filters defines the different subscription(s) you want to make, and is defined by the following interface:
 
@@ -142,7 +142,7 @@ export interface NamedTransactionFilter {
 }
 ```
 
-The event name is a unique name that describes the event you are subscribing to. The [filter](subscriptions.md#transactionfilter) defines how to interpret transactions on the chain as being "collected" by that event and the mapper is an optional ability to map from the raw transaction to a more targeted type for your event subscribers to consume.
+The event name is a unique name that describes the event you are subscribing to. The [filter](/docs/algokit-subscriber/typescript/latest/guides/subscriptions/#transactionfilter) defines how to interpret transactions on the chain as being "collected" by that event and the mapper is an optional ability to map from the raw transaction to a more targeted type for your event subscribers to consume.
 
 ## Subscribing to events
 
@@ -245,11 +245,11 @@ The default type that will be received is a `SubscribedTransaction`, which can b
 import type { SubscribedTransaction } from '@algorandfoundation/algokit-subscriber/types';
 ```
 
-See the [detail about this type](subscriptions.md#subscribedtransaction).
+See the [detail about this type](/docs/algokit-subscriber/typescript/latest/guides/subscriptions/#subscribedtransaction).
 
 Alternatively, if you defined a mapper against the filter then it will be applied before passing the objects through.
 
-If you call `onPoll` it will be called last (after all `on` and `onBatch` listeners) for each poll, with the full set of transactions for that poll and [metadata about the poll result](./subscriptions.md#transactionsubscriptionresult). This allows you to process the entire poll batch in one transaction or have a hook to call after processing individual listeners (e.g. to commit a transaction).
+If you call `onPoll` it will be called last (after all `on` and `onBatch` listeners) for each poll, with the full set of transactions for that poll and [metadata about the poll result](/docs/algokit-subscriber/typescript/latest/guides/subscriptions/#transactionsubscriptionresult). This allows you to process the entire poll batch in one transaction or have a hook to call after processing individual listeners (e.g. to commit a transaction).
 
 If you want to run code before a poll starts (e.g. to log or start a transaction) you can do so with `onBeforePoll`.
 
@@ -345,4 +345,4 @@ Once an error listener has been registered, the default listener is removed and 
 
 ## Examples
 
-See the [main README](../README.md#examples).
+See the [main README](latest/README#examples).

@@ -2,7 +2,7 @@
 title: Logging
 ---
 
-Algorand Python provides a [`log` method](docs/_build/markdown/api-algopy#algopy.log) that allows you to emit debugging and event information as well as return values from your contracts to the caller.
+Algorand Python provides a [`log` method](/docs/algorand-python/python/latest/api/api-algopy#algopy.log) that allows you to emit debugging and event information as well as return values from your contracts to the caller.
 
 This `log` method is a superset of the [AVM `log` method](/algokit/languages/python/lg-ops/) that adds extra functionality:
 
@@ -15,7 +15,7 @@ This `log` method is a superset of the [AVM `log` method](/algokit/languages/pyt
   - `str` literals / module variables (encoded as UTF-8)
   - `bytes` literals / module variables (encoded as is)
   - `Bytes` values (encoded as is)
-  - `BytesBacked` values, which includes [`String`](docs/_build/markdown/api-algopy#algopy.String), [`BigUInt`](docs/_build/markdown/api-algopy#algopy.BigUInt), [`Account`](docs/_build/markdown/api-algopy#algopy.Account) and all of the [ARC-4 types](docs/_build/markdown/api-algopy.arc4) (encoded as their underlying bytes values)
+  - `BytesBacked` values, which includes [`String`](/docs/algorand-python/python/latest/api/api-algopy#algopy.String), [`BigUInt`](/docs/algorand-python/python/latest/api/api-algopy#algopy.BigUInt), [`Account`](/docs/algorand-python/python/latest/api/api-algopy#algopy.Account) and all of the [ARC-4 types](/docs/algorand-python/python/latest/api/api-algopy.arc4) (encoded as their underlying bytes values)
 
 Logged values are [available to the calling client](https://dev.algorand.co/reference/rest-api/algod/#pendingtransactionresponse) and attached to the transaction record stored on the blockchain ledger.
 

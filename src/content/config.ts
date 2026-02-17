@@ -18,7 +18,15 @@ export const collections = {
     loader: {
       name: 'algorand-docs',
       load: async context => {
-        await docsLoader().load(context);
+        await docsLoader({
+          generateId: ({ entry, data }) => {
+            // Respect explicit slug frontmatter (same as Starlight's default behavior)
+            if (typeof data.slug === 'string') return data.slug;
+            // Strip only file extension — preserve dots and case in filenames
+            // (Starlight's default uses github-slugger which removes dots)
+            return entry.replace(/\.mdx?$/, '');
+          },
+        }).load(context);
 
         if (IMPORT_GITHUB) {
           console.log('🔄 Importing content from GitHub repositories...');

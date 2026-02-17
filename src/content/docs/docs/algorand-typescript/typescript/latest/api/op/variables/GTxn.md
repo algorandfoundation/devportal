@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / GTxn
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / GTxn
 
 > `const` **GTxn**: `object`
 
@@ -22,7 +22,7 @@ Get values for transactions in the current group
 
 ### accounts()
 
-> **accounts**(`a`, `b`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **accounts**(`a`, `b`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Accounts listed in the ApplicationCall transaction
 Min AVM version: 2
@@ -39,7 +39,7 @@ Min AVM version: 2
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### amount()
 
@@ -81,7 +81,7 @@ Min AVM version: 2
 
 ### applicationId()
 
-> **applicationId**(`a`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> **applicationId**(`a`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ApplicationID from ApplicationCall transaction
 Min AVM version: 2
@@ -94,11 +94,11 @@ Min AVM version: 2
 
 #### Returns
 
-[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ### applications()
 
-> **applications**(`a`, `b`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> **applications**(`a`, `b`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 Foreign Apps listed in the ApplicationCall transaction
 Min AVM version: 3
@@ -115,7 +115,7 @@ Min AVM version: 3
 
 #### Returns
 
-[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ### approvalProgram()
 
@@ -174,7 +174,7 @@ Min AVM version: 3
 
 ### assetCloseTo()
 
-> **assetCloseTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **assetCloseTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 3
@@ -187,11 +187,11 @@ Min AVM version: 3
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### assetReceiver()
 
-> **assetReceiver**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **assetReceiver**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 3
@@ -204,11 +204,11 @@ Min AVM version: 3
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### assets()
 
-> **assets**(`a`, `b`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> **assets**(`a`, `b`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Foreign Assets listed in the ApplicationCall transaction
 Min AVM version: 3
@@ -225,11 +225,11 @@ Min AVM version: 3
 
 #### Returns
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 ### assetSender()
 
-> **assetSender**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **assetSender**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address. Source of assets if Sender is the Asset's Clawback address.
 Min AVM version: 3
@@ -242,7 +242,7 @@ Min AVM version: 3
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### clearStateProgram()
 
@@ -284,7 +284,7 @@ Min AVM version: 7
 
 ### closeRemainderTo()
 
-> **closeRemainderTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **closeRemainderTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 3
@@ -297,11 +297,11 @@ Min AVM version: 3
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### configAsset()
 
-> **configAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> **configAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Asset ID in asset config transaction
 Min AVM version: 2
@@ -314,11 +314,11 @@ Min AVM version: 2
 
 #### Returns
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 ### configAssetClawback()
 
-> **configAssetClawback**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **configAssetClawback**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 2
@@ -331,7 +331,7 @@ Min AVM version: 2
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### configAssetDecimals()
 
@@ -369,7 +369,7 @@ Min AVM version: 2
 
 ### configAssetFreeze()
 
-> **configAssetFreeze**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **configAssetFreeze**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 2
@@ -382,11 +382,11 @@ Min AVM version: 2
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### configAssetManager()
 
-> **configAssetManager**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **configAssetManager**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 2
@@ -399,7 +399,7 @@ Min AVM version: 2
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### configAssetMetadataHash()
 
@@ -437,7 +437,7 @@ Min AVM version: 2
 
 ### configAssetReserve()
 
-> **configAssetReserve**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **configAssetReserve**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 2
@@ -450,7 +450,7 @@ Min AVM version: 2
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### configAssetTotal()
 
@@ -505,7 +505,7 @@ Min AVM version: 2
 
 ### createdApplicationId()
 
-> **createdApplicationId**(`a`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> **createdApplicationId**(`a`): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ApplicationID allocated by the creation of an application (only with `itxn` in v5). Application mode only
 Min AVM version: 5
@@ -518,11 +518,11 @@ Min AVM version: 5
 
 #### Returns
 
-[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ### createdAssetId()
 
-> **createdAssetId**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> **createdAssetId**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Asset ID allocated by the creation of an ASA (only with `itxn` in v5). Application mode only
 Min AVM version: 5
@@ -535,7 +535,7 @@ Min AVM version: 5
 
 #### Returns
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 ### extraProgramPages()
 
@@ -607,7 +607,7 @@ Min AVM version: 7
 
 ### freezeAsset()
 
-> **freezeAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> **freezeAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Asset ID being frozen or un-frozen
 Min AVM version: 2
@@ -620,11 +620,11 @@ Min AVM version: 2
 
 #### Returns
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 ### freezeAssetAccount()
 
-> **freezeAssetAccount**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **freezeAssetAccount**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address of the account whose asset slot is being frozen or un-frozen
 Min AVM version: 2
@@ -637,7 +637,7 @@ Min AVM version: 2
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### freezeAssetFrozen()
 
@@ -968,7 +968,7 @@ Min AVM version: 5
 
 ### onCompletion()
 
-> **onCompletion**(`a`): [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/oncompleteaction/)
+> **onCompletion**(`a`): [`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/OnCompleteAction/)
 
 ApplicationCall transaction on completion action
 Min AVM version: 2
@@ -981,11 +981,11 @@ Min AVM version: 2
 
 #### Returns
 
-[`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/oncompleteaction/)
+[`OnCompleteAction`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/OnCompleteAction/)
 
 ### receiver()
 
-> **receiver**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **receiver**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 3
@@ -998,7 +998,7 @@ Min AVM version: 3
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### rejectVersion()
 
@@ -1019,7 +1019,7 @@ Min AVM version: 12
 
 ### rekeyTo()
 
-> **rekeyTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **rekeyTo**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte Sender's new AuthAddr
 Min AVM version: 2
@@ -1032,7 +1032,7 @@ Min AVM version: 2
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### selectionPk()
 
@@ -1053,7 +1053,7 @@ Min AVM version: 3
 
 ### sender()
 
-> **sender**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **sender**(`a`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address
 Min AVM version: 3
@@ -1066,7 +1066,7 @@ Min AVM version: 3
 
 #### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### stateProofPk()
 
@@ -1121,7 +1121,7 @@ Min AVM version: 3
 
 ### typeEnum()
 
-> **typeEnum**(`a`): [`TransactionType`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/)
+> **typeEnum**(`a`): [`TransactionType`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/)
 
 Transaction type as integer
 Min AVM version: 3
@@ -1134,7 +1134,7 @@ Min AVM version: 3
 
 #### Returns
 
-[`TransactionType`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/)
+[`TransactionType`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/)
 
 ### voteFirst()
 
@@ -1206,7 +1206,7 @@ Min AVM version: 3
 
 ### xferAsset()
 
-> **xferAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+> **xferAsset**(`a`): [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
 
 Asset ID
 Min AVM version: 3
@@ -1219,4 +1219,4 @@ Min AVM version: 3
 
 #### Returns
 
-[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/asset/)
+[`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)

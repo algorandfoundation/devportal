@@ -2,7 +2,7 @@
 title: AssetOptOutParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/) / AssetOptOutParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/) / AssetOptOutParams
 
 [types/asset](/docs/algokit-utils/typescript/latest/api/modules/types_asset/).AssetOptOutParams
 
@@ -12,7 +12,7 @@ Parameters for `assetOptOut` call.
 
 ## Hierarchy
 
-- [`AssetOptInParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/)
+- [`AssetOptInParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/)
 
   ↳ **`AssetOptOutParams`**
 
@@ -20,21 +20,21 @@ Parameters for `assetOptOut` call.
 
 ### Properties
 
-- [account](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#account)
-- [assetCreatorAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#assetcreatoraddress)
-- [assetId](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#assetid)
-- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#atc)
-- [ensureZeroBalance](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#ensurezerobalance)
-- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#fee)
-- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#lease)
-- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#maxfee)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#maxroundstowaitforconfirmation)
-- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#note)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#populateappcallresources)
-- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#skipsending)
-- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#skipwaiting)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#suppresslog)
-- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptoutparams/#transactionparams)
+- [account](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#account)
+- [assetCreatorAddress](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#assetcreatoraddress)
+- [assetId](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#assetid)
+- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#atc)
+- [ensureZeroBalance](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#ensurezerobalance)
+- [fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#fee)
+- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#lease)
+- [maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#maxfee)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#maxroundstowaitforconfirmation)
+- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#note)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#populateappcallresources)
+- [skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#skipsending)
+- [skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#skipwaiting)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#suppresslog)
+- [transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptOutParams/#transactionparams)
 
 ## Properties
 
@@ -46,7 +46,7 @@ The account to opt in/out for
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[account](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#account)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[account](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#account)
 
 #### Defined in
 
@@ -74,7 +74,7 @@ The ID of the assets to opt in for / out of
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[assetId](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#assetid)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[assetId](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#assetid)
 
 #### Defined in
 
@@ -90,7 +90,7 @@ An optional `AtomicTransactionComposer` to add the transaction to, if specified 
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#atc)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#atc)
 
 #### Defined in
 
@@ -112,13 +112,13 @@ Whether or not to validate the account has a zero-balance before issuing the opt
 
 ### fee
 
-• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **fee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The flat fee you want to pay, useful for covering extra fees in a transaction group or app call
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#fee)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[fee](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#fee)
 
 #### Defined in
 
@@ -134,7 +134,7 @@ An (optional) [transaction lease](https://dev.algorand.co/concepts/transactions/
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#lease)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#lease)
 
 #### Defined in
 
@@ -144,13 +144,13 @@ An (optional) [transaction lease](https://dev.algorand.co/concepts/transactions/
 
 ### maxFee
 
-• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **maxFee**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The maximum fee that you are happy to pay (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#maxfee)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[maxFee](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#maxfee)
 
 #### Defined in
 
@@ -166,7 +166,7 @@ The maximum number of rounds to wait for confirmation, only applies if `skipWait
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#maxroundstowaitforconfirmation)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -182,7 +182,7 @@ The (optional) transaction note
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[note](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#note)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[note](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#note)
 
 #### Defined in
 
@@ -198,7 +198,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#populateappcallresources)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#populateappcallresources)
 
 #### Defined in
 
@@ -215,7 +215,7 @@ and instead just return the raw transaction, e.g. so you can add it to a group o
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#skipsending)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[skipSending](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#skipsending)
 
 #### Defined in
 
@@ -231,7 +231,7 @@ Whether to skip waiting for the submitted transaction (only relevant if `skipSen
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#skipwaiting)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[skipWaiting](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#skipwaiting)
 
 #### Defined in
 
@@ -247,7 +247,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#suppresslog)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#suppresslog)
 
 #### Defined in
 
@@ -263,7 +263,7 @@ Optional transaction parameters
 
 #### Inherited from
 
-[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/).[transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_assetassetoptinparams/#transactionparams)
+[AssetOptInParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/).[transactionParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_asset.AssetOptInParams/#transactionparams)
 
 #### Defined in
 

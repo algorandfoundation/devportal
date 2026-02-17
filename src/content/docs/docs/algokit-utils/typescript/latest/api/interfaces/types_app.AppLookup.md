@@ -2,7 +2,7 @@
 title: AppLookup
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppLookup
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppLookup
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppLookup
 
@@ -12,14 +12,14 @@ A lookup of name -> Algorand app for a creator
 
 ### Properties
 
-- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_appapplookup/#apps)
-- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_appapplookup/#creator)
+- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppLookup/#apps)
+- [creator](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppLookup/#creator)
 
 ## Properties
 
 ### apps
 
-• **apps**: `Readonly`\<\{ `[name: string]`: [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/); }\>
+• **apps**: `Readonly`\<\{ `[name: string]`: [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/); }\>
 
 #### Defined in
 

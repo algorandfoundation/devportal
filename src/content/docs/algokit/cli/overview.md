@@ -31,9 +31,9 @@ AlgoKit has a number of global options that can impact all commands. Note: these
 - `-h, --help` The help option can be used on any command to get details on any command, its sub-commands and options.
 - `-v, --verbose` Enables DEBUG logging, useful when troubleshooting or if you want to peek under the covers and learn what AlgoKit CLI is doing.
 - `--color / --no-color` Enables or disables output of console styling, we also support the [NO_COLOR](https://no-color.org) environment variable.
-- `--skip-version-check` Skips updated AlgoKit version checking and prompting for that execution, this can also be disabled [permanently on a given machine](docs/cli/#version-prompt) with `algokit config version-prompt disable`.
+- `--skip-version-check` Skips updated AlgoKit version checking and prompting for that execution, this can also be disabled [permanently on a given machine](/docs/algokit-cli/python/latest/#version-prompt) with `algokit config version-prompt disable`.
 
-See also the [AlgoKit CLI Reference](docs/cli/), which details every command, sub-command and option.
+See also the [AlgoKit CLI Reference](/docs/algokit-cli/python/latest/), which details every command, sub-command and option.
 
 ## AlgoKit Tutorials
 

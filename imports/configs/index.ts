@@ -52,14 +52,14 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   ...algokitCli.variants,
   ...algorandPython.variants,
   ...algorandTypescript.variants,
-  // ...algokitSubscriber.variants, // hidden — docs not yet ready
+  ...algokitSubscriber.variants, // hidden — docs not yet ready
   ...nodekit.variants,
   arcStandardsConfig,
   // Legacy guide targets — keep old algokit/* paths in sync via stateKey
   algokitCliLegacy,
   algorandPythonLegacy,
   algorandTypescriptLegacy,
-  // algokitSubscriberLegacy, // hidden — docs not yet ready
+  algokitSubscriberLegacy, // hidden — docs not yet ready
   algokitUtilsTsLegacy,
   algokitUtilsPyLegacy,
 ];

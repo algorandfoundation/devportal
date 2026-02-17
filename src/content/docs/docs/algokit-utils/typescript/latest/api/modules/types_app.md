@@ -2,37 +2,37 @@
 title: types/app
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/app
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/app
 
 ## Table of contents
 
 ### Enumerations
 
-- [OnSchemaBreak](/docs/algokit-utils/typescript/latest/api/enums/types_apponschemabreak/)
-- [OnUpdate](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/)
+- [OnSchemaBreak](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnSchemaBreak/)
+- [OnUpdate](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/)
 
 ### Interfaces
 
-- [AppCallParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcallparams/)
-- [AppCallTransactionResultOfType](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcalltransactionresultoftype/)
-- [AppCompilationResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcompilationresult/)
-- [AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymetadata/)
-- [AppDeploymentParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappdeploymentparams/)
-- [AppLookup](/docs/algokit-utils/typescript/latest/api/interfaces/types_appapplookup/)
-- [AppMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappmetadata/)
-- [AppReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappreference/)
-- [AppState](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstate/)
-- [AppStorageSchema](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/)
-- [BoxName](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/)
-- [BoxReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxreference/)
-- [BoxValueRequestParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxvaluerequestparams/)
-- [BoxValuesRequestParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxvaluesrequestparams/)
-- [CompiledTeal](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/)
-- [CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/)
-- [CreateAppParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcreateappparams/)
-- [RawAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/)
-- [TealTemplateParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)
-- [UpdateAppParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_appupdateappparams/)
+- [AppCallParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallParams/)
+- [AppCallTransactionResultOfType](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallTransactionResultOfType/)
+- [AppCompilationResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCompilationResult/)
+- [AppDeployMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeployMetadata/)
+- [AppDeploymentParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppDeploymentParams/)
+- [AppLookup](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppLookup/)
+- [AppMetadata](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppMetadata/)
+- [AppReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppReference/)
+- [AppState](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppState/)
+- [AppStorageSchema](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/)
+- [BoxName](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/)
+- [BoxReference](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxReference/)
+- [BoxValueRequestParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxValueRequestParams/)
+- [BoxValuesRequestParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxValuesRequestParams/)
+- [CompiledTeal](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/)
+- [CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/)
+- [CreateAppParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CreateAppParams/)
+- [RawAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/)
+- [TealTemplateParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)
+- [UpdateAppParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.UpdateAppParams/)
 
 ### Type Aliases
 
@@ -60,7 +60,7 @@ title: types/app
 
 ### ABIAppCallArg
 
-Ƭ **ABIAppCallArg**: `ABIArgument` \| [`TransactionToSign`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactiontransactiontosign/) \| `Transaction` \| `Promise`\<[`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/)\> \| [`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresult/) \| `undefined`
+Ƭ **ABIAppCallArg**: `ABIArgument` \| [`TransactionToSign`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.TransactionToSign/) \| `Transaction` \| `Promise`\<[`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/)\> \| [`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResult/) \| `undefined`
 
 An argument for an ABI method, either a primitive value, or a transaction with or without signer, or the unawaited async return value of an algokit method that returns a `SendTransactionResult`
 
@@ -72,7 +72,7 @@ An argument for an ABI method, either a primitive value, or a transaction with o
 
 ### ABIAppCallArgs
 
-Ƭ **ABIAppCallArgs**: [`CoreAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/) & \{ `method`: `ABIMethodParams` \| `ABIMethod` ; `methodArgs`: [`ABIAppCallArg`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abiappcallarg)[] }
+Ƭ **ABIAppCallArgs**: [`CoreAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/) & \{ `method`: `ABIMethodParams` \| `ABIMethod` ; `methodArgs`: [`ABIAppCallArg`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abiappcallarg)[] }
 
 App call args for an ABI call
 
@@ -96,7 +96,7 @@ The return value of an ABI method call
 
 ### AppCallArgs
 
-Ƭ **AppCallArgs**: [`RawAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/) \| [`ABIAppCallArgs`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abiappcallargs)
+Ƭ **AppCallArgs**: [`RawAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/) \| [`ABIAppCallArgs`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abiappcallargs)
 
 Arguments to pass to an app call either:
 
@@ -111,7 +111,7 @@ Arguments to pass to an app call either:
 
 ### AppCallTransactionResult
 
-Ƭ **AppCallTransactionResult**: [`AppCallTransactionResultOfType`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcalltransactionresultoftype/)\<[`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)\>
+Ƭ **AppCallTransactionResult**: [`AppCallTransactionResultOfType`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallTransactionResultOfType/)\<[`ABIReturn`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#abireturn)\>
 
 Result from calling an app
 
@@ -214,7 +214,7 @@ Result from sending a single app transaction.
 
 ### SendAppUpdateTransactionResult
 
-Ƭ **SendAppUpdateTransactionResult**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`SendAppTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#sendapptransactionresult) & `Partial`\<[`AppCompilationResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcompilationresult/)\>\>
+Ƭ **SendAppUpdateTransactionResult**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<[`SendAppTransactionResult`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#sendapptransactionresult) & `Partial`\<[`AppCompilationResult`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCompilationResult/)\>\>
 
 Result from sending a single app transaction.
 

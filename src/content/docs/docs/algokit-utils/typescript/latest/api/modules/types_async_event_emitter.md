@@ -2,13 +2,13 @@
 title: types/async-event-emitter
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/async-event-emitter
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/async-event-emitter
 
 ## Table of contents
 
 ### Classes
 
-- [AsyncEventEmitter](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitterasynceventemitter/)
+- [AsyncEventEmitter](/docs/algokit-utils/typescript/latest/api/classes/types_async_event_emitter.AsyncEventEmitter/)
 
 ### Type Aliases
 

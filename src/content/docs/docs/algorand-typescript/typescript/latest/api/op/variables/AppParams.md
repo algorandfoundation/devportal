@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / AppParams
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / AppParams
 
 > `const` **AppParams**: `object`
 
@@ -20,7 +20,7 @@ Defined in: [op.ts:332](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 ### appAddress()
 
-> **appAddress**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+> **appAddress**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 Address for which this application has authority
 Min AVM version: 5
@@ -29,11 +29,11 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
-readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 ### appApprovalProgram()
 
@@ -46,7 +46,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
@@ -63,7 +63,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
@@ -71,7 +71,7 @@ readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-
 
 ### appCreator()
 
-> **appCreator**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+> **appCreator**(`a`): readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 Creator address
 Min AVM version: 5
@@ -80,11 +80,11 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
-readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/), `boolean`\]
+readonly \[[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/), `boolean`\]
 
 ### appExtraProgramPages()
 
@@ -97,7 +97,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
@@ -114,7 +114,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
@@ -131,7 +131,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
@@ -148,7 +148,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
@@ -165,7 +165,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 
@@ -182,7 +182,7 @@ Min AVM version: 12
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 #### Returns
 

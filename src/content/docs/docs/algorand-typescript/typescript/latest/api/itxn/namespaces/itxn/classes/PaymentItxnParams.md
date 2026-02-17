@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/readme/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/readme/) / PaymentItxnParams
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/README/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/README/) / PaymentItxnParams
 
 Defined in: [itxn.ts:995](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L995)
 
@@ -54,7 +54,7 @@ Update one or more fields in this PaymentItxnParams object
 
 ##### fields
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentfields/)
+[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/)
 
 #### Returns
 
@@ -64,7 +64,7 @@ Update one or more fields in this PaymentItxnParams object
 
 ### submit()
 
-> **submit**(): [`PaymentInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentinnertxn/)
+> **submit**(): [`PaymentInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentInnerTxn/)
 
 Defined in: [itxn.ts:999](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L999)
 
@@ -72,4 +72,4 @@ Submit an itxn with these fields and return the PaymentInnerTxn result
 
 #### Returns
 
-[`PaymentInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/paymentinnertxn/)
+[`PaymentInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentInnerTxn/)

@@ -2,7 +2,7 @@
 title: FundAppAccountParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / FundAppAccountParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / FundAppAccountParams
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).FundAppAccountParams
 
@@ -12,16 +12,16 @@ Parameters for funding an app account
 
 ### Properties
 
-- [amount](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientfundappaccountparams/#amount)
-- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientfundappaccountparams/#note)
-- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientfundappaccountparams/#sendparams)
-- [sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientfundappaccountparams/#sender)
+- [amount](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.FundAppAccountParams/#amount)
+- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.FundAppAccountParams/#note)
+- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.FundAppAccountParams/#sendparams)
+- [sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.FundAppAccountParams/#sender)
 
 ## Properties
 
 ### amount
 
-• **amount**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• **amount**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 #### Defined in
 
@@ -43,7 +43,7 @@ The transaction note for the smart contract call
 
 ### sendParams
 
-• `Optional` **sendParams**: [`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/)
+• `Optional` **sendParams**: [`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/)
 
 Parameters to control transaction sending
 

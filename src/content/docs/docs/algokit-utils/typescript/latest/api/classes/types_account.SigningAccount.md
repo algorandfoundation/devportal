@@ -2,7 +2,7 @@
 title: SigningAccount
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/) / SigningAccount
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/) / SigningAccount
 
 [types/account](/docs/algokit-utils/typescript/latest/api/modules/types_account/).SigningAccount
 
@@ -16,26 +16,26 @@ Account wrapper that supports a rekeyed account
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/#constructor)
 
 ### Properties
 
-- [\_account](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/#_account)
-- [\_sender](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/#_sender)
-- [\_signer](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/#_signer)
+- [\_account](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/#_account)
+- [\_sender](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/#_sender)
+- [\_signer](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/#_signer)
 
 ### Accessors
 
-- [addr](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/#addr)
-- [sender](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/#sender)
-- [signer](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/#signer)
-- [sk](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/#sk)
+- [addr](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/#addr)
+- [sender](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/#sender)
+- [signer](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/#signer)
+- [sk](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/#sk)
 
 ## Constructors
 
 ### constructor
 
-• **new SigningAccount**(`account`, `sender`): [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/)
+• **new SigningAccount**(`account`, `sender`): [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/)
 
 #### Parameters
 
@@ -46,7 +46,7 @@ Account wrapper that supports a rekeyed account
 
 #### Returns
 
-[`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/)
+[`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/)
 
 #### Defined in
 

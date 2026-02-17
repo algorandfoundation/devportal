@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / ensureBudget
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / ensureBudget
 
 > **ensureBudget**(`requiredBudget`, `feeSource`): `void`
 
@@ -31,7 +31,7 @@ The total required budget
 
 ### feeSource
 
-[`OpUpFeeSource`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/opupfeesource/) = `OpUpFeeSource.GroupCredit`
+[`OpUpFeeSource`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/OpUpFeeSource/) = `OpUpFeeSource.GroupCredit`
 
 Which source to withdraw txn fees from.
 

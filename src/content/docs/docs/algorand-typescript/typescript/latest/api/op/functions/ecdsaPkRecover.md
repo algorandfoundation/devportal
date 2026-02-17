@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / ecdsaPkRecover
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / ecdsaPkRecover
 
 > **ecdsaPkRecover**(`v`, `a`, `b`, `c`, `d`): readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>, [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>\]
 
@@ -23,7 +23,7 @@ S (top) and R elements of a signature, recovery id and data (bottom) are expecte
 
 ### v
 
-[`Ecdsa`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/ecdsa/)
+[`Ecdsa`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/Ecdsa/)
 
 ### a
 

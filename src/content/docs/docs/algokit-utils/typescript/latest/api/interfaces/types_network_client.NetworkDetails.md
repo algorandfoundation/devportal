@@ -2,7 +2,7 @@
 title: NetworkDetails
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/) / NetworkDetails
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/) / NetworkDetails
 
 [types/network-client](/docs/algokit-utils/typescript/latest/api/modules/types_network_client/).NetworkDetails
 
@@ -12,11 +12,11 @@ Details of the current network.
 
 ### Properties
 
-- [genesisHash](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientnetworkdetails/#genesishash)
-- [genesisId](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientnetworkdetails/#genesisid)
-- [isLocalNet](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientnetworkdetails/#islocalnet)
-- [isMainNet](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientnetworkdetails/#ismainnet)
-- [isTestNet](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientnetworkdetails/#istestnet)
+- [genesisHash](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.NetworkDetails/#genesishash)
+- [genesisId](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.NetworkDetails/#genesisid)
+- [isLocalNet](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.NetworkDetails/#islocalnet)
+- [isMainNet](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.NetworkDetails/#ismainnet)
+- [isTestNet](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.NetworkDetails/#istestnet)
 
 ## Properties
 

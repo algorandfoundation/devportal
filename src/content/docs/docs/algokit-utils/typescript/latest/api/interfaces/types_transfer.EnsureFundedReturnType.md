@@ -2,7 +2,7 @@
 title: EnsureFundedReturnType
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transfer](/docs/algokit-utils/typescript/latest/api/modules/types_transfer/) / EnsureFundedReturnType
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transfer](/docs/algokit-utils/typescript/latest/api/modules/types_transfer/) / EnsureFundedReturnType
 
 [types/transfer](/docs/algokit-utils/typescript/latest/api/modules/types_transfer/).EnsureFundedReturnType
 
@@ -12,8 +12,8 @@ title: EnsureFundedReturnType
 
 ### Properties
 
-- [amount](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferensurefundedreturntype/#amount)
-- [transactionId](/docs/algokit-utils/typescript/latest/api/interfaces/types_transferensurefundedreturntype/#transactionid)
+- [amount](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.EnsureFundedReturnType/#amount)
+- [transactionId](/docs/algokit-utils/typescript/latest/api/interfaces/types_transfer.EnsureFundedReturnType/#transactionid)
 
 ## Properties
 

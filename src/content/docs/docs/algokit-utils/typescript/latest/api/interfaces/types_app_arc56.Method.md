@@ -2,7 +2,7 @@
 title: Method
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / Method
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / Method
 
 [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/).Method
 
@@ -12,14 +12,14 @@ Describes a method in the contract. This interface is an extension of the interf
 
 ### Properties
 
-- [actions](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/#actions)
-- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/#args)
-- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/#desc)
-- [events](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/#events)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/#name)
-- [readonly](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/#readonly)
-- [recommendations](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/#recommendations)
-- [returns](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56method/#returns)
+- [actions](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/#actions)
+- [args](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/#args)
+- [desc](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/#desc)
+- [events](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/#events)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/#name)
+- [readonly](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/#readonly)
+- [recommendations](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/#recommendations)
+- [returns](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Method/#returns)
 
 ## Properties
 
@@ -68,7 +68,7 @@ Optional, user-friendly description for the method
 
 ### events
 
-• `Optional` **events**: [`Event`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56event/)[]
+• `Optional` **events**: [`Event`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.Event/)[]
 
 ARC-28 events that MAY be emitted by this method
 

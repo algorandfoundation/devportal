@@ -2,7 +2,7 @@
 title: CoreAppCallArgs
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / CoreAppCallArgs
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / CoreAppCallArgs
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).CoreAppCallArgs
 
@@ -12,18 +12,18 @@ Common app call arguments for ABI and non-ABI (raw) calls
 
 - **`CoreAppCallArgs`**
 
-  ↳ [`RawAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/)
+  ↳ [`RawAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/)
 
 ## Table of contents
 
 ### Properties
 
-- [accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#accounts)
-- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#apps)
-- [assets](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#assets)
-- [boxes](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#boxes)
-- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#lease)
-- [rekeyTo](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#rekeyto)
+- [accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#accounts)
+- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#apps)
+- [assets](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#assets)
+- [boxes](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#boxes)
+- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#lease)
+- [rekeyTo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#rekeyto)
 
 ## Properties
 
@@ -65,7 +65,7 @@ IDs of any assets to load into the foreignAssets array
 
 ### boxes
 
-• `Optional` **boxes**: ([`BoxReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxreference/) \| [`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
+• `Optional` **boxes**: ([`BoxReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxReference/) \| [`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
 
 Any box references to load
 

@@ -2,7 +2,7 @@
 title: AlgorandFixtureConfig
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / AlgorandFixtureConfig
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / AlgorandFixtureConfig
 
 [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/).AlgorandFixtureConfig
 
@@ -10,7 +10,7 @@ Configuration for creating an Algorand testing fixture.
 
 ## Hierarchy
 
-- `Partial`\<[`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoconfig/)\>
+- `Partial`\<[`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoConfig/)\>
 
   ↳ **`AlgorandFixtureConfig`**
 
@@ -18,14 +18,14 @@ Configuration for creating an Algorand testing fixture.
 
 ### Properties
 
-- [accountGetter](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/#accountgetter)
-- [algod](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/#algod)
-- [algodConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/#algodconfig)
-- [indexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/#indexer)
-- [indexerConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/#indexerconfig)
-- [kmd](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/#kmd)
-- [kmdConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/#kmdconfig)
-- [testAccountFunding](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandfixtureconfig/#testaccountfunding)
+- [accountGetter](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/#accountgetter)
+- [algod](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/#algod)
+- [algodConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/#algodconfig)
+- [indexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/#indexer)
+- [indexerConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/#indexerconfig)
+- [kmd](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/#kmd)
+- [kmdConfig](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/#kmdconfig)
+- [testAccountFunding](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandFixtureConfig/#testaccountfunding)
 
 ## Properties
 
@@ -70,7 +70,7 @@ An optional algod client, if not specified then it will create one against `algo
 
 ### algodConfig
 
-• `Optional` **algodConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+• `Optional` **algodConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Algod client configuration
 
@@ -98,7 +98,7 @@ An optional indexer client, if not specified then it will create one against `in
 
 ### indexerConfig
 
-• `Optional` **indexerConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+• `Optional` **indexerConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Indexer client configuration
 
@@ -126,7 +126,7 @@ An optional kmd client, if not specified then it will create one against `kmdCon
 
 ### kmdConfig
 
-• `Optional` **kmdConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_clientalgoclientconfig/)
+• `Optional` **kmdConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_network_client.AlgoClientConfig/)
 
 Kmd configuration
 
@@ -142,7 +142,7 @@ Partial.kmdConfig
 
 ### testAccountFunding
 
-• `Optional` **testAccountFunding**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amountalgoamount/)
+• `Optional` **testAccountFunding**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/classes/types_amount.AlgoAmount/)
 
 The amount of funds to allocate to the default testing account, if not specified then it will get 10 ALGO.
 

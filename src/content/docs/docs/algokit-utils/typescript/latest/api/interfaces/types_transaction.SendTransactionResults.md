@@ -2,7 +2,7 @@
 title: SendTransactionResults
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendTransactionResults
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / SendTransactionResults
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).SendTransactionResults
 
@@ -12,18 +12,18 @@ The result of preparing and/or sending multiple transactions
 
 - **`SendTransactionResults`**
 
-  ↳ [`AppCallTransactionResultOfType`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappcalltransactionresultoftype/)
+  ↳ [`AppCallTransactionResultOfType`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppCallTransactionResultOfType/)
 
-  ↳ [`SendAtomicTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendatomictransactioncomposerresults/)
+  ↳ [`SendAtomicTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendAtomicTransactionComposerResults/)
 
-  ↳ [`ConfirmedTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionconfirmedtransactionresults/)
+  ↳ [`ConfirmedTransactionResults`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.ConfirmedTransactionResults/)
 
 ## Table of contents
 
 ### Properties
 
-- [confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/#confirmations)
-- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionresults/#transactions)
+- [confirmations](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/#confirmations)
+- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionResults/#transactions)
 
 ## Properties
 

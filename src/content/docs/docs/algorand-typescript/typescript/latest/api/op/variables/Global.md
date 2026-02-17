@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/readme/) / Global
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / Global
 
 > `const` **Global**: `object`
 
@@ -48,14 +48,14 @@ Min AVM version: 10
 
 #### Get Signature
 
-> **get** **callerApplicationAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **get** **callerApplicationAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 The application address of the application that called this application. ZeroAddress if this application is at the top-level. Application mode only.
 Min AVM version: 6
 
 ##### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### callerApplicationId
 
@@ -74,40 +74,40 @@ Min AVM version: 6
 
 #### Get Signature
 
-> **get** **creatorAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **get** **creatorAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Address of the creator of the current application. Application mode only.
 Min AVM version: 3
 
 ##### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### currentApplicationAddress
 
 #### Get Signature
 
-> **get** **currentApplicationAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **get** **currentApplicationAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Address that the current application controls. Application mode only.
 Min AVM version: 5
 
 ##### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 ### currentApplicationId
 
 #### Get Signature
 
-> **get** **currentApplicationId**(): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+> **get** **currentApplicationId**(): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ID of current application executing. Application mode only.
 Min AVM version: 2
 
 ##### Returns
 
-[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/application/)
+[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
 
 ### genesisHash
 
@@ -308,11 +308,11 @@ Min AVM version: 2
 
 #### Get Signature
 
-> **get** **zeroAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> **get** **zeroAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 32 byte address of all zero bytes
 Min AVM version: 1
 
 ##### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)

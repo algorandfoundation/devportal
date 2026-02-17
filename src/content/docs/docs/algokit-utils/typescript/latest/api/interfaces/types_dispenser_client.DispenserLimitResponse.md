@@ -2,7 +2,7 @@
 title: DispenserLimitResponse
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/) / DispenserLimitResponse
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/) / DispenserLimitResponse
 
 [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/).DispenserLimitResponse
 
@@ -12,7 +12,7 @@ The TestNet Dispenser API response when getting the current limit.
 
 ### Properties
 
-- [amount](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clientdispenserlimitresponse/#amount)
+- [amount](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.DispenserLimitResponse/#amount)
 
 ## Properties
 

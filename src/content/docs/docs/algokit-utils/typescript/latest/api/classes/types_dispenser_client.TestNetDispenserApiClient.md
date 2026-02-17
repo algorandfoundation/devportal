@@ -2,7 +2,7 @@
 title: TestNetDispenserApiClient
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/) / TestNetDispenserApiClient
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/) / TestNetDispenserApiClient
 
 [types/dispenser-client](/docs/algokit-utils/typescript/latest/api/modules/types_dispenser_client/).TestNetDispenserApiClient
 
@@ -43,40 +43,40 @@ If neither the environment variable 'ALGOKIT_DISPENSER_ACCESS_TOKEN' nor the aut
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#constructor)
 
 ### Properties
 
-- [\_authToken](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#_authtoken)
-- [\_requestTimeout](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#_requesttimeout)
+- [\_authToken](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#_authtoken)
+- [\_requestTimeout](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#_requesttimeout)
 
 ### Accessors
 
-- [authToken](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#authtoken)
-- [requestTimeout](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#requesttimeout)
+- [authToken](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#authtoken)
+- [requestTimeout](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#requesttimeout)
 
 ### Methods
 
-- [fund](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#fund)
-- [getLimit](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#getlimit)
-- [processDispenserRequest](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#processdispenserrequest)
-- [refund](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/#refund)
+- [fund](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#fund)
+- [getLimit](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#getlimit)
+- [processDispenserRequest](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#processdispenserrequest)
+- [refund](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/#refund)
 
 ## Constructors
 
 ### constructor
 
-• **new TestNetDispenserApiClient**(`params?`): [`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
+• **new TestNetDispenserApiClient**(`params?`): [`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/)
 
 #### Parameters
 
-| Name      | Type                                                                                                                                             |
-| :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params?` | [`TestNetDispenserApiClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clienttestnetdispenserapiclientparams/) |
+| Name      | Type                                                                                                                                              |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `params?` | [`TestNetDispenserApiClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.TestNetDispenserApiClientParams/) |
 
 #### Returns
 
-[`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_clienttestnetdispenserapiclient/)
+[`TestNetDispenserApiClient`](/docs/algokit-utils/typescript/latest/api/classes/types_dispenser_client.TestNetDispenserApiClient/)
 
 #### Defined in
 
@@ -138,7 +138,7 @@ The timeout for API requests, in seconds.
 
 ### fund
 
-▸ **fund**(`address`, `amount`): `Promise`\<[`DispenserFundResponse`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clientdispenserfundresponse/)\>
+▸ **fund**(`address`, `amount`): `Promise`\<[`DispenserFundResponse`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.DispenserFundResponse/)\>
 
 Sends a funding request to the dispenser API to fund the specified address with the given amount of Algo.
 
@@ -151,7 +151,7 @@ Sends a funding request to the dispenser API to fund the specified address with 
 
 #### Returns
 
-`Promise`\<[`DispenserFundResponse`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clientdispenserfundresponse/)\>
+`Promise`\<[`DispenserFundResponse`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.DispenserFundResponse/)\>
 
 DispenserFundResponse: An object containing the transaction ID and funded amount.
 
@@ -163,13 +163,13 @@ DispenserFundResponse: An object containing the transaction ID and funded amount
 
 ### getLimit
 
-▸ **getLimit**(): `Promise`\<[`DispenserLimitResponse`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clientdispenserlimitresponse/)\>
+▸ **getLimit**(): `Promise`\<[`DispenserLimitResponse`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.DispenserLimitResponse/)\>
 
 Sends a request to the dispenser API to get the funding limit for the Algo asset.
 
 #### Returns
 
-`Promise`\<[`DispenserLimitResponse`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_clientdispenserlimitresponse/)\>
+`Promise`\<[`DispenserLimitResponse`](/docs/algokit-utils/typescript/latest/api/interfaces/types_dispenser_client.DispenserLimitResponse/)\>
 
 DispenserLimitResponse: An object containing the funding limit amount.
 

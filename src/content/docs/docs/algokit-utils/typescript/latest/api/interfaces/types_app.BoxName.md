@@ -2,7 +2,7 @@
 title: BoxName
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / BoxName
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / BoxName
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).BoxName
 
@@ -12,9 +12,9 @@ The name of a box storage box
 
 ### Properties
 
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/#name)
-- [nameBase64](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/#namebase64)
-- [nameRaw](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/#nameraw)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/#name)
+- [nameBase64](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/#namebase64)
+- [nameRaw](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/#nameraw)
 
 ## Properties
 

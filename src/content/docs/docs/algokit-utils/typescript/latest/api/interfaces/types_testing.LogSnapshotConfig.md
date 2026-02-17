@@ -2,7 +2,7 @@
 title: LogSnapshotConfig
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / LogSnapshotConfig
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / LogSnapshotConfig
 
 [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/).LogSnapshotConfig
 
@@ -14,16 +14,16 @@ with random values in the log snapshot, but rather will get substituted with pre
 
 ### Properties
 
-- [accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinglogsnapshotconfig/#accounts)
-- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinglogsnapshotconfig/#apps)
-- [filterPredicate](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinglogsnapshotconfig/#filterpredicate)
-- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinglogsnapshotconfig/#transactions)
+- [accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.LogSnapshotConfig/#accounts)
+- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.LogSnapshotConfig/#apps)
+- [filterPredicate](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.LogSnapshotConfig/#filterpredicate)
+- [transactions](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.LogSnapshotConfig/#transactions)
 
 ## Properties
 
 ### accounts
 
-• `Optional` **accounts**: (`string` \| [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountmultisigaccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_accountsigningaccount/) \| `Address` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) \| `LogicSigAccount`)[]
+• `Optional` **accounts**: (`string` \| [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.MultisigAccount/) \| `default` \| [`SigningAccount`](/docs/algokit-utils/typescript/latest/api/classes/types_account.SigningAccount/) \| `Address` \| [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) \| `LogicSigAccount`)[]
 
 Any accounts/addresses to replace the address for predictably
 

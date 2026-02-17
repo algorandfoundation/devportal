@@ -2,7 +2,7 @@
 title: types/instance-of
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/instance-of
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/instance-of
 
 ## Table of contents
 

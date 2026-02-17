@@ -6,13 +6,13 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/readme/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/readme/) / KeyRegistrationTxn
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/README/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/README/) / KeyRegistrationTxn
 
-> **KeyRegistrationTxn**(`n`): [`KeyRegistrationTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/keyregistrationtxn/)
+> **KeyRegistrationTxn**(`n`): [`KeyRegistrationTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/KeyRegistrationTxn/)
 
 Defined in: [gtxn.ts:605](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L605)
 
@@ -29,4 +29,4 @@ The index of the txn in the group
 
 ## Returns
 
-[`KeyRegistrationTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/keyregistrationtxn/)
+[`KeyRegistrationTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/KeyRegistrationTxn/)

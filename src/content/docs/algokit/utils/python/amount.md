@@ -1,5 +1,7 @@
 ---
 title: Algo amount handling
+sidebar:
+  label: Algo Amount Handling
 ---
 
 Algo amount handling is one of the core capabilities provided by AlgoKit Utils. It allows you to reliably and tersely specify amounts of microAlgo and Algo and safely convert between them.

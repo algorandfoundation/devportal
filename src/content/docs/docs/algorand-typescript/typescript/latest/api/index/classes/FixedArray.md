@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / FixedArray
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / FixedArray
 
 Defined in: [arrays.ts:9](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arrays.ts#L9)
 
@@ -124,7 +124,7 @@ Negative indexes are taken from the end.
 
 ##### index
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 The index of the item to retrieve
 
@@ -244,7 +244,7 @@ Defined in: [arrays.ts:54](https://github.com/algorandfoundation/puya-ts/blob/ma
 
 ###### end
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 An index in which to stop copying items.
 
@@ -272,13 +272,13 @@ Defined in: [arrays.ts:61](https://github.com/algorandfoundation/puya-ts/blob/ma
 
 ###### start
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 An index in which to start copying items.
 
 ###### end
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64compat/)
+[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
 
 An index in which to stop copying items
 

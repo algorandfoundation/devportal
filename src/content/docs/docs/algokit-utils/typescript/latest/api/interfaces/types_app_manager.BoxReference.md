@@ -2,7 +2,7 @@
 title: BoxReference
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/) / BoxReference
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/) / BoxReference
 
 [types/app-manager](/docs/algokit-utils/typescript/latest/api/modules/types_app_manager/).BoxReference
 
@@ -12,8 +12,8 @@ A grouping of the app ID and name identifier to reference an app box.
 
 ### Properties
 
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerboxreference/#appid)
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_managerboxreference/#name)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.BoxReference/#appid)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_manager.BoxReference/#name)
 
 ## Properties
 

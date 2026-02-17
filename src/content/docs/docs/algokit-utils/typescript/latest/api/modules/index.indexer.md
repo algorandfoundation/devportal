@@ -2,7 +2,7 @@
 title: 'Namespace: indexer'
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [index](/docs/algokit-utils/typescript/latest/api/modules/) / indexer
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [index](/docs/algokit-utils/typescript/latest/api/modules/) / indexer
 
 [index](/docs/algokit-utils/typescript/latest/api/modules/).indexer
 
@@ -10,16 +10,16 @@ title: 'Namespace: indexer'
 
 ### Type Aliases
 
-- [SearchForTransactions](/docs/algokit-utils/typescript/latest/api/modules/indexindexer/#searchfortransactions)
+- [SearchForTransactions](/docs/algokit-utils/typescript/latest/api/modules/index.indexer/#searchfortransactions)
 
 ### Functions
 
-- [executePaginatedRequest](/docs/algokit-utils/typescript/latest/api/modules/indexindexer/#executepaginatedrequest)
-- [lookupAccountByAddress](/docs/algokit-utils/typescript/latest/api/modules/indexindexer/#lookupaccountbyaddress)
-- [lookupAccountCreatedApplicationByAddress](/docs/algokit-utils/typescript/latest/api/modules/indexindexer/#lookupaccountcreatedapplicationbyaddress)
-- [lookupAssetHoldings](/docs/algokit-utils/typescript/latest/api/modules/indexindexer/#lookupassetholdings)
-- [lookupTransactionById](/docs/algokit-utils/typescript/latest/api/modules/indexindexer/#lookuptransactionbyid)
-- [searchTransactions](/docs/algokit-utils/typescript/latest/api/modules/indexindexer/#searchtransactions)
+- [executePaginatedRequest](/docs/algokit-utils/typescript/latest/api/modules/index.indexer/#executepaginatedrequest)
+- [lookupAccountByAddress](/docs/algokit-utils/typescript/latest/api/modules/index.indexer/#lookupaccountbyaddress)
+- [lookupAccountCreatedApplicationByAddress](/docs/algokit-utils/typescript/latest/api/modules/index.indexer/#lookupaccountcreatedapplicationbyaddress)
+- [lookupAssetHoldings](/docs/algokit-utils/typescript/latest/api/modules/index.indexer/#lookupassetholdings)
+- [lookupTransactionById](/docs/algokit-utils/typescript/latest/api/modules/index.indexer/#lookuptransactionbyid)
+- [searchTransactions](/docs/algokit-utils/typescript/latest/api/modules/index.indexer/#searchtransactions)
 
 ## Type Aliases
 
@@ -124,12 +124,12 @@ Looks up asset holdings for the given asset; will automatically paginate through
 
 #### Parameters
 
-| Name               | Type                                                                                                                          | Description                                                         |
-| :----------------- | :---------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------ |
-| `indexer`          | `IndexerClient`                                                                                                               | An indexer instance                                                 |
-| `assetId`          | `number` \| `bigint`                                                                                                          | The ID of the asset to look up holdings for                         |
-| `options?`         | [`LookupAssetHoldingsOptions`](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexerlookupassetholdingsoptions/) | Optional options to control the lookup                              |
-| `paginationLimit?` | `number`                                                                                                                      | The number of records to return per paginated request, default 1000 |
+| Name               | Type                                                                                                                           | Description                                                         |
+| :----------------- | :----------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------ |
+| `indexer`          | `IndexerClient`                                                                                                                | An indexer instance                                                 |
+| `assetId`          | `number` \| `bigint`                                                                                                           | The ID of the asset to look up holdings for                         |
+| `options?`         | [`LookupAssetHoldingsOptions`](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexer.LookupAssetHoldingsOptions/) | Optional options to control the lookup                              |
+| `paginationLimit?` | `number`                                                                                                                       | The number of records to return per paginated request, default 1000 |
 
 #### Returns
 

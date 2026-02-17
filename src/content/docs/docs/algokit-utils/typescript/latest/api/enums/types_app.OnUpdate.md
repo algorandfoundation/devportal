@@ -2,7 +2,7 @@
 title: OnUpdate
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / OnUpdate
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / OnUpdate
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).OnUpdate
 
@@ -12,10 +12,10 @@ What action to perform when deploying an app and an update is detected in the TE
 
 ### Enumeration Members
 
-- [AppendApp](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/#appendapp)
-- [Fail](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/#fail)
-- [ReplaceApp](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/#replaceapp)
-- [UpdateApp](/docs/algokit-utils/typescript/latest/api/enums/types_apponupdate/#updateapp)
+- [AppendApp](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/#appendapp)
+- [Fail](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/#fail)
+- [ReplaceApp](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/#replaceapp)
+- [UpdateApp](/docs/algokit-utils/typescript/latest/api/enums/types_app.OnUpdate/#updateapp)
 
 ## Enumeration Members
 

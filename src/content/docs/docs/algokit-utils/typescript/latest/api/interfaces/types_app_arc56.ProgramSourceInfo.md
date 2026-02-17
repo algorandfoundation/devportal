@@ -2,7 +2,7 @@
 title: ProgramSourceInfo
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / ProgramSourceInfo
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / ProgramSourceInfo
 
 [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/).ProgramSourceInfo
 
@@ -10,8 +10,8 @@ title: ProgramSourceInfo
 
 ### Properties
 
-- [pcOffsetMethod](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56programsourceinfo/#pcoffsetmethod)
-- [sourceInfo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56programsourceinfo/#sourceinfo)
+- [pcOffsetMethod](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.ProgramSourceInfo/#pcoffsetmethod)
+- [sourceInfo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.ProgramSourceInfo/#sourceinfo)
 
 ## Properties
 

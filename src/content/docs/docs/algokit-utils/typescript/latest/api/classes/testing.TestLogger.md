@@ -2,7 +2,7 @@
 title: TestLogger
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [testing](/docs/algokit-utils/typescript/latest/api/modules/testing/) / TestLogger
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [testing](/docs/algokit-utils/typescript/latest/api/modules/testing/) / TestLogger
 
 [testing](/docs/algokit-utils/typescript/latest/api/modules/testing/).TestLogger
 
@@ -17,32 +17,32 @@ This is useful for automated testing.
 
 ### Constructors
 
-- [constructor](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#constructor)
+- [constructor](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#constructor)
 
 ### Properties
 
-- [logs](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#logs)
-- [originalLogger](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#originallogger)
+- [logs](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#logs)
+- [originalLogger](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#originallogger)
 
 ### Accessors
 
-- [capturedLogs](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#capturedlogs)
+- [capturedLogs](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#capturedlogs)
 
 ### Methods
 
-- [clear](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#clear)
-- [debug](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#debug)
-- [error](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#error)
-- [getLogSnapshot](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#getlogsnapshot)
-- [info](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#info)
-- [verbose](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#verbose)
-- [warn](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/#warn)
+- [clear](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#clear)
+- [debug](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#debug)
+- [error](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#error)
+- [getLogSnapshot](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#getlogsnapshot)
+- [info](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#info)
+- [verbose](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#verbose)
+- [warn](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/#warn)
 
 ## Constructors
 
 ### constructor
 
-• **new TestLogger**(`originalLogger?`): [`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/)
+• **new TestLogger**(`originalLogger?`): [`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/)
 
 Create a new test logger that wraps the given logger if provided.
 
@@ -54,7 +54,7 @@ Create a new test logger that wraps the given logger if provided.
 
 #### Returns
 
-[`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testingtestlogger/)
+[`TestLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TestLogger/)
 
 #### Defined in
 
@@ -176,9 +176,9 @@ https://jestjs.io/docs/snapshot-testing#2-tests-should-be-deterministic
 
 #### Parameters
 
-| Name      | Type                                                                                                        | Description                |
-| :-------- | :---------------------------------------------------------------------------------------------------------- | :------------------------- |
-| `config?` | [`LogSnapshotConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinglogsnapshotconfig/) | The snapshot configuration |
+| Name      | Type                                                                                                         | Description                |
+| :-------- | :----------------------------------------------------------------------------------------------------------- | :------------------------- |
+| `config?` | [`LogSnapshotConfig`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.LogSnapshotConfig/) | The snapshot configuration |
 
 #### Returns
 

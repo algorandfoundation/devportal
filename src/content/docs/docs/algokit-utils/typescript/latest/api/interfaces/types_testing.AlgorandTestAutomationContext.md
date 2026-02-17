@@ -2,7 +2,7 @@
 title: AlgorandTestAutomationContext
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / AlgorandTestAutomationContext
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/) / AlgorandTestAutomationContext
 
 [types/testing](/docs/algokit-utils/typescript/latest/api/modules/types_testing/).AlgorandTestAutomationContext
 
@@ -12,15 +12,15 @@ Test automation context.
 
 ### Properties
 
-- [algod](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#algod)
-- [algorand](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#algorand)
-- [generateAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#generateaccount)
-- [indexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#indexer)
-- [kmd](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#kmd)
-- [testAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#testaccount)
-- [transactionLogger](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#transactionlogger)
-- [waitForIndexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#waitforindexer)
-- [waitForIndexerTransaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_testingalgorandtestautomationcontext/#waitforindexertransaction)
+- [algod](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#algod)
+- [algorand](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#algorand)
+- [generateAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#generateaccount)
+- [indexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#indexer)
+- [kmd](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#kmd)
+- [testAccount](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#testaccount)
+- [transactionLogger](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#transactionlogger)
+- [waitForIndexer](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#waitforindexer)
+- [waitForIndexerTransaction](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.AlgorandTestAutomationContext/#waitforindexertransaction)
 
 ## Properties
 
@@ -38,7 +38,7 @@ Algod client instance that will log transactions in `transactionLogger`
 
 ### algorand
 
-• **algorand**: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_clientalgorandclient/)
+• **algorand**: [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/classes/types_algorand_client.AlgorandClient/)
 
 An AlgorandClient instance loaded with the current context, including testAccount and any generated accounts loaded as signers
 
@@ -50,23 +50,23 @@ An AlgorandClient instance loaded with the current context, including testAccoun
 
 ### generateAccount
 
-• **generateAccount**: (`params`: [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinggettestaccountparams/)) => `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)\>
+• **generateAccount**: (`params`: [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.GetTestAccountParams/)) => `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)\>
 
 Generate and fund an additional ephemerally created account
 
 #### Type declaration
 
-▸ (`params`): `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)\>
+▸ (`params`): `Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)\>
 
 ##### Parameters
 
-| Name     | Type                                                                                                              |
-| :------- | :---------------------------------------------------------------------------------------------------------------- |
-| `params` | [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testinggettestaccountparams/) |
+| Name     | Type                                                                                                               |
+| :------- | :----------------------------------------------------------------------------------------------------------------- |
+| `params` | [`GetTestAccountParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_testing.GetTestAccountParams/) |
 
 ##### Returns
 
-`Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/)\>
+`Promise`\<`Address` & `default` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/)\>
 
 #### Defined in
 
@@ -100,7 +100,7 @@ KMD client instance
 
 ### testAccount
 
-• **testAccount**: `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_accounttransactionsigneraccount/) & `default`
+• **testAccount**: `Address` & [`TransactionSignerAccount`](/docs/algokit-utils/typescript/latest/api/interfaces/types_account.TransactionSignerAccount/) & `default`
 
 Default, funded test account that is ephemerally created
 
@@ -112,7 +112,7 @@ Default, funded test account that is ephemerally created
 
 ### transactionLogger
 
-• **transactionLogger**: [`TransactionLogger`](/docs/algokit-utils/typescript/latest/api/classes/testingtransactionlogger/)
+• **transactionLogger**: [`TransactionLogger`](/docs/algokit-utils/typescript/latest/api/classes/testing.TransactionLogger/)
 
 Transaction logger that will log transaction IDs for all transactions issued by `algod`
 

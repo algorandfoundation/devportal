@@ -6,17 +6,17 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / KeyRegistrationComposeFields
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / KeyRegistrationComposeFields
 
 Defined in: [itxn-compose.ts:10](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L10)
 
 ## Extends
 
-- [`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/)
+- [`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/)
 
 ## Properties
 
@@ -30,7 +30,7 @@ microalgos
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`fee`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#fee)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`fee`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#fee)
 
 ---
 
@@ -44,7 +44,7 @@ round number
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`firstValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#firstvalid)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`firstValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#firstvalid)
 
 ---
 
@@ -58,7 +58,7 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`firstValidTime`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#firstvalidtime)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`firstValidTime`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#firstvalidtime)
 
 ---
 
@@ -72,7 +72,7 @@ round number
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`lastValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#lastvalid)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`lastValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#lastvalid)
 
 ---
 
@@ -86,7 +86,7 @@ Defined in: [itxn.ts:655](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`lease`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#lease)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`lease`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#lease)
 
 ---
 
@@ -100,7 +100,7 @@ Marks an account nonparticipating for rewards
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`nonparticipation`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#nonparticipation)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`nonparticipation`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#nonparticipation)
 
 ---
 
@@ -114,13 +114,13 @@ Any data up to 1024 bytes
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`note`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#note)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`note`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#note)
 
 ---
 
 ### rekeyTo?
 
-> `optional` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:659](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L659)
 
@@ -128,7 +128,7 @@ Defined in: [itxn.ts:659](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`rekeyTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#rekeyto)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`rekeyTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#rekeyto)
 
 ---
 
@@ -142,13 +142,13 @@ Defined in: [itxn.ts:667](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`selectionKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#selectionkey)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`selectionKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#selectionkey)
 
 ---
 
 ### sender?
 
-> `optional` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:631](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L631)
 
@@ -156,7 +156,7 @@ Defined in: [itxn.ts:631](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`sender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#sender)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`sender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#sender)
 
 ---
 
@@ -170,13 +170,13 @@ Defined in: [itxn.ts:687](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`stateProofKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#stateproofkey)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`stateProofKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#stateproofkey)
 
 ---
 
 ### type
 
-> **type**: [`KeyRegistration`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/transactiontype/#keyregistration)
+> **type**: [`KeyRegistration`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/#keyregistration)
 
 Defined in: [itxn-compose.ts:11](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L11)
 
@@ -192,7 +192,7 @@ The first round that the participation key is valid.
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteFirst`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votefirst)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`voteFirst`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#votefirst)
 
 ---
 
@@ -206,7 +206,7 @@ Defined in: [itxn.ts:663](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votekey)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`voteKey`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#votekey)
 
 ---
 
@@ -220,7 +220,7 @@ Dilution for the 2-level participation key
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteKeyDilution`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votekeydilution)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`voteKeyDilution`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#votekeydilution)
 
 ---
 
@@ -234,4 +234,4 @@ The last round that the participation key is valid.
 
 #### Inherited from
 
-[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/).[`voteLast`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/keyregistrationfields/#votelast)
+[`KeyRegistrationFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/).[`voteLast`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/KeyRegistrationFields/#votelast)

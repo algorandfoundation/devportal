@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / BareMethodConfig
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / BareMethodConfig
 
 > **BareMethodConfig** = `object`
 
@@ -22,7 +22,7 @@ Configuration options for a bare method
 
 ### allowActions?
 
-> `optional` **allowActions**: [`OnCompleteActionStr`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/oncompleteactionstr/) \| [`OnCompleteActionStr`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/oncompleteactionstr/)[]
+> `optional` **allowActions**: [`OnCompleteActionStr`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/OnCompleteActionStr/) \| [`OnCompleteActionStr`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/OnCompleteActionStr/)[]
 
 Defined in: [arc4/index.ts:184](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L184)
 
@@ -38,7 +38,7 @@ Which on complete action(s) are allowed when invoking this method.
 
 ### onCreate?
 
-> `optional` **onCreate**: [`CreateOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/createoptions/)
+> `optional` **onCreate**: [`CreateOptions`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/CreateOptions/)
 
 Defined in: [arc4/index.ts:189](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L189)
 

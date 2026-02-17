@@ -2,7 +2,7 @@
 title: DeclaredSchemaValueSpec
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / DeclaredSchemaValueSpec
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/) / DeclaredSchemaValueSpec
 
 [types/app-spec](/docs/algokit-utils/typescript/latest/api/modules/types_app_spec/).DeclaredSchemaValueSpec
 
@@ -12,10 +12,10 @@ Declared schema value specification
 
 ### Properties
 
-- [descr](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specdeclaredschemavaluespec/#descr)
-- [key](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specdeclaredschemavaluespec/#key)
-- [static](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specdeclaredschemavaluespec/#static)
-- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specdeclaredschemavaluespec/#type)
+- [descr](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.DeclaredSchemaValueSpec/#descr)
+- [key](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.DeclaredSchemaValueSpec/#key)
+- [static](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.DeclaredSchemaValueSpec/#static)
+- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.DeclaredSchemaValueSpec/#type)
 
 ## Properties
 

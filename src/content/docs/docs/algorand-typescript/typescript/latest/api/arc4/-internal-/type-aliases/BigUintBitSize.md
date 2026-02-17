@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/readme/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/readme/) / BigUintBitSize
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/README/) / BigUintBitSize
 
 > **BigUintBitSize** = `72` \| `80` \| `88` \| `96` \| `104` \| `112` \| `120` \| `128` \| `136` \| `144` \| `152` \| `160` \| `168` \| `176` \| `184` \| `192` \| `200` \| `208` \| `216` \| `224` \| `232` \| `240` \| `248` \| `256` \| `264` \| `272` \| `280` \| `288` \| `296` \| `304` \| `312` \| `320` \| `328` \| `336` \| `344` \| `352` \| `360` \| `368` \| `376` \| `384` \| `392` \| `400` \| `408` \| `416` \| `424` \| `432` \| `440` \| `448` \| `456` \| `464` \| `472` \| `480` \| `488` \| `496` \| `504` \| `512`
 

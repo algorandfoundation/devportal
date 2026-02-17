@@ -2,19 +2,19 @@
 title: types/indexer
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/indexer
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/indexer
 
 ## Table of contents
 
 ### Enumerations
 
-- [AccountStatus](/docs/algokit-utils/typescript/latest/api/enums/types_indexeraccountstatus/)
-- [ApplicationOnComplete](/docs/algokit-utils/typescript/latest/api/enums/types_indexerapplicationoncomplete/)
-- [SignatureType](/docs/algokit-utils/typescript/latest/api/enums/types_indexersignaturetype/)
+- [AccountStatus](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.AccountStatus/)
+- [ApplicationOnComplete](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.ApplicationOnComplete/)
+- [SignatureType](/docs/algokit-utils/typescript/latest/api/enums/types_indexer.SignatureType/)
 
 ### Interfaces
 
-- [LookupAssetHoldingsOptions](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexerlookupassetholdingsoptions/)
+- [LookupAssetHoldingsOptions](/docs/algokit-utils/typescript/latest/api/interfaces/types_indexer.LookupAssetHoldingsOptions/)
 
 ### Type Aliases
 

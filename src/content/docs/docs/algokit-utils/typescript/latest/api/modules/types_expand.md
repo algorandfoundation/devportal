@@ -2,7 +2,7 @@
 title: types/expand
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/expand
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/expand
 
 ## Table of contents
 

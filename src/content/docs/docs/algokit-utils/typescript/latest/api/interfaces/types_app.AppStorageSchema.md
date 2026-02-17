@@ -2,7 +2,7 @@
 title: AppStorageSchema
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppStorageSchema
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / AppStorageSchema
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).AppStorageSchema
 
@@ -12,11 +12,11 @@ Parameters representing the storage schema of an app.
 
 ### Properties
 
-- [extraPages](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/#extrapages)
-- [globalByteSlices](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/#globalbyteslices)
-- [globalInts](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/#globalints)
-- [localByteSlices](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/#localbyteslices)
-- [localInts](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/#localints)
+- [extraPages](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/#extrapages)
+- [globalByteSlices](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/#globalbyteslices)
+- [globalInts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/#globalints)
+- [localByteSlices](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/#localbyteslices)
+- [localInts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/#localints)
 
 ## Properties
 

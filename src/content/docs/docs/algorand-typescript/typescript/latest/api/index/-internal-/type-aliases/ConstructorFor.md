@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/readme/) / ConstructorFor
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / [\<internal\>](/docs/algorand-typescript/typescript/latest/api/index/-internal-/README/) / ConstructorFor
 
 > **ConstructorFor**\<`T`, `TArgs`\> = (...`args`) => `T`
 
@@ -24,7 +24,7 @@ Defined in: [internal/typescript-helpers.ts:5](https://github.com/algorandfounda
 
 ### TArgs
 
-`TArgs` _extends_ [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/deliberateany/)[] = [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/deliberateany/)[]
+`TArgs` _extends_ [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/DeliberateAny/)[] = [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/DeliberateAny/)[]
 
 ## Parameters
 

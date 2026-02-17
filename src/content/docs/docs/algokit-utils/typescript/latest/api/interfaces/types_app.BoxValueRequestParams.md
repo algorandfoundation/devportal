@@ -2,7 +2,7 @@
 title: BoxValueRequestParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / BoxValueRequestParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / BoxValueRequestParams
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).BoxValueRequestParams
 
@@ -15,9 +15,9 @@ Parameters to get and decode a box value as an ABI type.
 
 ### Properties
 
-- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxvaluerequestparams/#appid)
-- [boxName](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxvaluerequestparams/#boxname)
-- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxvaluerequestparams/#type)
+- [appId](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxValueRequestParams/#appid)
+- [boxName](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxValueRequestParams/#boxname)
+- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxValueRequestParams/#type)
 
 ## Properties
 
@@ -35,7 +35,7 @@ The ID of the app return box names for
 
 ### boxName
 
-• **boxName**: `string` \| `Uint8Array` \| [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxname/)
+• **boxName**: `string` \| `Uint8Array` \| [`BoxName`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxName/)
 
 The name of the box to return either as a string, binary array or `BoxName`
 

@@ -13,7 +13,7 @@ App client and App factory are higher-order use case capabilities provided by Al
 
 ## `AppFactory`
 
-The [`AppFactory`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factoryappfactory/) is a class that, for a given app spec, allows you to create and deploy one or more app instances and to create one or more app clients to interact with those (or other) app instances.
+The [`AppFactory`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factory.AppFactory/) is a class that, for a given app spec, allows you to create and deploy one or more app instances and to create one or more app clients to interact with those (or other) app instances.
 
 To get an instance of `AppFactory` you can use either [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/algorand-client/) via `algorand.client.getAppFactory` or instantiate it directly (passing in an app spec, an `AlgorandClient` instance and other optional parameters):
 
@@ -36,7 +36,7 @@ const factory = algorand.client.getAppFactory({
 
 ## `AppClient`
 
-The [`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientappclient/) is a class that, for a given app spec, allows you to manage calls and state for a specific deployed instance of an app (with a known app ID).
+The [`AppClient`](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.AppClient/) is a class that, for a given app spec, allows you to manage calls and state for a specific deployed instance of an app (with a known app ID).
 
 To get an instance of `AppClient` you can use either [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/algorand-client/) via `algorand.client.getAppClient*` or instantiate it directly (passing in an app ID, app spec, `AlgorandClient` instance and other optional parameters):
 
@@ -75,8 +75,8 @@ As well as allowing you to control creation and deployment of apps, the `AppFact
 
 This is possible via two methods on the app factory:
 
-- [`factory.getAppClientById(params)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factoryappfactory/#getappclientbyid) - Returns a new `AppClient` client for an app instance of the given ID. Automatically populates appName, defaultSender and source maps from the factory if not specified in the params.
-- [`factory.getAppClientByCreatorAndName(params)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factoryappfactory/#getappclientbycreatorandname) - Returns a new `AppClient` client, resolving the app by creator address and name using AlgoKit app deployment semantics (i.e. looking for the app creation transaction note). Automatically populates appName, defaultSender and source maps from the factory if not specified in the params.
+- [`factory.getAppClientById(params)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factory.AppFactory/#getappclientbyid) - Returns a new `AppClient` client for an app instance of the given ID. Automatically populates appName, defaultSender and source maps from the factory if not specified in the params.
+- [`factory.getAppClientByCreatorAndName(params)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factory.AppFactory/#getappclientbycreatorandname) - Returns a new `AppClient` client, resolving the app by creator address and name using AlgoKit app deployment semantics (i.e. looking for the app creation transaction note). Automatically populates appName, defaultSender and source maps from the factory if not specified in the params.
 
 ```typescript
 const appClient1 = factory.getAppClientById({ appId: 12345n });
@@ -101,8 +101,8 @@ const appClient6 = factory.getAppClientByCreatorAndName({
 
 Once you have an [app factory](#appfactory) you can perform the following actions:
 
-- [`factory.create(params?)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factoryappfactory/#create) - Signs and sends a transaction to create an app and returns the [result of that call](/docs/algokit-utils/typescript/latest/guides/app/#creation) and an [`AppClient`](#appclient) instance for the created app
-- [`factory.deploy(params)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factoryappfactory/#deploy) - Uses the [creator address and app name pattern](/docs/algokit-utils/typescript/latest/guides/app-deploy/#lookup-deployed-apps-by-name) to find if the app has already been deployed or not and either creates, updates or replaces that app based on the [deployment rules](/docs/algokit-utils/typescript/latest/guides/app-deploy/#performing-a-deployment) (i.e. it's an idempotent deployment) and returns the [result of the deployment](/docs/algokit-utils/typescript/latest/guides/app-deploy/#return-value) and an [`AppClient`](#appclient) instance for the created/updated/existing app
+- [`factory.create(params?)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factory.AppFactory/#create) - Signs and sends a transaction to create an app and returns the [result of that call](/docs/algokit-utils/typescript/latest/guides/app/#creation) and an [`AppClient`](#appclient) instance for the created app
+- [`factory.deploy(params)`](/docs/algokit-utils/typescript/latest/api/classes/types_app_factory.AppFactory/#deploy) - Uses the [creator address and app name pattern](/docs/algokit-utils/typescript/latest/guides/app-deploy/#lookup-deployed-apps-by-name) to find if the app has already been deployed or not and either creates, updates or replaces that app based on the [deployment rules](/docs/algokit-utils/typescript/latest/guides/app-deploy/#performing-a-deployment) (i.e. it's an idempotent deployment) and returns the [result of the deployment](/docs/algokit-utils/typescript/latest/guides/app-deploy/#return-value) and an [`AppClient`](#appclient) instance for the created/updated/existing app
 
 ### Create
 
@@ -390,11 +390,11 @@ The information in that error message can be parsed and when combined with the [
 
 The app client and app factory automatically provide this functionality for all smart contract calls. They also expose a function that can be used for any custom calls you manually construct and need to add into your own try/catch `exposeLogicError(e: Error, isClear?: boolean)`.
 
-When an error is thrown then the resulting error that is re-thrown will be a [`LogicError` object](/docs/algokit-utils/typescript/latest/api/classes/types_logic_errorlogicerror/), which has the following fields:
+When an error is thrown then the resulting error that is re-thrown will be a [`LogicError` object](/docs/algokit-utils/typescript/latest/api/classes/types_logic_error.LogicError/), which has the following fields:
 
 - `message: string` - The formatted error message `{ERROR_MESSAGE}. at:{TEAL_LINE}. {ERROR_DESCRIPTION}`
 - `stack: string` - A stack trace of the TEAL code showing where the error was with the 5 lines either side of it
-- `led: LogicErrorDetails` - The parsed [logic error details](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_errorlogicerrordetails/) from the error message, with the following properties:
+- `led: LogicErrorDetails` - The parsed [logic error details](/docs/algokit-utils/typescript/latest/api/interfaces/types_logic_error.LogicErrorDetails/) from the error message, with the following properties:
   - `txId: string` - The transaction ID that triggered the error
   - `pc: number` - The program counter
   - `msg: string` - The raw error message

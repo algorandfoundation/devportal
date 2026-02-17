@@ -2,7 +2,7 @@
 title: AtomicTransactionComposerToSend
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / AtomicTransactionComposerToSend
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/) / AtomicTransactionComposerToSend
 
 [types/transaction](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/).AtomicTransactionComposerToSend
 
@@ -10,7 +10,7 @@ An `AtomicTransactionComposer` with transactions to send.
 
 ## Hierarchy
 
-- [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/)
+- [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/)
 
   ↳ **`AtomicTransactionComposerToSend`**
 
@@ -18,19 +18,19 @@ An `AtomicTransactionComposer` with transactions to send.
 
 ### Properties
 
-- [additionalAtcContext](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/#additionalatccontext)
-- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/#atc)
-- [coverAppCallInnerTransactionFees](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/#coverappcallinnertransactionfees)
-- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/#maxroundstowaitforconfirmation)
-- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/#populateappcallresources)
-- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/#sendparams)
-- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionatomictransactioncomposertosend/#suppresslog)
+- [additionalAtcContext](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/#additionalatccontext)
+- [atc](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/#atc)
+- [coverAppCallInnerTransactionFees](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/#coverappcallinnertransactionfees)
+- [maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/#maxroundstowaitforconfirmation)
+- [populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/#populateappcallresources)
+- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/#sendparams)
+- [suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AtomicTransactionComposerToSend/#suppresslog)
 
 ## Properties
 
 ### additionalAtcContext
 
-• `Optional` **additionalAtcContext**: [`AdditionalAtomicTransactionComposerContext`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionadditionalatomictransactioncomposercontext/)
+• `Optional` **additionalAtcContext**: [`AdditionalAtomicTransactionComposerContext`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.AdditionalAtomicTransactionComposerContext/)
 
 Additional `AtomicTransactionComposer` context used when building the transaction group that is sent.
 This additional context is used and must be supplied when coverAppCallInnerTransactionFees is set to true.
@@ -61,7 +61,7 @@ Whether to use simulate to automatically calculate required app call inner trans
 
 #### Inherited from
 
-[SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/).[coverAppCallInnerTransactionFees](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/#coverappcallinnertransactionfees)
+[SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/).[coverAppCallInnerTransactionFees](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/#coverappcallinnertransactionfees)
 
 #### Defined in
 
@@ -77,7 +77,7 @@ The number of rounds to wait for confirmation. By default until the latest lastV
 
 #### Inherited from
 
-[SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/).[maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/#maxroundstowaitforconfirmation)
+[SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/).[maxRoundsToWaitForConfirmation](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/#maxroundstowaitforconfirmation)
 
 #### Defined in
 
@@ -93,7 +93,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 #### Inherited from
 
-[SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/).[populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/#populateappcallresources)
+[SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/).[populateAppCallResources](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/#populateappcallresources)
 
 #### Defined in
 
@@ -103,7 +103,7 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 ### sendParams
 
-• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
+• `Optional` **sendParams**: `Omit`\<[`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/), `"fee"` \| `"maxFee"` \| `"skipSending"` \| `"atc"`\>
 
 **`Deprecated`**
 
@@ -124,7 +124,7 @@ Whether to suppress log messages from transaction send, default: do not suppress
 
 #### Inherited from
 
-[SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/).[suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/#suppresslog)
+[SendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/).[suppressLog](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/#suppresslog)
 
 #### Defined in
 

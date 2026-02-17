@@ -2,30 +2,30 @@
 title: types/app-client
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / types/app-client
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / types/app-client
 
 ## Table of contents
 
 ### Classes
 
-- [AppClient](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientappclient/)
-- [ApplicationClient](/docs/algokit-utils/typescript/latest/api/classes/types_app_clientapplicationclient/)
+- [AppClient](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.AppClient/)
+- [ApplicationClient](/docs/algokit-utils/typescript/latest/api/classes/types_app_client.ApplicationClient/)
 
 ### Interfaces
 
-- [AppClientCallABIArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/)
-- [AppClientCallCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallcoreparams/)
-- [AppClientCompilationParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/)
-- [AppClientCompilationResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationresult/)
-- [AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycallinterfaceparams/)
-- [AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeploycoreparams/)
-- [AppClientDeployParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientdeployparams/)
-- [AppClientParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/)
-- [AppSourceMaps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappsourcemaps/)
-- [FundAppAccountParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientfundappaccountparams/)
-- [ResolveAppById](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyid/)
-- [ResolveAppByIdBase](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/)
-- [SourceMapExport](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientsourcemapexport/)
+- [AppClientCallABIArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/)
+- [AppClientCallCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallCoreParams/)
+- [AppClientCompilationParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/)
+- [AppClientCompilationResult](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationResult/)
+- [AppClientDeployCallInterfaceParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCallInterfaceParams/)
+- [AppClientDeployCoreParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployCoreParams/)
+- [AppClientDeployParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientDeployParams/)
+- [AppClientParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/)
+- [AppSourceMaps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppSourceMaps/)
+- [FundAppAccountParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.FundAppAccountParams/)
+- [ResolveAppById](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppById/)
+- [ResolveAppByIdBase](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/)
+- [SourceMapExport](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.SourceMapExport/)
 
 ### Type Aliases
 
@@ -68,7 +68,7 @@ AppClient common parameters for a bare app call
 
 ### AppClientCallArgs
 
-Ƭ **AppClientCallArgs**: [`AppClientCallRawArgs`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallrawargs) \| [`AppClientCallABIArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallabiargs/)
+Ƭ **AppClientCallArgs**: [`AppClientCallRawArgs`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallrawargs) \| [`AppClientCallABIArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallABIArgs/)
 
 The arguments to pass to an Application Client smart contract call
 
@@ -80,7 +80,7 @@ The arguments to pass to an Application Client smart contract call
 
 ### AppClientCallParams
 
-Ƭ **AppClientCallParams**: [`AppClientCallArgs`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallargs) & [`AppClientCallCoreParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallcoreparams/)
+Ƭ **AppClientCallParams**: [`AppClientCallArgs`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallargs) & [`AppClientCallCoreParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallCoreParams/)
 
 Parameters to construct a ApplicationClient contract call
 
@@ -92,7 +92,7 @@ Parameters to construct a ApplicationClient contract call
 
 ### AppClientCallRawArgs
 
-Ƭ **AppClientCallRawArgs**: [`RawAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/)
+Ƭ **AppClientCallRawArgs**: [`RawAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/)
 
 #### Defined in
 
@@ -102,7 +102,7 @@ Parameters to construct a ApplicationClient contract call
 
 ### AppClientClearStateParams
 
-Ƭ **AppClientClearStateParams**: [`AppClientCallRawArgs`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallrawargs) & [`AppClientCallCoreParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallcoreparams/)
+Ƭ **AppClientClearStateParams**: [`AppClientCallRawArgs`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallrawargs) & [`AppClientCallCoreParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallCoreParams/)
 
 Parameters to construct a ApplicationClient clear state contract call
 
@@ -132,7 +132,7 @@ On-complete action parameter for creating a contract using ApplicationClient
 
 ### AppClientCreateParams
 
-Ƭ **AppClientCreateParams**: [`AppClientCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallparams) & [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/) & [`AppClientCreateOnComplete`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcreateoncomplete) & \{ `schema?`: `Partial`\<[`AppStorageSchema`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appappstorageschema/)\> }
+Ƭ **AppClientCreateParams**: [`AppClientCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallparams) & [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/) & [`AppClientCreateOnComplete`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcreateoncomplete) & \{ `schema?`: `Partial`\<[`AppStorageSchema`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppStorageSchema/)\> }
 
 Parameters for creating a contract using ApplicationClient
 
@@ -156,7 +156,7 @@ AppClient common parameters for an ABI method call
 
 ### AppClientUpdateParams
 
-Ƭ **AppClientUpdateParams**: [`AppClientCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallparams) & [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcompilationparams/)
+Ƭ **AppClientUpdateParams**: [`AppClientCallParams`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appclientcallparams) & [`AppClientCompilationParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCompilationParams/)
 
 Parameters for updating a contract using ApplicationClient
 
@@ -168,7 +168,7 @@ Parameters for updating a contract using ApplicationClient
 
 ### AppDetails
 
-Ƭ **AppDetails**: [`AppDetailsBase`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appdetailsbase) & [`ResolveAppById`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyid/) \| [`ResolveAppByCreatorAndName`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#resolveappbycreatorandname)
+Ƭ **AppDetails**: [`AppDetailsBase`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appdetailsbase) & [`ResolveAppById`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppById/) \| [`ResolveAppByCreatorAndName`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#resolveappbycreatorandname)
 
 The details of an AlgoKit Utils deployed app
 
@@ -188,7 +188,7 @@ The details of an AlgoKit Utils deployed app
 
 | Name                | Type                                                                                                              | Description                                                                                                                                                                             |
 | :------------------ | :---------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `deployTimeParams?` | [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_apptealtemplateparams/)         | Optionally provide any deploy-time parameters to replace in the TEAL code; if specified here will get used in calls to `deploy`, `create` and `update` unless overridden in those calls |
+| `deployTimeParams?` | [`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.TealTemplateParams/)        | Optionally provide any deploy-time parameters to replace in the TEAL code; if specified here will get used in calls to `deploy`, `create` and `update` unless overridden in those calls |
 | `params?`           | `SuggestedParams`                                                                                                 | Default suggested params object to use                                                                                                                                                  |
 | `sender?`           | [`SendTransactionFrom`](/docs/algokit-utils/typescript/latest/api/modules/types_transaction/#sendtransactionfrom) | Default sender to use for transactions issued by this application client                                                                                                                |
 
@@ -218,9 +218,9 @@ The details of an ARC-0032 app spec specified, AlgoKit Utils deployed app
 
 #### Type declaration
 
-| Name  | Type                                                                                                 | Description                                                                        |
-| :---- | :--------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------- |
-| `app` | [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_specappspec/) \| `string` | The ARC-0032 application spec as either: _ Parsed JSON `AppSpec` _ Raw JSON string |
+| Name  | Type                                                                                                  | Description                                                                        |
+| :---- | :---------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------- |
+| `app` | [`AppSpec`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_spec.AppSpec/) \| `string` | The ARC-0032 application spec as either: _ Parsed JSON `AppSpec` _ Raw JSON string |
 
 #### Defined in
 
@@ -242,7 +242,7 @@ The details of an ARC-0032 app spec specified, AlgoKit Utils deployed app by cre
 
 ### AppSpecAppDetailsById
 
-Ƭ **AppSpecAppDetailsById**: [`AppSpecAppDetailsBase`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appspecappdetailsbase) & [`AppDetailsBase`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appdetailsbase) & [`ResolveAppByIdBase`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientresolveappbyidbase/)
+Ƭ **AppSpecAppDetailsById**: [`AppSpecAppDetailsBase`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appspecappdetailsbase) & [`AppDetailsBase`](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/#appdetailsbase) & [`ResolveAppByIdBase`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.ResolveAppByIdBase/)
 
 The details of an ARC-0032 app spec specified, AlgoKit Utils deployed app by id
 
@@ -272,7 +272,7 @@ onComplete parameter for a non-update app call
 
 ### CloneAppClientParams
 
-Ƭ **CloneAppClientParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Partial`\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/), `"algorand"` \| `"appSpec"`\>\>\>
+Ƭ **CloneAppClientParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Partial`\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/), `"algorand"` \| `"appSpec"`\>\>\>
 
 Parameters to clone an app client
 
@@ -284,7 +284,7 @@ Parameters to clone an app client
 
 ### FundAppParams
 
-Ƭ **FundAppParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`PaymentParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#paymentparams), `"receiver"` \| `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendparams/) & \{ `sender?`: `Address` \| `string` }\>
+Ƭ **FundAppParams**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`PaymentParams`](/docs/algokit-utils/typescript/latest/api/modules/types_composer/#paymentparams), `"receiver"` \| `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendParams/) & \{ `sender?`: `Address` \| `string` }\>
 
 Parameters for funding an app account
 
@@ -314,11 +314,11 @@ Configuration to resolve app by creator and name `getCreatorAppsByName`
 
 #### Type declaration
 
-| Name                | Type                                                                                                 | Description                                                                                                                                                                                                                                            |
-| :------------------ | :--------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `creatorAddress`    | `Address` \| `string`                                                                                | The address of the app creator account to resolve the app by                                                                                                                                                                                           |
-| `findExistingUsing` | `Indexer` \| [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appapplookup/) | The mechanism to find an existing app instance metadata for the given creator and name; either: _ An indexer instance to search the creator account apps; or _ The cached value of the existing apps for the given creator from `getCreatorAppsByName` |
-| `name?`             | `string`                                                                                             | The optional name override to resolve the app by within the creator account (default: uses the name in the ABI contract)                                                                                                                               |
+| Name                | Type                                                                                                  | Description                                                                                                                                                                                                                                            |
+| :------------------ | :---------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `creatorAddress`    | `Address` \| `string`                                                                                 | The address of the app creator account to resolve the app by                                                                                                                                                                                           |
+| `findExistingUsing` | `Indexer` \| [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.AppLookup/) | The mechanism to find an existing app instance metadata for the given creator and name; either: _ An indexer instance to search the creator account apps; or _ The cached value of the existing apps for the given creator from `getCreatorAppsByName` |
+| `name?`             | `string`                                                                                              | The optional name override to resolve the app by within the creator account (default: uses the name in the ABI contract)                                                                                                                               |
 
 #### Defined in
 
@@ -328,7 +328,7 @@ Configuration to resolve app by creator and name `getCreatorAppsByName`
 
 ### ResolveAppClientByCreatorAndName
 
-Ƭ **ResolveAppClientByCreatorAndName**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/), `"appId"`\> & \{ `appLookupCache?`: [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployerapplookup/) ; `creatorAddress`: `Address` \| `string` ; `ignoreCache?`: `boolean` }\>
+Ƭ **ResolveAppClientByCreatorAndName**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/), `"appId"`\> & \{ `appLookupCache?`: [`AppLookup`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_deployer.AppLookup/) ; `creatorAddress`: `Address` \| `string` ; `ignoreCache?`: `boolean` }\>
 
 Resolve an app client instance by looking up an app created by the given creator with the given name
 
@@ -340,7 +340,7 @@ Resolve an app client instance by looking up an app created by the given creator
 
 ### ResolveAppClientByNetwork
 
-Ƭ **ResolveAppClientByNetwork**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientparams/), `"appId"`\>\>
+Ƭ **ResolveAppClientByNetwork**: [`Expand`](/docs/algokit-utils/typescript/latest/api/modules/types_expand/#expand)\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientParams/), `"appId"`\>\>
 
 Resolve an app client instance by looking up the current network.
 

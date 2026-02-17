@@ -2,7 +2,7 @@
 title: AppClientCallCoreParams
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientCallCoreParams
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/) / AppClientCallCoreParams
 
 [types/app-client](/docs/algokit-utils/typescript/latest/api/modules/types_app_client/).AppClientCallCoreParams
 
@@ -12,9 +12,9 @@ Common (core) parameters to construct a ApplicationClient contract call
 
 ### Properties
 
-- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallcoreparams/#note)
-- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallcoreparams/#sendparams)
-- [sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_clientappclientcallcoreparams/#sender)
+- [note](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallCoreParams/#note)
+- [sendParams](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallCoreParams/#sendparams)
+- [sender](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_client.AppClientCallCoreParams/#sender)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The transaction note for the smart contract call
 
 ### sendParams
 
-• `Optional` **sendParams**: [`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transactionsendtransactionparams/)
+• `Optional` **sendParams**: [`SendTransactionParams`](/docs/algokit-utils/typescript/latest/api/interfaces/types_transaction.SendTransactionParams/)
 
 Parameters to control transaction sending
 

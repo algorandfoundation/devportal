@@ -2,7 +2,7 @@
 title: TealSourceDebugEventData
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/) / TealSourceDebugEventData
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/) / TealSourceDebugEventData
 
 [types/debugging](/docs/algokit-utils/typescript/latest/api/modules/types_debugging/).TealSourceDebugEventData
 
@@ -12,9 +12,9 @@ Represents the data for a single TEAL source
 
 ### Properties
 
-- [appName](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingtealsourcedebugeventdata/#appname)
-- [compiledTeal](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingtealsourcedebugeventdata/#compiledteal)
-- [fileName](/docs/algokit-utils/typescript/latest/api/interfaces/types_debuggingtealsourcedebugeventdata/#filename)
+- [appName](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.TealSourceDebugEventData/#appname)
+- [compiledTeal](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.TealSourceDebugEventData/#compiledteal)
+- [fileName](/docs/algokit-utils/typescript/latest/api/interfaces/types_debugging.TealSourceDebugEventData/#filename)
 
 ## Properties
 
@@ -32,7 +32,7 @@ The name of the application
 
 ### compiledTeal
 
-• **compiledTeal**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcompiledteal/)
+• **compiledTeal**: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CompiledTeal/)
 
 The compiled TEAL code
 

@@ -2,7 +2,7 @@
 title: RawAppCallArgs
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / RawAppCallArgs
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/) / RawAppCallArgs
 
 [types/app](/docs/algokit-utils/typescript/latest/api/modules/types_app/).RawAppCallArgs
 
@@ -10,7 +10,7 @@ App call args with non-ABI (raw) values (minus some processing like encoding str
 
 ## Hierarchy
 
-- [`CoreAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/)
+- [`CoreAppCallArgs`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/)
 
   ↳ **`RawAppCallArgs`**
 
@@ -18,14 +18,14 @@ App call args with non-ABI (raw) values (minus some processing like encoding str
 
 ### Properties
 
-- [accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/#accounts)
-- [appArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/#appargs)
-- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/#apps)
-- [assets](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/#assets)
-- [boxes](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/#boxes)
-- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/#lease)
-- [method](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/#method)
-- [rekeyTo](/docs/algokit-utils/typescript/latest/api/interfaces/types_apprawappcallargs/#rekeyto)
+- [accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/#accounts)
+- [appArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/#appargs)
+- [apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/#apps)
+- [assets](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/#assets)
+- [boxes](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/#boxes)
+- [lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/#lease)
+- [method](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/#method)
+- [rekeyTo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.RawAppCallArgs/#rekeyto)
 
 ## Properties
 
@@ -37,7 +37,7 @@ The address of any accounts to load in
 
 #### Inherited from
 
-[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/).[accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#accounts)
+[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/).[accounts](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#accounts)
 
 #### Defined in
 
@@ -65,7 +65,7 @@ IDs of any apps to load into the foreignApps array
 
 #### Inherited from
 
-[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/).[apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#apps)
+[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/).[apps](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#apps)
 
 #### Defined in
 
@@ -81,7 +81,7 @@ IDs of any assets to load into the foreignAssets array
 
 #### Inherited from
 
-[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/).[assets](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#assets)
+[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/).[assets](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#assets)
 
 #### Defined in
 
@@ -91,13 +91,13 @@ IDs of any assets to load into the foreignAssets array
 
 ### boxes
 
-• `Optional` **boxes**: ([`BoxReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_appboxreference/) \| [`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
+• `Optional` **boxes**: ([`BoxReference`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.BoxReference/) \| [`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/modules/types_app/#boxidentifier) \| `BoxReference`)[]
 
 Any box references to load
 
 #### Inherited from
 
-[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/).[boxes](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#boxes)
+[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/).[boxes](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#boxes)
 
 #### Defined in
 
@@ -113,7 +113,7 @@ The optional lease for the transaction
 
 #### Inherited from
 
-[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/).[lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#lease)
+[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/).[lease](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#lease)
 
 #### Defined in
 
@@ -143,7 +143,7 @@ Optional account / account address that should be authorised to transact on beha
 
 #### Inherited from
 
-[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/).[rekeyTo](/docs/algokit-utils/typescript/latest/api/interfaces/types_appcoreappcallargs/#rekeyto)
+[CoreAppCallArgs](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/).[rekeyTo](/docs/algokit-utils/typescript/latest/api/interfaces/types_app.CoreAppCallArgs/#rekeyto)
 
 #### Defined in
 

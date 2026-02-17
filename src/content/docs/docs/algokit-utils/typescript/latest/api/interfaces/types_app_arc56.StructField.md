@@ -2,7 +2,7 @@
 title: StructField
 ---
 
-[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/readme/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / StructField
+[@algorandfoundation/algokit-utils](/docs/algokit-utils/typescript/latest/api/README/) / [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/) / StructField
 
 [types/app-arc56](/docs/algokit-utils/typescript/latest/api/modules/types_app_arc56/).StructField
 
@@ -12,8 +12,8 @@ Information about a single field in a struct
 
 ### Properties
 
-- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/#name)
-- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/#type)
+- [name](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/#name)
+- [type](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/#type)
 
 ## Properties
 
@@ -31,7 +31,7 @@ The name of the struct field
 
 ### type
 
-• **type**: `string` \| [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56structfield/)[]
+• **type**: `string` \| [`StructField`](/docs/algokit-utils/typescript/latest/api/interfaces/types_app_arc56.StructField/)[]
 
 The type of the struct field's value
 

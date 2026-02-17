@@ -6,11 +6,11 @@ generated: 2025-10-31T00:00:00.000Z
 repo: puya-ts
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/readme/)
+[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
 
 ---
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/readme/) / Asset
+[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Asset
 
 > **Asset** = `object`
 
@@ -22,7 +22,7 @@ Creates a new Asset object represent the asset id 0 (an invalid ID)
 
 ### clawback
 
-> `readonly` **clawback**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **clawback**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [reference.ts:198](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L198)
 
@@ -32,7 +32,7 @@ Clawback address
 
 ### creator
 
-> `readonly` **creator**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **creator**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [reference.ts:203](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L203)
 
@@ -64,7 +64,7 @@ Frozen by default or not
 
 ### freeze
 
-> `readonly` **freeze**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **freeze**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [reference.ts:193](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L193)
 
@@ -84,7 +84,7 @@ Returns the id of the Asset
 
 ### manager
 
-> `readonly` **manager**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **manager**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [reference.ts:183](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L183)
 
@@ -114,7 +114,7 @@ Asset name
 
 ### reserve
 
-> `readonly` **reserve**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+> `readonly` **reserve**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Defined in: [reference.ts:188](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L188)
 
@@ -166,7 +166,7 @@ Asset and supplied Account must be an available resource
 
 ##### account
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Account
 
@@ -192,7 +192,7 @@ Asset and supplied Account must be an available resource
 
 ##### account
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/account/)
+[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
 
 Account
 
