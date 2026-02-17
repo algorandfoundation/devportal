@@ -35,15 +35,57 @@ export default defineConfig({
       plugins: [
         starlightImageZoom(),
         starlightLinksValidator({
-          // TODO: Re-enable once all remaining broken links are resolved (DVP-1205)
-          errorOnRelativeLinks: false,
+          errorOnRelativeLinks: true,
           errorOnInvalidHashes: false,
           errorOnLocalLinks: false,
-          exclude: [
-            '**/reference/rest-api/**',
-            '**/reference/sdk/**',
-            '**/docs/algorand-typescript/**/api/**', // TypeDoc cross-refs to excluded /modules/ paths
-          ],
+          exclude: ({ link, slug }) => {
+            // --- Page-level excludes (all links on these pages) ---
+            if (slug.startsWith('reference/rest-api/')) return true;
+            if (slug.startsWith('reference/sdk/')) return true;
+
+            // --- Link-level excludes (imported content artifacts) ---
+
+            // Empty links from Sphinx/MkDocs conversion: [text]()
+            if (!link || link.trim() === '') return true;
+
+            // TypeDoc HTML cross-refs and source file refs
+            if (/\.html(#|$)/.test(link)) return true;
+            if (link.startsWith('src/')) return true;
+            if (link.includes('-internal-')) return true;
+
+            // Internal repo paths (not site pages)
+            if (link.startsWith('docs/markdown/autoapi/')) return true;
+            if (link.startsWith('docs/architecture-decisions/')) return true;
+            if (link.startsWith('docs/abi-routing')) return true;
+            if (link.startsWith('docs/_build/')) return true;
+            if (/(?:^|\/)README(#|$)/.test(link)) return true;
+
+            // Malformed markdown links: [https://...](https://...)
+            if (link.startsWith('[http')) return true;
+
+            // External spec reference in opcodes page
+            if (link === 'jsonspec.md') return true;
+
+            // Links TO OpenAPI-generated pages (hashes can't be validated)
+            if (link.startsWith('/reference/rest-api/')) return true;
+
+            // TypeDoc code module refs in imported guides
+            if (link.includes('/code/modules/')) return true;
+
+            // Subscriber docs — heavily cross-linked imported pages
+            if (slug.startsWith('algokit/subscriber/') || slug.startsWith('docs/algokit-subscriber/')) return true;
+
+            // Unit-testing docs — references unimported sibling pages
+            if (slug.startsWith('algokit/unit-testing/')) return true;
+
+            // AlgoKit Utils legacy guides — untransformed autoapi refs
+            if (slug.startsWith('algokit/utils/')) return true;
+
+            // Algorand TypeScript API docs — TypeDoc cross-refs
+            if (/^docs\/algorand-typescript\/.*\/api\//.test(slug)) return true;
+
+            return false;
+          },
         }),
         starlightLlmsTxt({
           minify: {
