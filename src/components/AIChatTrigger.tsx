@@ -9,7 +9,7 @@ export default function AIChatTrigger() {
       onClick={() => isChatOpen.set(!isOpen)}
       aria-label='Ask AI'
       aria-expanded={isOpen}
-      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border
+      className={`flex items-center gap-1.5 h-10 px-3 rounded-lg border
         text-[length:var(--sl-text-sm)] font-medium font-[family-name:inherit] whitespace-nowrap
         cursor-pointer transition-[border-color,background-color,color] duration-150
         border-[var(--sl-color-gray-5)] text-[var(--sl-color-gray-2)]
