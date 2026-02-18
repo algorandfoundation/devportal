@@ -12,6 +12,7 @@ import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 import { sidebarEntries as algokitUtilsSidebar } from './imports/configs/algokit-utils/sidebar.config.js';
 import { sidebarEntries as algokitCliSidebar } from './imports/configs/algokit-cli/sidebar.config.js';
 import { sidebarEntries as algorandPythonSidebar } from './imports/configs/algorand-python/sidebar.config.js';
@@ -73,7 +74,11 @@ export default defineConfig({
             if (link.includes('/code/modules/')) return true;
 
             // Subscriber docs — heavily cross-linked imported pages
-            if (slug.startsWith('algokit/subscriber/') || slug.startsWith('docs/algokit-subscriber/')) return true;
+            if (
+              slug.startsWith('algokit/subscriber/') ||
+              slug.startsWith('docs/algokit-subscriber/')
+            )
+              return true;
 
             // Unit-testing docs — references unimported sibling pages
             if (slug.startsWith('algokit/unit-testing/')) return true;
@@ -163,21 +168,6 @@ export default defineConfig({
         {
           tag: 'script',
           content: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5XBZ7HB');`,
-        },
-        {
-          tag: 'script',
-          attrs: {
-            src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-            'data-website-id': '6e799942-b20a-4203-8103-93582a2611e1',
-            'data-project-name': 'Algorand',
-            'data-project-color': '#99A1A7',
-            'data-modal-header-bg-color': '#17cac6',
-            'data-font-family': 'Inter, sans-serif',
-            'data-modal-title-color': '#ffffff',
-            'data-modal-title': 'Ask AI',
-            'data-modal-body-bg-color': '#f6f6f6',
-            'data-project-logo': '/algorand-logo.png',
-          },
         },
         {
           tag: 'meta',
@@ -415,9 +405,7 @@ export default defineConfig({
             {
               label: 'LORA the Explorer',
               collapsed: true,
-              items: [
-                { slug: 'algokit/lora/overview' },
-              ],
+              items: [{ slug: 'algokit/lora/overview' }],
             },
             {
               label: 'Project Templates',
@@ -564,9 +552,7 @@ export default defineConfig({
             {
               label: 'AVM Debugger',
               collapsed: true,
-              items: [
-                { slug: 'algokit/avm-debugger' },
-              ],
+              items: [{ slug: 'algokit/avm-debugger' }],
             },
             {
               label: 'Language Servers',
@@ -658,16 +644,12 @@ export default defineConfig({
             {
               label: 'Algorand TEAL',
               collapsed: true,
-              items: [
-                { slug: 'reference/algorand-teal/opcodes' },
-              ],
+              items: [{ slug: 'reference/algorand-teal/opcodes' }],
             },
             {
               label: 'SDK',
               collapsed: true,
-              items: [
-                { slug: 'reference/sdk/sdk-list' },
-              ],
+              items: [{ slug: 'reference/sdk/sdk-list' }],
             },
             {
               label: 'REST API',
@@ -726,6 +708,7 @@ export default defineConfig({
       layout: 'dagre',
     }),
     sitemap(),
+    react(),
   ],
   markdown: {
     rehypePlugins: [
