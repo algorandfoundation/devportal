@@ -98,7 +98,9 @@ if (libraryConfig)
     <PageFrame>
       <Header slot='header' />
       {starlightRoute.hasSidebar && <Sidebar slot='sidebar' />}
-      <script src='@astrojs/starlight/components/SidebarPersistState'></script>
+      <script
+        src='../../node_modules/@astrojs/starlight/components/SidebarPersistState'
+      ></script>
       <TwoColumnContent>
         <PageSidebar slot='right-sidebar' />
         <main
