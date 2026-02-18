@@ -290,11 +290,7 @@ export const LANG_ABBREV: Record<string, string> = {
 };
 
 /** Build the Pagefind filter key for a library variant. */
-export function buildFilterKey(
-  librarySlug: string,
-  language: string,
-): string {
-  const abbrev =
-    LANG_ABBREV[language.toLowerCase()] ?? language.toLowerCase();
+export function buildFilterKey(librarySlug: string, language: string): string {
+  const abbrev = LANG_ABBREV[language.toLowerCase()] ?? language.toLowerCase();
   return `${librarySlug}-${abbrev}`;
 }
