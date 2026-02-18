@@ -12,6 +12,7 @@ import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 import { sidebarEntries as algokitUtilsSidebar } from './imports/configs/algokit-utils/sidebar.config.js';
 import { sidebarEntries as algokitCliSidebar } from './imports/configs/algokit-cli/sidebar.config.js';
 import { sidebarEntries as algorandPythonSidebar } from './imports/configs/algorand-python/sidebar.config.js';
@@ -726,6 +727,7 @@ export default defineConfig({
       layout: 'dagre',
     }),
     sitemap(),
+    react(),
   ],
   markdown: {
     rehypePlugins: [
