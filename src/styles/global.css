@@ -377,3 +377,44 @@ div.opcode-section table td {
 :root:has(.library-header) starlight-menu-button {
   display: none !important;
 }
+
+/* ── View Transitions ──────────────────────────────── */
+
+@keyframes vtFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vtFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+::view-transition-old(root) {
+  animation: 75ms ease-out both vtFadeOut;
+}
+
+::view-transition-new(root) {
+  animation: 75ms ease-in both vtFadeIn;
+}
+
+/* Persisted chat panel should not animate during transitions */
+::view-transition-old(ai-chat-panel),
+::view-transition-new(ai-chat-panel) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}

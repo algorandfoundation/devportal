@@ -1,7 +1,10 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import Default from '@astrojs/starlight/components/ThemeProvider.astro';
 import AIChatPanel from './AIChatPanel.tsx';
 ---
+
+<ClientRouter />
 
 <script is:inline>
   if (
@@ -10,8 +13,22 @@ import AIChatPanel from './AIChatPanel.tsx';
   ) {
     localStorage.setItem('starlight-theme', 'dark');
   }
+
+  // Preserve dark mode across View Transition swaps.
+  // Guarded to register only once despite is:inline re-execution.
+  if (!window.__themeSwapRegistered) {
+    window.__themeSwapRegistered = true;
+    document.addEventListener('astro:before-swap', e => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      if (theme) {
+        e.newDocument.documentElement.setAttribute('data-theme', theme);
+      }
+    });
+  }
 </script>
 
 <Default {...Astro.props}><slot /></Default>
 
-<AIChatPanel client:only='react' />
+<div transition:persist='ai-chat-panel'>
+  <AIChatPanel client:only='react' />
+</div>
