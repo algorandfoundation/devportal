@@ -1,0 +1,43 @@
+---
+import { parseLibraryPath, buildFilterKey } from '../config/libraries.ts';
+
+const { banner } = Astro.locals.starlightRoute.entry.data;
+const parsed = parseLibraryPath(Astro.url.pathname);
+const filterValue = parsed
+  ? buildFilterKey(parsed.library.slug, parsed.language)
+  : null;
+---
+
+{
+  banner && (
+    <div class='sl-banner' data-pagefind-ignore set:html={banner.content} />
+  )
+}
+{
+  filterValue && (
+    <span data-pagefind-filter='library' hidden>
+      {filterValue}
+    </span>
+  )
+}
+
+<style>
+  @layer starlight.core {
+    .sl-banner {
+      --__sl-banner-text: var(
+        --sl-color-banner-text,
+        var(--sl-color-text-invert)
+      );
+      padding: var(--sl-nav-pad-y) var(--sl-nav-pad-x);
+      background-color: var(--sl-color-banner-bg, var(--sl-color-bg-accent));
+      color: var(--__sl-banner-text);
+      line-height: var(--sl-line-height-headings);
+      text-align: center;
+      text-wrap: balance;
+      box-shadow: var(--sl-shadow-sm);
+    }
+    .sl-banner :global(a) {
+      color: var(--__sl-banner-text);
+    }
+  }
+</style>
