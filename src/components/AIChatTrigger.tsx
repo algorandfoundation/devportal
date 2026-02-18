@@ -12,8 +12,8 @@ export default function AIChatTrigger() {
       className={`flex items-center gap-1.5 h-10 px-3 rounded-lg border
         text-[length:var(--sl-text-sm)] font-medium font-[family-name:inherit] whitespace-nowrap
         cursor-pointer transition-[border-color,background-color,color] duration-150
-        border-[var(--sl-color-gray-5)] text-[var(--sl-color-gray-2)]
-        hover:border-[var(--sl-color-gray-4)] hover:text-[var(--sl-color-white)]
+        border-[var(--sl-color-gray-5)] text-algo-accent-green
+        hover:border-algo-accent-green hover:text-algo-accent-green
         ${isOpen ? 'bg-[var(--sl-color-gray-6)]' : 'bg-transparent'}`}
     >
       <svg
