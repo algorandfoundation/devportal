@@ -9,7 +9,7 @@ export default function AIChatTrigger() {
       onClick={() => isChatOpen.set(!isOpen)}
       aria-label='Ask AI'
       aria-expanded={isOpen}
-      className={`flex items-center gap-1.5 h-10 px-3 rounded-lg border
+      className={`flex items-center gap-1.5 h-8 md:h-10 px-2 md:px-3 rounded-lg border
         text-[length:var(--sl-text-sm)] font-medium font-[family-name:inherit] whitespace-nowrap
         cursor-pointer transition-[border-color,background-color,color] duration-150
         border-[var(--sl-color-gray-5)] text-algo-accent-green
@@ -32,7 +32,7 @@ export default function AIChatTrigger() {
         <circle cx='8' cy='6.5' r='0.5' fill='currentColor' stroke='none' />
         <circle cx='10.5' cy='6.5' r='0.5' fill='currentColor' stroke='none' />
       </svg>
-      <span>Ask AI</span>
+      <span className='hidden md:inline'>Ask AI</span>
     </button>
   );
 }
