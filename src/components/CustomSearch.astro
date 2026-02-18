@@ -1,12 +1,12 @@
 ---
 import { Icon } from '@astrojs/starlight/components';
 import project from 'virtual:starlight/project-context';
-import { libraries } from '../config/libraries.ts';
+import {
+  libraries,
+  parseLibraryPath,
+  buildFilterKey,
+} from '../config/libraries.ts';
 
-const LANG_ABBREV: Record<string, string> = {
-  typescript: 'ts',
-  python: 'py',
-};
 const LANG_LABEL: Record<string, string> = {
   typescript: 'TS',
   python: 'Python',
@@ -16,13 +16,19 @@ const LANG_LABEL: Record<string, string> = {
 const filterOptions: Record<string, string> = {};
 for (const lib of libraries) {
   for (const lang of lib.languages) {
-    const abbrev = LANG_ABBREV[lang.toLowerCase()] ?? lang.toLowerCase();
+    const key = buildFilterKey(lib.slug, lang);
     const displayLang = LANG_LABEL[lang.toLowerCase()] ?? lang;
     const label =
       lib.languages.length > 1 ? `${lib.label} (${displayLang})` : lib.label;
-    filterOptions[`${lib.slug}-${abbrev}`] = label;
+    filterOptions[key] = label;
   }
 }
+
+// DVP-1208: Pre-compute current library filter at build time (no DOM query needed)
+const parsed = parseLibraryPath(Astro.url.pathname);
+const currentFilter = parsed
+  ? buildFilterKey(parsed.library.slug, parsed.language)
+  : '';
 
 const pagefindTranslations = {
   placeholder: Astro.locals.t('search.label'),
@@ -36,6 +42,7 @@ const pagefindTranslations = {
 const dataAttributes: Record<string, string | undefined> = {
   'data-translations': JSON.stringify(pagefindTranslations),
   'data-filter-options': JSON.stringify(filterOptions),
+  'data-current-filter': currentFilter || undefined,
 };
 if (project.trailingSlash === 'never')
   dataAttributes['data-strip-trailing-slash'] = '';
@@ -140,36 +147,22 @@ if (project.trailingSlash === 'never')
       // DVP-1208: Library filter state
       const filterSelect =
         this.querySelector<HTMLSelectElement>('.library-filter');
+      const pageFilter = this.dataset.currentFilter || null;
       let desiredFilter: string | null = null;
       let filterObserver: MutationObserver | null = null;
-
-      // Read filter value from page's hidden Pagefind filter element
-      const getLibraryFilterValue = (): string | null => {
-        return (
-          document
-            .querySelector('[data-pagefind-filter="library"]')
-            ?.textContent?.trim() || null
-        );
-      };
 
       // Sync the desired filter to Pagefind's hidden checkboxes
       const syncFilter = (): boolean => {
         const searchEl = document.getElementById('starlight__search');
         if (!searchEl) return false;
 
-        const filterEls = searchEl.querySelectorAll(
-          '.pagefind-ui__filter-value',
+        const checkboxes = searchEl.querySelectorAll<HTMLInputElement>(
+          '.pagefind-ui__filter-checkbox',
         );
-        if (filterEls.length === 0) return false;
+        if (checkboxes.length === 0) return false;
 
-        for (const el of filterEls) {
-          const label = el.querySelector('label');
-          const cb = el.querySelector('input[type="checkbox"]');
-          if (!label || !(cb instanceof HTMLInputElement)) continue;
-
-          const labelText = label.textContent?.trim() || '';
-          const isTarget =
-            desiredFilter && labelText.startsWith(desiredFilter + ' ');
+        for (const cb of checkboxes) {
+          const isTarget = desiredFilter && cb.value === desiredFilter;
 
           if (isTarget && !cb.checked) cb.click();
           else if (!isTarget && cb.checked) cb.click();
@@ -198,7 +191,7 @@ if (project.trailingSlash === 'never')
 
       const openModal = (event?: MouseEvent) => {
         // DVP-1208: Pre-select library filter when on a library page
-        desiredFilter = getLibraryFilterValue();
+        desiredFilter = pageFilter;
         if (filterSelect) filterSelect.value = desiredFilter || '';
         if (desiredFilter) startFilterObserver();
 

@@ -278,3 +278,23 @@ export const categoryLabels: Record<LibraryCategory, string> = {
   tool: 'Libraries & Tools',
   api: 'REST APIs',
 };
+
+// ---------------------------------------------------------------------------
+// Search filter helpers (DVP-1208)
+// ---------------------------------------------------------------------------
+
+/** Abbreviations used in Pagefind filter keys (e.g. algokit-utils-ts). */
+export const LANG_ABBREV: Record<string, string> = {
+  typescript: 'ts',
+  python: 'py',
+};
+
+/** Build the Pagefind filter key for a library variant. */
+export function buildFilterKey(
+  librarySlug: string,
+  language: string,
+): string {
+  const abbrev =
+    LANG_ABBREV[language.toLowerCase()] ?? language.toLowerCase();
+  return `${librarySlug}-${abbrev}`;
+}

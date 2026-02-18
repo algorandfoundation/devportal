@@ -1,15 +1,10 @@
 ---
-import { parseLibraryPath } from '../config/libraries.ts';
-
-const LANG_ABBREV: Record<string, string> = {
-  typescript: 'ts',
-  python: 'py',
-};
+import { parseLibraryPath, buildFilterKey } from '../config/libraries.ts';
 
 const { banner } = Astro.locals.starlightRoute.entry.data;
 const parsed = parseLibraryPath(Astro.url.pathname);
 const filterValue = parsed
-  ? `${parsed.library.slug}-${LANG_ABBREV[parsed.language.toLowerCase()] ?? parsed.language.toLowerCase()}`
+  ? buildFilterKey(parsed.library.slug, parsed.language)
   : null;
 ---
 
