@@ -399,11 +399,11 @@ div.opcode-section table td {
 }
 
 ::view-transition-old(root) {
-  animation: 150ms ease-out both vtFadeOut;
+  animation: 75ms ease-out both vtFadeOut;
 }
 
 ::view-transition-new(root) {
-  animation: 150ms ease-in both vtFadeIn;
+  animation: 75ms ease-in both vtFadeIn;
 }
 
 /* Persisted chat panel should not animate during transitions */
