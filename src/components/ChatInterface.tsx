@@ -31,16 +31,16 @@ function CopyButton({ text, className }: { text: string; className?: string }) {
   return (
     <button
       onClick={handleCopy}
-      className={`flex items-center justify-center p-1
-        bg-[var(--sl-color-gray-5)] border-none rounded
-        text-[var(--sl-color-gray-2)] cursor-pointer
-        transition-[background,color] duration-150 ${className ?? ''}`}
+      className={`flex items-center gap-1 p-1 bg-transparent border-none
+        rounded cursor-pointer transition-colors duration-150
+        ${copied ? 'text-algo-accent-green' : 'text-[var(--sl-color-gray-4)]'}
+        ${className ?? ''}`}
       title={copied ? 'Copied!' : 'Copy'}
     >
       {copied ? (
         <svg
-          width='14'
-          height='14'
+          width='12'
+          height='12'
           viewBox='0 0 16 16'
           fill='none'
           stroke='currentColor'
@@ -52,8 +52,8 @@ function CopyButton({ text, className }: { text: string; className?: string }) {
         </svg>
       ) : (
         <svg
-          width='14'
-          height='14'
+          width='12'
+          height='12'
           viewBox='0 0 16 16'
           fill='none'
           stroke='currentColor'
@@ -65,6 +65,7 @@ function CopyButton({ text, className }: { text: string; className?: string }) {
           <path d='M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2' />
         </svg>
       )}
+      {copied && <span className='text-[0.6rem] font-medium'>Copied</span>}
     </button>
   );
 }
@@ -86,7 +87,8 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
       </SyntaxHighlighter>
       <CopyButton
         text={code}
-        className='absolute top-3 right-2 opacity-0 group-hover:opacity-100 transition-opacity'
+        className='absolute top-3 right-2 opacity-0 group-hover:opacity-100 transition-opacity
+          hover:bg-[var(--sl-color-gray-5)] text-[var(--sl-color-gray-2)]!'
       />
     </div>
   );
