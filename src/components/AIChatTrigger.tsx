@@ -9,12 +9,13 @@ export default function AIChatTrigger() {
       onClick={() => isChatOpen.set(!isOpen)}
       aria-label='Ask AI'
       aria-expanded={isOpen}
-      className={`flex items-center gap-1.5 h-8 md:h-10 px-2 md:px-3 rounded-lg border
+      className={`flex items-center gap-1.5 h-10 px-0 md:px-3 rounded-lg
+        border-0 md:border
         text-[length:var(--sl-text-sm)] font-medium font-[family-name:inherit] whitespace-nowrap
         cursor-pointer transition-[border-color,background-color,color] duration-150
-        border-[var(--sl-color-gray-5)] text-algo-accent-green
-        hover:border-algo-accent-green hover:text-algo-accent-green
-        ${isOpen ? 'bg-[var(--sl-color-gray-6)]' : 'bg-transparent'}`}
+        md:border-[var(--sl-color-gray-5)] text-algo-accent-green
+        hover:md:border-algo-accent-green hover:text-algo-accent-green
+        bg-transparent ${isOpen ? 'md:bg-[var(--sl-color-gray-6)]' : ''}`}
     >
       <svg
         width='14'
