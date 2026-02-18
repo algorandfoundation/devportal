@@ -1,8 +1,16 @@
 ---
-import { getLibraryFromPath } from '../config/libraries.ts';
+import { parseLibraryPath } from '../config/libraries.ts';
+
+const LANG_ABBREV: Record<string, string> = {
+  typescript: 'ts',
+  python: 'py',
+};
 
 const { banner } = Astro.locals.starlightRoute.entry.data;
-const libraryConfig = getLibraryFromPath(Astro.url.pathname);
+const parsed = parseLibraryPath(Astro.url.pathname);
+const filterValue = parsed
+  ? `${parsed.library.slug}-${LANG_ABBREV[parsed.language.toLowerCase()] ?? parsed.language.toLowerCase()}`
+  : null;
 ---
 
 {
@@ -11,9 +19,9 @@ const libraryConfig = getLibraryFromPath(Astro.url.pathname);
   )
 }
 {
-  libraryConfig && (
+  filterValue && (
     <span data-pagefind-filter='library' hidden>
-      {libraryConfig.slug}
+      {filterValue}
     </span>
   )
 }

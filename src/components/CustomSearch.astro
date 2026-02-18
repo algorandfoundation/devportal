@@ -3,6 +3,27 @@ import { Icon } from '@astrojs/starlight/components';
 import project from 'virtual:starlight/project-context';
 import { libraries } from '../config/libraries.ts';
 
+const LANG_ABBREV: Record<string, string> = {
+  typescript: 'ts',
+  python: 'py',
+};
+const LANG_LABEL: Record<string, string> = {
+  typescript: 'TS',
+  python: 'Python',
+};
+
+// DVP-1208: Build filter options { filterValue: displayLabel }
+const filterOptions: Record<string, string> = {};
+for (const lib of libraries) {
+  for (const lang of lib.languages) {
+    const abbrev = LANG_ABBREV[lang.toLowerCase()] ?? lang.toLowerCase();
+    const displayLang = LANG_LABEL[lang.toLowerCase()] ?? lang;
+    const label =
+      lib.languages.length > 1 ? `${lib.label} (${displayLang})` : lib.label;
+    filterOptions[`${lib.slug}-${abbrev}`] = label;
+  }
+}
+
 const pagefindTranslations = {
   placeholder: Astro.locals.t('search.label'),
   ...Object.fromEntries(
@@ -12,12 +33,9 @@ const pagefindTranslations = {
   ),
 };
 
-// DVP-1208: Build slug-to-label map for scope chip display
-const libraryLabels = Object.fromEntries(libraries.map(l => [l.slug, l.label]));
-
 const dataAttributes: Record<string, string | undefined> = {
   'data-translations': JSON.stringify(pagefindTranslations),
-  'data-library-labels': JSON.stringify(libraryLabels),
+  'data-filter-options': JSON.stringify(filterOptions),
 };
 if (project.trailingSlash === 'never')
   dataAttributes['data-strip-trailing-slash'] = '';
@@ -57,6 +75,12 @@ if (project.trailingSlash === 'never')
           </div>
         ) : (
           <div class='search-container'>
+            <select class='library-filter' aria-label='Filter by library'>
+              <option value=''>All libraries</option>
+              {Object.entries(filterOptions).map(([value, label]) => (
+                <option value={value}>{label}</option>
+              ))}
+            </select>
             <div id='starlight__search' />
           </div>
         )
@@ -101,19 +125,6 @@ if (project.trailingSlash === 'never')
       const dialog = this.querySelector('dialog')!;
       const dialogFrame = this.querySelector('.dialog-frame')!;
 
-      // DVP-1208: Parse library labels from data attribute
-      let libraryLabels: Record<string, string> = {};
-      try {
-        libraryLabels = JSON.parse(this.dataset.libraryLabels || '{}');
-      } catch {
-        // Ignore JSON parse errors — fallback to empty labels
-      }
-
-      // DVP-1208: Track current library scope
-      let currentScope: string | null = null;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let pagefindInstance: any = null;
-
       /** Close the modal if a user clicks on a link or outside of the modal. */
       const onClick = (event: MouseEvent) => {
         const isLink = 'href' in (event.target || {});
@@ -126,8 +137,14 @@ if (project.trailingSlash === 'never')
         }
       };
 
-      // DVP-1208: Detect library from current page's filter element
-      const getLibrarySlug = (): string | null => {
+      // DVP-1208: Library filter state
+      const filterSelect =
+        this.querySelector<HTMLSelectElement>('.library-filter');
+      let desiredFilter: string | null = null;
+      let filterObserver: MutationObserver | null = null;
+
+      // Read filter value from page's hidden Pagefind filter element
+      const getLibraryFilterValue = (): string | null => {
         return (
           document
             .querySelector('[data-pagefind-filter="library"]')
@@ -135,37 +152,55 @@ if (project.trailingSlash === 'never')
         );
       };
 
-      // DVP-1208: Update scope chip visibility and label
-      const updateScopeChip = () => {
-        const chip = this.querySelector<HTMLElement>('.scope-chip');
-        if (!chip) return;
+      // Sync the desired filter to Pagefind's hidden checkboxes
+      const syncFilter = (): boolean => {
+        const searchEl = document.getElementById('starlight__search');
+        if (!searchEl) return false;
 
-        if (currentScope && libraryLabels[currentScope]) {
-          const label = chip.querySelector<HTMLElement>('.scope-chip-label');
-          if (label) label.textContent = libraryLabels[currentScope];
-          chip.style.display = '';
-        } else {
-          chip.style.display = 'none';
+        const filterEls = searchEl.querySelectorAll(
+          '.pagefind-ui__filter-value',
+        );
+        if (filterEls.length === 0) return false;
+
+        for (const el of filterEls) {
+          const label = el.querySelector('label');
+          const cb = el.querySelector('input[type="checkbox"]');
+          if (!label || !(cb instanceof HTMLInputElement)) continue;
+
+          const labelText = label.textContent?.trim() || '';
+          const isTarget =
+            desiredFilter && labelText.startsWith(desiredFilter + ' ');
+
+          if (isTarget && !cb.checked) cb.click();
+          else if (!isTarget && cb.checked) cb.click();
         }
+        return true;
       };
 
-      // DVP-1208: Apply or clear library scope filter
-      const applyScope = (slug: string | null) => {
-        currentScope = slug;
-        if (!pagefindInstance) return;
+      // Start observing for Pagefind filter checkboxes to appear
+      const startFilterObserver = () => {
+        const searchEl = document.getElementById('starlight__search');
+        if (!searchEl) return;
 
-        if (slug) {
-          pagefindInstance.triggerFilters({ library: [slug] });
-        } else {
-          pagefindInstance.triggerFilters({ library: [] });
-        }
-        updateScopeChip();
+        filterObserver?.disconnect();
+        filterObserver = new MutationObserver(() => {
+          if (syncFilter()) filterObserver?.disconnect();
+        });
+        filterObserver.observe(searchEl, { childList: true, subtree: true });
+        setTimeout(() => filterObserver?.disconnect(), 10000);
       };
+
+      // Handle select changes
+      filterSelect?.addEventListener('change', () => {
+        desiredFilter = filterSelect.value || null;
+        if (!syncFilter()) startFilterObserver();
+      });
 
       const openModal = (event?: MouseEvent) => {
-        // DVP-1208: Re-detect library scope each time modal opens
-        const slug = getLibrarySlug();
-        applyScope(slug);
+        // DVP-1208: Pre-select library filter when on a library page
+        desiredFilter = getLibraryFilterValue();
+        if (filterSelect) filterSelect.value = desiredFilter || '';
+        if (desiredFilter) startFilterObserver();
 
         dialog.showModal();
         document.body.toggleAttribute('data-search-modal-open', true);
@@ -174,7 +209,10 @@ if (project.trailingSlash === 'never')
         window.addEventListener('click', onClick);
       };
 
-      const closeModal = () => dialog.close();
+      const closeModal = () => {
+        filterObserver?.disconnect();
+        dialog.close();
+      };
 
       openBtn.addEventListener('click', openModal);
       openBtn.disabled = false;
@@ -217,7 +255,7 @@ if (project.trailingSlash === 'never')
         onIdle(async () => {
           // @ts-expect-error — Missing types for @pagefind/default-ui package.
           const { PagefindUI } = await import('@pagefind/default-ui');
-          pagefindInstance = new PagefindUI({
+          new PagefindUI({
             ...pagefindUserConfig,
             element: '#starlight__search',
             baseUrl: import.meta.env.BASE_URL,
@@ -237,34 +275,6 @@ if (project.trailingSlash === 'never')
               });
             },
           });
-
-          // DVP-1208: Build scope chip using safe DOM APIs
-          const searchContainer = this.querySelector('.search-container');
-          if (searchContainer) {
-            const chip = document.createElement('div');
-            chip.className = 'scope-chip';
-            chip.style.display = 'none';
-
-            const textSpan = document.createElement('span');
-            textSpan.textContent = 'Searching in: ';
-
-            const labelStrong = document.createElement('strong');
-            labelStrong.className = 'scope-chip-label';
-            textSpan.appendChild(labelStrong);
-
-            const dismissBtn = document.createElement('button');
-            dismissBtn.className = 'scope-chip-dismiss';
-            dismissBtn.setAttribute('aria-label', 'Search all docs');
-            dismissBtn.textContent = '\u00d7';
-
-            chip.appendChild(textSpan);
-            chip.appendChild(dismissBtn);
-            searchContainer.insertBefore(chip, searchContainer.firstChild);
-
-            dismissBtn.addEventListener('click', () => {
-              applyScope(null);
-            });
-          }
         });
       });
     }
@@ -400,39 +410,23 @@ if (project.trailingSlash === 'never')
       }
     }
 
-    /* DVP-1208: Scope chip styles */
-    .scope-chip {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.375rem 0.625rem;
-      margin-bottom: 0.75rem;
-      border-radius: 0.375rem;
-      background-color: var(--sl-color-accent-low);
-      color: var(--sl-color-text);
-      font-size: var(--sl-text-sm);
-    }
-
-    .scope-chip-dismiss {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 1.25rem;
-      height: 1.25rem;
-      margin-inline-start: auto;
-      padding: 0;
-      border: 0;
-      border-radius: 50%;
-      background-color: var(--sl-color-gray-5);
-      color: var(--sl-color-gray-1);
-      font-size: 0.875rem;
-      line-height: 1;
+    /* DVP-1208: Custom library filter dropdown */
+    .library-filter {
+      width: 100%;
+      padding: 0.375rem 0.5rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid var(--sl-color-gray-5);
+      border-radius: 0.25rem;
+      background-color: var(--sl-color-black);
+      color: var(--sl-color-gray-2);
+      font-size: var(--sl-text-xs);
+      font-family: var(--__sl-font);
       cursor: pointer;
     }
 
-    .scope-chip-dismiss:hover {
-      background-color: var(--sl-color-gray-4);
-      color: var(--sl-color-white);
+    .library-filter:focus-visible {
+      outline: 2px solid var(--sl-color-accent);
+      outline-offset: 1px;
     }
   }
 </style>
@@ -441,6 +435,11 @@ if (project.trailingSlash === 'never')
   @import url('@pagefind/default-ui/css/ui.css') layer(starlight.core);
 
   @layer starlight.core {
+    /* DVP-1208: Hide Pagefind's built-in filter panel (replaced by custom dropdown) */
+    #starlight__search .pagefind-ui__filter-panel {
+      display: none !important;
+    }
+
     [data-search-modal-open] {
       overflow: hidden;
     }
