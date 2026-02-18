@@ -10,7 +10,13 @@ const libraryConfig = getLibraryFromPath(Astro.url.pathname);
     <div class='sl-banner' data-pagefind-ignore set:html={banner.content} />
   )
 }
-{libraryConfig && <span data-pagefind-filter-library={libraryConfig.slug} />}
+{
+  libraryConfig && (
+    <span data-pagefind-filter='library' hidden>
+      {libraryConfig.slug}
+    </span>
+  )
+}
 
 <style>
   @layer starlight.core {

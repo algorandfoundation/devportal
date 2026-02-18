@@ -126,12 +126,12 @@ if (project.trailingSlash === 'never')
         }
       };
 
-      // DVP-1208: Detect library from current page's <main> element
+      // DVP-1208: Detect library from current page's filter element
       const getLibrarySlug = (): string | null => {
         return (
           document
-            .querySelector('main[data-pagefind-filter-library]')
-            ?.getAttribute('data-pagefind-filter-library') ?? null
+            .querySelector('[data-pagefind-filter="library"]')
+            ?.textContent?.trim() || null
         );
       };
 
