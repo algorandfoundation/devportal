@@ -18,20 +18,13 @@ export default function AIChatTrigger() {
         bg-transparent ${isOpen ? 'md:bg-[var(--sl-color-gray-6)]' : ''}`}
     >
       <svg
-        width='14'
-        height='14'
-        viewBox='0 0 16 16'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'
+        width='16'
+        height='16'
+        viewBox='0 0 24 24'
+        fill='currentColor'
         aria-hidden='true'
       >
-        <path d='M2 6.5C2 4 4.5 2 8 2s6 2 6 4.5S11.5 11 8 11c-.6 0-1.2-.1-1.7-.2L3 13v-3.3C2.4 8.8 2 7.7 2 6.5z' />
-        <circle cx='5.5' cy='6.5' r='0.5' fill='currentColor' stroke='none' />
-        <circle cx='8' cy='6.5' r='0.5' fill='currentColor' stroke='none' />
-        <circle cx='10.5' cy='6.5' r='0.5' fill='currentColor' stroke='none' />
+        <path d='m20.713 8.128-.246.566a.506.506 0 0 1-.934 0l-.246-.566a4.36 4.36 0 0 0-2.22-2.25l-.759-.339a.53.53 0 0 1 0-.963l.717-.319a4.37 4.37 0 0 0 2.251-2.326l.253-.611a.506.506 0 0 1 .942 0l.253.61a4.37 4.37 0 0 0 2.25 2.327l.718.32a.53.53 0 0 1 0 .962l-.76.338a4.36 4.36 0 0 0-2.219 2.251M20 11a6 6 0 0 0 1.993-.339q.007.17.007.339a8 8 0 0 1-8 8v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8h4q.17 0 .339.007A6 6 0 0 0 20 11' />
       </svg>
       <span className='hidden md:inline'>Ask AI</span>
     </button>
