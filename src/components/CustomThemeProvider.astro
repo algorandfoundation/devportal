@@ -18,7 +18,7 @@ import AIChatPanel from './AIChatPanel.tsx';
   // Guarded to register only once despite is:inline re-execution.
   if (!window.__themeSwapRegistered) {
     window.__themeSwapRegistered = true;
-    document.addEventListener('astro:before-swap', (e) => {
+    document.addEventListener('astro:before-swap', e => {
       const theme = document.documentElement.getAttribute('data-theme');
       if (theme) {
         e.newDocument.documentElement.setAttribute('data-theme', theme);
@@ -29,6 +29,6 @@ import AIChatPanel from './AIChatPanel.tsx';
 
 <Default {...Astro.props}><slot /></Default>
 
-<div transition:persist="ai-chat-panel">
+<div transition:persist='ai-chat-panel'>
   <AIChatPanel client:only='react' />
 </div>

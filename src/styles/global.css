@@ -381,13 +381,21 @@ div.opcode-section table td {
 /* ── View Transitions ──────────────────────────────── */
 
 @keyframes vtFadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes vtFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 ::view-transition-old(root) {
