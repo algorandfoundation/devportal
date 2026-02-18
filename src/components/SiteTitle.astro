@@ -1,5 +1,4 @@
 ---
-// @ts-expect-error — virtual module has no type declarations
 import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
@@ -21,12 +20,12 @@ const activeLibrary = !isFooter ? getLibraryFromPath(currentPath) : undefined;
 const libraryLogo = activeLibrary?.logo;
 
 // Site logo sources (library logo renders separately as inline SVG)
-const darkLogoSrc = isFooter ? AltDarkLogo.src : logos.dark.src;
-const lightLogoSrc = isFooter ? logos.dark.src : logos.light?.src;
-const darkWidth = logos.dark.width;
-const darkHeight = logos.dark.height;
-const lightWidth = isFooter ? logos.dark.width : logos.light?.width;
-const lightHeight = isFooter ? logos.dark.height : logos.light?.height;
+const darkLogoSrc = isFooter ? AltDarkLogo.src : logos.dark?.src;
+const lightLogoSrc = isFooter ? logos.dark?.src : logos.light?.src;
+const darkWidth = logos.dark?.width;
+const darkHeight = logos.dark?.height;
+const lightWidth = isFooter ? logos.dark?.width : logos.light?.width;
+const lightHeight = isFooter ? logos.dark?.height : logos.light?.height;
 
 const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 ---
