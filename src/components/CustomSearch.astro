@@ -242,7 +242,10 @@ if (project.trailingSlash === 'never')
         ? stripTrailingSlash
         : (path: string) => path;
 
-      window.addEventListener('DOMContentLoaded', () => {
+      // Initialize Pagefind UI — handles both first load and ClientRouter navigations.
+      // DOMContentLoaded only fires once; on subsequent client-side navigations the
+      // document is already loaded so we initialize immediately.
+      const initPagefind = () => {
         if (import.meta.env.DEV) return;
         const onIdle = window.requestIdleCallback || (cb => setTimeout(cb, 1));
         onIdle(async () => {
@@ -269,7 +272,15 @@ if (project.trailingSlash === 'never')
             },
           });
         });
-      });
+      };
+
+      if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', initPagefind, {
+          once: true,
+        });
+      } else {
+        initPagefind();
+      }
     }
   }
   customElements.define('site-search', SiteSearch);
