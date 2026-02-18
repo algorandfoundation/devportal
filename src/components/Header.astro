@@ -91,7 +91,17 @@ const activeLibrary = getLibraryFromPath(currentPath);
 
   .title-wrapper {
     /* Prevent long titles overflowing and covering the search and menu buttons on narrow viewports. */
-    overflow: hidden;
+    overflow: clip;
+    /* Accommodate focus ring on site-title link */
+    padding: 0.25rem;
+    margin: -0.25rem;
+    min-width: 0;
+  }
+
+  .social-icons::after {
+    content: '';
+    height: 2rem;
+    border-inline-end: 1px solid var(--sl-color-gray-5);
   }
 
   .right-group,

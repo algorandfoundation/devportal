@@ -16,6 +16,8 @@ function CopyButton({ text, className }: { text: string; className?: string }) {
       // Fallback for older browsers using deprecated but safe DOM API
       const textarea = document.createElement('textarea');
       textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
       document.body.appendChild(textarea);
       textarea.select();
       // eslint-disable-next-line -- deprecated but needed as clipboard fallback
@@ -95,10 +97,13 @@ export default function ChatInterface() {
     conversation,
     submitQuery,
     isGeneratingAnswer,
+    isPreparingAnswer,
     resetConversation,
     stopGeneration,
     addFeedback,
+    error,
   } = useChat();
+  const isLoading = isPreparingAnswer || isGeneratingAnswer;
 
   const deepThinking = useDeepThinking();
 
@@ -120,7 +125,7 @@ export default function ChatInterface() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const q = input.trim();
-    if (!q || isGeneratingAnswer) return;
+    if (!q || isLoading) return;
     submitQuery(q);
     setInput('');
   };
@@ -135,7 +140,7 @@ export default function ChatInterface() {
     }
   };
 
-  const hasMessages = conversation && [...conversation].length > 0;
+  const hasMessages = conversation && conversation.length > 0;
 
   return (
     <div className='flex flex-col h-full text-[color:var(--sl-color-text)] font-[family-name:var(--sl-font,system-ui,sans-serif)]'>
@@ -184,7 +189,7 @@ export default function ChatInterface() {
               strokeWidth='1'
               strokeLinecap='round'
               strokeLinejoin='round'
-              style={{ opacity: 0.3 }}
+              className='opacity-30'
             >
               <path d='M2 6.5C2 4 4.5 2 8 2s6 2 6 4.5S11.5 11 8 11c-.6 0-1.2-.1-1.7-.2L3 13v-3.3C2.4 8.8 2 7.7 2 6.5z' />
             </svg>
@@ -199,7 +204,7 @@ export default function ChatInterface() {
         )}
 
         {conversation &&
-          [...conversation].map((qa, index) => (
+          conversation.map((qa, index) => (
             <div key={qa.id || index} className='mb-5'>
               {/* User question */}
               <div className='flex justify-end mb-3'>
@@ -365,6 +370,11 @@ export default function ChatInterface() {
               </div>
             </div>
           ))}
+        {error && (
+          <div className='p-3 mx-0 mb-2 bg-red-900/20 border border-red-500/30 rounded-md text-red-300 text-xs'>
+            {error}
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -418,16 +428,16 @@ export default function ChatInterface() {
             className='flex-1 bg-transparent border-none outline-none
               text-[var(--sl-color-white)] text-[length:var(--sl-text-sm)]
               font-[family-name:inherit] py-1.5 min-w-0'
-            disabled={isGeneratingAnswer}
+            disabled={isLoading}
           />
           <button
             type='submit'
-            disabled={!input.trim() || isGeneratingAnswer}
+            disabled={!input.trim() || isLoading}
             className={`flex items-center justify-center p-1.5
               bg-[var(--sl-color-accent)] border-none rounded-md
               text-[var(--sl-color-black)] cursor-pointer shrink-0
               transition-opacity duration-150
-              ${input.trim() && !isGeneratingAnswer ? 'opacity-100' : 'opacity-40'}`}
+              ${input.trim() && !isLoading ? 'opacity-100' : 'opacity-40'}`}
           >
             <svg
               width='14'
