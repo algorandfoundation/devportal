@@ -195,6 +195,7 @@ export default defineConfig({
         Header: './src/components/Header.astro',
         Hero: './src/components/Hero.astro',
         Page: './src/components/CustomPage.astro',
+        Search: './src/components/CustomSearch.astro',
         Sidebar: './src/components/Sidebar.astro',
         SiteTitle: './src/components/SiteTitle.astro',
         ThemeProvider: './src/components/CustomThemeProvider.astro',
