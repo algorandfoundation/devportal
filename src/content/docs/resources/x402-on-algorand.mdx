@@ -1,0 +1,70 @@
+---
+title: x402 on Algorand
+---
+
+import { Image } from 'astro:assets';
+import x402Flow from '@images/x402-flow.png';
+
+## What is x402
+
+The HTTP error code 402 Payment Required has been in the original specification of the HTTP protocol since the 1990s and is described as being reserved for future use.
+
+In 2025, the Coinbase developer platform has picked up the implementation of this error code and created the x402 protocol, an internet-native emerging payment standard. It enables novel payment methods such as micropayments, pay-per-API-requests, and machine-to-machine payments.
+
+## x402 on Algorand
+
+While not depending on blockchain technology, X402 definitely benefits from some of the advantages that a blockchain delivers as payment rails.
+On Algorand, x402 benefits from a variety of things that are baked into the protocol itself:
+- Zero downtime
+- Predictable performance
+- 10,000 TPS
+- Low transaction fees
+- Instant and deterministic finality
+- Composable Smart Contracts
+- Stablecoin support
+- Atomic transaction groups
+
+### Roles in x402
+
+There are different roles in a typical X402 scenario.
+
+A merchant wants to provide a resource. They decide on pricing, access rules, and payment terms.
+
+Resource servers protect access to these resources and enforce the x402 requirements.
+
+The facilitator verifies payments and checks settlements.
+
+Clients, such as AI agents, have different ways of requesting an x402 protected resource, e. g. via HTTP, MCP or A2A.
+
+### x402 flow
+
+A typical request flow in x402 looks as follows:
+
+At a protocol level, x402 follows a predictable pattern:
+
+1. A client or agent requests a protected resource.
+1. The server responds with HTTP 402 and structured payment requirements.
+1. The client submits payment proof.
+1. The facilitator verifies settlement.
+1. The server returns the requested resource.
+
+<Image src={x402Flow} alt='x402 on Algorand' />
+
+### Common x402 use cases
+
+*Pay-per-API access:* Charge per request without managing plans or quotas. 
+
+*Agent-to-service payments:* Allow AI agents to discover services and pay for usage autonomously.
+
+*On-demand compute and inference:* Meter and charge for execution time or inference requests.
+
+*Premium data and content APIs:* Sell access to high-value data without subscriptions.
+
+*Internal service monetization:* Enable usage-based billing and cost attribution across microservices.
+
+### Learn more about x402 on Algorand
+
+- [x402 on Algorand](https://algorand.co/agentic-commerce/x402)
+- [x402 on Algorand developer resources](https://algorand.co/agentic-commerce/x402/developers)
+- [x402.org](https:x402.org)
+
