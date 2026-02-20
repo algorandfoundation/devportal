@@ -16,15 +16,15 @@ export const sidebarEntries = buildSidebarEntries('algokit-utils', [
 export const sidebarMetadata: SidebarMetadata = {
   sections: [
     {
-      pattern: 'docs/algokit-utils/*/latest',
+      pattern: 'docs/algokit-utils/*/*',
       meta: { order: 10, collapsed: true, cascade: ['collapsed'] },
     },
     {
-      pattern: 'docs/algokit-utils/*/latest/api',
+      pattern: 'docs/algokit-utils/*/*/api',
       meta: { label: 'API Reference', order: 10, collapsed: true, cascade: ['collapsed'] },
     },
     {
-      pattern: 'docs/algokit-utils/*/latest/guides',
+      pattern: 'docs/algokit-utils/*/*/guides',
       meta: { label: 'Concepts', order: 5, collapsed: false },
     },
   ],

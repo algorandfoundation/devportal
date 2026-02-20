@@ -15,7 +15,7 @@ export const sidebarEntries = buildSidebarEntries('algorand-typescript', [
 export const sidebarMetadata: SidebarMetadata = {
   sections: [
     {
-      pattern: 'docs/algorand-typescript/*/latest/api',
+      pattern: 'docs/algorand-typescript/*/*/api',
       meta: { label: 'API Reference', order: 10, collapsed: true, cascade: ['collapsed'] },
     },
   ],
