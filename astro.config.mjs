@@ -13,12 +13,8 @@ import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import { sidebarEntries as algokitUtilsSidebar } from './imports/configs/algokit-utils/sidebar.config.js';
-import { sidebarEntries as algokitCliSidebar } from './imports/configs/algokit-cli/sidebar.config.js';
-import { sidebarEntries as algorandPythonSidebar } from './imports/configs/algorand-python/sidebar.config.js';
-import { sidebarEntries as algorandTypescriptSidebar } from './imports/configs/algorand-typescript/sidebar.config.js';
-import { sidebarEntries as algokitSubscriberSidebar } from './imports/configs/algokit-subscriber/sidebar.config.js';
-import { sidebarEntries as nodekitSidebar } from './imports/configs/nodekit/sidebar.config.js';
+import { buildAllLibrarySidebarEntries } from './imports/sidebar.js';
+import { LIBRARY_CONFIGS } from './imports/configs/index.js';
 
 const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -695,12 +691,7 @@ export default defineConfig({
           ],
         },
         // Library sidebars — consumed by LibraryDocsSidebar, hidden from main sidebar
-        ...algokitUtilsSidebar,
-        ...algokitCliSidebar,
-        ...algorandPythonSidebar,
-        ...algorandTypescriptSidebar,
-        ...algokitSubscriberSidebar,
-        ...nodekitSidebar,
+        ...buildAllLibrarySidebarEntries(LIBRARY_CONFIGS),
       ],
     }),
     icon(),
