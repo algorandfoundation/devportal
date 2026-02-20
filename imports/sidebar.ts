@@ -1,4 +1,9 @@
+import { existsSync, readFileSync } from 'fs';
+import { join } from 'path';
+
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
+
+import type { SidebarJsonEntry } from './types.js';
 
 const SIDEBAR_LABEL_PREFIX = '_lib';
 
@@ -20,6 +25,46 @@ export function parseLibrarySidebarLabel(
   const parts = label.split(':');
   if (parts.length !== 4) return null;
   return { slug: parts[1], language: parts[2], version: parts[3] };
+}
+
+/** Content root relative to project root. */
+const CONTENT_DOCS_ROOT = join(process.cwd(), 'src/content/docs');
+
+/**
+ * Rebase all paths in sidebar.json entries from artifact-relative
+ * to devportal content paths.
+ *
+ * Rules:
+ * - autogenerate.directory: prefix with `{prefix}/`
+ * - link (no leading /):    prefix with `{prefix}/`
+ * - link (leading /):       prefix with `/{prefix}`
+ * - items (group):          recurse into children
+ */
+export function rebaseSidebarEntries(
+  entries: SidebarJsonEntry[],
+  prefix: string,
+): SidebarJsonEntry[] {
+  return entries.map((entry) => {
+    if ('autogenerate' in entry) {
+      return {
+        ...entry,
+        autogenerate: {
+          ...entry.autogenerate,
+          directory: `${prefix}/${entry.autogenerate.directory}`,
+        },
+      };
+    }
+    if ('link' in entry) {
+      const rebased = entry.link.startsWith('/')
+        ? `/${prefix}${entry.link}`
+        : `${prefix}/${entry.link}`;
+      return { ...entry, link: rebased };
+    }
+    if ('items' in entry) {
+      return { ...entry, items: rebaseSidebarEntries(entry.items, prefix) };
+    }
+    return entry;
+  });
 }
 
 /** Build Starlight sidebar autogenerate entries for a library's variants. */

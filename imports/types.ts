@@ -85,3 +85,12 @@ export interface SidebarMetadataItem {
 export interface SidebarMetadata {
   sections: SidebarMetadataItem[];
 }
+
+/**
+ * A single entry from a library's sidebar.json artifact.
+ * Matches Starlight's SidebarItem shape (subset used by library sidebars).
+ */
+export type SidebarJsonEntry =
+  | { label: string; link: string }
+  | { label: string; autogenerate: { directory: string; collapsed?: boolean }; collapsed?: boolean }
+  | { label: string; items: SidebarJsonEntry[]; collapsed?: boolean };
