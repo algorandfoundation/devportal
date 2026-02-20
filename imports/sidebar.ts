@@ -67,13 +67,46 @@ export function rebaseSidebarEntries(
   });
 }
 
-/** Build Starlight sidebar autogenerate entries for a library's variants. */
+/**
+ * Build Starlight sidebar entries for a library's variants.
+ *
+ * For each variant/version, checks if a rebased sidebar.json exists on disk
+ * (written by the import script for github-artifact sources). If present,
+ * reads the structured entries and appends a devportal-owned API Reference
+ * autogenerate group. If absent, falls back to a single top-level autogenerate
+ * directive (the existing behavior for github-loader sources).
+ */
 export function buildSidebarEntries(
   slug: string,
   variants: Array<{ language: string; version: string }>,
 ): NonNullable<StarlightUserConfig['sidebar']> {
-  return variants.map((v) => ({
-    label: buildLibrarySidebarLabel(slug, v.language, v.version),
-    autogenerate: { directory: `docs/${slug}/${v.language.toLowerCase()}/${v.version}` },
-  }));
+  return variants.map((v) => {
+    const lang = v.language.toLowerCase();
+    const prefix = `docs/${slug}/${lang}/${v.version}`;
+    const sidebarJsonPath = join(CONTENT_DOCS_ROOT, prefix, 'sidebar.json');
+
+    if (existsSync(sidebarJsonPath)) {
+      const raw = readFileSync(sidebarJsonPath, 'utf-8');
+      const entries: SidebarJsonEntry[] = JSON.parse(raw);
+      const rebased = rebaseSidebarEntries(entries, prefix);
+
+      return {
+        label: buildLibrarySidebarLabel(slug, v.language, v.version),
+        items: [
+          ...rebased,
+          {
+            label: 'API Reference',
+            autogenerate: { directory: `${prefix}/api` },
+            collapsed: true,
+          },
+        ],
+      };
+    }
+
+    // Fallback: no sidebar.json — use single top-level autogenerate
+    return {
+      label: buildLibrarySidebarLabel(slug, v.language, v.version),
+      autogenerate: { directory: prefix },
+    };
+  });
 }
