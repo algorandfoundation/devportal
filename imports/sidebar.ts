@@ -3,7 +3,7 @@ import { join } from 'path';
 
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
 
-import type { SidebarJsonEntry } from './types.js';
+import type { LibraryImportConfig, SidebarJsonEntry } from './types.js';
 
 const SIDEBAR_LABEL_PREFIX = '_lib';
 
@@ -108,5 +108,25 @@ export function buildSidebarEntries(
       label: buildLibrarySidebarLabel(slug, v.language, v.version),
       autogenerate: { directory: prefix },
     };
+  });
+}
+
+/**
+ * Build sidebar entries for ALL libraries by iterating library configs.
+ *
+ * Replaces the manual per-library imports and spreads in astro.config.mjs.
+ * Each library's variants × versions are passed to buildSidebarEntries().
+ */
+export function buildAllLibrarySidebarEntries(
+  configs: LibraryImportConfig[],
+): NonNullable<StarlightUserConfig['sidebar']> {
+  return configs.flatMap((lib) => {
+    const variantVersionPairs = lib.variants.flatMap((variant) =>
+      variant.versions.map((ver) => ({
+        language: variant.language,
+        version: ver.slug,
+      })),
+    );
+    return buildSidebarEntries(lib.metadata.slug, variantVersionPairs);
   });
 }
