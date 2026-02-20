@@ -13,7 +13,7 @@ export const sidebarEntries = buildSidebarEntries('algokit-cli', [
 ]);
 
 export const sidebarMetadata: SidebarMetadata = {
-  includes: [
+  sections: [
     {
       pattern: 'docs/algokit-cli/*/latest/guides',
       meta: { label: 'Concepts', order: 5, collapsed: false },

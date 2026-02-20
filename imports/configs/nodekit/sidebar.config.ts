@@ -12,4 +12,4 @@ export const sidebarEntries = buildSidebarEntries('nodekit', [
   { language: 'go', version: 'latest' },
 ]);
 
-export const sidebarMetadata: SidebarMetadata = { includes: [] };
+export const sidebarMetadata: SidebarMetadata = { sections: [] };

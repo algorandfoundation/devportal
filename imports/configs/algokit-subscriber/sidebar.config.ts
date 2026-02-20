@@ -12,4 +12,4 @@ export const sidebarEntries = buildSidebarEntries('algokit-subscriber', [
   { language: 'typescript', version: 'latest' },
 ]);
 
-export const sidebarMetadata: SidebarMetadata = { includes: [] };
+export const sidebarMetadata: SidebarMetadata = { sections: [] };

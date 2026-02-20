@@ -13,7 +13,7 @@ export const sidebarEntries = buildSidebarEntries('algorand-python', [
 ]);
 
 export const sidebarMetadata: SidebarMetadata = {
-  includes: [
+  sections: [
     {
       pattern: 'docs/algorand-python/*/latest/api',
       meta: { label: 'API Reference', order: 10, collapsed: true, cascade: ['collapsed'] },

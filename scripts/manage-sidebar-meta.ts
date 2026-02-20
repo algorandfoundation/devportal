@@ -124,7 +124,7 @@ function findAllMetaFiles(dir: string): string[] {
 
 /** Flatten all metadata items from all libraries into a single ordered list. */
 function flattenMetadataItems(): SidebarMetadataItem[] {
-  return SIDEBAR_METADATA.flatMap(m => m.includes);
+  return SIDEBAR_METADATA.flatMap(m => m.sections);
 }
 
 /**

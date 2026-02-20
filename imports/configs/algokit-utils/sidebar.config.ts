@@ -14,7 +14,7 @@ export const sidebarEntries = buildSidebarEntries('algokit-utils', [
 ]);
 
 export const sidebarMetadata: SidebarMetadata = {
-  includes: [
+  sections: [
     {
       pattern: 'docs/algokit-utils/*/latest',
       meta: { order: 10, collapsed: true, cascade: ['collapsed'] },
