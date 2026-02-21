@@ -54,6 +54,9 @@ export function rebaseSidebarEntries(
         },
       };
     }
+    if ('slug' in entry) {
+      return { ...entry, slug: `${prefix}/${entry.slug}` };
+    }
     if ('link' in entry) {
       const rebased = entry.link.startsWith('/')
         ? `/${prefix}${entry.link}`
