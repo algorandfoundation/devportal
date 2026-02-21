@@ -13,7 +13,6 @@ import {
   existsSync,
   mkdirSync,
   mkdtempSync,
-  readFileSync,
   rmSync,
   writeFileSync,
 } from 'fs';
@@ -28,8 +27,7 @@ import { Octokit } from 'octokit';
 // feature that doesn't work under tsx/Node.js. Instead, we import the artifact
 // registry directly. When adding a new artifact variant, update ARTIFACT_VARIANTS below.
 import type { GithubArtifactConfig } from '../imports/types.js';
-import type { VersionConfig, SidebarJsonEntry } from '../imports/types.js';
-import { rebaseSidebarEntries } from '../imports/sidebar.js';
+import type { VersionConfig } from '../imports/types.js';
 
 // ---------------------------------------------------------------------------
 // CLI flags
@@ -88,7 +86,8 @@ interface DownloadTask {
 //
 // NOTE: Keep in sync with the corresponding import.config.ts variant.
 const ARTIFACT_VARIANTS: ArtifactEntry[] = [
-  // Example (uncomment when migrating algokit-utils TypeScript):
+  // Add artifact variants here when migrating a library.
+  // Example:
   // {
   //   librarySlug: 'algokit-utils',
   //   variant: {
@@ -201,17 +200,14 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
     mkdirSync(destDir, { recursive: true });
     execSync(`cp -R "${contentSrc}/"* "${destDir}/"`, { stdio: 'pipe' });
 
-    // 7. Rebase sidebar.json if present in artifact
+    // 7. Copy sidebar.json if present in artifact (written as-is;
+    //    rebasing happens in buildSidebarEntries() at Astro config time)
     const sidebarSrc = join(extractDir, 'sidebar.json');
     if (existsSync(sidebarSrc)) {
-      const raw = readFileSync(sidebarSrc, 'utf-8');
-      const entries: SidebarJsonEntry[] = JSON.parse(raw);
-      const rebased = rebaseSidebarEntries(entries, prefix);
-      writeFileSync(
-        join(destDir, 'sidebar.json'),
-        JSON.stringify(rebased, null, 2),
-      );
-      console.log(`  Rebased sidebar.json -> ${prefix}/sidebar.json`);
+      execSync(`cp "${sidebarSrc}" "${join(destDir, 'sidebar.json')}"`, {
+        stdio: 'pipe',
+      });
+      console.log(`  Copied sidebar.json -> ${prefix}/sidebar.json`);
     }
 
     console.log(`  Done: ${label} -> ${prefix}/`);

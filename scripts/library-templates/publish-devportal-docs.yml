@@ -75,8 +75,9 @@ jobs:
         run: |
           mkdir -p dist-devportal/content
 
-          # Copy guide and API content (adjust paths for your repo structure).
-          # These paths should match your Starlight content collection layout.
+          # Copy all doc content (guides, API, root files like index.mdx).
+          # Adjust paths if your Starlight content layout differs.
+          find src/content/docs -maxdepth 1 -type f \( -name '*.md' -o -name '*.mdx' \) -exec cp {} dist-devportal/content/ \;
           cp -R src/content/docs/guides dist-devportal/content/ 2>/dev/null || true
           cp -R src/content/docs/api dist-devportal/content/ 2>/dev/null || true
 
