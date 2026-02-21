@@ -32,17 +32,44 @@ export interface LibraryMetadata {
 }
 
 /**
- * Import configuration for a single language variant of a library.
+ * Raw-file strategy (existing @larkiny/astro-github-loader path).
  *
  * Extends the loader's ImportOptions with required language and version fields.
- * Since ImportOptions already has these as optional, the extension narrows them
- * to required — valid TypeScript, and still assignable to ImportOptions.
+ * `source` is optional and defaults to 'github-loader' — existing configs
+ * don't need to specify it.
  */
-export interface VariantImportConfig extends ImportOptions {
+export interface GithubLoaderConfig extends ImportOptions {
+  source?: 'github-loader';
   /** Language for this variant: "TypeScript", "Python", "Go", etc. */
   language: string;
   /** Versions to display in the version picker (manually curated) */
   versions: VersionConfig[];
+}
+
+/**
+ * Release-artifact strategy (pre-built by library CI).
+ *
+ * Does NOT extend ImportOptions — artifact configs don't use the loader.
+ * The script downloads the tarball and unpacks it directly.
+ */
+export interface GithubArtifactConfig {
+  source: 'github-artifact';
+  /** Language for this variant: "TypeScript", "Python", "Go", etc. */
+  language: string;
+  /** Versions to display in the version picker (manually curated) */
+  versions: VersionConfig[];
+  /** GitHub repo owner */
+  owner: string;
+  /** GitHub repo name */
+  repo: string;
+}
+
+/** Discriminated union — use `isArtifactVariant()` to narrow. */
+export type VariantImportConfig = GithubLoaderConfig | GithubArtifactConfig;
+
+/** Type guard for artifact variants. */
+export function isArtifactVariant(v: VariantImportConfig): v is GithubArtifactConfig {
+  return v.source === 'github-artifact';
 }
 
 /** Top-level config exported by each library's import.config.ts file. */
