@@ -92,5 +92,6 @@ export interface SidebarMetadata {
  */
 export type SidebarJsonEntry =
   | { label: string; link: string }
+  | { slug: string }
   | { label: string; autogenerate: { directory: string; collapsed?: boolean }; collapsed?: boolean }
   | { label: string; items: SidebarJsonEntry[]; collapsed?: boolean };
