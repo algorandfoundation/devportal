@@ -13,21 +13,29 @@ import {
   existsSync,
   mkdirSync,
   mkdtempSync,
+  readFileSync,
+  readdirSync,
   rmSync,
   writeFileSync,
 } from 'fs';
 import { execSync } from 'child_process';
-import { join } from 'path';
+import { join, relative } from 'path';
 import { tmpdir } from 'os';
 
 import { Octokit } from 'octokit';
+import picomatch from 'picomatch';
 
 // NOTE: We cannot import LIBRARY_CONFIGS from the barrel (imports/configs/index.ts)
 // because it pulls in import.config.ts files that use .svg?raw imports — a Vite-only
 // feature that doesn't work under tsx/Node.js. Instead, we import the artifact
 // registry directly. When adding a new artifact variant, update ARTIFACT_VARIANTS below.
+//
+// Transform functions from imports/transforms/ are safe to import directly —
+// they have no Vite-only dependencies.
 import type { GithubArtifactConfig } from '../imports/types.js';
 import type { VersionConfig } from '../imports/types.js';
+import type { ContentTransform } from '../imports/transforms/frontmatter.js';
+import { stripFrontmatterKeys } from '../imports/transforms/frontmatter.js';
 
 // ---------------------------------------------------------------------------
 // CLI flags
@@ -61,10 +69,20 @@ const ASSET_NAME = 'devportal-docs.tar.gz';
 // Types
 // ---------------------------------------------------------------------------
 
+/** A post-import transform applied to files matching a glob pattern. */
+interface PostImportTransform {
+  /** Glob pattern matched against file paths relative to the content root. */
+  pattern: string;
+  /** Content transform function (from imports/transforms/). */
+  transform: ContentTransform;
+}
+
 /** An artifact variant paired with its library slug. */
 interface ArtifactEntry {
   librarySlug: string;
   variant: GithubArtifactConfig;
+  /** Transforms applied to matching files after unpacking. */
+  postImportTransforms?: PostImportTransform[];
 }
 
 interface DownloadTask {
@@ -74,6 +92,7 @@ interface DownloadTask {
   releaseTag: string;
   destDir: string;
   prefix: string;
+  postImportTransforms?: PostImportTransform[];
 }
 
 // ---------------------------------------------------------------------------
@@ -87,17 +106,7 @@ interface DownloadTask {
 // NOTE: Keep in sync with the corresponding import.config.ts variant.
 const ARTIFACT_VARIANTS: ArtifactEntry[] = [
   // Add artifact variants here when migrating a library.
-  // Example:
-  // {
-  //   librarySlug: 'algokit-utils',
-  //   variant: {
-  //     source: 'github-artifact',
-  //     language: 'TypeScript',
-  //     versions: [{ slug: 'latest', label: 'Latest' }],
-  //     owner: 'algorandfoundation',
-  //     repo: 'algokit-utils-ts',
-  //   },
-  // },
+  // See imports/configs/algokit-utils/import.config.ts for an example.
 ];
 
 // ---------------------------------------------------------------------------
@@ -107,7 +116,7 @@ const ARTIFACT_VARIANTS: ArtifactEntry[] = [
 function buildTasks(): DownloadTask[] {
   const tasks: DownloadTask[] = [];
 
-  for (const { librarySlug, variant } of ARTIFACT_VARIANTS) {
+  for (const { librarySlug, variant, postImportTransforms } of ARTIFACT_VARIANTS) {
     for (const version of variant.versions) {
       const releaseTag =
         version.slug === 'latest' ? 'docs-latest' : version.slug;
@@ -122,6 +131,7 @@ function buildTasks(): DownloadTask[] {
         releaseTag,
         destDir,
         prefix,
+        postImportTransforms,
       });
     }
   }
@@ -132,6 +142,45 @@ function buildTasks(): DownloadTask[] {
 // ---------------------------------------------------------------------------
 // Download + unpack
 // ---------------------------------------------------------------------------
+
+/** Recursively collect all files under a directory. */
+function walkFiles(dir: string): string[] {
+  const results: string[] = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      results.push(...walkFiles(full));
+    } else {
+      results.push(full);
+    }
+  }
+  return results;
+}
+
+/** Apply post-import transforms to files matching their glob patterns. */
+function applyPostImportTransforms(
+  destDir: string,
+  transforms: PostImportTransform[],
+  prefix: string,
+): void {
+  const allFiles = walkFiles(destDir);
+
+  for (const { pattern, transform } of transforms) {
+    const matcher = picomatch(pattern);
+
+    for (const filePath of allFiles) {
+      const rel = relative(destDir, filePath);
+      if (!matcher(rel)) continue;
+
+      const content = readFileSync(filePath, 'utf-8');
+      const transformed = transform(content, rel);
+      if (transformed !== content) {
+        writeFileSync(filePath, transformed);
+        console.log(`  Transformed: ${prefix}/${rel}`);
+      }
+    }
+  }
+}
 
 async function downloadAndUnpack(task: DownloadTask): Promise<void> {
   const { variant, version, releaseTag, destDir, prefix } = task;
@@ -208,6 +257,11 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
         stdio: 'pipe',
       });
       console.log(`  Copied sidebar.json -> ${prefix}/sidebar.json`);
+    }
+
+    // 8. Apply post-import transforms (e.g. strip upstream-only frontmatter)
+    if (task.postImportTransforms?.length) {
+      applyPostImportTransforms(destDir, task.postImportTransforms, prefix);
     }
 
     console.log(`  Done: ${label} -> ${prefix}/`);
