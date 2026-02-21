@@ -84,6 +84,9 @@ export default defineConfig({
             // Algorand TypeScript API docs — TypeDoc cross-refs
             if (/^docs\/algorand-typescript\/.*\/api\//.test(slug)) return true;
 
+            // AlgoKit Utils TS — content not yet imported (pending reimport)
+            if (link.startsWith('/docs/algokit-utils/typescript/latest/')) return true;
+
             // ARC standards — cross-references between ARC spec pages
             if (slug.startsWith('arc-standards/') && /^\.\/arc-\d+/.test(link)) return true;
 
