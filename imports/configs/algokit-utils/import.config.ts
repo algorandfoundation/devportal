@@ -10,7 +10,6 @@ import {
   overviewOrderTransform,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
-import logo from './logo.svg?raw';
 
 export const config: LibraryImportConfig = {
   metadata: {
@@ -18,7 +17,6 @@ export const config: LibraryImportConfig = {
     label: 'AlgoKit Utils',
     description: 'Utilities for building solutions on Algorand',
     color: '#3B82F6',
-    logo,
     category: 'sdk',
   },
   variants: [
@@ -110,23 +108,6 @@ export const config: LibraryImportConfig = {
       clear: true,
       enabled: true,
     },
-    // When migrating to github-artifact, replace the loader variant above
-    // with an artifact variant and add a matching entry to ARTIFACT_VARIANTS
-    // in scripts/import-release-docs.ts:
-    //
-    // {
-    //   source: 'github-artifact',
-    //   language: 'TypeScript',
-    //   versions: [{ slug: 'latest', label: 'Latest' }],
-    //   owner: 'algorandfoundation',
-    //   repo: 'algokit-utils-ts',
-    // },
-    //
-    // Post-import transforms (e.g. stripping upstream-only frontmatter) are
-    // configured in the ARTIFACT_VARIANTS entry, not here. Example:
-    //   postImportTransforms: [
-    //     { pattern: 'index.{md,mdx}', transform: stripFrontmatterKeys(['template', 'hero']) },
-    //   ],
     {
       language: 'Python',
       versions: [{ slug: 'latest', label: 'Latest' }],

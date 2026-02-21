@@ -25,17 +25,10 @@ import { tmpdir } from 'os';
 import { Octokit } from 'octokit';
 import picomatch from 'picomatch';
 
-// NOTE: We cannot import LIBRARY_CONFIGS from the barrel (imports/configs/index.ts)
-// because it pulls in import.config.ts files that use .svg?raw imports — a Vite-only
-// feature that doesn't work under tsx/Node.js. Instead, we import the artifact
-// registry directly. When adding a new artifact variant, update ARTIFACT_VARIANTS below.
-//
-// Transform functions from imports/transforms/ are safe to import directly —
-// they have no Vite-only dependencies.
-import type { GithubArtifactConfig } from '../imports/types.js';
+import { LIBRARY_CONFIGS } from '../imports/configs/index.js';
+import { isArtifactVariant } from '../imports/types.js';
+import type { GithubArtifactConfig, PostImportTransform } from '../imports/types.js';
 import type { VersionConfig } from '../imports/types.js';
-import type { ContentTransform } from '../imports/transforms/frontmatter.js';
-import { stripFrontmatterKeys } from '../imports/transforms/frontmatter.js';
 
 // ---------------------------------------------------------------------------
 // CLI flags
@@ -69,22 +62,6 @@ const ASSET_NAME = 'devportal-docs.tar.gz';
 // Types
 // ---------------------------------------------------------------------------
 
-/** A post-import transform applied to files matching a glob pattern. */
-interface PostImportTransform {
-  /** Glob pattern matched against file paths relative to the content root. */
-  pattern: string;
-  /** Content transform function (from imports/transforms/). */
-  transform: ContentTransform;
-}
-
-/** An artifact variant paired with its library slug. */
-interface ArtifactEntry {
-  librarySlug: string;
-  variant: GithubArtifactConfig;
-  /** Transforms applied to matching files after unpacking. */
-  postImportTransforms?: PostImportTransform[];
-}
-
 interface DownloadTask {
   librarySlug: string;
   variant: GithubArtifactConfig;
@@ -96,47 +73,28 @@ interface DownloadTask {
 }
 
 // ---------------------------------------------------------------------------
-// Artifact registry
-// ---------------------------------------------------------------------------
-
-// Register artifact variants here. Each entry maps a library slug to its
-// github-artifact variant config. When a library variant is migrated to the
-// artifact strategy, add it here.
-//
-// NOTE: Keep in sync with the corresponding import.config.ts variant.
-const ARTIFACT_VARIANTS: ArtifactEntry[] = [
-  // Add artifact variants here when migrating a library.
-  // See imports/configs/algokit-utils/import.config.ts for an example.
-];
-
-// ---------------------------------------------------------------------------
 // Task builder
 // ---------------------------------------------------------------------------
 
+/** Derive download tasks from LIBRARY_CONFIGS — no separate registry needed. */
 function buildTasks(): DownloadTask[] {
-  const tasks: DownloadTask[] = [];
-
-  for (const { librarySlug, variant, postImportTransforms } of ARTIFACT_VARIANTS) {
-    for (const version of variant.versions) {
-      const releaseTag =
-        version.slug === 'latest' ? 'docs-latest' : version.slug;
-      const lang = variant.language.toLowerCase();
-      const prefix = `docs/${librarySlug}/${lang}/${version.slug}`;
-      const destDir = join(CONTENT_DOCS_DIR, prefix);
-
-      tasks.push({
-        librarySlug,
-        variant,
-        version,
-        releaseTag,
-        destDir,
-        prefix,
-        postImportTransforms,
-      });
-    }
-  }
-
-  return tasks;
+  return LIBRARY_CONFIGS.flatMap(lib =>
+    lib.variants.filter(isArtifactVariant).flatMap(variant =>
+      variant.versions.map(version => {
+        const lang = variant.language.toLowerCase();
+        const prefix = `docs/${lib.metadata.slug}/${lang}/${version.slug}`;
+        return {
+          librarySlug: lib.metadata.slug,
+          variant,
+          version,
+          releaseTag: version.slug === 'latest' ? 'docs-latest' : version.slug,
+          destDir: join(CONTENT_DOCS_DIR, prefix),
+          prefix,
+          postImportTransforms: variant.postImportTransforms,
+        };
+      })
+    )
+  );
 }
 
 // ---------------------------------------------------------------------------

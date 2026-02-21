@@ -23,10 +23,6 @@ export interface LibraryMetadata {
   description: string;
   /** Accent color (hex) for library dot/badge */
   color: string;
-  /** Raw SVG markup for inline rendering (import with ?raw) */
-  logo?: string;
-  /** Raw SVG markup for compact icon (import with ?raw) */
-  icon?: string;
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
 }
@@ -46,6 +42,14 @@ export interface GithubLoaderConfig extends ImportOptions {
   versions: VersionConfig[];
 }
 
+/** A post-import transform applied to files matching a glob pattern. */
+export interface PostImportTransform {
+  /** Glob pattern matched against file paths relative to the content root. */
+  pattern: string;
+  /** Content transform function (from imports/transforms/). */
+  transform: (content: string, filePath: string) => string;
+}
+
 /**
  * Release-artifact strategy (pre-built by library CI).
  *
@@ -62,6 +66,8 @@ export interface GithubArtifactConfig {
   owner: string;
   /** GitHub repo name */
   repo: string;
+  /** Transforms applied to matching files after unpacking. */
+  postImportTransforms?: PostImportTransform[];
 }
 
 /** Discriminated union — use `isArtifactVariant()` to narrow. */

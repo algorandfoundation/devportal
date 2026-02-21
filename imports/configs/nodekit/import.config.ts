@@ -2,7 +2,6 @@ import type { LibraryImportConfig } from '../../types';
 import { overviewOrderTransform } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../../transforms/links.js';
-import logo from './logo.svg?raw';
 
 export const config: LibraryImportConfig = {
   metadata: {
@@ -10,7 +9,6 @@ export const config: LibraryImportConfig = {
     label: 'NodeKit',
     description: 'Tools for running Algorand nodes',
     color: '#EF4444',
-    logo,
     category: 'tool',
   },
   variants: [

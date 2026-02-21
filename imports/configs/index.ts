@@ -73,8 +73,7 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   algokitUtilsPyLegacy,
 ];
 
-/** All sidebar metadata rules for _meta.yml generation.
- *  NOTE: When adding a library, also update scripts/manage-sidebar-meta.ts (duplicated due to SVG import chain). */
+/** All sidebar metadata rules for _meta.yml generation. */
 export const SIDEBAR_METADATA: SidebarMetadata[] = [
   algokitUtilsMeta,
   algokitCliMeta,
