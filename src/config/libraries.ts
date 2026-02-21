@@ -6,6 +6,8 @@
  * import from this file and don't need to know about the config structure.
  */
 
+import { existsSync, readFileSync } from 'fs';
+import { join } from 'path';
 import type { LibraryImportConfig } from '../../imports/types';
 import type { VersionConfig } from '../../imports/types';
 import type { StarlightRouteData } from '@astrojs/starlight/route-data';
@@ -32,10 +34,8 @@ export interface LibraryConfig {
   languages: string[];
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
-  /** Raw SVG markup for inline rendering (import with ?raw) */
+  /** Raw SVG markup resolved by convention from imports/configs/<slug>/logo.svg */
   logo?: string;
-  /** Raw SVG markup for compact icon (import with ?raw) */
-  icon?: string;
   /** Sidebar tree for this library's docs (populated by sidebar configs) */
   sidebar: LibrarySidebarEntry[];
 }
@@ -76,6 +76,13 @@ type StarlightBadge = NonNullable<
 // Registry builder
 // ---------------------------------------------------------------------------
 
+/** Resolve a library's logo SVG from the conventional path: imports/configs/<slug>/logo.svg */
+function resolveLibraryLogo(slug: string): string | undefined {
+  const logoPath = join(process.cwd(), 'imports/configs', slug, 'logo.svg');
+  if (!existsSync(logoPath)) return undefined;
+  return readFileSync(logoPath, 'utf-8');
+}
+
 function buildRegistry(configs: LibraryImportConfig[]): LibraryConfig[] {
   return configs.map(config => {
     // Aggregate versions across all variants (supports multiple variants
@@ -95,8 +102,7 @@ function buildRegistry(configs: LibraryImportConfig[]): LibraryConfig[] {
       label: config.metadata.label,
       description: config.metadata.description,
       color: config.metadata.color,
-      logo: config.metadata.logo,
-      icon: config.metadata.icon,
+      logo: resolveLibraryLogo(config.metadata.slug),
       versions,
       languages,
       category: config.metadata.category,

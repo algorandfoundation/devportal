@@ -1,4 +1,9 @@
+import { existsSync, readFileSync } from 'fs';
+import { join } from 'path';
+
 import type { StarlightUserConfig } from '@astrojs/starlight/types';
+
+import type { LibraryImportConfig, SidebarJsonEntry } from './types.js';
 
 const SIDEBAR_LABEL_PREFIX = '_lib';
 
@@ -22,13 +27,109 @@ export function parseLibrarySidebarLabel(
   return { slug: parts[1], language: parts[2], version: parts[3] };
 }
 
-/** Build Starlight sidebar autogenerate entries for a library's variants. */
+/** Content root relative to project root. */
+const CONTENT_DOCS_ROOT = join(process.cwd(), 'src/content/docs');
+
+/**
+ * Rebase all paths in sidebar.json entries from artifact-relative
+ * to devportal content paths.
+ *
+ * Rules:
+ * - autogenerate.directory: prefix with `{prefix}/`
+ * - link (no leading /):    prefix with `{prefix}/`
+ * - link (leading /):       prefix with `/{prefix}`
+ * - items (group):          recurse into children
+ */
+export function rebaseSidebarEntries(
+  entries: SidebarJsonEntry[],
+  prefix: string,
+): SidebarJsonEntry[] {
+  return entries.map((entry) => {
+    if ('autogenerate' in entry) {
+      return {
+        ...entry,
+        autogenerate: {
+          ...entry.autogenerate,
+          directory: `${prefix}/${entry.autogenerate.directory}`,
+        },
+      };
+    }
+    if ('slug' in entry) {
+      return { ...entry, slug: `${prefix}/${entry.slug}` };
+    }
+    if ('link' in entry) {
+      const rebased = entry.link.startsWith('/')
+        ? `/${prefix}${entry.link}`
+        : `${prefix}/${entry.link}`;
+      return { ...entry, link: rebased };
+    }
+    if ('items' in entry) {
+      return { ...entry, items: rebaseSidebarEntries(entry.items, prefix) };
+    }
+    return entry;
+  });
+}
+
+/**
+ * Build Starlight sidebar entries for a library's variants.
+ *
+ * For each variant/version, checks if a rebased sidebar.json exists on disk
+ * (written by the import script for github-artifact sources). If present,
+ * reads the structured entries and appends a devportal-owned API Reference
+ * autogenerate group. If absent, falls back to a single top-level autogenerate
+ * directive (the existing behavior for github-loader sources).
+ */
 export function buildSidebarEntries(
   slug: string,
   variants: Array<{ language: string; version: string }>,
 ): NonNullable<StarlightUserConfig['sidebar']> {
-  return variants.map((v) => ({
-    label: buildLibrarySidebarLabel(slug, v.language, v.version),
-    autogenerate: { directory: `docs/${slug}/${v.language.toLowerCase()}/${v.version}` },
-  }));
+  return variants.map((v) => {
+    const lang = v.language.toLowerCase();
+    const prefix = `docs/${slug}/${lang}/${v.version}`;
+    const sidebarJsonPath = join(CONTENT_DOCS_ROOT, prefix, 'sidebar.json');
+
+    if (existsSync(sidebarJsonPath)) {
+      const raw = readFileSync(sidebarJsonPath, 'utf-8');
+      const entries: SidebarJsonEntry[] = JSON.parse(raw);
+      const rebased = rebaseSidebarEntries(entries, prefix);
+
+      return {
+        label: buildLibrarySidebarLabel(slug, v.language, v.version),
+        items: [
+          ...rebased,
+          {
+            label: 'API Reference',
+            autogenerate: { directory: `${prefix}/api` },
+            collapsed: true,
+          },
+        ],
+      };
+    }
+
+    // Fallback: no sidebar.json — use single top-level autogenerate
+    return {
+      label: buildLibrarySidebarLabel(slug, v.language, v.version),
+      autogenerate: { directory: prefix },
+    };
+  });
+}
+
+/**
+ * Build sidebar entries for ALL libraries by iterating library configs.
+ *
+ * Replaces the manual per-library imports and spreads in astro.config.mjs.
+ * Each library's variants × versions are passed to buildSidebarEntries().
+ */
+export function buildAllLibrarySidebarEntries(
+  configs: LibraryImportConfig[],
+): NonNullable<StarlightUserConfig['sidebar']> {
+  return configs.flatMap((lib) => {
+    const variantVersionPairs = lib.variants.flatMap((variant) =>
+      variant.versions.map((ver) => ({
+        language: variant.language,
+        version: ver.slug,
+      })),
+    );
+    return buildSidebarEntries(lib.metadata.slug, variantVersionPairs);
+  });
 }

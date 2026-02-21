@@ -23,26 +23,59 @@ export interface LibraryMetadata {
   description: string;
   /** Accent color (hex) for library dot/badge */
   color: string;
-  /** Raw SVG markup for inline rendering (import with ?raw) */
-  logo?: string;
-  /** Raw SVG markup for compact icon (import with ?raw) */
-  icon?: string;
   /** Category grouping */
   category: 'sdk' | 'cli' | 'language' | 'tool' | 'api';
 }
 
 /**
- * Import configuration for a single language variant of a library.
+ * Raw-file strategy (existing @larkiny/astro-github-loader path).
  *
  * Extends the loader's ImportOptions with required language and version fields.
- * Since ImportOptions already has these as optional, the extension narrows them
- * to required — valid TypeScript, and still assignable to ImportOptions.
+ * `source` is optional and defaults to 'github-loader' — existing configs
+ * don't need to specify it.
  */
-export interface VariantImportConfig extends ImportOptions {
+export interface GithubLoaderConfig extends ImportOptions {
+  source?: 'github-loader';
   /** Language for this variant: "TypeScript", "Python", "Go", etc. */
   language: string;
   /** Versions to display in the version picker (manually curated) */
   versions: VersionConfig[];
+}
+
+/** A post-import transform applied to files matching a glob pattern. */
+export interface PostImportTransform {
+  /** Glob pattern matched against file paths relative to the content root. */
+  pattern: string;
+  /** Content transform function (from imports/transforms/). */
+  transform: (content: string, filePath: string) => string;
+}
+
+/**
+ * Release-artifact strategy (pre-built by library CI).
+ *
+ * Does NOT extend ImportOptions — artifact configs don't use the loader.
+ * The script downloads the tarball and unpacks it directly.
+ */
+export interface GithubArtifactConfig {
+  source: 'github-artifact';
+  /** Language for this variant: "TypeScript", "Python", "Go", etc. */
+  language: string;
+  /** Versions to display in the version picker (manually curated) */
+  versions: VersionConfig[];
+  /** GitHub repo owner */
+  owner: string;
+  /** GitHub repo name */
+  repo: string;
+  /** Transforms applied to matching files after unpacking. */
+  postImportTransforms?: PostImportTransform[];
+}
+
+/** Discriminated union — use `isArtifactVariant()` to narrow. */
+export type VariantImportConfig = GithubLoaderConfig | GithubArtifactConfig;
+
+/** Type guard for artifact variants. */
+export function isArtifactVariant(v: VariantImportConfig): v is GithubArtifactConfig {
+  return v.source === 'github-artifact';
 }
 
 /** Top-level config exported by each library's import.config.ts file. */
@@ -83,5 +116,15 @@ export interface SidebarMetadataItem {
 
 /** Sidebar metadata exported by a library's sidebar.config.ts. */
 export interface SidebarMetadata {
-  includes: SidebarMetadataItem[];
+  sections: SidebarMetadataItem[];
 }
+
+/**
+ * A single entry from a library's sidebar.json artifact.
+ * Matches Starlight's SidebarItem shape (subset used by library sidebars).
+ */
+export type SidebarJsonEntry =
+  | { label: string; link: string }
+  | { slug: string }
+  | { label: string; autogenerate: { directory: string; collapsed?: boolean }; collapsed?: boolean }
+  | { label: string; items: SidebarJsonEntry[]; collapsed?: boolean };

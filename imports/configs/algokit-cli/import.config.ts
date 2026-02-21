@@ -8,7 +8,6 @@ import {
   overviewOrderTransform,
 } from '../../transforms/common.js';
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
-import logo from './logo.svg?raw';
 
 export const config: LibraryImportConfig = {
   metadata: {
@@ -16,7 +15,6 @@ export const config: LibraryImportConfig = {
     label: 'AlgoKit CLI',
     description: 'The AlgoKit command-line interface',
     color: '#F59E0B',
-    logo,
     category: 'cli',
   },
   variants: [

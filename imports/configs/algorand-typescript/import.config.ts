@@ -12,15 +12,12 @@ import {
 import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
 import { generateStarlightLinkMappings } from '../../transforms/links.js';
 
-import logo from './logo.svg?raw';
-
 export const config: LibraryImportConfig = {
   metadata: {
     slug: 'algorand-typescript',
     label: 'Algorand TypeScript',
     description: 'Build smart contracts on Algorand using TypeScript',
     color: '#EC4899',
-    logo,
     category: 'language',
   },
   variants: [

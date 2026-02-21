@@ -8,6 +8,7 @@
 
 import type { ImportOptions } from '@larkiny/astro-github-loader';
 import type { LibraryImportConfig, SidebarMetadata } from '../types';
+import { isArtifactVariant } from '../types.js';
 
 // Per-library configs
 import {
@@ -56,12 +57,12 @@ export const LIBRARY_CONFIGS: LibraryImportConfig[] = [
 
 /** Flat list of all import configs for the content loader. */
 export const REMOTE_CONTENT: ImportOptions[] = [
-  ...algokitUtils.variants,
-  ...algokitCli.variants,
-  ...algorandPython.variants,
-  ...algorandTypescript.variants,
-  ...algokitSubscriber.variants, // hidden — docs not yet ready
-  ...nodekit.variants,
+  ...algokitUtils.variants.filter(v => !isArtifactVariant(v)),
+  ...algokitCli.variants.filter(v => !isArtifactVariant(v)),
+  ...algorandPython.variants.filter(v => !isArtifactVariant(v)),
+  ...algorandTypescript.variants.filter(v => !isArtifactVariant(v)),
+  ...algokitSubscriber.variants.filter(v => !isArtifactVariant(v)), // hidden — docs not yet ready
+  ...nodekit.variants.filter(v => !isArtifactVariant(v)),
   arcStandardsConfig,
   // Legacy guide targets — keep old algokit/* paths in sync via stateKey
   algokitCliLegacy,
@@ -72,8 +73,7 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   algokitUtilsPyLegacy,
 ];
 
-/** All sidebar metadata rules for _meta.yml generation.
- *  NOTE: When adding a library, also update scripts/manage-sidebar-meta.ts (duplicated due to SVG import chain). */
+/** All sidebar metadata rules for _meta.yml generation. */
 export const SIDEBAR_METADATA: SidebarMetadata[] = [
   algokitUtilsMeta,
   algokitCliMeta,
