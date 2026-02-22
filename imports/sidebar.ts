@@ -71,13 +71,64 @@ export function rebaseSidebarEntries(
 }
 
 /**
+ * Convert slug-based entries to link-based entries so they don't
+ * participate in Starlight's active page matching. Slug entries
+ * become absolute links (e.g. slug "docs/foo" → link "/docs/foo/").
+ * Autogenerate entries are converted to a single link to the directory.
+ * Groups with items are recursed.
+ */
+function slugsToLinks(entries: SidebarJsonEntry[]): SidebarJsonEntry[] {
+  return entries.map((entry) => {
+    if ('slug' in entry) {
+      const s = entry.slug;
+      // link entries require a label — derive from slug if missing
+      const label = ('label' in entry ? (entry as { label: string }).label : null)
+        ?? s.split('/').pop()!.replace(/-/g, ' ');
+      return { label, link: `/${s}/` };
+    }
+    if ('autogenerate' in entry) {
+      const { autogenerate, collapsed, ...rest } = entry;
+      return { ...rest, link: `/${autogenerate.directory}/` };
+    }
+    if ('items' in entry) {
+      return { ...entry, items: slugsToLinks(entry.items) };
+    }
+    return entry;
+  });
+}
+
+/**
+ * Read a library variant's sidebar.json and return entries as links.
+ *
+ * Useful for embedding a library's sidebar into another section
+ * (e.g. the algokit/ product section) without duplicating content.
+ * Uses link entries instead of slug entries to avoid interfering
+ * with Starlight's active page highlighting in the library sidebar.
+ * Returns null if no sidebar.json exists for this variant.
+ */
+export function readSidebarJson(
+  slug: string,
+  language: string,
+  version: string,
+): SidebarJsonEntry[] | null {
+  const lang = language.toLowerCase();
+  const prefix = `docs/${slug}/${lang}/${version}`;
+  const sidebarJsonPath = join(CONTENT_DOCS_ROOT, prefix, 'sidebar.json');
+  if (!existsSync(sidebarJsonPath)) return null;
+  const raw = readFileSync(sidebarJsonPath, 'utf-8');
+  const entries: SidebarJsonEntry[] = JSON.parse(raw);
+  const rebased = rebaseSidebarEntries(entries, prefix);
+  return slugsToLinks(rebased);
+}
+
+/**
  * Build Starlight sidebar entries for a library's variants.
  *
  * For each variant/version, checks if a rebased sidebar.json exists on disk
  * (written by the import script for github-artifact sources). If present,
- * reads the structured entries and appends a devportal-owned API Reference
- * autogenerate group. If absent, falls back to a single top-level autogenerate
- * directive (the existing behavior for github-loader sources).
+ * uses the library's sidebar entries as-is (including any API Reference
+ * section the library defines). If absent, falls back to a single top-level
+ * autogenerate directive (the existing behavior for github-loader sources).
  */
 export function buildSidebarEntries(
   slug: string,
@@ -95,14 +146,7 @@ export function buildSidebarEntries(
 
       return {
         label: buildLibrarySidebarLabel(slug, v.language, v.version),
-        items: [
-          ...rebased,
-          {
-            label: 'API Reference',
-            autogenerate: { directory: `${prefix}/api` },
-            collapsed: true,
-          },
-        ],
+        items: rebased,
       };
     }
 
