@@ -7,13 +7,13 @@ Indexer lookups / searching is a higher-order use case capability provided by Al
 
 To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-py/tree/main/tests/modules/indexer_client).
 
-To access the indexer client you can get it from [`AlgorandClient`](../../core/algorand-client) via `algorand.client.indexer`:
+To access the indexer client you can get it from [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) via `algorand.client.indexer`:
 
 ```python
 indexer = algorand.client.indexer
 ```
 
-All of the indexer methods are called directly on the `IndexerClient` instance, which you can get from [`AlgorandClient`](../../core/algorand-client) via `algorand.client.indexer`. These calls are not made more easy to call by exposing via `AlgorandClient` and thus not requiring the indexer SDK client to be passed in. This is because we want to add a tiny bit of friction to using indexer, given it's an expensive API to run for node providers, the data from it can sometimes be slow and stale, and there are alternatives [that](https://github.com/algorandfoundation/algokit-subscriber-ts) [allow](https://github.com/algorand/conduit) individual projects to index subsets of chain data specific to them as a preferred option. In saying that, it's a very useful API for doing ad hoc data retrieval, writing automated tests, and many other uses.
+All of the indexer methods are called directly on the `IndexerClient` instance, which you can get from [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) via `algorand.client.indexer`. These calls are not made more easy to call by exposing via `AlgorandClient` and thus not requiring the indexer SDK client to be passed in. This is because we want to add a tiny bit of friction to using indexer, given it's an expensive API to run for node providers, the data from it can sometimes be slow and stale, and there are alternatives [that](https://github.com/algorandfoundation/algokit-subscriber-ts) [allow](https://github.com/algorand/conduit) individual projects to index subsets of chain data specific to them as a preferred option. In saying that, it's a very useful API for doing ad hoc data retrieval, writing automated tests, and many other uses.
 
 ## Indexer wrapper functions
 

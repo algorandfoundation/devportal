@@ -7,7 +7,7 @@ title: "AccountParticipation"
 
 > **AccountParticipation** = `object`
 
-Defined in: [packages/algod\_client/src/models/account-participation.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L7)
+Defined in: [packages/algod\_client/src/models/account-participation.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L7)
 
 AccountParticipation describes the parameters used by this account in consensus protocol.
 
@@ -17,7 +17,7 @@ AccountParticipation describes the parameters used by this account in consensus 
 
 > **selectionParticipationKey**: `Uint8Array`
 
-Defined in: [packages/algod\_client/src/models/account-participation.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L11)
+Defined in: [packages/algod\_client/src/models/account-participation.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L11)
 
 \[sel\] Selection public key (if any) currently registered for this round.
 
@@ -27,7 +27,7 @@ Defined in: [packages/algod\_client/src/models/account-participation.ts:11](http
 
 > `optional` **stateProofKey**: `Uint8Array`
 
-Defined in: [packages/algod\_client/src/models/account-participation.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L36)
+Defined in: [packages/algod\_client/src/models/account-participation.ts:36](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L36)
 
 \[stprf\] Root of the state proof key (if any)
 
@@ -37,7 +37,7 @@ Defined in: [packages/algod\_client/src/models/account-participation.ts:36](http
 
 > **voteFirstValid**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/account-participation.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L16)
+Defined in: [packages/algod\_client/src/models/account-participation.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L16)
 
 \[voteFst\] First round for which this participation is valid.
 
@@ -47,7 +47,7 @@ Defined in: [packages/algod\_client/src/models/account-participation.ts:16](http
 
 > **voteKeyDilution**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/account-participation.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L21)
+Defined in: [packages/algod\_client/src/models/account-participation.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L21)
 
 \[voteKD\] Number of subkeys in each batch of participation keys.
 
@@ -57,7 +57,7 @@ Defined in: [packages/algod\_client/src/models/account-participation.ts:21](http
 
 > **voteLastValid**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/account-participation.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L26)
+Defined in: [packages/algod\_client/src/models/account-participation.ts:26](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L26)
 
 \[voteLst\] Last round for which this participation is valid.
 
@@ -67,6 +67,6 @@ Defined in: [packages/algod\_client/src/models/account-participation.ts:26](http
 
 > **voteParticipationKey**: `Uint8Array`
 
-Defined in: [packages/algod\_client/src/models/account-participation.ts:31](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L31)
+Defined in: [packages/algod\_client/src/models/account-participation.ts:31](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/account-participation.ts#L31)
 
 \[vote\] root participation public key (if any) currently registered for this round.

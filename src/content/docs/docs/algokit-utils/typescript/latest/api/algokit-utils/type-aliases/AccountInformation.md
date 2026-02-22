@@ -7,7 +7,7 @@ title: "AccountInformation"
 
 > **AccountInformation** = `object`
 
-Defined in: [src/account.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L22)
+Defined in: [src/account.ts:22](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L22)
 
 Account information at a given round.
 
@@ -15,9 +15,9 @@ Account information at a given round.
 
 ### address
 
-> **address**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> **address**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [src/account.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L26)
+Defined in: [src/account.ts:26](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L26)
 
 The account public key
 
@@ -25,9 +25,9 @@ The account public key
 
 ### amountWithoutPendingRewards
 
-> **amountWithoutPendingRewards**: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> **amountWithoutPendingRewards**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/account.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L34)
+Defined in: [src/account.ts:34](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L34)
 
 The amount of Algo in the account, without the pending rewards.
 
@@ -35,9 +35,9 @@ The amount of Algo in the account, without the pending rewards.
 
 ### appsLocalState?
 
-> `optional` **appsLocalState**: [`ApplicationLocalState`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/applicationlocalstate/)[]
+> `optional` **appsLocalState**: [`ApplicationLocalState`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/applicationlocalstate/)[]
 
-Defined in: [src/account.ts:91](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L91)
+Defined in: [src/account.ts:91](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L91)
 
 Applications local data stored in this account.
 
@@ -47,7 +47,7 @@ Applications local data stored in this account.
 
 > `optional` **appsTotalExtraPages**: `number`
 
-Defined in: [src/account.ts:96](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L96)
+Defined in: [src/account.ts:96](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L96)
 
 The sum of all extra application program pages for this account.
 
@@ -55,9 +55,9 @@ The sum of all extra application program pages for this account.
 
 ### appsTotalSchema?
 
-> `optional` **appsTotalSchema**: [`ApplicationStateSchema`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/applicationstateschema/)
+> `optional` **appsTotalSchema**: [`ApplicationStateSchema`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/applicationstateschema/)
 
-Defined in: [src/account.ts:102](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L102)
+Defined in: [src/account.ts:102](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L102)
 
 (tsch) stores the sum of all of the local schemas and global schemas in this
 account.
@@ -67,9 +67,9 @@ Note: the raw account uses `StateSchema` for this type.
 
 ### assets?
 
-> `optional` **assets**: [`AssetHolding`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/assetholding/)[]
+> `optional` **assets**: [`AssetHolding`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/assetholding/)[]
 
-Defined in: [src/account.ts:107](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L107)
+Defined in: [src/account.ts:107](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L107)
 
 Assets held by this account.
 
@@ -77,9 +77,9 @@ Assets held by this account.
 
 ### authAddr?
 
-> `optional` **authAddr**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> `optional` **authAddr**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [src/account.ts:114](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L114)
+Defined in: [src/account.ts:114](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L114)
 
 The address against which signing should be checked. If empty, the
 address of the current account is used. This field can be updated in any
@@ -89,9 +89,9 @@ transaction by setting the `RekeyTo` field.
 
 ### balance
 
-> **balance**: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> **balance**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/account.ts:29](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L29)
+Defined in: [src/account.ts:29](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L29)
 
 The balance of Algo currently held by the account.
 
@@ -99,9 +99,9 @@ The balance of Algo currently held by the account.
 
 ### createdApps?
 
-> `optional` **createdApps**: [`Application`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/application/)[]
+> `optional` **createdApps**: [`Application`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/application/)[]
 
-Defined in: [src/account.ts:119](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L119)
+Defined in: [src/account.ts:119](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L119)
 
 Parameters of applications created by this account including app global data.
 
@@ -109,9 +109,9 @@ Parameters of applications created by this account including app global data.
 
 ### createdAssets?
 
-> `optional` **createdAssets**: [`Asset`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/asset/)[]
+> `optional` **createdAssets**: [`Asset`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/asset/)[]
 
-Defined in: [src/account.ts:125](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L125)
+Defined in: [src/account.ts:125](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L125)
 
 (apar) parameters of assets created by this account.
 Note: the raw account uses `map[int] -> Asset` for this type.
@@ -122,7 +122,7 @@ Note: the raw account uses `map[int] -> Asset` for this type.
 
 > `optional` **lastHeartbeatRound**: `bigint`
 
-Defined in: [src/account.ts:162](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L162)
+Defined in: [src/account.ts:162](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L162)
 
 The round in which this account last went online, or explicitly renewed their
 online status.
@@ -133,7 +133,7 @@ online status.
 
 > `optional` **lastProposedRound**: `bigint`
 
-Defined in: [src/account.ts:167](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L167)
+Defined in: [src/account.ts:167](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L167)
 
 The round in which this account last proposed the block.
 
@@ -141,9 +141,9 @@ The round in which this account last proposed the block.
 
 ### minBalance
 
-> **minBalance**: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> **minBalance**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/account.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L41)
+Defined in: [src/account.ts:41](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L41)
 
 Algo balance required to be held by the account.
 
@@ -153,9 +153,9 @@ The requirement grows based on asset and application usage.
 
 ### participation?
 
-> `optional` **participation**: [`AccountParticipation`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/accountparticipation/)
+> `optional` **participation**: [`AccountParticipation`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/accountparticipation/)
 
-Defined in: [src/account.ts:131](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L131)
+Defined in: [src/account.ts:131](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L131)
 
 AccountParticipation describes the parameters used by this account in consensus
 protocol.
@@ -164,9 +164,9 @@ protocol.
 
 ### pendingRewards
 
-> **pendingRewards**: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> **pendingRewards**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/account.ts:45](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L45)
+Defined in: [src/account.ts:45](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L45)
 
 Amount of Algo of pending rewards in this account.
 
@@ -176,7 +176,7 @@ Amount of Algo of pending rewards in this account.
 
 > `optional` **rewardBase**: `number`
 
-Defined in: [src/account.ts:137](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L137)
+Defined in: [src/account.ts:137](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L137)
 
 Used as part of the rewards computation. Only applicable to accounts
 which are participating.
@@ -185,9 +185,9 @@ which are participating.
 
 ### rewards
 
-> **rewards**: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> **rewards**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/account.ts:51](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L51)
+Defined in: [src/account.ts:51](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L51)
 
 Total rewards of Algo the account has received, including pending
 rewards.
@@ -198,7 +198,7 @@ rewards.
 
 > `optional` **sigType**: `string`
 
-Defined in: [src/account.ts:145](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L145)
+Defined in: [src/account.ts:145](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L145)
 
 Indicates what type of signature is used by this account, must be one of:
 * sig
@@ -211,7 +211,7 @@ Indicates what type of signature is used by this account, must be one of:
 
 > **status**: `string`
 
-Defined in: [src/account.ts:64](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L64)
+Defined in: [src/account.ts:64](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L64)
 
 Delegation status of the account's Algo:
 * Offline - indicates that the associated account is delegated.
@@ -224,7 +224,7 @@ Delegation status of the account's Algo:
 
 > **totalAppsOptedIn**: `number`
 
-Defined in: [src/account.ts:70](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L70)
+Defined in: [src/account.ts:70](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L70)
 
 The count of all applications that have been opted in, equivalent to the count
 of application local data (AppLocalState objects) stored in this account.
@@ -235,7 +235,7 @@ of application local data (AppLocalState objects) stored in this account.
 
 > **totalAssetsOptedIn**: `number`
 
-Defined in: [src/account.ts:76](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L76)
+Defined in: [src/account.ts:76](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L76)
 
 The count of all assets that have been opted in, equivalent to the count of
 AssetHolding objects held by this account.
@@ -246,7 +246,7 @@ AssetHolding objects held by this account.
 
 > `optional` **totalBoxBytes**: `number`
 
-Defined in: [src/account.ts:151](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L151)
+Defined in: [src/account.ts:151](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L151)
 
 The total number of bytes used by this account's app's box keys and
 values.
@@ -257,7 +257,7 @@ values.
 
 > `optional` **totalBoxes**: `number`
 
-Defined in: [src/account.ts:156](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L156)
+Defined in: [src/account.ts:156](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L156)
 
 The number of existing boxes created by this account's app.
 
@@ -267,7 +267,7 @@ The number of existing boxes created by this account's app.
 
 > **totalCreatedApps**: `number`
 
-Defined in: [src/account.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L81)
+Defined in: [src/account.ts:81](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L81)
 
 The count of all apps (AppParams objects) created by this account.
 
@@ -277,7 +277,7 @@ The count of all apps (AppParams objects) created by this account.
 
 > **totalCreatedAssets**: `number`
 
-Defined in: [src/account.ts:86](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L86)
+Defined in: [src/account.ts:86](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L86)
 
 The count of all assets (AssetParams objects) created by this account.
 
@@ -287,6 +287,6 @@ The count of all assets (AssetParams objects) created by this account.
 
 > **validAsOfRound**: `bigint`
 
-Defined in: [src/account.ts:56](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account.ts#L56)
+Defined in: [src/account.ts:56](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account.ts#L56)
 
 The round number for which this information is relevant.

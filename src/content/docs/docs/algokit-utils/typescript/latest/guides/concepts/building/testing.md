@@ -5,7 +5,7 @@ description: "Automated testing is a higher-order use case capability provided b
 
 Automated testing is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It allows you to use terse, robust automated testing primitives that work across any testing framework (including jest and vitest) to facilitate fixture management, quickly generating isolated and funded test accounts, transaction logging, indexer wait management and log capture.
 
-To see some usage examples check out the all of the [automated tests](../../src/) and the various \*.spec.ts files (AlgoKit Utils [dogfoods](https://en.wikipedia.org/wiki/Eating_your_own_dog_food) it's own testing library). Alternatively, you can see an example of using this library to test a smart contract with [the tests](https://github.com/algorandfoundation/nft_voting_tool/blob/main/src/algorand/smart_contracts/tests/voting.spec.ts) for the [on-chain voting tool](https://github.com/algorandfoundation/nft_voting_tool#readme).
+To see some usage examples check out the all of the [automated tests](https://github.com/algorandfoundation/algokit-utils-ts/tree/main/src) and the various \*.spec.ts files (AlgoKit Utils [dogfoods](https://en.wikipedia.org/wiki/Eating_your_own_dog_food) it's own testing library). Alternatively, you can see an example of using this library to test a smart contract with [the tests](https://github.com/algorandfoundation/nft_voting_tool/blob/main/src/algorand/smart_contracts/tests/voting.spec.ts) for the [on-chain voting tool](https://github.com/algorandfoundation/nft_voting_tool#readme).
 
 ## Module import
 
@@ -112,14 +112,14 @@ When calling `algorandFixture()` you can optionally pass in some fixture configu
 - `algod?: Algodv2` - An optional algod client, if not specified then it will create one against environment variables defined network (if present) or default LocalNet
 - `indexer?: Indexer` - An optional indexer client, if not specified then it will create one against environment variables defined network (if present) or default LocalNet
 - `kmd?: Kmd` - An optional kmd client, if not specified then it will create one against environment variables defined network (if present) or default LocalNet
-- `testAccountFunding?: AlgoAmount` - The [amount](../../core/amount) of funds to allocate to the default testing account, if not specified then it will get `10` ALGO
+- `testAccountFunding?: AlgoAmount` - The [amount](/docs/algokit-utils/typescript/latest/guides/concepts/core/amount/) of funds to allocate to the default testing account, if not specified then it will get `10` ALGO
 - `accountGetter?: (algod: Algodv2, kmd?: Kmd) => Promise<Address & AddressWithSigners>` - Optional override for how to get an account; this allows you to retrieve test accounts from a known or cached list of accounts.
 
 ### Using the fixture context
 
 The `fixture.context` property is of type `AlgorandTestAutomationContext` exposes the following properties from which you can pick which ones you want in a given test using an object [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
 
-- `algorand: AlgorandClient` - An [`AlgorandClient`](../../core/algorand-client) instance
+- `algorand: AlgorandClient` - An [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) instance
 - `algod: Algodv2` - Proxy Algod client instance that will log sent transactions in `transactionLogger`
 - `indexer: Indexer` - Indexer client instance
 - `kmd: Kmd` - KMD client instance
@@ -235,11 +235,11 @@ The easiest way to use this functionality is via the [Algorand fixture](#algoran
 
 When testing, it's often useful to ephemerally generate random accounts, fund them with some number of Algo and then use that account to perform transactions. By creating an ephemeral, random account you naturally get isolation between tests and test runs and don't need to start from a specific blockchain network state. This makes test less flakey, and also means the same test can be run against LocalNet and (say) TestNet.
 
-The key when generating a test account is getting hold of a [dispenser](./transfer.md#dispenser) and then [ensuring the test account is funded](./transfer.md#ensurefunded).
+The key when generating a test account is getting hold of a [dispenser](/docs/algokit-utils/typescript/latest/guides/concepts/building/transfer/#dispenser) and then [ensuring the test account is funded](/docs/algokit-utils/typescript/latest/guides/concepts/building/transfer/#ensurefunded).
 
 To make it easier to quickly get a test account the testing capability provides the following mechanisms:
 
-- `algotesting.getTestAccount(testAccountParams, algod, kmd?)` - Generates a random new account, logs the mnemonic of the account (unless suppressed), funds it from the [dispenser](./transfer.md#dispenser)
+- `algotesting.getTestAccount(testAccountParams, algod, kmd?)` - Generates a random new account, logs the mnemonic of the account (unless suppressed), funds it from the [dispenser](/docs/algokit-utils/typescript/latest/guides/concepts/building/transfer/#dispenser)
 - `algorandFixture.testAccount` - A test account that is always generated for every test (log output suppressed to reduce noise, but worth noting that means the mnemonic isn't logged for this account), by default it is given 10 Algo unless overridden in the [fixture config](#fixture-configuration)
 - `algorandFixture.generateAccount(testAccountParams)` - Allows you to quickly generate a test account with the `algod` and `kmd` instances that are part of the given fixture
 

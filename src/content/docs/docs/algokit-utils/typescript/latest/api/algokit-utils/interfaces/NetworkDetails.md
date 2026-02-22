@@ -5,7 +5,7 @@ prev: false
 title: "NetworkDetails"
 ---
 
-Defined in: [src/network-client.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L22)
+Defined in: [src/network-client.ts:22](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L22)
 
 Details of the current network.
 
@@ -15,7 +15,7 @@ Details of the current network.
 
 > **genesisHash**: `string`
 
-Defined in: [src/network-client.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L32)
+Defined in: [src/network-client.ts:32](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L32)
 
 The base64 genesis hash of the current network.
 
@@ -25,7 +25,7 @@ The base64 genesis hash of the current network.
 
 > **genesisId**: `string`
 
-Defined in: [src/network-client.ts:30](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L30)
+Defined in: [src/network-client.ts:30](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L30)
 
 The genesis ID of the current network.
 
@@ -35,7 +35,7 @@ The genesis ID of the current network.
 
 > **isLocalNet**: `boolean`
 
-Defined in: [src/network-client.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L28)
+Defined in: [src/network-client.ts:28](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L28)
 
 Whether or not the network is LocalNet.
 
@@ -45,7 +45,7 @@ Whether or not the network is LocalNet.
 
 > **isMainNet**: `boolean`
 
-Defined in: [src/network-client.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L26)
+Defined in: [src/network-client.ts:26](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L26)
 
 Whether or not the network is MainNet.
 
@@ -55,6 +55,6 @@ Whether or not the network is MainNet.
 
 > **isTestNet**: `boolean`
 
-Defined in: [src/network-client.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L24)
+Defined in: [src/network-client.ts:24](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L24)
 
 Whether or not the network is TestNet.

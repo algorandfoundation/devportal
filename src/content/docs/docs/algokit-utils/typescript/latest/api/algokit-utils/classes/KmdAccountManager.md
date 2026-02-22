@@ -5,7 +5,7 @@ prev: false
 title: "KmdAccountManager"
 ---
 
-Defined in: [src/kmd-account-manager.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L13)
+Defined in: [src/kmd-account-manager.ts:13](https://github.com/larkiny/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L13)
 
 Provides abstractions over a [KMD](https://github.com/algorand/go-algorand/blob/master/daemon/kmd/README.md) instance
 that makes it easier to get and manage accounts using KMD.
@@ -16,7 +16,7 @@ that makes it easier to get and manage accounts using KMD.
 
 > **new KmdAccountManager**(`clientManager`): `KmdAccountManager`
 
-Defined in: [src/kmd-account-manager.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L21)
+Defined in: [src/kmd-account-manager.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L21)
 
 Create a new KMD manager.
 
@@ -24,7 +24,7 @@ Create a new KMD manager.
 
 ##### clientManager
 
-[`ClientManager`](/algokit-utils-ts/api/algokit-utils/classes/clientmanager/)
+[`ClientManager`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/clientmanager/)
 
 A ClientManager client to use for algod and kmd clients
 
@@ -36,15 +36,15 @@ A ClientManager client to use for algod and kmd clients
 
 ### getLocalNetDispenserAccount()
 
-> **getLocalNetDispenserAccount**(): `Promise`\<[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
+> **getLocalNetDispenserAccount**(): `Promise`\<[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
 
-Defined in: [src/kmd-account-manager.ts:191](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L191)
+Defined in: [src/kmd-account-manager.ts:191](https://github.com/larkiny/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L191)
 
 Returns an Algorand account with private key loaded for the default LocalNet dispenser account (that can be used to fund other accounts).
 
 #### Returns
 
-`Promise`\<[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
+`Promise`\<[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
 
 The default LocalNet dispenser account
 
@@ -58,9 +58,9 @@ const dispenser = await kmdAccountManager.getLocalNetDispenserAccount()
 
 ### getOrCreateWalletAccount()
 
-> **getOrCreateWalletAccount**(`name`, `fundWith?`): `Promise`\<[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
+> **getOrCreateWalletAccount**(`name`, `fundWith?`): `Promise`\<[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
 
-Defined in: [src/kmd-account-manager.ts:147](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L147)
+Defined in: [src/kmd-account-manager.ts:147](https://github.com/larkiny/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L147)
 
 Gets an account with private key loaded from a KMD wallet of the given name, or alternatively creates one with funds in it via a KMD wallet of the given name.
 
@@ -80,13 +80,13 @@ The name of the wallet to retrieve / create
 
 ##### fundWith?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The number of Algo to fund the account with when it gets created, if not specified then 1000 ALGO will be funded from the dispenser account
 
 #### Returns
 
-`Promise`\<[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
+`Promise`\<[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
 
 An Algorand account with private key loaded - either one that already existed in the given KMD wallet, or a new one that is funded for you
 
@@ -104,9 +104,9 @@ const existingAccount = await kmdAccountManager.getOrCreateWalletAccount('accoun
 
 ### getWalletAccount()
 
-> **getWalletAccount**(`walletName`, `predicate?`, `sender?`): `Promise`\<[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| `undefined`\>
+> **getWalletAccount**(`walletName`, `predicate?`, `sender?`): `Promise`\<[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| `undefined`\>
 
-Defined in: [src/kmd-account-manager.ts:65](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L65)
+Defined in: [src/kmd-account-manager.ts:65](https://github.com/larkiny/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L65)
 
 Returns an Algorand signing account with private key loaded from the given KMD wallet (identified by name).
 
@@ -128,11 +128,11 @@ An optional filter to use to find the account (otherwise it will return a random
 
 The optional sender address to use this signer for (aka a rekeyed account)
 
-`string` | [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+`string` | [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
 #### Returns
 
-`Promise`\<[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| `undefined`\>
+`Promise`\<[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| `undefined`\>
 
 The signing account (with private key loaded) or undefined if no matching wallet or account was found
 
@@ -149,10 +149,10 @@ const defaultDispenserAccount = await kmdAccountManager.getWalletAccount(
 
 ### kmd()
 
-> **kmd**(): `Promise`\<[`KmdClient`](/algokit-utils-ts/api/subpaths/kmd-client/classes/kmdclient/)\>
+> **kmd**(): `Promise`\<[`KmdClient`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdclient/)\>
 
-Defined in: [src/kmd-account-manager.ts:30](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L30)
+Defined in: [src/kmd-account-manager.ts:30](https://github.com/larkiny/algokit-utils-ts/blob/main/src/kmd-account-manager.ts#L30)
 
 #### Returns
 
-`Promise`\<[`KmdClient`](/algokit-utils-ts/api/subpaths/kmd-client/classes/kmdclient/)\>
+`Promise`\<[`KmdClient`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdclient/)\>

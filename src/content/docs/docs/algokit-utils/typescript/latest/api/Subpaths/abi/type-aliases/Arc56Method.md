@@ -7,7 +7,7 @@ title: "Arc56Method"
 
 > **Arc56Method** = `object`
 
-Defined in: [packages/abi/src/arc56-contract.ts:142](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L142)
+Defined in: [packages/abi/src/arc56-contract.ts:142](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L142)
 
 Describes a method in the contract. This type is an extension of the type described in ARC-4
 
@@ -17,7 +17,7 @@ Describes a method in the contract. This type is an extension of the type descri
 
 > **actions**: `object`
 
-Defined in: [packages/abi/src/arc56-contract.ts:183](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L183)
+Defined in: [packages/abi/src/arc56-contract.ts:183](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L183)
 
 an action is a combination of call/create and an OnComplete
 
@@ -39,7 +39,7 @@ OnCompletes this method allows when appID === 0
 
 > **args**: `object`[]
 
-Defined in: [packages/abi/src/arc56-contract.ts:148](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L148)
+Defined in: [packages/abi/src/arc56-contract.ts:148](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L148)
 
 The arguments of the method, in order
 
@@ -68,7 +68,7 @@ Where the default value is coming from
 
 ##### defaultValue.type?
 
-> `optional` **type**: `ABITypeName` \| [`AVMType`](/algokit-utils-ts/api/subpaths/abi/type-aliases/avmtype/)
+> `optional` **type**: `ABITypeName` \| [`AVMType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/avmtype/)
 
 How the data is encoded. This is the encoding for the data provided here, not the arg type
 
@@ -86,7 +86,7 @@ Optional, user-friendly name for the argument
 
 #### struct?
 
-> `optional` **struct**: [`StructName`](/algokit-utils-ts/api/subpaths/abi/type-aliases/structname/)
+> `optional` **struct**: [`StructName`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/structname/)
 
 If the type is a struct, the name of the struct
 
@@ -102,7 +102,7 @@ The type of the argument. The `struct` field should also be checked to determine
 
 > `optional` **desc**: `string`
 
-Defined in: [packages/abi/src/arc56-contract.ts:146](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L146)
+Defined in: [packages/abi/src/arc56-contract.ts:146](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L146)
 
 Optional, user-friendly description for the method
 
@@ -110,9 +110,9 @@ Optional, user-friendly description for the method
 
 ### events?
 
-> `optional` **events**: [`Event`](/algokit-utils-ts/api/subpaths/abi/type-aliases/event/)[]
+> `optional` **events**: [`Event`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/event/)[]
 
-Defined in: [packages/abi/src/arc56-contract.ts:192](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L192)
+Defined in: [packages/abi/src/arc56-contract.ts:192](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L192)
 
 ARC-28 events that MAY be emitted by this method
 
@@ -122,7 +122,7 @@ ARC-28 events that MAY be emitted by this method
 
 > **name**: `string`
 
-Defined in: [packages/abi/src/arc56-contract.ts:144](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L144)
+Defined in: [packages/abi/src/arc56-contract.ts:144](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L144)
 
 The name of the method
 
@@ -132,7 +132,7 @@ The name of the method
 
 > `optional` **readonly**: `boolean`
 
-Defined in: [packages/abi/src/arc56-contract.ts:190](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L190)
+Defined in: [packages/abi/src/arc56-contract.ts:190](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L190)
 
 If this method does not write anything to the ledger (ARC-22)
 
@@ -142,7 +142,7 @@ If this method does not write anything to the ledger (ARC-22)
 
 > `optional` **recommendations**: `object`
 
-Defined in: [packages/abi/src/arc56-contract.ts:194](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L194)
+Defined in: [packages/abi/src/arc56-contract.ts:194](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L194)
 
 Information that clients can use when calling the method
 
@@ -206,7 +206,7 @@ The number of inner transactions the caller should cover the fees for
 
 > **returns**: `object`
 
-Defined in: [packages/abi/src/arc56-contract.ts:174](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L174)
+Defined in: [packages/abi/src/arc56-contract.ts:174](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L174)
 
 Information about the method's return value
 
@@ -218,7 +218,7 @@ Optional, user-friendly description for the return value
 
 #### struct?
 
-> `optional` **struct**: [`StructName`](/algokit-utils-ts/api/subpaths/abi/type-aliases/structname/)
+> `optional` **struct**: [`StructName`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/structname/)
 
 If the type is a struct, the name of the struct
 

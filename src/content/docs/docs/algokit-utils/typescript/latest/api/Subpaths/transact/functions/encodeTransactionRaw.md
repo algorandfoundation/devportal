@@ -7,7 +7,7 @@ title: "encodeTransactionRaw"
 
 > **encodeTransactionRaw**(`transaction`): `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:461](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L461)
+Defined in: [packages/transact/src/transactions/transaction.ts:461](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L461)
 
 Encode the transaction without the domain separation (e.g. "TX") prefix
 This is useful for encoding the transaction for signing with tools that automatically add "TX" prefix to the transaction bytes.
@@ -16,7 +16,7 @@ This is useful for encoding the transaction for signing with tools that automati
 
 ### transaction
 
-[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)
+[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)
 
 ## Returns
 

@@ -7,12 +7,12 @@ title: "BoxesResponse"
 
 > **BoxesResponse** = `object`
 
-Defined in: [packages/algod\_client/src/models/boxes-response.ts:6](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/boxes-response.ts#L6)
+Defined in: [packages/algod\_client/src/models/boxes-response.ts:6](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/boxes-response.ts#L6)
 
 ## Properties
 
 ### boxes
 
-> **boxes**: [`BoxDescriptor`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/boxdescriptor/)[]
+> **boxes**: [`BoxDescriptor`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/boxdescriptor/)[]
 
-Defined in: [packages/algod\_client/src/models/boxes-response.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/boxes-response.ts#L7)
+Defined in: [packages/algod\_client/src/models/boxes-response.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/boxes-response.ts#L7)

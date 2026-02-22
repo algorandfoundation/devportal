@@ -6,7 +6,7 @@ description: "Client management is one of the core capabilities provided by Algo
 Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) [algod](https://dev.algorand.co/reference/rest-apis/algod), [indexer](https://dev.algorand.co/reference/rest-apis/indexer) and [kmd](https://dev.algorand.co/reference/rest-apis/kmd) clients against various networks resolved from environment or specified configuration.
 
 > [!TIP]
-> The API client types are available from the [modular imports](../../advanced/modular-imports): Algod types from `@algorandfoundation/algokit-utils/algod-client`, Indexer types from `@algorandfoundation/algokit-utils/indexer-client`, and KMD types from `@algorandfoundation/algokit-utils/kmd-client`.
+> The API client types are available from the [modular imports](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/modular-imports/): Algod types from `@algorandfoundation/algokit-utils/algod-client`, Indexer types from `@algorandfoundation/algokit-utils/indexer-client`, and KMD types from `@algorandfoundation/algokit-utils/kmd-client`.
 
 To see some usage examples check out the `automated tests`.
 
@@ -14,7 +14,7 @@ To see some usage examples check out the `automated tests`.
 
 The `ClientManager` is a class that is used to manage client instances.
 
-To get an instance of `ClientManager` you can get it from either [`AlgorandClient`](../algorand-client) via `algorand.client` or instantiate it directly:
+To get an instance of `ClientManager` you can get it from either [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) via `algorand.client` or instantiate it directly:
 
 ```typescript
 import { ClientManager } from '@algorandfoundation/algokit-utils/client-manager'
@@ -71,7 +71,7 @@ You can also shortcut needing to write the likes of `ClientManager.getAlgoClient
 
 ### Accessing SDK clients via ClientManager instance
 
-Once you have a `ClientManager` instance, you can access the SDK clients for the various Algorand APIs from it (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](../algorand-client)):
+Once you have a `ClientManager` instance, you can access the SDK clients for the various Algorand APIs from it (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/)):
 
 ```typescript
 const algorand = AlgorandClient.defaultLocalNet()
@@ -93,11 +93,11 @@ algorand.client.kmd // Throws error
 
 ### Creating an app client instance
 
-See [how to create app clients via ClientManager via AlgorandClient](../../building/app-client#dynamically-creating-clients-for-a-given-app-spec).
+See [how to create app clients via ClientManager via AlgorandClient](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-client/#dynamically-creating-clients-for-a-given-app-spec).
 
 ### Creating a TestNet dispenser API client instance
 
-You can also create a [TestNet dispenser API client instance](../../advanced/dispenser-client#creating-a-dispenser-client) from `ClientManager` too.
+You can also create a [TestNet dispenser API client instance](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/dispenser-client/#creating-a-dispenser-client) from `ClientManager` too.
 
 ## Automatic retry
 
@@ -105,7 +105,7 @@ When receiving an Algod or Indexer client from AlgoKit Utils, it will be a speci
 
 ## Network information
 
-To get information about the current network you are connected to, you can use the `network()` method on `ClientManager` or the `is{Network}()` methods (which in turn call `network()`) as shown below (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](../algorand-client)):
+To get information about the current network you are connected to, you can use the `network()` method on `ClientManager` or the `is{Network}()` methods (which in turn call `network()`) as shown below (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/)):
 
 ```typescript
 const algorand = AlgorandClient.defaultLocalNet()

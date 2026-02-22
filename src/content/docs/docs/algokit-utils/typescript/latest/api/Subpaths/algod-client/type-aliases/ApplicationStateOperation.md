@@ -7,7 +7,7 @@ title: "ApplicationStateOperation"
 
 > **ApplicationStateOperation** = `object`
 
-Defined in: [packages/algod\_client/src/models/application-state-operation.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L9)
+Defined in: [packages/algod\_client/src/models/application-state-operation.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L9)
 
 An operation against an application's global/local/box state.
 
@@ -15,9 +15,9 @@ An operation against an application's global/local/box state.
 
 ### account?
 
-> `optional` **account**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> `optional` **account**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [packages/algod\_client/src/models/application-state-operation.ts:29](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L29)
+Defined in: [packages/algod\_client/src/models/application-state-operation.ts:29](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L29)
 
 For local state changes, the address of the account associated with the local state.
 
@@ -27,7 +27,7 @@ For local state changes, the address of the account associated with the local st
 
 > **appStateType**: `string`
 
-Defined in: [packages/algod\_client/src/models/application-state-operation.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L18)
+Defined in: [packages/algod\_client/src/models/application-state-operation.ts:18](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L18)
 
 Type of application state. Value `g` is **global state**, `l` is **local state**, `b` is **boxes**.
 
@@ -37,7 +37,7 @@ Type of application state. Value `g` is **global state**, `l` is **local state**
 
 > **key**: `Uint8Array`
 
-Defined in: [packages/algod\_client/src/models/application-state-operation.ts:23](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L23)
+Defined in: [packages/algod\_client/src/models/application-state-operation.ts:23](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L23)
 
 The key (name) of the global/local/box state.
 
@@ -45,9 +45,9 @@ The key (name) of the global/local/box state.
 
 ### newValue?
 
-> `optional` **newValue**: [`AvmValue`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/avmvalue/)
+> `optional` **newValue**: [`AvmValue`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/avmvalue/)
 
-Defined in: [packages/algod\_client/src/models/application-state-operation.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L24)
+Defined in: [packages/algod\_client/src/models/application-state-operation.ts:24](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L24)
 
 ***
 
@@ -55,6 +55,6 @@ Defined in: [packages/algod\_client/src/models/application-state-operation.ts:24
 
 > **operation**: `string`
 
-Defined in: [packages/algod\_client/src/models/application-state-operation.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L13)
+Defined in: [packages/algod\_client/src/models/application-state-operation.ts:13](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-state-operation.ts#L13)
 
 Operation type. Value `w` is **write**, `d` is **delete**.

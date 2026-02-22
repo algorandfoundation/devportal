@@ -5,9 +5,9 @@ description: "The `TransactionComposer` class allows you to easily compose one o
 
 The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.
 
-It's the core of how the [`AlgorandClient`](../../core/algorand-client) class composes and sends transactions.
+It's the core of how the [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) class composes and sends transactions.
 
-To get an instance of `TransactionComposer` you can either get it from an [app client](../../building/app-client), from an [`AlgorandClient`](../../core/algorand-client), or by instantiating via the constructor.
+To get an instance of `TransactionComposer` you can either get it from an [app client](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/), from an [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/), or by instantiating via the constructor.
 
 ```python
 composer_from_algorand = algorand.new_group()
@@ -33,7 +33,7 @@ composer_from_constructor_with_optional_params = TransactionComposer(
 
 ## Constructing a transaction
 
-To construct a transaction you need to add it to the composer, passing in the relevant `params object` for that transaction. Params are Python dataclasses and all of them extend the [common call parameters](../../core/algorand-client#transaction-parameters).
+To construct a transaction you need to add it to the composer, passing in the relevant `params object` for that transaction. Params are Python dataclasses and all of them extend the [common call parameters](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/#transaction-parameters).
 
 The `methods to construct a transaction` are all named `add_{transaction_type}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
 

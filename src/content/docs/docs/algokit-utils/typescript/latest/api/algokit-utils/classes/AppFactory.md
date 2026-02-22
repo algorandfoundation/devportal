@@ -5,7 +5,7 @@ prev: false
 title: "AppFactory"
 ---
 
-Defined in: [src/app-factory.ts:150](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L150)
+Defined in: [src/app-factory.ts:150](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L150)
 
 ARC-56/ARC-32 app factory that, for a given app spec, allows you to create
 and deploy one or more app instances and to create one or more app clients
@@ -17,7 +17,7 @@ to interact with those (or other) app instances.
 
 > **new AppFactory**(`params`): `AppFactory`
 
-Defined in: [src/app-factory.ts:177](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L177)
+Defined in: [src/app-factory.ts:177](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L177)
 
 Create a new app factory.
 
@@ -25,7 +25,7 @@ Create a new app factory.
 
 ##### params
 
-[`AppFactoryParams`](/algokit-utils-ts/api/algokit-utils/interfaces/appfactoryparams/)
+[`AppFactoryParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appfactoryparams/)
 
 The parameters to create the app factory
 
@@ -49,7 +49,7 @@ const appFactory = new AppFactory({
 
 > `readonly` **createTransaction**: `object`
 
-Defined in: [src/app-factory.ts:225](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L225)
+Defined in: [src/app-factory.ts:225](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L225)
 
 Create transactions for the current app
 
@@ -61,7 +61,7 @@ Create bare (raw) transactions for the current app
 
 ##### bare.create()
 
-> **create**: (`params?`) => `Promise`\<[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)\>
+> **create**: (`params?`) => `Promise`\<[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)\>
 
 Create a create app call transaction using a bare (raw) create call.
 
@@ -75,13 +75,13 @@ The parameters to create the create call transaction
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -105,7 +105,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -120,13 +120,13 @@ Whether or not the contract should have deploy-time permanence control set, unde
 
 ###### deployTimeParams?
 
-[`TealTemplateParams`](/algokit-utils-ts/api/algokit-utils/interfaces/tealtemplateparams/)
+[`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/tealtemplateparams/)
 
 Any deploy-time parameters to replace in the TEAL code
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -164,7 +164,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -176,7 +176,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+[`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
 
 ###### rejectVersion?
 
@@ -186,7 +186,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -224,13 +224,13 @@ The number of integers saved in local state.
 
 ###### sender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the account sending the transaction, if undefined then the app client's defaultSender is used.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -238,7 +238,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -256,13 +256,13 @@ How many rounds the transaction should be valid for, if not specified then the r
 
 ###### Returns
 
-`Promise`\<[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)\>
+`Promise`\<[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)\>
 
 The create call transaction
 
 #### create()
 
-> **create**: (`params`) => `Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)\>; `signers`: `Map`\<`number`, [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)\>; `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; \}\>
+> **create**: (`params`) => `Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)\>; `signers`: `Map`\<`number`, [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)\>; `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; \}\>
 
 Create a create app call transaction using an ABI create call.
 
@@ -276,13 +276,13 @@ The parameters to create the create call transaction
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -294,7 +294,7 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 
 ###### args?
 
-([`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
+([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
 
 Arguments to the ABI method, either:
 * An ABI value
@@ -313,7 +313,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -328,13 +328,13 @@ Whether or not the contract should have deploy-time permanence control set, unde
 
 ###### deployTimeParams?
 
-[`TealTemplateParams`](/algokit-utils-ts/api/algokit-utils/interfaces/tealtemplateparams/)
+[`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/tealtemplateparams/)
 
 Any deploy-time parameters to replace in the TEAL code
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -372,7 +372,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -402,7 +402,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+[`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -414,7 +414,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -452,13 +452,13 @@ The number of integers saved in local state.
 
 ###### sender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the account sending the transaction, if undefined then the app client's defaultSender is used.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -466,7 +466,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -484,7 +484,7 @@ How many rounds the transaction should be valid for, if not specified then the r
 
 ##### Returns
 
-`Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)\>; `signers`: `Map`\<`number`, [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)\>; `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; \}\>
+`Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)\>; `signers`: `Map`\<`number`, [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)\>; `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; \}\>
 
 The create call transaction
 
@@ -494,7 +494,7 @@ The create call transaction
 
 > `readonly` **send**: `object`
 
-Defined in: [src/app-factory.ts:253](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L253)
+Defined in: [src/app-factory.ts:253](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L253)
 
 Send transactions to the current app
 
@@ -506,7 +506,7 @@ Send bare (raw) transactions for the current app
 
 ##### bare.create()
 
-> **create**: (`params?`) => `Promise`\<\{ `appClient`: [`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return`: `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}; \}\>
+> **create**: (`params?`) => `Promise`\<\{ `appClient`: [`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return`: `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}; \}\>
 
 Creates an instance of the app using a bare (raw) create call and returns the result
 of the creation transaction and an app client to interact with that app instance.
@@ -517,19 +517,19 @@ Performs deploy-time TEAL template placeholder substitutions (if specified).
 
 ###### params?
 
-`object` & [`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/)
+`object` & [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/)
 
 The parameters to create the app
 
 ###### Returns
 
-`Promise`\<\{ `appClient`: [`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return`: `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}; \}\>
+`Promise`\<\{ `appClient`: [`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return`: `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}; \}\>
 
 The app client and the result of the creation transaction
 
 #### create()
 
-> **create**: (`params`) => `Promise`\<\{ `appClient`: [`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}; \}\>
+> **create**: (`params`) => `Promise`\<\{ `appClient`: [`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}; \}\>
 
 Creates an instance of the app and returns the result of the creation
 transaction and an app client to interact with that app instance.
@@ -540,13 +540,13 @@ Performs deploy-time TEAL template placeholder substitutions (if specified).
 
 ###### params
 
-`object` & [`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/)
+`object` & [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/)
 
 The parameters to create the app
 
 ##### Returns
 
-`Promise`\<\{ `appClient`: [`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}; \}\>
+`Promise`\<\{ `appClient`: [`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}; \}\>
 
 The app client and the result of the creation transaction
 
@@ -556,15 +556,15 @@ The app client and the result of the creation transaction
 
 #### Get Signature
 
-> **get** **algorand**(): [`AlgorandClient`](/algokit-utils-ts/api/algokit-utils/classes/algorandclient/)
+> **get** **algorand**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/)
 
-Defined in: [src/app-factory.ts:201](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L201)
+Defined in: [src/app-factory.ts:201](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L201)
 
 Return the algorand client this factory is using.
 
 ##### Returns
 
-[`AlgorandClient`](/algokit-utils-ts/api/algokit-utils/classes/algorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/)
 
 ***
 
@@ -574,7 +574,7 @@ Return the algorand client this factory is using.
 
 > **get** **appName**(): `string`
 
-Defined in: [src/app-factory.ts:191](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L191)
+Defined in: [src/app-factory.ts:191](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L191)
 
 The name of the app (from the ARC-32 / ARC-56 app spec or override).
 
@@ -588,15 +588,15 @@ The name of the app (from the ARC-32 / ARC-56 app spec or override).
 
 #### Get Signature
 
-> **get** **appSpec**(): [`Arc56Contract`](/algokit-utils-ts/api/subpaths/abi/type-aliases/arc56contract/)
+> **get** **appSpec**(): [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/arc56contract/)
 
-Defined in: [src/app-factory.ts:196](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L196)
+Defined in: [src/app-factory.ts:196](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L196)
 
 The ARC-56 app spec being used
 
 ##### Returns
 
-[`Arc56Contract`](/algokit-utils-ts/api/subpaths/abi/type-aliases/arc56contract/)
+[`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/arc56contract/)
 
 ***
 
@@ -606,7 +606,7 @@ The ARC-56 app spec being used
 
 > **get** **params**(): `object`
 
-Defined in: [src/app-factory.ts:220](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L220)
+Defined in: [src/app-factory.ts:220](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L220)
 
 Get parameters to create transactions (create and deploy related calls) for the current app.
 
@@ -643,13 +643,13 @@ Return params for a create bare call, including deploy-time TEAL template replac
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -673,7 +673,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -688,13 +688,13 @@ Whether or not the contract should have deploy-time permanence control set, unde
 
 ###### deployTimeParams?
 
-[`TealTemplateParams`](/algokit-utils-ts/api/algokit-utils/interfaces/tealtemplateparams/)
+[`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/tealtemplateparams/)
 
 Any deploy-time parameters to replace in the TEAL code
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -732,7 +732,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -744,7 +744,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+[`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
 
 ###### rejectVersion?
 
@@ -754,7 +754,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -792,13 +792,13 @@ The number of integers saved in local state.
 
 ###### sender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the account sending the transaction, if undefined then the app client's defaultSender is used.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -806,7 +806,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -838,13 +838,13 @@ Return params for a deployment delete bare call
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -868,7 +868,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -877,7 +877,7 @@ Either the name identifier (which will be set against app ID of `0` i.e.
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -907,7 +907,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -925,7 +925,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -933,13 +933,13 @@ Change the signing key of the sender to the given address.
 
 ###### sender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the account sending the transaction, if undefined then the app client's defaultSender is used.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -947,7 +947,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -971,13 +971,13 @@ Return params for a deployment update bare call
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1001,7 +1001,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1010,7 +1010,7 @@ Either the name identifier (which will be set against app ID of `0` i.e.
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -1040,7 +1040,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -1058,7 +1058,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -1066,13 +1066,13 @@ Change the signing key of the sender to the given address.
 
 ###### sender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the account sending the transaction, if undefined then the app client's defaultSender is used.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -1080,7 +1080,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -1104,13 +1104,13 @@ Return params for a create ABI call, including deploy-time TEAL template replace
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1122,7 +1122,7 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 
 ###### args?
 
-([`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
+([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
 
 Arguments to the ABI method, either:
 * An ABI value
@@ -1141,7 +1141,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1156,13 +1156,13 @@ Whether or not the contract should have deploy-time permanence control set, unde
 
 ###### deployTimeParams?
 
-[`TealTemplateParams`](/algokit-utils-ts/api/algokit-utils/interfaces/tealtemplateparams/)
+[`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/tealtemplateparams/)
 
 Any deploy-time parameters to replace in the TEAL code
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -1200,7 +1200,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -1230,7 +1230,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+[`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -1242,7 +1242,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -1280,13 +1280,13 @@ The number of integers saved in local state.
 
 ###### sender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the account sending the transaction, if undefined then the app client's defaultSender is used.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -1294,7 +1294,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -1326,13 +1326,13 @@ Return params for a deployment delete ABI call
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1344,7 +1344,7 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 
 ###### args?
 
-([`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
+([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
 
 Arguments to the ABI method, either:
 * An ABI value
@@ -1363,7 +1363,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1372,7 +1372,7 @@ Either the name identifier (which will be set against app ID of `0` i.e.
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -1402,7 +1402,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -1432,7 +1432,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`OnApplicationComplete`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/)
+[`OnApplicationComplete`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -1444,7 +1444,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -1452,13 +1452,13 @@ Change the signing key of the sender to the given address.
 
 ###### sender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the account sending the transaction, if undefined then the app client's defaultSender is used.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -1466,7 +1466,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -1490,13 +1490,13 @@ Return params for a deployment update ABI call
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1508,7 +1508,7 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 
 ###### args?
 
-([`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
+([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
 
 Arguments to the ABI method, either:
 * An ABI value
@@ -1527,7 +1527,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1536,7 +1536,7 @@ Either the name identifier (which will be set against app ID of `0` i.e.
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -1566,7 +1566,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -1596,7 +1596,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`OnApplicationComplete`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/)
+[`OnApplicationComplete`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -1608,7 +1608,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -1616,13 +1616,13 @@ Change the signing key of the sender to the given address.
 
 ###### sender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the account sending the transaction, if undefined then the app client's defaultSender is used.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -1630,7 +1630,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -1648,7 +1648,7 @@ How many rounds the transaction should be valid for, if not specified then the r
 
 > **compile**(`compilation?`): `Promise`\<`AppClientCompilationResult`\>
 
-Defined in: [src/app-factory.ts:600](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L600)
+Defined in: [src/app-factory.ts:600](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L600)
 
 Compiles the approval and clear state programs (if TEAL templates provided),
 performing any provided deploy-time parameter replacement and stores
@@ -1682,9 +1682,9 @@ const result = await factory.compile()
 
 ### deploy()
 
-> **deploy**(`params`): `Promise`\<\{ `appClient`: [`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"create"`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"update"`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteResult`: [`ConfirmedTransactionResult`](/algokit-utils-ts/api/algokit-utils/interfaces/confirmedtransactionresult/); `deleteReturn`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"replace"`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `createdMetadata`: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `name`: `string`; `operationPerformed`: `"nothing"`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \}; \}\>
+> **deploy**(`params`): `Promise`\<\{ `appClient`: [`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"create"`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"update"`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteResult`: [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/confirmedtransactionresult/); `deleteReturn`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"replace"`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `name`: `string`; `operationPerformed`: `"nothing"`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \}; \}\>
 
-Defined in: [src/app-factory.ts:354](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L354)
+Defined in: [src/app-factory.ts:354](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L354)
 
 Idempotently deploy (create if not exists, update if changed) an app against the given name for the given creator account, including deploy-time TEAL template placeholder substitutions (if specified).
 
@@ -1714,7 +1714,7 @@ Whether to use simulate to automatically calculate required app call inner trans
 
 ###### createParams?
 
-\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: ([`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `method`: `string`; `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \} \| \{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}
+\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: ([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `method`: `string`; `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \} \| \{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}
 
 Create transaction parameters to use if a create needs to be issued as part of deployment
 
@@ -1727,19 +1727,19 @@ Whether or not the contract should have deploy-time permanence control set.
 
 ###### deleteParams?
 
-\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `sender?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \} \| \{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: ([`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `method`: `string`; `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`OnApplicationComplete`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/); `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `sender?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}
+\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `sender?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \} \| \{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: ([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `method`: `string`; `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`OnApplicationComplete`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/); `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `sender?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}
 
 Delete transaction parameters to use if a create needs to be issued as part of deployment
 
 ###### deployTimeParams?
 
-[`TealTemplateParams`](/algokit-utils-ts/api/algokit-utils/interfaces/tealtemplateparams/)
+[`TealTemplateParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/tealtemplateparams/)
 
 Any deploy-time parameters to replace in the TEAL code before compiling it (used if teal code is passed in as a string)
 
 ###### existingDeployments?
 
-[`AppLookup`](/algokit-utils-ts/api/algokit-utils/interfaces/applookup/)
+[`AppLookup`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/applookup/)
 
 Optional cached value of the existing apps for the given creator; use this to avoid an indexer lookup
 
@@ -1757,7 +1757,7 @@ The number of rounds to wait for confirmation. By default until the latest lastV
 
 ###### onSchemaBreak?
 
-`"replace"` \| [`OnSchemaBreak`](/algokit-utils-ts/api/algokit-utils/enumerations/onschemabreak/) \| `"fail"` \| `"append"`
+`"replace"` \| [`OnSchemaBreak`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/onschemabreak/) \| `"fail"` \| `"append"`
 
 What action to perform if a schema break (storage schema or extra pages change) is detected:
 
@@ -1767,7 +1767,7 @@ What action to perform if a schema break (storage schema or extra pages change) 
 
 ###### onUpdate?
 
-`"replace"` \| `"update"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/algokit-utils-ts/api/algokit-utils/enumerations/onupdate/)
+`"replace"` \| `"update"` \| `"fail"` \| `"append"` \| [`OnUpdate`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/onupdate/)
 
 What action to perform if a TEAL code update is detected:
 
@@ -1797,13 +1797,13 @@ Whether or not the contract should have deploy-time immutability control set.
 
 ###### updateParams?
 
-\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `sender?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \} \| \{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: ([`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `method`: `string`; `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`OnApplicationComplete`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/); `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `sender?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}
+\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `sender?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \} \| \{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appReferences?`: `bigint`[]; `args?`: ([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]; `assetReferences?`: `bigint`[]; `boxReferences?`: ([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `method`: `string`; `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`OnApplicationComplete`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/); `rejectVersion?`: `number`; `rekeyTo?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `sender?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}
 
 Update transaction parameters to use if a create needs to be issued as part of deployment
 
 #### Returns
 
-`Promise`\<\{ `appClient`: [`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"create"`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"update"`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteResult`: [`ConfirmedTransactionResult`](/algokit-utils-ts/api/algokit-utils/interfaces/confirmedtransactionresult/); `deleteReturn`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"replace"`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/algokit-utils-ts/api/algokit-utils/interfaces/compiledteal/); `createdMetadata`: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `name`: `string`; `operationPerformed`: `"nothing"`; `return`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \}; \}\>
+`Promise`\<\{ `appClient`: [`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/); `result`: \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"create"`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"update"`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteResult`: [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/confirmedtransactionresult/); `deleteReturn`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `groupId`: `string` \| `undefined`; `name`: `string`; `operationPerformed`: `"replace"`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \} \| \{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `createdMetadata`: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/); `createdRound`: `bigint`; `deletable?`: `boolean`; `deleted`: `boolean`; `deleteReturn`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `name`: `string`; `operationPerformed`: `"nothing"`; `return`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`; `updatable?`: `boolean`; `updatedRound`: `bigint`; `version`: `string`; \}; \}\>
 
 The app client and the result of the deployment
 
@@ -1839,7 +1839,7 @@ const { appClient, result } = await factory.deploy({
 
 > **exportSourceMaps**(): `AppSourceMaps`
 
-Defined in: [src/app-factory.ts:481](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L481)
+Defined in: [src/app-factory.ts:481](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L481)
 
 Export the current source maps for the app.
 
@@ -1855,7 +1855,7 @@ The source maps
 
 > **exposeLogicError**(`e`, `isClearStateProgram?`): `Error`
 
-Defined in: [src/app-factory.ts:469](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L469)
+Defined in: [src/app-factory.ts:469](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L469)
 
 Takes an error that may include a logic error from a call to the current app and re-exposes the
 error to include source code information via the source map and ARC-56 spec.
@@ -1884,9 +1884,9 @@ The new error, or if there was no logic error or source map then the wrapped err
 
 ### getAppClientByCreatorAndName()
 
-> **getAppClientByCreatorAndName**(`params`): `Promise`\<[`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/)\>
+> **getAppClientByCreatorAndName**(`params`): `Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/)\>
 
-Defined in: [src/app-factory.ts:450](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L450)
+Defined in: [src/app-factory.ts:450](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L450)
 
 Returns a new `AppClient` client, resolving the app by creator address and name
 using AlgoKit app deployment semantics (i.e. looking for the app creation transaction note).
@@ -1902,7 +1902,7 @@ The parameters to create the app client
 
 ###### appLookupCache?
 
-[`AppLookup`](/algokit-utils-ts/api/algokit-utils/interfaces/applookup/)
+[`AppLookup`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/applookup/)
 
 An optional cached app lookup that matches a name to on-chain details;
 either this is needed or indexer is required to be passed in to this `ClientManager` on construction.
@@ -1928,19 +1928,19 @@ Optional source map for the clear state program
 
 ###### creatorAddress
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 The address of the creator account for the app
 
 ###### defaultSender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Optional address to use for the account to use as the default sender for calls.
 
 ###### defaultSigner?
 
-[`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).
 
@@ -1952,7 +1952,7 @@ Whether or not to ignore the `AppDeployer` lookup cache and force an on-chain lo
 
 #### Returns
 
-`Promise`\<[`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/)\>
+`Promise`\<[`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/)\>
 
 The `AppClient` instance
 
@@ -1966,9 +1966,9 @@ const appClient = factory.getAppClientByCreatorAndName({ creatorAddress: 'CREATO
 
 ### getAppClientById()
 
-> **getAppClientById**(`params`): [`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/)
+> **getAppClientById**(`params`): [`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/)
 
-Defined in: [src/app-factory.ts:424](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L424)
+Defined in: [src/app-factory.ts:424](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L424)
 
 Returns a new `AppClient` client for an app instance of the given ID.
 
@@ -2008,19 +2008,19 @@ Optional source map for the clear state program
 
 ###### defaultSender?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Optional address to use for the account to use as the default sender for calls.
 
 ###### defaultSigner?
 
-[`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 Optional signer to use as the default signer for default sender calls (if not specified then the signer will be resolved from `AlgorandClient`).
 
 #### Returns
 
-[`AppClient`](/algokit-utils-ts/api/algokit-utils/classes/appclient/)
+[`AppClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appclient/)
 
 The `AppClient` instance
 
@@ -2036,7 +2036,7 @@ const appClient = factory.getAppClientById({ appId: 12345n })
 
 > **importSourceMaps**(`sourceMaps`): `void`
 
-Defined in: [src/app-factory.ts:498](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-factory.ts#L498)
+Defined in: [src/app-factory.ts:498](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L498)
 
 Import source maps for the app.
 

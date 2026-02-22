@@ -5,13 +5,13 @@ prev: false
 title: "ABIStructType"
 ---
 
-Defined in: [packages/abi/src/abi-type.ts:730](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L730)
+Defined in: [packages/abi/src/abi-type.ts:730](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L730)
 
 A struct ABI type with named fields.
 
 ## Extends
 
-- [`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/)
+- [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
 ## Constructors
 
@@ -19,7 +19,7 @@ A struct ABI type with named fields.
 
 > **new ABIStructType**(`structName`, `structFields`): `ABIStructType`
 
-Defined in: [packages/abi/src/abi-type.ts:736](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L736)
+Defined in: [packages/abi/src/abi-type.ts:736](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L736)
 
 Creates a new struct type.
 
@@ -33,7 +33,7 @@ The name of the struct
 
 ##### structFields
 
-[`ABIStructField`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abistructfield/)[]
+[`ABIStructField`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistructfield/)[]
 
 The fields of the struct
 
@@ -43,15 +43,15 @@ The fields of the struct
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`constructor`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#constructor)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`constructor`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#constructor)
 
 ## Properties
 
 ### structFields
 
-> `readonly` **structFields**: [`ABIStructField`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abistructfield/)[]
+> `readonly` **structFields**: [`ABIStructField`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistructfield/)[]
 
-Defined in: [packages/abi/src/abi-type.ts:738](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L738)
+Defined in: [packages/abi/src/abi-type.ts:738](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L738)
 
 The fields of the struct
 
@@ -61,7 +61,7 @@ The fields of the struct
 
 > `readonly` **structName**: `string`
 
-Defined in: [packages/abi/src/abi-type.ts:737](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L737)
+Defined in: [packages/abi/src/abi-type.ts:737](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L737)
 
 The name of the struct
 
@@ -73,7 +73,7 @@ The name of the struct
 
 > **get** **displayName**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:748](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L748)
+Defined in: [packages/abi/src/abi-type.ts:748](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L748)
 
 Returns a user-friendly display name for this type.
 
@@ -85,7 +85,7 @@ The display name for this type
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`displayName`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#displayname)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`displayName`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#displayname)
 
 ***
 
@@ -95,7 +95,7 @@ The display name for this type
 
 > **get** **name**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:743](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L743)
+Defined in: [packages/abi/src/abi-type.ts:743](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L743)
 
 Returns the ARC-4 type name string representation.
 
@@ -107,7 +107,7 @@ The ARC-4 type string
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`name`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#name)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`name`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#name)
 
 ## Methods
 
@@ -115,7 +115,7 @@ The ARC-4 type string
 
 > **byteLen**(): `number`
 
-Defined in: [packages/abi/src/abi-type.ts:774](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L774)
+Defined in: [packages/abi/src/abi-type.ts:774](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L774)
 
 Gets the byte length of the encoded type for static types.
 
@@ -131,7 +131,7 @@ Error if the type is dynamic
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`byteLen`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#bytelen)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`byteLen`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#bytelen)
 
 ***
 
@@ -139,7 +139,7 @@ Error if the type is dynamic
 
 > **decode**(`bytes`): `ABIStructValue`
 
-Defined in: [packages/abi/src/abi-type.ts:849](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L849)
+Defined in: [packages/abi/src/abi-type.ts:849](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L849)
 
 Decodes bytes according to this ABI type.
 
@@ -159,7 +159,7 @@ The decoded value
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`decode`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#decode)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`decode`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#decode)
 
 ***
 
@@ -167,7 +167,7 @@ The decoded value
 
 > **encode**(`value`): `Uint8Array`
 
-Defined in: [packages/abi/src/abi-type.ts:835](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L835)
+Defined in: [packages/abi/src/abi-type.ts:835](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L835)
 
 Encodes a value according to this ABI type.
 
@@ -175,7 +175,7 @@ Encodes a value according to this ABI type.
 
 ##### value
 
-[`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/)
+[`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)
 
 The value to encode
 
@@ -187,7 +187,7 @@ The encoded bytes
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`encode`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#encode)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`encode`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#encode)
 
 ***
 
@@ -195,7 +195,7 @@ The encoded bytes
 
 > **equals**(`other`): `boolean`
 
-Defined in: [packages/abi/src/abi-type.ts:752](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L752)
+Defined in: [packages/abi/src/abi-type.ts:752](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L752)
 
 Checks if this ABI type is equal to another.
 
@@ -203,7 +203,7 @@ Checks if this ABI type is equal to another.
 
 ##### other
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
 The other ABI type to compare with
 
@@ -215,7 +215,7 @@ True if the types are equal, false otherwise
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`equals`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#equals)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`equals`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#equals)
 
 ***
 
@@ -223,7 +223,7 @@ True if the types are equal, false otherwise
 
 > **isDynamic**(): `boolean`
 
-Defined in: [packages/abi/src/abi-type.ts:769](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L769)
+Defined in: [packages/abi/src/abi-type.ts:769](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L769)
 
 Checks if this ABI type is dynamic (variable-length).
 
@@ -235,21 +235,21 @@ True if the type is dynamic, false otherwise
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`isDynamic`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#isdynamic)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`isDynamic`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#isdynamic)
 
 ***
 
 ### toABITupleType()
 
-> **toABITupleType**(): [`ABITupleType`](/algokit-utils-ts/api/subpaths/abi/classes/abitupletype/)
+> **toABITupleType**(): [`ABITupleType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitupletype/)
 
-Defined in: [packages/abi/src/abi-type.ts:783](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L783)
+Defined in: [packages/abi/src/abi-type.ts:783](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L783)
 
 Converts this struct type to an equivalent tuple type.
 
 #### Returns
 
-[`ABITupleType`](/algokit-utils-ts/api/subpaths/abi/classes/abitupletype/)
+[`ABITupleType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitupletype/)
 
 The equivalent tuple type
 
@@ -259,7 +259,7 @@ The equivalent tuple type
 
 > **toString**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L57)
+Defined in: [packages/abi/src/abi-type.ts:57](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L57)
 
 Returns the ARC-4 type name string representation.
 
@@ -271,15 +271,15 @@ The ARC-4 type string
 
 #### Inherited from
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`toString`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#tostring)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`toString`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#tostring)
 
 ***
 
 ### from()
 
-> `static` **from**(`str`): [`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/)
+> `static` **from**(`str`): [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
-Defined in: [packages/abi/src/abi-type.ts:100](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L100)
+Defined in: [packages/abi/src/abi-type.ts:100](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L100)
 
 Creates an ABI type from an ARC-4 type string.
 
@@ -293,13 +293,13 @@ The ARC-4 type string (e.g., "uint256", "bool", "(uint8,address)")
 
 #### Returns
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
 The corresponding ABI type
 
 #### Inherited from
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`from`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#from)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`from`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#from)
 
 ***
 
@@ -307,7 +307,7 @@ The corresponding ABI type
 
 > `static` **fromStruct**(`structName`, `structs`): `ABIStructType`
 
-Defined in: [packages/abi/src/abi-type.ts:804](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L804)
+Defined in: [packages/abi/src/abi-type.ts:804](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L804)
 
 Creates an ABIStructType from struct name and struct definitions.
 
@@ -321,7 +321,7 @@ The name of the struct
 
 ##### structs
 
-`Record`\<`string`, [`StructField`](/algokit-utils-ts/api/subpaths/abi/type-aliases/structfield/)[]\>
+`Record`\<`string`, [`StructField`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/structfield/)[]\>
 
 A record of struct definitions
 

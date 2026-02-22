@@ -18,7 +18,7 @@ title: "algokit_utils.accounts.account_manager"
 
 ### *class* EnsureFundedResult
 
-Bases: [`algokit_utils.transactions.transaction_sender.SendSingleTransactionResult`](../../transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult), `_CommonEnsureFundedParams`
+Bases: [`algokit_utils.transactions.transaction_sender.SendSingleTransactionResult`](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult), `_CommonEnsureFundedParams`
 
 Result from performing an ensure funded call.
 
@@ -38,23 +38,23 @@ See https://dev.algorand.co/reference/rest-apis/algod/#account for detailed fiel
 
 The account’s address
 
-#### amount *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### amount *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)*
 
 The account’s current balance
 
-#### amount_without_pending_rewards *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### amount_without_pending_rewards *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)*
 
 The account’s balance without the pending rewards
 
-#### min_balance *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### min_balance *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)*
 
 The account’s minimum required balance
 
-#### pending_rewards *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### pending_rewards *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)*
 
 The amount of pending rewards
 
-#### rewards *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### rewards *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)*
 
 The amount of rewards earned
 
@@ -154,7 +154,7 @@ Base reward for this account
 
 Signature type for this account
 
-### *class* AccountManager(client_manager: [ClientManager](../../clients/client_manager/#algokit_utils.clients.client_manager.ClientManager))
+### *class* AccountManager(client_manager: [ClientManager](/docs/algokit-utils/python/latest/api/algokit_utils/clients/client_manager/#algokit_utils.clients.client_manager.ClientManager))
 
 Creates and keeps track of signing accounts that can sign transactions for a sending address.
 
@@ -168,7 +168,7 @@ mnemonic-based, rekeyed, multisig, and logic signature accounts.
   account_manager = AccountManager(client_manager)
   ```
 
-#### *property* kmd *: [KmdAccountManager](../kmd_account_manager/#algokit_utils.accounts.kmd_account_manager.KmdAccountManager)*
+#### *property* kmd *: [KmdAccountManager](/docs/algokit-utils/python/latest/api/algokit_utils/accounts/kmd_account_manager/#algokit_utils.accounts.kmd_account_manager.KmdAccountManager)*
 
 KMD account manager that allows you to easily get and create accounts using KMD.
 
@@ -336,7 +336,7 @@ from the environment (ideally via a secret storage service) rather than the file
   account = account_manager.from_mnemonic("mnemonic secret ...")
   ```
 
-#### from_environment(name: str, fund_with: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None) → AddressWithSigners
+#### from_environment(name: str, fund_with: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None) → AddressWithSigners
 
 Tracks and returns an Algorand account with private key loaded by convention from environment variables.
 
@@ -473,7 +473,7 @@ Tracks and returns an Algorand account that is a rekeyed version of the given ac
   rekeyed_account = account_manager.rekeyed(account, "SENDERADDRESS...")
   ```
 
-#### rekey_account(account: str, rekey_to: str | AddressWithTransactionSigner, \*, signer: TransactionSigner | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None, suppress_log: bool | None = None) → [SendTransactionComposerResults](../../transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.SendTransactionComposerResults)
+#### rekey_account(account: str, rekey_to: str | AddressWithTransactionSigner, \*, signer: TransactionSigner | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None, suppress_log: bool | None = None) → [SendTransactionComposerResults](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.SendTransactionComposerResults)
 
 Rekey an account to a new address.
 
@@ -518,7 +518,7 @@ Please be careful with this function and be sure to read the
   )
   ```
 
-#### ensure_funded(account_to_fund: str | AddressWithTransactionSigner | AddressWithSigners, dispenser_account: str | AddressWithTransactionSigner | AddressWithSigners, min_spending_balance: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount), min_funding_increment: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None, signer: TransactionSigner | None = None, rekey_to: str | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None) → [EnsureFundedResult](#algokit_utils.accounts.account_manager.EnsureFundedResult) | None
+#### ensure_funded(account_to_fund: str | AddressWithTransactionSigner | AddressWithSigners, dispenser_account: str | AddressWithTransactionSigner | AddressWithSigners, min_spending_balance: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount), min_funding_increment: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None, signer: TransactionSigner | None = None, rekey_to: str | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None) → [EnsureFundedResult](#algokit_utils.accounts.account_manager.EnsureFundedResult) | None
 
 Funds a given account using a dispenser account as a funding source.
 
@@ -562,7 +562,7 @@ See [https://dev.algorand.co/concepts/smart-contracts/costs-constraints#mbr](htt
   )
   ```
 
-#### ensure_funded_from_environment(account_to_fund: str | AddressWithTransactionSigner | AddressWithSigners, min_spending_balance: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount), \*, min_funding_increment: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None, signer: TransactionSigner | None = None, rekey_to: str | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None) → [EnsureFundedResult](#algokit_utils.accounts.account_manager.EnsureFundedResult) | None
+#### ensure_funded_from_environment(account_to_fund: str | AddressWithTransactionSigner | AddressWithSigners, min_spending_balance: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount), \*, min_funding_increment: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None, signer: TransactionSigner | None = None, rekey_to: str | None = None, note: bytes | None = None, lease: bytes | None = None, static_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, extra_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, max_fee: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None, validity_window: int | None = None, first_valid_round: int | None = None, last_valid_round: int | None = None) → [EnsureFundedResult](#algokit_utils.accounts.account_manager.EnsureFundedResult) | None
 
 Ensure an account is funded from a dispenser account configured in environment.
 
@@ -611,7 +611,7 @@ if it’s a rekeyed account, or against default LocalNet if no environment varia
   )
   ```
 
-#### ensure_funded_from_testnet_dispenser_api(account_to_fund: str | AddressWithTransactionSigner, dispenser_client: [TestNetDispenserApiClient](../../clients/dispenser_api_client/#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient), min_spending_balance: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount), \*, min_funding_increment: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None) → [EnsureFundedFromTestnetDispenserApiResult](#algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult) | None
+#### ensure_funded_from_testnet_dispenser_api(account_to_fund: str | AddressWithTransactionSigner, dispenser_client: [TestNetDispenserApiClient](/docs/algokit-utils/python/latest/api/algokit_utils/clients/dispenser_api_client/#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient), min_spending_balance: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount), \*, min_funding_increment: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None) → [EnsureFundedFromTestnetDispenserApiResult](#algokit_utils.accounts.account_manager.EnsureFundedFromTestnetDispenserApiResult) | None
 
 Ensure an account is funded using the TestNet Dispenser API.
 

@@ -19,7 +19,7 @@ from algokit_utils.models.amount import AlgoAmount
 
 ## Algorand fixture
 
-In general, the primary entrypoint for testing is creating a pytest fixture that provides an [`AlgorandClient`](../../core/algorand-client) configured for LocalNet. This fixture, combined with account fixtures, exposes all the functionality you need to write isolated, repeatable tests.
+In general, the primary entrypoint for testing is creating a pytest fixture that provides an [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) configured for LocalNet. This fixture, combined with account fixtures, exposes all the functionality you need to write isolated, repeatable tests.
 
 ```python
 import pytest
@@ -118,12 +118,12 @@ def test_account(algorand: AlgorandClient) -> AddressWithSigners:
 
 ### Using the fixture context
 
-The `algorand` fixture provides access to an [`AlgorandClient`](../../core/algorand-client) instance which exposes the following properties commonly used in testing:
+The `algorand` fixture provides access to an [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) instance which exposes the following properties commonly used in testing:
 
 - `algorand.client.algod` - Algod client instance
 - `algorand.client.indexer` - Indexer client instance (if configured)
 - `algorand.client.kmd` - KMD client instance (if configured)
-- `algorand.account` - [`AccountManager`](../../core/account) for creating and managing test accounts
+- `algorand.account` - [`AccountManager`](/docs/algokit-utils/python/latest/guides/concepts/core/account/) for creating and managing test accounts
 - `algorand.send` - Methods for sending transactions
 - `algorand.app` - Methods for interacting with applications
 
@@ -198,14 +198,14 @@ def test_deploy_logging(algorand, test_account, capture_logs, snapshot):
 
 When testing, it's often useful to ephemerally generate random accounts, fund them with some number of Algo and then use that account to perform transactions. By creating an ephemeral, random account you naturally get isolation between tests and test runs and don't need to start from a specific blockchain network state. This makes tests less flakey, and also means the same test can be run against LocalNet and (say) TestNet.
 
-The key when generating a test account is getting hold of a [dispenser](./transfer#dispenser) and then [ensuring the test account is funded](./transfer#ensure_funded).
+The key when generating a test account is getting hold of a [dispenser](/docs/algokit-utils/python/latest/guides/concepts/building/transfer/#dispenser) and then [ensuring the test account is funded](/docs/algokit-utils/python/latest/guides/concepts/building/transfer/#ensure_funded).
 
 To make it easier to quickly get a test account, the following mechanisms are available:
 
 - `algorand.account.random()` - Generates a new random Algorand account
-- `algorand.account.localnet_dispenser()` - Gets the LocalNet [dispenser](./transfer#dispenser) account for funding
+- `algorand.account.localnet_dispenser()` - Gets the LocalNet [dispenser](/docs/algokit-utils/python/latest/guides/concepts/building/transfer/#dispenser) account for funding
 - `algorand.account.dispenser_from_environment()` - Gets dispenser from environment variables or LocalNet
-- `algorand.account.ensure_funded(account, dispenser, min_spending_balance=...)` - [Ensures the account is funded](./transfer#ensure_funded) with a minimum balance
+- `algorand.account.ensure_funded(account, dispenser, min_spending_balance=...)` - [Ensures the account is funded](/docs/algokit-utils/python/latest/guides/concepts/building/transfer/#ensure_funded) with a minimum balance
 - `algorand.account.from_environment(name)` - Loads an account from environment variables (auto-creates on LocalNet)
 
 A typical pattern for creating funded test accounts is:
@@ -225,7 +225,7 @@ def generate_account(algorand: AlgorandClient, initial_funds: AlgoAmount = AlgoA
 
 ## Creating test assets
 
-When testing functionality that involves [Algorand Standard Assets (ASAs)](./asset), you can create test assets using a pytest fixture or helper function. This pairs with a funded test account fixture to create ephemeral assets for each test or test suite.
+When testing functionality that involves [Algorand Standard Assets (ASAs)](/docs/algokit-utils/python/latest/guides/concepts/building/asset/), you can create test assets using a pytest fixture or helper function. This pairs with a funded test account fixture to create ephemeral assets for each test or test suite.
 
 ### Fixture approach
 
@@ -316,7 +316,7 @@ def test_with_asset(algorand: AlgorandClient, test_account: AddressWithSigners):
 
 ## Testing asset transfers
 
-When testing [asset transfers](./asset), the receiver must first opt in to the asset before receiving it. You can then transfer assets and assert on the resulting balances.
+When testing [asset transfers](/docs/algokit-utils/python/latest/guides/concepts/building/asset/), the receiver must first opt in to the asset before receiving it. You can then transfer assets and assert on the resulting balances.
 
 ```python
 import pytest
@@ -405,7 +405,7 @@ def test_asset_transfer(
 
 ## Testing application deployments
 
-When testing [smart contract deployments](./app-deploy), you can use the [`AppFactory`](./app-client#appfactory) to deploy an application and then assert on the deployment result. The deploy result includes the operation performed, the app ID, and the app address.
+When testing [smart contract deployments](/docs/algokit-utils/python/latest/guides/concepts/building/app-deploy/), you can use the [`AppFactory`](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/#appfactory) to deploy an application and then assert on the deployment result. The deploy result includes the operation performed, the app ID, and the app address.
 
 ```python
 import json
@@ -462,7 +462,7 @@ def test_deploy_updates_existing_app(factory: AppFactory):
 
 ## Testing application calls
 
-When testing [application calls](./app-client), you can use an [`AppClient`](./app-client#appclient) to call ABI methods and assert on the return values. The `app_client.send.call()` method returns a result with an `abi_return` field containing the decoded ABI return value.
+When testing [application calls](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/), you can use an [`AppClient`](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/#appclient) to call ABI methods and assert on the return values. The `app_client.send.call()` method returns a result with an `abi_return` field containing the decoded ABI return value.
 
 ```python
 import json
@@ -515,7 +515,7 @@ def test_abi_struct_return(app_client: AppClient):
 
 ## Testing box storage
 
-When testing [box storage](./app-client#boxes) operations, you need to fund the application account to cover the minimum balance requirement (MBR) for boxes, then create, write, and read boxes via the [`AppClient`](./app-client#appclient). Box references must be included in the transaction so the AVM can access them.
+When testing [box storage](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/#boxes) operations, you need to fund the application account to cover the minimum balance requirement (MBR) for boxes, then create, write, and read boxes via the [`AppClient`](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/#appclient). Box references must be included in the transaction so the AVM can access them.
 
 ```python
 import base64

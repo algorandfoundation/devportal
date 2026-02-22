@@ -7,7 +7,7 @@ title: "TransactionSigner"
 
 > **TransactionSigner** = (`txnGroup`, `indexesToSign`) => `Promise`\<`Uint8Array`[]\>
 
-Defined in: [packages/transact/src/signer.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/signer.ts#L9)
+Defined in: [packages/transact/src/signer.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/signer.ts#L9)
 
 Function for signing a group of transactions
 
@@ -15,7 +15,7 @@ Function for signing a group of transactions
 
 ### txnGroup
 
-[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]
+[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]
 
 ### indexesToSign
 

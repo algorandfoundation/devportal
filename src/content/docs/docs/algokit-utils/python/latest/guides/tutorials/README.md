@@ -58,8 +58,8 @@ print(f"Transaction ID: {result.tx_id}")
 
 Once you're comfortable with the basics, explore these concept guides:
 
-- [**Algorand client**](/algokit-utils-py/concepts/core/algorand-client/) - The main entry point for all functionality
-- [**Account management**](/algokit-utils-py/concepts/core/account/) - Create and manage accounts
-- [**App client and App factory**](/algokit-utils-py/concepts/building/app-client/) - Deploy and interact with smart contracts
-- [**Transaction composer**](/algokit-utils-py/concepts/advanced/transaction-composer/) - Build complex transaction groups
-- [**Automated testing**](/algokit-utils-py/concepts/building/testing/) - Patterns for testing with pytest
+- [**Algorand client**](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) - The main entry point for all functionality
+- [**Account management**](/docs/algokit-utils/python/latest/guides/concepts/core/account/) - Create and manage accounts
+- [**App client and App factory**](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/) - Deploy and interact with smart contracts
+- [**Transaction composer**](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/) - Build complex transaction groups
+- [**Automated testing**](/docs/algokit-utils/python/latest/guides/concepts/building/testing/) - Patterns for testing with pytest

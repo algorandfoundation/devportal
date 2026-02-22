@@ -7,7 +7,7 @@ title: "TransactionSignatureMultisig"
 
 > **TransactionSignatureMultisig** = `object`
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.ts:12](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-multisig.ts#L12)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.ts:12](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-multisig.ts#L12)
 
 structure holding multiple subsignatures.
 
@@ -18,9 +18,9 @@ crypto/multisig.go : MultisigSig
 
 ### subsignature?
 
-> `optional` **subsignature**: [`TransactionSignatureMultisigSubsignature`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsignaturemultisigsubsignature/)[]
+> `optional` **subsignature**: [`TransactionSignatureMultisigSubsignature`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsignaturemultisigsubsignature/)[]
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-multisig.ts#L16)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-multisig.ts#L16)
 
 \[subsig\] holds pairs of public key and signatures.
 
@@ -30,7 +30,7 @@ Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.
 
 > `optional` **threshold**: `number`
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-multisig.ts#L21)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-multisig.ts#L21)
 
 \[thr\]
 
@@ -40,6 +40,6 @@ Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.
 
 > `optional` **version**: `number`
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-multisig.ts#L26)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-multisig.ts:26](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-multisig.ts#L26)
 
 \[v\]

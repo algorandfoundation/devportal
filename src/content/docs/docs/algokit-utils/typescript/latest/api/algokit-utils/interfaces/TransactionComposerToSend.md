@@ -5,13 +5,13 @@ prev: false
 title: "TransactionComposerToSend"
 ---
 
-Defined in: [src/transaction/types.ts:142](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L142)
+Defined in: [src/transaction/types.ts:142](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L142)
 
 An `TransactionComposer` with transactions to send.
 
 ## Extends
 
-- [`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/)
+- [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/)
 
 ## Properties
 
@@ -19,13 +19,13 @@ An `TransactionComposer` with transactions to send.
 
 > `optional` **coverAppCallInnerTransactionFees**: `boolean`
 
-Defined in: [src/transaction/types.ts:132](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L132)
+Defined in: [src/transaction/types.ts:132](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L132)
 
 Whether to use simulate to automatically calculate required app call inner transaction fees and cover them in the parent app call transaction fee
 
 #### Inherited from
 
-[`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/).[`coverAppCallInnerTransactionFees`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/#coverappcallinnertransactionfees)
+[`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/).[`coverAppCallInnerTransactionFees`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/#coverappcallinnertransactionfees)
 
 ***
 
@@ -33,13 +33,13 @@ Whether to use simulate to automatically calculate required app call inner trans
 
 > `optional` **maxRoundsToWaitForConfirmation**: `number`
 
-Defined in: [src/transaction/types.ts:126](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L126)
+Defined in: [src/transaction/types.ts:126](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L126)
 
 The number of rounds to wait for confirmation. By default until the latest lastValid has past.
 
 #### Inherited from
 
-[`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/).[`maxRoundsToWaitForConfirmation`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/#maxroundstowaitforconfirmation)
+[`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/).[`maxRoundsToWaitForConfirmation`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/#maxroundstowaitforconfirmation)
 
 ***
 
@@ -47,13 +47,13 @@ The number of rounds to wait for confirmation. By default until the latest lastV
 
 > `optional` **populateAppCallResources**: `boolean`
 
-Defined in: [src/transaction/types.ts:130](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L130)
+Defined in: [src/transaction/types.ts:130](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L130)
 
 Whether to use simulate to automatically populate app call resources in the txn objects. Defaults to `Config.populateAppCallResources`.
 
 #### Inherited from
 
-[`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/).[`populateAppCallResources`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/#populateappcallresources)
+[`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/).[`populateAppCallResources`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/#populateappcallresources)
 
 ***
 
@@ -61,20 +61,20 @@ Whether to use simulate to automatically populate app call resources in the txn 
 
 > `optional` **suppressLog**: `boolean`
 
-Defined in: [src/transaction/types.ts:128](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L128)
+Defined in: [src/transaction/types.ts:128](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L128)
 
 Whether to suppress log messages from transaction send, default: do not suppress.
 
 #### Inherited from
 
-[`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/).[`suppressLog`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/#suppresslog)
+[`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/).[`suppressLog`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/#suppresslog)
 
 ***
 
 ### transactionComposer
 
-> **transactionComposer**: [`TransactionComposer`](/algokit-utils-ts/api/algokit-utils/classes/transactioncomposer/)
+> **transactionComposer**: [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)
 
-Defined in: [src/transaction/types.ts:144](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/types.ts#L144)
+Defined in: [src/transaction/types.ts:144](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L144)
 
 The `TransactionComposer` with transactions loaded to send

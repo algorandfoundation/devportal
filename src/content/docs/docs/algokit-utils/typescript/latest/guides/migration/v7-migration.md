@@ -5,7 +5,7 @@ description: "Version 7 of AlgoKit Utils moved from a stateless function-based i
 
 Version 7 of AlgoKit Utils moved from a stateless function-based interface to a stateful class-based interface. Doing this allowed for a much easier and simpler consumption experience guided by intellisense, involves less passing around of redundant values (e.g. `algod` client) and is more performant since commonly retrieved values like transaction parameters are able to be cached.
 
-The entry point to the vast majority of functionality in AlgoKit Utils is now available via a single entry-point, the [`AlgorandClient` class](../../concepts/core/algorand-client).
+The entry point to the vast majority of functionality in AlgoKit Utils is now available via a single entry-point, the [`AlgorandClient` class](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/).
 
 The old version will still work until at least v9 (we have been careful to keep those functions working with backwards compatibility), but it exposes an older, function-based interface to the functionality that is deprecated. The new way to use AlgoKit Utils is via the `AlgorandClient` class, which is easier, simpler and more convenient to use and has powerful new features.
 
@@ -61,7 +61,7 @@ There is a class in AlgoKit Utils called `AlgoAmount` that wraps the representat
 
 #### Step 2 - Replace sdk clients with `AlgorandClient`
 
-The next step is to get an `AlgorandClient` instance at the same place(s) you had an algod instance. To do this you can look for anywhere you called the `getAlgoClient` method and replace them with an [equivalent mechanism](../../concepts/core/algorand-client#algorand-client) for getting an `AlgorandClient` instance.
+The next step is to get an `AlgorandClient` instance at the same place(s) you had an algod instance. To do this you can look for anywhere you called the `getAlgoClient` method and replace them with an [equivalent mechanism](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/#algorand-client) for getting an `AlgorandClient` instance.
 
 You can retrieve an algod / indexer / kmd object to avoid the need to immediately have to rewrite all of the old calls by accessing them from the `AlgorandClient` instance, e.g.:
 
@@ -102,13 +102,13 @@ Other things to note that you may come across:
 - We now restrict the number of valid rounds (10 rounds, except when pointing to LocalNet, which is still 1000 to avoid problems given the round advances for every transaction) to a much smaller window than the default (1000 rounds), but this is configurable by default and per transaction if that's a problem. If you come across this problem it will present as a dead transaction error.
 - Transaction parameters are cached for a period of time to prevent repeated calls to the algod API to get default transaction parameters, but this sometimes means that you can create duplicate transaction IDs when previously that wouldn't happen, you will get an obvious error if that happens though and can adjust it by ensuring one of the parameters in your transaction change slightly (e.g. note, lease, validity window, etc.), you can also exert control over default transaction parameter caching
 - Rather than always passing a signer into transaction calls (which is what the `SendTransactionFrom` instance previously combined with the address), we have decoupled signing and sender address via the `AccountManager` (`algorand.account`), which keeps track of the signer associated with a sender address so the signer can be resolved just in time.
-  - Most of the time you don't need to worry about it since it will magically happen for you, but if you have situations where you are creating a signer outside of the `AccountManager` you will need to [register the signer](../../concepts/core/account#registering-a-signer) with the `AccountManager` first.
+  - Most of the time you don't need to worry about it since it will magically happen for you, but if you have situations where you are creating a signer outside of the `AccountManager` you will need to [register the signer](/docs/algokit-utils/typescript/latest/guides/concepts/core/account/#registering-a-signer) with the `AccountManager` first.
   - Note: you can also explicitly pass a `signer` in as well if you want an escape hatch.
 - Things that were previously nested in a `sendParams` property are now collapsed into the parent params object
 
 #### Step 4 - Replace `ApplicationClient` usage
 
-The existing `ApplicationClient` (untyped app client) class is still present until at least v9, but it's worthwhile migrating to the new [`AppClient` and `AppFactory` classes](../../concepts/building/app-client). These new clients are [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) compatible, but also support [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) app specs and will continue to support this indefinitely until such time the community deems they are deprecated.
+The existing `ApplicationClient` (untyped app client) class is still present until at least v9, but it's worthwhile migrating to the new [`AppClient` and `AppFactory` classes](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-client/). These new clients are [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) compatible, but also support [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) app specs and will continue to support this indefinitely until such time the community deems they are deprecated.
 
 All of the functionality in `ApplicationClient` is available within the new classes, but their interface is slightly different to make it easier to use and more consistent with the new `AlgorandClient` functionality. The key existing methods that have changed all have `@deprecation` notices to help guide you on this, but broadly the changes are:
 
@@ -117,14 +117,14 @@ All of the functionality in `ApplicationClient` is available within the new clas
 - This means that you can simply access `client.appId` and `client.appAddress` on `AppClient` since these values are known statically and won't change (previously you had to awkwardly call `await client.getAppReference()` since these values weren't always available and potentially required an API call to resolve).
 - `fundAppAccount` no longer takes an `AlgoAmount` directly - it always expects the params object (more consistent with other functions)
 - `compile` is replaced with static methods on `AppClient` and `getABIMethodParams` is deprecated in favour of `getABIMethod`, which now returns the params _and_ the `ABIMethod`
-- All of the methods that return or execute a transaction (`update`, `call`, `optIn`, etc.) are now exposed in an interface similar to the one in [`AlgorandClient`](../../concepts/core/algorand-client#creating-and-issuing-transactions), namely (where `{callType}` is one of: `update` / `delete` / `optIn` / `closeOut` / `clearState` / `call`):
+- All of the methods that return or execute a transaction (`update`, `call`, `optIn`, etc.) are now exposed in an interface similar to the one in [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/#creating-and-issuing-transactions), namely (where `{callType}` is one of: `update` / `delete` / `optIn` / `closeOut` / `clearState` / `call`):
   - `appClient.createTransaction.{callType}` to get a transaction for an ABI method call
   - `appClient.send.{callType}` to sign and send a transaction for an ABI method call
   - `appClient.params.{callType}` to get a params object for an ABI method call
   - `appClient.createTransaction.bare.{callType}` to get a transaction for a bare app call
   - `appClient.send.bare.{callType}` to sign and send a transaction for a bare app call
   - `appClient.params.bare.{callType}` to get a params object for a bare app call
-- The `resolveBy` functionality has disappeared in favour of [much simpler entrypoints within `algorand.client`](../../concepts/building/app-client#appclient)
+- The `resolveBy` functionality has disappeared in favour of [much simpler entrypoints within `algorand.client`](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-client/#appclient)
 - When making an ABI method call, the method arguments property is now `args` rather than `methodArgs`
 - The foreign reference arrays have been renamed (and are affected by the switch to `BigInt` for app and asset IDs) and appear in the top level params object rather than nested in an `args` property:
   - `boxes` -> `boxReferences`

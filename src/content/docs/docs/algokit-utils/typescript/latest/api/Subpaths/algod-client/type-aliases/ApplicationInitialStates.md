@@ -7,7 +7,7 @@ title: "ApplicationInitialStates"
 
 > **ApplicationInitialStates** = `object`
 
-Defined in: [packages/algod\_client/src/models/application-initial-states.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L9)
+Defined in: [packages/algod\_client/src/models/application-initial-states.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L9)
 
 An application's initial global/local/box states that were accessed during simulation.
 
@@ -15,25 +15,25 @@ An application's initial global/local/box states that were accessed during simul
 
 ### appBoxes?
 
-> `optional` **appBoxes**: [`ApplicationKvStorage`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/applicationkvstorage/)
+> `optional` **appBoxes**: [`ApplicationKvStorage`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/applicationkvstorage/)
 
-Defined in: [packages/algod\_client/src/models/application-initial-states.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L20)
+Defined in: [packages/algod\_client/src/models/application-initial-states.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L20)
 
 ***
 
 ### appGlobals?
 
-> `optional` **appGlobals**: [`ApplicationKvStorage`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/applicationkvstorage/)
+> `optional` **appGlobals**: [`ApplicationKvStorage`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/applicationkvstorage/)
 
-Defined in: [packages/algod\_client/src/models/application-initial-states.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L19)
+Defined in: [packages/algod\_client/src/models/application-initial-states.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L19)
 
 ***
 
 ### appLocals?
 
-> `optional` **appLocals**: [`ApplicationKvStorage`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/applicationkvstorage/)[]
+> `optional` **appLocals**: [`ApplicationKvStorage`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/applicationkvstorage/)[]
 
-Defined in: [packages/algod\_client/src/models/application-initial-states.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L18)
+Defined in: [packages/algod\_client/src/models/application-initial-states.ts:18](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L18)
 
 An application's initial local states tied to different accounts.
 
@@ -43,6 +43,6 @@ An application's initial local states tied to different accounts.
 
 > **id**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/application-initial-states.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L13)
+Defined in: [packages/algod\_client/src/models/application-initial-states.ts:13](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-initial-states.ts#L13)
 
 Application index.

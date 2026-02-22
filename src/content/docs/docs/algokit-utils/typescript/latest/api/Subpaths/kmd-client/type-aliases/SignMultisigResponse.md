@@ -7,7 +7,7 @@ title: "SignMultisigResponse"
 
 > **SignMultisigResponse** = `object`
 
-Defined in: [packages/kmd\_client/src/models/sign-multisig-response.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/sign-multisig-response.ts#L7)
+Defined in: [packages/kmd\_client/src/models/sign-multisig-response.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/sign-multisig-response.ts#L7)
 
 SignMultisigResponse is the response to `POST /v1/multisig/sign`
 
@@ -17,4 +17,4 @@ SignMultisigResponse is the response to `POST /v1/multisig/sign`
 
 > **multisig**: `Uint8Array`
 
-Defined in: [packages/kmd\_client/src/models/sign-multisig-response.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/sign-multisig-response.ts#L8)
+Defined in: [packages/kmd\_client/src/models/sign-multisig-response.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/sign-multisig-response.ts#L8)

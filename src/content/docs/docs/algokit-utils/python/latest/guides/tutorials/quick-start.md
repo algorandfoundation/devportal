@@ -120,7 +120,7 @@ print(f"Response: {response.abi_return}")  # "Hello, world"
 
 ## What's Next?
 
-- [AlgorandClient](/algokit-utils-py/concepts/core/algorand-client/) — Learn about the main entry point
-- [Account Management](/algokit-utils-py/concepts/core/account/) — Different ways to create and manage accounts
-- [Transaction Management](/algokit-utils-py/concepts/core/transaction/) — Build and send transactions
-- [App Client](/algokit-utils-py/concepts/building/app-client/) — Deploy and interact with smart contracts
+- [AlgorandClient](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) — Learn about the main entry point
+- [Account Management](/docs/algokit-utils/python/latest/guides/concepts/core/account/) — Different ways to create and manage accounts
+- [Transaction Management](/docs/algokit-utils/python/latest/guides/concepts/core/transaction/) — Build and send transactions
+- [App Client](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/) — Deploy and interact with smart contracts

@@ -7,7 +7,7 @@ title: "ListWalletsResponse"
 
 > **ListWalletsResponse** = `object`
 
-Defined in: [packages/kmd\_client/src/models/list-wallets-response.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/list-wallets-response.ts#L9)
+Defined in: [packages/kmd\_client/src/models/list-wallets-response.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/list-wallets-response.ts#L9)
 
 ListWalletsResponse is the response to `GET /v1/wallets`
 
@@ -15,6 +15,6 @@ ListWalletsResponse is the response to `GET /v1/wallets`
 
 ### wallets
 
-> **wallets**: [`Wallet`](/algokit-utils-ts/api/subpaths/kmd-client/type-aliases/wallet/)[]
+> **wallets**: [`Wallet`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/wallet/)[]
 
-Defined in: [packages/kmd\_client/src/models/list-wallets-response.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/list-wallets-response.ts#L10)
+Defined in: [packages/kmd\_client/src/models/list-wallets-response.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/list-wallets-response.ts#L10)

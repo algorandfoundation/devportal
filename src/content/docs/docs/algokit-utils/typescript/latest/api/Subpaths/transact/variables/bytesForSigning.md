@@ -7,7 +7,7 @@ title: "bytesForSigning"
 
 > `const` **bytesForSigning**: `object`
 
-Defined in: [packages/transact/src/signer.ts:121](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/signer.ts#L121)
+Defined in: [packages/transact/src/signer.ts:121](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/signer.ts#L121)
 
 ## Type Declaration
 
@@ -19,11 +19,11 @@ Defined in: [packages/transact/src/signer.ts:121](https://github.com/algorandfou
 
 ##### lsig
 
-[`LogicSig`](/algokit-utils-ts/api/subpaths/transact/classes/logicsig/)
+[`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/)
 
 ##### msig?
 
-[`MultisigAccount`](/algokit-utils-ts/api/subpaths/transact/classes/multisigaccount/)
+[`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/multisigaccount/)
 
 #### Returns
 
@@ -51,7 +51,7 @@ Defined in: [packages/transact/src/signer.ts:121](https://github.com/algorandfou
 
 ##### lsig
 
-[`LogicSig`](/algokit-utils-ts/api/subpaths/transact/classes/logicsig/)
+[`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/)
 
 ##### data
 
@@ -69,7 +69,7 @@ Defined in: [packages/transact/src/signer.ts:121](https://github.com/algorandfou
 
 ##### txn
 
-[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)
+[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)
 
 #### Returns
 

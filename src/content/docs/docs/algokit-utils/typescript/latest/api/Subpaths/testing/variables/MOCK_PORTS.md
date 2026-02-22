@@ -7,7 +7,7 @@ title: "MOCK_PORTS"
 
 > `const` **MOCK\_PORTS**: `object`
 
-Defined in: [packages/testing/src/mockServer.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/testing/src/mockServer.ts#L24)
+Defined in: [packages/testing/src/mockServer.ts:24](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/testing/src/mockServer.ts#L24)
 
 Default ports for mock servers when running locally (matches algokit-polytest defaults)
 

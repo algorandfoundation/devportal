@@ -5,15 +5,15 @@ prev: false
 title: "ABIReturn"
 ---
 
-> **ABIReturn** = \{ `decodeError`: `undefined`; `method`: [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/); `rawReturnValue`: `Uint8Array`; `returnValue`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/); \} \| \{ `decodeError?`: `Error`; `method`: [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/); `rawReturnValue?`: `undefined`; `returnValue?`: `undefined`; \}
+> **ABIReturn** = \{ `decodeError`: `undefined`; `method`: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/); `rawReturnValue`: `Uint8Array`; `returnValue`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/); \} \| \{ `decodeError?`: `Error`; `method`: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/); `rawReturnValue?`: `undefined`; `returnValue?`: `undefined`; \}
 
-Defined in: [packages/abi/src/abi-method.ts:54](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L54)
+Defined in: [packages/abi/src/abi-method.ts:54](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L54)
 
 Represents an ABI method return value with parsed data.
 
 ## Type Declaration
 
-\{ `decodeError`: `undefined`; `method`: [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/); `rawReturnValue`: `Uint8Array`; `returnValue`: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/); \}
+\{ `decodeError`: `undefined`; `method`: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/); `rawReturnValue`: `Uint8Array`; `returnValue`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/); \}
 
 ### decodeError
 
@@ -21,7 +21,7 @@ Represents an ABI method return value with parsed data.
 
 ### method
 
-> **method**: [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)
+> **method**: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)
 
 The method that was called.
 
@@ -35,11 +35,11 @@ This is the value from the last app call log with the first 4 bytes (the ABI ret
 
 ### returnValue
 
-> **returnValue**: [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/)
+> **returnValue**: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)
 
 The parsed ABI return value.
 
-\{ `decodeError?`: `Error`; `method`: [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/); `rawReturnValue?`: `undefined`; `returnValue?`: `undefined`; \}
+\{ `decodeError?`: `Error`; `method`: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/); `rawReturnValue?`: `undefined`; `returnValue?`: `undefined`; \}
 
 ### decodeError?
 
@@ -47,7 +47,7 @@ The parsed ABI return value.
 
 ### method
 
-> **method**: [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)
+> **method**: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)
 
 ### rawReturnValue?
 

@@ -5,9 +5,9 @@ prev: false
 title: "searchTransactions"
 ---
 
-> **searchTransactions**(`indexer`, `searchCriteria`, `paginationLimit?`): `Promise`\<[`TransactionsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
+> **searchTransactions**(`indexer`, `searchCriteria`, `paginationLimit?`): `Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
 
-Defined in: [src/indexer-client/indexer-lookup.ts:86](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-client/indexer-lookup.ts#L86)
+Defined in: [src/indexer-client/indexer-lookup.ts:86](https://github.com/larkiny/algokit-utils-ts/blob/main/src/indexer-client/indexer-lookup.ts#L86)
 
 Allows transactions to be searched for the given criteria.
 
@@ -15,13 +15,13 @@ Allows transactions to be searched for the given criteria.
 
 ### indexer
 
-[`IndexerClient`](/algokit-utils-ts/api/subpaths/indexer-client/classes/indexerclient/)
+[`IndexerClient`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/classes/indexerclient/)
 
 An indexer client
 
 ### searchCriteria
 
-[`SearchForTransactionsCriteria`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/searchfortransactionscriteria/)
+[`SearchForTransactionsCriteria`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/searchfortransactionscriteria/)
 
 The criteria to search for
 
@@ -33,6 +33,6 @@ The number of records to return per paginated request, default 1000
 
 ## Returns
 
-`Promise`\<[`TransactionsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
+`Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
 
 The search results

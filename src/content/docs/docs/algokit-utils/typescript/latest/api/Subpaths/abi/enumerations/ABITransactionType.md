@@ -5,7 +5,7 @@ prev: false
 title: "ABITransactionType"
 ---
 
-Defined in: [packages/abi/src/abi-method.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L7)
+Defined in: [packages/abi/src/abi-method.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L7)
 
 ## Enumeration Members
 
@@ -13,7 +13,7 @@ Defined in: [packages/abi/src/abi-method.ts:7](https://github.com/algorandfounda
 
 > **AppCall**: `"appl"`
 
-Defined in: [packages/abi/src/abi-method.ts:14](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L14)
+Defined in: [packages/abi/src/abi-method.ts:14](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L14)
 
 ***
 
@@ -21,7 +21,7 @@ Defined in: [packages/abi/src/abi-method.ts:14](https://github.com/algorandfound
 
 > **AssetConfig**: `"acfg"`
 
-Defined in: [packages/abi/src/abi-method.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L11)
+Defined in: [packages/abi/src/abi-method.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L11)
 
 ***
 
@@ -29,7 +29,7 @@ Defined in: [packages/abi/src/abi-method.ts:11](https://github.com/algorandfound
 
 > **AssetFreeze**: `"afrz"`
 
-Defined in: [packages/abi/src/abi-method.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L13)
+Defined in: [packages/abi/src/abi-method.ts:13](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L13)
 
 ***
 
@@ -37,7 +37,7 @@ Defined in: [packages/abi/src/abi-method.ts:13](https://github.com/algorandfound
 
 > **AssetTransfer**: `"axfer"`
 
-Defined in: [packages/abi/src/abi-method.ts:12](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L12)
+Defined in: [packages/abi/src/abi-method.ts:12](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L12)
 
 ***
 
@@ -45,7 +45,7 @@ Defined in: [packages/abi/src/abi-method.ts:12](https://github.com/algorandfound
 
 > **KeyRegistration**: `"keyreg"`
 
-Defined in: [packages/abi/src/abi-method.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L10)
+Defined in: [packages/abi/src/abi-method.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L10)
 
 ***
 
@@ -53,7 +53,7 @@ Defined in: [packages/abi/src/abi-method.ts:10](https://github.com/algorandfound
 
 > **Payment**: `"pay"`
 
-Defined in: [packages/abi/src/abi-method.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L9)
+Defined in: [packages/abi/src/abi-method.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L9)
 
 ***
 
@@ -61,4 +61,4 @@ Defined in: [packages/abi/src/abi-method.ts:9](https://github.com/algorandfounda
 
 > **Txn**: `"txn"`
 
-Defined in: [packages/abi/src/abi-method.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L8)
+Defined in: [packages/abi/src/abi-method.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L8)

@@ -5,7 +5,7 @@ prev: false
 title: "ClientConfig"
 ---
 
-Defined in: [packages/algod\_client/src/core/client-config.ts:3](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L3)
+Defined in: [packages/algod\_client/src/core/client-config.ts:3](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L3)
 
 ## Properties
 
@@ -13,7 +13,7 @@ Defined in: [packages/algod\_client/src/core/client-config.ts:3](https://github.
 
 > **baseUrl**: `string`
 
-Defined in: [packages/algod\_client/src/core/client-config.ts:4](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L4)
+Defined in: [packages/algod\_client/src/core/client-config.ts:4](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L4)
 
 ***
 
@@ -21,7 +21,7 @@ Defined in: [packages/algod\_client/src/core/client-config.ts:4](https://github.
 
 > `optional` **headers**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/algod\_client/src/core/client-config.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L7)
+Defined in: [packages/algod\_client/src/core/client-config.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L7)
 
 ***
 
@@ -29,7 +29,7 @@ Defined in: [packages/algod\_client/src/core/client-config.ts:7](https://github.
 
 > `optional` **logger**: `Logger`
 
-Defined in: [packages/algod\_client/src/core/client-config.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L10)
+Defined in: [packages/algod\_client/src/core/client-config.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L10)
 
 ***
 
@@ -37,7 +37,7 @@ Defined in: [packages/algod\_client/src/core/client-config.ts:10](https://github
 
 > `optional` **maxRetries**: `number`
 
-Defined in: [packages/algod\_client/src/core/client-config.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L9)
+Defined in: [packages/algod\_client/src/core/client-config.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L9)
 
 Optional override for retry attempts. Defaults to 4 retries. Set to 0 to disable retries.
 
@@ -47,7 +47,7 @@ Optional override for retry attempts. Defaults to 4 retries. Set to 0 to disable
 
 > `optional` **port**: `string` \| `number`
 
-Defined in: [packages/algod\_client/src/core/client-config.ts:5](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L5)
+Defined in: [packages/algod\_client/src/core/client-config.ts:5](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L5)
 
 ***
 
@@ -55,4 +55,4 @@ Defined in: [packages/algod\_client/src/core/client-config.ts:5](https://github.
 
 > `optional` **token**: `string` \| \{\[`name`: `string`\]: `string`; \}
 
-Defined in: [packages/algod\_client/src/core/client-config.ts:6](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L6)
+Defined in: [packages/algod\_client/src/core/client-config.ts:6](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/client-config.ts#L6)

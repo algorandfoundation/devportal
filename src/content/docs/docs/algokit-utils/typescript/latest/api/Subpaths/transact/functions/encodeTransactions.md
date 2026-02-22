@@ -7,7 +7,7 @@ title: "encodeTransactions"
 
 > **encodeTransactions**(`transactions`): `Uint8Array`\<`ArrayBufferLike`\>[]
 
-Defined in: [packages/transact/src/transactions/transaction.ts:405](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L405)
+Defined in: [packages/transact/src/transactions/transaction.ts:405](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L405)
 
 Encode transactions with the domain separation (e.g. "TX") prefix
 
@@ -15,7 +15,7 @@ Encode transactions with the domain separation (e.g. "TX") prefix
 
 ### transactions
 
-[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]
+[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]
 
 A collection of transactions to encode
 

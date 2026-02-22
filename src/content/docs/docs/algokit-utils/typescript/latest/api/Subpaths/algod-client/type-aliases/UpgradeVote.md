@@ -7,7 +7,7 @@ title: "UpgradeVote"
 
 > **UpgradeVote** = `object`
 
-Defined in: [packages/algod\_client/src/models/block.ts:291](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L291)
+Defined in: [packages/algod\_client/src/models/block.ts:291](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L291)
 
 Protocol upgrade vote parameters for the block.
 
@@ -17,7 +17,7 @@ Protocol upgrade vote parameters for the block.
 
 > `optional` **upgradeApprove**: `boolean`
 
-Defined in: [packages/algod\_client/src/models/block.ts:297](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L297)
+Defined in: [packages/algod\_client/src/models/block.ts:297](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L297)
 
 [upgradeyes] Upgrade approval flag.
 
@@ -27,7 +27,7 @@ Defined in: [packages/algod\_client/src/models/block.ts:297](https://github.com/
 
 > `optional` **upgradeDelay**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/block.ts:295](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L295)
+Defined in: [packages/algod\_client/src/models/block.ts:295](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L295)
 
 [upgradedelay] Upgrade delay in rounds.
 
@@ -37,6 +37,6 @@ Defined in: [packages/algod\_client/src/models/block.ts:295](https://github.com/
 
 > `optional` **upgradePropose**: `string`
 
-Defined in: [packages/algod\_client/src/models/block.ts:293](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L293)
+Defined in: [packages/algod\_client/src/models/block.ts:293](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L293)
 
 [upgradeprop] Upgrade proposal.

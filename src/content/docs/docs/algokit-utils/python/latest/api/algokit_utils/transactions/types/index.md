@@ -51,11 +51,11 @@ title: "algokit_utils.transactions.types"
 
 #### lease *: bytes | None* *= None*
 
-#### static_fee *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### static_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
-#### extra_fee *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### extra_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
-#### max_fee *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### max_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
 #### validity_window *: int | None* *= None*
 
@@ -69,7 +69,7 @@ Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
 #### receiver *: str*
 
-#### amount *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### amount *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)*
 
 #### close_remainder_to *: str | None* *= None*
 

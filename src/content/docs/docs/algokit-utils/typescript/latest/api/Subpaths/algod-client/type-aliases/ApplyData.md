@@ -7,7 +7,7 @@ title: "ApplyData"
 
 > **ApplyData** = `object`
 
-Defined in: [packages/algod\_client/src/models/block.ts:110](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L110)
+Defined in: [packages/algod\_client/src/models/block.ts:110](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L110)
 
 ## Properties
 
@@ -15,7 +15,7 @@ Defined in: [packages/algod\_client/src/models/block.ts:110](https://github.com/
 
 > `optional` **applicationId**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/block.ts:118](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L118)
+Defined in: [packages/algod\_client/src/models/block.ts:118](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L118)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: [packages/algod\_client/src/models/block.ts:118](https://github.com/
 
 > `optional` **assetClosingAmount**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/block.ts:112](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L112)
+Defined in: [packages/algod\_client/src/models/block.ts:112](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L112)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: [packages/algod\_client/src/models/block.ts:112](https://github.com/
 
 > `optional` **closeRewards**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/block.ts:115](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L115)
+Defined in: [packages/algod\_client/src/models/block.ts:115](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L115)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: [packages/algod\_client/src/models/block.ts:115](https://github.com/
 
 > `optional` **closingAmount**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/block.ts:111](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L111)
+Defined in: [packages/algod\_client/src/models/block.ts:111](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L111)
 
 ***
 
@@ -47,15 +47,15 @@ Defined in: [packages/algod\_client/src/models/block.ts:111](https://github.com/
 
 > `optional` **configAsset**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/block.ts:117](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L117)
+Defined in: [packages/algod\_client/src/models/block.ts:117](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L117)
 
 ***
 
 ### evalDelta?
 
-> `optional` **evalDelta**: [`BlockAppEvalDelta`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/blockappevaldelta/)
+> `optional` **evalDelta**: [`BlockAppEvalDelta`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/blockappevaldelta/)
 
-Defined in: [packages/algod\_client/src/models/block.ts:116](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L116)
+Defined in: [packages/algod\_client/src/models/block.ts:116](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L116)
 
 ***
 
@@ -63,7 +63,7 @@ Defined in: [packages/algod\_client/src/models/block.ts:116](https://github.com/
 
 > `optional` **receiverRewards**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/block.ts:114](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L114)
+Defined in: [packages/algod\_client/src/models/block.ts:114](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L114)
 
 ***
 
@@ -71,4 +71,4 @@ Defined in: [packages/algod\_client/src/models/block.ts:114](https://github.com/
 
 > `optional` **senderRewards**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/block.ts:113](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L113)
+Defined in: [packages/algod\_client/src/models/block.ts:113](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L113)

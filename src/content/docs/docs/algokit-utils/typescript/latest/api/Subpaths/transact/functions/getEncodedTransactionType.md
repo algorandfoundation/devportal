@@ -5,9 +5,9 @@ prev: false
 title: "getEncodedTransactionType"
 ---
 
-> **getEncodedTransactionType**(`encoded_transaction`): [`TransactionType`](/algokit-utils-ts/api/subpaths/transact/enumerations/transactiontype/)
+> **getEncodedTransactionType**(`encoded_transaction`): [`TransactionType`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/transactiontype/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:380](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L380)
+Defined in: [packages/transact/src/transactions/transaction.ts:380](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L380)
 
 Get the transaction type from the encoded transaction.
 This is particularly useful when decoding a transaction that has an unknown type
@@ -20,4 +20,4 @@ This is particularly useful when decoding a transaction that has an unknown type
 
 ## Returns
 
-[`TransactionType`](/algokit-utils-ts/api/subpaths/transact/enumerations/transactiontype/)
+[`TransactionType`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/transactiontype/)

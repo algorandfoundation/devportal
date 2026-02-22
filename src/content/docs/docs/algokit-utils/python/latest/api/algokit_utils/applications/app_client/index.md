@@ -62,11 +62,11 @@ The compiled approval program bytes
 
 The compiled clear state program bytes
 
-#### compiled_approval *: [CompiledTeal](../../models/application/#algokit_utils.models.application.CompiledTeal) | None* *= None*
+#### compiled_approval *: [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | None* *= None*
 
 Optional compilation artifacts for approval program
 
-#### compiled_clear *: [CompiledTeal](../../models/application/#algokit_utils.models.application.CompiledTeal) | None* *= None*
+#### compiled_clear *: [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | None* *= None*
 
 Optional compilation artifacts for clear state program
 
@@ -107,7 +107,7 @@ List of asset IDs to reference
 
 List of box references to include
 
-#### extra_fee *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### extra_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
 Additional fee to add to transaction
 
@@ -115,7 +115,7 @@ Additional fee to add to transaction
 
 Transaction lease value
 
-#### max_fee *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### max_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
 Maximum fee allowed for transaction
 
@@ -135,7 +135,7 @@ Sender address override
 
 Custom transaction signer
 
-#### static_fee *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
+#### static_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
 Fixed fee for transaction
 
@@ -183,7 +183,7 @@ Bases: [`CommonAppCallParams`](#algokit_utils.applications.app_client.CommonAppC
 
 Parameters for funding an application’s account.
 
-#### amount *: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount)*
+#### amount *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)*
 
 Amount to fund
 
@@ -253,7 +253,7 @@ Full parameters for creating an app client
 
 The application specification
 
-#### algorand *: [AlgorandClient](../../algorand/#algokit_utils.algorand.AlgorandClient)*
+#### algorand *: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)*
 
 The Algorand client
 
@@ -311,7 +311,7 @@ methods for calling application methods, managing state, and handling transactio
   client = AppClient(params)
   ```
 
-#### *property* algorand *: [AlgorandClient](../../algorand/#algokit_utils.algorand.AlgorandClient)*
+#### *property* algorand *: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)*
 
 Get the Algorand client instance.
 
@@ -404,7 +404,7 @@ Normalize an application specification to ARC-56 format.
   spec = AppClient.normalise_app_spec(app_spec_json)
   ```
 
-#### *static* from_network(app_spec: Arc56Contract | Arc32Contract | str, algorand: [AlgorandClient](../../algorand/#algokit_utils.algorand.AlgorandClient), app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None) → [AppClient](#algokit_utils.applications.app_client.AppClient)
+#### *static* from_network(app_spec: Arc56Contract | Arc32Contract | str, algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient), app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None) → [AppClient](#algokit_utils.applications.app_client.AppClient)
 
 Create an AppClient instance from network information.
 
@@ -439,7 +439,7 @@ Create an AppClient instance from network information.
   )
   ```
 
-#### *static* from_creator_and_name(creator_address: str, app_name: str, app_spec: Arc56Contract | Arc32Contract | str, algorand: [AlgorandClient](../../algorand/#algokit_utils.algorand.AlgorandClient), default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None, ignore_cache: bool | None = None, app_lookup_cache: [ApplicationLookup](../app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → [AppClient](#algokit_utils.applications.app_client.AppClient)
+#### *static* from_creator_and_name(creator_address: str, app_name: str, app_spec: Arc56Contract | Arc32Contract | str, algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient), default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None, ignore_cache: bool | None = None, app_lookup_cache: [ApplicationLookup](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → [AppClient](#algokit_utils.applications.app_client.AppClient)
 
 Create an AppClient instance from creator address and application name.
 
@@ -468,7 +468,7 @@ Create an AppClient instance from creator address and application name.
   )
   ```
 
-#### *static* compile(app_spec: Arc56Contract, app_manager: [AppManager](../app_manager/#algokit_utils.applications.app_manager.AppManager), compilation_params: [AppClientCompilationParams](#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](#algokit_utils.applications.app_client.AppClientCompilationResult)
+#### *static* compile(app_spec: Arc56Contract, app_manager: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager), compilation_params: [AppClientCompilationParams](#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppClientCompilationResult](#algokit_utils.applications.app_client.AppClientCompilationResult)
 
 Compile the application’s TEAL code.
 
@@ -508,7 +508,7 @@ Create a cloned AppClient instance with optionally overridden parameters.
   cloned_client = client.clone(app_name="Cloned App", default_sender="NEW_SENDER")
   ```
 
-#### export_source_maps() → [AppSourceMaps](../../models/application/#algokit_utils.models.application.AppSourceMaps)
+#### export_source_maps() → [AppSourceMaps](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppSourceMaps)
 
 Export the application’s source maps.
 
@@ -517,7 +517,7 @@ Export the application’s source maps.
 * **Raises:**
   **ValueError** – If source maps haven’t been loaded
 
-#### import_source_maps(source_maps: [AppSourceMaps](../../models/application/#algokit_utils.models.application.AppSourceMaps)) → None
+#### import_source_maps(source_maps: [AppSourceMaps](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppSourceMaps)) → None
 
 Import source maps for the application.
 
@@ -526,7 +526,7 @@ Import source maps for the application.
 * **Raises:**
   **ValueError** – If source maps are invalid or missing
 
-#### get_local_state(address: str) → dict[str, [AppState](../../models/application/#algokit_utils.models.application.AppState)]
+#### get_local_state(address: str) → dict[str, [AppState](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppState)]
 
 Get local state for an account.
 
@@ -535,7 +535,7 @@ Get local state for an account.
 * **Returns:**
   The account’s local state for this application
 
-#### get_global_state() → dict[str, [AppState](../../models/application/#algokit_utils.models.application.AppState)]
+#### get_global_state() → dict[str, [AppState](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppState)]
 
 Get the application’s global state.
 
@@ -546,7 +546,7 @@ Get the application’s global state.
   global_state = client.get_global_state()
   ```
 
-#### get_box_names() → list[[BoxName](../../models/state/#algokit_utils.models.state.BoxName)]
+#### get_box_names() → list[[BoxName](/docs/algokit-utils/python/latest/api/algokit_utils/models/state/#algokit_utils.models.state.BoxName)]
 
 Get all box names for the application.
 
@@ -584,7 +584,7 @@ Get a box value decoded according to an ABI type.
   box_value = client.get_box_value_from_abi_type(box_name, abi_type)
   ```
 
-#### get_box_values(filter_func: Callable[[[BoxName](../../models/state/#algokit_utils.models.state.BoxName)], bool] | None = None) → list[[BoxValue](../../models/state/#algokit_utils.models.state.BoxValue)]
+#### get_box_values(filter_func: Callable[[[BoxName](/docs/algokit-utils/python/latest/api/algokit_utils/models/state/#algokit_utils.models.state.BoxName)], bool] | None = None) → list[[BoxValue](/docs/algokit-utils/python/latest/api/algokit_utils/models/state/#algokit_utils.models.state.BoxValue)]
 
 Get values for multiple boxes.
 
@@ -597,7 +597,7 @@ Get values for multiple boxes.
   box_values = client.get_box_values()
   ```
 
-#### get_box_values_from_abi_type(abi_type: ABIType, filter_func: Callable[[[BoxName](../../models/state/#algokit_utils.models.state.BoxName)], bool] | None = None) → list[[BoxABIValue](../abi/#algokit_utils.applications.abi.BoxABIValue)]
+#### get_box_values_from_abi_type(abi_type: ABIType, filter_func: Callable[[[BoxName](/docs/algokit-utils/python/latest/api/algokit_utils/models/state/#algokit_utils.models.state.BoxName)], bool] | None = None) → list[[BoxABIValue](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.BoxABIValue)]
 
 Get multiple box values decoded according to an ABI type.
 
@@ -611,7 +611,7 @@ Get multiple box values decoded according to an ABI type.
   box_values = client.get_box_values_from_abi_type(abi_type)
   ```
 
-#### fund_app_account(params: [FundAppAccountParams](#algokit_utils.applications.app_client.FundAppAccountParams), send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](../../transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### fund_app_account(params: [FundAppAccountParams](#algokit_utils.applications.app_client.FundAppAccountParams), send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Fund the application’s account.
 

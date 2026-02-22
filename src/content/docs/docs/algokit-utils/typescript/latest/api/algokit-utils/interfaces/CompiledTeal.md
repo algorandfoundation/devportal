@@ -5,7 +5,7 @@ prev: false
 title: "CompiledTeal"
 ---
 
-Defined in: [src/app.ts:127](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L127)
+Defined in: [src/app.ts:127](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L127)
 
 Information about a compiled teal program
 
@@ -15,7 +15,7 @@ Information about a compiled teal program
 
 > **compiled**: `string`
 
-Defined in: [src/app.ts:131](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L131)
+Defined in: [src/app.ts:131](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L131)
 
 The compiled code
 
@@ -25,7 +25,7 @@ The compiled code
 
 > **compiledBase64ToBytes**: `Uint8Array`
 
-Defined in: [src/app.ts:135](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L135)
+Defined in: [src/app.ts:135](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L135)
 
 The base64 encoded code as a byte array
 
@@ -35,7 +35,7 @@ The base64 encoded code as a byte array
 
 > **compiledHash**: `string`
 
-Defined in: [src/app.ts:133](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L133)
+Defined in: [src/app.ts:133](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L133)
 
 The hash returned by the compiler
 
@@ -45,7 +45,7 @@ The hash returned by the compiler
 
 > **sourceMap**: `ProgramSourceMap`
 
-Defined in: [src/app.ts:137](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L137)
+Defined in: [src/app.ts:137](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L137)
 
 Source map from the compilation
 
@@ -55,6 +55,6 @@ Source map from the compilation
 
 > **teal**: `string`
 
-Defined in: [src/app.ts:129](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L129)
+Defined in: [src/app.ts:129](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L129)
 
 Original TEAL code

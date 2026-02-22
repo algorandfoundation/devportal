@@ -7,7 +7,7 @@ title: "ApplicationLogData"
 
 > **ApplicationLogData** = `object`
 
-Defined in: [packages/indexer\_client/src/models/application-log-data.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/application-log-data.ts#L7)
+Defined in: [packages/indexer\_client/src/models/application-log-data.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/application-log-data.ts#L7)
 
 Stores the global information associated with an application.
 
@@ -17,7 +17,7 @@ Stores the global information associated with an application.
 
 > **logs**: `Uint8Array`[]
 
-Defined in: [packages/indexer\_client/src/models/application-log-data.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/application-log-data.ts#L16)
+Defined in: [packages/indexer\_client/src/models/application-log-data.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/application-log-data.ts#L16)
 
 Logs for the application being executed by the transaction.
 
@@ -27,6 +27,6 @@ Logs for the application being executed by the transaction.
 
 > **txId**: `string`
 
-Defined in: [packages/indexer\_client/src/models/application-log-data.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/application-log-data.ts#L11)
+Defined in: [packages/indexer\_client/src/models/application-log-data.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/application-log-data.ts#L11)
 
 Transaction ID

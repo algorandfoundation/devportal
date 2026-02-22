@@ -5,13 +5,13 @@ prev: false
 title: "AssetManager"
 ---
 
-Defined in: [src/asset-manager.ts:142](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset-manager.ts#L142)
+Defined in: [src/asset-manager.ts:142](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L142)
 
 Allows management of asset information.
 
 ## See
 
-[AlgorandClient](/algokit-utils-ts/api/algokit-utils/classes/algorandclient/) for the main entry point that provides access to this manager
+[AlgorandClient](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/) for the main entry point that provides access to this manager
 
 ## Constructors
 
@@ -19,7 +19,7 @@ Allows management of asset information.
 
 > **new AssetManager**(`algod`, `newGroup`): `AssetManager`
 
-Defined in: [src/asset-manager.ts:155](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset-manager.ts#L155)
+Defined in: [src/asset-manager.ts:155](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L155)
 
 Create a new asset manager.
 
@@ -27,13 +27,13 @@ Create a new asset manager.
 
 ##### algod
 
-[`AlgodClient`](/algokit-utils-ts/api/subpaths/algod-client/classes/algodclient/)
+[`AlgodClient`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/classes/algodclient/)
 
 An algod client
 
 ##### newGroup
 
-(`config?`) => [`TransactionComposer`](/algokit-utils-ts/api/algokit-utils/classes/transactioncomposer/)
+(`config?`) => [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)
 
 A function that creates a new `TransactionComposer` transaction group
 
@@ -51,9 +51,9 @@ const assetManager = new AssetManager(algod, () => new TransactionComposer({algo
 
 ### bulkOptIn()
 
-> **bulkOptIn**(`account`, `assetIds`, `options?`): `Promise`\<[`BulkAssetOptInOutResult`](/algokit-utils-ts/api/algokit-utils/interfaces/bulkassetoptinoutresult/)[]\>
+> **bulkOptIn**(`account`, `assetIds`, `options?`): `Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/bulkassetoptinoutresult/)[]\>
 
-Defined in: [src/asset-manager.ts:237](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset-manager.ts#L237)
+Defined in: [src/asset-manager.ts:237](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L237)
 
 Opt an account in to a list of Algorand Standard Assets.
 
@@ -65,7 +65,7 @@ Transactions will be sent in batches of 16 as transaction groups.
 
 The account to opt-in
 
-`string` | [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+`string` | [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
 ##### assetIds
 
@@ -75,13 +75,13 @@ The list of asset IDs to opt-in to
 
 ##### options?
 
-`Omit`\<`CommonTransactionParams`, `"sender"`\> & [`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/)
+`Omit`\<`CommonTransactionParams`, `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/)
 
 Any parameters to control the transaction or execution of the transaction
 
 #### Returns
 
-`Promise`\<[`BulkAssetOptInOutResult`](/algokit-utils-ts/api/algokit-utils/interfaces/bulkassetoptinoutresult/)[]\>
+`Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/bulkassetoptinoutresult/)[]\>
 
 An array of records matching asset ID to transaction ID of the opt in
 
@@ -98,9 +98,9 @@ assetManager.bulkOptIn("ACCOUNTADDRESS", [12345n, 67890n], { maxFee: (1000).micr
 
 ### bulkOptOut()
 
-> **bulkOptOut**(`account`, `assetIds`, `options?`): `Promise`\<[`BulkAssetOptInOutResult`](/algokit-utils-ts/api/algokit-utils/interfaces/bulkassetoptinoutresult/)[]\>
+> **bulkOptOut**(`account`, `assetIds`, `options?`): `Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/bulkassetoptinoutresult/)[]\>
 
-Defined in: [src/asset-manager.ts:287](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset-manager.ts#L287)
+Defined in: [src/asset-manager.ts:287](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L287)
 
 Opt an account out of a list of Algorand Standard Assets.
 
@@ -112,7 +112,7 @@ Transactions will be sent in batches of 16 as transaction groups.
 
 The account to opt-in
 
-`string` | [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+`string` | [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
 ##### assetIds
 
@@ -122,13 +122,13 @@ The list of asset IDs to opt-out of
 
 ##### options?
 
-`Omit`\<`CommonTransactionParams`, `"sender"`\> & [`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/) & `object`
+`Omit`\<`CommonTransactionParams`, `"sender"`\> & [`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/) & `object`
 
 Any parameters to control the transaction or execution of the transaction
 
 #### Returns
 
-`Promise`\<[`BulkAssetOptInOutResult`](/algokit-utils-ts/api/algokit-utils/interfaces/bulkassetoptinoutresult/)[]\>
+`Promise`\<[`BulkAssetOptInOutResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/bulkassetoptinoutresult/)[]\>
 
 An array of records matching asset ID to transaction ID of the opt in
 
@@ -145,9 +145,9 @@ assetManager.bulkOptOut("ACCOUNTADDRESS", [12345n, 67890n], { ensureZeroBalance:
 
 ### getAccountInformation()
 
-> **getAccountInformation**(`sender`, `assetId`): `Promise`\<[`AccountAssetInformation`](/algokit-utils-ts/api/algokit-utils/type-aliases/accountassetinformation/)\>
+> **getAccountInformation**(`sender`, `assetId`): `Promise`\<[`AccountAssetInformation`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/accountassetinformation/)\>
 
-Defined in: [src/asset-manager.ts:209](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset-manager.ts#L209)
+Defined in: [src/asset-manager.ts:209](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L209)
 
 Returns the given sender account's asset holding for a given asset.
 
@@ -157,7 +157,7 @@ Returns the given sender account's asset holding for a given asset.
 
 The address of the sender/account to look up
 
-`string` | [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+`string` | [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
 ##### assetId
 
@@ -167,7 +167,7 @@ The ID of the asset to return a holding for
 
 #### Returns
 
-`Promise`\<[`AccountAssetInformation`](/algokit-utils-ts/api/algokit-utils/type-aliases/accountassetinformation/)\>
+`Promise`\<[`AccountAssetInformation`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/accountassetinformation/)\>
 
 The account asset holding information
 
@@ -185,9 +185,9 @@ const accountInfo = await assetManager.getAccountInformation(address, assetId);
 
 ### getById()
 
-> **getById**(`assetId`): `Promise`\<[`AssetInformation`](/algokit-utils-ts/api/algokit-utils/interfaces/assetinformation/)\>
+> **getById**(`assetId`): `Promise`\<[`AssetInformation`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/assetinformation/)\>
 
-Defined in: [src/asset-manager.ts:171](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/asset-manager.ts#L171)
+Defined in: [src/asset-manager.ts:171](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L171)
 
 Returns the current asset information for the asset with the given ID.
 
@@ -201,7 +201,7 @@ The ID of the asset
 
 #### Returns
 
-`Promise`\<[`AssetInformation`](/algokit-utils-ts/api/algokit-utils/interfaces/assetinformation/)\>
+`Promise`\<[`AssetInformation`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/assetinformation/)\>
 
 The asset information
 

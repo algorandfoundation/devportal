@@ -7,7 +7,7 @@ title: "encodeSignedTransactionToJson"
 
 > **encodeSignedTransactionToJson**(`signedTransaction`, `space?`): `string`
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:184](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L184)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:184](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L184)
 
 Encode a signed transaction to wire-format JSON string.
 
@@ -19,7 +19,7 @@ that preserves the canonical field names.
 
 ### signedTransaction
 
-[`SignedTransaction`](/algokit-utils-ts/api/subpaths/transact/type-aliases/signedtransaction/)
+[`SignedTransaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/signedtransaction/)
 
 The signed transaction to encode
 

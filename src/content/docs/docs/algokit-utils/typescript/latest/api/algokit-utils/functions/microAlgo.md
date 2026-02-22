@@ -5,9 +5,9 @@ prev: false
 title: "microAlgo"
 ---
 
-> **microAlgo**(`microAlgos`): [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> **microAlgo**(`microAlgos`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/amount.ts:195](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L195)
+Defined in: [src/amount.ts:195](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L195)
 
 Returns an amount of µAlgo using AlgoAmount
 
@@ -21,7 +21,7 @@ The amount of µAlgo
 
 ## Returns
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 ## Example
 

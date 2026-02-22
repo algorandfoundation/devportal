@@ -5,7 +5,7 @@ prev: false
 title: "TransactionComposer"
 ---
 
-Defined in: [src/composer.ts:224](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L224)
+Defined in: [src/composer.ts:224](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L224)
 
 TransactionComposer helps you compose and execute transactions as a transaction group.
 
@@ -15,7 +15,7 @@ TransactionComposer helps you compose and execute transactions as a transaction 
 
 > **new TransactionComposer**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:297](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L297)
+Defined in: [src/composer.ts:297](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L297)
 
 Create a `TransactionComposer`.
 
@@ -23,7 +23,7 @@ Create a `TransactionComposer`.
 
 ##### params
 
-[`TransactionComposerParams`](/algokit-utils-ts/api/algokit-utils/type-aliases/transactioncomposerparams/)
+[`TransactionComposerParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/transactioncomposerparams/)
 
 The configuration for this composer
 
@@ -39,7 +39,7 @@ The `TransactionComposer` instance
 
 > **addAppCall**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:968](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L968)
+Defined in: [src/composer.ts:968](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L968)
 
 Add an application call transaction to the transaction group.
 
@@ -97,7 +97,7 @@ composer.addAppCall({
 
 > **addAppCallMethodCall**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:1213](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1213)
+Defined in: [src/composer.ts:1213](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1213)
 
 Add a non-create/non-update ABI method application call transaction to the transaction group.
 
@@ -111,13 +111,13 @@ The ABI method application call transaction parameters
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -135,7 +135,7 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 
 ###### args?
 
-([`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/) \| [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `Promise`\<[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)\> \| [`TransactionWithSigner`](/algokit-utils-ts/api/algokit-utils/interfaces/transactionwithsigner/) \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appId?`: `0`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender`: [`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appId`: `bigint`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `sender`: [`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<`AppMethodCallParams`\> \| `undefined`)[]
+([`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/) \| [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `Promise`\<[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)\> \| [`TransactionWithSigner`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/transactionwithsigner/) \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appId?`: `0`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender`: [`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appId`: `bigint`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `sender`: [`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<`AppMethodCallParams`\> \| `undefined`)[]
 
 Arguments to the ABI method, either:
 * An ABI value
@@ -153,7 +153,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -162,7 +162,7 @@ Either the name identifier (which will be set against app ID of `0` i.e.
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -192,13 +192,13 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
 ###### method
 
-[`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)
+[`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)
 
 The ABI method to call
 
@@ -210,7 +210,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+[`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -222,7 +222,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -230,13 +230,13 @@ Change the signing key of the sender to the given address.
 
 ###### sender
 
-[`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/)
+[`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/)
 
 The address sending the transaction, optionally with an attached signer.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -244,7 +244,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -308,7 +308,7 @@ composer.addAppCallMethodCall({
 
 > **addAppCreate**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:838](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L838)
+Defined in: [src/composer.ts:838](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L838)
 
 Add an application create transaction to the transaction group.
 
@@ -322,13 +322,13 @@ The application create transaction parameters
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -362,7 +362,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -377,7 +377,7 @@ The program to execute for ClearState OnComplete as raw teal that will be compil
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -415,7 +415,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -427,7 +427,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+[`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -439,7 +439,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -477,13 +477,13 @@ The number of integers saved in local state.
 
 ###### sender
 
-[`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/)
+[`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/)
 
 The address sending the transaction, optionally with an attached signer.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -491,7 +491,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -558,7 +558,7 @@ composer.addAppCreate({
 
 > **addAppCreateMethodCall**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:1031](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1031)
+Defined in: [src/composer.ts:1031](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1031)
 
 Add an ABI method create application call transaction to the transaction group.
 
@@ -572,13 +572,13 @@ The ABI create method application call transaction parameters
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -600,7 +600,7 @@ The program to execute for all OnCompletes other than ClearState as raw teal tha
 
 ###### args?
 
-([`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/) \| [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `Promise`\<[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)\> \| [`TransactionWithSigner`](/algokit-utils-ts/api/algokit-utils/interfaces/transactionwithsigner/) \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appId?`: `0`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender`: [`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appId`: `bigint`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `sender`: [`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<`AppMethodCallParams`\> \| `undefined`)[]
+([`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/) \| [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `Promise`\<[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)\> \| [`TransactionWithSigner`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/transactionwithsigner/) \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appId?`: `0`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender`: [`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appId`: `bigint`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `sender`: [`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<`AppMethodCallParams`\> \| `undefined`)[]
 
 Arguments to the ABI method, either:
 * An ABI value
@@ -618,7 +618,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -633,7 +633,7 @@ The program to execute for ClearState OnComplete as raw teal that will be compil
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -671,13 +671,13 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
 ###### method
 
-[`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)
+[`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)
 
 The ABI method to call
 
@@ -689,7 +689,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+[`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -701,7 +701,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -739,13 +739,13 @@ The number of integers saved in local state.
 
 ###### sender
 
-[`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/)
+[`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/)
 
 The address sending the transaction, optionally with an attached signer.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -753,7 +753,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -826,7 +826,7 @@ composer.addAppCreateMethodCall({
 
 > **addAppDelete**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:924](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L924)
+Defined in: [src/composer.ts:924](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L924)
 
 Add an application delete transaction to the transaction group.
 
@@ -836,7 +836,7 @@ Note: we recommend using app clients to make it easier to make app calls.
 
 ##### params
 
-[`AppDeleteParams`](/algokit-utils-ts/api/algokit-utils/type-aliases/appdeleteparams/)
+[`AppDeleteParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/appdeleteparams/)
 
 The application delete transaction parameters
 
@@ -882,7 +882,7 @@ composer.addAppDelete({
 
 > **addAppDeleteMethodCall**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:1153](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1153)
+Defined in: [src/composer.ts:1153](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1153)
 
 Add an ABI method delete application call transaction to the transaction group.
 
@@ -896,13 +896,13 @@ The ABI delete method application call transaction parameters
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -920,7 +920,7 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 
 ###### args?
 
-([`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/) \| [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `Promise`\<[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)\> \| [`TransactionWithSigner`](/algokit-utils-ts/api/algokit-utils/interfaces/transactionwithsigner/) \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appId?`: `0`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender`: [`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appId`: `bigint`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `sender`: [`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<`AppMethodCallParams`\> \| `undefined`)[]
+([`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/) \| [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `Promise`\<[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)\> \| [`TransactionWithSigner`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/transactionwithsigner/) \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appId?`: `0`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender`: [`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appId`: `bigint`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `sender`: [`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<`AppMethodCallParams`\> \| `undefined`)[]
 
 Arguments to the ABI method, either:
 * An ABI value
@@ -938,7 +938,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -947,7 +947,7 @@ Either the name identifier (which will be set against app ID of `0` i.e.
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -977,13 +977,13 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
 ###### method
 
-[`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)
+[`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)
 
 The ABI method to call
 
@@ -995,7 +995,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+[`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -1007,7 +1007,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -1015,13 +1015,13 @@ Change the signing key of the sender to the given address.
 
 ###### sender
 
-[`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/)
+[`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/)
 
 The address sending the transaction, optionally with an attached signer.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -1029,7 +1029,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -1093,7 +1093,7 @@ composer.addAppDeleteMethodCall({
 
 > **addAppUpdate**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:882](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L882)
+Defined in: [src/composer.ts:882](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L882)
 
 Add an application update transaction to the transaction group.
 
@@ -1107,13 +1107,13 @@ The application update transaction parameters
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1149,7 +1149,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1164,7 +1164,7 @@ The program to execute for ClearState OnComplete as raw teal (string) or compile
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -1194,7 +1194,7 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
@@ -1206,7 +1206,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication)
+[`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -1218,7 +1218,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -1226,13 +1226,13 @@ Change the signing key of the sender to the given address.
 
 ###### sender
 
-[`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/)
+[`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/)
 
 The address sending the transaction, optionally with an attached signer.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -1240,7 +1240,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -1294,7 +1294,7 @@ composer.addAppUpdate({
 
 > **addAppUpdateMethodCall**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:1093](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1093)
+Defined in: [src/composer.ts:1093](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1093)
 
 Add an ABI method update application call transaction to the transaction group.
 
@@ -1308,13 +1308,13 @@ The ABI update method application call transaction parameters
 
 ###### accessReferences?
 
-[`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]
+[`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]
 
 Access references unifies `accountReferences`, `appReferences`, `assetReferences`, and `boxReferences` under a single list. If non-empty, these other reference lists must be empty. If access is empty, those other reference lists may be non-empty.
 
 ###### accountReferences?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 Any account addresses to add to the [accounts array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1338,7 +1338,7 @@ The program to execute for all OnCompletes other than ClearState as raw teal (st
 
 ###### args?
 
-([`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/) \| [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/) \| `Promise`\<[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)\> \| [`TransactionWithSigner`](/algokit-utils-ts/api/algokit-utils/interfaces/transactionwithsigner/) \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appId?`: `0`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender`: [`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/algokit-utils-ts/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]; `appId`: `bigint`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `sender`: [`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<`AppMethodCallParams`\> \| `undefined`)[]
+([`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/) \| [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `Promise`\<[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)\> \| [`TransactionWithSigner`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/transactionwithsigner/) \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appId?`: `0`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `extraProgramPages?`: `number`; `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`NoOp`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#noop) \| [`OptIn`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#optin) \| [`CloseOut`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#closeout) \| [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication) \| [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `schema?`: \{ `globalByteSlices`: `number`; `globalInts`: `number`; `localByteSlices`: `number`; `localInts`: `number`; \}; `sender`: [`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<\{ `accessReferences?`: [`ResourceReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/resourcereference/)[]; `accountReferences?`: [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]; `appId`: `bigint`; `appReferences?`: `bigint`[]; `approvalProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `args?`: `Uint8Array`\<`ArrayBufferLike`\>[]; `assetReferences?`: `bigint`[]; `boxReferences?`: BoxIdentifier \| BoxReference[]; `clearStateProgram`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `extraFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `firstValidRound?`: `bigint`; `lastValidRound?`: `bigint`; `lease?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `maxFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `note?`: `string` \| `Uint8Array`\<`ArrayBufferLike`\>; `onComplete?`: [`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication); `rejectVersion?`: `number`; `rekeyTo?`: ReadableAddress \| undefined; `sender`: [`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/); `signer?`: [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/); `staticFee?`: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/); `validityWindow?`: `number` \| `bigint`; \}\> \| `AppMethodCall`\<`AppMethodCallParams`\> \| `undefined`)[]
 
 Arguments to the ABI method, either:
 * An ABI value
@@ -1356,7 +1356,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 
 ###### boxReferences?
 
-([`BoxIdentifier`](/algokit-utils-ts/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/algokit-utils-ts/api/algokit-utils/interfaces/boxreference/))[]
+([`BoxIdentifier`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/boxidentifier/) \| [`BoxReference`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxreference/))[]
 
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
@@ -1371,7 +1371,7 @@ The program to execute for ClearState OnComplete as raw teal (string) or compile
 
 ###### extraFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The fee to pay IN ADDITION to the suggested fee. Useful for manually covering inner transaction fees.
 
@@ -1401,13 +1401,13 @@ A [lease](https://dev.algorand.co/concepts/transactions/leases)
 
 ###### maxFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 Throw an error if the fee for the transaction is more than this amount; prevents overspending on fees during high congestion periods.
 
 ###### method
 
-[`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)
+[`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)
 
 The ABI method to call
 
@@ -1419,7 +1419,7 @@ Note to attach to the transaction. Max of 1000 bytes.
 
 ###### onComplete?
 
-[`UpdateApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication)
+[`UpdateApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#updateapplication)
 
 The [on-complete](https://dev.algorand.co/concepts/smart-contracts/avm#oncomplete) action of the call; defaults to no-op.
 
@@ -1431,7 +1431,7 @@ If set, the transaction will be rejected when the app's version is greater than 
 
 ###### rekeyTo?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 Change the signing key of the sender to the given address.
 
@@ -1439,13 +1439,13 @@ Change the signing key of the sender to the given address.
 
 ###### sender
 
-[`SendingAddress`](/algokit-utils-ts/api/subpaths/transact/type-aliases/sendingaddress/)
+[`SendingAddress`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/sendingaddress/)
 
 The address sending the transaction, optionally with an attached signer.
 
 ###### signer?
 
-[`AddressWithTransactionSigner`](/algokit-utils-ts/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
  an attempt will be made to find a registered signer for the
@@ -1453,7 +1453,7 @@ The function used to sign transaction(s); if not specified then
 
 ###### staticFee?
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 The static transaction fee. In most cases you want to use `extraFee` unless setting the fee to 0 to be covered by another transaction.
 
@@ -1519,7 +1519,7 @@ composer.addAppUpdateMethodCall({
 
 > **addAssetConfig**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:609](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L609)
+Defined in: [src/composer.ts:609](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L609)
 
 Add an asset config transaction to the transaction group.
 
@@ -1569,7 +1569,7 @@ composer.addAssetConfig({
 
 > **addAssetCreate**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:574](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L574)
+Defined in: [src/composer.ts:574](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L574)
 
 Add an asset create transaction to the transaction group.
 
@@ -1625,7 +1625,7 @@ composer.addAssetCreate({
 
 > **addAssetDestroy**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:675](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L675)
+Defined in: [src/composer.ts:675](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L675)
 
 Add an asset destroy transaction to the transaction group.
 
@@ -1672,7 +1672,7 @@ composer.addAssetDestroy({
 
 > **addAssetFreeze**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:643](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L643)
+Defined in: [src/composer.ts:643](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L643)
 
 Add an asset freeze transaction to the transaction group.
 
@@ -1721,7 +1721,7 @@ composer.addAssetFreeze({
 
 > **addAssetOptIn**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:744](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L744)
+Defined in: [src/composer.ts:744](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L744)
 
 Add an asset opt-in transaction to the transaction group.
 
@@ -1768,7 +1768,7 @@ composer.addAssetOptIn({
 
 > **addAssetOptOut**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:782](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L782)
+Defined in: [src/composer.ts:782](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L782)
 
 Add an asset opt-out transaction to the transaction group.
 
@@ -1821,7 +1821,7 @@ composer.addAssetOptOut({
 
 > **addAssetTransfer**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:712](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L712)
+Defined in: [src/composer.ts:712](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L712)
 
 Add an asset transfer transaction to the transaction group.
 
@@ -1873,7 +1873,7 @@ composer.addAssetTransfer({
 
 > **addOfflineKeyRegistration**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:1302](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1302)
+Defined in: [src/composer.ts:1302](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1302)
 
 Add an offline key registration transaction to the transaction group.
 
@@ -1923,7 +1923,7 @@ composer.addOfflineKeyRegistration({
 
 > **addOnlineKeyRegistration**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:1267](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1267)
+Defined in: [src/composer.ts:1267](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1267)
 
 Add an online key registration transaction to the transaction group.
 
@@ -1985,7 +1985,7 @@ composer.addOnlineKeyRegistration({
 
 > **addPayment**(`params`): `TransactionComposer`
 
-Defined in: [src/composer.ts:533](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L533)
+Defined in: [src/composer.ts:533](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L533)
 
 Add a payment transaction to the transaction group.
 
@@ -2039,7 +2039,7 @@ composer.addPayment({
 
 > **addTransaction**(`transaction`, `signer?`): `TransactionComposer`
 
-Defined in: [src/composer.ts:462](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L462)
+Defined in: [src/composer.ts:462](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L462)
 
 Add a pre-built transaction to the transaction group.
 
@@ -2047,13 +2047,13 @@ Add a pre-built transaction to the transaction group.
 
 ##### transaction
 
-[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)
+[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)
 
 The pre-built transaction
 
 ##### signer?
 
-[`TransactionSigner`](/algokit-utils-ts/api/subpaths/transact/type-aliases/transactionsigner/)
+[`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 Optional signer override for the transaction
 
@@ -2075,7 +2075,7 @@ composer.addTransaction(txn)
 
 > **addTransactionComposer**(`composer`): `TransactionComposer`
 
-Defined in: [src/composer.ts:493](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L493)
+Defined in: [src/composer.ts:493](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L493)
 
 Add another transaction composer to the current transaction composer.
 The transaction params of the input transaction composer will be added.
@@ -2109,9 +2109,9 @@ composer.addTransactionComposer(innerComposer)
 
 ### build()
 
-> **build**(): `Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)\>; `transactions`: [`TransactionWithSigner`](/algokit-utils-ts/api/algokit-utils/interfaces/transactionwithsigner/)[]; \}\>
+> **build**(): `Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)\>; `transactions`: [`TransactionWithSigner`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/transactionwithsigner/)[]; \}\>
 
-Defined in: [src/composer.ts:1329](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1329)
+Defined in: [src/composer.ts:1329](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1329)
 
 Build the transaction composer.
 
@@ -2122,7 +2122,7 @@ You can safely call this method multiple times to get the same result.
 
 #### Returns
 
-`Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)\>; `transactions`: [`TransactionWithSigner`](/algokit-utils-ts/api/algokit-utils/interfaces/transactionwithsigner/)[]; \}\>
+`Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)\>; `transactions`: [`TransactionWithSigner`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/transactionwithsigner/)[]; \}\>
 
 The built transaction composer, the transactions and any corresponding method calls
 
@@ -2136,9 +2136,9 @@ const { transactions, methodCalls } = await composer.build()
 
 ### buildTransactions()
 
-> **buildTransactions**(): `Promise`\<[`BuiltTransactions`](/algokit-utils-ts/api/algokit-utils/interfaces/builttransactions/)\>
+> **buildTransactions**(): `Promise`\<[`BuiltTransactions`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/builttransactions/)\>
 
-Defined in: [src/composer.ts:1502](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1502)
+Defined in: [src/composer.ts:1502](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1502)
 
 Builds all transactions in the composer and returns them along with method calls and signers.
 
@@ -2147,7 +2147,7 @@ Use this when you need the raw transactions.
 
 #### Returns
 
-`Promise`\<[`BuiltTransactions`](/algokit-utils-ts/api/algokit-utils/interfaces/builttransactions/)\>
+`Promise`\<[`BuiltTransactions`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/builttransactions/)\>
 
 An object containing the array of built transactions, method calls, and signers
 
@@ -2163,13 +2163,13 @@ const { transactions, methodCalls, signers } = await composer.buildTransactions(
 
 > **clone**(`composerConfig?`): `TransactionComposer`
 
-Defined in: [src/composer.ts:419](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L419)
+Defined in: [src/composer.ts:419](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L419)
 
 #### Parameters
 
 ##### composerConfig?
 
-[`TransactionComposerConfig`](/algokit-utils-ts/api/algokit-utils/type-aliases/transactioncomposerconfig/)
+[`TransactionComposerConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/transactioncomposerconfig/)
 
 #### Returns
 
@@ -2181,7 +2181,7 @@ Defined in: [src/composer.ts:419](https://github.com/algorandfoundation/algokit-
 
 > **count**(): `number`
 
-Defined in: [src/composer.ts:1312](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1312)
+Defined in: [src/composer.ts:1312](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1312)
 
 Get the number of transactions currently added to this composer.
 
@@ -2197,7 +2197,7 @@ The number of transactions currently added to this composer
 
 > **gatherSignatures**(): `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>[]\>
 
-Defined in: [src/composer.ts:2100](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L2100)
+Defined in: [src/composer.ts:2100](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L2100)
 
 #### Returns
 
@@ -2207,16 +2207,16 @@ Defined in: [src/composer.ts:2100](https://github.com/algorandfoundation/algokit
 
 ### rebuild()
 
-> **rebuild**(): `Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)\>; `transactions`: [`TransactionWithSigner`](/algokit-utils-ts/api/algokit-utils/interfaces/transactionwithsigner/)[]; \}\>
+> **rebuild**(): `Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)\>; `transactions`: [`TransactionWithSigner`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/transactionwithsigner/)[]; \}\>
 
-Defined in: [src/composer.ts:1784](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1784)
+Defined in: [src/composer.ts:1784](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1784)
 
 Rebuild the group, discarding any previously built transactions.
 This will potentially cause new signers and suggested params to be used if the callbacks return a new value compared to the first build.
 
 #### Returns
 
-`Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/algokit-utils-ts/api/subpaths/abi/classes/abimethod/)\>; `transactions`: [`TransactionWithSigner`](/algokit-utils-ts/api/algokit-utils/interfaces/transactionwithsigner/)[]; \}\>
+`Promise`\<\{ `methodCalls`: `Map`\<`number`, [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)\>; `transactions`: [`TransactionWithSigner`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/transactionwithsigner/)[]; \}\>
 
 The newly built transaction composer and the transactions
 
@@ -2232,7 +2232,7 @@ const { atc, transactions, methodCalls } = await composer.rebuild()
 
 > **registerErrorTransformer**(`transformer`): `TransactionComposer`
 
-Defined in: [src/composer.ts:447](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L447)
+Defined in: [src/composer.ts:447](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L447)
 
 Register a function that will be used to transform an error caught when simulating or executing
 
@@ -2240,7 +2240,7 @@ Register a function that will be used to transform an error caught when simulati
 
 ##### transformer
 
-[`ErrorTransformer`](/algokit-utils-ts/api/algokit-utils/type-aliases/errortransformer/)
+[`ErrorTransformer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/errortransformer/)
 
 #### Returns
 
@@ -2252,9 +2252,9 @@ The composer so you can chain method calls
 
 ### send()
 
-> **send**(`params?`): `Promise`\<[`SendTransactionComposerResults`](/algokit-utils-ts/api/algokit-utils/interfaces/sendtransactioncomposerresults/)\>
+> **send**(`params?`): `Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/)\>
 
-Defined in: [src/composer.ts:1803](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1803)
+Defined in: [src/composer.ts:1803](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1803)
 
 Compose the transaction group and send it to the network.
 
@@ -2262,13 +2262,13 @@ Compose the transaction group and send it to the network.
 
 ##### params?
 
-[`SendParams`](/algokit-utils-ts/api/algokit-utils/interfaces/sendparams/)
+[`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/)
 
 The parameters to control execution with
 
 #### Returns
 
-`Promise`\<[`SendTransactionComposerResults`](/algokit-utils-ts/api/algokit-utils/interfaces/sendtransactioncomposerresults/)\>
+`Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/)\>
 
 The execution result
 
@@ -2284,13 +2284,13 @@ const result = await composer.send()
 
 > **setMaxFees**(`maxFees`): `void`
 
-Defined in: [src/composer.ts:2173](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L2173)
+Defined in: [src/composer.ts:2173](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L2173)
 
 #### Parameters
 
 ##### maxFees
 
-`Map`\<`number`, [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)\>
+`Map`\<`number`, [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)\>
 
 #### Returns
 
@@ -2302,15 +2302,15 @@ Defined in: [src/composer.ts:2173](https://github.com/algorandfoundation/algokit
 
 #### Call Signature
 
-> **simulate**(): `Promise`\<[`SendTransactionComposerResults`](/algokit-utils-ts/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
+> **simulate**(): `Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
 
-Defined in: [src/composer.ts:1983](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1983)
+Defined in: [src/composer.ts:1983](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1983)
 
 Compose the transaction group and simulate sending it to the network
 
 ##### Returns
 
-`Promise`\<[`SendTransactionComposerResults`](/algokit-utils-ts/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
+`Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
 
 The simulation result
 
@@ -2322,9 +2322,9 @@ const result = await composer.simulate()
 
 #### Call Signature
 
-> **simulate**(`options`): `Promise`\<[`SendTransactionComposerResults`](/algokit-utils-ts/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
+> **simulate**(`options`): `Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
 
-Defined in: [src/composer.ts:1994](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L1994)
+Defined in: [src/composer.ts:1994](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L1994)
 
 Compose the transaction group and simulate sending it to the network
 
@@ -2346,7 +2346,7 @@ Allows access to unnamed resources during simulation.
 
 ###### execTraceConfig?
 
-[`SimulateTraceConfig`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/simulatetraceconfig/)
+[`SimulateTraceConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/simulatetraceconfig/)
 
 ###### extraOpcodeBudget?
 
@@ -2375,7 +2375,7 @@ This will set `fixSigners` and `allowEmptySignatures` when sending the request t
 
 ##### Returns
 
-`Promise`\<[`SendTransactionComposerResults`](/algokit-utils-ts/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
+`Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
 
 The simulation result
 
@@ -2389,9 +2389,9 @@ const result = await composer.simulate({
 
 #### Call Signature
 
-> **simulate**(`options`): `Promise`\<[`SendTransactionComposerResults`](/algokit-utils-ts/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
+> **simulate**(`options`): `Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
 
-Defined in: [src/composer.ts:2005](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L2005)
+Defined in: [src/composer.ts:2005](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L2005)
 
 Compose the transaction group and simulate sending it to the network
 
@@ -2399,11 +2399,11 @@ Compose the transaction group and simulate sending it to the network
 
 ###### options
 
-[`RawSimulateOptions`](/algokit-utils-ts/api/algokit-utils/type-aliases/rawsimulateoptions/)
+[`RawSimulateOptions`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/rawsimulateoptions/)
 
 ##### Returns
 
-`Promise`\<[`SendTransactionComposerResults`](/algokit-utils-ts/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
+`Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & `object`\>
 
 The simulation result
 
@@ -2421,7 +2421,7 @@ const result = await composer.simulate({
 
 > `static` **arc2Note**(`note`): `Uint8Array`
 
-Defined in: [src/composer.ts:2094](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L2094)
+Defined in: [src/composer.ts:2094](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L2094)
 
 Create an encoded transaction note that follows the ARC-2 spec.
 
@@ -2431,7 +2431,7 @@ https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md
 
 ##### note
 
-[`Arc2TransactionNote`](/algokit-utils-ts/api/algokit-utils/type-aliases/arc2transactionnote/)
+[`Arc2TransactionNote`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/arc2transactionnote/)
 
 The ARC-2 transaction note data
 

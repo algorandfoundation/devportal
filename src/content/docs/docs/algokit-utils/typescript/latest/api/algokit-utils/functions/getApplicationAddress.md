@@ -5,9 +5,9 @@ prev: false
 title: "getApplicationAddress"
 ---
 
-> **getApplicationAddress**(`appID`): [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> **getApplicationAddress**(`appID`): [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [packages/common/src/address.ts:178](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/common/src/address.ts#L178)
+Defined in: [packages/common/src/address.ts:178](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/common/src/address.ts#L178)
 
 Get the escrow address of an application.
 
@@ -21,6 +21,6 @@ The ID of the application.
 
 ## Returns
 
-[`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
 The address corresponding to that application's escrow account.

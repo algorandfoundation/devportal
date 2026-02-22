@@ -7,7 +7,7 @@ title: "SimulateRequest"
 
 > **SimulateRequest** = `object`
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L11)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L11)
 
 Request type for simulation endpoint.
 
@@ -17,7 +17,7 @@ Request type for simulation endpoint.
 
 > `optional` **allowEmptySignatures**: `boolean`
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:25](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L25)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:25](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L25)
 
 Allows transactions without signatures to be simulated as if they had correct signatures.
 
@@ -27,7 +27,7 @@ Allows transactions without signatures to be simulated as if they had correct si
 
 > `optional` **allowMoreLogging**: `boolean`
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:30](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L30)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:30](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L30)
 
 Lifts limits on log opcode usage during simulation.
 
@@ -37,7 +37,7 @@ Lifts limits on log opcode usage during simulation.
 
 > `optional` **allowUnnamedResources**: `boolean`
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:35](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L35)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:35](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L35)
 
 Allows access to unnamed resources during simulation.
 
@@ -45,9 +45,9 @@ Allows access to unnamed resources during simulation.
 
 ### execTraceConfig?
 
-> `optional` **execTraceConfig**: [`SimulateTraceConfig`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/simulatetraceconfig/)
+> `optional` **execTraceConfig**: [`SimulateTraceConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/simulatetraceconfig/)
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L41)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:41](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L41)
 
 ***
 
@@ -55,7 +55,7 @@ Defined in: [packages/algod\_client/src/models/simulate-request.ts:41](https://g
 
 > `optional` **extraOpcodeBudget**: `number`
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:40](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L40)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:40](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L40)
 
 Applies extra opcode budget during simulation for each transaction group.
 
@@ -65,7 +65,7 @@ Applies extra opcode budget during simulation for each transaction group.
 
 > `optional` **fixSigners**: `boolean`
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:46](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L46)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:46](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L46)
 
 If true, signers for transactions that are missing signatures will be fixed during evaluation.
 
@@ -75,7 +75,7 @@ If true, signers for transactions that are missing signatures will be fixed duri
 
 > `optional` **round**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L20)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L20)
 
 If provided, specifies the round preceding the simulation. State changes through this round will be used to run this simulation. Usually only the 4 most recent rounds will be available (controlled by the node config value MaxAcctLookback). If not specified, defaults to the latest available round.
 
@@ -83,8 +83,8 @@ If provided, specifies the round preceding the simulation. State changes through
 
 ### txnGroups
 
-> **txnGroups**: [`SimulateRequestTransactionGroup`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/simulaterequesttransactiongroup/)[]
+> **txnGroups**: [`SimulateRequestTransactionGroup`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/simulaterequesttransactiongroup/)[]
 
-Defined in: [packages/algod\_client/src/models/simulate-request.ts:15](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L15)
+Defined in: [packages/algod\_client/src/models/simulate-request.ts:15](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-request.ts#L15)
 
 The transaction groups to simulate.

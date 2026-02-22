@@ -7,9 +7,9 @@ Account management is one of the core capabilities provided by AlgoKit Utils. It
 
 ## `AccountManager`
 
-The `AccountManager` is a class that is used to get, create, and fund accounts and perform account-related actions such as funding. The `AccountManager` also keeps track of signers for each address so when using the [`TransactionComposer`](../advanced/transaction-composer) to send transactions, a signer function does not need to manually be specified for each transaction - instead it can be inferred from the sender address automatically!
+The `AccountManager` is a class that is used to get, create, and fund accounts and perform account-related actions such as funding. The `AccountManager` also keeps track of signers for each address so when using the [`TransactionComposer`](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/) to send transactions, a signer function does not need to manually be specified for each transaction - instead it can be inferred from the sender address automatically!
 
-To get an instance of `AccountManager`, you can use either [`AlgorandClient`](../algorand-client) via `algorand.account` or instantiate it directly:
+To get an instance of `AccountManager`, you can use either [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) via `algorand.account` or instantiate it directly:
 
 ```python
 from algokit_utils import AccountManager
@@ -21,7 +21,7 @@ account_manager = AccountManager(client_manager)
 
 The core internal type that holds information about a signer/sender pair for a transaction is `AddressWithTransactionSigner`, which represents a `TransactionSigner` (`signer`) along with a sender address (`addr`).
 
-Many methods in `AccountManager` expose an `AddressWithTransactionSigner`. `AddressWithTransactionSigner` can be used with [`TransactionComposer`](../advanced/transaction-composer).
+Many methods in `AccountManager` expose an `AddressWithTransactionSigner`. `AddressWithTransactionSigner` can be used with [`TransactionComposer`](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/).
 
 `AddressWithTransactionSigner` is a `Protocol` — any object that provides an `addr: str` property (via the `Addressable` protocol) and a `signer: TransactionSigner` property structurally conforms to it. The following built-in types satisfy this protocol:
 
@@ -37,7 +37,7 @@ Source: [`src/algokit_transact/signer.py`](https://github.com/algorandfoundation
 
 ## Registering a signer
 
-The `AccountManager` keeps track of which signer is associated with a given sender address. This is used by [`AlgorandClient`](../algorand-client) to automatically sign transactions by that sender. Any of the [methods](#accounts) within `AccountManager` that return an account will automatically register the signer with the sender. If however, you are creating a signer external to the `AccountManager`, then you need to register the signer with the `AccountManager` if you want it to be able to automatically sign transactions from that sender.
+The `AccountManager` keeps track of which signer is associated with a given sender address. This is used by [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) to automatically sign transactions by that sender. Any of the [methods](#accounts) within `AccountManager` that return an account will automatically register the signer with the sender. If however, you are creating a signer external to the `AccountManager`, then you need to register the signer with the `AccountManager` if you want it to be able to automatically sign transactions from that sender.
 
 There are two methods that can be used for this, `set_signer_from_account`, which takes any `AddressWithTransactionSigner` conforming object (such as `AddressWithSigners`, `LogicSigAccount`, or `MultisigAccount`), or `set_signer` which takes the sender address and the `TransactionSigner`:
 
@@ -70,7 +70,7 @@ algorand.account.set_default_signer(my_default_signer)
 
 ## Get a signer
 
-[`AlgorandClient`](../algorand-client) will automatically retrieve a signer when signing a transaction, but if you need to get a `TransactionSigner` externally to do something more custom then you can retrieve the signer for a given sender address (or an `AddressWithTransactionSigner`):
+[`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) will automatically retrieve a signer when signing a transaction, but if you need to get a `TransactionSigner` externally to do something more custom then you can retrieve the signer for a given sender address (or an `AddressWithTransactionSigner`):
 
 ```python
 signer = algorand.account.get_signer("SENDER_ADDRESS")
@@ -100,7 +100,7 @@ The `sender` parameter accepts either a `str` address or an `AddressWithTransact
 
 ## Accounts
 
-In order to get/register accounts for signing operations you can use the following methods on [`AccountManager`](#accountmanager) (expressed here as `algorand.account` to denote the syntax via an [`AlgorandClient`](../algorand-client)):
+In order to get/register accounts for signing operations you can use the following methods on [`AccountManager`](#accountmanager) (expressed here as `algorand.account` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/)):
 
 - `algorand.account.from_environment(name, fund_with)` - Registers and returns an account with private key loaded by convention based on the given name identifier - either by idempotently creating the account in KMD or from environment variable via `os.environ['{NAME}_MNEMONIC']` and (optionally) `os.environ['{NAME}_SENDER']` (if account is rekeyed)
   - This allows you to have powerful code that will automatically create and fund an account by name locally and when deployed against TestNet/MainNet will automatically resolve from environment variables, without having to have different code
@@ -172,10 +172,10 @@ You can issue a transaction to rekey an account by using the `algorand.account.r
 - `account: str` - The account address of the account that will be rekeyed
 - `rekey_to: str | AddressWithTransactionSigner` - The account address or signing account of the account that will be used to authorise transactions for the rekeyed account going forward. If a signing account is provided that will now be tracked as the signer for `account` in the `AccountManager` instance.
 - Additional keyword-only options:
-  - [Common transaction parameters](../algorand-client#transaction-parameters)
+  - [Common transaction parameters](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/#transaction-parameters)
   - `suppress_log: bool | None` - Optionally suppress log output
 
-You can also pass in `rekey_to` as a [common transaction parameter](../algorand-client#transaction-parameters) to any transaction.
+You can also pass in `rekey_to` as a [common transaction parameter](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/#transaction-parameters) to any transaction.
 
 ### Examples
 
@@ -224,7 +224,7 @@ When running LocalNet, you have an instance of the [Key Management Daemon](https
 
 The KMD SDK is fairly low level so to make use of it there is a fair bit of boilerplate code that's needed. This code has been abstracted away into the `KmdAccountManager` class.
 
-To get an instance of the `KmdAccountManager` class you can access it from [`AlgorandClient`](../algorand-client) via `algorand.account.kmd` or instantiate it directly (passing in a [`ClientManager`](../client)):
+To get an instance of the `KmdAccountManager` class you can access it from [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) via `algorand.account.kmd` or instantiate it directly (passing in a [`ClientManager`](/docs/algokit-utils/python/latest/guides/concepts/core/client/)):
 
 ```python
 from algokit_utils import KmdAccountManager
@@ -256,7 +256,7 @@ new_account = kmd_account_manager.get_or_create_wallet_account(
 existing_account = kmd_account_manager.get_or_create_wallet_account("account1")
 ```
 
-Some of this functionality is directly exposed from [`AccountManager`](#accountmanager), which has the added benefit of registering the account as a signer so they can be automatically used to sign transactions when using via [`AlgorandClient`](../algorand-client):
+Some of this functionality is directly exposed from [`AccountManager`](#accountmanager), which has the added benefit of registering the account as a signer so they can be automatically used to sign transactions when using via [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/):
 
 ```python
 # Get and register LocalNet dispenser

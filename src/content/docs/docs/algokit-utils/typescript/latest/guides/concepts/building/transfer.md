@@ -1,17 +1,17 @@
 ---
 title: "Algo transfers (payments)"
-description: "Algo transfers, or [payments](https://dev.algorand.co/concepts/transactions/types/#payment-transaction), is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [Algo amount handling](../core/amount.md) and [Transaction management](../core/transaction.md). It allows you to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding."
+description: "Algo transfers, or [payments](https://dev.algorand.co/concepts/transactions/types/#payment-transaction), is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [Algo amount handling](/docs/algokit-utils/typescript/latest/guides/concepts/core/amount/) and [Transaction management](/docs/algokit-utils/typescript/latest/guides/concepts/core/transaction/). It allows you to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding."
 ---
 
-Algo transfers, or [payments](https://dev.algorand.co/concepts/transactions/types/#payment-transaction), is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [Algo amount handling](../../core/amount) and [Transaction management](../../core/transaction). It allows you to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding.
+Algo transfers, or [payments](https://dev.algorand.co/concepts/transactions/types/#payment-transaction), is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [Algo amount handling](/docs/algokit-utils/typescript/latest/guides/concepts/core/amount/) and [Transaction management](/docs/algokit-utils/typescript/latest/guides/concepts/core/transaction/). It allows you to easily initiate Algo transfers between accounts, including dispenser management and idempotent account funding.
 
 To see some usage examples check out the `automated tests`.
 
 ## payment
 
-The key function to facilitate Algo transfers is `algorand.send.payment(params)` (immediately send a single payment transaction), `algorand.createTransaction.payment(params)` (construct a payment transaction), or `algorand.newGroup().addPayment(params)` (add payment to a group of transactions) per [`AlgorandClient`](../../core/algorand-client) [transaction semantics](../core/algorand-client.md#creating-and-issuing-transactions).
+The key function to facilitate Algo transfers is `algorand.send.payment(params)` (immediately send a single payment transaction), `algorand.createTransaction.payment(params)` (construct a payment transaction), or `algorand.newGroup().addPayment(params)` (add payment to a group of transactions) per [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) [transaction semantics](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/#creating-and-issuing-transactions).
 
-The base type for specifying a payment transaction is `PaymentParams`, which has the following parameters in addition to the [common transaction parameters](../core/algorand-client.md#transaction-parameters):
+The base type for specifying a payment transaction is `PaymentParams`, which has the following parameters in addition to the [common transaction parameters](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/#transaction-parameters):
 
 - `receiver: string` - The address of the account that will receive the Algo
 - `amount: AlgoAmount` - The amount of Algo to send
@@ -71,11 +71,11 @@ The general structure of these calls is similar, they all take:
 - The source (dispenser):
   - In `ensureFunded`: `dispenserAccount: string | TransactionSignerAccount` - the address or signing account of the account to use as a dispenser
   - In `ensureFundedFromEnvironment`: Not specified, loaded automatically from the ephemeral environment
-  - In `ensureFundedFromTestNetDispenserApi`: `dispenserClient: TestNetDispenserApiClient` - a client instance of the [TestNet dispenser API](../../advanced/dispenser-client)
+  - In `ensureFundedFromTestNetDispenserApi`: `dispenserClient: TestNetDispenserApiClient` - a client instance of the [TestNet dispenser API](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/dispenser-client/)
 - `minSpendingBalance: AlgoAmount` - The minimum balance of Algo that the account should have available to spend (i.e., on top of the minimum balance requirement)
 - An `options` object, which has:
-  - [Common transaction parameters](./algorand-client.md#transaction-parameters) (not for TestNet Dispenser API)
-  - [Execution parameters](../core/algorand-client.md#sending-a-single-transaction) (not for TestNet Dispenser API)
+  - [Common transaction parameters](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/#transaction-parameters) (not for TestNet Dispenser API)
+  - [Execution parameters](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/#sending-a-single-transaction) (not for TestNet Dispenser API)
   - `minFundingIncrement?: AlgoAmount` - When issuing a funding amount, the minimum amount to transfer; this avoids many small transfers if this function gets called often on an active account
 
 ### Examples
@@ -113,12 +113,12 @@ await algorand.account.ensureFundedUsingDispenserAPI('ACCOUNTADDRESS', algorand.
 })
 ```
 
-All 3 variants return an `EnsureFundedReturnType` (and the first two also return a [single transaction result](../core/algorand-client.md#sending-a-single-transaction)) if a funding transaction was needed, or `undefined` if no transaction was required:
+All 3 variants return an `EnsureFundedReturnType` (and the first two also return a [single transaction result](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/#sending-a-single-transaction)) if a funding transaction was needed, or `undefined` if no transaction was required:
 
 - `amountFunded: AlgoAmount` - The number of Algo that was paid
 - `transactionId: string` - The ID of the transaction that funded the account
 
-If you are using the TestNet Dispenser API then the `transactionId` is useful if you want to use the [refund functionality](../advanced/dispenser-client.md#registering-a-refund).
+If you are using the TestNet Dispenser API then the `transactionId` is useful if you want to use the [refund functionality](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/dispenser-client/#registering-a-refund).
 
 ## Dispenser
 
@@ -126,7 +126,7 @@ If you want to programmatically send funds to an account so it can transact then
 
 There's a number of ways to get a dispensing account in AlgoKit Utils:
 
-- Get a dispenser via [account manager](../../core/account#dispenser) - either automatically from [LocalNet](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/localnet.md) or from the environment
-- By programmatically creating one of the many account types via [account manager](../core/account.md#accounts)
-- By programmatically interacting with [KMD](../core/account.md#kmd-account-management) if running against LocalNet
-- By using the [AlgoKit TestNet Dispenser API client](../../advanced/dispenser-client) which can be used to fund accounts on TestNet via a dedicated API service
+- Get a dispenser via [account manager](/docs/algokit-utils/typescript/latest/guides/concepts/core/account/#dispenser) - either automatically from [LocalNet](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/localnet.md) or from the environment
+- By programmatically creating one of the many account types via [account manager](/docs/algokit-utils/typescript/latest/guides/concepts/core/account/#accounts)
+- By programmatically interacting with [KMD](/docs/algokit-utils/typescript/latest/guides/concepts/core/account/#kmd-account-management) if running against LocalNet
+- By using the [AlgoKit TestNet Dispenser API client](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/dispenser-client/) which can be used to fund accounts on TestNet via a dedicated API service

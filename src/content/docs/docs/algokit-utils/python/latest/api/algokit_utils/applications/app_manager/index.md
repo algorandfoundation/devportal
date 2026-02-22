@@ -41,7 +41,7 @@ and interacting with application boxes.
   app_manager = AppManager(algod_client)
   ```
 
-#### compile_teal(teal_code: str) → [CompiledTeal](../../models/application/#algokit_utils.models.application.CompiledTeal)
+#### compile_teal(teal_code: str) → [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal)
 
 Compile TEAL source code.
 
@@ -50,7 +50,7 @@ Compile TEAL source code.
 * **Returns:**
   The compiled TEAL code and associated metadata
 
-#### compile_teal_template(teal_template_code: str, template_params: TealTemplateParams | None = None, deployment_metadata: Mapping[str, bool | None] | None = None) → [CompiledTeal](../../models/application/#algokit_utils.models.application.CompiledTeal)
+#### compile_teal_template(teal_template_code: str, template_params: TealTemplateParams | None = None, deployment_metadata: Mapping[str, bool | None] | None = None) → [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal)
 
 Compile a TEAL template with parameters.
 
@@ -70,7 +70,7 @@ Compile a TEAL template with parameters.
   compiled_teal = app_manager.compile_teal_template(teal_template_code)
   ```
 
-#### get_compilation_result(teal_code: str) → [CompiledTeal](../../models/application/#algokit_utils.models.application.CompiledTeal) | None
+#### get_compilation_result(teal_code: str) → [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | None
 
 Get cached compilation result for TEAL code if available.
 
@@ -86,7 +86,7 @@ Get cached compilation result for TEAL code if available.
   compilation_result = app_manager.get_compilation_result(teal_code)
   ```
 
-#### get_by_id(app_id: int) → [AppInformation](../../models/application/#algokit_utils.models.application.AppInformation)
+#### get_by_id(app_id: int) → [AppInformation](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppInformation)
 
 Get information about an application by ID.
 
@@ -101,7 +101,7 @@ Get information about an application by ID.
   app_info = app_manager.get_by_id(app_id)
   ```
 
-#### get_global_state(app_id: int) → dict[str, [AppState](../../models/application/#algokit_utils.models.application.AppState)]
+#### get_global_state(app_id: int) → dict[str, [AppState](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppState)]
 
 Get the global state of an application.
 
@@ -116,7 +116,7 @@ Get the global state of an application.
   global_state = app_manager.get_global_state(app_id)
   ```
 
-#### get_local_state(app_id: int, address: str) → dict[str, [AppState](../../models/application/#algokit_utils.models.application.AppState)]
+#### get_local_state(app_id: int, address: str) → dict[str, [AppState](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppState)]
 
 Get the local state for an account in an application.
 
@@ -135,7 +135,7 @@ Get the local state for an account in an application.
   local_state = app_manager.get_local_state(app_id, address)
   ```
 
-#### get_box_names(app_id: int) → list[[BoxName](../../models/state/#algokit_utils.models.state.BoxName)]
+#### get_box_names(app_id: int) → list[[BoxName](/docs/algokit-utils/python/latest/api/algokit_utils/models/state/#algokit_utils.models.state.BoxName)]
 
 Get names of all boxes for an application.
 
@@ -244,7 +244,7 @@ Get standardized box reference from various identifier types.
   box_reference = app_manager.get_box_reference(box_name)
   ```
 
-#### *static* get_abi_return(confirmation: PendingTransactionResponse, method: Method | None = None) → [ABIReturn](../abi/#algokit_utils.applications.abi.ABIReturn) | None
+#### *static* get_abi_return(confirmation: PendingTransactionResponse, method: Method | None = None) → [ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn) | None
 
 Get the ABI return value from a transaction confirmation.
 
@@ -262,7 +262,7 @@ Get the ABI return value from a transaction confirmation.
   abi_return = app_manager.get_abi_return(confirmation, method)
   ```
 
-#### *static* decode_app_state(state: Sequence[TealKeyValue] | None) → dict[str, [AppState](../../models/application/#algokit_utils.models.application.AppState)]
+#### *static* decode_app_state(state: Sequence[TealKeyValue] | None) → dict[str, [AppState](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.AppState)]
 
 Decode application state from raw format.
 

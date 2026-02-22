@@ -8,6 +8,6 @@ title: "algokit_utils.errors"
 
 ## Submodules
 
-* [algokit_utils.errors.logic_error](logic_error/)
+* [algokit_utils.errors.logic_error](/docs/algokit-utils/python/latest/api/algokit_utils/errors/logic_error/)
 
 </div>

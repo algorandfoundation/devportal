@@ -8,6 +8,6 @@ title: "algokit_utils.assets"
 
 ## Submodules
 
-* [algokit_utils.assets.asset_manager](asset_manager/)
+* [algokit_utils.assets.asset_manager](/docs/algokit-utils/python/latest/api/algokit_utils/assets/asset_manager/)
 
 </div>

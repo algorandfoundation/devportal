@@ -5,21 +5,21 @@ prev: false
 title: "AppMetadata"
 ---
 
-Defined in: [src/app-deployer.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L75)
+Defined in: [src/app-deployer.ts:75](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L75)
 
 The metadata that can be collected about a deployed app
 
 ## Extends
 
-- [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/)
+- [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/)
 
 ## Properties
 
 ### appAddress
 
-> **appAddress**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> **appAddress**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [src/app-deployer.ts:79](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L79)
+Defined in: [src/app-deployer.ts:79](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L79)
 
 The Algorand address of the account associated with the app
 
@@ -29,7 +29,7 @@ The Algorand address of the account associated with the app
 
 > **appId**: `bigint`
 
-Defined in: [src/app-deployer.ts:77](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L77)
+Defined in: [src/app-deployer.ts:77](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L77)
 
 The id of the app
 
@@ -37,9 +37,9 @@ The id of the app
 
 ### createdMetadata
 
-> **createdMetadata**: [`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/)
+> **createdMetadata**: [`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/)
 
-Defined in: [src/app-deployer.ts:85](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L85)
+Defined in: [src/app-deployer.ts:85](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L85)
 
 The metadata when the app was created
 
@@ -49,7 +49,7 @@ The metadata when the app was created
 
 > **createdRound**: `bigint`
 
-Defined in: [src/app-deployer.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L81)
+Defined in: [src/app-deployer.ts:81](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L81)
 
 The round the app was created
 
@@ -59,13 +59,13 @@ The round the app was created
 
 > `optional` **deletable**: `boolean`
 
-Defined in: [src/app.ts:157](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L157)
+Defined in: [src/app.ts:157](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L157)
 
 Whether or not the app is deletable / permanent / unspecified
 
 #### Inherited from
 
-[`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/).[`deletable`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/#deletable)
+[`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/).[`deletable`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/#deletable)
 
 ***
 
@@ -73,7 +73,7 @@ Whether or not the app is deletable / permanent / unspecified
 
 > **deleted**: `boolean`
 
-Defined in: [src/app-deployer.ts:87](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L87)
+Defined in: [src/app-deployer.ts:87](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L87)
 
 Whether or not the app is deleted
 
@@ -83,13 +83,13 @@ Whether or not the app is deleted
 
 > **name**: `string`
 
-Defined in: [src/app.ts:153](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L153)
+Defined in: [src/app.ts:153](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L153)
 
 The unique name identifier of the app within the creator account
 
 #### Inherited from
 
-[`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/).[`name`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/#name)
+[`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/).[`name`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/#name)
 
 ***
 
@@ -97,13 +97,13 @@ The unique name identifier of the app within the creator account
 
 > `optional` **updatable**: `boolean`
 
-Defined in: [src/app.ts:159](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L159)
+Defined in: [src/app.ts:159](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L159)
 
 Whether or not the app is updatable / immutable / unspecified
 
 #### Inherited from
 
-[`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/).[`updatable`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/#updatable)
+[`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/).[`updatable`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/#updatable)
 
 ***
 
@@ -111,7 +111,7 @@ Whether or not the app is updatable / immutable / unspecified
 
 > **updatedRound**: `bigint`
 
-Defined in: [src/app-deployer.ts:83](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L83)
+Defined in: [src/app-deployer.ts:83](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L83)
 
 The last round that the app was updated
 
@@ -121,10 +121,10 @@ The last round that the app was updated
 
 > **version**: `string`
 
-Defined in: [src/app.ts:155](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L155)
+Defined in: [src/app.ts:155](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L155)
 
 The version of app that is / will be deployed
 
 #### Inherited from
 
-[`AppDeployMetadata`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/).[`version`](/algokit-utils-ts/api/algokit-utils/interfaces/appdeploymetadata/#version)
+[`AppDeployMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/).[`version`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appdeploymetadata/#version)

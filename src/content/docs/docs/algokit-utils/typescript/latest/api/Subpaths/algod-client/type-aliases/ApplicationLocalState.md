@@ -7,7 +7,7 @@ title: "ApplicationLocalState"
 
 > **ApplicationLocalState** = `object`
 
-Defined in: [packages/algod\_client/src/models/application-local-state.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-local-state.ts#L11)
+Defined in: [packages/algod\_client/src/models/application-local-state.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-local-state.ts#L11)
 
 Stores local state associated with an application.
 
@@ -17,7 +17,7 @@ Stores local state associated with an application.
 
 > **id**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/application-local-state.ts:15](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-local-state.ts#L15)
+Defined in: [packages/algod\_client/src/models/application-local-state.ts:15](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-local-state.ts#L15)
 
 The application which this local state is for.
 
@@ -25,14 +25,14 @@ The application which this local state is for.
 
 ### keyValue?
 
-> `optional` **keyValue**: [`TealKeyValueStore`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/tealkeyvaluestore/)
+> `optional` **keyValue**: [`TealKeyValueStore`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/tealkeyvaluestore/)
 
-Defined in: [packages/algod\_client/src/models/application-local-state.ts:17](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-local-state.ts#L17)
+Defined in: [packages/algod\_client/src/models/application-local-state.ts:17](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-local-state.ts#L17)
 
 ***
 
 ### schema
 
-> **schema**: [`ApplicationStateSchema`](/algokit-utils-ts/api/subpaths/algod-client/type-aliases/applicationstateschema/)
+> **schema**: [`ApplicationStateSchema`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/applicationstateschema/)
 
-Defined in: [packages/algod\_client/src/models/application-local-state.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-local-state.ts#L16)
+Defined in: [packages/algod\_client/src/models/application-local-state.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/application-local-state.ts#L16)

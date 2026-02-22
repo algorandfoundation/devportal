@@ -7,7 +7,7 @@ title: "LightBlockHeaderProof"
 
 > **LightBlockHeaderProof** = `object`
 
-Defined in: [packages/algod\_client/src/models/light-block-header-proof.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/light-block-header-proof.ts#L7)
+Defined in: [packages/algod\_client/src/models/light-block-header-proof.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/light-block-header-proof.ts#L7)
 
 Proof of membership and position of a light block header.
 
@@ -17,7 +17,7 @@ Proof of membership and position of a light block header.
 
 > **index**: `number`
 
-Defined in: [packages/algod\_client/src/models/light-block-header-proof.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/light-block-header-proof.ts#L11)
+Defined in: [packages/algod\_client/src/models/light-block-header-proof.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/light-block-header-proof.ts#L11)
 
 The index of the light block header in the vector commitment tree
 
@@ -27,7 +27,7 @@ The index of the light block header in the vector commitment tree
 
 > **proof**: `Uint8Array`
 
-Defined in: [packages/algod\_client/src/models/light-block-header-proof.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/light-block-header-proof.ts#L21)
+Defined in: [packages/algod\_client/src/models/light-block-header-proof.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/light-block-header-proof.ts#L21)
 
 The encoded proof.
 
@@ -37,6 +37,6 @@ The encoded proof.
 
 > **treedepth**: `number`
 
-Defined in: [packages/algod\_client/src/models/light-block-header-proof.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/light-block-header-proof.ts#L16)
+Defined in: [packages/algod\_client/src/models/light-block-header-proof.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/light-block-header-proof.ts#L16)
 
 Represents the depth of the tree that is being proven, i.e. the number of edges from a leaf to the root.

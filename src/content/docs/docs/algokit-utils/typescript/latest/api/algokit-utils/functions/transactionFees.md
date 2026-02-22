@@ -5,9 +5,9 @@ prev: false
 title: "transactionFees"
 ---
 
-> **transactionFees**(`numberOfTransactions`): [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> **transactionFees**(`numberOfTransactions`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/amount.ts:204](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L204)
+Defined in: [src/amount.ts:204](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L204)
 
 Returns an amount of µAlgo to cover standard fees for the given number of transactions using AlgoAmount
 
@@ -21,7 +21,7 @@ The of standard transaction fees to return the amount of Algo
 
 ## Returns
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 ## Example
 

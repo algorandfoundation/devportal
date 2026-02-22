@@ -13,7 +13,7 @@ title: "algokit_utils.transactions.transaction_creator"
 
 ## Module Contents
 
-### *class* AlgorandClientTransactionCreator(new_group: Callable[[], [TransactionComposer](../transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)])
+### *class* AlgorandClientTransactionCreator(new_group: Callable[[], [TransactionComposer](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)])
 
 A creator for Algorand transactions.
 
@@ -455,7 +455,7 @@ Create an application call transaction.
   ))
   ```
 
-#### *property* app_create_method_call *: Callable[[AppCreateMethodCallParams], [BuiltTransactions](../transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
+#### *property* app_create_method_call *: Callable[[AppCreateMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
 
 Create an application create call with ABI method call transaction.
 
@@ -494,7 +494,7 @@ Create an application create call with ABI method call transaction.
   ))
   ```
 
-#### *property* app_update_method_call *: Callable[[AppUpdateMethodCallParams], [BuiltTransactions](../transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
+#### *property* app_update_method_call *: Callable[[AppUpdateMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
 
 Create an application update call with ABI method call transaction.
 
@@ -532,7 +532,7 @@ Create an application update call with ABI method call transaction.
   ))
   ```
 
-#### *property* app_delete_method_call *: Callable[[AppDeleteMethodCallParams], [BuiltTransactions](../transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
+#### *property* app_delete_method_call *: Callable[[AppDeleteMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
 
 Create an application delete call with ABI method call transaction.
 
@@ -566,7 +566,7 @@ Create an application delete call with ABI method call transaction.
   ))
   ```
 
-#### *property* app_call_method_call *: Callable[[AppCallMethodCallParams], [BuiltTransactions](../transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
+#### *property* app_call_method_call *: Callable[[AppCallMethodCallParams], [BuiltTransactions](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.BuiltTransactions)]*
 
 Create an application call with ABI method call transaction.
 
