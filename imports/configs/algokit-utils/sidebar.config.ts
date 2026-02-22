@@ -7,7 +7,7 @@ export const sidebarMetadata: SidebarMetadata = {
       meta: { order: 10, collapsed: true, cascade: ['collapsed'] },
     },
     {
-      pattern: 'docs/algokit-utils/*/*/api',
+      pattern: 'docs/algokit-utils/typescript/*/api',
       meta: { label: 'API Reference', order: 10, collapsed: true, cascade: ['collapsed'] },
     },
     {
