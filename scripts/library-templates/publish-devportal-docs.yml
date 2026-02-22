@@ -8,9 +8,15 @@
 #   - Tag push (v*): builds from tag, attaches to existing release
 #   - Manual dispatch: builds from selected ref
 #
-# Required secrets:
-#   - DEVPORTAL_DISPATCH_TOKEN: PAT with repo scope on the devportal repo
-#     (used to trigger repository_dispatch for devportal rebuild)
+# Prerequisites:
+#   - docs/package.json must define a "build-devportal" script that runs
+#     the full build pipeline (astro build + normalize-links + build-sidebar)
+#   - If your library has language-specific setup (Python/uv, root npm ci
+#     for TypeDoc, etc.), add those steps before the "Build devportal
+#     artifact" step
+#
+# No secrets required — devportal nightly import picks up new releases
+# automatically.
 #
 # Output: devportal-docs.tar.gz attached to a GitHub Release
 #   Contents:
@@ -40,7 +46,7 @@ permissions:
   contents: write
 
 jobs:
-  publish:
+  publish-docs:
     name: Build and Publish Docs
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -54,19 +60,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      # ---- Language-specific setup (add your steps here) ----
+      # Examples:
+      #   Python/Sphinx: setup-uv + uv sync --group dev
+      #   TypeScript/TypeDoc: npm ci (root deps for TypeDoc)
 
-      - name: Build docs
+      - name: Install docs dependencies
+        run: pnpm install --frozen-lockfile --dir docs
+
+      - name: Build devportal artifact
         working-directory: docs
-        run: pnpm build
+        run: pnpm run build-devportal
 
       # ---- Package for DevPortal ----
 
@@ -75,21 +86,19 @@ jobs:
         run: |
           mkdir -p dist-devportal/content
 
-          # Copy all doc content (guides, API, root files like index.mdx).
-          # Adjust paths if your Starlight content layout differs.
+          # Copy root content files (index.mdx etc)
           find src/content/docs -maxdepth 1 -type f \( -name '*.md' -o -name '*.mdx' \) -exec cp {} dist-devportal/content/ \;
+
+          # Copy guides and API content
           cp -R src/content/docs/guides dist-devportal/content/ 2>/dev/null || true
           cp -R src/content/docs/api dist-devportal/content/ 2>/dev/null || true
-
-          # Build sidebar.json from sidebar.config.ts
-          node build-sidebar-json.mjs
 
           # Generate manifest
           cat > dist-devportal/manifest.json <<MANIFEST
           {
-            "repo": "${{ github.repository }}",
-            "ref": "${{ github.sha }}",
-            "tag": "${{ github.ref_name }}",
+            "repo": "${GITHUB_REPOSITORY}",
+            "ref": "${GITHUB_SHA}",
+            "tag": "${GITHUB_REF_NAME}",
             "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           }
           MANIFEST
@@ -105,12 +114,12 @@ jobs:
       - name: Determine release tag
         id: release-tag
         run: |
-          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref_type }}" == "tag" ]]; then
-            echo "tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
-            echo "prerelease=false" >> $GITHUB_OUTPUT
+          if [[ "${GITHUB_EVENT_NAME}" == "push" && "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
           else
-            echo "tag=docs-latest" >> $GITHUB_OUTPUT
-            echo "prerelease=true" >> $GITHUB_OUTPUT
+            echo "tag=docs-latest" >> "$GITHUB_OUTPUT"
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upsert docs-latest release (nightly/manual)
@@ -119,9 +128,7 @@ jobs:
         with:
           tag_name: docs-latest
           name: 'Documentation (Latest)'
-          body: |
-            Rolling pre-release with latest documentation build.
-            Updated: ${{ github.event.head_commit.timestamp || github.event.inputs.ref || 'nightly' }}
+          body: 'Rolling pre-release with latest documentation build.'
           prerelease: true
           files: docs/devportal-docs.tar.gz
           fail_on_unmatched_files: true
@@ -133,19 +140,3 @@ jobs:
           tag_name: ${{ github.ref_name }}
           files: docs/devportal-docs.tar.gz
           fail_on_unmatched_files: true
-
-      # ---- Notify DevPortal ----
-
-      - name: Trigger devportal rebuild
-        if: success()
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.DEVPORTAL_DISPATCH_TOKEN }}
-          repository: algorandfoundation/devportal
-          event-type: docs-published
-          client-payload: |
-            {
-              "repo": "${{ github.repository }}",
-              "tag": "${{ steps.release-tag.outputs.tag }}",
-              "prerelease": "${{ steps.release-tag.outputs.prerelease }}"
-            }

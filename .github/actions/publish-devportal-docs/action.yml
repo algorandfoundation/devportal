@@ -1,0 +1,97 @@
+# Reusable composite action for publishing library docs to the devportal.
+#
+# Usage in a library repo workflow:
+#
+#   - name: Publish DevPortal Docs
+#     uses: algorandfoundation/devportal/.github/actions/publish-devportal-docs@main
+#     with:
+#       docs-dir: docs
+#
+# Prerequisites:
+#   - Node.js and pnpm must already be set up by the caller
+#   - Language-specific deps (Python/uv, root npm ci, etc.) must be
+#     installed by the caller before invoking this action
+#   - docs/package.json must define a "build-devportal" script
+#   - The caller workflow must set `permissions: contents: write`
+
+name: Publish DevPortal Docs
+description: Build, package, and publish library documentation for the Algorand Developer Portal
+
+inputs:
+  docs-dir:
+    description: 'Relative path to the docs directory'
+    required: false
+    default: 'docs'
+
+runs:
+  using: composite
+  steps:
+    - name: Install docs dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile --dir ${{ inputs.docs-dir }}
+
+    - name: Build devportal artifact
+      shell: bash
+      working-directory: ${{ inputs.docs-dir }}
+      run: pnpm run build-devportal
+
+    - name: Prepare dist-devportal
+      shell: bash
+      working-directory: ${{ inputs.docs-dir }}
+      run: |
+        mkdir -p dist-devportal/content
+
+        # Copy root content files (index.mdx etc)
+        find src/content/docs -maxdepth 1 -type f \( -name '*.md' -o -name '*.mdx' \) -exec cp {} dist-devportal/content/ \;
+
+        # Copy guides and API content
+        cp -R src/content/docs/guides dist-devportal/content/ 2>/dev/null || true
+        cp -R src/content/docs/api dist-devportal/content/ 2>/dev/null || true
+
+        # Generate manifest
+        cat > dist-devportal/manifest.json <<MANIFEST
+        {
+          "repo": "${GITHUB_REPOSITORY}",
+          "ref": "${GITHUB_SHA}",
+          "tag": "${GITHUB_REF_NAME}",
+          "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        }
+        MANIFEST
+
+    - name: Create tarball
+      shell: bash
+      working-directory: ${{ inputs.docs-dir }}
+      run: |
+        cd dist-devportal
+        tar czf ../devportal-docs.tar.gz .
+
+    - name: Determine release tag
+      id: release-tag
+      shell: bash
+      run: |
+        if [[ "${GITHUB_EVENT_NAME}" == "push" && "${GITHUB_REF_TYPE}" == "tag" ]]; then
+          echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          echo "prerelease=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "tag=docs-latest" >> "$GITHUB_OUTPUT"
+          echo "prerelease=true" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Upsert docs-latest release (nightly/manual)
+      if: steps.release-tag.outputs.prerelease == 'true'
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: docs-latest
+        name: 'Documentation (Latest)'
+        body: 'Rolling pre-release with latest documentation build.'
+        prerelease: true
+        files: ${{ inputs.docs-dir }}/devportal-docs.tar.gz
+        fail_on_unmatched_files: true
+
+    - name: Attach to version release (tag push)
+      if: steps.release-tag.outputs.prerelease == 'false'
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ github.ref_name }}
+        files: ${{ inputs.docs-dir }}/devportal-docs.tar.gz
+        fail_on_unmatched_files: true

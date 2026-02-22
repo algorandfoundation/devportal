@@ -1,24 +1,24 @@
-#!/usr/bin/env node
+#!/usr/bin/env npx tsx
 /**
- * build-sidebar-json.mjs
+ * build-sidebar-json.ts
  *
  * Imports the library's sidebar.config.ts, filters out non-serializable
  * entries (runtime plugins like typeDocSidebarGroup), and writes sidebar.json.
  *
  * Usage (from library's docs/ directory):
- *   node build-sidebar-json.mjs
+ *   npx tsx build-sidebar-json.ts
  *
  * Output: dist-devportal/sidebar.json
  *
+ * Prerequisite: tsx must be a dev dependency in the library's docs/package.json.
  * Copy this file into your library's docs/ directory.
  */
 
-import { writeFileSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Import the library's sidebar config.
 // Adjust this path if your sidebar.config.ts is in a different location.
@@ -31,7 +31,7 @@ const { sidebar, devportalFallbacks } = await import('./sidebar.config.ts');
  * Runtime plugin entries (like typeDocSidebarGroup) are class instances
  * or objects with methods and should be excluded.
  */
-function isSerializable(entry) {
+function isSerializable(entry: unknown): boolean {
   if (typeof entry !== 'object' || entry === null) return false;
   return (
     'slug' in entry ||
@@ -44,12 +44,13 @@ function isSerializable(entry) {
 /**
  * Recursively filter sidebar entries, keeping only serializable ones.
  */
-function filterSerializable(entries) {
+function filterSerializable(entries: unknown[]): unknown[] {
   return entries
     .filter(isSerializable)
     .map((entry) => {
-      if ('items' in entry) {
-        return { ...entry, items: filterSerializable(entry.items) };
+      if (typeof entry === 'object' && entry !== null && 'items' in entry) {
+        const e = entry as Record<string, unknown>;
+        return { ...e, items: filterSerializable(e.items as unknown[]) };
       }
       return entry;
     });
