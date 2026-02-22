@@ -9,7 +9,7 @@ import {
   extractH1ToSidebarAndTitle,
   overviewOrderTransform,
 } from '../../transforms/common.js';
-import { createFrontmatterTransform } from '../../transforms/frontmatter.js';
+import { createFrontmatterTransform, stripFrontmatterKeys } from '../../transforms/frontmatter.js';
 
 export const config: LibraryImportConfig = {
   metadata: {
@@ -20,6 +20,33 @@ export const config: LibraryImportConfig = {
     category: 'sdk',
   },
   variants: [
+    /** Testing out the Starlight docs import approach */
+    {
+      source: 'github-artifact',
+      language: 'TypeScript',
+      versions: [{ slug: 'latest', label: 'Latest' }],
+      owner: 'larkiny',
+      repo: 'algokit-utils-ts',
+      postImportTransforms: [
+        {
+          pattern: '**/*.{md,mdx}',
+          transform: stripFrontmatterKeys(['hero', 'template']), // Revert the docs index page template to the base page layout
+        },
+      ],
+    },
+    {
+      source: 'github-artifact',
+      language: 'Python',
+      versions: [{ slug: 'latest', label: 'Latest' }],
+      owner: 'larkiny',
+      repo: 'algokit-utils-py',
+      postImportTransforms: [
+        {
+          pattern: '**/*.{md,mdx}',
+          transform: stripFrontmatterKeys(['hero', 'template']),
+        },
+      ],
+    },
     {
       language: 'TypeScript',
       versions: [{ slug: 'latest', label: 'Latest' }],
@@ -27,6 +54,8 @@ export const config: LibraryImportConfig = {
       owner: 'algorandfoundation',
       repo: 'algokit-utils-ts',
       ref: 'chore/fix-docs',
+      clear: true,
+      enabled: false,
       transforms: [overviewOrderTransform],
       includes: [
         {
@@ -105,8 +134,6 @@ export const config: LibraryImportConfig = {
           },
         ],
       },
-      clear: true,
-      enabled: true,
     },
     {
       language: 'Python',
@@ -116,6 +143,8 @@ export const config: LibraryImportConfig = {
       repo: 'algokit-utils-py',
       ref: 'main',
       transforms: [overviewOrderTransform],
+      enabled: false,
+      clear: true,
       includes: [
         {
           pattern: 'docs/markdown/index.md',
@@ -215,7 +244,6 @@ export const config: LibraryImportConfig = {
           },
         ],
       },
-      enabled: true,
     },
   ],
 };
@@ -276,7 +304,7 @@ export const legacyTsGuideConfig: ImportOptions = {
     ],
   },
   clear: true,
-  enabled: true,
+  enabled: false,
 };
 
 /** Separate import for legacy guide path at algokit/utils/python/ */
@@ -335,5 +363,5 @@ export const legacyPyGuideConfig: ImportOptions = {
       },
     ],
   },
-  enabled: true,
+  enabled: false,
 };
