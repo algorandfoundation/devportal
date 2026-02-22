@@ -22,7 +22,9 @@ const __dirname = dirname(__filename);
 
 // Import the library's sidebar config.
 // Adjust this path if your sidebar.config.ts is in a different location.
-const { sidebar } = await import('./sidebar.config.ts');
+// devportalFallbacks: optional serializable replacements for non-serializable
+// entries (e.g. typeDocSidebarGroup → autogenerate fallback).
+const { sidebar, devportalFallbacks } = await import('./sidebar.config.ts');
 
 /**
  * Check if a sidebar entry is serializable (plain data object).
@@ -54,10 +56,13 @@ function filterSerializable(entries) {
 }
 
 const filtered = filterSerializable(sidebar);
+const fallbacks = Array.isArray(devportalFallbacks) ? devportalFallbacks : [];
+const result = [...filtered, ...fallbacks];
+
 const outputDir = join(__dirname, 'dist-devportal');
 mkdirSync(outputDir, { recursive: true });
 
 const outputPath = join(outputDir, 'sidebar.json');
-writeFileSync(outputPath, JSON.stringify(filtered, null, 2));
+writeFileSync(outputPath, JSON.stringify(result, null, 2));
 
-console.log(`Wrote ${filtered.length} sidebar entries to ${outputPath}`);
+console.log(`Wrote ${result.length} sidebar entries to ${outputPath}`);
