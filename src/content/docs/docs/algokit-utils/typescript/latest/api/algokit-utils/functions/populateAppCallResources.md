@@ -5,9 +5,9 @@ prev: false
 title: "populateAppCallResources"
 ---
 
-> **populateAppCallResources**(`composer`): `Promise`\<[`TransactionComposer`](/algokit-utils-ts/api/algokit-utils/classes/transactioncomposer/)\>
+> **populateAppCallResources**(`composer`): `Promise`\<[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)\>
 
-Defined in: [src/transaction/transaction.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L68)
+Defined in: [src/transaction/transaction.ts:68](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L68)
 
 :::caution[Deprecated]
 Use `composer.build()` directly
@@ -19,12 +19,12 @@ app call resources populated into it
 
 ### composer
 
-[`TransactionComposer`](/algokit-utils-ts/api/algokit-utils/classes/transactioncomposer/)
+[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)
 
 The composer containing the txn group
 
 ## Returns
 
-`Promise`\<[`TransactionComposer`](/algokit-utils-ts/api/algokit-utils/classes/transactioncomposer/)\>
+`Promise`\<[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)\>
 
 A new composer with the resources populated into the transactions

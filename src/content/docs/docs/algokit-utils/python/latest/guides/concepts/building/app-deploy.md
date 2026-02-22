@@ -7,7 +7,7 @@ AlgoKit contains advanced smart contract deployment capabilities that allow you 
 
 It's optional to use this functionality, since you can construct your own deployment logic using create / update / delete calls and your own mechanism to maintaining app metadata (like app IDs etc.), but this capability is an opinionated out-of-the-box solution that takes care of the heavy lifting for you.
 
-App deployment is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App management](../app).
+App deployment is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App management](/docs/algokit-utils/python/latest/guides/concepts/building/app/).
 
 To see some usage examples check out the [automated tests](https://github.com/algorandfoundation/algokit-utils-py/tree/main/tests/applications).
 
@@ -29,7 +29,7 @@ Namely, it described the concept of a smart contract development lifecycle:
    1. **Validate** the deployed app via automated testing of the smart contracts to provide confidence in their correctness
    2. **Call** deployed smart contract with runtime parameters to utilise it
 
-![App deployment lifecycle](/algokit-utils-py/images/lifecycle.jpg)
+![App deployment lifecycle](/docs/algokit-utils/python/latest/images/lifecycle.jpg)
 
 The App deployment capability provided by AlgoKit Utils helps implement **#2 Deployment**.
 
@@ -46,7 +46,7 @@ This design allows you to have the same deployment code across environments with
 
 The `AppDeployer` is a class that is used to manage app deployments and deployment metadata.
 
-To get an instance of `AppDeployer` you can use either [`AlgorandClient`](../../core/algorand-client) via `algorand.app_deployer` or instantiate it directly (passing in an [`AppManager`](./app.md#appmanager), [`AlgorandClientTransactionSender`](../../core/algorand-client#sending-a-single-transaction) and optionally an indexer client instance):
+To get an instance of `AppDeployer` you can use either [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) via `algorand.app_deployer` or instantiate it directly (passing in an [`AppManager`](/docs/algokit-utils/python/latest/guides/concepts/building/app/#appmanager), [`AlgorandClientTransactionSender`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/#sending-a-single-transaction) and optionally an indexer client instance):
 
 ```python
 from algokit_utils.applications.app_deployer import AppDeployer
@@ -210,9 +210,9 @@ It will automatically [add metadata to the transaction note of the create or upd
 The first parameter `deployment` is an `AppDeployParams`, which is an object with:
 
 - `metadata: AppDeploymentMetaData` - determines the [deployment metadata](#deployment-metadata) of the deployment
-- `create_params: AppCreateParams | AppCreateMethodCallParams` - the parameters for an [app creation call](./app.md#creation) (raw or ABI method call)
-- `update_params: AppUpdateParams | AppUpdateMethodCallParams` - the parameters for an [app update call](./app.md#updating) (raw or ABI method call) without the `app_id`, `approval_program` or `clear_state_program`, since these are calculated by the `deploy` method
-- `delete_params: AppDeleteParams | AppDeleteMethodCallParams` - the parameters for an [app delete call](./app.md#deleting) (raw or ABI method call) without the `app_id`, since this is calculated by the `deploy` method
+- `create_params: AppCreateParams | AppCreateMethodCallParams` - the parameters for an [app creation call](/docs/algokit-utils/python/latest/guides/concepts/building/app/#creation) (raw or ABI method call)
+- `update_params: AppUpdateParams | AppUpdateMethodCallParams` - the parameters for an [app update call](/docs/algokit-utils/python/latest/guides/concepts/building/app/#updating) (raw or ABI method call) without the `app_id`, `approval_program` or `clear_state_program`, since these are calculated by the `deploy` method
+- `delete_params: AppDeleteParams | AppDeleteMethodCallParams` - the parameters for an [app delete call](/docs/algokit-utils/python/latest/guides/concepts/building/app/#deleting) (raw or ABI method call) without the `app_id`, since this is calculated by the `deploy` method
 - `deploy_time_params: TealTemplateParams | None` - allows automatic substitution of [deploy-time TEAL template variables](#compilation-and-template-substitution)
   - `TealTemplateParams` is a `key => value` dict that will result in `TMPL_{key}` being replaced with `value` (where a string or `bytes` will be appropriately encoded as bytes within the TEAL code)
 - `on_schema_break: Literal["replace", "fail", "append"] | OnSchemaBreak | None` - determines `what should happen` if a breaking change to the schema is detected (e.g. if you need more global or local state that was previously requested when the contract was originally created)
@@ -220,7 +220,7 @@ The first parameter `deployment` is an `AppDeployParams`, which is an object wit
 - `existing_deployments: ApplicationLookup | None` - optionally allows the [app lookup retrieval](#lookup-deployed-apps-by-name) to be skipped if it's already been retrieved outside of this `AppDeployer` instance
 - `ignore_cache: bool` - optionally allows the [lookup cache](#lookup-deployed-apps-by-name) to be ignored and force retrieval of fresh deployment metadata from indexer (default `False`)
 - `max_fee: int | None` - optional maximum fee
-- `send_params: SendParams | None` - optional [transaction execution control parameters](../../core/algorand-client#transaction-parameters)
+- `send_params: SendParams | None` - optional [transaction execution control parameters](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/#transaction-parameters)
 
 ### Idempotency
 
@@ -253,11 +253,11 @@ Below is a sample in [Algorand Python SDK](https://github.com/algorandfoundation
 # ... your contract code ...
 @arc4.baremethod(allow_actions=["UpdateApplication"])
 def update(self) -> None:
-    assert TemplateVar[bool]("UPDATABLE")
+    assert TemplateVar[bool](/docs/algokit-utils/python/latest/guides/concepts/building/"UPDATABLE"/)
 
 @arc4.baremethod(allow_actions=["DeleteApplication"])
 def delete(self) -> None:
-    assert TemplateVar[bool]("DELETABLE")
+    assert TemplateVar[bool](/docs/algokit-utils/python/latest/guides/concepts/building/"DELETABLE"/)
 # ... your contract code ...
 ```
 
@@ -314,8 +314,8 @@ class AppDeployResult:
 
 Based on the value of `operation_performed`, the corresponding result fields will be populated:
 
-- If `Create` then `create_result` will contain the [`SendAppCreateTransactionResult`](./app.md#calling-an-app)
-- If `Update` then `update_result` will contain the [`SendAppUpdateTransactionResult`](./app.md#calling-an-app)
+- If `Create` then `create_result` will contain the [`SendAppCreateTransactionResult`](/docs/algokit-utils/python/latest/guides/concepts/building/app/#calling-an-app)
+- If `Update` then `update_result` will contain the [`SendAppUpdateTransactionResult`](/docs/algokit-utils/python/latest/guides/concepts/building/app/#calling-an-app)
 - If `Replace` then both `create_result` and `delete_result` will be populated (the old app is deleted and a new one is created in an atomic transaction)
 - If `Nothing` then all result fields will be `None`
 

@@ -5,9 +5,9 @@ prev: false
 title: "algos"
 ---
 
-> **algos**(`algos`): [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> **algos**(`algos`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/amount.ts:167](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L167)
+Defined in: [src/amount.ts:167](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L167)
 
 Returns an amount of Algo using AlgoAmount
 
@@ -21,7 +21,7 @@ The amount of Algo
 
 ## Returns
 
-[`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
 ## Example
 
@@ -31,4 +31,4 @@ The amount of Algo
 
 ## See
 
-[AlgoAmount](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+[AlgoAmount](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)

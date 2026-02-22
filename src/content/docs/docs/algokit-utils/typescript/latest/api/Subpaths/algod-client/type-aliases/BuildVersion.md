@@ -7,7 +7,7 @@ title: "BuildVersion"
 
 > **BuildVersion** = `object`
 
-Defined in: [packages/algod\_client/src/models/build-version.ts:4](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L4)
+Defined in: [packages/algod\_client/src/models/build-version.ts:4](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L4)
 
 ## Properties
 
@@ -15,7 +15,7 @@ Defined in: [packages/algod\_client/src/models/build-version.ts:4](https://githu
 
 > **branch**: `string`
 
-Defined in: [packages/algod\_client/src/models/build-version.ts:5](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L5)
+Defined in: [packages/algod\_client/src/models/build-version.ts:5](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L5)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: [packages/algod\_client/src/models/build-version.ts:5](https://githu
 
 > **buildNumber**: `number`
 
-Defined in: [packages/algod\_client/src/models/build-version.ts:6](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L6)
+Defined in: [packages/algod\_client/src/models/build-version.ts:6](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L6)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: [packages/algod\_client/src/models/build-version.ts:6](https://githu
 
 > **channel**: `string`
 
-Defined in: [packages/algod\_client/src/models/build-version.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L7)
+Defined in: [packages/algod\_client/src/models/build-version.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L7)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: [packages/algod\_client/src/models/build-version.ts:7](https://githu
 
 > **commitHash**: `string`
 
-Defined in: [packages/algod\_client/src/models/build-version.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L8)
+Defined in: [packages/algod\_client/src/models/build-version.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L8)
 
 ***
 
@@ -47,7 +47,7 @@ Defined in: [packages/algod\_client/src/models/build-version.ts:8](https://githu
 
 > **major**: `number`
 
-Defined in: [packages/algod\_client/src/models/build-version.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L9)
+Defined in: [packages/algod\_client/src/models/build-version.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L9)
 
 ***
 
@@ -55,4 +55,4 @@ Defined in: [packages/algod\_client/src/models/build-version.ts:9](https://githu
 
 > **minor**: `number`
 
-Defined in: [packages/algod\_client/src/models/build-version.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L10)
+Defined in: [packages/algod\_client/src/models/build-version.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/build-version.ts#L10)

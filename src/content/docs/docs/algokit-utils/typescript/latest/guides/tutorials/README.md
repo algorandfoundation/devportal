@@ -66,7 +66,7 @@ npx tsx hello-algorand.ts
 
 ## What's Next?
 
-- [AlgorandClient](../concepts/algorand-client.md) - Learn about the main entry point
-- [Account Management](../concepts/account.md) - Different ways to create and manage accounts
-- [Transaction Management](../concepts/transaction.md) - Build and send transactions
+- [AlgorandClient](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) - Learn about the main entry point
+- [Account Management](/docs/algokit-utils/typescript/latest/guides/concepts/core/account/) - Different ways to create and manage accounts
+- [Transaction Management](/docs/algokit-utils/typescript/latest/guides/concepts/core/transaction/) - Build and send transactions
 - [Examples](https://github.com/algorandfoundation/algokit-utils-ts/tree/decoupling/examples) - Browse 100+ runnable examples

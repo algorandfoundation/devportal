@@ -7,7 +7,7 @@ title: "validateSignedTransaction"
 
 > **validateSignedTransaction**(`signedTransaction`): `void`
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:156](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L156)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:156](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L156)
 
 Validate a signed transaction structure
 
@@ -15,7 +15,7 @@ Validate a signed transaction structure
 
 ### signedTransaction
 
-[`SignedTransaction`](/algokit-utils-ts/api/subpaths/transact/type-aliases/signedtransaction/)
+[`SignedTransaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/signedtransaction/)
 
 ## Returns
 

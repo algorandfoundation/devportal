@@ -7,7 +7,7 @@ title: "MultisigSignature"
 
 > **MultisigSignature** = `object`
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:60](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L60)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:60](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L60)
 
 Represents an Algorand multisignature signature.
 
@@ -19,9 +19,9 @@ While technically this accepts `Address` types, it is expected that these will b
 
 ### subsigs
 
-> **subsigs**: [`MultisigSubsignature`](/algokit-utils-ts/api/subpaths/transact/type-aliases/multisigsubsignature/)[]
+> **subsigs**: [`MultisigSubsignature`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/multisigsubsignature/)[]
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:74](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L74)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:74](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L74)
 
 Array of subsignatures
 
@@ -31,7 +31,7 @@ Array of subsignatures
 
 > **threshold**: `number`
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:69](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L69)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:69](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L69)
 
 Minimum number of signatures required.
 
@@ -41,6 +41,6 @@ Minimum number of signatures required.
 
 > **version**: `number`
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:64](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L64)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:64](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L64)
 
 Multisig version.

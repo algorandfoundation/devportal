@@ -77,7 +77,7 @@ Contains detailed debugging information including simulation traces and sent tra
 
 #### default_validity_window *: int | None* *= None*
 
-#### app_manager *: [AppManager](../../applications/app_manager/#algokit_utils.applications.app_manager.AppManager) | None* *= None*
+#### app_manager *: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager) | None* *= None*
 
 #### error_transformers *: list[ErrorTransformer] | None* *= None*
 
@@ -107,7 +107,7 @@ Contains detailed debugging information including simulation traces and sent tra
 
 #### confirmations *: list[PendingTransactionResponse]*
 
-#### returns *: list[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]*
+#### returns *: list[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]*
 
 #### group_id *: str | None* *= None*
 
@@ -125,41 +125,41 @@ Create a shallow copy of this composer, optionally overriding config flags.
 
 #### add_transaction(txn: Transaction, signer: TransactionSigner | None = None) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_payment(params: [PaymentParams](../types/#algokit_utils.transactions.types.PaymentParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_payment(params: [PaymentParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.PaymentParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_asset_create(params: [AssetCreateParams](../types/#algokit_utils.transactions.types.AssetCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_create(params: [AssetCreateParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AssetCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_asset_config(params: [AssetConfigParams](../types/#algokit_utils.transactions.types.AssetConfigParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_config(params: [AssetConfigParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AssetConfigParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_asset_freeze(params: [AssetFreezeParams](../types/#algokit_utils.transactions.types.AssetFreezeParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_freeze(params: [AssetFreezeParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AssetFreezeParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_asset_destroy(params: [AssetDestroyParams](../types/#algokit_utils.transactions.types.AssetDestroyParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_destroy(params: [AssetDestroyParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AssetDestroyParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_asset_transfer(params: [AssetTransferParams](../types/#algokit_utils.transactions.types.AssetTransferParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_transfer(params: [AssetTransferParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AssetTransferParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_asset_opt_in(params: [AssetOptInParams](../types/#algokit_utils.transactions.types.AssetOptInParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_opt_in(params: [AssetOptInParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AssetOptInParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_asset_opt_out(params: [AssetOptOutParams](../types/#algokit_utils.transactions.types.AssetOptOutParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_asset_opt_out(params: [AssetOptOutParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AssetOptOutParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_app_create(params: [AppCreateParams](../types/#algokit_utils.transactions.types.AppCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_create(params: [AppCreateParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AppCreateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_app_update(params: [AppUpdateParams](../types/#algokit_utils.transactions.types.AppUpdateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_update(params: [AppUpdateParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AppUpdateParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_app_delete(params: [AppDeleteParams](../types/#algokit_utils.transactions.types.AppDeleteParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_delete(params: [AppDeleteParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AppDeleteParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_app_call(params: [AppCallParams](../types/#algokit_utils.transactions.types.AppCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_call(params: [AppCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AppCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_app_create_method_call(params: [AppCreateMethodCallParams](../types/#algokit_utils.transactions.types.AppCreateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_create_method_call(params: [AppCreateMethodCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AppCreateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_app_update_method_call(params: [AppUpdateMethodCallParams](../types/#algokit_utils.transactions.types.AppUpdateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_update_method_call(params: [AppUpdateMethodCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AppUpdateMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_app_delete_method_call(params: [AppDeleteMethodCallParams](../types/#algokit_utils.transactions.types.AppDeleteMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_delete_method_call(params: [AppDeleteMethodCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AppDeleteMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_app_call_method_call(params: [AppCallMethodCallParams](../types/#algokit_utils.transactions.types.AppCallMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_app_call_method_call(params: [AppCallMethodCallParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.AppCallMethodCallParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_online_key_registration(params: [OnlineKeyRegistrationParams](../types/#algokit_utils.transactions.types.OnlineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_online_key_registration(params: [OnlineKeyRegistrationParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.OnlineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
-#### add_offline_key_registration(params: [OfflineKeyRegistrationParams](../types/#algokit_utils.transactions.types.OfflineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### add_offline_key_registration(params: [OfflineKeyRegistrationParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.OfflineKeyRegistrationParams)) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 #### count() → int
 
@@ -182,7 +182,7 @@ populate unnamed resources or adjust fees, and it leaves grouping unchanged.
 
 #### gather_signatures() → list[bytes]
 
-#### send(params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendTransactionComposerResults)
+#### send(params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendTransactionComposerResults](#algokit_utils.transactions.transaction_composer.SendTransactionComposerResults)
 
 Compose the transaction group and send it to the network.
 
@@ -206,7 +206,7 @@ Args:
 Returns:
 : SendTransactionComposerResults containing simulation results.
 
-#### set_max_fees(max_fees: dict[int, [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount)]) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### set_max_fees(max_fees: dict[int, [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)]) → [TransactionComposer](#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Override max_fee for queued transactions by index before building.
 

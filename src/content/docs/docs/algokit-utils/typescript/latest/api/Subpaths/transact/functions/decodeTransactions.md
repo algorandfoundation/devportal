@@ -5,9 +5,9 @@ prev: false
 title: "decodeTransactions"
 ---
 
-> **decodeTransactions**(`encoded_transactions`): [`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]
+> **decodeTransactions**(`encoded_transactions`): [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]
 
-Defined in: [packages/transact/src/transactions/transaction.ts:507](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L507)
+Defined in: [packages/transact/src/transactions/transaction.ts:507](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L507)
 
 Decodes a collection of MsgPack bytes into a transaction collection.
 
@@ -25,4 +25,4 @@ A collection of decoded transactions or an error if decoding fails.
 
 ## Returns
 
-[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)[]
+[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]

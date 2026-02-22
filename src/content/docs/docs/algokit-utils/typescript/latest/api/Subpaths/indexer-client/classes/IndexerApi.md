@@ -5,11 +5,11 @@ prev: false
 title: "IndexerApi"
 ---
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L43)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:43](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L43)
 
 ## Extended by
 
-- [`IndexerClient`](/algokit-utils-ts/api/subpaths/indexer-client/classes/indexerclient/)
+- [`IndexerClient`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/classes/indexerclient/)
 
 ## Constructors
 
@@ -17,13 +17,13 @@ Defined in: [packages/indexer\_client/src/apis/api-service.ts:43](https://github
 
 > **new IndexerApi**(`httpRequest`): `IndexerApi`
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L44)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:44](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L44)
 
 #### Parameters
 
 ##### httpRequest
 
-[`BaseHttpRequest`](/algokit-utils-ts/api/subpaths/indexer-client/classes/basehttprequest/)
+[`BaseHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/classes/basehttprequest/)
 
 #### Returns
 
@@ -33,29 +33,29 @@ Defined in: [packages/indexer\_client/src/apis/api-service.ts:44](https://github
 
 ### httpRequest
 
-> `readonly` **httpRequest**: [`BaseHttpRequest`](/algokit-utils-ts/api/subpaths/indexer-client/classes/basehttprequest/)
+> `readonly` **httpRequest**: [`BaseHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/classes/basehttprequest/)
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:44](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L44)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:44](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L44)
 
 ## Methods
 
 ### healthCheck()
 
-> **healthCheck**(): `Promise`\<[`HealthCheck`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/healthcheck/)\>
+> **healthCheck**(): `Promise`\<[`HealthCheck`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/healthcheck/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:50](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L50)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:50](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L50)
 
 #### Returns
 
-`Promise`\<[`HealthCheck`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/healthcheck/)\>
+`Promise`\<[`HealthCheck`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/healthcheck/)\>
 
 ***
 
 ### lookupAccountAppLocalStates()
 
-> **lookupAccountAppLocalStates**(`account`, `params?`): `Promise`\<[`ApplicationLocalStatesResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationlocalstatesresponse/)\>
+> **lookupAccountAppLocalStates**(`account`, `params?`): `Promise`\<[`ApplicationLocalStatesResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationlocalstatesresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:70](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L70)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:70](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L70)
 
 Lookup an account's asset holdings, optionally for a specific ID.
 
@@ -63,7 +63,7 @@ Lookup an account's asset holdings, optionally for a specific ID.
 
 ##### account
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ##### params?
 
@@ -85,15 +85,15 @@ Lookup an account's asset holdings, optionally for a specific ID.
 
 #### Returns
 
-`Promise`\<[`ApplicationLocalStatesResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationlocalstatesresponse/)\>
+`Promise`\<[`ApplicationLocalStatesResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationlocalstatesresponse/)\>
 
 ***
 
 ### lookupAccountAssets()
 
-> **lookupAccountAssets**(`account`, `params?`): `Promise`\<[`AssetHoldingsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetholdingsresponse/)\>
+> **lookupAccountAssets**(`account`, `params?`): `Promise`\<[`AssetHoldingsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetholdingsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:93](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L93)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:93](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L93)
 
 Lookup an account's asset holdings, optionally for a specific ID.
 
@@ -101,7 +101,7 @@ Lookup an account's asset holdings, optionally for a specific ID.
 
 ##### account
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ##### params?
 
@@ -123,15 +123,15 @@ Lookup an account's asset holdings, optionally for a specific ID.
 
 #### Returns
 
-`Promise`\<[`AssetHoldingsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetholdingsresponse/)\>
+`Promise`\<[`AssetHoldingsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetholdingsresponse/)\>
 
 ***
 
 ### lookupAccountById()
 
-> **lookupAccountById**(`account`, `params?`): `Promise`\<[`AccountResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/accountresponse/)\>
+> **lookupAccountById**(`account`, `params?`): `Promise`\<[`AccountResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/accountresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:116](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L116)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:116](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L116)
 
 Lookup account information.
 
@@ -139,7 +139,7 @@ Lookup account information.
 
 ##### account
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ##### params?
 
@@ -157,15 +157,15 @@ Lookup account information.
 
 #### Returns
 
-`Promise`\<[`AccountResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/accountresponse/)\>
+`Promise`\<[`AccountResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/accountresponse/)\>
 
 ***
 
 ### lookupAccountCreatedApplications()
 
-> **lookupAccountCreatedApplications**(`account`, `params?`): `Promise`\<[`ApplicationsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationsresponse/)\>
+> **lookupAccountCreatedApplications**(`account`, `params?`): `Promise`\<[`ApplicationsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:143](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L143)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:143](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L143)
 
 Lookup an account's created application parameters, optionally for a specific ID.
 
@@ -173,7 +173,7 @@ Lookup an account's created application parameters, optionally for a specific ID
 
 ##### account
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ##### params?
 
@@ -195,15 +195,15 @@ Lookup an account's created application parameters, optionally for a specific ID
 
 #### Returns
 
-`Promise`\<[`ApplicationsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationsresponse/)\>
+`Promise`\<[`ApplicationsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationsresponse/)\>
 
 ***
 
 ### lookupAccountCreatedAssets()
 
-> **lookupAccountCreatedAssets**(`account`, `params?`): `Promise`\<[`AssetsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetsresponse/)\>
+> **lookupAccountCreatedAssets**(`account`, `params?`): `Promise`\<[`AssetsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:166](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L166)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:166](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L166)
 
 Lookup an account's created asset parameters, optionally for a specific ID.
 
@@ -211,7 +211,7 @@ Lookup an account's created asset parameters, optionally for a specific ID.
 
 ##### account
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ##### params?
 
@@ -233,15 +233,15 @@ Lookup an account's created asset parameters, optionally for a specific ID.
 
 #### Returns
 
-`Promise`\<[`AssetsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetsresponse/)\>
+`Promise`\<[`AssetsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetsresponse/)\>
 
 ***
 
 ### lookupAccountTransactions()
 
-> **lookupAccountTransactions**(`account`, `params?`): `Promise`\<[`TransactionsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
+> **lookupAccountTransactions**(`account`, `params?`): `Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:189](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L189)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:189](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L189)
 
 Lookup account transactions. Transactions are returned newest to oldest.
 
@@ -249,7 +249,7 @@ Lookup account transactions. Transactions are returned newest to oldest.
 
 ##### account
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ##### params?
 
@@ -315,15 +315,15 @@ Lookup account transactions. Transactions are returned newest to oldest.
 
 #### Returns
 
-`Promise`\<[`TransactionsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
+`Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
 
 ***
 
 ### lookupApplicationBoxByIdAndName()
 
-> **lookupApplicationBoxByIdAndName**(`applicationId`, `boxName`): `Promise`\<[`Box`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/box/)\>
+> **lookupApplicationBoxByIdAndName**(`applicationId`, `boxName`): `Promise`\<[`Box`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/box/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:709](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L709)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:709](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L709)
 
 Given an application ID and box name, it returns the round, box name, and value.
 
@@ -339,15 +339,15 @@ Given an application ID and box name, it returns the round, box name, and value.
 
 #### Returns
 
-`Promise`\<[`Box`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/box/)\>
+`Promise`\<[`Box`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/box/)\>
 
 ***
 
 ### lookupApplicationById()
 
-> **lookupApplicationById**(`applicationId`, `params?`): `Promise`\<[`ApplicationResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationresponse/)\>
+> **lookupApplicationById**(`applicationId`, `params?`): `Promise`\<[`ApplicationResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:264](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L264)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:264](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L264)
 
 Lookup application.
 
@@ -365,15 +365,15 @@ Lookup application.
 
 #### Returns
 
-`Promise`\<[`ApplicationResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationresponse/)\>
+`Promise`\<[`ApplicationResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationresponse/)\>
 
 ***
 
 ### lookupApplicationLogsById()
 
-> **lookupApplicationLogsById**(`applicationId`, `params?`): `Promise`\<[`ApplicationLogsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationlogsresponse/)\>
+> **lookupApplicationLogsById**(`applicationId`, `params?`): `Promise`\<[`ApplicationLogsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationlogsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:284](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L284)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:284](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L284)
 
 Lookup application logs.
 
@@ -403,7 +403,7 @@ Lookup application logs.
 
 ###### senderAddress?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ###### txId?
 
@@ -411,15 +411,15 @@ Lookup application logs.
 
 #### Returns
 
-`Promise`\<[`ApplicationLogsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationlogsresponse/)\>
+`Promise`\<[`ApplicationLogsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationlogsresponse/)\>
 
 ***
 
 ### lookupAssetBalances()
 
-> **lookupAssetBalances**(`assetId`, `params?`): `Promise`\<[`AssetBalancesResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetbalancesresponse/)\>
+> **lookupAssetBalances**(`assetId`, `params?`): `Promise`\<[`AssetBalancesResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetbalancesresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:321](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L321)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:321](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L321)
 
 Lookup the list of accounts who hold this asset
 
@@ -453,15 +453,15 @@ Lookup the list of accounts who hold this asset
 
 #### Returns
 
-`Promise`\<[`AssetBalancesResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetbalancesresponse/)\>
+`Promise`\<[`AssetBalancesResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetbalancesresponse/)\>
 
 ***
 
 ### lookupAssetById()
 
-> **lookupAssetById**(`assetId`, `params?`): `Promise`\<[`AssetResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetresponse/)\>
+> **lookupAssetById**(`assetId`, `params?`): `Promise`\<[`AssetResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:356](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L356)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:356](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L356)
 
 Lookup asset information.
 
@@ -479,15 +479,15 @@ Lookup asset information.
 
 #### Returns
 
-`Promise`\<[`AssetResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetresponse/)\>
+`Promise`\<[`AssetResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetresponse/)\>
 
 ***
 
 ### lookupAssetTransactions()
 
-> **lookupAssetTransactions**(`assetId`, `params?`): `Promise`\<[`TransactionsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
+> **lookupAssetTransactions**(`assetId`, `params?`): `Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:376](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L376)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:376](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L376)
 
 Lookup transactions for an asset. Transactions are returned oldest to newest.
 
@@ -501,7 +501,7 @@ Lookup transactions for an asset. Transactions are returned oldest to newest.
 
 ###### address?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ###### addressRole?
 
@@ -569,15 +569,15 @@ Lookup transactions for an asset. Transactions are returned oldest to newest.
 
 #### Returns
 
-`Promise`\<[`TransactionsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
+`Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
 
 ***
 
 ### lookupBlock()
 
-> **lookupBlock**(`roundNumber`, `params?`): `Promise`\<[`Block`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/block/)\>
+> **lookupBlock**(`roundNumber`, `params?`): `Promise`\<[`Block`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/block/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:435](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L435)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:435](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L435)
 
 Lookup block.
 
@@ -595,15 +595,15 @@ Lookup block.
 
 #### Returns
 
-`Promise`\<[`Block`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/block/)\>
+`Promise`\<[`Block`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/block/)\>
 
 ***
 
 ### lookupTransactionById()
 
-> **lookupTransactionById**(`txId`): `Promise`\<[`TransactionResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionresponse/)\>
+> **lookupTransactionById**(`txId`): `Promise`\<[`TransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:455](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L455)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:455](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L455)
 
 Lookup a single transaction.
 
@@ -615,15 +615,15 @@ Lookup a single transaction.
 
 #### Returns
 
-`Promise`\<[`TransactionResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionresponse/)\>
+`Promise`\<[`TransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionresponse/)\>
 
 ***
 
 ### searchForAccounts()
 
-> **searchForAccounts**(`params?`): `Promise`\<[`AccountsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/accountsresponse/)\>
+> **searchForAccounts**(`params?`): `Promise`\<[`AccountsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/accountsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:475](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L475)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:475](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L475)
 
 Search for accounts.
 
@@ -641,7 +641,7 @@ Search for accounts.
 
 ###### authAddr?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ###### currencyGreaterThan?
 
@@ -677,15 +677,15 @@ Search for accounts.
 
 #### Returns
 
-`Promise`\<[`AccountsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/accountsresponse/)\>
+`Promise`\<[`AccountsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/accountsresponse/)\>
 
 ***
 
 ### searchForApplicationBoxes()
 
-> **searchForApplicationBoxes**(`applicationId`, `params?`): `Promise`\<[`BoxesResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/boxesresponse/)\>
+> **searchForApplicationBoxes**(`applicationId`, `params?`): `Promise`\<[`BoxesResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/boxesresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:519](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L519)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:519](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L519)
 
 Given an application ID, returns the box names of that application sorted lexicographically.
 
@@ -707,15 +707,15 @@ Given an application ID, returns the box names of that application sorted lexico
 
 #### Returns
 
-`Promise`\<[`BoxesResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/boxesresponse/)\>
+`Promise`\<[`BoxesResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/boxesresponse/)\>
 
 ***
 
 ### searchForApplications()
 
-> **searchForApplications**(`params?`): `Promise`\<[`ApplicationsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationsresponse/)\>
+> **searchForApplications**(`params?`): `Promise`\<[`ApplicationsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:539](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L539)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:539](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L539)
 
 Search for applications
 
@@ -745,15 +745,15 @@ Search for applications
 
 #### Returns
 
-`Promise`\<[`ApplicationsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/applicationsresponse/)\>
+`Promise`\<[`ApplicationsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/applicationsresponse/)\>
 
 ***
 
 ### searchForAssets()
 
-> **searchForAssets**(`params?`): `Promise`\<[`AssetsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetsresponse/)\>
+> **searchForAssets**(`params?`): `Promise`\<[`AssetsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:571](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L571)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:571](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L571)
 
 Search for assets.
 
@@ -791,15 +791,15 @@ Search for assets.
 
 #### Returns
 
-`Promise`\<[`AssetsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/assetsresponse/)\>
+`Promise`\<[`AssetsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/assetsresponse/)\>
 
 ***
 
 ### searchForBlockHeaders()
 
-> **searchForBlockHeaders**(`params?`): `Promise`\<[`BlockHeadersResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/blockheadersresponse/)\>
+> **searchForBlockHeaders**(`params?`): `Promise`\<[`BlockHeadersResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/blockheadersresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:607](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L607)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:607](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L607)
 
 Search for block headers. Block headers are returned in ascending round order. Transactions are not included in the output.
 
@@ -809,7 +809,7 @@ Search for block headers. Block headers are returned in ascending round order. T
 
 ###### absent?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 ###### afterTime?
 
@@ -821,7 +821,7 @@ Search for block headers. Block headers are returned in ascending round order. T
 
 ###### expired?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 ###### limit?
 
@@ -841,19 +841,19 @@ Search for block headers. Block headers are returned in ascending round order. T
 
 ###### proposers?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)[]
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)[]
 
 #### Returns
 
-`Promise`\<[`BlockHeadersResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/blockheadersresponse/)\>
+`Promise`\<[`BlockHeadersResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/blockheadersresponse/)\>
 
 ***
 
 ### searchForTransactions()
 
-> **searchForTransactions**(`params?`): `Promise`\<[`TransactionsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
+> **searchForTransactions**(`params?`): `Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
 
-Defined in: [packages/indexer\_client/src/apis/api-service.ts:647](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L647)
+Defined in: [packages/indexer\_client/src/apis/api-service.ts:647](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/apis/api-service.ts#L647)
 
 Search for transactions. Transactions are returned oldest to newest unless the address parameter is used, in which case results are returned newest to oldest.
 
@@ -863,7 +863,7 @@ Search for transactions. Transactions are returned oldest to newest unless the a
 
 ###### address?
 
-[`ReadableAddress`](/algokit-utils-ts/api/algokit-utils/type-aliases/readableaddress/)
+[`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/)
 
 ###### addressRole?
 
@@ -943,4 +943,4 @@ Search for transactions. Transactions are returned oldest to newest unless the a
 
 #### Returns
 
-`Promise`\<[`TransactionsResponse`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>
+`Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>

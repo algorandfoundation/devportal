@@ -7,7 +7,7 @@
     "label": "Getting Started",
     "items": [
       {
-        "slug": "tutorials/quick-start"
+        "slug": "guides/tutorials/quick-start"
       }
     ]
   },
@@ -15,19 +15,19 @@
     "label": "Core Concepts",
     "items": [
       {
-        "slug": "concepts/core/algorand-client"
+        "slug": "guides/concepts/core/algorand-client"
       },
       {
-        "slug": "concepts/core/account"
+        "slug": "guides/concepts/core/account"
       },
       {
-        "slug": "concepts/core/transaction"
+        "slug": "guides/concepts/core/transaction"
       },
       {
-        "slug": "concepts/core/amount"
+        "slug": "guides/concepts/core/amount"
       },
       {
-        "slug": "concepts/core/client"
+        "slug": "guides/concepts/core/client"
       }
     ]
   },
@@ -35,25 +35,25 @@
     "label": "Building Applications",
     "items": [
       {
-        "slug": "concepts/building/app-client"
+        "slug": "guides/concepts/building/app-client"
       },
       {
-        "slug": "concepts/building/app-deploy"
+        "slug": "guides/concepts/building/app-deploy"
       },
       {
-        "slug": "concepts/building/app"
+        "slug": "guides/concepts/building/app"
       },
       {
-        "slug": "concepts/building/typed-app-clients"
+        "slug": "guides/concepts/building/typed-app-clients"
       },
       {
-        "slug": "concepts/building/asset"
+        "slug": "guides/concepts/building/asset"
       },
       {
-        "slug": "concepts/building/transfer"
+        "slug": "guides/concepts/building/transfer"
       },
       {
-        "slug": "concepts/building/testing"
+        "slug": "guides/concepts/building/testing"
       }
     ]
   },
@@ -62,19 +62,19 @@
     "collapsed": true,
     "items": [
       {
-        "slug": "concepts/advanced/transaction-composer"
+        "slug": "guides/concepts/advanced/transaction-composer"
       },
       {
-        "slug": "concepts/advanced/modular-imports"
+        "slug": "guides/concepts/advanced/modular-imports"
       },
       {
-        "slug": "concepts/advanced/debugging"
+        "slug": "guides/concepts/advanced/debugging"
       },
       {
-        "slug": "concepts/advanced/indexer"
+        "slug": "guides/concepts/advanced/indexer"
       },
       {
-        "slug": "concepts/advanced/dispenser-client"
+        "slug": "guides/concepts/advanced/dispenser-client"
       }
     ]
   },
@@ -82,7 +82,7 @@
     "label": "Migration Guides",
     "collapsed": true,
     "autogenerate": {
-      "directory": "migration"
+      "directory": "guides/migration"
     }
   },
   {

@@ -7,17 +7,17 @@ title: "getABIEncodedValue"
 
 > **getABIEncodedValue**(`type`, `value`): `Uint8Array`
 
-Defined in: [packages/abi/src/abi-method.ts:335](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L335)
+Defined in: [packages/abi/src/abi-method.ts:335](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L335)
 
 ## Parameters
 
 ### type
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/) | [`AVMType`](/algokit-utils-ts/api/subpaths/abi/type-aliases/avmtype/)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/) | [`AVMType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/avmtype/)
 
 ### value
 
-[`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/)
+[`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)
 
 ## Returns
 

@@ -7,7 +7,7 @@ title: "VersionsResponse"
 
 > **VersionsResponse** = `object`
 
-Defined in: [packages/kmd\_client/src/models/versions-response.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/versions-response.ts#L8)
+Defined in: [packages/kmd\_client/src/models/versions-response.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/versions-response.ts#L8)
 
 VersionsResponse is the response to `GET /versions`
 friendly:VersionsResponse
@@ -18,4 +18,4 @@ friendly:VersionsResponse
 
 > **versions**: `string`[]
 
-Defined in: [packages/kmd\_client/src/models/versions-response.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/versions-response.ts#L9)
+Defined in: [packages/kmd\_client/src/models/versions-response.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/versions-response.ts#L9)

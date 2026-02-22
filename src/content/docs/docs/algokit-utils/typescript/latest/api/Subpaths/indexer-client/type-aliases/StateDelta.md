@@ -5,8 +5,8 @@ prev: false
 title: "StateDelta"
 ---
 
-> **StateDelta** = [`EvalDeltaKeyValue`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/evaldeltakeyvalue/)[]
+> **StateDelta** = [`EvalDeltaKeyValue`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/evaldeltakeyvalue/)[]
 
-Defined in: [packages/indexer\_client/src/models/state-delta.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/state-delta.ts#L9)
+Defined in: [packages/indexer\_client/src/models/state-delta.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/state-delta.ts#L9)
 
 Application state delta.

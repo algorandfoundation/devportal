@@ -97,11 +97,11 @@ The deployment metadata
 
 Optional template parameters to use during compilation
 
-#### on_schema_break *: Literal['replace', 'fail', 'append'] | [OnSchemaBreak](../enums/#algokit_utils.applications.enums.OnSchemaBreak) | None* *= None*
+#### on_schema_break *: Literal['replace', 'fail', 'append'] | [OnSchemaBreak](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OnSchemaBreak) | None* *= None*
 
 Optional on schema break action
 
-#### on_update *: Literal['update', 'replace', 'fail', 'append'] | [OnUpdate](../enums/#algokit_utils.applications.enums.OnUpdate) | None* *= None*
+#### on_update *: Literal['update', 'replace', 'fail', 'append'] | [OnUpdate](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OnUpdate) | None* *= None*
 
 Optional on update action
 
@@ -129,7 +129,7 @@ Whether to ignore the cache
 
 Optional maximum fee
 
-#### send_params *: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None* *= None*
+#### send_params *: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None* *= None*
 
 Optional send parameters
 
@@ -141,23 +141,23 @@ The result of a deployment
 
 The application metadata
 
-#### operation_performed *: [OperationPerformed](../enums/#algokit_utils.applications.enums.OperationPerformed)*
+#### operation_performed *: [OperationPerformed](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OperationPerformed)*
 
 The operation performed
 
-#### create_result *: [SendAppCreateTransactionResult](../../transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[ABIReturn](../abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### create_result *: [SendAppCreateTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
 
 The create result
 
-#### update_result *: [SendAppUpdateTransactionResult](../../transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[ABIReturn](../abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### update_result *: [SendAppUpdateTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
 
 The update result
 
-#### delete_result *: [SendAppTransactionResult](../../transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](../abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### delete_result *: [SendAppTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
 
 The delete result
 
-### *class* AppDeployer(app_manager: [AppManager](../app_manager/#algokit_utils.applications.app_manager.AppManager), transaction_sender: [AlgorandClientTransactionSender](../../transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender), indexer: IndexerClient | None = None)
+### *class* AppDeployer(app_manager: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager), transaction_sender: [AlgorandClientTransactionSender](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender), indexer: IndexerClient | None = None)
 
 Manages deployment and deployment metadata of applications
 
@@ -228,7 +228,7 @@ the existing app will be deleted and re-created.
 #### get_creator_apps_by_name(\*, creator_address: str, ignore_cache: bool = False) → [ApplicationLookup](#algokit_utils.applications.app_deployer.ApplicationLookup)
 
 Returns a lookup of name => app metadata (id, address, …metadata) for all apps created by the given account
-that have an [ARC-2]([https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md)) AppDeployNote as
+that have an ARC-2 ([https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md)) AppDeployNote as
 the transaction note of the app creation transaction.
 
 This function caches the result for the given creator account so that subsequent calls won’t require an indexer

@@ -5,7 +5,7 @@ prev: false
 title: "ApiError"
 ---
 
-Defined in: [packages/indexer\_client/src/core/api-error.ts:1](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L1)
+Defined in: [packages/indexer\_client/src/core/api-error.ts:1](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L1)
 
 ## Extends
 
@@ -23,7 +23,7 @@ Defined in: [packages/indexer\_client/src/core/api-error.ts:1](https://github.co
 
 > **new ApiError**\<`T`\>(`url`, `status`, `body?`): `ApiError`\<`T`\>
 
-Defined in: [packages/indexer\_client/src/core/api-error.ts:6](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L6)
+Defined in: [packages/indexer\_client/src/core/api-error.ts:6](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L6)
 
 #### Parameters
 
@@ -53,7 +53,7 @@ Defined in: [packages/indexer\_client/src/core/api-error.ts:6](https://github.co
 
 > `readonly` **body**: `T` \| `undefined`
 
-Defined in: [packages/indexer\_client/src/core/api-error.ts:4](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L4)
+Defined in: [packages/indexer\_client/src/core/api-error.ts:4](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L4)
 
 ***
 
@@ -61,7 +61,7 @@ Defined in: [packages/indexer\_client/src/core/api-error.ts:4](https://github.co
 
 > `optional` **cause**: `unknown`
 
-Defined in: docs/node\_modules/typescript/lib/lib.es2022.error.d.ts:26
+Defined in: docs/node\_modules/.pnpm/typescript@5.9.3/node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 #### Inherited from
 
@@ -73,7 +73,7 @@ Defined in: docs/node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > **message**: `string`
 
-Defined in: docs/node\_modules/typescript/lib/lib.es5.d.ts:1077
+Defined in: docs/node\_modules/.pnpm/typescript@5.9.3/node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 #### Inherited from
 
@@ -85,7 +85,7 @@ Defined in: docs/node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 > **name**: `string`
 
-Defined in: docs/node\_modules/typescript/lib/lib.es5.d.ts:1076
+Defined in: docs/node\_modules/.pnpm/typescript@5.9.3/node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 #### Inherited from
 
@@ -97,7 +97,7 @@ Defined in: docs/node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > `optional` **stack**: `string`
 
-Defined in: docs/node\_modules/typescript/lib/lib.es5.d.ts:1078
+Defined in: docs/node\_modules/.pnpm/typescript@5.9.3/node\_modules/typescript/lib/lib.es5.d.ts:1078
 
 #### Inherited from
 
@@ -109,7 +109,7 @@ Defined in: docs/node\_modules/typescript/lib/lib.es5.d.ts:1078
 
 > `readonly` **status**: `number`
 
-Defined in: [packages/indexer\_client/src/core/api-error.ts:3](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L3)
+Defined in: [packages/indexer\_client/src/core/api-error.ts:3](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L3)
 
 ***
 
@@ -117,7 +117,7 @@ Defined in: [packages/indexer\_client/src/core/api-error.ts:3](https://github.co
 
 > `readonly` **url**: `string`
 
-Defined in: [packages/indexer\_client/src/core/api-error.ts:2](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L2)
+Defined in: [packages/indexer\_client/src/core/api-error.ts:2](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/core/api-error.ts#L2)
 
 ***
 

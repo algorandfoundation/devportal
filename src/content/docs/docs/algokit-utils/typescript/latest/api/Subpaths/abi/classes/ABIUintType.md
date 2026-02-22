@@ -5,13 +5,13 @@ prev: false
 title: "ABIUintType"
 ---
 
-Defined in: [packages/abi/src/abi-type.ts:171](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L171)
+Defined in: [packages/abi/src/abi-type.ts:171](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L171)
 
 An unsigned integer ABI type of a specific bit size.
 
 ## Extends
 
-- [`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/)
+- [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
 ## Constructors
 
@@ -19,7 +19,7 @@ An unsigned integer ABI type of a specific bit size.
 
 > **new ABIUintType**(`bitSize`): `ABIUintType`
 
-Defined in: [packages/abi/src/abi-type.ts:176](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L176)
+Defined in: [packages/abi/src/abi-type.ts:176](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L176)
 
 Creates a new unsigned integer type.
 
@@ -37,7 +37,7 @@ The bit size (must be a multiple of 8, between 8 and 512)
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`constructor`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#constructor)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`constructor`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#constructor)
 
 ## Properties
 
@@ -45,7 +45,7 @@ The bit size (must be a multiple of 8, between 8 and 512)
 
 > `readonly` **bitSize**: `number`
 
-Defined in: [packages/abi/src/abi-type.ts:176](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L176)
+Defined in: [packages/abi/src/abi-type.ts:176](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L176)
 
 The bit size (must be a multiple of 8, between 8 and 512)
 
@@ -57,7 +57,7 @@ The bit size (must be a multiple of 8, between 8 and 512)
 
 > **get** **displayName**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:49](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L49)
+Defined in: [packages/abi/src/abi-type.ts:49](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L49)
 
 Returns a user-friendly display name for this type.
 
@@ -69,7 +69,7 @@ The display name for this type
 
 #### Inherited from
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`displayName`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#displayname)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`displayName`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#displayname)
 
 ***
 
@@ -79,7 +79,7 @@ The display name for this type
 
 > **get** **name**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:183](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L183)
+Defined in: [packages/abi/src/abi-type.ts:183](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L183)
 
 Returns the ARC-4 type name string representation.
 
@@ -91,7 +91,7 @@ The ARC-4 type string
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`name`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#name)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`name`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#name)
 
 ## Methods
 
@@ -99,7 +99,7 @@ The ARC-4 type string
 
 > **byteLen**(): `number`
 
-Defined in: [packages/abi/src/abi-type.ts:195](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L195)
+Defined in: [packages/abi/src/abi-type.ts:195](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L195)
 
 Gets the byte length of the encoded type for static types.
 
@@ -115,15 +115,15 @@ Error if the type is dynamic
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`byteLen`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#bytelen)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`byteLen`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#bytelen)
 
 ***
 
 ### decode()
 
-> **decode**(`bytes`): [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/)
+> **decode**(`bytes`): [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)
 
-Defined in: [packages/abi/src/abi-type.ts:213](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L213)
+Defined in: [packages/abi/src/abi-type.ts:213](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L213)
 
 Decodes bytes according to this ABI type.
 
@@ -137,13 +137,13 @@ The bytes to decode
 
 #### Returns
 
-[`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/)
+[`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)
 
 The decoded value
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`decode`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#decode)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`decode`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#decode)
 
 ***
 
@@ -151,7 +151,7 @@ The decoded value
 
 > **encode**(`value`): `Uint8Array`
 
-Defined in: [packages/abi/src/abi-type.ts:199](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L199)
+Defined in: [packages/abi/src/abi-type.ts:199](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L199)
 
 Encodes a value according to this ABI type.
 
@@ -159,7 +159,7 @@ Encodes a value according to this ABI type.
 
 ##### value
 
-[`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/)
+[`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)
 
 The value to encode
 
@@ -171,7 +171,7 @@ The encoded bytes
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`encode`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#encode)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`encode`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#encode)
 
 ***
 
@@ -179,7 +179,7 @@ The encoded bytes
 
 > **equals**(`other`): `boolean`
 
-Defined in: [packages/abi/src/abi-type.ts:187](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L187)
+Defined in: [packages/abi/src/abi-type.ts:187](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L187)
 
 Checks if this ABI type is equal to another.
 
@@ -187,7 +187,7 @@ Checks if this ABI type is equal to another.
 
 ##### other
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
 The other ABI type to compare with
 
@@ -199,7 +199,7 @@ True if the types are equal, false otherwise
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`equals`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#equals)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`equals`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#equals)
 
 ***
 
@@ -207,7 +207,7 @@ True if the types are equal, false otherwise
 
 > **isDynamic**(): `boolean`
 
-Defined in: [packages/abi/src/abi-type.ts:191](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L191)
+Defined in: [packages/abi/src/abi-type.ts:191](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L191)
 
 Checks if this ABI type is dynamic (variable-length).
 
@@ -219,7 +219,7 @@ True if the type is dynamic, false otherwise
 
 #### Overrides
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`isDynamic`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#isdynamic)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`isDynamic`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#isdynamic)
 
 ***
 
@@ -227,7 +227,7 @@ True if the type is dynamic, false otherwise
 
 > **toString**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L57)
+Defined in: [packages/abi/src/abi-type.ts:57](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L57)
 
 Returns the ARC-4 type name string representation.
 
@@ -239,15 +239,15 @@ The ARC-4 type string
 
 #### Inherited from
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`toString`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#tostring)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`toString`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#tostring)
 
 ***
 
 ### from()
 
-> `static` **from**(`str`): [`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/)
+> `static` **from**(`str`): [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
-Defined in: [packages/abi/src/abi-type.ts:100](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L100)
+Defined in: [packages/abi/src/abi-type.ts:100](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L100)
 
 Creates an ABI type from an ARC-4 type string.
 
@@ -261,10 +261,10 @@ The ARC-4 type string (e.g., "uint256", "bool", "(uint8,address)")
 
 #### Returns
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
 The corresponding ABI type
 
 #### Inherited from
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/).[`from`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/#from)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`from`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#from)

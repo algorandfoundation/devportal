@@ -7,7 +7,7 @@ title: "StateProofMessage"
 
 > **StateProofMessage** = `object`
 
-Defined in: [packages/transact/src/transactions/state-proof.ts:66](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L66)
+Defined in: [packages/transact/src/transactions/state-proof.ts:66](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L66)
 
 ## Properties
 
@@ -15,7 +15,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:66](https://githu
 
 > **blockHeadersCommitment**: `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/state-proof.ts:67](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L67)
+Defined in: [packages/transact/src/transactions/state-proof.ts:67](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L67)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:67](https://githu
 
 > **firstAttestedRound**: `bigint`
 
-Defined in: [packages/transact/src/transactions/state-proof.ts:70](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L70)
+Defined in: [packages/transact/src/transactions/state-proof.ts:70](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L70)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:70](https://githu
 
 > **lastAttestedRound**: `bigint`
 
-Defined in: [packages/transact/src/transactions/state-proof.ts:71](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L71)
+Defined in: [packages/transact/src/transactions/state-proof.ts:71](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L71)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:71](https://githu
 
 > **lnProvenWeight**: `bigint`
 
-Defined in: [packages/transact/src/transactions/state-proof.ts:69](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L69)
+Defined in: [packages/transact/src/transactions/state-proof.ts:69](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L69)
 
 ***
 
@@ -47,4 +47,4 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:69](https://githu
 
 > **votersCommitment**: `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/state-proof.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L68)
+Defined in: [packages/transact/src/transactions/state-proof.ts:68](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L68)

@@ -5,9 +5,9 @@ prev: false
 title: "getMockServer"
 ---
 
-> **getMockServer**(`clientType`): `Promise`\<[`MockServer`](/algokit-utils-ts/api/subpaths/testing/interfaces/mockserver/)\>
+> **getMockServer**(`clientType`): `Promise`\<[`MockServer`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/mockserver/)\>
 
-Defined in: [packages/testing/src/mockServer.ts:92](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/testing/src/mockServer.ts#L92)
+Defined in: [packages/testing/src/mockServer.ts:92](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/testing/src/mockServer.ts#L92)
 
 Get a mock server instance for the specified client type.
 
@@ -18,13 +18,13 @@ and validates that the server is reachable before returning a MockServer instanc
 
 ### clientType
 
-[`ClientType`](/algokit-utils-ts/api/subpaths/testing/type-aliases/clienttype/)
+[`ClientType`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/type-aliases/clienttype/)
 
 The type of client to get a mock server for ('algod', 'indexer', or 'kmd')
 
 ## Returns
 
-`Promise`\<[`MockServer`](/algokit-utils-ts/api/subpaths/testing/interfaces/mockserver/)\>
+`Promise`\<[`MockServer`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/mockserver/)\>
 
 Promise resolving to a MockServer instance
 

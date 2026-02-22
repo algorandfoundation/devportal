@@ -5,7 +5,7 @@ prev: false
 title: "BoxName"
 ---
 
-Defined in: [src/app.ts:266](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L266)
+Defined in: [src/app.ts:266](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L266)
 
 The name of a box storage box
 
@@ -15,7 +15,7 @@ The name of a box storage box
 
 > **name**: `string`
 
-Defined in: [src/app.ts:268](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L268)
+Defined in: [src/app.ts:268](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L268)
 
 Name in UTF-8
 
@@ -25,7 +25,7 @@ Name in UTF-8
 
 > **nameBase64**: `string`
 
-Defined in: [src/app.ts:272](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L272)
+Defined in: [src/app.ts:272](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L272)
 
 Name in Base64
 
@@ -35,6 +35,6 @@ Name in Base64
 
 > **nameRaw**: `Uint8Array`
 
-Defined in: [src/app.ts:270](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app.ts#L270)
+Defined in: [src/app.ts:270](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L270)
 
 Name in binary bytes

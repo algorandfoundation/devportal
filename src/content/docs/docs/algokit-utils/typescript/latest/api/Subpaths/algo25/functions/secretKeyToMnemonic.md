@@ -7,7 +7,7 @@ title: "secretKeyToMnemonic"
 
 > **secretKeyToMnemonic**(`sk`): `string`
 
-Defined in: [packages/algo25/src/index.ts:141](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algo25/src/index.ts#L141)
+Defined in: [packages/algo25/src/index.ts:141](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algo25/src/index.ts#L141)
 
 secretKeyToMnemonic takes an Algorand secret key and returns the corresponding mnemonic.
 

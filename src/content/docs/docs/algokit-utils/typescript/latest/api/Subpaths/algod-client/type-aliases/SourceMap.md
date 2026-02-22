@@ -7,7 +7,7 @@ title: "SourceMap"
 
 > **SourceMap** = `object`
 
-Defined in: [packages/algod\_client/src/models/source-map.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L7)
+Defined in: [packages/algod\_client/src/models/source-map.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L7)
 
 Source map for the program
 
@@ -17,7 +17,7 @@ Source map for the program
 
 > **mappings**: `string`
 
-Defined in: [packages/algod\_client/src/models/source-map.ts:23](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L23)
+Defined in: [packages/algod\_client/src/models/source-map.ts:23](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L23)
 
 A string with the encoded mapping data.
 
@@ -27,7 +27,7 @@ A string with the encoded mapping data.
 
 > **names**: `string`[]
 
-Defined in: [packages/algod\_client/src/models/source-map.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L18)
+Defined in: [packages/algod\_client/src/models/source-map.ts:18](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L18)
 
 A list of symbol names used by the "mappings" entry.
 
@@ -37,7 +37,7 @@ A list of symbol names used by the "mappings" entry.
 
 > **sources**: `string`[]
 
-Defined in: [packages/algod\_client/src/models/source-map.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L13)
+Defined in: [packages/algod\_client/src/models/source-map.ts:13](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L13)
 
 A list of original sources used by the "mappings" entry.
 
@@ -47,4 +47,4 @@ A list of original sources used by the "mappings" entry.
 
 > **version**: `number`
 
-Defined in: [packages/algod\_client/src/models/source-map.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L8)
+Defined in: [packages/algod\_client/src/models/source-map.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/source-map.ts#L8)

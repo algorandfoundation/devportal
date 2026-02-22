@@ -7,7 +7,7 @@ title: "ProgramSourceInfo"
 
 > **ProgramSourceInfo** = `object`
 
-Defined in: [packages/abi/src/arc56-contract.ts:298](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L298)
+Defined in: [packages/abi/src/arc56-contract.ts:298](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L298)
 
 ## Properties
 
@@ -15,7 +15,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:298](https://github.com/algorand
 
 > **pcOffsetMethod**: `"none"` \| `"cblocks"`
 
-Defined in: [packages/abi/src/arc56-contract.ts:305](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L305)
+Defined in: [packages/abi/src/arc56-contract.ts:305](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L305)
 
 How the program counter offset is calculated
 - none: The pc values in sourceInfo are not offset
@@ -27,6 +27,6 @@ How the program counter offset is calculated
 
 > **sourceInfo**: `SourceInfo`[]
 
-Defined in: [packages/abi/src/arc56-contract.ts:300](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L300)
+Defined in: [packages/abi/src/arc56-contract.ts:300](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L300)
 
 The source information for the program

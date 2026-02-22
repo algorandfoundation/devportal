@@ -5,13 +5,13 @@ prev: false
 title: "UpdatableConfig"
 ---
 
-Defined in: [src/updatable-config.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L28)
+Defined in: [src/updatable-config.ts:28](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L28)
 
 Updatable AlgoKit config
 
 ## Implements
 
-- `Readonly`\<[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/)\>
+- `Readonly`\<[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/)\>
 
 ## Constructors
 
@@ -19,7 +19,7 @@ Updatable AlgoKit config
 
 > **new UpdatableConfig**(): `UpdatableConfig`
 
-Defined in: [src/updatable-config.ts:90](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L90)
+Defined in: [src/updatable-config.ts:90](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L90)
 
 #### Returns
 
@@ -33,7 +33,7 @@ Defined in: [src/updatable-config.ts:90](https://github.com/algorandfoundation/a
 
 > **get** **debug**(): `boolean`
 
-Defined in: [src/updatable-config.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L39)
+Defined in: [src/updatable-config.ts:39](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L39)
 
 Whether or not debug mode is enabled
 
@@ -43,7 +43,7 @@ Whether or not debug mode is enabled
 
 #### Implementation of
 
-[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/).[`debug`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/#debug)
+[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`debug`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#debug)
 
 ***
 
@@ -51,17 +51,17 @@ Whether or not debug mode is enabled
 
 #### Get Signature
 
-> **get** **events**(): [`AsyncEventEmitter`](/algokit-utils-ts/api/algokit-utils/classes/asynceventemitter/)
+> **get** **events**(): [`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/asynceventemitter/)
 
-Defined in: [src/updatable-config.ts:59](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L59)
+Defined in: [src/updatable-config.ts:59](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L59)
 
 ##### Returns
 
-[`AsyncEventEmitter`](/algokit-utils-ts/api/algokit-utils/classes/asynceventemitter/)
+[`AsyncEventEmitter`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/asynceventemitter/)
 
 #### Implementation of
 
-[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/).[`events`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/#events)
+[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`events`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#events)
 
 ***
 
@@ -71,7 +71,7 @@ Defined in: [src/updatable-config.ts:59](https://github.com/algorandfoundation/a
 
 > **get** **logger**(): `Logger`
 
-Defined in: [src/updatable-config.ts:35](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L35)
+Defined in: [src/updatable-config.ts:35](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L35)
 
 Logger
 
@@ -81,7 +81,7 @@ Logger
 
 #### Implementation of
 
-[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/).[`logger`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/#logger)
+[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`logger`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#logger)
 
 ***
 
@@ -91,7 +91,7 @@ Logger
 
 > **get** **maxSearchDepth**(): `number`
 
-Defined in: [src/updatable-config.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L55)
+Defined in: [src/updatable-config.ts:55](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L55)
 
 The maximum depth to search for a specific file
 
@@ -101,7 +101,7 @@ The maximum depth to search for a specific file
 
 #### Implementation of
 
-[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/).[`maxSearchDepth`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/#maxsearchdepth)
+[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`maxSearchDepth`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#maxsearchdepth)
 
 ***
 
@@ -111,7 +111,7 @@ The maximum depth to search for a specific file
 
 > **get** **populateAppCallResources**(): `boolean`
 
-Defined in: [src/updatable-config.ts:31](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L31)
+Defined in: [src/updatable-config.ts:31](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L31)
 
 Whether to enable populateAppCallResources in sendParams by default.
 Default value is false.
@@ -122,7 +122,7 @@ Default value is false.
 
 #### Implementation of
 
-[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/).[`populateAppCallResources`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/#populateappcallresources)
+[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`populateAppCallResources`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#populateappcallresources)
 
 ***
 
@@ -132,7 +132,7 @@ Default value is false.
 
 > **get** **projectRoot**(): `string` \| `null`
 
-Defined in: [src/updatable-config.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L43)
+Defined in: [src/updatable-config.ts:43](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L43)
 
 The path to the project root directory
 
@@ -142,7 +142,7 @@ The path to the project root directory
 
 #### Implementation of
 
-[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/).[`projectRoot`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/#projectroot)
+[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`projectRoot`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#projectroot)
 
 ***
 
@@ -152,7 +152,7 @@ The path to the project root directory
 
 > **get** **traceAll**(): `boolean`
 
-Defined in: [src/updatable-config.ts:47](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L47)
+Defined in: [src/updatable-config.ts:47](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L47)
 
 Indicates whether to trace all operations
 
@@ -162,7 +162,7 @@ Indicates whether to trace all operations
 
 #### Implementation of
 
-[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/).[`traceAll`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/#traceall)
+[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`traceAll`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#traceall)
 
 ***
 
@@ -172,7 +172,7 @@ Indicates whether to trace all operations
 
 > **get** **traceBufferSizeMb**(): `number`
 
-Defined in: [src/updatable-config.ts:51](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L51)
+Defined in: [src/updatable-config.ts:51](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L51)
 
 The size of the trace buffer in megabytes
 
@@ -182,7 +182,7 @@ The size of the trace buffer in megabytes
 
 #### Implementation of
 
-[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/).[`traceBufferSizeMb`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/#tracebuffersizemb)
+[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/).[`traceBufferSizeMb`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/#tracebuffersizemb)
 
 ## Methods
 
@@ -190,7 +190,7 @@ The size of the trace buffer in megabytes
 
 > **configure**(`newConfig`): `void`
 
-Defined in: [src/updatable-config.ts:107](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L107)
+Defined in: [src/updatable-config.ts:107](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L107)
 
 Update the AlgoKit configuration with your own configuration settings
 
@@ -198,7 +198,7 @@ Update the AlgoKit configuration with your own configuration settings
 
 ##### newConfig
 
-`Partial`\<[`AlgoKitConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algokitconfig/)\>
+`Partial`\<[`AlgoKitConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algokitconfig/)\>
 
 Partial or complete config to replace
 
@@ -212,7 +212,7 @@ Partial or complete config to replace
 
 > **getLogger**(`returnNullLogger?`): `Logger`
 
-Defined in: [src/updatable-config.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L68)
+Defined in: [src/updatable-config.ts:68](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L68)
 
 Returns the current logger, or the null logger if true is passed in to `returnNullLogger`
 
@@ -236,7 +236,7 @@ The requested logger
 
 > **withDebug**(`lambda`): `void`
 
-Defined in: [src/updatable-config.ts:80](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/updatable-config.ts#L80)
+Defined in: [src/updatable-config.ts:80](https://github.com/larkiny/algokit-utils-ts/blob/main/src/updatable-config.ts#L80)
 
 Temporarily run with debug set to true.
 

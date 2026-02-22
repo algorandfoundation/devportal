@@ -7,7 +7,7 @@ title: "Block"
 
 > **Block** = `object`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:31](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L31)
+Defined in: [packages/indexer\_client/src/models/block.ts:31](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L31)
 
 Block information.
 
@@ -20,7 +20,7 @@ data/bookkeeping/block.go : Block
 
 > `optional` **bonus**: `number`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:45](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L45)
+Defined in: [packages/indexer\_client/src/models/block.ts:45](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L45)
 
 the potential bonus payout for this block.
 
@@ -30,7 +30,7 @@ the potential bonus payout for this block.
 
 > `optional` **feesCollected**: `number`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:40](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L40)
+Defined in: [packages/indexer\_client/src/models/block.ts:40](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L40)
 
 the sum of all fees paid by transactions in this block.
 
@@ -40,7 +40,7 @@ the sum of all fees paid by transactions in this block.
 
 > **genesisHash**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L55)
+Defined in: [packages/indexer\_client/src/models/block.ts:55](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L55)
 
 \[gh\] hash to which this block belongs.
 
@@ -50,7 +50,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:55](https://github.com
 
 > **genesisId**: `string`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:60](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L60)
+Defined in: [packages/indexer\_client/src/models/block.ts:60](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L60)
 
 \[gen\] ID to which this block belongs.
 
@@ -58,9 +58,9 @@ Defined in: [packages/indexer\_client/src/models/block.ts:60](https://github.com
 
 ### participationUpdates
 
-> **participationUpdates**: [`ParticipationUpdates`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/participationupdates/)
+> **participationUpdates**: [`ParticipationUpdates`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/participationupdates/)
 
-Defined in: [packages/indexer\_client/src/models/block.ts:121](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L121)
+Defined in: [packages/indexer\_client/src/models/block.ts:121](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L121)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:121](https://github.co
 
 > **previousBlockHash**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:65](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L65)
+Defined in: [packages/indexer\_client/src/models/block.ts:65](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L65)
 
 \[prev\] Previous block hash.
 
@@ -78,7 +78,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:65](https://github.com
 
 > `optional` **previousBlockHash512**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:70](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L70)
+Defined in: [packages/indexer\_client/src/models/block.ts:70](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L70)
 
 \[prev512\] Previous block hash, using SHA-512.
 
@@ -86,9 +86,9 @@ Defined in: [packages/indexer\_client/src/models/block.ts:70](https://github.com
 
 ### proposer?
 
-> `optional` **proposer**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> `optional` **proposer**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [packages/indexer\_client/src/models/block.ts:35](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L35)
+Defined in: [packages/indexer\_client/src/models/block.ts:35](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L35)
 
 the proposer of this block.
 
@@ -98,7 +98,7 @@ the proposer of this block.
 
 > `optional` **proposerPayout**: `number`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:50](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L50)
+Defined in: [packages/indexer\_client/src/models/block.ts:50](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L50)
 
 the actual amount transferred to the proposer from the fee sink.
 
@@ -106,9 +106,9 @@ the actual amount transferred to the proposer from the fee sink.
 
 ### rewards
 
-> **rewards**: [`BlockRewards`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/blockrewards/)
+> **rewards**: [`BlockRewards`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/blockrewards/)
 
-Defined in: [packages/indexer\_client/src/models/block.ts:71](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L71)
+Defined in: [packages/indexer\_client/src/models/block.ts:71](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L71)
 
 ***
 
@@ -116,7 +116,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:71](https://github.com
 
 > **round**: `bigint`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:76](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L76)
+Defined in: [packages/indexer\_client/src/models/block.ts:76](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L76)
 
 \[rnd\] Current round on which this block was appended to the chain.
 
@@ -126,7 +126,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:76](https://github.com
 
 > **seed**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L81)
+Defined in: [packages/indexer\_client/src/models/block.ts:81](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L81)
 
 \[seed\] Sortition seed.
 
@@ -134,9 +134,9 @@ Defined in: [packages/indexer\_client/src/models/block.ts:81](https://github.com
 
 ### stateProofTracking?
 
-> `optional` **stateProofTracking**: [`StateProofTracking`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/stateprooftracking/)[]
+> `optional` **stateProofTracking**: [`StateProofTracking`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/stateprooftracking/)[]
 
-Defined in: [packages/indexer\_client/src/models/block.ts:86](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L86)
+Defined in: [packages/indexer\_client/src/models/block.ts:86](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L86)
 
 Tracks the status of state proofs.
 
@@ -146,7 +146,7 @@ Tracks the status of state proofs.
 
 > **timestamp**: `number`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:91](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L91)
+Defined in: [packages/indexer\_client/src/models/block.ts:91](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L91)
 
 \[ts\] Block creation timestamp in seconds since epoch
 
@@ -154,9 +154,9 @@ Defined in: [packages/indexer\_client/src/models/block.ts:91](https://github.com
 
 ### transactions
 
-> **transactions**: [`Transaction`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transaction/)[]
+> **transactions**: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transaction/)[]
 
-Defined in: [packages/indexer\_client/src/models/block.ts:96](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L96)
+Defined in: [packages/indexer\_client/src/models/block.ts:96](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L96)
 
 \[txns\] list of transactions corresponding to a given round.
 
@@ -166,7 +166,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:96](https://github.com
 
 > **transactionsRoot**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:101](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L101)
+Defined in: [packages/indexer\_client/src/models/block.ts:101](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L101)
 
 \[txn\] TransactionsRoot authenticates the set of transactions appearing in the block. More specifically, it's the root of a merkle tree whose leaves are the block's Txids, in lexicographic order. For the empty block, it's 0. Note that the TxnRoot does not authenticate the signatures on the transactions, only the transactions themselves. Two blocks with the same transactions but in a different order and with different signatures will have the same TxnRoot.
 
@@ -176,7 +176,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:101](https://github.co
 
 > `optional` **transactionsRootSha256**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:106](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L106)
+Defined in: [packages/indexer\_client/src/models/block.ts:106](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L106)
 
 \[txn256\] TransactionsRootSHA256 is an auxiliary TransactionRoot, built using a vector commitment instead of a merkle tree, and SHA256 hash function instead of the default SHA512_256. This commitment can be used on environments where only the SHA256 function exists.
 
@@ -186,7 +186,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:106](https://github.co
 
 > `optional` **transactionsRootSha512**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:111](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L111)
+Defined in: [packages/indexer\_client/src/models/block.ts:111](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L111)
 
 \[txn512\] TransactionsRootSHA512 is an auxiliary TransactionRoot, built using a vector commitment instead of a merkle tree, and SHA512 hash function instead of the default SHA512_256.
 
@@ -196,7 +196,7 @@ Defined in: [packages/indexer\_client/src/models/block.ts:111](https://github.co
 
 > `optional` **txnCounter**: `number`
 
-Defined in: [packages/indexer\_client/src/models/block.ts:118](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L118)
+Defined in: [packages/indexer\_client/src/models/block.ts:118](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L118)
 
 \[tc\] TxnCounter counts the number of transactions committed in the ledger, from the time at which support for this feature was introduced.
 
@@ -206,14 +206,14 @@ Specifically, TxnCounter is the number of the next transaction that will be comm
 
 ### upgradeState
 
-> **upgradeState**: [`BlockUpgradeState`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/blockupgradestate/)
+> **upgradeState**: [`BlockUpgradeState`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/blockupgradestate/)
 
-Defined in: [packages/indexer\_client/src/models/block.ts:119](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L119)
+Defined in: [packages/indexer\_client/src/models/block.ts:119](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L119)
 
 ***
 
 ### upgradeVote?
 
-> `optional` **upgradeVote**: [`BlockUpgradeVote`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/blockupgradevote/)
+> `optional` **upgradeVote**: [`BlockUpgradeVote`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/blockupgradevote/)
 
-Defined in: [packages/indexer\_client/src/models/block.ts:120](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L120)
+Defined in: [packages/indexer\_client/src/models/block.ts:120](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block.ts#L120)

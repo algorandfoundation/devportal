@@ -13,7 +13,7 @@ title: "algokit_utils.algorand"
 
 ## Module Contents
 
-### *class* AlgorandClient(config: [AlgoClientConfigs](../models/network/#algokit_utils.models.network.AlgoClientConfigs) | [AlgoSdkClients](../clients/client_manager/#algokit_utils.clients.client_manager.AlgoSdkClients))
+### *class* AlgorandClient(config: [AlgoClientConfigs](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientConfigs) | [AlgoSdkClients](/docs/algokit-utils/python/latest/api/algokit_utils/clients/client_manager/#algokit_utils.clients.client_manager.AlgoSdkClients))
 
 A client that brokers easy access to Algorand functionality.
 
@@ -132,7 +132,7 @@ Unregister an error transformer function
 * **Returns:**
   The AlgorandClient so you can chain method calls
 
-#### new_group() → [TransactionComposer](../transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### new_group() → [TransactionComposer](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Start a new TransactionComposer transaction group
 
@@ -142,7 +142,7 @@ Start a new TransactionComposer transaction group
   result = composer.add_transaction(payment).send()
   ```
 
-#### *property* client *: [ClientManager](../clients/client_manager/#algokit_utils.clients.client_manager.ClientManager)*
+#### *property* client *: [ClientManager](/docs/algokit-utils/python/latest/api/algokit_utils/clients/client_manager/#algokit_utils.clients.client_manager.ClientManager)*
 
 Get clients, including algosdk clients and app clients.
 
@@ -151,7 +151,7 @@ Get clients, including algosdk clients and app clients.
   clientManager = AlgorandClient.mainnet().client
   ```
 
-#### *property* account *: [AccountManager](../accounts/account_manager/#algokit_utils.accounts.account_manager.AccountManager)*
+#### *property* account *: [AccountManager](/docs/algokit-utils/python/latest/api/algokit_utils/accounts/account_manager/#algokit_utils.accounts.account_manager.AccountManager)*
 
 Get or create accounts that can sign transactions.
 
@@ -160,7 +160,7 @@ Get or create accounts that can sign transactions.
   accountManager = AlgorandClient.mainnet().account
   ```
 
-#### *property* asset *: [AssetManager](../assets/asset_manager/#algokit_utils.assets.asset_manager.AssetManager)*
+#### *property* asset *: [AssetManager](/docs/algokit-utils/python/latest/api/algokit_utils/assets/asset_manager/#algokit_utils.assets.asset_manager.AssetManager)*
 
 Get or create assets.
 
@@ -169,7 +169,7 @@ Get or create assets.
   assetManager = AlgorandClient.mainnet().asset
   ```
 
-#### *property* app *: [AppManager](../applications/app_manager/#algokit_utils.applications.app_manager.AppManager)*
+#### *property* app *: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager)*
 
 Get or create applications.
 
@@ -178,7 +178,7 @@ Get or create applications.
   appManager = AlgorandClient.mainnet().app
   ```
 
-#### *property* app_deployer *: [AppDeployer](../applications/app_deployer/#algokit_utils.applications.app_deployer.AppDeployer)*
+#### *property* app_deployer *: [AppDeployer](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.AppDeployer)*
 
 Get or create applications.
 
@@ -187,7 +187,7 @@ Get or create applications.
   appDeployer = AlgorandClient.mainnet().app_deployer
   ```
 
-#### *property* send *: [AlgorandClientTransactionSender](../transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender)*
+#### *property* send *: [AlgorandClientTransactionSender](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender)*
 
 Methods for sending a transaction and waiting for confirmation
 
@@ -202,7 +202,7 @@ Methods for sending a transaction and waiting for confirmation
   )
   ```
 
-#### *property* create_transaction *: [AlgorandClientTransactionCreator](../transactions/transaction_creator/#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)*
+#### *property* create_transaction *: [AlgorandClientTransactionCreator](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_creator/#algokit_utils.transactions.transaction_creator.AlgorandClientTransactionCreator)*
 
 Methods for building transactions
 
@@ -279,7 +279,7 @@ Expects to be called from a Python environment.
   algorand = AlgorandClient.from_environment()
   ```
 
-#### *static* from_config(algod_config: [AlgoClientNetworkConfig](../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig), indexer_config: [AlgoClientNetworkConfig](../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None, kmd_config: [AlgoClientNetworkConfig](../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None) → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
+#### *static* from_config(algod_config: [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig), indexer_config: [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None, kmd_config: [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig) | None = None) → [AlgorandClient](#algokit_utils.algorand.AlgorandClient)
 
 Returns an AlgorandClient from the given config.
 

@@ -177,6 +177,6 @@ print(call_result.abi_return)  # Parsed ABI return value
 
 ## Further reading
 
-To understand how to create, simulate and send transactions consult the [`AlgorandClient`](../algorand-client) and [`TransactionComposer`](../../advanced/transaction-composer) documentation.
+To understand how to create, simulate and send transactions consult the [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) and [`TransactionComposer`](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/) documentation.
 
 **Source:** [`src/algokit_utils/transactions/transaction_sender.py`](https://github.com/algorandfoundation/algokit-utils-py/blob/main/src/algokit_utils/transactions/transaction_sender.py)

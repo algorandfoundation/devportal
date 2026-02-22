@@ -5,7 +5,7 @@ prev: false
 title: "LocalNetManager"
 ---
 
-Defined in: [src/network-manager.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L19)
+Defined in: [src/network-manager.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L19)
 
 Manager for LocalNet-specific network operations.
 These methods only work on LocalNet and will throw an error if called on other networks.
@@ -16,23 +16,23 @@ These methods only work on LocalNet and will throw an error if called on other n
 
 > **new LocalNetManager**(`algod`, `networkManager`, `algorand`): `LocalNetManager`
 
-Defined in: [src/network-manager.ts:25](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L25)
+Defined in: [src/network-manager.ts:25](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L25)
 
 #### Parameters
 
 ##### algod
 
-[`AlgodClient`](/algokit-utils-ts/api/subpaths/algod-client/classes/algodclient/)
+[`AlgodClient`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/classes/algodclient/)
 
 The algod client to use for LocalNet operations
 
 ##### networkManager
 
-[`NetworkManager`](/algokit-utils-ts/api/algokit-utils/classes/networkmanager/)
+[`NetworkManager`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/networkmanager/)
 
 ##### algorand
 
-[`AlgorandClient`](/algokit-utils-ts/api/algokit-utils/classes/algorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/)
 
 #### Returns
 
@@ -44,7 +44,7 @@ The algod client to use for LocalNet operations
 
 > **blockWarp**(`targetRound`): `Promise`\<`void`\>
 
-Defined in: [src/network-manager.ts:62](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L62)
+Defined in: [src/network-manager.ts:62](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L62)
 
 Advances the blockchain by generating blocks until the target round is reached.
 
@@ -77,7 +77,7 @@ await algorand.network.localNet.blockWarp(100n)
 
 > **timeWarp**(`targetTimestamp`): `Promise`\<`void`\>
 
-Defined in: [src/network-manager.ts:82](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L82)
+Defined in: [src/network-manager.ts:82](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L82)
 
 Advances the blockchain timestamp to a target Unix timestamp.
 

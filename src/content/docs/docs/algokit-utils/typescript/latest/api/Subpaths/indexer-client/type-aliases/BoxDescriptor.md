@@ -7,7 +7,7 @@ title: "BoxDescriptor"
 
 > **BoxDescriptor** = `object`
 
-Defined in: [packages/indexer\_client/src/models/box-descriptor.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/box-descriptor.ts#L7)
+Defined in: [packages/indexer\_client/src/models/box-descriptor.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/box-descriptor.ts#L7)
 
 Box descriptor describes an app box without a value.
 
@@ -17,6 +17,6 @@ Box descriptor describes an app box without a value.
 
 > **name**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/box-descriptor.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/box-descriptor.ts#L11)
+Defined in: [packages/indexer\_client/src/models/box-descriptor.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/box-descriptor.ts#L11)
 
 Base64 encoded box name

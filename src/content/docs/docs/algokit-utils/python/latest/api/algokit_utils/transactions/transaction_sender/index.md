@@ -52,11 +52,11 @@ The full array of transactions
 
 The full array of confirmations
 
-#### returns *: list[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### returns *: list[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
 
 The ABI return value if applicable
 
-#### *classmethod* from_composer_result(result: [SendTransactionComposerResults](../transaction_composer/#algokit_utils.transactions.transaction_composer.SendTransactionComposerResults), \*, is_abi: bool = False, index: int = -1) → Self
+#### *classmethod* from_composer_result(result: [SendTransactionComposerResults](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.SendTransactionComposerResults), \*, is_abi: bool = False, index: int = -1) → Self
 
 ### *class* SendSingleAssetCreateTransactionResult
 
@@ -90,11 +90,11 @@ Result of updating an application.
 
 Contains the compiled approval and clear programs.
 
-#### compiled_approval *: [CompiledTeal](../../models/application/#algokit_utils.models.application.CompiledTeal) | bytes | None* *= None*
+#### compiled_approval *: [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | bytes | None* *= None*
 
 The compiled approval program
 
-#### compiled_clear *: [CompiledTeal](../../models/application/#algokit_utils.models.application.CompiledTeal) | bytes | None* *= None*
+#### compiled_clear *: [CompiledTeal](/docs/algokit-utils/python/latest/api/algokit_utils/models/application/#algokit_utils.models.application.CompiledTeal) | bytes | None* *= None*
 
 The compiled clear state program
 
@@ -114,14 +114,14 @@ The ID of the newly created application
 
 The address of the newly created application
 
-### *class* AlgorandClientTransactionSender(new_group: Callable[[], [TransactionComposer](../transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)], asset_manager: [AssetManager](../../assets/asset_manager/#algokit_utils.assets.asset_manager.AssetManager), app_manager: [AppManager](../../applications/app_manager/#algokit_utils.applications.app_manager.AppManager), algod_client: AlgodClient)
+### *class* AlgorandClientTransactionSender(new_group: Callable[[], [TransactionComposer](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)], asset_manager: [AssetManager](/docs/algokit-utils/python/latest/api/algokit_utils/assets/asset_manager/#algokit_utils.assets.asset_manager.AssetManager), app_manager: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager), algod_client: AlgodClient)
 
 Orchestrates sending transactions for AlgorandClient.
 
 Provides methods to send various types of transactions including payments,
 asset operations, and application calls.
 
-#### new_group() → [TransactionComposer](../transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)
+#### new_group() → [TransactionComposer](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_composer/#algokit_utils.transactions.transaction_composer.TransactionComposer)
 
 Create a new transaction group.
 
@@ -135,7 +135,7 @@ Create a new transaction group.
   composer.send()
   ```
 
-#### payment(params: PaymentParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### payment(params: PaymentParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Send a payment transaction to transfer Algo between accounts.
 
@@ -175,7 +175,7 @@ Send a payment transaction to transfer Algo between accounts.
   ))
   ```
 
-#### asset_create(params: AssetCreateParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleAssetCreateTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleAssetCreateTransactionResult)
+#### asset_create(params: AssetCreateParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleAssetCreateTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleAssetCreateTransactionResult)
 
 Create a new Algorand Standard Asset.
 
@@ -231,7 +231,7 @@ Create a new Algorand Standard Asset.
   ))
   ```
 
-#### asset_config(params: AssetConfigParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### asset_config(params: AssetConfigParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Configure an existing Algorand Standard Asset.
 
@@ -269,7 +269,7 @@ Configure an existing Algorand Standard Asset.
   ))
   ```
 
-#### asset_freeze(params: AssetFreezeParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### asset_freeze(params: AssetFreezeParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Freeze or unfreeze an Algorand Standard Asset for an account.
 
@@ -315,7 +315,7 @@ Freeze or unfreeze an Algorand Standard Asset for an account.
   ))
   ```
 
-#### asset_destroy(params: AssetDestroyParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### asset_destroy(params: AssetDestroyParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Destroys an Algorand Standard Asset.
 
@@ -357,7 +357,7 @@ Destroys an Algorand Standard Asset.
   ))
   ```
 
-#### asset_transfer(params: AssetTransferParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### asset_transfer(params: AssetTransferParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Transfer an Algorand Standard Asset.
 
@@ -406,7 +406,7 @@ Transfer an Algorand Standard Asset.
   ))
   ```
 
-#### asset_opt_in(params: AssetOptInParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### asset_opt_in(params: AssetOptInParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Opt an account into an Algorand Standard Asset.
 
@@ -448,7 +448,7 @@ Opt an account into an Algorand Standard Asset.
   ))
   ```
 
-#### asset_opt_out(params: AssetOptOutParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None, \*, ensure_zero_balance: bool = True) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### asset_opt_out(params: AssetOptOutParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None, \*, ensure_zero_balance: bool = True) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Opt an account out of an Algorand Standard Asset.
 
@@ -497,7 +497,7 @@ Opt an account out of an Algorand Standard Asset.
   ))
   ```
 
-#### app_create(params: AppCreateParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppCreateTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]
+#### app_create(params: AppCreateParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppCreateTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]
 
 Create a new application.
 
@@ -554,7 +554,7 @@ Create a new application.
   ))
   ```
 
-#### app_update(params: AppUpdateParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppUpdateTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]
+#### app_update(params: AppUpdateParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppUpdateTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]
 
 Update an application.
 
@@ -602,7 +602,7 @@ Update an application.
   ))
   ```
 
-#### app_delete(params: AppDeleteParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]
+#### app_delete(params: AppDeleteParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]
 
 Delete an application.
 
@@ -647,7 +647,7 @@ Delete an application.
   ))
   ```
 
-#### app_call(params: AppCallParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]
+#### app_call(params: AppCallParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]
 
 Call an application.
 
@@ -692,7 +692,7 @@ Call an application.
   ))
   ```
 
-#### app_create_method_call(params: AppCreateMethodCallParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppCreateTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]
+#### app_create_method_call(params: AppCreateMethodCallParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppCreateTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]
 
 Call an application’s create method.
 
@@ -760,7 +760,7 @@ Call an application’s create method.
   ))
   ```
 
-#### app_update_method_call(params: AppUpdateMethodCallParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppUpdateTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]
+#### app_update_method_call(params: AppUpdateMethodCallParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppUpdateTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]
 
 Call an application’s update method.
 
@@ -799,7 +799,7 @@ Call an application’s update method.
   ))
   ```
 
-#### app_delete_method_call(params: AppDeleteMethodCallParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]
+#### app_delete_method_call(params: AppDeleteMethodCallParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]
 
 Call an application’s delete method.
 
@@ -832,7 +832,7 @@ Call an application’s delete method.
   ))
   ```
 
-#### app_call_method_call(params: AppCallMethodCallParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](../../applications/abi/#algokit_utils.applications.abi.ABIReturn)]
+#### app_call_method_call(params: AppCallMethodCallParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendAppTransactionResult](#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)]
 
 Call an application’s call method.
 
@@ -867,7 +867,7 @@ Call an application’s call method.
   ))
   ```
 
-#### online_key_registration(params: OnlineKeyRegistrationParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### online_key_registration(params: OnlineKeyRegistrationParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Register an online key.
 
@@ -906,7 +906,7 @@ Register an online key.
   print(result.tx_id)
   ```
 
-#### offline_key_registration(params: OfflineKeyRegistrationParams, send_params: [SendParams](../../models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
+#### offline_key_registration(params: OfflineKeyRegistrationParams, send_params: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None = None) → [SendSingleTransactionResult](#algokit_utils.transactions.transaction_sender.SendSingleTransactionResult)
 
 Register an offline key.
 

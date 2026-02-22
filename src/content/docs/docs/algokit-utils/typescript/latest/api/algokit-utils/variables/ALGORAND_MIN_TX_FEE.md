@@ -5,6 +5,6 @@ prev: false
 title: "ALGORAND_MIN_TX_FEE"
 ---
 
-> `const` **ALGORAND\_MIN\_TX\_FEE**: [`AlgoAmount`](/algokit-utils-ts/api/algokit-utils/classes/algoamount/)
+> `const` **ALGORAND\_MIN\_TX\_FEE**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/amount.ts:208](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L208)
+Defined in: [src/amount.ts:208](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L208)

@@ -7,7 +7,7 @@ title: "validateTransaction"
 
 > **validateTransaction**(`transaction`): `void`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:412](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L412)
+Defined in: [packages/transact/src/transactions/transaction.ts:412](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L412)
 
 Validate a transaction
 
@@ -15,7 +15,7 @@ Validate a transaction
 
 ### transaction
 
-[`Transaction`](/algokit-utils-ts/api/subpaths/transact/classes/transaction/)
+[`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)
 
 ## Returns
 

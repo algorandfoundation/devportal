@@ -5,7 +5,7 @@ description: "`AlgorandClient` is a client class that brokers easy access to Alg
 
 `AlgorandClient` is a client class that brokers easy access to Algorand functionality. It's the `default entrypoint` into AlgoKit Utils functionality.
 
-The main entrypoint to the bulk of the functionality in AlgoKit Utils is the `AlgorandClient` class, most of the time you can get started by typing `AlgorandClient.` and choosing one of the static initialisation methods to create an [Algorand client](./), e.g.:
+The main entrypoint to the bulk of the functionality in AlgoKit Utils is the `AlgorandClient` class, most of the time you can get started by typing `AlgorandClient.` and choosing one of the static initialisation methods to create an [Algorand client](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/), e.g.:
 
 ```python
 # Point to the network configured through environment variables or
@@ -48,18 +48,18 @@ kmd_client = algorand.client.kmd
 
 The `AlgorandClient` has a number of manager class instances that help you quickly use intellisense to get access to advanced functionality.
 
-- [`AccountManager`](../account) via `algorand.account`, there are also some chainable convenience methods which wrap specific methods in `AccountManager`:
+- [`AccountManager`](/docs/algokit-utils/python/latest/guides/concepts/core/account/) via `algorand.account`, there are also some chainable convenience methods which wrap specific methods in `AccountManager`:
   - `algorand.set_default_signer(signer)` - Sets the default signer to use if no other signer is specified
   - `algorand.set_signer_from_account(account)` - Registers the provided account as the default signer
   - `algorand.set_signer(sender, signer)` - Sets the signer for the given sender address
-- [`AssetManager`](../../building/asset) via `algorand.asset`
+- [`AssetManager`](/docs/algokit-utils/python/latest/guides/concepts/building/asset/) via `algorand.asset`
 - `AppManager` via `algorand.app`
-- [`AppDeployer`](../../building/app-deploy) via `algorand.app_deployer`
-- [`ClientManager`](../client) via `algorand.client`
+- [`AppDeployer`](/docs/algokit-utils/python/latest/guides/concepts/building/app-deploy/) via `algorand.app_deployer`
+- [`ClientManager`](/docs/algokit-utils/python/latest/guides/concepts/core/client/) via `algorand.client`
 
 ## Creating and issuing transactions
 
-`AlgorandClient` exposes a series of methods that allow you to create, execute, and compose groups of transactions (all via the [`TransactionComposer`](../../advanced/transaction-composer)).
+`AlgorandClient` exposes a series of methods that allow you to create, execute, and compose groups of transactions (all via the [`TransactionComposer`](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/)).
 
 ### Creating transactions
 
@@ -100,9 +100,9 @@ You can compose a single transaction via `algorand.send...`, which gives you an 
 
 Further documentation is present in the related capabilities:
 
-- [App management](../../building/app)
-- [Asset management](../../building/asset)
-- [Algo transfers](../../building/transfer)
+- [App management](/docs/algokit-utils/python/latest/guides/concepts/building/app/)
+- [Asset management](/docs/algokit-utils/python/latest/guides/concepts/building/asset/)
+- [Algo transfers](/docs/algokit-utils/python/latest/guides/concepts/building/transfer/)
 
 The signature for the calls to send a single transaction usually look like:
 
@@ -112,13 +112,13 @@ The signature for the calls to send a single transaction usually look like:
 - `{ComposerTransactionTypeParams}` will be the parameters that are specific to that transaction type e.g. `PaymentParams`, `see the full list`
 - `CommonTxnParams` are the [common transaction parameters](#transaction-parameters) that can be specified for every single transaction
 - `SendParams` are the [parameters](#transaction-parameters) that control execution semantics when sending transactions to the network
-- `SendSingleTransactionResult` is all of the information that is relevant when [sending a single transaction to the network](../transaction)
+- `SendSingleTransactionResult` is all of the information that is relevant when [sending a single transaction to the network](/docs/algokit-utils/python/latest/guides/concepts/core/transaction/)
 
 Generally, the functions to immediately send a single transaction will emit log messages before and/or after sending the transaction. You can opt-out of this by passing `suppress_log=True`.
 
 ### Composing a group of transactions
 
-You can compose a group of transactions for execution by using the `new_group()` method on `AlgorandClient` and then use the various `.add_{type}()` methods on [`TransactionComposer`](../../advanced/transaction-composer) to add a series of transactions.
+You can compose a group of transactions for execution by using the `new_group()` method on `AlgorandClient` and then use the various `.add_{type}()` methods on [`TransactionComposer`](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/) to add a series of transactions.
 
 ```python
 result = (algorand
@@ -139,7 +139,7 @@ result = (algorand
     .send())
 ```
 
-`new_group()` returns a new [`TransactionComposer`](../../advanced/transaction-composer) instance, which can also return the group of transactions, simulate them and other things.
+`new_group()` returns a new [`TransactionComposer`](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/) instance, which can also return the group of transactions, simulate them and other things.
 
 ### Transaction parameters
 
@@ -167,7 +167,7 @@ There are two common base parameter groups that get reused:
   - `populate_app_call_resources: bool | None` - Whether to use simulate to automatically populate app call resources in the txn objects. Defaults to `config.populate_app_call_resources`.
   - `cover_app_call_inner_transaction_fees: bool | None` - Whether to use simulate to automatically calculate required app call inner transaction fees and cover them in the parent app call transaction fee
 
-Then on top of that the base type gets extended for the specific type of transaction you are issuing. These are all defined as part of [`TransactionComposer`](../../advanced/transaction-composer) and we recommend reading these docs, especially when leveraging either `populate_app_call_resources` or `cover_app_call_inner_transaction_fees`.
+Then on top of that the base type gets extended for the specific type of transaction you are issuing. These are all defined as part of [`TransactionComposer`](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/) and we recommend reading these docs, especially when leveraging either `populate_app_call_resources` or `cover_app_call_inner_transaction_fees`.
 
 ### Error handling
 
@@ -198,17 +198,17 @@ algorand.register_error_transformer(my_transformer)
 algorand.unregister_error_transformer(my_transformer)
 ```
 
-`AlgorandClient` stores transformers in a `set` (de-duplicated). A snapshot is passed to each new composer created via `new_group()`. Transformers can also be registered directly on individual [`TransactionComposer`](../../advanced/transaction-composer) instances.
+`AlgorandClient` stores transformers in a `set` (de-duplicated). A snapshot is passed to each new composer created via `new_group()`. Transformers can also be registered directly on individual [`TransactionComposer`](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/) instances.
 
 If a transformer itself raises, an `ErrorTransformerError` is raised. If a transformer returns a non-`Exception` value, an `InvalidErrorTransformerValueError` is raised. Both are defined in `algokit_utils.transactions.transaction_composer`.
 
-For full details on the error flow and per-composer registration, see [Error Transformers](../../advanced/transaction-composer#error-transformers).
+For full details on the error flow and per-composer registration, see [Error Transformers](/docs/algokit-utils/python/latest/guides/concepts/advanced/transaction-composer/#error-transformers).
 
 ### Transaction configuration
 
 AlgorandClient caches network provided transaction values for you automatically to reduce network traffic. It has a set of default configurations that control this behaviour, but you have the ability to override and change the configuration of this behaviour:
 
-- `algorand.set_default_validity_window(validity_window)` - Set the default validity window (number of rounds from the current known round that the transaction will be valid to be accepted for), having a smallish value for this is usually ideal to avoid transactions that are valid for a long future period and may be submitted even after you think it failed to submit if waiting for a particular number of rounds for the transaction to be successfully submitted. The validity window defaults to 10, except in [automated testing](../../building/testing) where it's set to 1000 when targeting LocalNet.
+- `algorand.set_default_validity_window(validity_window)` - Set the default validity window (number of rounds from the current known round that the transaction will be valid to be accepted for), having a smallish value for this is usually ideal to avoid transactions that are valid for a long future period and may be submitted even after you think it failed to submit if waiting for a particular number of rounds for the transaction to be successfully submitted. The validity window defaults to 10, except in [automated testing](/docs/algokit-utils/python/latest/guides/concepts/building/testing/) where it's set to 1000 when targeting LocalNet.
 - `algorand.set_suggested_params_cache(suggested_params, until=None)` - Set the suggested network parameters to use (optionally until the given time)
 - `algorand.set_suggested_params_cache_timeout(timeout)` - Set the timeout that is used to cache the suggested network parameters (by default 3 seconds)
 - `algorand.get_suggested_params()` - Get the current suggested network parameters object, either the cached value, or if the cache has expired a fresh value

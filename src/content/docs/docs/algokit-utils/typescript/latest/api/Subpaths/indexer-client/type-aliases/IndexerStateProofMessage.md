@@ -7,7 +7,7 @@ title: "IndexerStateProofMessage"
 
 > **IndexerStateProofMessage** = `object`
 
-Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:4](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L4)
+Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:4](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L4)
 
 ## Properties
 
@@ -15,7 +15,7 @@ Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:
 
 > `optional` **blockHeadersCommitment**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L8)
+Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L8)
 
 \[b\]
 
@@ -25,7 +25,7 @@ Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:
 
 > `optional` **firstAttestedRound**: `bigint`
 
-Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:23](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L23)
+Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:23](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L23)
 
 \[f\]
 
@@ -35,7 +35,7 @@ Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:
 
 > `optional` **latestAttestedRound**: `bigint`
 
-Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L28)
+Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:28](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L28)
 
 \[l\]
 
@@ -45,7 +45,7 @@ Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:
 
 > `optional` **lnProvenWeight**: `bigint`
 
-Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L18)
+Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:18](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L18)
 
 \[P\]
 
@@ -55,6 +55,6 @@ Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:
 
 > `optional` **votersCommitment**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:13](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L13)
+Defined in: [packages/indexer\_client/src/models/indexer-state-proof-message.ts:13](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/indexer-state-proof-message.ts#L13)
 
 \[v\]

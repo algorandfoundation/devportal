@@ -7,7 +7,7 @@ title: "AppDeleteParams"
 
 > **AppDeleteParams** = `CommonAppCallParams` & `object`
 
-Defined in: [src/transactions/app-call.ts:97](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transactions/app-call.ts#L97)
+Defined in: [src/transactions/app-call.ts:97](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transactions/app-call.ts#L97)
 
 Parameters to define an application delete call transaction.
 
@@ -15,4 +15,4 @@ Parameters to define an application delete call transaction.
 
 ### onComplete?
 
-> `optional` **onComplete**: [`DeleteApplication`](/algokit-utils-ts/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)
+> `optional` **onComplete**: [`DeleteApplication`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/onapplicationcomplete/#deleteapplication)

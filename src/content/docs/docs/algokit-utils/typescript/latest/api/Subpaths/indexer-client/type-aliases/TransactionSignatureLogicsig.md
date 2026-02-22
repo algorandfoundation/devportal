@@ -7,7 +7,7 @@ title: "TransactionSignatureLogicsig"
 
 > **TransactionSignatureLogicsig** = `object`
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:12](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L12)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:12](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L12)
 
 \[lsig\] Programatic transaction signature.
 
@@ -20,7 +20,7 @@ data/transactions/logicsig.go
 
 > `optional` **args**: `Uint8Array`[]
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L16)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L16)
 
 \[arg\] Logic arguments, base64 encoded.
 
@@ -30,7 +30,7 @@ Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.
 
 > **logic**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L21)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L21)
 
 \[l\] Program signed by a signature or multi signature, or hashed to be the address of an account. Base64 encoded TEAL program.
 
@@ -38,17 +38,17 @@ Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.
 
 ### logicMultisigSignature?
 
-> `optional` **logicMultisigSignature**: [`TransactionSignatureMultisig`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsignaturemultisig/)
+> `optional` **logicMultisigSignature**: [`TransactionSignatureMultisig`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsignaturemultisig/)
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:23](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L23)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:23](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L23)
 
 ***
 
 ### multisigSignature?
 
-> `optional` **multisigSignature**: [`TransactionSignatureMultisig`](/algokit-utils-ts/api/subpaths/indexer-client/type-aliases/transactionsignaturemultisig/)
+> `optional` **multisigSignature**: [`TransactionSignatureMultisig`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsignaturemultisig/)
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:22](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L22)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:22](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L22)
 
 ***
 
@@ -56,6 +56,6 @@ Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.
 
 > `optional` **signature**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L28)
+Defined in: [packages/indexer\_client/src/models/transaction-signature-logicsig.ts:28](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/transaction-signature-logicsig.ts#L28)
 
 \[sig\] ed25519 signature.

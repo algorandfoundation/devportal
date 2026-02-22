@@ -6,7 +6,7 @@ description: "Transaction management is one of the core capabilities provided by
 Transaction management is one of the core capabilities provided by AlgoKit Utils. It allows you to construct, simulate and send single, or grouped transactions with consistent and highly configurable semantics, including configurable control of transaction notes, logging, fees, multiple sender account types, and sending behaviour.
 
 > [!TIP]
-> Core transaction types (`Transaction`, `TransactionSigner`) are available from the [modular imports](../../advanced/modular-imports) via `@algorandfoundation/algokit-utils/transact`, and response types like `PendingTransactionResponse` are available from `@algorandfoundation/algokit-utils/algod-client`.
+> Core transaction types (`Transaction`, `TransactionSigner`) are available from the [modular imports](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/modular-imports/) via `@algorandfoundation/algokit-utils/transact`, and response types like `PendingTransactionResponse` are available from `@algorandfoundation/algokit-utils/algod-client`.
 
 ## ConfirmedTransactionResult
 
@@ -26,4 +26,4 @@ There are various variations of the `ConfirmedTransactionResult` that are expose
 
 ## Further reading
 
-To understand how to create, simulate and send transactions consult the [`AlgorandClient`](../algorand-client) and [`TransactionComposer`](../../advanced/transaction-composer) documentation.
+To understand how to create, simulate and send transactions consult the [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) and [`TransactionComposer`](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/transaction-composer/) documentation.

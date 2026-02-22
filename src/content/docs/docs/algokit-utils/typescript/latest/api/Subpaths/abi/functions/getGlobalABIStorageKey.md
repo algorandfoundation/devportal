@@ -5,9 +5,9 @@ prev: false
 title: "getGlobalABIStorageKey"
 ---
 
-> **getGlobalABIStorageKey**(`contract`, `keyName`): [`ABIStorageKey`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abistoragekey/)
+> **getGlobalABIStorageKey**(`contract`, `keyName`): [`ABIStorageKey`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistoragekey/)
 
-Defined in: [packages/abi/src/arc56-contract.ts:380](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L380)
+Defined in: [packages/abi/src/arc56-contract.ts:380](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L380)
 
 Get a specific global storage key with parsed ABI types
 
@@ -15,7 +15,7 @@ Get a specific global storage key with parsed ABI types
 
 ### contract
 
-[`Arc56Contract`](/algokit-utils-ts/api/subpaths/abi/type-aliases/arc56contract/)
+[`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/arc56contract/)
 
 The ARC-56 contract
 
@@ -27,7 +27,7 @@ The name of the storage key
 
 ## Returns
 
-[`ABIStorageKey`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abistoragekey/)
+[`ABIStorageKey`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistoragekey/)
 
 The ABIStorageKey with parsed types
 

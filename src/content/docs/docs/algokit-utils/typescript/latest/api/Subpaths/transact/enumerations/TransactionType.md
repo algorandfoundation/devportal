@@ -5,7 +5,7 @@ prev: false
 title: "TransactionType"
 ---
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:4](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L4)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:4](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L4)
 
 Supported transaction types
 
@@ -15,7 +15,7 @@ Supported transaction types
 
 > **AppCall**: `"appl"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L28)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:28](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L28)
 
 Application transaction
 
@@ -25,7 +25,7 @@ Application transaction
 
 > **AssetConfig**: `"acfg"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L16)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L16)
 
 Asset configuration transaction
 
@@ -35,7 +35,7 @@ Asset configuration transaction
 
 > **AssetFreeze**: `"afrz"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L24)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:24](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L24)
 
 Asset freeze transaction
 
@@ -45,7 +45,7 @@ Asset freeze transaction
 
 > **AssetTransfer**: `"axfer"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L20)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L20)
 
 Asset transfer transaction
 
@@ -55,7 +55,7 @@ Asset transfer transaction
 
 > **Heartbeat**: `"hb"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:36](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L36)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:36](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L36)
 
 Heartbeat transaction
 
@@ -65,7 +65,7 @@ Heartbeat transaction
 
 > **KeyRegistration**: `"keyreg"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:12](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L12)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:12](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L12)
 
 Key registration transaction
 
@@ -75,7 +75,7 @@ Key registration transaction
 
 > **Payment**: `"pay"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:8](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L8)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L8)
 
 Payment transaction
 
@@ -85,7 +85,7 @@ Payment transaction
 
 > **StateProof**: `"stpf"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:32](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L32)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:32](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L32)
 
 State proof transaction
 
@@ -95,7 +95,7 @@ State proof transaction
 
 > **Unknown**: `"unknown"`
 
-Defined in: [packages/transact/src/transactions/transaction-type.ts:42](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L42)
+Defined in: [packages/transact/src/transactions/transaction-type.ts:42](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L42)
 
 Unknown transaction type
 Used when decoding transactions with unrecognized type values.

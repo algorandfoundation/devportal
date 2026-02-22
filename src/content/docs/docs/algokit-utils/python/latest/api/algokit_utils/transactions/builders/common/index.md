@@ -61,16 +61,16 @@ title: "algokit_utils.transactions.builders.common"
 
 #### txn *: Transaction*
 
-#### logical_max_fee *: [AlgoAmount](../../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None*
+#### logical_max_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None*
 
-### algokit_utils.transactions.builders.common.build_transaction_header(params: [CommonTxnParams](../../types/#algokit_utils.transactions.types.CommonTxnParams), suggested_params: SuggestedParamsLike, \*, default_validity_window: int, default_validity_window_is_explicit: bool, is_localnet: bool) → tuple[[TransactionHeader](#algokit_utils.transactions.builders.common.TransactionHeader), [FeeConfig](#algokit_utils.transactions.builders.common.FeeConfig)]
+### algokit_utils.transactions.builders.common.build_transaction_header(params: [CommonTxnParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.CommonTxnParams), suggested_params: SuggestedParamsLike, \*, default_validity_window: int, default_validity_window_is_explicit: bool, is_localnet: bool) → tuple[[TransactionHeader](#algokit_utils.transactions.builders.common.TransactionHeader), [FeeConfig](#algokit_utils.transactions.builders.common.FeeConfig)]
 
 ### algokit_utils.transactions.builders.common.build_transaction(txn_type: TransactionType, header: [TransactionHeader](#algokit_utils.transactions.builders.common.TransactionHeader), \*, payment: PaymentTransactionFields | None = None, asset_transfer: AssetTransferTransactionFields | None = None, asset_config: AssetConfigTransactionFields | None = None, asset_freeze: AssetFreezeTransactionFields | None = None, application_call: AppCallTransactionFields | None = None, key_registration: KeyRegistrationTransactionFields | None = None) → Transaction
 
-### algokit_utils.transactions.builders.common.apply_transaction_fees(txn: Transaction, params: [CommonTxnParams](../../types/#algokit_utils.transactions.types.CommonTxnParams), fee_config: [FeeConfig](#algokit_utils.transactions.builders.common.FeeConfig)) → [BuiltTransaction](#algokit_utils.transactions.builders.common.BuiltTransaction)
+### algokit_utils.transactions.builders.common.apply_transaction_fees(txn: Transaction, params: [CommonTxnParams](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/types/#algokit_utils.transactions.types.CommonTxnParams), fee_config: [FeeConfig](#algokit_utils.transactions.builders.common.FeeConfig)) → [BuiltTransaction](#algokit_utils.transactions.builders.common.BuiltTransaction)
 
 ### algokit_utils.transactions.builders.common.encode_lease(lease: str | bytes | None) → bytes | None
 
-### algokit_utils.transactions.builders.common.calculate_inner_fee_delta(inner_txns: list[PendingTransactionResponse] | None, min_fee: int, acc: [FeeDelta](../../fee_coverage/#algokit_utils.transactions.fee_coverage.FeeDelta) | None = None) → [FeeDelta](../../fee_coverage/#algokit_utils.transactions.fee_coverage.FeeDelta) | None
+### algokit_utils.transactions.builders.common.calculate_inner_fee_delta(inner_txns: list[PendingTransactionResponse] | None, min_fee: int, acc: [FeeDelta](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/fee_coverage/#algokit_utils.transactions.fee_coverage.FeeDelta) | None = None) → [FeeDelta](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/fee_coverage/#algokit_utils.transactions.fee_coverage.FeeDelta) | None
 
 </div>

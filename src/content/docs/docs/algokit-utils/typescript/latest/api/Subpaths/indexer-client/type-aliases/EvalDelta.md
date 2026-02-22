@@ -7,7 +7,7 @@ title: "EvalDelta"
 
 > **EvalDelta** = `object`
 
-Defined in: [packages/indexer\_client/src/models/eval-delta.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/eval-delta.ts#L7)
+Defined in: [packages/indexer\_client/src/models/eval-delta.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/eval-delta.ts#L7)
 
 Represents a TEAL value delta.
 
@@ -17,7 +17,7 @@ Represents a TEAL value delta.
 
 > **action**: `number`
 
-Defined in: [packages/indexer\_client/src/models/eval-delta.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/eval-delta.ts#L11)
+Defined in: [packages/indexer\_client/src/models/eval-delta.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/eval-delta.ts#L11)
 
 \[at\] delta action.
 
@@ -27,7 +27,7 @@ Defined in: [packages/indexer\_client/src/models/eval-delta.ts:11](https://githu
 
 > `optional` **bytes**: `Uint8Array`
 
-Defined in: [packages/indexer\_client/src/models/eval-delta.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/eval-delta.ts#L16)
+Defined in: [packages/indexer\_client/src/models/eval-delta.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/eval-delta.ts#L16)
 
 \[bs\] bytes value.
 
@@ -37,6 +37,6 @@ Defined in: [packages/indexer\_client/src/models/eval-delta.ts:16](https://githu
 
 > `optional` **uint**: `bigint`
 
-Defined in: [packages/indexer\_client/src/models/eval-delta.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/eval-delta.ts#L21)
+Defined in: [packages/indexer\_client/src/models/eval-delta.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/eval-delta.ts#L21)
 
 \[ui\] uint value.

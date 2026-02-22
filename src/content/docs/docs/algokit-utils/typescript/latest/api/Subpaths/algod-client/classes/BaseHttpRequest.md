@@ -5,11 +5,11 @@ prev: false
 title: "BaseHttpRequest"
 ---
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L19)
+Defined in: [packages/algod\_client/src/core/base-http-request.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L19)
 
 ## Extended by
 
-- [`FetchHttpRequest`](/algokit-utils-ts/api/subpaths/algod-client/classes/fetchhttprequest/)
+- [`FetchHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/classes/fetchhttprequest/)
 
 ## Constructors
 
@@ -17,13 +17,13 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:19](https://gi
 
 > **new BaseHttpRequest**(`config`): `BaseHttpRequest`
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
+Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
 
 #### Parameters
 
 ##### config
 
-[`ClientConfig`](/algokit-utils-ts/api/subpaths/algod-client/interfaces/clientconfig/)
+[`ClientConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/interfaces/clientconfig/)
 
 #### Returns
 
@@ -33,9 +33,9 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://gi
 
 ### config
 
-> `readonly` **config**: [`ClientConfig`](/algokit-utils-ts/api/subpaths/algod-client/interfaces/clientconfig/)
+> `readonly` **config**: [`ClientConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/interfaces/clientconfig/)
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
+Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
 
 ## Methods
 
@@ -43,7 +43,7 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://gi
 
 > `abstract` **request**\<`T`\>(`options`): `Promise`\<`T`\>
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L21)
+Defined in: [packages/algod\_client/src/core/base-http-request.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L21)
 
 #### Type Parameters
 
@@ -55,7 +55,7 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:21](https://gi
 
 ##### options
 
-[`ApiRequestOptions`](/algokit-utils-ts/api/subpaths/algod-client/interfaces/apirequestoptions/)
+[`ApiRequestOptions`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/interfaces/apirequestoptions/)
 
 #### Returns
 

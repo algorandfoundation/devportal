@@ -5,11 +5,11 @@ prev: false
 title: "FetchHttpRequest"
 ---
 
-Defined in: [packages/kmd\_client/src/core/fetch-http-request.ts:61](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/core/fetch-http-request.ts#L61)
+Defined in: [packages/kmd\_client/src/core/fetch-http-request.ts:61](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/core/fetch-http-request.ts#L61)
 
 ## Extends
 
-- [`BaseHttpRequest`](/algokit-utils-ts/api/subpaths/kmd-client/classes/basehttprequest/)
+- [`BaseHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/basehttprequest/)
 
 ## Constructors
 
@@ -17,13 +17,13 @@ Defined in: [packages/kmd\_client/src/core/fetch-http-request.ts:61](https://git
 
 > **new FetchHttpRequest**(`config`): `FetchHttpRequest`
 
-Defined in: [packages/kmd\_client/src/core/base-http-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/core/base-http-request.ts#L20)
+Defined in: [packages/kmd\_client/src/core/base-http-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/core/base-http-request.ts#L20)
 
 #### Parameters
 
 ##### config
 
-[`ClientConfig`](/algokit-utils-ts/api/subpaths/kmd-client/interfaces/clientconfig/)
+[`ClientConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/interfaces/clientconfig/)
 
 #### Returns
 
@@ -31,19 +31,19 @@ Defined in: [packages/kmd\_client/src/core/base-http-request.ts:20](https://gith
 
 #### Inherited from
 
-[`BaseHttpRequest`](/algokit-utils-ts/api/subpaths/kmd-client/classes/basehttprequest/).[`constructor`](/algokit-utils-ts/api/subpaths/kmd-client/classes/basehttprequest/#constructor)
+[`BaseHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/basehttprequest/).[`constructor`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/basehttprequest/#constructor)
 
 ## Properties
 
 ### config
 
-> `readonly` **config**: [`ClientConfig`](/algokit-utils-ts/api/subpaths/kmd-client/interfaces/clientconfig/)
+> `readonly` **config**: [`ClientConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/interfaces/clientconfig/)
 
-Defined in: [packages/kmd\_client/src/core/base-http-request.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/core/base-http-request.ts#L20)
+Defined in: [packages/kmd\_client/src/core/base-http-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/core/base-http-request.ts#L20)
 
 #### Inherited from
 
-[`BaseHttpRequest`](/algokit-utils-ts/api/subpaths/kmd-client/classes/basehttprequest/).[`config`](/algokit-utils-ts/api/subpaths/kmd-client/classes/basehttprequest/#config)
+[`BaseHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/basehttprequest/).[`config`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/basehttprequest/#config)
 
 ## Methods
 
@@ -51,7 +51,7 @@ Defined in: [packages/kmd\_client/src/core/base-http-request.ts:20](https://gith
 
 > **request**\<`T`\>(`options`): `Promise`\<`T`\>
 
-Defined in: [packages/kmd\_client/src/core/fetch-http-request.ts:62](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/core/fetch-http-request.ts#L62)
+Defined in: [packages/kmd\_client/src/core/fetch-http-request.ts:62](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/core/fetch-http-request.ts#L62)
 
 #### Type Parameters
 
@@ -63,7 +63,7 @@ Defined in: [packages/kmd\_client/src/core/fetch-http-request.ts:62](https://git
 
 ##### options
 
-[`ApiRequestOptions`](/algokit-utils-ts/api/subpaths/kmd-client/interfaces/apirequestoptions/)
+[`ApiRequestOptions`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/interfaces/apirequestoptions/)
 
 #### Returns
 
@@ -71,4 +71,4 @@ Defined in: [packages/kmd\_client/src/core/fetch-http-request.ts:62](https://git
 
 #### Overrides
 
-[`BaseHttpRequest`](/algokit-utils-ts/api/subpaths/kmd-client/classes/basehttprequest/).[`request`](/algokit-utils-ts/api/subpaths/kmd-client/classes/basehttprequest/#request)
+[`BaseHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/basehttprequest/).[`request`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/basehttprequest/#request)

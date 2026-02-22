@@ -58,7 +58,7 @@ The genesis ID of the network
 
 The genesis hash of the network
 
-### *class* ClientManager(clients_or_configs: [AlgoClientConfigs](../../models/network/#algokit_utils.models.network.AlgoClientConfigs) | [AlgoSdkClients](#algokit_utils.clients.client_manager.AlgoSdkClients), algorand_client: [AlgorandClient](../../algorand/#algokit_utils.algorand.AlgorandClient))
+### *class* ClientManager(clients_or_configs: [AlgoClientConfigs](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientConfigs) | [AlgoSdkClients](#algokit_utils.clients.client_manager.AlgoSdkClients), algorand_client: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient))
 
 Manager for Algorand SDK clients.
 
@@ -147,7 +147,7 @@ to properly clean up resources.
   client_manager.close()
   ```
 
-#### get_testnet_dispenser(auth_token: str | None = None, request_timeout: int | None = None) → [TestNetDispenserApiClient](../dispenser_api_client/#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient)
+#### get_testnet_dispenser(auth_token: str | None = None, request_timeout: int | None = None) → [TestNetDispenserApiClient](/docs/algokit-utils/python/latest/api/algokit_utils/clients/dispenser_api_client/#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient)
 
 Get a TestNet dispenser API client.
 
@@ -157,7 +157,7 @@ Get a TestNet dispenser API client.
 * **Returns:**
   TestNet dispenser client instance
 
-#### get_app_factory(app_spec: Arc56Contract | str, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, version: str | None = None, compilation_params: [AppClientCompilationParams](../../applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppFactory](../../applications/app_factory/#algokit_utils.applications.app_factory.AppFactory)
+#### get_app_factory(app_spec: Arc56Contract | str, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, version: str | None = None, compilation_params: [AppClientCompilationParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → [AppFactory](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_factory/#algokit_utils.applications.app_factory.AppFactory)
 
 Get an application factory for deploying smart contracts.
 
@@ -173,7 +173,7 @@ Get an application factory for deploying smart contracts.
 * **Returns:**
   Application factory instance
 
-#### get_app_client_by_id(app_spec: Arc56Contract | str, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None) → [AppClient](../../applications/app_client/#algokit_utils.applications.app_client.AppClient)
+#### get_app_client_by_id(app_spec: Arc56Contract | str, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None) → [AppClient](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClient)
 
 Get an application client for an existing application by ID.
 
@@ -190,7 +190,7 @@ Get an application client for an existing application by ID.
 * **Returns:**
   Application client instance
 
-#### get_app_client_by_network(app_spec: Arc56Contract | str, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None) → [AppClient](../../applications/app_client/#algokit_utils.applications.app_client.AppClient)
+#### get_app_client_by_network(app_spec: Arc56Contract | str, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None) → [AppClient](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClient)
 
 Get an application client for an existing application by network.
 
@@ -206,7 +206,7 @@ Get an application client for an existing application by network.
 * **Returns:**
   Application client instance
 
-#### get_app_client_by_creator_and_name(creator_address: str, app_name: str, app_spec: Arc56Contract | str, default_sender: str | None = None, default_signer: TransactionSigner | None = None, ignore_cache: bool | None = None, app_lookup_cache: [ApplicationLookup](../../applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None) → [AppClient](../../applications/app_client/#algokit_utils.applications.app_client.AppClient)
+#### get_app_client_by_creator_and_name(creator_address: str, app_name: str, app_spec: Arc56Contract | str, default_sender: str | None = None, default_signer: TransactionSigner | None = None, ignore_cache: bool | None = None, app_lookup_cache: [ApplicationLookup](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None) → [AppClient](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClient)
 
 Get an application client by creator address and name.
 
@@ -223,7 +223,7 @@ Get an application client by creator address and name.
 * **Returns:**
   Application client instance
 
-#### *static* get_algod_client(config: [AlgoClientNetworkConfig](../../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)) → AlgodClient
+#### *static* get_algod_client(config: [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)) → AlgodClient
 
 Get a typed Algod client from config.
 
@@ -239,7 +239,7 @@ Get an Algod client from environment variables.
 * **Returns:**
   Algod client instance
 
-#### *static* get_kmd_client(config: [AlgoClientNetworkConfig](../../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)) → KmdClient
+#### *static* get_kmd_client(config: [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)) → KmdClient
 
 Get a KMD client from config or environment.
 
@@ -255,7 +255,7 @@ Get a KMD client from environment variables.
 * **Returns:**
   KMD client instance
 
-#### *static* get_indexer_client(config: [AlgoClientNetworkConfig](../../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)) → IndexerClient
+#### *static* get_indexer_client(config: [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)) → IndexerClient
 
 Get an Indexer client from config or environment.
 
@@ -284,7 +284,7 @@ Check if a genesis ID indicates a local network.
   ClientManager.genesis_id_is_localnet("devnet-v1")
   ```
 
-#### get_typed_app_client_by_creator_and_name(typed_client: type[TypedAppClientT], \*, creator_address: str, app_name: str, default_sender: str | None = None, default_signer: TransactionSigner | None = None, ignore_cache: bool | None = None, app_lookup_cache: [ApplicationLookup](../../applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → TypedAppClientT
+#### get_typed_app_client_by_creator_and_name(typed_client: type[TypedAppClientT], \*, creator_address: str, app_name: str, default_sender: str | None = None, default_signer: TransactionSigner | None = None, ignore_cache: bool | None = None, app_lookup_cache: [ApplicationLookup](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None) → TypedAppClientT
 
 Get a typed application client by creator address and name.
 
@@ -362,7 +362,7 @@ If no IDs are in the app spec or the network isn’t recognised, an error is thr
   )
   ```
 
-#### get_typed_app_factory(typed_factory: type[TypedFactoryT], \*, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, version: str | None = None, compilation_params: [AppClientCompilationParams](../../applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → TypedFactoryT
+#### get_typed_app_factory(typed_factory: type[TypedFactoryT], \*, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, version: str | None = None, compilation_params: [AppClientCompilationParams](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_client/#algokit_utils.applications.app_client.AppClientCompilationParams) | None = None) → TypedFactoryT
 
 Get a typed application factory.
 
@@ -386,7 +386,7 @@ Get a typed application factory.
   )
   ```
 
-#### *static* get_config_from_environment_or_localnet() → [AlgoClientConfigs](../../models/network/#algokit_utils.models.network.AlgoClientConfigs)
+#### *static* get_config_from_environment_or_localnet() → [AlgoClientConfigs](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientConfigs)
 
 Retrieve client configuration from environment variables or fallback to localnet defaults.
 
@@ -401,7 +401,7 @@ otherwise it will use default localnet configuration.
   config = client_manager.get_config_from_environment_or_localnet()
   ```
 
-#### *static* get_default_localnet_config(config_or_port: Literal['algod', 'indexer', 'kmd'] | int) → [AlgoClientNetworkConfig](../../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
+#### *static* get_default_localnet_config(config_or_port: Literal['algod', 'indexer', 'kmd'] | int) → [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Get default configuration for local network services.
 
@@ -415,7 +415,7 @@ Get default configuration for local network services.
   config = client_manager.get_default_localnet_config("algod")
   ```
 
-#### *static* get_algod_config_from_environment() → [AlgoClientNetworkConfig](../../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
+#### *static* get_algod_config_from_environment() → [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Retrieve the algod configuration from environment variables.
 Will raise an error if ALGOD_SERVER environment variable is not set
@@ -428,7 +428,7 @@ Will raise an error if ALGOD_SERVER environment variable is not set
   config = client_manager.get_algod_config_from_environment()
   ```
 
-#### *static* get_indexer_config_from_environment() → [AlgoClientNetworkConfig](../../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
+#### *static* get_indexer_config_from_environment() → [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Retrieve the indexer configuration from environment variables.
 Will raise an error if INDEXER_SERVER environment variable is not set
@@ -441,7 +441,7 @@ Will raise an error if INDEXER_SERVER environment variable is not set
   config = client_manager.get_indexer_config_from_environment()
   ```
 
-#### *static* get_kmd_config_from_environment() → [AlgoClientNetworkConfig](../../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
+#### *static* get_kmd_config_from_environment() → [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Retrieve the kmd configuration from environment variables.
 
@@ -453,7 +453,7 @@ Retrieve the kmd configuration from environment variables.
   config = client_manager.get_kmd_config_from_environment()
   ```
 
-#### *static* get_algonode_config(network: Literal['testnet', 'mainnet'], config: Literal['algod', 'indexer']) → [AlgoClientNetworkConfig](../../models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
+#### *static* get_algonode_config(network: Literal['testnet', 'mainnet'], config: Literal['algod', 'indexer']) → [AlgoClientNetworkConfig](/docs/algokit-utils/python/latest/api/algokit_utils/models/network/#algokit_utils.models.network.AlgoClientNetworkConfig)
 
 Returns the Algorand configuration to point to the free tier of the AlgoNode service.
 

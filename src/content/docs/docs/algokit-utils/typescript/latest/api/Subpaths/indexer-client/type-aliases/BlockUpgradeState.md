@@ -7,7 +7,7 @@ title: "BlockUpgradeState"
 
 > **BlockUpgradeState** = `object`
 
-Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L7)
+Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L7)
 
 Fields relating to a protocol upgrade.
 
@@ -17,7 +17,7 @@ Fields relating to a protocol upgrade.
 
 > **currentProtocol**: `string`
 
-Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L11)
+Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L11)
 
 \[proto\] The current protocol version.
 
@@ -27,7 +27,7 @@ Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:11](http
 
 > `optional` **nextProtocol**: `string`
 
-Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L16)
+Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L16)
 
 \[nextproto\] The next proposed protocol version.
 
@@ -37,7 +37,7 @@ Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:16](http
 
 > `optional` **nextProtocolApprovals**: `number`
 
-Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L21)
+Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L21)
 
 \[nextyes\] Number of blocks which approved the protocol upgrade.
 
@@ -47,7 +47,7 @@ Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:21](http
 
 > `optional` **nextProtocolSwitchOn**: `bigint`
 
-Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:26](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L26)
+Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:26](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L26)
 
 \[nextswitch\] Round on which the protocol upgrade will take effect.
 
@@ -57,6 +57,6 @@ Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:26](http
 
 > `optional` **nextProtocolVoteBefore**: `bigint`
 
-Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:31](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L31)
+Defined in: [packages/indexer\_client/src/models/block-upgrade-state.ts:31](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/models/block-upgrade-state.ts#L31)
 
 \[nextbefore\] Deadline round for this protocol upgrade (No votes will be consider after this round).

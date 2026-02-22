@@ -5,12 +5,12 @@ description: "The `TransactionComposer` class allows you to easily compose one o
 
 The `TransactionComposer` class allows you to easily compose one or more compliant Algorand transactions and execute and/or simulate them.
 
-It's the core of how the [`AlgorandClient`](../../core/algorand-client) class composes and sends transactions.
+It's the core of how the [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) class composes and sends transactions.
 
 > [!TIP]
-> ABI-related types like `ABIMethod` are available from the [modular imports](../modular-imports) via `@algorandfoundation/algokit-utils/abi`, and transaction types like `TransactionSigner` are available from `@algorandfoundation/algokit-utils/transact`.
+> ABI-related types like `ABIMethod` are available from the [modular imports](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/modular-imports/) via `@algorandfoundation/algokit-utils/abi`, and transaction types like `TransactionSigner` are available from `@algorandfoundation/algokit-utils/transact`.
 
-To get an instance of `TransactionComposer` you can either get it from an [app client](../../building/app-client), from an [`AlgorandClient`](../../core/algorand-client), or by new-ing up via the constructor.
+To get an instance of `TransactionComposer` you can either get it from an [app client](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-client/), from an [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/), or by new-ing up via the constructor.
 
 ```typescript
 const composerFromAlgorand = algorand.newGroup()
@@ -32,7 +32,7 @@ const composerFromConstructorWithOptionalParams = new TransactionComposer({
 
 ## Constructing a transaction
 
-To construct a transaction you need to add it to the composer, passing in the relevant `params object` for that transaction. Params are normal JavaScript objects and all of them extend the [common call parameters](./algorand-client.md#transaction-parameters).
+To construct a transaction you need to add it to the composer, passing in the relevant `params object` for that transaction. Params are normal JavaScript objects and all of them extend the [common call parameters](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/#transaction-parameters).
 
 The `methods to construct a transaction` are all named `add{TransactionType}` and return an instance of the composer so they can be chained together fluently to construct a transaction group.
 

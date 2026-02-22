@@ -11,7 +11,7 @@ To see some usage examples check out the [automated tests](https://github.com/al
 
 The `ClientManager` is a class that is used to manage client instances.
 
-To get an instance of `ClientManager` you can get it from either [`AlgorandClient`](./algorand-client) via `algorand.client` or instantiate it directly:
+To get an instance of `ClientManager` you can get it from either [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/) via `algorand.client` or instantiate it directly:
 
 ```python
 from algokit_utils import ClientManager, AlgoSdkClients, AlgoClientConfigs
@@ -65,7 +65,7 @@ You can also shortcut needing to write the likes of `ClientManager.get_algod_cli
 
 ### Accessing SDK clients via ClientManager instance
 
-Once you have a `ClientManager` instance, you can access the SDK clients for the various Algorand APIs from it (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](./algorand-client)):
+Once you have a `ClientManager` instance, you can access the SDK clients for the various Algorand APIs from it (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/)):
 
 ```python
 algorand = AlgorandClient.default_localnet()
@@ -87,11 +87,11 @@ algorand.client.kmd  # Raises error
 
 ### Creating an app client instance
 
-See [how to create app clients via ClientManager via AlgorandClient](../building/app-client#dynamically-creating-clients-for-a-given-app-spec).
+See [how to create app clients via ClientManager via AlgorandClient](/docs/algokit-utils/python/latest/guides/concepts/building/app-client/#dynamically-creating-clients-for-a-given-app-spec).
 
 ### Creating a TestNet dispenser API client instance
 
-You can also create a [TestNet dispenser API client instance](../advanced/dispenser-client) from `ClientManager` too.
+You can also create a [TestNet dispenser API client instance](/docs/algokit-utils/python/latest/guides/concepts/advanced/dispenser-client/) from `ClientManager` too.
 
 ## Automatic retry
 
@@ -99,7 +99,7 @@ The Algod client returned by AlgoKit Utils (via `ClientManager.get_algod_client(
 
 ## Network information
 
-To get information about the current network you are connected to, you can use the `network()` method on `ClientManager` or the `is_{network}()` methods (which in turn call `network()`) as shown below (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](./algorand-client)):
+To get information about the current network you are connected to, you can use the `network()` method on `ClientManager` or the `is_{network}()` methods (which in turn call `network()`) as shown below (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/python/latest/guides/concepts/core/algorand-client/)):
 
 ```python
 algorand = AlgorandClient.default_localnet()

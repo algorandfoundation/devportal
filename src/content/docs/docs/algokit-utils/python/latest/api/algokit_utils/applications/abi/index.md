@@ -116,7 +116,7 @@ Decodes a value according to its ABI type.
 
 Represents an ABI value stored in a box.
 
-#### name *: [BoxName](../../models/state/#algokit_utils.models.state.BoxName)*
+#### name *: [BoxName](/docs/algokit-utils/python/latest/api/algokit_utils/models/state/#algokit_utils.models.state.BoxName)*
 
 The name of the box
 

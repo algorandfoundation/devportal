@@ -5,7 +5,7 @@ prev: false
 title: "AppInformation"
 ---
 
-Defined in: [src/app-manager.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L16)
+Defined in: [src/app-manager.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L16)
 
 Information about an app.
 
@@ -13,9 +13,9 @@ Information about an app.
 
 ### appAddress
 
-> **appAddress**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> **appAddress**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [src/app-manager.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L20)
+Defined in: [src/app-manager.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L20)
 
 The escrow address that the app operates with.
 
@@ -25,7 +25,7 @@ The escrow address that the app operates with.
 
 > **appId**: `bigint`
 
-Defined in: [src/app-manager.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L18)
+Defined in: [src/app-manager.ts:18](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L18)
 
 The ID of the app.
 
@@ -35,7 +35,7 @@ The ID of the app.
 
 > **approvalProgram**: `Uint8Array`
 
-Defined in: [src/app-manager.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L24)
+Defined in: [src/app-manager.ts:24](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L24)
 
 Approval program.
 
@@ -45,7 +45,7 @@ Approval program.
 
 > **clearStateProgram**: `Uint8Array`
 
-Defined in: [src/app-manager.ts:28](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L28)
+Defined in: [src/app-manager.ts:28](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L28)
 
 Clear state program.
 
@@ -53,9 +53,9 @@ Clear state program.
 
 ### creator
 
-> **creator**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> **creator**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [src/app-manager.ts:33](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L33)
+Defined in: [src/app-manager.ts:33](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L33)
 
 The address that created this application. This is the address where the
 parameters and global state for this application can be found.
@@ -66,7 +66,7 @@ parameters and global state for this application can be found.
 
 > `optional` **extraProgramPages**: `number`
 
-Defined in: [src/app-manager.ts:47](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L47)
+Defined in: [src/app-manager.ts:47](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L47)
 
 Any extra pages that are needed for the smart contract.
 
@@ -76,7 +76,7 @@ Any extra pages that are needed for the smart contract.
 
 > **globalByteSlices**: `number`
 
-Defined in: [src/app-manager.ts:45](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L45)
+Defined in: [src/app-manager.ts:45](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L45)
 
 The number of allocated byte slices in global state.
 
@@ -86,7 +86,7 @@ The number of allocated byte slices in global state.
 
 > **globalInts**: `number`
 
-Defined in: [src/app-manager.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L43)
+Defined in: [src/app-manager.ts:43](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L43)
 
 The number of allocated ints in global state.
 
@@ -94,9 +94,9 @@ The number of allocated ints in global state.
 
 ### globalState
 
-> **globalState**: [`AppState`](/algokit-utils-ts/api/algokit-utils/interfaces/appstate/)
+> **globalState**: [`AppState`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appstate/)
 
-Defined in: [src/app-manager.ts:37](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L37)
+Defined in: [src/app-manager.ts:37](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L37)
 
 Current global state values.
 
@@ -106,7 +106,7 @@ Current global state values.
 
 > **localByteSlices**: `number`
 
-Defined in: [src/app-manager.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L41)
+Defined in: [src/app-manager.ts:41](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L41)
 
 The number of allocated byte slices in per-user local state.
 
@@ -116,7 +116,7 @@ The number of allocated byte slices in per-user local state.
 
 > **localInts**: `number`
 
-Defined in: [src/app-manager.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L39)
+Defined in: [src/app-manager.ts:39](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L39)
 
 The number of allocated ints in per-user local state.
 
@@ -126,6 +126,6 @@ The number of allocated ints in per-user local state.
 
 > `optional` **version**: `number`
 
-Defined in: [src/app-manager.ts:49](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-manager.ts#L49)
+Defined in: [src/app-manager.ts:49](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L49)
 
 The number of updates to the application programs

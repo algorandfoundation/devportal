@@ -7,7 +7,7 @@ title: "SupplyResponse"
 
 > **SupplyResponse** = `object`
 
-Defined in: [packages/algod\_client/src/models/supply-response.ts:7](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/supply-response.ts#L7)
+Defined in: [packages/algod\_client/src/models/supply-response.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/supply-response.ts#L7)
 
 Supply represents the current supply of MicroAlgos in the system
 
@@ -17,7 +17,7 @@ Supply represents the current supply of MicroAlgos in the system
 
 > **currentRound**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/supply-response.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/supply-response.ts#L11)
+Defined in: [packages/algod\_client/src/models/supply-response.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/supply-response.ts#L11)
 
 Round
 
@@ -27,7 +27,7 @@ Round
 
 > **onlineMoney**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/supply-response.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/supply-response.ts#L16)
+Defined in: [packages/algod\_client/src/models/supply-response.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/supply-response.ts#L16)
 
 OnlineMoney
 
@@ -37,6 +37,6 @@ OnlineMoney
 
 > **totalMoney**: `bigint`
 
-Defined in: [packages/algod\_client/src/models/supply-response.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/supply-response.ts#L21)
+Defined in: [packages/algod\_client/src/models/supply-response.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/supply-response.ts#L21)
 
 TotalMoney

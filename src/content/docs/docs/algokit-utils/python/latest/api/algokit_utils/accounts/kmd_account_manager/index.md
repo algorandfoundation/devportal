@@ -13,7 +13,7 @@ title: "algokit_utils.accounts.kmd_account_manager"
 
 ## Module Contents
 
-### *class* KmdAccountManager(client_manager: [ClientManager](../../clients/client_manager/#algokit_utils.clients.client_manager.ClientManager))
+### *class* KmdAccountManager(client_manager: [ClientManager](/docs/algokit-utils/python/latest/api/algokit_utils/clients/client_manager/#algokit_utils.clients.client_manager.ClientManager))
 
 Provides abstractions over KMD that makes it easier to get and manage accounts.
 
@@ -40,7 +40,7 @@ if no predicate is provided.
 * **Returns:**
   The signing account or None if no matching wallet or account was found
 
-#### get_or_create_wallet_account(name: str, fund_with: [AlgoAmount](../../models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None) → AddressWithSigners
+#### get_or_create_wallet_account(name: str, fund_with: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None = None) → AddressWithSigners
 
 Gets or creates a funded account in a KMD wallet of the given name.
 

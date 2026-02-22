@@ -7,9 +7,9 @@ title: "algorandFixture"
 
 ## Call Signature
 
-> **algorandFixture**(`fixtureConfig?`): [`AlgorandFixture`](/algokit-utils-ts/api/subpaths/testing/interfaces/algorandfixture/)
+> **algorandFixture**(`fixtureConfig?`): [`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandfixture/)
 
-Defined in: [src/testing/fixtures/algorand-fixture.ts:60](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L60)
+Defined in: [src/testing/fixtures/algorand-fixture.ts:60](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L60)
 
 Creates a test fixture for automated testing against Algorand.
 By default it tests against an environment variable specified client
@@ -22,13 +22,13 @@ an explicitly defined network.
 
 #### fixtureConfig?
 
-[`AlgorandFixtureConfig`](/algokit-utils-ts/api/subpaths/testing/interfaces/algorandfixtureconfig/)
+[`AlgorandFixtureConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandfixtureconfig/)
 
 The fixture configuration
 
 ### Returns
 
-[`AlgorandFixture`](/algokit-utils-ts/api/subpaths/testing/interfaces/algorandfixture/)
+[`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandfixture/)
 
 The fixture
 
@@ -72,9 +72,9 @@ test('My test', async () => {
 
 ## Call Signature
 
-> **algorandFixture**(`fixtureConfig`, `config`): [`AlgorandFixture`](/algokit-utils-ts/api/subpaths/testing/interfaces/algorandfixture/)
+> **algorandFixture**(`fixtureConfig`, `config`): [`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandfixture/)
 
-Defined in: [src/testing/fixtures/algorand-fixture.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L75)
+Defined in: [src/testing/fixtures/algorand-fixture.ts:75](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L75)
 
 :::caution[Deprecated]
 Config can be passed in directly to fixture config now.
@@ -92,16 +92,16 @@ By default it tests against an environment variable specified client
 
 The fixture configuration
 
-[`AlgorandFixtureConfig`](/algokit-utils-ts/api/subpaths/testing/interfaces/algorandfixtureconfig/) | `undefined`
+[`AlgorandFixtureConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandfixtureconfig/) | `undefined`
 
 #### config
 
-[`AlgoConfig`](/algokit-utils-ts/api/algokit-utils/interfaces/algoconfig/)
+[`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/)
 
 The fixture configuration
 
 ### Returns
 
-[`AlgorandFixture`](/algokit-utils-ts/api/subpaths/testing/interfaces/algorandfixture/)
+[`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandfixture/)
 
 The fixture

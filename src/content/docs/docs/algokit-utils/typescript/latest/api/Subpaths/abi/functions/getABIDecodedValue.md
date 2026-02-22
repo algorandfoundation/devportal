@@ -5,15 +5,15 @@ prev: false
 title: "getABIDecodedValue"
 ---
 
-> **getABIDecodedValue**(`type`, `bytes`): [`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/)
+> **getABIDecodedValue**(`type`, `bytes`): [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)
 
-Defined in: [packages/abi/src/abi-method.ts:324](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L324)
+Defined in: [packages/abi/src/abi-method.ts:324](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L324)
 
 ## Parameters
 
 ### type
 
-[`ABIType`](/algokit-utils-ts/api/subpaths/abi/classes/abitype/) | [`AVMType`](/algokit-utils-ts/api/subpaths/abi/type-aliases/avmtype/) | [`ABIReferenceType`](/algokit-utils-ts/api/subpaths/abi/enumerations/abireferencetype/)
+[`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/) | [`AVMType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/avmtype/) | [`ABIReferenceType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/enumerations/abireferencetype/)
 
 ### bytes
 
@@ -21,4 +21,4 @@ Defined in: [packages/abi/src/abi-method.ts:324](https://github.com/algorandfoun
 
 ## Returns
 
-[`ABIValue`](/algokit-utils-ts/api/subpaths/abi/type-aliases/abivalue/)
+[`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)

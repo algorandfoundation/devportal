@@ -7,7 +7,7 @@ title: "encodeSignedTransaction"
 
 > **encodeSignedTransaction**(`signedTransaction`): `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:115](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L115)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:115](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L115)
 
 Encode signed transactions to MsgPack for sending on the network.
 
@@ -17,7 +17,7 @@ This method performs canonical encoding. No domain separation prefix is applicab
 
 ### signedTransaction
 
-[`SignedTransaction`](/algokit-utils-ts/api/subpaths/transact/type-aliases/signedtransaction/)
+[`SignedTransaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/signedtransaction/)
 
 The signed transaction to encode
 

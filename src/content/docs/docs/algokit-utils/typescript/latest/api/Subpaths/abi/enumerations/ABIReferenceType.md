@@ -5,7 +5,7 @@ prev: false
 title: "ABIReferenceType"
 ---
 
-Defined in: [packages/abi/src/abi-method.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L16)
+Defined in: [packages/abi/src/abi-method.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L16)
 
 ## Enumeration Members
 
@@ -13,7 +13,7 @@ Defined in: [packages/abi/src/abi-method.ts:16](https://github.com/algorandfound
 
 > **Account**: `"account"`
 
-Defined in: [packages/abi/src/abi-method.ts:17](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L17)
+Defined in: [packages/abi/src/abi-method.ts:17](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L17)
 
 ***
 
@@ -21,7 +21,7 @@ Defined in: [packages/abi/src/abi-method.ts:17](https://github.com/algorandfound
 
 > **Application**: `"application"`
 
-Defined in: [packages/abi/src/abi-method.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L18)
+Defined in: [packages/abi/src/abi-method.ts:18](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L18)
 
 ***
 
@@ -29,4 +29,4 @@ Defined in: [packages/abi/src/abi-method.ts:18](https://github.com/algorandfound
 
 > **Asset**: `"asset"`
 
-Defined in: [packages/abi/src/abi-method.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L19)
+Defined in: [packages/abi/src/abi-method.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L19)

@@ -7,7 +7,7 @@ title: "TransactionParams"
 
 > **TransactionParams** = `object`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:37](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L37)
+Defined in: [packages/transact/src/transactions/transaction.ts:37](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L37)
 
 Represents the parameters for a complete Algorand transaction.
 
@@ -18,9 +18,9 @@ regardless of transaction type, plus transaction-type-specific fields.
 
 ### appCall?
 
-> `optional` **appCall**: [`AppCallTransactionFields`](/algokit-utils-ts/api/subpaths/transact/type-aliases/appcalltransactionfields/)
+> `optional` **appCall**: [`AppCallTransactionFields`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/appcalltransactionfields/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:134](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L134)
+Defined in: [packages/transact/src/transactions/transaction.ts:134](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L134)
 
 App call specific fields
 
@@ -28,9 +28,9 @@ App call specific fields
 
 ### assetConfig?
 
-> `optional` **assetConfig**: [`AssetConfigTransactionFields`](/algokit-utils-ts/api/subpaths/transact/type-aliases/assetconfigtransactionfields/)
+> `optional` **assetConfig**: [`AssetConfigTransactionFields`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/assetconfigtransactionfields/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:129](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L129)
+Defined in: [packages/transact/src/transactions/transaction.ts:129](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L129)
 
 Asset config specific fields
 
@@ -38,9 +38,9 @@ Asset config specific fields
 
 ### assetFreeze?
 
-> `optional` **assetFreeze**: [`AssetFreezeTransactionFields`](/algokit-utils-ts/api/subpaths/transact/type-aliases/assetfreezetransactionfields/)
+> `optional` **assetFreeze**: [`AssetFreezeTransactionFields`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/assetfreezetransactionfields/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:144](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L144)
+Defined in: [packages/transact/src/transactions/transaction.ts:144](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L144)
 
 Asset freeze specific fields
 
@@ -48,9 +48,9 @@ Asset freeze specific fields
 
 ### assetTransfer?
 
-> `optional` **assetTransfer**: [`AssetTransferTransactionFields`](/algokit-utils-ts/api/subpaths/transact/type-aliases/assettransfertransactionfields/)
+> `optional` **assetTransfer**: [`AssetTransferTransactionFields`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/assettransfertransactionfields/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:124](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L124)
+Defined in: [packages/transact/src/transactions/transaction.ts:124](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L124)
 
 Asset transfer specific fields
 
@@ -60,7 +60,7 @@ Asset transfer specific fields
 
 > `optional` **fee**: `bigint`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L55)
+Defined in: [packages/transact/src/transactions/transaction.ts:55](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L55)
 
 Optional transaction fee in microALGO.
 
@@ -72,7 +72,7 @@ When not set, the fee will be interpreted as 0 by the network.
 
 > **firstValid**: `bigint`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:60](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L60)
+Defined in: [packages/transact/src/transactions/transaction.ts:60](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L60)
 
 First round for when the transaction is valid.
 
@@ -82,7 +82,7 @@ First round for when the transaction is valid.
 
 > `optional` **genesisHash**: `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:74](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L74)
+Defined in: [packages/transact/src/transactions/transaction.ts:74](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L74)
 
 Hash of the genesis block of the network.
 
@@ -94,7 +94,7 @@ Used to identify which network the transaction is for.
 
 > `optional` **genesisId**: `string`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:81](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L81)
+Defined in: [packages/transact/src/transactions/transaction.ts:81](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L81)
 
 Genesis ID of the network.
 
@@ -106,7 +106,7 @@ A human-readable string used alongside genesis hash to identify the network.
 
 > `optional` **group**: `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:114](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L114)
+Defined in: [packages/transact/src/transactions/transaction.ts:114](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L114)
 
 Optional group ID for atomic transaction grouping.
 
@@ -116,9 +116,9 @@ Transactions with the same group ID must execute together or not at all.
 
 ### heartbeat?
 
-> `optional` **heartbeat**: [`HeartbeatTransactionFields`](/algokit-utils-ts/api/subpaths/transact/type-aliases/heartbeattransactionfields/)
+> `optional` **heartbeat**: [`HeartbeatTransactionFields`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/heartbeattransactionfields/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:149](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L149)
+Defined in: [packages/transact/src/transactions/transaction.ts:149](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L149)
 
 Heartbeat specific fields
 
@@ -126,9 +126,9 @@ Heartbeat specific fields
 
 ### keyRegistration?
 
-> `optional` **keyRegistration**: [`KeyRegistrationTransactionFields`](/algokit-utils-ts/api/subpaths/transact/type-aliases/keyregistrationtransactionfields/)
+> `optional` **keyRegistration**: [`KeyRegistrationTransactionFields`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/keyregistrationtransactionfields/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:139](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L139)
+Defined in: [packages/transact/src/transactions/transaction.ts:139](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L139)
 
 Key registration specific fields
 
@@ -138,7 +138,7 @@ Key registration specific fields
 
 > **lastValid**: `bigint`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:67](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L67)
+Defined in: [packages/transact/src/transactions/transaction.ts:67](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L67)
 
 Last round for when the transaction is valid.
 
@@ -150,7 +150,7 @@ After this round, the transaction will be expired.
 
 > `optional` **lease**: `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:107](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L107)
+Defined in: [packages/transact/src/transactions/transaction.ts:107](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L107)
 
 Optional lease value to enforce mutual transaction exclusion.
 
@@ -165,7 +165,7 @@ No other transaction sent by the same sender can be confirmed until the lease ex
 
 > `optional` **note**: `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/transaction.ts:88](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L88)
+Defined in: [packages/transact/src/transactions/transaction.ts:88](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L88)
 
 Optional user-defined note field.
 
@@ -175,9 +175,9 @@ Can contain arbitrary data up to 1KB in size.
 
 ### payment?
 
-> `optional` **payment**: [`PaymentTransactionFields`](/algokit-utils-ts/api/subpaths/transact/type-aliases/paymenttransactionfields/)
+> `optional` **payment**: [`PaymentTransactionFields`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/paymenttransactionfields/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:119](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L119)
+Defined in: [packages/transact/src/transactions/transaction.ts:119](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L119)
 
 Payment specific fields
 
@@ -185,9 +185,9 @@ Payment specific fields
 
 ### rekeyTo?
 
-> `optional` **rekeyTo**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> `optional` **rekeyTo**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:97](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L97)
+Defined in: [packages/transact/src/transactions/transaction.ts:97](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L97)
 
 Optional authorized account for future transactions.
 
@@ -199,9 +199,9 @@ the original address.
 
 ### sender
 
-> **sender**: [`Address`](/algokit-utils-ts/api/algokit-utils/classes/address/)
+> **sender**: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:48](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L48)
+Defined in: [packages/transact/src/transactions/transaction.ts:48](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L48)
 
 The account that authorized the transaction.
 
@@ -211,9 +211,9 @@ Fees are deducted from this account.
 
 ### stateProof?
 
-> `optional` **stateProof**: [`StateProofTransactionFields`](/algokit-utils-ts/api/subpaths/transact/type-aliases/stateprooftransactionfields/)
+> `optional` **stateProof**: [`StateProofTransactionFields`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/stateprooftransactionfields/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:154](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L154)
+Defined in: [packages/transact/src/transactions/transaction.ts:154](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L154)
 
 State proof specific fields
 
@@ -221,8 +221,8 @@ State proof specific fields
 
 ### type
 
-> **type**: [`TransactionType`](/algokit-utils-ts/api/subpaths/transact/enumerations/transactiontype/)
+> **type**: [`TransactionType`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/enumerations/transactiontype/)
 
-Defined in: [packages/transact/src/transactions/transaction.ts:41](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L41)
+Defined in: [packages/transact/src/transactions/transaction.ts:41](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction.ts#L41)
 
 The type of transaction

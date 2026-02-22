@@ -5,7 +5,7 @@ prev: false
 title: "AlgorandFixture"
 ---
 
-Defined in: [src/testing/types.ts:69](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L69)
+Defined in: [src/testing/types.ts:69](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L69)
 
 An Algorand automated testing fixture
 
@@ -15,7 +15,7 @@ An Algorand automated testing fixture
 
 > **beforeEach**: () => `Promise`\<`void`\>
 
-Defined in: [src/testing/types.ts:93](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L93)
+Defined in: [src/testing/types.ts:93](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L93)
 
 :::caution[Deprecated]
 Use newScope instead.
@@ -32,7 +32,7 @@ Testing framework agnostic handler method to run before each test to prepare the
 
 > **newScope**: () => `Promise`\<`void`\>
 
-Defined in: [src/testing/types.ts:133](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L133)
+Defined in: [src/testing/types.ts:133](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L133)
 
 Creates a new isolated fixture scope (clean transaction logger, AlgorandClient, testAccount, etc.).
 
@@ -80,15 +80,15 @@ describe('MY MODULE', () => {
 
 #### Get Signature
 
-> **get** **algorand**(): [`AlgorandClient`](/algokit-utils-ts/api/algokit-utils/classes/algorandclient/)
+> **get** **algorand**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/)
 
-Defined in: [src/testing/types.ts:87](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L87)
+Defined in: [src/testing/types.ts:87](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L87)
 
 Retrieve an `AlgorandClient` loaded with the current context, including testAccount and any generated accounts loaded as signers.
 
 ##### Returns
 
-[`AlgorandClient`](/algokit-utils-ts/api/algokit-utils/classes/algorandclient/)
+[`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/)
 
 ***
 
@@ -96,9 +96,9 @@ Retrieve an `AlgorandClient` loaded with the current context, including testAcco
 
 #### Get Signature
 
-> **get** **context**(): [`AlgorandTestAutomationContext`](/algokit-utils-ts/api/subpaths/testing/interfaces/algorandtestautomationcontext/)
+> **get** **context**(): [`AlgorandTestAutomationContext`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandtestautomationcontext/)
 
-Defined in: [src/testing/types.ts:82](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L82)
+Defined in: [src/testing/types.ts:82](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L82)
 
 Retrieve the current context.
 Useful with destructuring.
@@ -115,4 +115,4 @@ test('My test', () => {
 
 ##### Returns
 
-[`AlgorandTestAutomationContext`](/algokit-utils-ts/api/subpaths/testing/interfaces/algorandtestautomationcontext/)
+[`AlgorandTestAutomationContext`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandtestautomationcontext/)

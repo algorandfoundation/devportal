@@ -7,7 +7,7 @@ The AlgoKit Python Utilities package provides a set of debugging tools that can 
 
 ## Configuration
 
-The [`UpdatableConfig`](../../../../api/algokit_utils/config/#updatableconfig) class (source: `src/algokit_utils/config.py`) manages configuration settings for the AlgoKit project. A singleton instance is available as `config`:
+The [`UpdatableConfig`](/docs/algokit-utils/python/latest/api/algokit_utils/config/#updatableconfig) class (source: `src/algokit_utils/config.py`) manages configuration settings for the AlgoKit project. A singleton instance is available as `config`:
 
 ```python
 from algokit_utils.config import config
@@ -36,7 +36,7 @@ config.configure(
 
 ## AlgoKitLogger
 
-[`AlgoKitLogger`](../../../../api/algokit_utils/config/#algokitlogger) is a custom `logging.Logger` subclass that provides fine-grained control over log output. It is the default logger for the library.
+[`AlgoKitLogger`](/docs/algokit-utils/python/latest/api/algokit_utils/config/#algokitlogger) is a custom `logging.Logger` subclass that provides fine-grained control over log output. It is the default logger for the library.
 
 ### Per-call suppression
 

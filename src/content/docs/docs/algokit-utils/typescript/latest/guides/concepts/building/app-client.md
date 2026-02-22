@@ -1,12 +1,12 @@
 ---
 title: "App client and App factory"
-description: "App client and App factory are higher-order use case capabilities provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App deployment](./app-deploy.md) and [App management](./app.md). They allow you to access high productivity application clients that work with [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) and [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application spec defined smart contracts, which you can use to create, update, delete, deploy and call a smart contract and access state data for it."
+description: "App client and App factory are higher-order use case capabilities provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App deployment](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/) and [App management](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/). They allow you to access high productivity application clients that work with [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) and [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application spec defined smart contracts, which you can use to create, update, delete, deploy and call a smart contract and access state data for it."
 ---
 
 > [!NOTE]
-> This page covers the untyped app client, but we recommend using [typed clients](../typed-app-clients), which will give you a better developer experience with strong typing and intellisense specific to the app itself.
+> This page covers the untyped app client, but we recommend using [typed clients](/docs/algokit-utils/typescript/latest/guides/concepts/building/typed-app-clients/), which will give you a better developer experience with strong typing and intellisense specific to the app itself.
 
-App client and App factory are higher-order use case capabilities provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App deployment](../app-deploy) and [App management](../app). They allow you to access high productivity application clients that work with [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) and [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application spec defined smart contracts, which you can use to create, update, delete, deploy and call a smart contract and access state data for it.
+App client and App factory are higher-order use case capabilities provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App deployment](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/) and [App management](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/). They allow you to access high productivity application clients that work with [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) and [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application spec defined smart contracts, which you can use to create, update, delete, deploy and call a smart contract and access state data for it.
 
 > ![NOTE]
 >
@@ -16,7 +16,7 @@ App client and App factory are higher-order use case capabilities provided by Al
 
 The `AppFactory` is a class that, for a given app spec, allows you to create and deploy one or more app instances and to create one or more app clients to interact with those (or other) app instances.
 
-To get an instance of `AppFactory` you can use either [`AlgorandClient`](../../core/algorand-client) via `algorand.client.getAppFactory` or instantiate it directly (passing in an app spec, an `AlgorandClient` instance and other optional parameters):
+To get an instance of `AppFactory` you can use either [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) via `algorand.client.getAppFactory` or instantiate it directly (passing in an app spec, an `AlgorandClient` instance and other optional parameters):
 
 ```typescript
 // Minimal example
@@ -39,7 +39,7 @@ const factory = algorand.client.getAppFactory({
 
 The `AppClient` is a class that, for a given app spec, allows you to manage calls and state for a specific deployed instance of an app (with a known app ID).
 
-To get an instance of `AppClient` you can use either [`AlgorandClient`](../../core/algorand-client) via `algorand.client.getAppClient*` or instantiate it directly (passing in an app ID, app spec, `AlgorandClient` instance and other optional parameters):
+To get an instance of `AppClient` you can use either [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) via `algorand.client.getAppClient*` or instantiate it directly (passing in an app ID, app spec, `AlgorandClient` instance and other optional parameters):
 
 ```typescript
 // Minimal examples
@@ -102,16 +102,16 @@ const appClient6 = factory.getAppClientByCreatorAndName({
 
 Once you have an [app factory](#appfactory) you can perform the following actions:
 
-- `factory.create(params?)` - Signs and sends a transaction to create an app and returns the [result of that call](./app.md#creation) and an [`AppClient`](#appclient) instance for the created app
-- `factory.deploy(params)` - Uses the [creator address and app name pattern](./app-deploy.md#lookup-deployed-apps-by-name) to find if the app has already been deployed or not and either creates, updates or replaces that app based on the [deployment rules](./app-deploy.md#performing-a-deployment) (i.e. it's an idempotent deployment) and returns the [result of the deployment](./app-deploy.md#return-value) and an [`AppClient`](#appclient) instance for the created/updated/existing app
+- `factory.create(params?)` - Signs and sends a transaction to create an app and returns the [result of that call](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#creation) and an [`AppClient`](#appclient) instance for the created app
+- `factory.deploy(params)` - Uses the [creator address and app name pattern](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#lookup-deployed-apps-by-name) to find if the app has already been deployed or not and either creates, updates or replaces that app based on the [deployment rules](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#performing-a-deployment) (i.e. it's an idempotent deployment) and returns the [result of the deployment](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#return-value) and an [`AppClient`](#appclient) instance for the created/updated/existing app
 
 ### Create
 
-The create method is a wrapper over the `appCreate` (bare calls) and `appCreateMethodCall` (ABI method calls) [methods](./app.md#creation), with the following differences:
+The create method is a wrapper over the `appCreate` (bare calls) and `appCreateMethodCall` (ABI method calls) [methods](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#creation), with the following differences:
 
 - You don't need to specify the `approvalProgram`, `clearStateProgram`, or `schema` because these are all specified or calculated from the app spec (noting you can override the `schema`)
 - `sender` is optional and if not specified then the `defaultSender` from the `AppFactory` constructor is used (if it was specified, otherwise an error is thrown)
-- `deployTimeParams`, `updatable` and `deletable` can be passed in to control [deploy-time parameter replacements and deploy-time immutability and permanence control](./app-deploy.md#compilation-and-template-substitution); these values can also be passed into the `AppFactory` constructor instead and if so will be used if not defined in the params to the create call
+- `deployTimeParams`, `updatable` and `deletable` can be passed in to control [deploy-time parameter replacements and deploy-time immutability and permanence control](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#compilation-and-template-substitution); these values can also be passed into the `AppFactory` constructor instead and if so will be used if not defined in the params to the create call
 
 ```typescript
 // Use no-argument bare-call
@@ -136,21 +136,21 @@ const { result, appClient } = factory.send.create({
 })
 ```
 
-If you want to construct a custom create call, use the underlying [`algorand.send.appCreate` / `algorand.createTransaction.appCreate` / `algorand.send.appCreateMethodCall` / `algorand.createTransaction.appCreateMethodCall` methods](./app.md#creation) then you can get params objects:
+If you want to construct a custom create call, use the underlying [`algorand.send.appCreate` / `algorand.createTransaction.appCreate` / `algorand.send.appCreateMethodCall` / `algorand.createTransaction.appCreateMethodCall` methods](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#creation) then you can get params objects:
 
-- `factory.params.create(params)` - ABI method create call for deploy method or an underlying [`appCreateMethodCall` call](./app.md#creation)
-- `factory.params.bare.create(params)` - Bare create call for deploy method or an underlying [`appCreate` call](./app.md#creation)
+- `factory.params.create(params)` - ABI method create call for deploy method or an underlying [`appCreateMethodCall` call](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#creation)
+- `factory.params.bare.create(params)` - Bare create call for deploy method or an underlying [`appCreate` call](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#creation)
 
 ### Deploy
 
-The deploy method is a wrapper over the [`AppDeployer`'s `deploy` method](./app-deploy.md#performing-a-deployment), with the following differences:
+The deploy method is a wrapper over the [`AppDeployer`'s `deploy` method](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#performing-a-deployment), with the following differences:
 
 - You don't need to specify the `approvalProgram`, `clearStateProgram`, or `schema` in the `createParams` because these are all specified or calculated from the app spec (noting you can override the `schema`)
 - `sender` is optional for `createParams`, `updateParams` and `deleteParams` and if not specified then the `defaultSender` from the `AppFactory` constructor is used (if it was specified, otherwise an error is thrown)
 - You don't need to pass in `metadata` to the deploy params - it's calculated from:
   - `updatable` and `deletable`, which you can optionally pass in directly to the method params
   - `version` and `name`, which are optionally passed into the `AppFactory` constructor
-- `deployTimeParams`, `updatable` and `deletable` can all be passed into the `AppFactory` and if so will be used if not defined in the params to the deploy call for the [deploy-time parameter replacements and deploy-time immutability and permanence control](./app-deploy.md#compilation-and-template-substitution)
+- `deployTimeParams`, `updatable` and `deletable` can all be passed into the `AppFactory` and if so will be used if not defined in the params to the deploy call for the [deploy-time parameter replacements and deploy-time immutability and permanence control](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#compilation-and-template-substitution)
 - `createParams`, `updateParams` and `deleteParams` are optional, if they aren't specified then default values are used for everything and a no-argument bare call will be made for any create/update/delete calls
 - If you want to call an ABI method for create/update/delete calls then you can pass in a string for `method` (as opposed to an `ABIMethod` object), which can either be the method name, or if you need to disambiguate between multiple methods of the same name it can be the ABI signature (see example below)
 
@@ -196,18 +196,18 @@ const { result, appClient } = factory.deploy({
 })
 ```
 
-If you want to construct a custom deploy call, use the underlying [`algorand.appDeployer.deploy` method](./app-deploy.md#performing-a-deployment) then you can get params objects for the `createParams`, `updateParams` and `deleteParams`:
+If you want to construct a custom deploy call, use the underlying [`algorand.appDeployer.deploy` method](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#performing-a-deployment) then you can get params objects for the `createParams`, `updateParams` and `deleteParams`:
 
-- `factory.params.create(params)` - ABI method create call for deploy method or an underlying [`appCreateMethodCall` call](./app.md#creation)
+- `factory.params.create(params)` - ABI method create call for deploy method or an underlying [`appCreateMethodCall` call](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#creation)
 - `factory.params.deployUpdate(params)` - ABI method update call for deploy method
 - `factory.params.deployDelete(params)` - ABI method delete call for deploy method
-- `factory.params.bare.create(params)` - Bare create call for deploy method or an underlying [`appCreate` call](./app.md#creation)
+- `factory.params.bare.create(params)` - Bare create call for deploy method or an underlying [`appCreate` call](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#creation)
 - `factory.params.bare.deployUpdate(params)` - Bare update call for deploy method
 - `factory.params.bare.deployDelete(params)` - Bare delete call for deploy method
 
 ## Updating and deleting an app
 
-Deploy method aside, the ability to make update and delete calls happens after there is an instance of an app so are done via `AppClient`. The semantics of this are no different than [other calls](#calling-the-app), with the caveat that the update call is a bit different to the others since the code will be compiled when constructing the update params (making it an async method) and the update calls thus optionally takes compilation parameters (`deployTimeParams`, `updatable` and `deletable`) for [deploy-time parameter replacements and deploy-time immutability and permanence control](./app-deploy.md#compilation-and-template-substitution).
+Deploy method aside, the ability to make update and delete calls happens after there is an instance of an app so are done via `AppClient`. The semantics of this are no different than [other calls](#calling-the-app), with the caveat that the update call is a bit different to the others since the code will be compiled when constructing the update params (making it an async method) and the update calls thus optionally takes compilation parameters (`deployTimeParams`, `updatable` and `deletable`) for [deploy-time parameter replacements and deploy-time immutability and permanence control](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#compilation-and-template-substitution).
 
 ## Calling the app
 
@@ -231,9 +231,9 @@ To make one of these calls `{onComplete}` needs to be swapped with the [on compl
 - `closeOut` - A close-out call
 - `call` - A no-op call (or other call if `onComplete` is specified to anything other than update)
 
-The input payload for all of these calls is the same as the [underlying app methods](./app.md#calling-apps) with the caveat that the `appId` is not passed in (since the `AppClient` already knows the app ID), `sender` is optional (it uses `defaultSender` from the `AppClient` constructor if it was specified) and `method` (for ABI method calls) is a string rather than an `ABIMethod` object (which can either be the method name, or if you need to disambiguate between multiple methods of the same name it can be the ABI signature).
+The input payload for all of these calls is the same as the [underlying app methods](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#calling-apps) with the caveat that the `appId` is not passed in (since the `AppClient` already knows the app ID), `sender` is optional (it uses `defaultSender` from the `AppClient` constructor if it was specified) and `method` (for ABI method calls) is a string rather than an `ABIMethod` object (which can either be the method name, or if you need to disambiguate between multiple methods of the same name it can be the ABI signature).
 
-The return payload for all of these is the same as the [underlying methods](./app.md#calling-apps).
+The return payload for all of these is the same as the [underlying methods](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#calling-apps).
 
 ```typescript
 const call1 = await appClient.send.update({
@@ -309,7 +309,7 @@ Often there is a need to fund an app account to cover minimum balance requiremen
 
 The input parameters are:
 
-- A `FundAppParams`, which has the same properties as a [payment transaction](./transfer.md#payment) except `receiver` is not required and `sender` is optional (if not specified then it will be set to the app client's default sender if configured).
+- A `FundAppParams`, which has the same properties as a [payment transaction](/docs/algokit-utils/typescript/latest/guides/concepts/building/transfer/#payment) except `receiver` is not required and `sender` is optional (if not specified then it will be set to the app client's default sender if configured).
 
 Note: If you are passing the funding payment in as an ABI argument so it can be validated by the ABI method then you'll want to get the funding call as a transaction, e.g.:
 
@@ -359,13 +359,13 @@ const map = appClient.state.global.getMap('myMap')
 
 There are various methods defined that let you read state from the smart contract app:
 
-- `getGlobalState()` - Gets the current global state using [`algorand.app.getGlobalState`](./app.md#global-state)
-- `getLocalState(address: string)` - Gets the current local state for the given account address using [`algorand.app.getLocalState`](./app.md#local-state).
-- `getBoxNames()` - Gets the current box names using [`algorand.app.getBoxNames`](./app.md#boxes)
-- `getBoxValue(name)` - Gets the current value of the given box using [`algorand.app.getBoxValue`](./app.md#boxes)
-- `getBoxValueFromABIType(name)` - Gets the current value of the given box from an ABI type using [`algorand.app.getBoxValueFromABIType`](./app.md#boxes)
-- `getBoxValues(filter)` - Gets the current values of the boxes using [`algorand.app.getBoxValues`](./app.md#boxes)
-- `getBoxValuesFromABIType(type, filter)` - Gets the current values of the boxes from an ABI type using [`algorand.app.getBoxValuesFromABIType`](./app.md#boxes)
+- `getGlobalState()` - Gets the current global state using [`algorand.app.getGlobalState`](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#global-state)
+- `getLocalState(address: string)` - Gets the current local state for the given account address using [`algorand.app.getLocalState`](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#local-state).
+- `getBoxNames()` - Gets the current box names using [`algorand.app.getBoxNames`](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#boxes)
+- `getBoxValue(name)` - Gets the current value of the given box using [`algorand.app.getBoxValue`](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#boxes)
+- `getBoxValueFromABIType(name)` - Gets the current value of the given box from an ABI type using [`algorand.app.getBoxValueFromABIType`](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#boxes)
+- `getBoxValues(filter)` - Gets the current values of the boxes using [`algorand.app.getBoxValues`](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#boxes)
+- `getBoxValuesFromABIType(type, filter)` - Gets the current values of the boxes from an ABI type using [`algorand.app.getBoxValuesFromABIType`](/docs/algokit-utils/typescript/latest/guides/concepts/building/app/#boxes)
 
 ```typescript
 const globalState = await appClient.getGlobalState()
@@ -387,7 +387,7 @@ Often when calling a smart contract during development you will get logic errors
 
 When this occurs, you will generally get an error that looks something like: `TransactionPool.Remember: transaction {TRANSACTION_ID}: logic eval error: {ERROR_MESSAGE}. Details: pc={PROGRAM_COUNTER_VALUE}, opcodes={LIST_OF_OP_CODES}`.
 
-The information in that error message can be parsed and when combined with the [source map from compilation](./app-deploy.md#compilation-and-template-substitution) you can expose debugging information that makes it much easier to understand what's happening. The ARC-56 app spec, if provided, can also specify human-readable error messages against certain program counter values and further augment the error message.
+The information in that error message can be parsed and when combined with the [source map from compilation](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-deploy/#compilation-and-template-substitution) you can expose debugging information that makes it much easier to understand what's happening. The ARC-56 app spec, if provided, can also specify human-readable error messages against certain program counter values and further augment the error message.
 
 The app client and app factory automatically provide this functionality for all smart contract calls. They also expose a function that can be used for any custom calls you manually construct and need to add into your own try/catch `exposeLogicError(e: Error, isClear?: boolean)`.
 
@@ -418,7 +418,7 @@ Config.configure({ debug: true })
 
 If you do that then the exception will have the `traces` property within the underlying exception will have key information from the simulation within it and this will get populated into the `led.traces` property of the thrown error.
 
-When this debug flag is set, it will also emit debugging symbols to allow break-point debugging of the calls if the [project root is also configured](../../advanced/debugging).
+When this debug flag is set, it will also emit debugging symbols to allow break-point debugging of the calls if the [project root is also configured](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/debugging/).
 
 ## Default arguments
 
