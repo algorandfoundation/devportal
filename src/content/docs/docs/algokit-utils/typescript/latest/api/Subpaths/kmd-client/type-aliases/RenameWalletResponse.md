@@ -1,0 +1,20 @@
+---
+editUrl: false
+next: false
+prev: false
+title: "RenameWalletResponse"
+---
+
+> **RenameWalletResponse** = `object`
+
+Defined in: [packages/kmd\_client/src/models/rename-wallet-response.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/rename-wallet-response.ts#L9)
+
+RenameWalletResponse is the response to `POST /v1/wallet/rename`
+
+## Properties
+
+### wallet
+
+> **wallet**: [`Wallet`](/algokit-utils-ts/api/subpaths/kmd-client/type-aliases/wallet/)
+
+Defined in: [packages/kmd\_client/src/models/rename-wallet-response.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/kmd_client/src/models/rename-wallet-response.ts#L10)
