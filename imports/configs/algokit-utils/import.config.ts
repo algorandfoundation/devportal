@@ -30,7 +30,7 @@ export const config: LibraryImportConfig = {
       postImportTransforms: [
         {
           pattern: '**/*.{md,mdx}',
-          transform: stripFrontmatterKeys(['hero', 'template']), // Revert the docs index page template to the base page layout
+          transform: stripFrontmatterKeys(['hero', 'template']),
         },
       ],
     },

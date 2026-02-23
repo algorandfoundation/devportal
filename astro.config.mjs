@@ -81,14 +81,10 @@ export default defineConfig({
             // Unit-testing docs — references unimported sibling pages
             if (slug.startsWith('algokit/unit-testing/')) return true;
 
-            // AlgoKit Utils legacy guides — untransformed autoapi refs
-            if (slug.startsWith('algokit/utils/')) return true;
 
             // Algorand TypeScript API docs — TypeDoc cross-refs
             if (/^docs\/algorand-typescript\/.*\/api\//.test(slug)) return true;
 
-            // AlgoKit Utils TS — content not yet imported (pending reimport)
-            if (link.startsWith('/docs/algokit-utils/typescript/latest/')) return true;
 
             // ARC standards — cross-references between ARC spec pages
             if (slug.startsWith('arc-standards/') && /^\.\/arc-\d+/.test(link)) return true;
