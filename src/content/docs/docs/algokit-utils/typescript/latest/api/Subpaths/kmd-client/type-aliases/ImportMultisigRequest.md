@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: "ImportMultisigRequest"
+title: 'ImportMultisigRequest'
 ---
 
 > **ImportMultisigRequest** = `object`
 
-Defined in: [packages/kmd\_client/src/models/import-multisig-request.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L7)
+Defined in: [packages/kmd_client/src/models/import-multisig-request.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L7)
 
 The request for `POST /v1/multisig/import`
 
@@ -17,28 +17,28 @@ The request for `POST /v1/multisig/import`
 
 > **multisigVersion**: `number`
 
-Defined in: [packages/kmd\_client/src/models/import-multisig-request.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L8)
+Defined in: [packages/kmd_client/src/models/import-multisig-request.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L8)
 
-***
+---
 
 ### publicKeys
 
 > **publicKeys**: `Uint8Array`[]
 
-Defined in: [packages/kmd\_client/src/models/import-multisig-request.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L9)
+Defined in: [packages/kmd_client/src/models/import-multisig-request.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L9)
 
-***
+---
 
 ### threshold
 
 > **threshold**: `number`
 
-Defined in: [packages/kmd\_client/src/models/import-multisig-request.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L10)
+Defined in: [packages/kmd_client/src/models/import-multisig-request.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L10)
 
-***
+---
 
 ### walletHandleToken
 
 > **walletHandleToken**: `string`
 
-Defined in: [packages/kmd\_client/src/models/import-multisig-request.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L11)
+Defined in: [packages/kmd_client/src/models/import-multisig-request.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/models/import-multisig-request.ts#L11)

@@ -1,6 +1,6 @@
 ---
-title: "Automated testing"
-description: "A collection of useful snippets and patterns for testing Algorand applications using AlgoKit Utils with pytest."
+title: 'Automated testing'
+description: 'A collection of useful snippets and patterns for testing Algorand applications using AlgoKit Utils with pytest.'
 ---
 
 Automated testing is a higher-order use case capability provided by AlgoKit Utils that builds on top of the core capabilities. It allows you to use terse, robust automated testing primitives that work with [pytest](https://docs.pytest.org/en/latest/) to facilitate fixture management, quickly generating isolated and funded test accounts, transaction logging, and log capture.

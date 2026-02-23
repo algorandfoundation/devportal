@@ -1,6 +1,6 @@
 ---
-title: "Quick Start"
-description: "Get up and running with AlgoKit Utils in 5 minutes."
+title: 'Quick Start'
+description: 'Get up and running with AlgoKit Utils in 5 minutes.'
 ---
 
 Get up and running with AlgoKit Utils in 5 minutes.

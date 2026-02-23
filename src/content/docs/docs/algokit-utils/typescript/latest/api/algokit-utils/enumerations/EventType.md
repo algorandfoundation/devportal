@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "EventType"
+title: 'EventType'
 ---
 
 Defined in: [src/lifecycle-events.ts:3](https://github.com/larkiny/algokit-utils-ts/blob/main/src/lifecycle-events.ts#L3)
@@ -15,7 +15,7 @@ Defined in: [src/lifecycle-events.ts:3](https://github.com/larkiny/algokit-utils
 
 Defined in: [src/lifecycle-events.ts:5](https://github.com/larkiny/algokit-utils-ts/blob/main/src/lifecycle-events.ts#L5)
 
-***
+---
 
 ### TxnGroupSimulated
 

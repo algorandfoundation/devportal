@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SendTransactionParams"
+title: 'SendTransactionParams'
 ---
 
 Defined in: [src/transaction/types.ts:25](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L25)
@@ -19,7 +19,7 @@ Defined in: [src/transaction/types.ts:36](https://github.com/larkiny/algokit-uti
 
 The flat fee you want to pay, useful for covering extra fees in a transaction group or app call
 
-***
+---
 
 ### maxFee?
 
@@ -29,7 +29,7 @@ Defined in: [src/transaction/types.ts:38](https://github.com/larkiny/algokit-uti
 
 The maximum fee that you are happy to pay (default: unbounded) - if this is set it's possible the transaction could get rejected during network congestion
 
-***
+---
 
 ### maxRoundsToWaitForConfirmation?
 
@@ -39,7 +39,7 @@ Defined in: [src/transaction/types.ts:40](https://github.com/larkiny/algokit-uti
 
 The maximum number of rounds to wait for confirmation, only applies if `skipWaiting` is `undefined` or `false`, default: wait up to 5 rounds
 
-***
+---
 
 ### populateAppCallResources?
 
@@ -49,7 +49,7 @@ Defined in: [src/transaction/types.ts:42](https://github.com/larkiny/algokit-uti
 
 Whether to use simulate to automatically populate app call resources in the txn objects. Defaults to true when there are app calls in the group.
 
-***
+---
 
 ### skipSending?
 
@@ -60,7 +60,7 @@ Defined in: [src/transaction/types.ts:28](https://github.com/larkiny/algokit-uti
 Whether to skip signing and sending the transaction to the chain (default: transaction signed and sent to chain, unless `atc` specified)
 and instead just return the raw transaction, e.g. so you can add it to a group of transactions
 
-***
+---
 
 ### skipWaiting?
 
@@ -70,7 +70,7 @@ Defined in: [src/transaction/types.ts:30](https://github.com/larkiny/algokit-uti
 
 Whether to skip waiting for the submitted transaction (only relevant if `skipSending` is `false` or unset)
 
-***
+---
 
 ### suppressLog?
 
@@ -80,7 +80,7 @@ Defined in: [src/transaction/types.ts:34](https://github.com/larkiny/algokit-uti
 
 Whether to suppress log messages from transaction send, default: do not suppress
 
-***
+---
 
 ### transactionComposer?
 

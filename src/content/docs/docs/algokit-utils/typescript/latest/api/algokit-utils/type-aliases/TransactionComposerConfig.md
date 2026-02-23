@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionComposerConfig"
+title: 'TransactionComposerConfig'
 ---
 
 > **TransactionComposerConfig** = `object`
@@ -17,7 +17,7 @@ Defined in: [src/composer.ts:169](https://github.com/larkiny/algokit-utils-ts/bl
 
 Defined in: [src/composer.ts:170](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L170)
 
-***
+---
 
 ### populateAppCallResources
 

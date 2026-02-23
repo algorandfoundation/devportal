@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "searchTransactions"
+title: 'searchTransactions'
 ---
 
 > **searchTransactions**(`indexer`, `searchCriteria`, `paginationLimit?`): `Promise`\<[`TransactionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/transactionsresponse/)\>

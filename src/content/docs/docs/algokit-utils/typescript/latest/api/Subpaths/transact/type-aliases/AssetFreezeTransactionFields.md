@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetFreezeTransactionFields"
+title: 'AssetFreezeTransactionFields'
 ---
 
 > **AssetFreezeTransactionFields** = `object`
@@ -24,7 +24,7 @@ Defined in: [packages/transact/src/transactions/asset-freeze.ts:14](https://gith
 
 The ID of the asset being frozen/unfrozen.
 
-***
+---
 
 ### freezeTarget
 
@@ -34,7 +34,7 @@ Defined in: [packages/transact/src/transactions/asset-freeze.ts:19](https://gith
 
 The target account whose asset holdings will be affected.
 
-***
+---
 
 ### frozen
 

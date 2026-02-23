@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppCreateParams"
+title: 'AppCreateParams'
 ---
 
 > **AppCreateParams** = `Expand`\<`Omit`\<`CommonAppCallParams`, `"appId"`\> & `object`\>

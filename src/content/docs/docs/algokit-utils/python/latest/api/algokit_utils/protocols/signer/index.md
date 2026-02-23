@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.protocols.signer"
+title: 'algokit_utils.protocols.signer'
 ---
 
 <div class="api-ref">

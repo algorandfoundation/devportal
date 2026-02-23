@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AccountAssetInformation"
+title: 'AccountAssetInformation'
 ---
 
 > **AccountAssetInformation** = `object`
@@ -21,7 +21,7 @@ Defined in: [src/account.ts:173](https://github.com/larkiny/algokit-utils-ts/blo
 
 The ID of the asset held.
 
-***
+---
 
 ### balance
 
@@ -31,7 +31,7 @@ Defined in: [src/account.ts:175](https://github.com/larkiny/algokit-utils-ts/blo
 
 The current balance of that asset holding.
 
-***
+---
 
 ### frozen
 
@@ -41,7 +41,7 @@ Defined in: [src/account.ts:177](https://github.com/larkiny/algokit-utils-ts/blo
 
 Whether or not the asset is frozen for the account.
 
-***
+---
 
 ### round
 

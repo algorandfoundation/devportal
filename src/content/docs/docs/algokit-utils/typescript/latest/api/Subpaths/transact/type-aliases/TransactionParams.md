@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionParams"
+title: 'TransactionParams'
 ---
 
 > **TransactionParams** = `object`
@@ -24,7 +24,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:134](https://gith
 
 App call specific fields
 
-***
+---
 
 ### assetConfig?
 
@@ -34,7 +34,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:129](https://gith
 
 Asset config specific fields
 
-***
+---
 
 ### assetFreeze?
 
@@ -44,7 +44,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:144](https://gith
 
 Asset freeze specific fields
 
-***
+---
 
 ### assetTransfer?
 
@@ -54,7 +54,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:124](https://gith
 
 Asset transfer specific fields
 
-***
+---
 
 ### fee?
 
@@ -66,7 +66,7 @@ Optional transaction fee in microALGO.
 
 When not set, the fee will be interpreted as 0 by the network.
 
-***
+---
 
 ### firstValid
 
@@ -76,7 +76,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:60](https://githu
 
 First round for when the transaction is valid.
 
-***
+---
 
 ### genesisHash?
 
@@ -88,7 +88,7 @@ Hash of the genesis block of the network.
 
 Used to identify which network the transaction is for.
 
-***
+---
 
 ### genesisId?
 
@@ -100,7 +100,7 @@ Genesis ID of the network.
 
 A human-readable string used alongside genesis hash to identify the network.
 
-***
+---
 
 ### group?
 
@@ -112,7 +112,7 @@ Optional group ID for atomic transaction grouping.
 
 Transactions with the same group ID must execute together or not at all.
 
-***
+---
 
 ### heartbeat?
 
@@ -122,7 +122,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:149](https://gith
 
 Heartbeat specific fields
 
-***
+---
 
 ### keyRegistration?
 
@@ -132,7 +132,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:139](https://gith
 
 Key registration specific fields
 
-***
+---
 
 ### lastValid
 
@@ -144,7 +144,7 @@ Last round for when the transaction is valid.
 
 After this round, the transaction will be expired.
 
-***
+---
 
 ### lease?
 
@@ -159,7 +159,7 @@ A lease X is acquired by the sender, generating the (sender, X) lease.
 The lease is kept active until the last_valid round of the transaction has elapsed.
 No other transaction sent by the same sender can be confirmed until the lease expires.
 
-***
+---
 
 ### note?
 
@@ -171,7 +171,7 @@ Optional user-defined note field.
 
 Can contain arbitrary data up to 1KB in size.
 
-***
+---
 
 ### payment?
 
@@ -181,7 +181,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:119](https://gith
 
 Payment specific fields
 
-***
+---
 
 ### rekeyTo?
 
@@ -195,7 +195,7 @@ If set, only this account will be used for transaction authorization going forwa
 Reverting back control to the original address must be done by setting this field to
 the original address.
 
-***
+---
 
 ### sender
 
@@ -207,7 +207,7 @@ The account that authorized the transaction.
 
 Fees are deducted from this account.
 
-***
+---
 
 ### stateProof?
 
@@ -217,7 +217,7 @@ Defined in: [packages/transact/src/transactions/transaction.ts:154](https://gith
 
 State proof specific fields
 
-***
+---
 
 ### type
 

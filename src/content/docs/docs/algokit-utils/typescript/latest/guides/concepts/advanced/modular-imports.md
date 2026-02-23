@@ -1,6 +1,6 @@
 ---
-title: "Modular imports"
-description: "AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This enables better tree-shaking and smaller bundle sizes for your applications."
+title: 'Modular imports'
+description: 'AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This enables better tree-shaking and smaller bundle sizes for your applications.'
 ---
 
 AlgoKit Utils is designed with a modular architecture that allows you to import only the functionality you need. This enables better tree-shaking and smaller bundle sizes for your applications.
@@ -9,15 +9,15 @@ AlgoKit Utils is designed with a modular architecture that allows you to import 
 
 The library is organized into several subpath exports, each containing related functionality:
 
-| Subpath | Purpose | Key Exports |
-|---------|---------|-------------|
-| `/transact` | Transaction primitives | `Transaction`, `TransactionSigner`, `OnApplicationComplete`, `LogicSigAccount`, `MultisigAccount`, `BoxReference` |
-| `/abi` | ABI utilities | `ABIMethod`, `ABIType`, `ABIStringType`, `ABIValue`, Arc56 contract utilities |
-| `/algod-client` | Algod API types | `AlgodClient`, `PendingTransactionResponse`, and other Algod models |
-| `/indexer-client` | Indexer API types | `IndexerClient`, response types like `TransactionResponse`, `AccountResponse` |
-| `/kmd-client` | KMD API types | `KmdClient`, wallet types |
-| `/common` | Shared utilities | `Address` class, encoding/decoding codecs |
-| `/testing` | Test utilities | `algorandFixture`, `algoKitLogCaptureFixture`, `TestLogger` |
+| Subpath           | Purpose                | Key Exports                                                                                                       |
+| ----------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `/transact`       | Transaction primitives | `Transaction`, `TransactionSigner`, `OnApplicationComplete`, `LogicSigAccount`, `MultisigAccount`, `BoxReference` |
+| `/abi`            | ABI utilities          | `ABIMethod`, `ABIType`, `ABIStringType`, `ABIValue`, Arc56 contract utilities                                     |
+| `/algod-client`   | Algod API types        | `AlgodClient`, `PendingTransactionResponse`, and other Algod models                                               |
+| `/indexer-client` | Indexer API types      | `IndexerClient`, response types like `TransactionResponse`, `AccountResponse`                                     |
+| `/kmd-client`     | KMD API types          | `KmdClient`, wallet types                                                                                         |
+| `/common`         | Shared utilities       | `Address` class, encoding/decoding codecs                                                                         |
+| `/testing`        | Test utilities         | `algorandFixture`, `algoKitLogCaptureFixture`, `TestLogger`                                                       |
 
 ## Using modular imports
 
@@ -26,24 +26,31 @@ The library is organized into several subpath exports, each containing related f
 For most use cases, you can import from the main package:
 
 ```typescript
-import { AlgorandClient, algo, microAlgo } from '@algorandfoundation/algokit-utils'
+import { AlgorandClient, algo, microAlgo } from '@algorandfoundation/algokit-utils';
 ```
 
 For specific types or when optimizing bundle size, use subpath imports:
 
 ```typescript
 // Transaction types
-import { Transaction, TransactionSigner, OnApplicationComplete } from '@algorandfoundation/algokit-utils/transact'
+import {
+  Transaction,
+  TransactionSigner,
+  OnApplicationComplete,
+} from '@algorandfoundation/algokit-utils/transact';
 
 // ABI utilities
-import { ABIMethod, ABIType, ABIStringType } from '@algorandfoundation/algokit-utils/abi'
+import { ABIMethod, ABIType, ABIStringType } from '@algorandfoundation/algokit-utils/abi';
 
 // API client types
-import { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client'
-import { TransactionResponse, AccountResponse } from '@algorandfoundation/algokit-utils/indexer-client'
+import { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client';
+import {
+  TransactionResponse,
+  AccountResponse,
+} from '@algorandfoundation/algokit-utils/indexer-client';
 
 // Testing utilities
-import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
+import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 ```
 
 ### Type imports
@@ -51,8 +58,8 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing'
 When you only need types (not runtime values), use type-only imports:
 
 ```typescript
-import type { Transaction, TransactionSigner } from '@algorandfoundation/algokit-utils/transact'
-import type { ABIMethod } from '@algorandfoundation/algokit-utils/abi'
+import type { Transaction, TransactionSigner } from '@algorandfoundation/algokit-utils/transact';
+import type { ABIMethod } from '@algorandfoundation/algokit-utils/abi';
 ```
 
 ## Subpath details
@@ -79,7 +86,7 @@ import {
   // Transaction encoding/decoding
   encodeTransaction,
   decodeTransaction,
-} from '@algorandfoundation/algokit-utils/transact'
+} from '@algorandfoundation/algokit-utils/transact';
 ```
 
 ### `/abi`
@@ -106,7 +113,7 @@ import {
   Arc56Contract,
   getBoxABIStorageKey,
   getGlobalABIStorageKey,
-} from '@algorandfoundation/algokit-utils/abi'
+} from '@algorandfoundation/algokit-utils/abi';
 ```
 
 ### `/algod-client`
@@ -118,7 +125,7 @@ import {
   AlgodClient,
   PendingTransactionResponse,
   // ... other Algod API types
-} from '@algorandfoundation/algokit-utils/algod-client'
+} from '@algorandfoundation/algokit-utils/algod-client';
 ```
 
 ### `/indexer-client`
@@ -134,7 +141,7 @@ import {
   ApplicationResponse,
   AssetResponse,
   // ... other Indexer API types
-} from '@algorandfoundation/algokit-utils/indexer-client'
+} from '@algorandfoundation/algokit-utils/indexer-client';
 ```
 
 ### `/testing`
@@ -147,7 +154,7 @@ import {
   algoKitLogCaptureFixture,
   getTestAccount,
   runWhenIndexerCaughtUp,
-} from '@algorandfoundation/algokit-utils/testing'
+} from '@algorandfoundation/algokit-utils/testing';
 ```
 
 ## Tree-shaking benefits
@@ -156,20 +163,22 @@ Using modular imports helps bundlers (like webpack, esbuild, or rollup) eliminat
 
 ```typescript
 // This imports only what you need
-import { Transaction } from '@algorandfoundation/algokit-utils/transact'
+import { Transaction } from '@algorandfoundation/algokit-utils/transact';
 
 // Instead of importing everything
-import { Transaction } from '@algorandfoundation/algokit-utils'
+import { Transaction } from '@algorandfoundation/algokit-utils';
 ```
 
 ## When to use modular imports
 
 **Use the main export when:**
+
 - You're using `AlgorandClient` as your primary interface
 - Bundle size isn't a critical concern
 - You need multiple related features
 
 **Use subpath imports when:**
+
 - You need specific types for type annotations
 - You're building a library that should have minimal dependencies
 - You want to optimize bundle size

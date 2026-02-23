@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "lookupAccountCreatedApplicationByAddress"
+title: 'lookupAccountCreatedApplicationByAddress'
 ---
 
 > **lookupAccountCreatedApplicationByAddress**(`indexer`, `address`, `getAll`, `paginationLimit?`): `Promise`\<[`Application`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/application/)[]\>

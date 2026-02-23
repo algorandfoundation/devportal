@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.transact"
+title: 'algokit_utils.transact'
 ---
 
 <div class="api-ref">

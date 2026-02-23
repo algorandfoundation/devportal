@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Arc2TransactionNote"
+title: 'Arc2TransactionNote'
 ---
 
 > **Arc2TransactionNote** = \{ `dAppName`: `string`; `data`: `string`; `format`: `"m"` \| `"b"` \| `"u"`; \} \| \{ `dAppName`: `string`; `data`: [`TransactionNoteData`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/transactionnotedata/); `format`: `"j"`; \}

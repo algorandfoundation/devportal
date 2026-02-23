@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.applications.app_spec"
+title: 'algokit_utils.applications.app_spec'
 ---
 
 <div class="api-ref">

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AVMString"
+title: 'AVMString'
 ---
 
 > **AVMString** = `"AVMString"`

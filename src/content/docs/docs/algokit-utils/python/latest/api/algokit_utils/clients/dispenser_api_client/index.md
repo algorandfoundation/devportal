@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.clients.dispenser_api_client"
+title: 'algokit_utils.clients.dispenser_api_client'
 ---
 
 <div class="api-ref">
@@ -8,15 +8,15 @@ title: "algokit_utils.clients.dispenser_api_client"
 
 ## Attributes
 
-| [`DISPENSER_ASSETS`](#algokit_utils.clients.dispenser_api_client.DISPENSER_ASSETS)                     |    |
-|--------------------------------------------------------------------------------------------------------|----|
-| [`DISPENSER_REQUEST_TIMEOUT`](#algokit_utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT)   |    |
-| [`DISPENSER_ACCESS_TOKEN_KEY`](#algokit_utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY) |    |
+| [`DISPENSER_ASSETS`](#algokit_utils.clients.dispenser_api_client.DISPENSER_ASSETS)                     |     |
+| ------------------------------------------------------------------------------------------------------ | --- |
+| [`DISPENSER_REQUEST_TIMEOUT`](#algokit_utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT)   |     |
+| [`DISPENSER_ACCESS_TOKEN_KEY`](#algokit_utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY) |     |
 
 ## Classes
 
 | [`DispenserApiConfig`](#algokit_utils.clients.dispenser_api_client.DispenserApiConfig)               |                                                                                                                                                                                                                             |
-|------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`DispenserAssetName`](#algokit_utils.clients.dispenser_api_client.DispenserAssetName)               | Enum where members are also (and must be) ints                                                                                                                                                                              |
 | [`DispenserAsset`](#algokit_utils.clients.dispenser_api_client.DispenserAsset)                       |                                                                                                                                                                                                                             |
 | [`DispenserFundResponse`](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)         |                                                                                                                                                                                                                             |
@@ -25,55 +25,55 @@ title: "algokit_utils.clients.dispenser_api_client"
 
 ## Module Contents
 
-### *class* DispenserApiConfig
+### _class_ DispenserApiConfig
 
-#### BASE_URL *= 'https://api.dispenser.algorandfoundation.tools'*
+#### BASE*URL *= 'https://api.dispenser.algorandfoundation.tools'_
 
-### *class* DispenserAssetName
+### _class_ DispenserAssetName
 
 Bases: `enum.IntEnum`
 
 Enum where members are also (and must be) ints
 
-#### ALGO *= 0*
+#### ALGO _= 0_
 
-### *class* DispenserAsset
+### _class_ DispenserAsset
 
-#### asset_id *: int*
+#### asset*id *: int\_
 
 The ID of the asset
 
-#### decimals *: int*
+#### decimals _: int_
 
 The amount of decimal places the asset was created with
 
-#### description *: str*
+#### description _: str_
 
 The description of the asset
 
-### *class* DispenserFundResponse
+### _class_ DispenserFundResponse
 
-#### tx_id *: str*
+#### tx*id *: str\_
 
 The transaction ID of the funded transaction
 
-#### amount *: int*
+#### amount _: int_
 
 The amount of Algos funded
 
-### *class* DispenserLimitResponse
+### _class_ DispenserLimitResponse
 
-#### amount *: int*
+#### amount _: int_
 
 The amount of Algos that can be funded
 
 ### algokit_utils.clients.dispenser_api_client.DISPENSER_ASSETS
 
-### algokit_utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT *= 15*
+### algokit*utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT *= 15\_
 
-### algokit_utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY *= 'ALGOKIT_DISPENSER_ACCESS_TOKEN'*
+### algokit*utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY *= 'ALGOKIT*DISPENSER_ACCESS_TOKEN'*
 
-### *class* TestNetDispenserApiClient(auth_token: str | None = None, request_timeout: int = DISPENSER_REQUEST_TIMEOUT)
+### _class_ TestNetDispenserApiClient(auth_token: str | None = None, request_timeout: int = DISPENSER_REQUEST_TIMEOUT)
 
 Client for interacting with the AlgoKit TestNet Dispenser API ([https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md)).
 To get started create a new access token via algokit dispenser login –ci
@@ -83,23 +83,23 @@ and it will be auto loaded. If both are set, the constructor argument takes prec
 
 Default request timeout is 15 seconds. Modify by passing request_timeout to the constructor.
 
-#### auth_token *: str*
+#### auth*token *: str\_
 
-#### request_timeout *= 15*
+#### request*timeout *= 15\_
 
 #### fund(address: str, amount: int, asset_id: int | None = None) → [DispenserFundResponse](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)
 
 Fund an account with Algos from the dispenser API
 
-* **Parameters:**
-  * **address** – The address to fund
-  * **amount** – The amount of Algos to fund
-  * **asset_id** – The asset ID to fund (deprecated)
-* **Returns:**
+- **Parameters:**
+  - **address** – The address to fund
+  - **amount** – The amount of Algos to fund
+  - **asset_id** – The asset ID to fund (deprecated)
+- **Returns:**
   The transaction ID of the funded transaction
-* **Raises:**
+- **Raises:**
   **Exception** – If the dispenser API request fails
-* **Example:**
+- **Example:**
   ```python
   dispenser_client = TestNetDispenserApiClient()
   dispenser_client.fund(address="SENDER_ADDRESS", amount=1000000)

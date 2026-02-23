@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIReturn"
+title: 'ABIReturn'
 ---
 
 > **ABIReturn** = \{ `decodeError`: `undefined`; `method`: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/); `rawReturnValue`: `Uint8Array`; `returnValue`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/); \} \| \{ `decodeError?`: `Error`; `method`: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/); `rawReturnValue?`: `undefined`; `returnValue?`: `undefined`; \}

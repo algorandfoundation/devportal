@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIMethodArg"
+title: 'ABIMethodArg'
 ---
 
 > **ABIMethodArg** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/abi/src/abi-method.ts:24](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:28](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L28)
 
-***
+---
 
 ### description?
 
@@ -25,7 +25,7 @@ Defined in: [packages/abi/src/abi-method.ts:28](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:27](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L27)
 
-***
+---
 
 ### name?
 
@@ -33,7 +33,7 @@ Defined in: [packages/abi/src/abi-method.ts:27](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:26](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L26)
 
-***
+---
 
 ### type
 

@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.transactions.builders.app"
+title: 'algokit_utils.transactions.builders.app'
 ---
 
 <div class="api-ref">
@@ -8,12 +8,12 @@ title: "algokit_utils.transactions.builders.app"
 
 ## Functions
 
-| [`build_app_create_transaction`](#algokit_utils.transactions.builders.app.build_app_create_transaction)(...)           |    |
-|------------------------------------------------------------------------------------------------------------------------|----|
-| [`build_app_update_transaction`](#algokit_utils.transactions.builders.app.build_app_update_transaction)(...)           |    |
-| [`build_app_delete_transaction`](#algokit_utils.transactions.builders.app.build_app_delete_transaction)(...)           |    |
-| [`build_app_call_transaction`](#algokit_utils.transactions.builders.app.build_app_call_transaction)(...)               |    |
-| [`build_app_method_call_transaction`](#algokit_utils.transactions.builders.app.build_app_method_call_transaction)(...) |    |
+| [`build_app_create_transaction`](#algokit_utils.transactions.builders.app.build_app_create_transaction)(...)           |     |
+| ---------------------------------------------------------------------------------------------------------------------- | --- |
+| [`build_app_update_transaction`](#algokit_utils.transactions.builders.app.build_app_update_transaction)(...)           |     |
+| [`build_app_delete_transaction`](#algokit_utils.transactions.builders.app.build_app_delete_transaction)(...)           |     |
+| [`build_app_call_transaction`](#algokit_utils.transactions.builders.app.build_app_call_transaction)(...)               |     |
+| [`build_app_method_call_transaction`](#algokit_utils.transactions.builders.app.build_app_method_call_transaction)(...) |     |
 
 ## Module Contents
 

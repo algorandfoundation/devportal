@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.protocols.typed_clients"
+title: 'algokit_utils.protocols.typed_clients'
 ---
 
 <div class="api-ref">
@@ -8,23 +8,23 @@ title: "algokit_utils.protocols.typed_clients"
 
 ## Classes
 
-| [`TypedAppClientProtocol`](#algokit_utils.protocols.typed_clients.TypedAppClientProtocol)   | App Client protocol   |
-|---------------------------------------------------------------------------------------------|-----------------------|
-| [`TypedAppFactoryProtocol`](#algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol) | App factory protocol  |
+| [`TypedAppClientProtocol`](#algokit_utils.protocols.typed_clients.TypedAppClientProtocol)   | App Client protocol  |
+| ------------------------------------------------------------------------------------------- | -------------------- |
+| [`TypedAppFactoryProtocol`](#algokit_utils.protocols.typed_clients.TypedAppFactoryProtocol) | App factory protocol |
 
 ## Module Contents
 
-### *class* TypedAppClientProtocol(\*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient), approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None)
+### _class_ TypedAppClientProtocol(\*, app_id: int, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient), approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None)
 
 Bases: `Protocol`
 
 App Client protocol
 
-#### *classmethod* from_creator_and_name(\*, creator_address: str, app_name: str, default_sender: str | None = None, default_signer: TransactionSigner | None = None, ignore_cache: bool | None = None, app_lookup_cache: [ApplicationLookup](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)) → Self
+#### _classmethod_ from_creator_and_name(\*, creator_address: str, app_name: str, default_sender: str | None = None, default_signer: TransactionSigner | None = None, ignore_cache: bool | None = None, app_lookup_cache: [ApplicationLookup](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_deployer/#algokit_utils.applications.app_deployer.ApplicationLookup) | None = None, algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)) → Self
 
-#### *classmethod* from_network(\*, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None, algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)) → Self
+#### _classmethod_ from_network(\*, app_name: str | None = None, default_sender: str | None = None, default_signer: TransactionSigner | None = None, approval_source_map: ProgramSourceMap | None = None, clear_source_map: ProgramSourceMap | None = None, algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient)) → Self
 
-### *class* TypedAppFactoryProtocol(algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient), \*\*kwargs: Any)
+### _class_ TypedAppFactoryProtocol(algorand: [AlgorandClient](/docs/algokit-utils/python/latest/api/algokit_utils/algorand/#algokit_utils.algorand.AlgorandClient), \*\*kwargs: Any)
 
 Bases: `Protocol`, `Generic`[`CreateParamsT`, `UpdateParamsT`, `DeleteParamsT`]
 

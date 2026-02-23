@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "encodeTransaction"
+title: 'encodeTransaction'
 ---
 
 > **encodeTransaction**(`transaction`): `Uint8Array`

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "RawSimulateOptions"
+title: 'RawSimulateOptions'
 ---
 
 > **RawSimulateOptions** = `Expand`\<`Omit`\<[`SimulateRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/simulaterequest/), `"txnGroups"`\>\> & `object`

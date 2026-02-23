@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "seedFromMnemonic"
+title: 'seedFromMnemonic'
 ---
 
 > **seedFromMnemonic**(`mnemonic`): `Uint8Array`\<`ArrayBufferLike`\>

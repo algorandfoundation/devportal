@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "createGlobalSetup"
+title: 'createGlobalSetup'
 ---
 
 > **createGlobalSetup**(`clientType`): () => `Promise`\<() => `Promise`\<`void`\>\>

@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.models.simulate"
+title: 'algokit_utils.models.simulate'
 ---
 
 <div class="api-ref">

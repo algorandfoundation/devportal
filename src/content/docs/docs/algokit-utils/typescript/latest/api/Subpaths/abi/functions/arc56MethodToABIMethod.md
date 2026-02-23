@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "arc56MethodToABIMethod"
+title: 'arc56MethodToABIMethod'
 ---
 
 > **arc56MethodToABIMethod**(`method`, `appSpec`): [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)

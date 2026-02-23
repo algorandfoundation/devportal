@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppDeleteParams"
+title: 'AppDeleteParams'
 ---
 
 > **AppDeleteParams** = `CommonAppCallParams` & `object`

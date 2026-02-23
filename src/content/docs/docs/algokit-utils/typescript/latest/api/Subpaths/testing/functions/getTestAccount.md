@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getTestAccount"
+title: 'getTestAccount'
 ---
 
 ## Call Signature

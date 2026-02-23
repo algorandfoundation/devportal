@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.transactions.builders.asset"
+title: 'algokit_utils.transactions.builders.asset'
 ---
 
 <div class="api-ref">
@@ -8,14 +8,14 @@ title: "algokit_utils.transactions.builders.asset"
 
 ## Functions
 
-| [`build_asset_create_transaction`](#algokit_utils.transactions.builders.asset.build_asset_create_transaction)(...)     |    |
-|------------------------------------------------------------------------------------------------------------------------|----|
-| [`build_asset_config_transaction`](#algokit_utils.transactions.builders.asset.build_asset_config_transaction)(...)     |    |
-| [`build_asset_destroy_transaction`](#algokit_utils.transactions.builders.asset.build_asset_destroy_transaction)(...)   |    |
-| [`build_asset_freeze_transaction`](#algokit_utils.transactions.builders.asset.build_asset_freeze_transaction)(...)     |    |
-| [`build_asset_transfer_transaction`](#algokit_utils.transactions.builders.asset.build_asset_transfer_transaction)(...) |    |
-| [`build_asset_opt_in_transaction`](#algokit_utils.transactions.builders.asset.build_asset_opt_in_transaction)(...)     |    |
-| [`build_asset_opt_out_transaction`](#algokit_utils.transactions.builders.asset.build_asset_opt_out_transaction)(...)   |    |
+| [`build_asset_create_transaction`](#algokit_utils.transactions.builders.asset.build_asset_create_transaction)(...)     |     |
+| ---------------------------------------------------------------------------------------------------------------------- | --- |
+| [`build_asset_config_transaction`](#algokit_utils.transactions.builders.asset.build_asset_config_transaction)(...)     |     |
+| [`build_asset_destroy_transaction`](#algokit_utils.transactions.builders.asset.build_asset_destroy_transaction)(...)   |     |
+| [`build_asset_freeze_transaction`](#algokit_utils.transactions.builders.asset.build_asset_freeze_transaction)(...)     |     |
+| [`build_asset_transfer_transaction`](#algokit_utils.transactions.builders.asset.build_asset_transfer_transaction)(...) |     |
+| [`build_asset_opt_in_transaction`](#algokit_utils.transactions.builders.asset.build_asset_opt_in_transaction)(...)     |     |
+| [`build_asset_opt_out_transaction`](#algokit_utils.transactions.builders.asset.build_asset_opt_out_transaction)(...)   |     |
 
 ## Module Contents
 

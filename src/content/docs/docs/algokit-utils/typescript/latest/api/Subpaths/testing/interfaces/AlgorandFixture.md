@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgorandFixture"
+title: 'AlgorandFixture'
 ---
 
 Defined in: [src/testing/types.ts:69](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L69)
@@ -26,7 +26,7 @@ Testing framework agnostic handler method to run before each test to prepare the
 
 `Promise`\<`void`\>
 
-***
+---
 
 ### newScope()
 
@@ -46,32 +46,32 @@ You can call this from any testing framework specific hook method to control whe
 
 ```typescript
 describe('MY MODULE', () => {
-  const fixture = algorandFixture()
-  beforeEach(fixture.newScope)
+  const fixture = algorandFixture();
+  beforeEach(fixture.newScope);
 
   test('MY TEST', async () => {
-    const { algorand, testAccount } = fixture.context
+    const { algorand, testAccount } = fixture.context;
 
     // Test stuff!
-  })
-})
+  });
+});
 ```
 
 ```typescript
 describe('MY MODULE', () => {
-  const fixture = algorandFixture()
-  beforeAll(fixture.newScope)
+  const fixture = algorandFixture();
+  beforeAll(fixture.newScope);
 
   test('test1', async () => {
-    const { algorand, testAccount } = fixture.context
+    const { algorand, testAccount } = fixture.context;
 
     // Test stuff!
-  })
+  });
   test('test2', async () => {
-    const { algorand, testAccount } = fixture.context
+    const { algorand, testAccount } = fixture.context;
     // algorand and testAccount are the same as in test1
-  })
-})
+  });
+});
 ```
 
 ## Accessors
@@ -90,7 +90,7 @@ Retrieve an `AlgorandClient` loaded with the current context, including testAcco
 
 [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/)
 
-***
+---
 
 ### context
 

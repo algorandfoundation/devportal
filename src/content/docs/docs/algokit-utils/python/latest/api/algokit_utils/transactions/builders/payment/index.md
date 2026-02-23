@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.transactions.builders.payment"
+title: 'algokit_utils.transactions.builders.payment'
 ---
 
 <div class="api-ref">
@@ -8,8 +8,8 @@ title: "algokit_utils.transactions.builders.payment"
 
 ## Functions
 
-| [`build_payment_transaction`](#algokit_utils.transactions.builders.payment.build_payment_transaction)(...)   |    |
-|--------------------------------------------------------------------------------------------------------------|----|
+| [`build_payment_transaction`](#algokit_utils.transactions.builders.payment.build_payment_transaction)(...) |     |
+| ---------------------------------------------------------------------------------------------------------- | --- |
 
 ## Module Contents
 

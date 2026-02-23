@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ClientResolveAppClientByCreatorAndNameParams"
+title: 'ClientResolveAppClientByCreatorAndNameParams'
 ---
 
 > **ClientResolveAppClientByCreatorAndNameParams** = `Expand`\<`Omit`\<[`ResolveAppClientByCreatorAndName`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/resolveappclientbycreatorandname/), `"algorand"`\>\>

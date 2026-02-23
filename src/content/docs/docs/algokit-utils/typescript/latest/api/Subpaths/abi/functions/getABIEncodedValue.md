@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getABIEncodedValue"
+title: 'getABIEncodedValue'
 ---
 
 > **getABIEncodedValue**(`type`, `value`): `Uint8Array`

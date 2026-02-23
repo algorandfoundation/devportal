@@ -1,6 +1,6 @@
 ---
-title: "Account management"
-description: "Account management is one of the core capabilities provided by AlgoKit Utils. It allows you to create mnemonic, rekeyed, multisig, transaction signer, idempotent KMD and environment variable injected accounts that can be used to sign transactions as well as representing a sender address at the same time. This significantly simplifies management of transaction signing."
+title: 'Account management'
+description: 'Account management is one of the core capabilities provided by AlgoKit Utils. It allows you to create mnemonic, rekeyed, multisig, transaction signer, idempotent KMD and environment variable injected accounts that can be used to sign transactions as well as representing a sender address at the same time. This significantly simplifies management of transaction signing.'
 ---
 
 Account management is one of the core capabilities provided by AlgoKit Utils. It allows you to create mnemonic, rekeyed, multisig, transaction signer, idempotent KMD and environment variable injected accounts that can be used to sign transactions as well as representing a sender address at the same time. This significantly simplifies management of transaction signing.
@@ -25,11 +25,11 @@ Many methods in `AccountManager` expose an `AddressWithTransactionSigner`. `Addr
 
 `AddressWithTransactionSigner` is a `Protocol` — any object that provides an `addr: str` property (via the `Addressable` protocol) and a `signer: TransactionSigner` property structurally conforms to it. The following built-in types satisfy this protocol:
 
-| Type | Description | Created via |
-| --- | --- | --- |
+| Type                                                | Description                       | Created via                                                     |
+| --------------------------------------------------- | --------------------------------- | --------------------------------------------------------------- |
 | [`AddressWithSigners`](#underlying-account-classes) | Standard account with private key | `algorand.account.random()`, `algorand.account.from_mnemonic()` |
-| [`LogicSigAccount`](#logicsigaccount) | Logic signature account | `algorand.account.logicsig()` |
-| [`MultisigAccount`](#multisigaccount) | Multisig account | `algorand.account.multisig()` |
+| [`LogicSigAccount`](#logicsigaccount)               | Logic signature account           | `algorand.account.logicsig()`                                   |
+| [`MultisigAccount`](#multisigaccount)               | Multisig account                  | `algorand.account.multisig()`                                   |
 
 You can also create your own conforming type by implementing a class with `addr` and `signer` properties. Since `AddressWithTransactionSigner` is decorated with `@runtime_checkable`, you can verify conformance at runtime with `isinstance()`.
 
@@ -130,14 +130,14 @@ While `AddressWithTransactionSigner` is the main interface used to represent an 
 
 A logic signature account for signing with a TEAL program. Extends `LogicSig` with delegation support.
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `sig` | `bytes \| None` | Single signature for delegation (if delegated to a single account) |
-| `msig` | `MultisigSignature \| None` | Multisig signature (if part of a multisig) |
-| `lmsig` | `MultisigSignature \| None` | Multisig-delegated logic sig signature |
-| `is_delegated` | `bool` | Whether this LogicSig is delegated to an account |
-| `signer` | `TransactionSigner` | Transaction signer callable for use with `TransactionComposer` |
-| `addr` | `str` | The logic signature account address (conforms to `AddressWithTransactionSigner` protocol) |
+| Property       | Type                        | Description                                                                               |
+| -------------- | --------------------------- | ----------------------------------------------------------------------------------------- |
+| `sig`          | `bytes \| None`             | Single signature for delegation (if delegated to a single account)                        |
+| `msig`         | `MultisigSignature \| None` | Multisig signature (if part of a multisig)                                                |
+| `lmsig`        | `MultisigSignature \| None` | Multisig-delegated logic sig signature                                                    |
+| `is_delegated` | `bool`                      | Whether this LogicSig is delegated to an account                                          |
+| `signer`       | `TransactionSigner`         | Transaction signer callable for use with `TransactionComposer`                            |
+| `addr`         | `str`                       | The logic signature account address (conforms to `AddressWithTransactionSigner` protocol) |
 
 Source: [`src/algokit_transact/logicsig.py`](https://github.com/algorandfoundation/algokit-utils-py/blob/main/src/algokit_transact/logicsig.py)
 
@@ -145,13 +145,13 @@ Source: [`src/algokit_transact/logicsig.py`](https://github.com/algorandfoundati
 
 A multisig account that supports multisig transactions with one or more signers present.
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `params` | `MultisigMetadata` | The multisig account parameters (`version`, `threshold`, `addrs`) |
-| `sub_signers` | `Sequence[AddressWithSigners]` | The list of signing accounts |
-| `signer` | `TransactionSigner` | Transaction signer callable for use with `TransactionComposer` |
-| `address` | `str` | The multisig account address |
-| `addr` | `str` | Alias for `address` (conforms to `AddressWithTransactionSigner` protocol) |
+| Property      | Type                           | Description                                                               |
+| ------------- | ------------------------------ | ------------------------------------------------------------------------- |
+| `params`      | `MultisigMetadata`             | The multisig account parameters (`version`, `threshold`, `addrs`)         |
+| `sub_signers` | `Sequence[AddressWithSigners]` | The list of signing accounts                                              |
+| `signer`      | `TransactionSigner`            | Transaction signer callable for use with `TransactionComposer`            |
+| `address`     | `str`                          | The multisig account address                                              |
+| `addr`        | `str`                          | Alias for `address` (conforms to `AddressWithTransactionSigner` protocol) |
 
 Source: [`src/algokit_transact/multisig.py`](https://github.com/algorandfoundation/algokit-utils-py/blob/main/src/algokit_transact/multisig.py)
 

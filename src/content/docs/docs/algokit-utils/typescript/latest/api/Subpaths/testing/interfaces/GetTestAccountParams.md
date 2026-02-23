@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "GetTestAccountParams"
+title: 'GetTestAccountParams'
 ---
 
 Defined in: [src/testing/types.ts:45](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L45)
@@ -29,7 +29,7 @@ Optional override for how to get a test account; this allows you to retrieve acc
 
 `Promise`\<[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) & `object`\>
 
-***
+---
 
 ### initialFunds
 
@@ -39,7 +39,7 @@ Defined in: [src/testing/types.ts:47](https://github.com/larkiny/algokit-utils-t
 
 Initial funds to ensure the account has
 
-***
+---
 
 ### suppressLog?
 

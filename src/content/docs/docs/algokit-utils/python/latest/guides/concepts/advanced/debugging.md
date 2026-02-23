@@ -1,6 +1,6 @@
 ---
-title: "Debugger"
-description: "The AlgoKit Python Utilities package provides a set of debugging tools that can be used to simulate and trace transactions on the Algorand blockchain. These tools and methods are optimized for developers who are building applications on Algorand and need to test and debug their smart contracts via [AlgoKit AVM Debugger extension](https://github.com/algorandfoundation/algokit-avm-vscode-debugger)."
+title: 'Debugger'
+description: 'The AlgoKit Python Utilities package provides a set of debugging tools that can be used to simulate and trace transactions on the Algorand blockchain. These tools and methods are optimized for developers who are building applications on Algorand and need to test and debug their smart contracts via [AlgoKit AVM Debugger extension](https://github.com/algorandfoundation/algokit-avm-vscode-debugger).'
 ---
 
 The AlgoKit Python Utilities package provides a set of debugging tools that can be used to simulate and trace transactions on the Algorand blockchain. These tools and methods are optimized for developers who are building applications on Algorand and need to test and debug their smart contracts via [AlgoKit AVM Debugger extension](https://marketplace.visualstudio.com/items?itemName=algorandfoundation.algokit-avm-vscode-debugger).
@@ -24,15 +24,15 @@ config.configure(
 
 ### Config flags
 
-| Flag | Type | Default | Description |
-| --- | --- | --- | --- |
-| `debug` | `bool` | `False` | Enables debug mode. When `True`, transaction traces are automatically generated and the logger level is set to `DEBUG`. |
-| `project_root` | `Path \| None` | Auto-detected | Root directory used for storing trace files and source maps. Auto-detected by searching up for `.algokit.toml`, or from the `ALGOKIT_PROJECT_ROOT` env var. |
-| `trace_all` | `bool` | `False` | When enabled, simulation traces are persisted for **all** operations, not just failed ones. |
-| `trace_buffer_size_mb` | `float` | `256` | Maximum disk space (MB) for stored trace files. Oldest traces are cleaned up when the limit is exceeded. |
-| `max_search_depth` | `int` | `10` | Maximum number of parent directories to traverse when auto-detecting `project_root`. |
-| `populate_app_call_resources` | `bool` | `True` | When enabled, automatically populates required resources (accounts, assets, apps, boxes) on application call transactions via simulation. |
-| `logger` | `logging.Logger` | `AlgoKitLogger()` | The logger instance used by the library. Can be replaced with any `logging.Logger`, including a null logger (see below). |
+| Flag                          | Type             | Default           | Description                                                                                                                                                 |
+| ----------------------------- | ---------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `debug`                       | `bool`           | `False`           | Enables debug mode. When `True`, transaction traces are automatically generated and the logger level is set to `DEBUG`.                                     |
+| `project_root`                | `Path \| None`   | Auto-detected     | Root directory used for storing trace files and source maps. Auto-detected by searching up for `.algokit.toml`, or from the `ALGOKIT_PROJECT_ROOT` env var. |
+| `trace_all`                   | `bool`           | `False`           | When enabled, simulation traces are persisted for **all** operations, not just failed ones.                                                                 |
+| `trace_buffer_size_mb`        | `float`          | `256`             | Maximum disk space (MB) for stored trace files. Oldest traces are cleaned up when the limit is exceeded.                                                    |
+| `max_search_depth`            | `int`            | `10`              | Maximum number of parent directories to traverse when auto-detecting `project_root`.                                                                        |
+| `populate_app_call_resources` | `bool`           | `True`            | When enabled, automatically populates required resources (accounts, assets, apps, boxes) on application call transactions via simulation.                   |
+| `logger`                      | `logging.Logger` | `AlgoKitLogger()` | The logger instance used by the library. Can be replaced with any `logging.Logger`, including a null logger (see below).                                    |
 
 ## AlgoKitLogger
 
@@ -74,7 +74,6 @@ Unlike the TypeScript version (which uses a [separate addon package](https://git
 The following methods are provided for manual debugging operations:
 
 - `persist_sourcemaps`: Persists sourcemaps for given TEAL contracts as AVM Debugger-compliant artifacts. Parameters:
-
   - `sources`: List of `PersistSourceMapInput` sources to generate sourcemaps for
   - `project_root`: Project root directory for storage
   - `client`: `AlgodClient` instance

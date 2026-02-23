@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABITransactionType"
+title: 'ABITransactionType'
 ---
 
 Defined in: [packages/abi/src/abi-method.ts:7](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L7)
@@ -15,7 +15,7 @@ Defined in: [packages/abi/src/abi-method.ts:7](https://github.com/larkiny/algoki
 
 Defined in: [packages/abi/src/abi-method.ts:14](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L14)
 
-***
+---
 
 ### AssetConfig
 
@@ -23,7 +23,7 @@ Defined in: [packages/abi/src/abi-method.ts:14](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L11)
 
-***
+---
 
 ### AssetFreeze
 
@@ -31,7 +31,7 @@ Defined in: [packages/abi/src/abi-method.ts:11](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:13](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L13)
 
-***
+---
 
 ### AssetTransfer
 
@@ -39,7 +39,7 @@ Defined in: [packages/abi/src/abi-method.ts:13](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:12](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L12)
 
-***
+---
 
 ### KeyRegistration
 
@@ -47,7 +47,7 @@ Defined in: [packages/abi/src/abi-method.ts:12](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L10)
 
-***
+---
 
 ### Payment
 
@@ -55,7 +55,7 @@ Defined in: [packages/abi/src/abi-method.ts:10](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L9)
 
-***
+---
 
 ### Txn
 

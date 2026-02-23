@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "KeyRegistrationTransactionFields"
+title: 'KeyRegistrationTransactionFields'
 ---
 
 > **KeyRegistrationTransactionFields** = `object`
@@ -22,7 +22,7 @@ Defined in: [packages/transact/src/transactions/key-registration.ts:41](https://
 
 Mark account as non-reward earning.
 
-***
+---
 
 ### selectionKey?
 
@@ -32,7 +32,7 @@ Defined in: [packages/transact/src/transactions/key-registration.ts:16](https://
 
 VRF public key (32 bytes).
 
-***
+---
 
 ### stateProofKey?
 
@@ -42,7 +42,7 @@ Defined in: [packages/transact/src/transactions/key-registration.ts:21](https://
 
 State proof key (64 bytes).
 
-***
+---
 
 ### voteFirst?
 
@@ -52,7 +52,7 @@ Defined in: [packages/transact/src/transactions/key-registration.ts:26](https://
 
 First round for which the participation key is valid.
 
-***
+---
 
 ### voteKey?
 
@@ -62,7 +62,7 @@ Defined in: [packages/transact/src/transactions/key-registration.ts:11](https://
 
 Root participation public key (32 bytes).
 
-***
+---
 
 ### voteKeyDilution?
 
@@ -72,7 +72,7 @@ Defined in: [packages/transact/src/transactions/key-registration.ts:36](https://
 
 Key dilution for the 2-level participation key.
 
-***
+---
 
 ### voteLast?
 

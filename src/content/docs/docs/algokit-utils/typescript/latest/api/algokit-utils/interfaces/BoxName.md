@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BoxName"
+title: 'BoxName'
 ---
 
 Defined in: [src/app.ts:266](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L266)
@@ -19,7 +19,7 @@ Defined in: [src/app.ts:268](https://github.com/larkiny/algokit-utils-ts/blob/ma
 
 Name in UTF-8
 
-***
+---
 
 ### nameBase64
 
@@ -29,7 +29,7 @@ Defined in: [src/app.ts:272](https://github.com/larkiny/algokit-utils-ts/blob/ma
 
 Name in Base64
 
-***
+---
 
 ### nameRaw
 

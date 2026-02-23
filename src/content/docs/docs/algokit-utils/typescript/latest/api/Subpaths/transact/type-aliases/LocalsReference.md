@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LocalsReference"
+title: 'LocalsReference'
 ---
 
 > **LocalsReference** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:235](https://github.
 
 The address of the account holding the local state
 
-***
+---
 
 ### appId
 

@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.applications.app_deployer"
+title: 'algokit_utils.applications.app_deployer'
 ---
 
 <div class="api-ref">
@@ -8,164 +8,164 @@ title: "algokit_utils.applications.app_deployer"
 
 ## Attributes
 
-| [`APP_DEPLOY_NOTE_DAPP`](#algokit_utils.applications.app_deployer.APP_DEPLOY_NOTE_DAPP)   |    |
-|-------------------------------------------------------------------------------------------|----|
+| [`APP_DEPLOY_NOTE_DAPP`](#algokit_utils.applications.app_deployer.APP_DEPLOY_NOTE_DAPP) |     |
+| --------------------------------------------------------------------------------------- | --- |
 
 ## Classes
 
-| [`AppDeploymentMetaData`](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)   | Metadata about an application stored in a transaction note during creation.   |
-|---------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| [`ApplicationReference`](#algokit_utils.applications.app_deployer.ApplicationReference)     | Information about an Algorand app                                             |
-| [`ApplicationMetaData`](#algokit_utils.applications.app_deployer.ApplicationMetaData)       | Complete metadata about a deployed app                                        |
-| [`ApplicationLookup`](#algokit_utils.applications.app_deployer.ApplicationLookup)           | Cache of {py:class}\`ApplicationMetaData\` for a specific creator             |
-| [`AppDeployParams`](#algokit_utils.applications.app_deployer.AppDeployParams)               | Parameters for deploying an app                                               |
-| [`AppDeployResult`](#algokit_utils.applications.app_deployer.AppDeployResult)               | The result of a deployment                                                    |
-| [`AppDeployer`](#algokit_utils.applications.app_deployer.AppDeployer)                       | Manages deployment and deployment metadata of applications                    |
+| [`AppDeploymentMetaData`](#algokit_utils.applications.app_deployer.AppDeploymentMetaData) | Metadata about an application stored in a transaction note during creation. |
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [`ApplicationReference`](#algokit_utils.applications.app_deployer.ApplicationReference)   | Information about an Algorand app                                           |
+| [`ApplicationMetaData`](#algokit_utils.applications.app_deployer.ApplicationMetaData)     | Complete metadata about a deployed app                                      |
+| [`ApplicationLookup`](#algokit_utils.applications.app_deployer.ApplicationLookup)         | Cache of {py:class}\`ApplicationMetaData\` for a specific creator           |
+| [`AppDeployParams`](#algokit_utils.applications.app_deployer.AppDeployParams)             | Parameters for deploying an app                                             |
+| [`AppDeployResult`](#algokit_utils.applications.app_deployer.AppDeployResult)             | The result of a deployment                                                  |
+| [`AppDeployer`](#algokit_utils.applications.app_deployer.AppDeployer)                     | Manages deployment and deployment metadata of applications                  |
 
 ## Module Contents
 
-### algokit_utils.applications.app_deployer.APP_DEPLOY_NOTE_DAPP *: str* *= 'ALGOKIT_DEPLOYER'*
+### algokit*utils.applications.app_deployer.APP_DEPLOY_NOTE_DAPP *: str\_ _= 'ALGOKIT_DEPLOYER'_
 
-### *class* AppDeploymentMetaData
+### _class_ AppDeploymentMetaData
 
 Metadata about an application stored in a transaction note during creation.
 
-#### name *: str*
+#### name _: str_
 
-#### version *: str*
+#### version _: str_
 
-#### deletable *: bool | None*
+#### deletable _: bool | None_
 
-#### updatable *: bool | None*
+#### updatable _: bool | None_
 
 #### dictify() → dict[str, str | bool]
 
-### *class* ApplicationReference
+### _class_ ApplicationReference
 
 Information about an Algorand app
 
-#### app_id *: int*
+#### app*id *: int\_
 
-#### app_address *: str*
+#### app*address *: str\_
 
-### *class* ApplicationMetaData
+### _class_ ApplicationMetaData
 
 Complete metadata about a deployed app
 
-#### reference *: [ApplicationReference](#algokit_utils.applications.app_deployer.ApplicationReference)*
+#### reference _: [ApplicationReference](#algokit_utils.applications.app_deployer.ApplicationReference)_
 
-#### deploy_metadata *: [AppDeploymentMetaData](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)*
+#### deploy*metadata *: [AppDeploymentMetaData](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)\_
 
-#### created_round *: int*
+#### created*round *: int\_
 
-#### updated_round *: int*
+#### updated*round *: int\_
 
-#### deleted *: bool* *= False*
+#### deleted _: bool_ _= False_
 
-#### *property* app_id *: int*
+#### _property_ app*id *: int\_
 
-#### *property* app_address *: str*
+#### _property_ app*address *: str\_
 
-#### *property* name *: str*
+#### _property_ name _: str_
 
-#### *property* version *: str*
+#### _property_ version _: str_
 
-#### *property* deletable *: bool | None*
+#### _property_ deletable _: bool | None_
 
-#### *property* updatable *: bool | None*
+#### _property_ updatable _: bool | None_
 
-### *class* ApplicationLookup
+### _class_ ApplicationLookup
 
 Cache of {py:class}\`ApplicationMetaData\` for a specific creator
 
 Can be used as an argument to {py:class}\`AppClient\` to reduce the number of calls when deploying multiple
 apps or discovering multiple app_ids
 
-#### creator *: str*
+#### creator _: str_
 
-#### apps *: dict[str, [ApplicationMetaData](#algokit_utils.applications.app_deployer.ApplicationMetaData)]*
+#### apps _: dict[str, [ApplicationMetaData](#algokit_utils.applications.app_deployer.ApplicationMetaData)]_
 
-### *class* AppDeployParams
+### _class_ AppDeployParams
 
 Parameters for deploying an app
 
-#### metadata *: [AppDeploymentMetaData](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)*
+#### metadata _: [AppDeploymentMetaData](#algokit_utils.applications.app_deployer.AppDeploymentMetaData)_
 
 The deployment metadata
 
-#### deploy_time_params *: TealTemplateParams | None* *= None*
+#### deploy*time_params *: TealTemplateParams | None\_ _= None_
 
 Optional template parameters to use during compilation
 
-#### on_schema_break *: Literal['replace', 'fail', 'append'] | [OnSchemaBreak](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OnSchemaBreak) | None* *= None*
+#### on*schema_break *: Literal['replace', 'fail', 'append'] | [OnSchemaBreak](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OnSchemaBreak) | None\_ _= None_
 
 Optional on schema break action
 
-#### on_update *: Literal['update', 'replace', 'fail', 'append'] | [OnUpdate](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OnUpdate) | None* *= None*
+#### on*update *: Literal['update', 'replace', 'fail', 'append'] | [OnUpdate](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OnUpdate) | None\_ _= None_
 
 Optional on update action
 
-#### create_params *: AppCreateParams | AppCreateMethodCallParams*
+#### create*params *: AppCreateParams | AppCreateMethodCallParams\_
 
 The creation parameters
 
-#### update_params *: AppUpdateParams | AppUpdateMethodCallParams*
+#### update*params *: AppUpdateParams | AppUpdateMethodCallParams\_
 
 The update parameters
 
-#### delete_params *: AppDeleteParams | AppDeleteMethodCallParams*
+#### delete*params *: AppDeleteParams | AppDeleteMethodCallParams\_
 
 The deletion parameters
 
-#### existing_deployments *: [ApplicationLookup](#algokit_utils.applications.app_deployer.ApplicationLookup) | None* *= None*
+#### existing*deployments *: [ApplicationLookup](#algokit_utils.applications.app_deployer.ApplicationLookup) | None\_ _= None_
 
 Optional existing deployments
 
-#### ignore_cache *: bool* *= False*
+#### ignore*cache *: bool\_ _= False_
 
 Whether to ignore the cache
 
-#### max_fee *: int | None* *= None*
+#### max*fee *: int | None\_ _= None_
 
 Optional maximum fee
 
-#### send_params *: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None* *= None*
+#### send*params *: [SendParams](/docs/algokit-utils/python/latest/api/algokit_utils/models/transaction/#algokit_utils.models.transaction.SendParams) | None\_ _= None_
 
 Optional send parameters
 
-### *class* AppDeployResult
+### _class_ AppDeployResult
 
 The result of a deployment
 
-#### app *: [ApplicationMetaData](#algokit_utils.applications.app_deployer.ApplicationMetaData)*
+#### app _: [ApplicationMetaData](#algokit_utils.applications.app_deployer.ApplicationMetaData)_
 
 The application metadata
 
-#### operation_performed *: [OperationPerformed](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OperationPerformed)*
+#### operation*performed *: [OperationPerformed](/docs/algokit-utils/python/latest/api/algokit_utils/applications/enums/#algokit_utils.applications.enums.OperationPerformed)\_
 
 The operation performed
 
-#### create_result *: [SendAppCreateTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### create*result *: [SendAppCreateTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppCreateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
 
 The create result
 
-#### update_result *: [SendAppUpdateTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### update*result *: [SendAppUpdateTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppUpdateTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
 
 The update result
 
-#### delete_result *: [SendAppTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None* *= None*
+#### delete*result *: [SendAppTransactionResult](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.SendAppTransactionResult)[[ABIReturn](/docs/algokit-utils/python/latest/api/algokit_utils/applications/abi/#algokit_utils.applications.abi.ABIReturn)] | None\_ _= None_
 
 The delete result
 
-### *class* AppDeployer(app_manager: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager), transaction_sender: [AlgorandClientTransactionSender](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender), indexer: IndexerClient | None = None)
+### _class_ AppDeployer(app_manager: [AppManager](/docs/algokit-utils/python/latest/api/algokit_utils/applications/app_manager/#algokit_utils.applications.app_manager.AppManager), transaction_sender: [AlgorandClientTransactionSender](/docs/algokit-utils/python/latest/api/algokit_utils/transactions/transaction_sender/#algokit_utils.transactions.transaction_sender.AlgorandClientTransactionSender), indexer: IndexerClient | None = None)
 
 Manages deployment and deployment metadata of applications
 
-* **Parameters:**
-  * **app_manager** – The app manager to use
-  * **transaction_sender** – The transaction sender to use
-  * **indexer** – The indexer to use
-* **Example:**
+- **Parameters:**
+  - **app_manager** – The app manager to use
+  - **transaction_sender** – The transaction sender to use
+  - **indexer** – The indexer to use
+- **Example:**
   ```python
   deployer = AppDeployer(app_manager, transaction_sender, indexer)
   ```
@@ -187,13 +187,13 @@ return properties like transaction, confirmation and delete_result.
 **Note:** if there is an update (different TEAL code) to an existing app (and on_update is set to ‘replace’)
 the existing app will be deleted and re-created.
 
-* **Parameters:**
+- **Parameters:**
   **deployment** – The arguments to control the app deployment
-* **Returns:**
+- **Returns:**
   The result of the deployment
-* **Raises:**
+- **Raises:**
   **ValueError** – If the app spec format is invalid
-* **Example:**
+- **Example:**
   ```python
   deployer.deploy(AppDeployParams(
       create_params=AppCreateParams(
@@ -236,14 +236,14 @@ lookup.
 
 If the AppManager instance wasn’t created with an indexer client, this function will throw an error.
 
-* **Parameters:**
-  * **creator_address** – The address of the account that is the creator of the apps you want to search for
-  * **ignore_cache** – Whether or not to ignore the cache and force a lookup, default: use the cache
-* **Returns:**
+- **Parameters:**
+  - **creator_address** – The address of the account that is the creator of the apps you want to search for
+  - **ignore_cache** – Whether or not to ignore the cache and force a lookup, default: use the cache
+- **Returns:**
   A name-based lookup of the app metadata
-* **Raises:**
+- **Raises:**
   **ValueError** – If the app spec format is invalid
-* **Example:**
+- **Example:**
   ```python
   result = await deployer.get_creator_apps_by_name(creator)
   ```

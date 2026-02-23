@@ -1,6 +1,6 @@
 ---
-title: "Getting Started"
-description: "Tutorials and guides to help you get started with AlgoKit Utils for Python."
+title: 'Getting Started'
+description: 'Tutorials and guides to help you get started with AlgoKit Utils for Python.'
 ---
 
 Welcome to the AlgoKit Utils for Python tutorials! These guides will help you get up and running quickly.

@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: "encodeSimulateResponseToJson"
+title: 'encodeSimulateResponseToJson'
 ---
 
 > **encodeSimulateResponseToJson**(`simulateResponse`): `string`
 
-Defined in: [packages/algod\_client/src/models/simulate-response.ts:76](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-response.ts#L76)
+Defined in: [packages/algod_client/src/models/simulate-response.ts:76](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/simulate-response.ts#L76)
 
 ## Parameters
 

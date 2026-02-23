@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgoAmount"
+title: 'AlgoAmount'
 ---
 
 Defined in: [src/amount.ts:2](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L2)
@@ -55,7 +55,7 @@ Return the amount as a number in Algo
 
 `number`
 
-***
+---
 
 ### algos
 
@@ -71,7 +71,7 @@ Return the amount as a number in Algo
 
 `number`
 
-***
+---
 
 ### microAlgo
 
@@ -87,7 +87,7 @@ Return the amount as a number in µAlgo
 
 `bigint`
 
-***
+---
 
 ### microAlgos
 
@@ -115,7 +115,7 @@ Defined in: [src/amount.ts:48](https://github.com/larkiny/algokit-utils-ts/blob/
 
 `string`
 
-***
+---
 
 ### valueOf()
 
@@ -131,7 +131,7 @@ the algos or microAlgos properties
 
 `number`
 
-***
+---
 
 ### Algo()
 
@@ -151,7 +151,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 `AlgoAmount`
 
-***
+---
 
 ### Algos()
 
@@ -171,7 +171,7 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 `AlgoAmount`
 
-***
+---
 
 ### MicroAlgo()
 
@@ -191,7 +191,7 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 `AlgoAmount`
 
-***
+---
 
 ### MicroAlgos()
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StorageMap"
+title: 'StorageMap'
 ---
 
 > **StorageMap** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:278](https://github.com/larkiny/
 
 Description of what the key-value pairs in this mapping hold
 
-***
+---
 
 ### keyType
 
@@ -31,7 +31,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:280](https://github.com/larkiny/
 
 The type of the keys in the map
 
-***
+---
 
 ### prefix?
 
@@ -41,7 +41,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:284](https://github.com/larkiny/
 
 The base64-encoded prefix of the map keys
 
-***
+---
 
 ### valueType
 

@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.transactions.helpers"
+title: 'algokit_utils.transactions.helpers'
 ---
 
 <div class="api-ref">
@@ -8,8 +8,8 @@ title: "algokit_utils.transactions.helpers"
 
 ## Functions
 
-| [`calculate_extra_program_pages`](#algokit_utils.transactions.helpers.calculate_extra_program_pages)(→ int)   | Calculate minimum number of extra_pages required for provided approval and clear programs.   |
-|---------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| [`calculate_extra_program_pages`](#algokit_utils.transactions.helpers.calculate_extra_program_pages)(→ int) | Calculate minimum number of extra_pages required for provided approval and clear programs. |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
 
 ## Module Contents
 

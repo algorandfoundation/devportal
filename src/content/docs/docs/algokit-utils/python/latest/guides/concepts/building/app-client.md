@@ -1,6 +1,6 @@
 ---
-title: "App client and App factory"
-description: "App client and App factory are higher-order use case capabilities provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App deployment](/docs/algokit-utils/python/latest/guides/concepts/building/app-deploy/) and [App management](/docs/algokit-utils/python/latest/guides/concepts/building/app/). They allow you to access high productivity application clients that work with [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) and [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application spec defined smart contracts, which you can use to create, update, delete, deploy and call a smart contract and access state data for it."
+title: 'App client and App factory'
+description: 'App client and App factory are higher-order use case capabilities provided by AlgoKit Utils that builds on top of the core capabilities, particularly [App deployment](/docs/algokit-utils/python/latest/guides/concepts/building/app-deploy/) and [App management](/docs/algokit-utils/python/latest/guides/concepts/building/app/). They allow you to access high productivity application clients that work with [ARC-56](https://github.com/algorandfoundation/ARCs/pull/258) and [ARC-32](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0032.md) application spec defined smart contracts, which you can use to create, update, delete, deploy and call a smart contract and access state data for it.'
 ---
 
 > [!NOTE]

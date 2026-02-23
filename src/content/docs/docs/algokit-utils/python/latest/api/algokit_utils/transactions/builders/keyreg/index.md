@@ -1,5 +1,5 @@
 ---
-title: "algokit_utils.transactions.builders.keyreg"
+title: 'algokit_utils.transactions.builders.keyreg'
 ---
 
 <div class="api-ref">
@@ -8,9 +8,9 @@ title: "algokit_utils.transactions.builders.keyreg"
 
 ## Functions
 
-| [`build_online_key_registration_transaction`](#algokit_utils.transactions.builders.keyreg.build_online_key_registration_transaction)(...)   |    |
-|---------------------------------------------------------------------------------------------------------------------------------------------|----|
-| [`build_offline_key_registration_transaction`](#algokit_utils.transactions.builders.keyreg.build_offline_key_registration_transaction)(...) |    |
+| [`build_online_key_registration_transaction`](#algokit_utils.transactions.builders.keyreg.build_online_key_registration_transaction)(...)   |     |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| [`build_offline_key_registration_transaction`](#algokit_utils.transactions.builders.keyreg.build_offline_key_registration_transaction)(...) |     |
 
 ## Module Contents
 
