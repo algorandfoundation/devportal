@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetConfigTransactionFields"
+title: 'AssetConfigTransactionFields'
 ---
 
 > **AssetConfigTransactionFields** = `object`
@@ -25,7 +25,7 @@ For asset creation, this must be 0.
 For asset reconfiguration this is the ID of the existing asset to be reconfigured,
 For asset destroy this is the ID of the existing asset to be destroyed.
 
-***
+---
 
 ### assetName?
 
@@ -39,7 +39,7 @@ Max size is 32 bytes.
 
 This field can only be specified upon asset creation.
 
-***
+---
 
 ### clawback?
 
@@ -55,7 +55,7 @@ If empty, clawback is not permitted.
 
 If not set or set to the Zero address the field is permanently empty.
 
-***
+---
 
 ### decimals?
 
@@ -66,16 +66,17 @@ Defined in: [packages/transact/src/transactions/asset-config.ts:46](https://gith
 The amount of decimal places the asset should have.
 
 If unspecified then the asset will be in whole units (i.e. `0`).
-* If 0, the asset is not divisible;
-* If 1, the base unit of the asset is in tenths;
-* If 2, the base unit of the asset is in hundredths;
-* If 3, the base unit of the asset is in thousandths;
+
+- If 0, the asset is not divisible;
+- If 1, the base unit of the asset is in tenths;
+- If 2, the base unit of the asset is in hundredths;
+- If 3, the base unit of the asset is in thousandths;
 
 and so on up to 19 decimal places.
 
 This field can only be specified upon asset creation.
 
-***
+---
 
 ### defaultFrozen?
 
@@ -92,7 +93,7 @@ transaction from the `freeze` account, which must be set on creation.
 
 This field can only be specified upon asset creation.
 
-***
+---
 
 ### freeze?
 
@@ -106,7 +107,7 @@ If empty, freezing is not permitted.
 
 If not set or set to the Zero address the field is permanently empty.
 
-***
+---
 
 ### manager?
 
@@ -120,7 +121,7 @@ The configuration fields it can change are `manager`, `reserve`, `clawback`, and
 
 If not set or set to the Zero address the asset becomes permanently immutable.
 
-***
+---
 
 ### metadataHash?
 
@@ -134,7 +135,7 @@ The format of this metadata is up to the application.
 
 This field can only be specified upon asset creation.
 
-***
+---
 
 ### reserve?
 
@@ -154,7 +155,7 @@ of the asset reside in an account that is different from the default creator acc
 
 If not set or set to the Zero address the field is permanently empty.
 
-***
+---
 
 ### total?
 
@@ -169,7 +170,7 @@ For example, if creating a asset with 2 decimals and wanting a total supply of 1
 
 This field can only be specified upon asset creation.
 
-***
+---
 
 ### unitName?
 
@@ -183,7 +184,7 @@ Max size is 8 bytes.
 
 This field can only be specified upon asset creation.
 
-***
+---
 
 ### url?
 

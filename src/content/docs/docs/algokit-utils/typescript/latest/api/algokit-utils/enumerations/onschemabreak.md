@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "OnSchemaBreak"
+title: 'OnSchemaBreak'
 ---
 
 Defined in: [src/app.ts:204](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app.ts#L204)
@@ -19,7 +19,7 @@ Defined in: [src/app.ts:210](https://github.com/larkiny/algokit-utils-ts/blob/ma
 
 Create a new app
 
-***
+---
 
 ### Fail
 
@@ -29,7 +29,7 @@ Defined in: [src/app.ts:206](https://github.com/larkiny/algokit-utils-ts/blob/ma
 
 Fail the deployment
 
-***
+---
 
 ### ReplaceApp
 

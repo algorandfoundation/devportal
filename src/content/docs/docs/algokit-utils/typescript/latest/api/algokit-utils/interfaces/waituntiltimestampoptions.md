@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "WaitUntilTimestampOptions"
+title: 'WaitUntilTimestampOptions'
 ---
 
 Defined in: [src/network-manager.ts:6](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L6)
@@ -19,7 +19,7 @@ Defined in: [src/network-manager.ts:8](https://github.com/larkiny/algokit-utils-
 
 Estimated block time in seconds, used to calculate rounds to wait. Should be slightly lower than average to undershoot. Defaults to 2.7.
 
-***
+---
 
 ### pollingIntervalMs?
 
@@ -29,7 +29,7 @@ Defined in: [src/network-manager.ts:10](https://github.com/larkiny/algokit-utils
 
 Polling interval in milliseconds when close to target. Defaults to 1000.
 
-***
+---
 
 ### pollingTimeoutMs?
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AVMUint64"
+title: 'AVMUint64'
 ---
 
 > **AVMUint64** = `"AVMUint64"`

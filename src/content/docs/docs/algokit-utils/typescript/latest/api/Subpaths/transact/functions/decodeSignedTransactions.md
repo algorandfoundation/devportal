@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "decodeSignedTransactions"
+title: 'decodeSignedTransactions'
 ---
 
 > **decodeSignedTransactions**(`encodedSignedTransactions`): [`SignedTransaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/signedtransaction/)[]

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgoClientConfig"
+title: 'AlgoClientConfig'
 ---
 
 Defined in: [src/network-client.ts:2](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L2)
@@ -19,7 +19,7 @@ Defined in: [src/network-client.ts:6](https://github.com/larkiny/algokit-utils-t
 
 The port to use e.g. 4001, 443, etc.
 
-***
+---
 
 ### server
 
@@ -29,7 +29,7 @@ Defined in: [src/network-client.ts:4](https://github.com/larkiny/algokit-utils-t
 
 Base URL of the server e.g. http://localhost, https://testnet-api.algonode.cloud/, etc.
 
-***
+---
 
 ### token?
 

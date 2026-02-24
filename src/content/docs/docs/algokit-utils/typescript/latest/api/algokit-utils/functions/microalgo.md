@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "microAlgo"
+title: 'microAlgo'
 ---
 
 > **microAlgo**(`microAlgos`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)

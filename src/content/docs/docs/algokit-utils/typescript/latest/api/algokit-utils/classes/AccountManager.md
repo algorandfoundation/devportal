@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AccountManager"
+title: 'AccountManager'
 ---
 
 Defined in: [src/account-manager.ts:48](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account-manager.ts#L48)
@@ -11,8 +11,8 @@ Creates and keeps track of signing accounts that can sign transactions for a sen
 
 ## See
 
- - [KmdAccountManager](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/kmdaccountmanager/) for KMD-specific account management
- - [AlgorandClient](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/) for the main entry point that provides access to this manager
+- [KmdAccountManager](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/kmdaccountmanager/) for KMD-specific account management
+- [AlgorandClient](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/) for the main entry point that provides access to this manager
 
 ## Constructors
 
@@ -43,7 +43,7 @@ The ClientManager client to use for algod and kmd clients
 #### Example
 
 ```typescript
-const accountManager = new AccountManager(clientManager)
+const accountManager = new AccountManager(clientManager);
 ```
 
 ## Accessors
@@ -95,10 +95,10 @@ The account
 #### Example
 
 ```typescript
-const account = await accountManager.dispenserFromEnvironment()
+const account = await accountManager.dispenserFromEnvironment();
 ```
 
-***
+---
 
 ### ensureFunded()
 
@@ -149,14 +149,16 @@ Optional parameters to control the funding increment, transaction or execution o
 
 ```typescript
 // Basic example
-await accountManager.ensureFunded("ACCOUNTADDRESS", "DISPENSERADDRESS", algokit.algo(1))
+await accountManager.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', algokit.algo(1));
 // With configuration
-await accountManager.ensureFunded("ACCOUNTADDRESS", "DISPENSERADDRESS", algokit.algo(1),
- { minFundingIncrement: algokit.algo(2), fee: (1000).microAlgo(), suppressLog: true }
-)
+await accountManager.ensureFunded('ACCOUNTADDRESS', 'DISPENSERADDRESS', algokit.algo(1), {
+  minFundingIncrement: algokit.algo(2),
+  fee: (1000).microAlgo(),
+  suppressLog: true,
+});
 ```
 
-***
+---
 
 ### ensureFundedFromEnvironment()
 
@@ -208,14 +210,16 @@ Optional parameters to control the funding increment, transaction or execution o
 
 ```typescript
 // Basic example
-await accountManager.ensureFundedFromEnvironment("ACCOUNTADDRESS", algokit.algo(1))
+await accountManager.ensureFundedFromEnvironment('ACCOUNTADDRESS', algokit.algo(1));
 // With configuration
-await accountManager.ensureFundedFromEnvironment("ACCOUNTADDRESS", algokit.algo(1),
- { minFundingIncrement: algokit.algo(2), fee: (1000).microAlgo(), suppressLog: true }
-)
+await accountManager.ensureFundedFromEnvironment('ACCOUNTADDRESS', algokit.algo(1), {
+  minFundingIncrement: algokit.algo(2),
+  fee: (1000).microAlgo(),
+  suppressLog: true,
+});
 ```
 
-***
+---
 
 ### ensureFundedFromTestNetDispenserApi()
 
@@ -268,14 +272,21 @@ Optional parameters to control the funding increment, transaction or execution o
 
 ```typescript
 // Basic example
-await accountManager.ensureFundedFromTestNetDispenserApi("ACCOUNTADDRESS", algorand.client.getTestNetDispenserFromEnvironment(), algokit.algo(1))
+await accountManager.ensureFundedFromTestNetDispenserApi(
+  'ACCOUNTADDRESS',
+  algorand.client.getTestNetDispenserFromEnvironment(),
+  algokit.algo(1),
+);
 // With configuration
-await accountManager.ensureFundedFromTestNetDispenserApi("ACCOUNTADDRESS", algorand.client.getTestNetDispenserFromEnvironment(), algokit.algo(1),
- { minFundingIncrement: algokit.algo(2) }
-)
+await accountManager.ensureFundedFromTestNetDispenserApi(
+  'ACCOUNTADDRESS',
+  algorand.client.getTestNetDispenserFromEnvironment(),
+  algokit.algo(1),
+  { minFundingIncrement: algokit.algo(2) },
+);
 ```
 
-***
+---
 
 ### fromEnvironment()
 
@@ -288,10 +299,11 @@ Tracks and returns an Algorand account with private key loaded by convention fro
 Note: This function expects to run in a Node.js environment.
 
 ## Convention:
-* **Non-LocalNet:** will load process.env['{NAME}_MNEMONIC'] as a mnemonic secret; **Note: Be careful how the mnemonic is handled**,
- never commit it into source control and ideally load it via a secret storage service rather than the file system.
+
+- **Non-LocalNet:** will load process.env['{NAME}_MNEMONIC'] as a mnemonic secret; **Note: Be careful how the mnemonic is handled**,
+  never commit it into source control and ideally load it via a secret storage service rather than the file system.
   If process.env['{NAME}_SENDER'] is defined then it will use that for the sender address (i.e. to support rekeyed accounts)
-* **LocalNet:** will load the account from a KMD wallet called {NAME} and if that wallet doesn't exist it will create it and fund the account for you
+- **LocalNet:** will load the account from a KMD wallet called {NAME} and if that wallet doesn't exist it will create it and fund the account for you
 
 This allows you to write code that will work seamlessly in production and local development (LocalNet) without manual config locally (including when you reset the LocalNet).
 
@@ -318,14 +330,15 @@ The account
 #### Example
 
 If you have a mnemonic secret loaded into `process.env.MY_ACCOUNT_MNEMONIC` then you can call the following to get that private key loaded into an account object:
+
 ```typescript
-const account = await accountManager.fromEnvironment('MY_ACCOUNT')
+const account = await accountManager.fromEnvironment('MY_ACCOUNT');
 ```
 
 If that code runs against LocalNet then a wallet called `MY_ACCOUNT` will automatically be created with an account that is automatically funded with 1000 (default) ALGO from the default LocalNet dispenser.
 If not running against LocalNet then it will use proces.env.MY_ACCOUNT_MNEMONIC as the private key and (if present) process.env.MY_ACCOUNT_SENDER as the sender address.
 
-***
+---
 
 ### fromKmd()
 
@@ -364,12 +377,13 @@ The account
 #### Example
 
 ```typescript
-const defaultDispenserAccount = await accountManager.fromKmd('unencrypted-default-wallet',
-  a => a.status !== 'Offline' && a.amount > 1_000_000_000
-)
+const defaultDispenserAccount = await accountManager.fromKmd(
+  'unencrypted-default-wallet',
+  a => a.status !== 'Offline' && a.amount > 1_000_000_000,
+);
 ```
 
-***
+---
 
 ### fromMnemonic()
 
@@ -386,7 +400,7 @@ Tracks and returns an Algorand account with secret key loaded (i.e. that can sig
 `string`
 
 The mnemonic secret representing the private key of an account; **Note: Be careful how the mnemonic is handled**,
- never commit it into source control and ideally load it from the environment (ideally via a secret storage service) rather than the file system.
+never commit it into source control and ideally load it from the environment (ideally via a secret storage service) rather than the file system.
 
 ##### sender?
 
@@ -403,11 +417,11 @@ The account
 #### Example
 
 ```typescript
-const account = accountManager.fromMnemonic("mnemonic secret ...")
-const rekeyedAccount = accountManager.fromMnemonic("mnemonic secret ...", "SENDERADDRESS...")
+const account = accountManager.fromMnemonic('mnemonic secret ...');
+const rekeyedAccount = accountManager.fromMnemonic('mnemonic secret ...', 'SENDERADDRESS...');
 ```
 
-***
+---
 
 ### getAccount()
 
@@ -436,13 +450,13 @@ The `AddressWithSigner` or throws an error if not found
 #### Example
 
 ```typescript
-const sender = accountManager.random()
+const sender = accountManager.random();
 // ...
 // Returns the `AddressWithSigner` for `sender` that has previously been registered
-const account = accountManager.getAccount(sender)
+const account = accountManager.getAccount(sender);
 ```
 
-***
+---
 
 ### getInformation()
 
@@ -471,11 +485,11 @@ The account information
 #### Example
 
 ```typescript
-const address = "XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA";
+const address = 'XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA';
 const accountInfo = await accountManager.getInformation(address);
 ```
 
-***
+---
 
 ### getSigner()
 
@@ -505,10 +519,10 @@ The `TransactionSigner` or throws an error if not found and no default signer is
 #### Example
 
 ```typescript
-const signer = accountManager.getSigner("SENDERADDRESS")
+const signer = accountManager.getSigner('SENDERADDRESS');
 ```
 
-***
+---
 
 ### localNetDispenser()
 
@@ -527,10 +541,10 @@ The account
 #### Example
 
 ```typescript
-const account = await accountManager.localNetDispenser()
+const account = await accountManager.localNetDispenser();
 ```
 
-***
+---
 
 ### logicsig()
 
@@ -566,7 +580,7 @@ A logic signature account wrapper
 const account = accountManager.logicsig(program, [new Uint8Array(3, ...)])
 ```
 
-***
+---
 
 ### multisig()
 
@@ -599,11 +613,13 @@ A multisig account wrapper
 #### Example
 
 ```typescript
-const account = accountManager.multisig({version: 1, threshold: 1, addrs: ["ADDRESS1...", "ADDRESS2..."]},
- [(await accountManager.fromEnvironment('ACCOUNT1')).account])
+const account = accountManager.multisig(
+  { version: 1, threshold: 1, addrs: ['ADDRESS1...', 'ADDRESS2...'] },
+  [(await accountManager.fromEnvironment('ACCOUNT1')).account],
+);
 ```
 
-***
+---
 
 ### random()
 
@@ -622,10 +638,10 @@ The account
 #### Example
 
 ```typescript
-const account = accountManager.random()
+const account = accountManager.random();
 ```
 
-***
+---
 
 ### rekeyAccount()
 
@@ -648,7 +664,7 @@ The account to rekey
 ##### rekeyTo
 
 The account address or signing account of the account that will be used to authorise transactions for the rekeyed account going forward.
- If a signing account is provided that will now be tracked as the signer for `account` in this `AccountManager`
+If a signing account is provided that will now be tracked as the signer for `account` in this `AccountManager`
 
 `string` | [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) | [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/)
 
@@ -667,17 +683,17 @@ The result of the transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await accountManager.rekeyAccount({account: "ACCOUNTADDRESS", rekeyTo: "NEWADDRESS"})
+await accountManager.rekeyAccount({ account: 'ACCOUNTADDRESS', rekeyTo: 'NEWADDRESS' });
 ```
 
 ```typescript
-await accountManager.rekeyAccount({account: account1, rekeyTo: newSignerAccount})
+await accountManager.rekeyAccount({ account: account1, rekeyTo: newSignerAccount });
 ```
 
 ```typescript
 await accountManager.rekeyAccount({
-  account: "ACCOUNTADDRESS",
-  rekeyTo: "NEWADDRESS",
+  account: 'ACCOUNTADDRESS',
+  rekeyTo: 'NEWADDRESS',
   lease: 'lease',
   note: 'note',
   firstValidRound: 1000n,
@@ -689,10 +705,10 @@ await accountManager.rekeyAccount({
   maxFee: (3000).microAlgo(),
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-})
+});
 ```
 
-***
+---
 
 ### rekeyed()
 
@@ -725,11 +741,11 @@ The account
 #### Example
 
 ```typescript
-const account = accountManager.fromMnemonic("mnemonic secret ...")
-const rekeyedAccount = accountManager.rekeyed(account, "SENDERADDRESS...")
+const account = accountManager.fromMnemonic('mnemonic secret ...');
+const rekeyedAccount = accountManager.rekeyed(account, 'SENDERADDRESS...');
 ```
 
-***
+---
 
 ### setDefaultSigner()
 
@@ -759,14 +775,14 @@ The `AccountManager` so method calls can be chained
 #### Example
 
 ```typescript
-const signer = accountManager.random() // Can be anything that returns a `TransactionSigner` or `AddressWithSigner`
-accountManager.setDefaultSigner(signer)
+const signer = accountManager.random(); // Can be anything that returns a `TransactionSigner` or `AddressWithSigner`
+accountManager.setDefaultSigner(signer);
 
 // When signing a transaction, if there is no signer registered for the sender then the default signer will be used
-const signer = accountManager.getSigner("SENDERADDRESS")
+const signer = accountManager.getSigner('SENDERADDRESS');
 ```
 
-***
+---
 
 ### setSigner()
 
@@ -799,11 +815,13 @@ The `AccountManager` instance for method chaining
 #### Example
 
 ```typescript
-const accountManager = new AccountManager(clientManager)
- .setSigner("SENDERADDRESS", transactionSigner)
+const accountManager = new AccountManager(clientManager).setSigner(
+  'SENDERADDRESS',
+  transactionSigner,
+);
 ```
 
-***
+---
 
 ### setSignerFromAccount()
 
@@ -821,7 +839,7 @@ Note: If you are generating accounts via the various methods on `AccountManager`
 ##### account
 
 The account to register, which can be a `AddressWithSigner` or
- a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount`
+a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount`
 
 [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/multisigaccount/) | [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) | [`LogicSigAccount`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsigaccount/)
 
@@ -835,14 +853,19 @@ The `AccountManager` instance for method chaining
 
 ```typescript
 const accountManager = new AccountManager(clientManager)
- .setSignerFromAccount(algosdk.generateAccount())
- .setSignerFromAccount(new algosdk.LogicSigAccount(program, args))
- .setSignerFromAccount(new SigningAccount(mnemonic, sender))
- .setSignerFromAccount(new MultisigAccount({version: 1, threshold: 1, addrs: ["ADDRESS1...", "ADDRESS2..."]}, [account1, account2]))
- .setSignerFromAccount({addr: "SENDERADDRESS", signer: transactionSigner})
+  .setSignerFromAccount(algosdk.generateAccount())
+  .setSignerFromAccount(new algosdk.LogicSigAccount(program, args))
+  .setSignerFromAccount(new SigningAccount(mnemonic, sender))
+  .setSignerFromAccount(
+    new MultisigAccount({ version: 1, threshold: 1, addrs: ['ADDRESS1...', 'ADDRESS2...'] }, [
+      account1,
+      account2,
+    ]),
+  )
+  .setSignerFromAccount({ addr: 'SENDERADDRESS', signer: transactionSigner });
 ```
 
-***
+---
 
 ### setSigners()
 

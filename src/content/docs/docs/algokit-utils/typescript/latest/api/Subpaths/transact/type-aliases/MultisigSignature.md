@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "MultisigSignature"
+title: 'MultisigSignature'
 ---
 
 > **MultisigSignature** = `object`
@@ -25,7 +25,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:74](https:
 
 Array of subsignatures
 
-***
+---
 
 ### threshold
 
@@ -35,7 +35,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:69](https:
 
 Minimum number of signatures required.
 
-***
+---
 
 ### version
 

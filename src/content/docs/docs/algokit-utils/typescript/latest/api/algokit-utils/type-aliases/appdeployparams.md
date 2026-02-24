@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppDeployParams"
+title: 'AppDeployParams'
 ---
 
 > **AppDeployParams** = `Expand`\<[`SendParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendparams/) & `object`\>

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SendSingleTransactionResult"
+title: 'SendSingleTransactionResult'
 ---
 
 > **SendSingleTransactionResult** = `Expand`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/) & [`ConfirmedTransactionResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/confirmedtransactionresult/)\>

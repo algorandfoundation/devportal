@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LocalNetManager"
+title: 'LocalNetManager'
 ---
 
 Defined in: [src/network-manager.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L19)
@@ -68,10 +68,10 @@ Error if not connected to LocalNet
 
 ```typescript
 // Advance LocalNet to round 100
-await algorand.network.localNet.blockWarp(100n)
+await algorand.network.localNet.blockWarp(100n);
 ```
 
-***
+---
 
 ### timeWarp()
 
@@ -101,6 +101,6 @@ Error if not connected to LocalNet
 
 ```typescript
 // Advance LocalNet time by 1 hour
-const oneHourFromNow = BigInt(Math.floor(Date.now() / 1000)) + 3600n
-await algorand.network.localNet.timeWarp(oneHourFromNow)
+const oneHourFromNow = BigInt(Math.floor(Date.now() / 1000)) + 3600n;
+await algorand.network.localNet.timeWarp(oneHourFromNow);
 ```

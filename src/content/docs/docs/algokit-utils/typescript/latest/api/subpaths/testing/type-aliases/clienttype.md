@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ClientType"
+title: 'ClientType'
 ---
 
 > **ClientType** = `"algod"` \| `"indexer"` \| `"kmd"`

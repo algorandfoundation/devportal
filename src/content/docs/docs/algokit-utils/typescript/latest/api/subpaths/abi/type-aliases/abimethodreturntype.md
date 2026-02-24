@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIMethodReturnType"
+title: 'ABIMethodReturnType'
 ---
 
 > **ABIMethodReturnType** = [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/) \| `"void"`

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StateProofMessage"
+title: 'StateProofMessage'
 ---
 
 > **StateProofMessage** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:66](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:67](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L67)
 
-***
+---
 
 ### firstAttestedRound
 
@@ -25,7 +25,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:67](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:70](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L70)
 
-***
+---
 
 ### lastAttestedRound
 
@@ -33,7 +33,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:70](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:71](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L71)
 
-***
+---
 
 ### lnProvenWeight
 
@@ -41,7 +41,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:71](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:69](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L69)
 
-***
+---
 
 ### votersCommitment
 

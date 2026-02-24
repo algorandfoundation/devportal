@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionToSign"
+title: 'TransactionToSign'
 ---
 
 Defined in: [src/transaction/types.ts:101](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L101)
@@ -19,7 +19,7 @@ Defined in: [src/transaction/types.ts:105](https://github.com/larkiny/algokit-ut
 
 The account to use to sign the transaction, either an account (with private key loaded) or a logic signature account
 
-***
+---
 
 ### transaction
 

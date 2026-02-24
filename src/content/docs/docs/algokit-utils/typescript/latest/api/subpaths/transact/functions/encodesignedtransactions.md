@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "encodeSignedTransactions"
+title: 'encodeSignedTransactions'
 ---
 
 > **encodeSignedTransactions**(`signedTransactions`): `Uint8Array`\<`ArrayBufferLike`\>[]
@@ -11,7 +11,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:128](https
 
 Encode signed transactions to MsgPack for sending on the network.
 
- This method performs canonical encoding. No domain separation prefix is applicable.
+This method performs canonical encoding. No domain separation prefix is applicable.
 
 ## Parameters
 

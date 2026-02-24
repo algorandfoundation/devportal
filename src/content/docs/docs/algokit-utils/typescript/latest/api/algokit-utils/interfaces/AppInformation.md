@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppInformation"
+title: 'AppInformation'
 ---
 
 Defined in: [src/app-manager.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L16)
@@ -19,7 +19,7 @@ Defined in: [src/app-manager.ts:20](https://github.com/larkiny/algokit-utils-ts/
 
 The escrow address that the app operates with.
 
-***
+---
 
 ### appId
 
@@ -29,7 +29,7 @@ Defined in: [src/app-manager.ts:18](https://github.com/larkiny/algokit-utils-ts/
 
 The ID of the app.
 
-***
+---
 
 ### approvalProgram
 
@@ -39,7 +39,7 @@ Defined in: [src/app-manager.ts:24](https://github.com/larkiny/algokit-utils-ts/
 
 Approval program.
 
-***
+---
 
 ### clearStateProgram
 
@@ -49,7 +49,7 @@ Defined in: [src/app-manager.ts:28](https://github.com/larkiny/algokit-utils-ts/
 
 Clear state program.
 
-***
+---
 
 ### creator
 
@@ -60,7 +60,7 @@ Defined in: [src/app-manager.ts:33](https://github.com/larkiny/algokit-utils-ts/
 The address that created this application. This is the address where the
 parameters and global state for this application can be found.
 
-***
+---
 
 ### extraProgramPages?
 
@@ -70,7 +70,7 @@ Defined in: [src/app-manager.ts:47](https://github.com/larkiny/algokit-utils-ts/
 
 Any extra pages that are needed for the smart contract.
 
-***
+---
 
 ### globalByteSlices
 
@@ -80,7 +80,7 @@ Defined in: [src/app-manager.ts:45](https://github.com/larkiny/algokit-utils-ts/
 
 The number of allocated byte slices in global state.
 
-***
+---
 
 ### globalInts
 
@@ -90,7 +90,7 @@ Defined in: [src/app-manager.ts:43](https://github.com/larkiny/algokit-utils-ts/
 
 The number of allocated ints in global state.
 
-***
+---
 
 ### globalState
 
@@ -100,7 +100,7 @@ Defined in: [src/app-manager.ts:37](https://github.com/larkiny/algokit-utils-ts/
 
 Current global state values.
 
-***
+---
 
 ### localByteSlices
 
@@ -110,7 +110,7 @@ Defined in: [src/app-manager.ts:41](https://github.com/larkiny/algokit-utils-ts/
 
 The number of allocated byte slices in per-user local state.
 
-***
+---
 
 ### localInts
 
@@ -120,7 +120,7 @@ Defined in: [src/app-manager.ts:39](https://github.com/larkiny/algokit-utils-ts/
 
 The number of allocated ints in per-user local state.
 
-***
+---
 
 ### version?
 

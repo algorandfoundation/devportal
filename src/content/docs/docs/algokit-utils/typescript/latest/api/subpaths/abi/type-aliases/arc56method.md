@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Arc56Method"
+title: 'Arc56Method'
 ---
 
 > **Arc56Method** = `object`
@@ -33,7 +33,7 @@ OnCompletes this method allows when appID !== 0
 
 OnCompletes this method allows when appID === 0
 
-***
+---
 
 ### args
 
@@ -60,6 +60,7 @@ Base64 encoded bytes, base64 ARC4 encoded uint64, or UTF-8 method selector
 > **source**: `"box"` \| `"global"` \| `"local"` \| `"literal"` \| `"method"`
 
 Where the default value is coming from
+
 - box: The data key signifies the box key to read the value from
 - global: The data key signifies the global state key to read the value from
 - local: The data key signifies the local state key to read the value from (for the sender)
@@ -96,7 +97,7 @@ If the type is a struct, the name of the struct
 
 The type of the argument. The `struct` field should also be checked to determine if this arg is a struct.
 
-***
+---
 
 ### desc?
 
@@ -106,7 +107,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:146](https://github.com/larkiny/
 
 Optional, user-friendly description for the method
 
-***
+---
 
 ### events?
 
@@ -116,7 +117,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:192](https://github.com/larkiny/
 
 ARC-28 events that MAY be emitted by this method
 
-***
+---
 
 ### name
 
@@ -126,7 +127,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:144](https://github.com/larkiny/
 
 The name of the method
 
-***
+---
 
 ### readonly?
 
@@ -136,7 +137,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:190](https://github.com/larkiny/
 
 If this method does not write anything to the ledger (ARC-22)
 
-***
+---
 
 ### recommendations?
 
@@ -200,7 +201,7 @@ The number of bytes being written to the box
 
 The number of inner transactions the caller should cover the fees for
 
-***
+---
 
 ### returns
 

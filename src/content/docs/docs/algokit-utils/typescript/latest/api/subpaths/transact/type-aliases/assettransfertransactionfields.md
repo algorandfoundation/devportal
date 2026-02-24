@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetTransferTransactionFields"
+title: 'AssetTransferTransactionFields'
 ---
 
 > **AssetTransferTransactionFields** = `object`
@@ -30,7 +30,7 @@ In other words, the asset decimals don't play a role in this value.
 It should be up to the caller (or a higher abstraction) to handle the conversion based on
 the asset decimals.
 
-***
+---
 
 ### assetId
 
@@ -40,7 +40,7 @@ Defined in: [packages/transact/src/transactions/asset-transfer.ts:14](https://gi
 
 The ID of the asset being transferred.
 
-***
+---
 
 ### assetSender?
 
@@ -54,7 +54,7 @@ If provided, this indicates that the transaction is a clawback operation,
 where the sender is the asset clawback address and is forcibly moving assets
 from this account to the receiver.
 
-***
+---
 
 ### closeRemainderTo?
 
@@ -68,7 +68,7 @@ If specified, this indicates that the sender is closing out their position in th
 and all remaining units of this asset owned by the sender will be transferred to this address.
 This effectively removes the asset from the sender's account.
 
-***
+---
 
 ### receiver
 

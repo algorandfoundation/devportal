@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SendTransactionResults"
+title: 'SendTransactionResults'
 ---
 
 Defined in: [src/transaction/types.ts:57](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L57)
@@ -24,7 +24,7 @@ Defined in: [src/transaction/types.ts:63](https://github.com/larkiny/algokit-uti
 The responses if the transactions were sent and waited for,
 the index of the confirmation will match the index of the underlying transaction
 
-***
+---
 
 ### transactions
 

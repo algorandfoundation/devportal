@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getTupleValueFromStructValue"
+title: 'getTupleValueFromStructValue'
 ---
 
 > **getTupleValueFromStructValue**(`structType`, `structValue`): [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)[]

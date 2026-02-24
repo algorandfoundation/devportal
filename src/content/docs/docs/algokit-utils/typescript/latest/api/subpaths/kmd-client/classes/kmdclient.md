@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "KmdClient"
+title: 'KmdClient'
 ---
 
-Defined in: [packages/kmd\_client/src/client.ts:5](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/client.ts#L5)
+Defined in: [packages/kmd_client/src/client.ts:5](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/client.ts#L5)
 
 ## Extends
 
@@ -17,7 +17,7 @@ Defined in: [packages/kmd\_client/src/client.ts:5](https://github.com/larkiny/al
 
 > **new KmdClient**(`config`): `KmdClient`
 
-Defined in: [packages/kmd\_client/src/client.ts:6](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/client.ts#L6)
+Defined in: [packages/kmd_client/src/client.ts:6](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/client.ts#L6)
 
 #### Parameters
 
@@ -39,7 +39,7 @@ Defined in: [packages/kmd\_client/src/client.ts:6](https://github.com/larkiny/al
 
 > `readonly` **httpRequest**: [`BaseHttpRequest`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/basehttprequest/)
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:90](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L90)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:90](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L90)
 
 #### Inherited from
 
@@ -51,7 +51,7 @@ Defined in: [packages/kmd\_client/src/apis/api-service.ts:90](https://github.com
 
 > **createWallet**(`body`): `Promise`\<[`CreateWalletResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/createwalletresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:630](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L630)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:630](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L630)
 
 Create a new wallet (collection of keys) with the given parameters.
 
@@ -69,13 +69,13 @@ Create a new wallet (collection of keys) with the given parameters.
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`createWallet`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#createwallet)
 
-***
+---
 
 ### deleteKey()
 
 > **deleteKey**(`body`): `Promise`\<`void`\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:124](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L124)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:124](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L124)
 
 Deletes the key with the passed public key from the wallet.
 
@@ -93,13 +93,13 @@ Deletes the key with the passed public key from the wallet.
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`deleteKey`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#deletekey)
 
-***
+---
 
 ### deleteMultisig()
 
 > **deleteMultisig**(`body`): `Promise`\<`void`\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:147](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L147)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:147](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L147)
 
 Deletes multisig preimage information for the passed address from the wallet.
 
@@ -117,13 +117,13 @@ Deletes multisig preimage information for the passed address from the wallet.
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`deleteMultisig`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#deletemultisig)
 
-***
+---
 
 ### exportKey()
 
 > **exportKey**(`body`): `Promise`\<[`ExportKeyResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/exportkeyresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:170](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L170)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:170](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L170)
 
 Export the secret key associated with the passed public key.
 
@@ -141,13 +141,13 @@ Export the secret key associated with the passed public key.
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`exportKey`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#exportkey)
 
-***
+---
 
 ### exportMasterKey()
 
 > **exportMasterKey**(`body`): `Promise`\<[`ExportMasterKeyResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/exportmasterkeyresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:195](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L195)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:195](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L195)
 
 Export the master derivation key from the wallet. This key is a master "backup" key for the underlying wallet. With it, you can regenerate all of the wallets that have been generated with this wallet's `POST /v1/key` endpoint. This key will not allow you to recover keys imported from other wallets, however.
 
@@ -165,13 +165,13 @@ Export the master derivation key from the wallet. This key is a master "backup" 
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`exportMasterKey`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#exportmasterkey)
 
-***
+---
 
 ### exportMultisig()
 
 > **exportMultisig**(`body`): `Promise`\<[`ExportMultisigResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/exportmultisigresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:220](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L220)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:220](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L220)
 
 Given a multisig address whose preimage this wallet stores, returns the information used to generate the address, including public keys, threshold, and multisig version.
 
@@ -189,13 +189,13 @@ Given a multisig address whose preimage this wallet stores, returns the informat
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`exportMultisig`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#exportmultisig)
 
-***
+---
 
 ### generateKey()
 
 > **generateKey**(`body`): `Promise`\<[`GenerateKeyResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/generatekeyresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:245](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L245)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:245](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L245)
 
 Generates the next key in the deterministic key sequence (as determined by the master derivation key) and adds it to the wallet, returning the public key.
 
@@ -213,13 +213,13 @@ Generates the next key in the deterministic key sequence (as determined by the m
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`generateKey`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#generatekey)
 
-***
+---
 
 ### importKey()
 
 > **importKey**(`body`): `Promise`\<[`ImportKeyResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/importkeyresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:270](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L270)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:270](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L270)
 
 Import an externally generated key into the wallet. Note that if you wish to back up the imported key, you must do so by backing up the entire wallet database, because imported keys were not derived from the wallet's master derivation key.
 
@@ -237,13 +237,13 @@ Import an externally generated key into the wallet. Note that if you wish to bac
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`importKey`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#importkey)
 
-***
+---
 
 ### importMultisig()
 
 > **importMultisig**(`body`): `Promise`\<[`ImportMultisigResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/importmultisigresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:295](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L295)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:295](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L295)
 
 Generates a multisig account from the passed public keys array and multisig metadata, and stores all of this in the wallet.
 
@@ -261,13 +261,13 @@ Generates a multisig account from the passed public keys array and multisig meta
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`importMultisig`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#importmultisig)
 
-***
+---
 
 ### initWalletHandle()
 
 > **initWalletHandle**(`body`): `Promise`\<[`InitWalletHandleTokenResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/initwallethandletokenresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:320](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L320)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:320](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L320)
 
 Unlock the wallet and return a wallet handle token that can be used for subsequent operations. These tokens expire periodically and must be renewed. You can `POST` the token to `/v1/wallet/info` to see how much time remains until expiration, and renew it with `/v1/wallet/renew`. When you're done, you can invalidate the token with `/v1/wallet/release`.
 
@@ -285,13 +285,13 @@ Unlock the wallet and return a wallet handle token that can be used for subseque
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`initWalletHandle`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#initwallethandle)
 
-***
+---
 
 ### listKeysInWallet()
 
 > **listKeysInWallet**(`body`): `Promise`\<[`ListKeysResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/listkeysresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:345](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L345)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:345](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L345)
 
 Lists all of the public keys in this wallet. All of them have a stored private key.
 
@@ -309,13 +309,13 @@ Lists all of the public keys in this wallet. All of them have a stored private k
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`listKeysInWallet`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#listkeysinwallet)
 
-***
+---
 
 ### listMultisig()
 
 > **listMultisig**(`body`): `Promise`\<[`ListMultisigResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/listmultisigresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:370](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L370)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:370](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L370)
 
 Lists all of the multisig accounts whose preimages this wallet stores
 
@@ -333,13 +333,13 @@ Lists all of the multisig accounts whose preimages this wallet stores
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`listMultisig`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#listmultisig)
 
-***
+---
 
 ### listWallets()
 
 > **listWallets**(): `Promise`\<[`ListWalletsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/listwalletsresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:395](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L395)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:395](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L395)
 
 Lists all of the wallets that kmd is aware of.
 
@@ -351,13 +351,13 @@ Lists all of the wallets that kmd is aware of.
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`listWallets`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#listwallets)
 
-***
+---
 
 ### releaseWalletHandleToken()
 
 > **releaseWalletHandleToken**(`body`): `Promise`\<`void`\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:415](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L415)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:415](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L415)
 
 Invalidate the passed wallet handle token, making it invalid for use in subsequent requests.
 
@@ -375,13 +375,13 @@ Invalidate the passed wallet handle token, making it invalid for use in subseque
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`releaseWalletHandleToken`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#releasewallethandletoken)
 
-***
+---
 
 ### renameWallet()
 
 > **renameWallet**(`body`): `Promise`\<[`RenameWalletResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/renamewalletresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:438](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L438)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:438](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L438)
 
 Rename the underlying wallet to something else
 
@@ -399,13 +399,13 @@ Rename the underlying wallet to something else
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`renameWallet`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#renamewallet)
 
-***
+---
 
 ### renewWalletHandleToken()
 
 > **renewWalletHandleToken**(`body`): `Promise`\<[`RenewWalletHandleTokenResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/renewwallethandletokenresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:463](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L463)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:463](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L463)
 
 Renew a wallet handle token, increasing its expiration duration to its initial value
 
@@ -423,13 +423,13 @@ Renew a wallet handle token, increasing its expiration duration to its initial v
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`renewWalletHandleToken`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#renewwallethandletoken)
 
-***
+---
 
 ### signMultisigProgram()
 
 > **signMultisigProgram**(`body`): `Promise`\<[`SignProgramMultisigResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/signprogrammultisigresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:488](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L488)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:488](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L488)
 
 Start a multisig signature, or add a signature to a partially completed multisig signature object.
 
@@ -447,13 +447,13 @@ Start a multisig signature, or add a signature to a partially completed multisig
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`signMultisigProgram`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#signmultisigprogram)
 
-***
+---
 
 ### signMultisigTransaction()
 
 > **signMultisigTransaction**(`body`): `Promise`\<[`SignMultisigResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/signmultisigresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:644](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L644)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:644](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L644)
 
 Enables the signing of a transaction using the provided wallet and multisig info.
 The public key is used to identify which multisig account key to use for signing.
@@ -497,13 +497,13 @@ A multisig signature or partial signature, which can be used to form a signed tr
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`signMultisigTransaction`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#signmultisigtransaction)
 
-***
+---
 
 ### signProgram()
 
 > **signProgram**(`body`): `Promise`\<[`SignProgramResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/signprogramresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:538](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L538)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:538](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L538)
 
 Signs the passed program with a key from the wallet, determined by the account named in the request.
 
@@ -521,13 +521,13 @@ Signs the passed program with a key from the wallet, determined by the account n
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`signProgram`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#signprogram)
 
-***
+---
 
 ### signTransaction()
 
 > **signTransaction**(`body`): `Promise`\<[`SignTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/signtransactionresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:657](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L657)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:657](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L657)
 
 Enables the signing of a transaction using the provided wallet info.
 When a public key is provided it is used to resolve the private key and sign the transaction, enabling rekeyed account signing.
@@ -562,13 +562,13 @@ An encoded, signed transaction.
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`signTransaction`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#signtransaction)
 
-***
+---
 
 ### version()
 
 > **version**(): `Promise`\<[`VersionsResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/versionsresponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:585](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L585)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:585](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L585)
 
 #### Returns
 
@@ -578,13 +578,13 @@ Defined in: [packages/kmd\_client/src/apis/api-service.ts:585](https://github.co
 
 [`KmdApi`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/).[`version`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdapi/#version)
 
-***
+---
 
 ### walletInfo()
 
 > **walletInfo**(`body`): `Promise`\<[`WalletInfoResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/type-aliases/walletinforesponse/)\>
 
-Defined in: [packages/kmd\_client/src/apis/api-service.ts:605](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L605)
+Defined in: [packages/kmd_client/src/apis/api-service.ts:605](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/kmd_client/src/apis/api-service.ts#L605)
 
 Returns information about the wallet associated with the passed wallet handle token. Additionally returns expiration information about the token itself.
 

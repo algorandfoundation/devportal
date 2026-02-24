@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ProgramDataSigner"
+title: 'ProgramDataSigner'
 ---
 
 > **ProgramDataSigner** = (`data`, `lsig`) => `Promise`\<`Uint8Array`\>

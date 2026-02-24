@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppDeleteMethodCall"
+title: 'AppDeleteMethodCall'
 ---
 
 > **AppDeleteMethodCall** = `Expand`\<`AppMethodCall`\<[`AppDeleteParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/appdeleteparams/)\>\>

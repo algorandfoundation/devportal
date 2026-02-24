@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StateSchema"
+title: 'StateSchema'
 ---
 
 > **StateSchema** = `object`
@@ -24,7 +24,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:177](https://github.
 
 Maximum number of byte slice values that may be stored.
 
-***
+---
 
 ### numUints
 

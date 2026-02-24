@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "genesisIdIsLocalNet"
+title: 'genesisIdIsLocalNet'
 ---
 
 > **genesisIdIsLocalNet**(`genesisId`): genesisId is "devnet-v1" \| "sandnet-v1" \| "dockernet-v1"

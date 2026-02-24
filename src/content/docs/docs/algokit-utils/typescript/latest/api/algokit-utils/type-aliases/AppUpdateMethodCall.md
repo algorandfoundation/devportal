@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppUpdateMethodCall"
+title: 'AppUpdateMethodCall'
 ---
 
 > **AppUpdateMethodCall** = `Expand`\<`AppMethodCall`\<[`AppUpdateParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/appupdateparams/)\>\>

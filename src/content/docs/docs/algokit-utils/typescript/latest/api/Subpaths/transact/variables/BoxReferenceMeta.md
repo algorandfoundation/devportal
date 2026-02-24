@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BoxReferenceMeta"
+title: 'BoxReferenceMeta'
 ---
 
 > `const` **BoxReferenceMeta**: `ObjectModelMetadata`\<[`BoxReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/boxreference/)\>

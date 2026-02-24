@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TestLogger"
+title: 'TestLogger'
 ---
 
 Defined in: [src/testing/test-logger.ts:8](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/test-logger.ts#L8)
@@ -66,7 +66,7 @@ Clears all logs captured so far.
 
 `void`
 
-***
+---
 
 ### debug()
 
@@ -92,7 +92,7 @@ Defined in: [src/testing/test-logger.ts:80](https://github.com/larkiny/algokit-u
 
 `Logger.debug`
 
-***
+---
 
 ### error()
 
@@ -118,7 +118,7 @@ Defined in: [src/testing/test-logger.ts:64](https://github.com/larkiny/algokit-u
 
 `Logger.error`
 
-***
+---
 
 ### getLogSnapshot()
 
@@ -128,7 +128,7 @@ Defined in: [src/testing/test-logger.ts:47](https://github.com/larkiny/algokit-u
 
 Returns a captured log snapshot.
 This helps ensure that the provided configuration items won't appear
- with random values in the log snapshot, but rather will get substituted with predictable ids.
+with random values in the log snapshot, but rather will get substituted with predictable ids.
 
 https://jestjs.io/docs/snapshot-testing#2-tests-should-be-deterministic
 
@@ -154,7 +154,7 @@ const logger = new TestLogger()
 expect(logger.getLogSnapshot()).toMatchSnapshot()
 ```
 
-***
+---
 
 ### info()
 
@@ -180,7 +180,7 @@ Defined in: [src/testing/test-logger.ts:72](https://github.com/larkiny/algokit-u
 
 `Logger.info`
 
-***
+---
 
 ### verbose()
 
@@ -206,7 +206,7 @@ Defined in: [src/testing/test-logger.ts:76](https://github.com/larkiny/algokit-u
 
 `Logger.verbose`
 
-***
+---
 
 ### warn()
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BoxReference"
+title: 'BoxReference'
 ---
 
 > **BoxReference** = `object`
@@ -25,7 +25,7 @@ Defined in: [packages/transact/src/transactions/app-call.ts:191](https://github.
 App ID that owns the box.
 A value of 0 indicates the current app.
 
-***
+---
 
 ### name
 

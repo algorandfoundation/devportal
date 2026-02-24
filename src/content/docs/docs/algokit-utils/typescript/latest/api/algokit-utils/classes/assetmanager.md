@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetManager"
+title: 'AssetManager'
 ---
 
 Defined in: [src/asset-manager.ts:142](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L142)
@@ -89,12 +89,15 @@ An array of records matching asset ID to transaction ID of the opt in
 
 ```typescript
 // Basic example
-assetManager.bulkOptIn("ACCOUNTADDRESS", [12345n, 67890n])
+assetManager.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n]);
 // With configuration
-assetManager.bulkOptIn("ACCOUNTADDRESS", [12345n, 67890n], { maxFee: (1000).microAlgo(), suppressLog: true })
+assetManager.bulkOptIn('ACCOUNTADDRESS', [12345n, 67890n], {
+  maxFee: (1000).microAlgo(),
+  suppressLog: true,
+});
 ```
 
-***
+---
 
 ### bulkOptOut()
 
@@ -136,12 +139,16 @@ An array of records matching asset ID to transaction ID of the opt in
 
 ```typescript
 // Basic example
-assetManager.bulkOptOut("ACCOUNTADDRESS", [12345n, 67890n])
+assetManager.bulkOptOut('ACCOUNTADDRESS', [12345n, 67890n]);
 // With configuration
-assetManager.bulkOptOut("ACCOUNTADDRESS", [12345n, 67890n], { ensureZeroBalance: true, maxFee: (1000).microAlgo(), suppressLog: true })
+assetManager.bulkOptOut('ACCOUNTADDRESS', [12345n, 67890n], {
+  ensureZeroBalance: true,
+  maxFee: (1000).microAlgo(),
+  suppressLog: true,
+});
 ```
 
-***
+---
 
 ### getAccountInformation()
 
@@ -174,14 +181,14 @@ The account asset holding information
 #### Example
 
 ```typescript
-const address = "XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA";
+const address = 'XBYLS2E6YI6XXL5BWCAMOA4GTWHXWENZMX5UHXMRNWWUQ7BXCY5WC5TEPA';
 const assetId = 123345n;
 const accountInfo = await assetManager.getAccountInformation(address, assetId);
 ```
 
 [Response data schema details](https://dev.algorand.co/reference/rest-apis/algod/#accountassetinformation)
 
-***
+---
 
 ### getById()
 

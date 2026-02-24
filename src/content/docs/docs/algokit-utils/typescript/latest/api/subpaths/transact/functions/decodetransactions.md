@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "decodeTransactions"
+title: 'decodeTransactions'
 ---
 
 > **decodeTransactions**(`encoded_transactions`): [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]
@@ -12,14 +12,16 @@ Defined in: [packages/transact/src/transactions/transaction.ts:507](https://gith
 Decodes a collection of MsgPack bytes into a transaction collection.
 
 # Parameters
-* `encoded_transaction` - A collection of MsgPack encoded bytes, each representing a transaction.
+
+- `encoded_transaction` - A collection of MsgPack encoded bytes, each representing a transaction.
 
 # Returns
+
 A collection of decoded transactions or an error if decoding fails.
 
 ## Parameters
 
-### encoded\_transactions
+### encoded_transactions
 
 `Uint8Array`\<`ArrayBufferLike`\>[]
 

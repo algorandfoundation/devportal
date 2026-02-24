@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "FalconSignatureStruct"
+title: 'FalconSignatureStruct'
 ---
 
 > **FalconSignatureStruct** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:49](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:52](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L52)
 
-***
+---
 
 ### signature
 
@@ -25,7 +25,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:52](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:50](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L50)
 
-***
+---
 
 ### vectorCommitmentIndex
 
@@ -33,7 +33,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:50](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:51](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L51)
 
-***
+---
 
 ### verifyingKey
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "lookupAssetHoldings"
+title: 'lookupAssetHoldings'
 ---
 
 > **lookupAssetHoldings**(`indexer`, `assetId`, `options?`, `paginationLimit?`): `Promise`\<[`MiniAssetHolding`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/miniassetholding/)[]\>

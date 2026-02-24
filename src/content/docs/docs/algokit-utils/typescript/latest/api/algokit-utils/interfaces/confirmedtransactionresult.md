@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ConfirmedTransactionResult"
+title: 'ConfirmedTransactionResult'
 ---
 
 Defined in: [src/transaction/types.ts:81](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L81)
@@ -27,7 +27,7 @@ The response from sending and waiting for the transaction
 
 [`SendTransactionResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresult/).[`confirmation`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactionresult/#confirmation)
 
-***
+---
 
 ### transaction
 

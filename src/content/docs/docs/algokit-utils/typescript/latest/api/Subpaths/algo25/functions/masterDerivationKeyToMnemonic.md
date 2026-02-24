@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "masterDerivationKeyToMnemonic"
+title: 'masterDerivationKeyToMnemonic'
 ---
 
 > **masterDerivationKeyToMnemonic**(`mdk`): `string`

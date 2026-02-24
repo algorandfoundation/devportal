@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getMockServer"
+title: 'getMockServer'
 ---
 
 > **getMockServer**(`clientType`): `Promise`\<[`MockServer`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/mockserver/)\>
@@ -35,7 +35,7 @@ Error if the environment variable is not set or the server is not reachable
 ## Example
 
 ```typescript
-const server = await getMockServer('algod')
-const client = new AlgodClient(DEFAULT_TOKEN, server.baseUrl)
+const server = await getMockServer('algod');
+const client = new AlgodClient(DEFAULT_TOKEN, server.baseUrl);
 // ... run tests ...
 ```

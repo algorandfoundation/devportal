@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "assignFee"
+title: 'assignFee'
 ---
 
 > **assignFee**(`transaction`, `feeParams`): [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Config"
+title: 'Config'
 ---
 
 > `const` **Config**: [`UpdatableConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/updatableconfig/)

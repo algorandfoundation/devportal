@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Participant"
+title: 'Participant'
 ---
 
 > **Participant** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:40](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:41](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L41)
 
-***
+---
 
 ### weight
 

@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "MOCK_PORTS"
+title: 'MOCK_PORTS'
 ---
 
-> `const` **MOCK\_PORTS**: `object`
+> `const` **MOCK_PORTS**: `object`
 
 Defined in: [packages/testing/src/mockServer.ts:24](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/testing/src/mockServer.ts#L24)
 

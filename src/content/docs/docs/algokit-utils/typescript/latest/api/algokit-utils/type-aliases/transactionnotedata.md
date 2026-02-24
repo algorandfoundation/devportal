@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionNoteData"
+title: 'TransactionNoteData'
 ---
 
 > **TransactionNoteData** = `string` \| `null` \| `undefined` \| `number` \| `any`[] \| `Record`\<`string`, `any`\>

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AssetInformation"
+title: 'AssetInformation'
 ---
 
 Defined in: [src/asset-manager.ts:18](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L18)
@@ -19,7 +19,7 @@ Defined in: [src/asset-manager.ts:20](https://github.com/larkiny/algokit-utils-t
 
 The ID of the asset.
 
-***
+---
 
 ### assetName?
 
@@ -31,7 +31,7 @@ The optional name of the asset.
 
 Max size is 32 bytes.
 
-***
+---
 
 ### assetNameAsBytes?
 
@@ -43,7 +43,7 @@ The optional name of the asset.
 
 Max size is 32 bytes.
 
-***
+---
 
 ### clawback?
 
@@ -59,7 +59,7 @@ If empty, clawback is not permitted.
 
 If not set the field is permanently empty.
 
-***
+---
 
 ### creator
 
@@ -73,7 +73,7 @@ This is the address where the parameters for this asset can be found,
 and also the address where unwanted asset units can be sent when
 closing out an asset position and opting-out of the asset.
 
-***
+---
 
 ### decimals
 
@@ -83,13 +83,13 @@ Defined in: [src/asset-manager.ts:44](https://github.com/larkiny/algokit-utils-t
 
 The amount of decimal places the asset was created with.
 
-* If 0, the asset is not divisible;
-* If 1, the base unit of the asset is in tenths;
-* If 2, the base unit of the asset is in hundredths;
-* If 3, the base unit of the asset is in thousandths;
-* and so on up to 19 decimal places.
+- If 0, the asset is not divisible;
+- If 1, the base unit of the asset is in tenths;
+- If 2, the base unit of the asset is in hundredths;
+- If 3, the base unit of the asset is in thousandths;
+- and so on up to 19 decimal places.
 
-***
+---
 
 ### defaultFrozen?
 
@@ -103,7 +103,7 @@ If `true` then for anyone apart from the creator to hold the
 asset it needs to be unfrozen per account using an asset freeze
 transaction from the `freeze` account.
 
-***
+---
 
 ### freeze?
 
@@ -117,7 +117,7 @@ If empty, freezing is not permitted.
 
 If not set the field is permanently empty.
 
-***
+---
 
 ### manager?
 
@@ -129,7 +129,7 @@ The address of the optional account that can manage the configuration of the ass
 
 If not set the asset is permanently immutable.
 
-***
+---
 
 ### metadataHash?
 
@@ -141,7 +141,7 @@ Defined in: [src/asset-manager.ts:135](https://github.com/larkiny/algokit-utils-
 
 The format of this metadata is up to the application.
 
-***
+---
 
 ### reserve?
 
@@ -161,7 +161,7 @@ of the asset reside in an account that is different from the default creator acc
 
 If not set the field is permanently empty.
 
-***
+---
 
 ### total
 
@@ -173,7 +173,7 @@ The total amount of the smallest divisible (decimal) units that were created of 
 
 For example, if `decimals` is, say, 2, then for every 100 `total` there is 1 whole unit.
 
-***
+---
 
 ### unitName?
 
@@ -185,7 +185,7 @@ The optional name of the unit of this asset (e.g. ticker name).
 
 Max size is 8 bytes.
 
-***
+---
 
 ### unitNameAsBytes?
 
@@ -197,7 +197,7 @@ The optional name of the unit of this asset (e.g. ticker name).
 
 Max size is 8 bytes.
 
-***
+---
 
 ### url?
 
@@ -209,7 +209,7 @@ Optional URL where more information about the asset can be retrieved (e.g. metad
 
 Max size is 96 bytes.
 
-***
+---
 
 ### urlAsBytes?
 

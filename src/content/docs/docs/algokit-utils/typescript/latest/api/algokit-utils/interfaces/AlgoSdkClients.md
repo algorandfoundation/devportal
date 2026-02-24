@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgoSdkClients"
+title: 'AlgoSdkClients'
 ---
 
 Defined in: [src/client-manager.ts:13](https://github.com/larkiny/algokit-utils-ts/blob/main/src/client-manager.ts#L13)
@@ -19,7 +19,7 @@ Defined in: [src/client-manager.ts:15](https://github.com/larkiny/algokit-utils-
 
 Algod client, see https://dev.algorand.co/reference/rest-apis/algod/
 
-***
+---
 
 ### indexer?
 
@@ -29,7 +29,7 @@ Defined in: [src/client-manager.ts:17](https://github.com/larkiny/algokit-utils-
 
 Optional indexer client, see https://dev.algorand.co/reference/rest-apis/indexer
 
-***
+---
 
 ### kmd?
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "NetworkDetails"
+title: 'NetworkDetails'
 ---
 
 Defined in: [src/network-client.ts:22](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L22)
@@ -19,7 +19,7 @@ Defined in: [src/network-client.ts:32](https://github.com/larkiny/algokit-utils-
 
 The base64 genesis hash of the current network.
 
-***
+---
 
 ### genesisId
 
@@ -29,7 +29,7 @@ Defined in: [src/network-client.ts:30](https://github.com/larkiny/algokit-utils-
 
 The genesis ID of the current network.
 
-***
+---
 
 ### isLocalNet
 
@@ -39,7 +39,7 @@ Defined in: [src/network-client.ts:28](https://github.com/larkiny/algokit-utils-
 
 Whether or not the network is LocalNet.
 
-***
+---
 
 ### isMainNet
 
@@ -49,7 +49,7 @@ Defined in: [src/network-client.ts:26](https://github.com/larkiny/algokit-utils-
 
 Whether or not the network is MainNet.
 
-***
+---
 
 ### isTestNet
 

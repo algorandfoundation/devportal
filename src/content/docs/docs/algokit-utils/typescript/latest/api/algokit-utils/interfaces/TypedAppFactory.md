@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TypedAppFactory"
+title: 'TypedAppFactory'
 ---
 
 Defined in: [src/client-manager.ts:712](https://github.com/larkiny/algokit-utils-ts/blob/main/src/client-manager.ts#L712)

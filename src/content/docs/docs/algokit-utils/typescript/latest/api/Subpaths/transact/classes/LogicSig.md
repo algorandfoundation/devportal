@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "LogicSig"
+title: 'LogicSig'
 ---
 
 Defined in: [packages/transact/src/logicsig.ts:32](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L32)
@@ -45,7 +45,7 @@ Defined in: [packages/transact/src/logicsig.ts:37](https://github.com/larkiny/al
 
 Defined in: [packages/transact/src/logicsig.ts:34](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L34)
 
-***
+---
 
 ### logic
 
@@ -83,7 +83,7 @@ Defined in: [packages/transact/src/logicsig.ts:79](https://github.com/larkiny/al
 
 [`LogicSigAccount`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsigaccount/)
 
-***
+---
 
 ### address()
 
@@ -95,7 +95,7 @@ Defined in: [packages/transact/src/logicsig.ts:55](https://github.com/larkiny/al
 
 [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-***
+---
 
 ### bytesToSignForDelegation()
 
@@ -113,7 +113,7 @@ Defined in: [packages/transact/src/logicsig.ts:63](https://github.com/larkiny/al
 
 `Uint8Array`
 
-***
+---
 
 ### delegatedAccount()
 
@@ -131,7 +131,7 @@ Defined in: [packages/transact/src/logicsig.ts:83](https://github.com/larkiny/al
 
 [`LogicSigAccount`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsigaccount/)
 
-***
+---
 
 ### programDataToSign()
 
@@ -149,7 +149,7 @@ Defined in: [packages/transact/src/logicsig.ts:75](https://github.com/larkiny/al
 
 `Uint8Array`
 
-***
+---
 
 ### signProgramData()
 
@@ -171,7 +171,7 @@ Defined in: [packages/transact/src/logicsig.ts:71](https://github.com/larkiny/al
 
 `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
 
-***
+---
 
 ### fromBytes()
 
@@ -189,7 +189,7 @@ Defined in: [packages/transact/src/logicsig.ts:49](https://github.com/larkiny/al
 
 `LogicSig`
 
-***
+---
 
 ### fromSignature()
 

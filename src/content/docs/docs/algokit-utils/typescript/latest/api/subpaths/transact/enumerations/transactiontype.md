@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TransactionType"
+title: 'TransactionType'
 ---
 
 Defined in: [packages/transact/src/transactions/transaction-type.ts:4](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/transaction-type.ts#L4)
@@ -19,7 +19,7 @@ Defined in: [packages/transact/src/transactions/transaction-type.ts:28](https://
 
 Application transaction
 
-***
+---
 
 ### AssetConfig
 
@@ -29,7 +29,7 @@ Defined in: [packages/transact/src/transactions/transaction-type.ts:16](https://
 
 Asset configuration transaction
 
-***
+---
 
 ### AssetFreeze
 
@@ -39,7 +39,7 @@ Defined in: [packages/transact/src/transactions/transaction-type.ts:24](https://
 
 Asset freeze transaction
 
-***
+---
 
 ### AssetTransfer
 
@@ -49,7 +49,7 @@ Defined in: [packages/transact/src/transactions/transaction-type.ts:20](https://
 
 Asset transfer transaction
 
-***
+---
 
 ### Heartbeat
 
@@ -59,7 +59,7 @@ Defined in: [packages/transact/src/transactions/transaction-type.ts:36](https://
 
 Heartbeat transaction
 
-***
+---
 
 ### KeyRegistration
 
@@ -69,7 +69,7 @@ Defined in: [packages/transact/src/transactions/transaction-type.ts:12](https://
 
 Key registration transaction
 
-***
+---
 
 ### Payment
 
@@ -79,7 +79,7 @@ Defined in: [packages/transact/src/transactions/transaction-type.ts:8](https://g
 
 Payment transaction
 
-***
+---
 
 ### StateProof
 
@@ -89,7 +89,7 @@ Defined in: [packages/transact/src/transactions/transaction-type.ts:32](https://
 
 State proof transaction
 
-***
+---
 
 ### Unknown
 

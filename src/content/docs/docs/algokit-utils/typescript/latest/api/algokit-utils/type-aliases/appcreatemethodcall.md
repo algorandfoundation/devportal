@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppCreateMethodCall"
+title: 'AppCreateMethodCall'
 ---
 
 > **AppCreateMethodCall** = `Expand`\<`AppMethodCall`\<[`AppCreateParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/appcreateparams/)\>\>

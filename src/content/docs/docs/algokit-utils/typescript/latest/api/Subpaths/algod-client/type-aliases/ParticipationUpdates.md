@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: "ParticipationUpdates"
+title: 'ParticipationUpdates'
 ---
 
 > **ParticipationUpdates** = `object`
 
-Defined in: [packages/algod\_client/src/models/block.ts:189](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L189)
+Defined in: [packages/algod_client/src/models/block.ts:189](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L189)
 
 ## Properties
 
@@ -15,16 +15,16 @@ Defined in: [packages/algod\_client/src/models/block.ts:189](https://github.com/
 
 > **absentParticipationAccounts**: `string`[]
 
-Defined in: [packages/algod\_client/src/models/block.ts:193](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L193)
+Defined in: [packages/algod_client/src/models/block.ts:193](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L193)
 
 [partupdabs] Absent participation accounts.
 
-***
+---
 
 ### expiredParticipationAccounts
 
 > **expiredParticipationAccounts**: `string`[]
 
-Defined in: [packages/algod\_client/src/models/block.ts:191](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L191)
+Defined in: [packages/algod_client/src/models/block.ts:191](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/block.ts#L191)
 
 [partupdrmv] Expired participation accounts.

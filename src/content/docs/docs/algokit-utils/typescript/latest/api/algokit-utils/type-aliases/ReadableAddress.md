@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ReadableAddress"
+title: 'ReadableAddress'
 ---
 
 > **ReadableAddress** = [`Addressable`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/addressable/) \| [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) \| `string`

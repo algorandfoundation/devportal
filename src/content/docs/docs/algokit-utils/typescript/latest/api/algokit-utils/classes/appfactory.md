@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppFactory"
+title: 'AppFactory'
 ---
 
 Defined in: [src/app-factory.ts:150](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-factory.ts#L150)
@@ -37,7 +37,7 @@ The `AppFactory` instance
 
 #### Example
 
-```typescript
+````typescript
 const appFactory = new AppFactory({
   appSpec: appSpec,
   algorand: AlgorandClient.mainNet(),
@@ -387,7 +387,7 @@ The method name or method signature to call if an ABI call is being emitted
 ```ts
 Method name
 `my_method`
-```
+````
 
 ```ts
 Method signature
@@ -461,8 +461,8 @@ The address of the account sending the transaction, if undefined then the app cl
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
- an attempt will be made to find a registered signer for the
- given `sender` or use a default signer (if configured).
+an attempt will be made to find a registered signer for the
+given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -488,7 +488,7 @@ How many rounds the transaction should be valid for, if not specified then the r
 
 The create call transaction
 
-***
+---
 
 ### send
 
@@ -566,7 +566,7 @@ Return the algorand client this factory is using.
 
 [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/)
 
-***
+---
 
 ### appName
 
@@ -582,7 +582,7 @@ The name of the app (from the ARC-32 / ARC-56 app spec or override).
 
 `string`
 
-***
+---
 
 ### appSpec
 
@@ -598,7 +598,7 @@ The ARC-56 app spec being used
 
 [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/arc56contract/)
 
-***
+---
 
 ### params
 
@@ -615,14 +615,14 @@ A good mental model for this is that these parameters represent a deferred trans
 ##### Examples
 
 ```typescript
-const createAppParams = appFactory.params.create({method: 'create_method', args: [123, 'hello']})
+const createAppParams = appFactory.params.create({ method: 'create_method', args: [123, 'hello'] });
 // ...
-await algorand.send.AppCreateMethodCall(createAppParams)
+await algorand.send.AppCreateMethodCall(createAppParams);
 ```
 
 ```typescript
-const createAppParams = appFactory.params.create({method: 'create_method', args: [123, 'hello']})
-await appClient.send.call({method: 'my_method', args: [createAppParams]})
+const createAppParams = appFactory.params.create({ method: 'create_method', args: [123, 'hello'] });
+await appClient.send.call({ method: 'my_method', args: [createAppParams] });
 ```
 
 ##### Returns
@@ -678,7 +678,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
 Either the name identifier (which will be set against app ID of `0` i.e.
- the current app), or a box identifier with the name identifier and app ID.
+the current app), or a box identifier with the name identifier and app ID.
 
 ###### deletable?
 
@@ -728,7 +728,7 @@ The last round this transaction is valid. It is recommended to use `validityWind
 Prevent multiple transactions with the same lease being included within the validity window.
 
 A [lease](https://dev.algorand.co/concepts/transactions/leases)
- enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
 
 ###### maxFee?
 
@@ -801,8 +801,8 @@ The address of the account sending the transaction, if undefined then the app cl
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
- an attempt will be made to find a registered signer for the
- given `sender` or use a default signer (if configured).
+an attempt will be made to find a registered signer for the
+given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -873,7 +873,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
 Either the name identifier (which will be set against app ID of `0` i.e.
- the current app), or a box identifier with the name identifier and app ID.
+the current app), or a box identifier with the name identifier and app ID.
 
 ###### extraFee?
 
@@ -903,7 +903,7 @@ The last round this transaction is valid. It is recommended to use `validityWind
 Prevent multiple transactions with the same lease being included within the validity window.
 
 A [lease](https://dev.algorand.co/concepts/transactions/leases)
- enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
 
 ###### maxFee?
 
@@ -942,8 +942,8 @@ The address of the account sending the transaction, if undefined then the app cl
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
- an attempt will be made to find a registered signer for the
- given `sender` or use a default signer (if configured).
+an attempt will be made to find a registered signer for the
+given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -1006,7 +1006,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
 Either the name identifier (which will be set against app ID of `0` i.e.
- the current app), or a box identifier with the name identifier and app ID.
+the current app), or a box identifier with the name identifier and app ID.
 
 ###### extraFee?
 
@@ -1036,7 +1036,7 @@ The last round this transaction is valid. It is recommended to use `validityWind
 Prevent multiple transactions with the same lease being included within the validity window.
 
 A [lease](https://dev.algorand.co/concepts/transactions/leases)
- enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
 
 ###### maxFee?
 
@@ -1075,8 +1075,8 @@ The address of the account sending the transaction, if undefined then the app cl
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
- an attempt will be made to find a registered signer for the
- given `sender` or use a default signer (if configured).
+an attempt will be made to find a registered signer for the
+given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -1125,13 +1125,14 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 ([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
 
 Arguments to the ABI method, either:
-* An ABI value
-* An ARC-56 struct
-* A transaction with explicit signer
-* A transaction (where the signer will be automatically assigned)
-* An unawaited transaction (e.g. from algorand.createTransaction.transactionType())
-* Another method call (via method call params object)
-* undefined (this represents a placeholder for either a default argument or a transaction argument that is fulfilled by another method call argument)
+
+- An ABI value
+- An ARC-56 struct
+- A transaction with explicit signer
+- A transaction (where the signer will be automatically assigned)
+- An unawaited transaction (e.g. from algorand.createTransaction.transactionType())
+- Another method call (via method call params object)
+- undefined (this represents a placeholder for either a default argument or a transaction argument that is fulfilled by another method call argument)
 
 ###### assetReferences?
 
@@ -1146,7 +1147,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
 Either the name identifier (which will be set against app ID of `0` i.e.
- the current app), or a box identifier with the name identifier and app ID.
+the current app), or a box identifier with the name identifier and app ID.
 
 ###### deletable?
 
@@ -1196,7 +1197,7 @@ The last round this transaction is valid. It is recommended to use `validityWind
 Prevent multiple transactions with the same lease being included within the validity window.
 
 A [lease](https://dev.algorand.co/concepts/transactions/leases)
- enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
 
 ###### maxFee?
 
@@ -1289,8 +1290,8 @@ The address of the account sending the transaction, if undefined then the app cl
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
- an attempt will be made to find a registered signer for the
- given `sender` or use a default signer (if configured).
+an attempt will be made to find a registered signer for the
+given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -1347,13 +1348,14 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 ([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
 
 Arguments to the ABI method, either:
-* An ABI value
-* An ARC-56 struct
-* A transaction with explicit signer
-* A transaction (where the signer will be automatically assigned)
-* An unawaited transaction (e.g. from algorand.createTransaction.transactionType())
-* Another method call (via method call params object)
-* undefined (this represents a placeholder for either a default argument or a transaction argument that is fulfilled by another method call argument)
+
+- An ABI value
+- An ARC-56 struct
+- A transaction with explicit signer
+- A transaction (where the signer will be automatically assigned)
+- An unawaited transaction (e.g. from algorand.createTransaction.transactionType())
+- Another method call (via method call params object)
+- undefined (this represents a placeholder for either a default argument or a transaction argument that is fulfilled by another method call argument)
 
 ###### assetReferences?
 
@@ -1368,7 +1370,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
 Either the name identifier (which will be set against app ID of `0` i.e.
- the current app), or a box identifier with the name identifier and app ID.
+the current app), or a box identifier with the name identifier and app ID.
 
 ###### extraFee?
 
@@ -1398,7 +1400,7 @@ The last round this transaction is valid. It is recommended to use `validityWind
 Prevent multiple transactions with the same lease being included within the validity window.
 
 A [lease](https://dev.algorand.co/concepts/transactions/leases)
- enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
 
 ###### maxFee?
 
@@ -1461,8 +1463,8 @@ The address of the account sending the transaction, if undefined then the app cl
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
- an attempt will be made to find a registered signer for the
- given `sender` or use a default signer (if configured).
+an attempt will be made to find a registered signer for the
+given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -1511,13 +1513,14 @@ The ID of any apps to load to the [foreign apps array](https://dev.algorand.co/c
 ([`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `AppMethodCallTransactionArgument` \| `undefined`)[]
 
 Arguments to the ABI method, either:
-* An ABI value
-* An ARC-56 struct
-* A transaction with explicit signer
-* A transaction (where the signer will be automatically assigned)
-* An unawaited transaction (e.g. from algorand.createTransaction.transactionType())
-* Another method call (via method call params object)
-* undefined (this represents a placeholder for either a default argument or a transaction argument that is fulfilled by another method call argument)
+
+- An ABI value
+- An ARC-56 struct
+- A transaction with explicit signer
+- A transaction (where the signer will be automatically assigned)
+- An unawaited transaction (e.g. from algorand.createTransaction.transactionType())
+- Another method call (via method call params object)
+- undefined (this represents a placeholder for either a default argument or a transaction argument that is fulfilled by another method call argument)
 
 ###### assetReferences?
 
@@ -1532,7 +1535,7 @@ The ID of any assets to load to the [foreign assets array](https://dev.algorand.
 Any boxes to load to the [boxes array](https://dev.algorand.co/concepts/smart-contracts/resource-usage#what-are-reference-arrays).
 
 Either the name identifier (which will be set against app ID of `0` i.e.
- the current app), or a box identifier with the name identifier and app ID.
+the current app), or a box identifier with the name identifier and app ID.
 
 ###### extraFee?
 
@@ -1562,7 +1565,7 @@ The last round this transaction is valid. It is recommended to use `validityWind
 Prevent multiple transactions with the same lease being included within the validity window.
 
 A [lease](https://dev.algorand.co/concepts/transactions/leases)
- enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
 
 ###### maxFee?
 
@@ -1625,8 +1628,8 @@ The address of the account sending the transaction, if undefined then the app cl
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
- an attempt will be made to find a registered signer for the
- given `sender` or use a default signer (if configured).
+an attempt will be made to find a registered signer for the
+given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -1675,10 +1678,10 @@ The compilation result
 #### Example
 
 ```typescript
-const result = await factory.compile()
+const result = await factory.compile();
 ```
 
-***
+---
 
 ### deploy()
 
@@ -1747,7 +1750,7 @@ Optional cached value of the existing apps for the given creator; use this to av
 
 `boolean`
 
-Whether or not to ignore the app metadata cache and force a lookup, default: use the cache *
+Whether or not to ignore the app metadata cache and force a lookup, default: use the cache \*
 
 ###### maxRoundsToWaitForConfirmation?
 
@@ -1761,9 +1764,9 @@ The number of rounds to wait for confirmation. By default until the latest lastV
 
 What action to perform if a schema break (storage schema or extra pages change) is detected:
 
-* `fail` - Fail the deployment (throw an error, **default**)
-* `replace` - Delete the old app and create a new one
-* `append` - Deploy a new app and leave the old one as is
+- `fail` - Fail the deployment (throw an error, **default**)
+- `replace` - Delete the old app and create a new one
+- `append` - Deploy a new app and leave the old one as is
 
 ###### onUpdate?
 
@@ -1771,10 +1774,10 @@ What action to perform if a schema break (storage schema or extra pages change) 
 
 What action to perform if a TEAL code update is detected:
 
-* `fail` - Fail the deployment (throw an error, **default**)
-* `update` - Update the app with the new TEAL code
-* `replace` - Delete the old app and create a new one
-* `append` - Deploy a new app and leave the old one as is
+- `fail` - Fail the deployment (throw an error, **default**)
+- `update` - Update the app with the new TEAL code
+- `replace` - Delete the old app and create a new one
+- `append` - Deploy a new app and leave the old one as is
 
 ###### populateAppCallResources?
 
@@ -1819,21 +1822,21 @@ const { appClient, result } = await factory.deploy({
       globalByteSlices: 0,
       globalInts: 0,
       localByteSlices: 0,
-      localInts: 0
-    }
+      localInts: 0,
+    },
   },
   updateParams: {
-    sender: 'SENDER_ADDRESS'
+    sender: 'SENDER_ADDRESS',
   },
   deleteParams: {
-    sender: 'SENDER_ADDRESS'
+    sender: 'SENDER_ADDRESS',
   },
   onSchemaBreak: 'append',
-  onUpdate: 'append'
- })
+  onUpdate: 'append',
+});
 ```
 
-***
+---
 
 ### exportSourceMaps()
 
@@ -1849,7 +1852,7 @@ Export the current source maps for the app.
 
 The source maps
 
-***
+---
 
 ### exposeLogicError()
 
@@ -1880,7 +1883,7 @@ Whether or not the code was running the clear state program (defaults to approva
 
 The new error, or if there was no logic error or source map then the wrapped error with source details
 
-***
+---
 
 ### getAppClientByCreatorAndName()
 
@@ -1959,10 +1962,13 @@ The `AppClient` instance
 #### Example
 
 ```typescript
-const appClient = factory.getAppClientByCreatorAndName({ creatorAddress: 'CREATOR_ADDRESS', appName: 'my_app' })
+const appClient = factory.getAppClientByCreatorAndName({
+  creatorAddress: 'CREATOR_ADDRESS',
+  appName: 'my_app',
+});
 ```
 
-***
+---
 
 ### getAppClientById()
 
@@ -2027,10 +2033,10 @@ The `AppClient` instance
 #### Example
 
 ```typescript
-const appClient = factory.getAppClientById({ appId: 12345n })
+const appClient = factory.getAppClientById({ appId: 12345n });
 ```
 
-***
+---
 
 ### importSourceMaps()
 

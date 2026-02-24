@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppClientParams"
+title: 'AppClientParams'
 ---
 
 Defined in: [src/app-client.ts:272](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L272)
@@ -19,7 +19,7 @@ Defined in: [src/app-client.ts:284](https://github.com/larkiny/algokit-utils-ts/
 
 An `AlgorandClient` instance
 
-***
+---
 
 ### appId
 
@@ -29,7 +29,7 @@ Defined in: [src/app-client.ts:274](https://github.com/larkiny/algokit-utils-ts/
 
 The ID of the app instance this client should make calls against.
 
-***
+---
 
 ### appName?
 
@@ -40,7 +40,7 @@ Defined in: [src/app-client.ts:290](https://github.com/larkiny/algokit-utils-ts/
 Optional override for the app name; used for on-chain metadata and lookups.
 Defaults to the ARC-32/ARC-56 app spec name
 
-***
+---
 
 ### approvalSourceMap?
 
@@ -50,7 +50,7 @@ Defined in: [src/app-client.ts:296](https://github.com/larkiny/algokit-utils-ts/
 
 Optional source map for the approval program
 
-***
+---
 
 ### appSpec
 
@@ -59,11 +59,12 @@ Optional source map for the approval program
 Defined in: [src/app-client.ts:281](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L281)
 
 The ARC-56 or ARC-32 application spec as either:
- * Parsed JSON ARC-56 `Contract`
- * Parsed JSON ARC-32 `AppSpec`
- * Raw JSON string (in either ARC-56 or ARC-32 format)
 
-***
+- Parsed JSON ARC-56 `Contract`
+- Parsed JSON ARC-32 `AppSpec`
+- Raw JSON string (in either ARC-56 or ARC-32 format)
+
+---
 
 ### clearSourceMap?
 
@@ -73,7 +74,7 @@ Defined in: [src/app-client.ts:298](https://github.com/larkiny/algokit-utils-ts/
 
 Optional source map for the clear state program
 
-***
+---
 
 ### defaultSender?
 
@@ -83,7 +84,7 @@ Defined in: [src/app-client.ts:292](https://github.com/larkiny/algokit-utils-ts/
 
 Optional address to use for the account to use as the default sender for calls.
 
-***
+---
 
 ### defaultSigner?
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppManager"
+title: 'AppManager'
 ---
 
 Defined in: [src/app-manager.ts:100](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-manager.ts#L100)
@@ -42,7 +42,7 @@ Defined in: [src/app-manager.ts:127](https://github.com/larkiny/algokit-utils-ts
 Compiles the given TEAL using algod and returns the result, including source map.
 
 The result of this compilation is also cached keyed by the TEAL
- code so it can be retrieved via `getCompilationResult`.
+code so it can be retrieved via `getCompilationResult`.
 
 This function is re-entrant; it will only compile the same code once.
 
@@ -63,10 +63,10 @@ The information about the compiled file
 #### Example
 
 ```typescript
-const compiled = await appManager.compileTeal(tealProgram)
+const compiled = await appManager.compileTeal(tealProgram);
 ```
 
-***
+---
 
 ### compileTealTemplate()
 
@@ -79,8 +79,8 @@ Performs template substitution of a teal template and compiles it, returning the
 Looks for `TMPL_{parameter}` for template replacements and replaces AlgoKit deploy-time control parameters
 if deployment metadata is specified.
 
-* `TMPL_UPDATABLE` for updatability / immutability control
-* `TMPL_DELETABLE` for deletability / permanence control
+- `TMPL_UPDATABLE` for updatability / immutability control
+- `TMPL_DELETABLE` for deletability / permanence control
 
 #### Parameters
 
@@ -117,10 +117,14 @@ The information about the compiled code
 #### Example
 
 ```typescript
-const compiled = await appManager.compileTealTemplate(tealTemplate, { TMPL_APP_ID: 12345n }, { updatable: true, deletable: false })
+const compiled = await appManager.compileTealTemplate(
+  tealTemplate,
+  { TMPL_APP_ID: 12345n },
+  { updatable: true, deletable: false },
+);
 ```
 
-***
+---
 
 ### getBoxNames()
 
@@ -150,7 +154,7 @@ The current box names
 const boxNames = await appManager.getBoxNames(12353n);
 ```
 
-***
+---
 
 ### getBoxValue()
 
@@ -186,7 +190,7 @@ The current box value as a byte array
 const boxValue = await appManager.getBoxValue(12353n, 'boxName');
 ```
 
-***
+---
 
 ### getBoxValueFromABIType()
 
@@ -213,10 +217,14 @@ The current box value as an ABI value
 #### Example
 
 ```typescript
-const boxValue = await appManager.getBoxValueFromABIType({ appId: 12353n, boxName: 'boxName', type: new ABIUintType(32) });
+const boxValue = await appManager.getBoxValueFromABIType({
+  appId: 12353n,
+  boxName: 'boxName',
+  type: new ABIUintType(32),
+});
 ```
 
-***
+---
 
 ### getBoxValues()
 
@@ -252,7 +260,7 @@ The current box values as a byte array in the same order as the passed in box na
 const boxValues = await appManager.getBoxValues(12353n, ['boxName1', 'boxName2']);
 ```
 
-***
+---
 
 ### getBoxValuesFromABIType()
 
@@ -279,10 +287,14 @@ The current box values as an ABI value in the same order as the passed in box na
 #### Example
 
 ```typescript
-const boxValues = await appManager.getBoxValuesFromABIType({ appId: 12353n, boxNames: ['boxName1', 'boxName2'], type: new ABIUintType(32) });
+const boxValues = await appManager.getBoxValuesFromABIType({
+  appId: 12353n,
+  boxNames: ['boxName1', 'boxName2'],
+  type: new ABIUintType(32),
+});
 ```
 
-***
+---
 
 ### getById()
 
@@ -312,7 +324,7 @@ The app information
 const appInfo = await appManager.getById(12353n);
 ```
 
-***
+---
 
 ### getCompilationResult()
 
@@ -335,15 +347,15 @@ The TEAL code
 [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/) \| `undefined`
 
 The information about the previously compiled file
- or `undefined` if that TEAL code wasn't previously compiled
+or `undefined` if that TEAL code wasn't previously compiled
 
 #### Example
 
 ```typescript
-const compiled = appManager.getCompilationResult(tealProgram)
+const compiled = appManager.getCompilationResult(tealProgram);
 ```
 
-***
+---
 
 ### getGlobalState()
 
@@ -373,7 +385,7 @@ The current global state for the given app
 const globalState = await appManager.getGlobalState(12353n);
 ```
 
-***
+---
 
 ### getLocalState()
 
@@ -409,7 +421,7 @@ The current local state for the given (app, account) combination
 const localState = await appManager.getLocalState(12353n, 'ACCOUNTADDRESS');
 ```
 
-***
+---
 
 ### decodeAppState()
 
@@ -440,7 +452,7 @@ An object keyeed by the UTF-8 representation of the key with various parsings of
 const stateValues = AppManager.decodeAppState(state);
 ```
 
-***
+---
 
 ### getABIReturn()
 
@@ -473,10 +485,13 @@ The return value for the method call
 #### Example
 
 ```typescript
-const returnValue = AppManager.getABIReturn(confirmation, ABIMethod.fromSignature('hello(string)void'));
+const returnValue = AppManager.getABIReturn(
+  confirmation,
+  ABIMethod.fromSignature('hello(string)void'),
+);
 ```
 
-***
+---
 
 ### getBoxReference()
 
@@ -506,7 +521,7 @@ The box reference ready to pass into a `algosdk.Transaction`
 const boxRef = AppManager.getBoxReference('boxName');
 ```
 
-***
+---
 
 ### replaceTealTemplateDeployTimeControlParams()
 
@@ -516,11 +531,11 @@ Defined in: [src/app-manager.ts:473](https://github.com/larkiny/algokit-utils-ts
 
 Replaces AlgoKit deploy-time deployment control parameters within the given TEAL template code.
 
-* `TMPL_UPDATABLE` for updatability / immutability control
-* `TMPL_DELETABLE` for deletability / permanence control
+- `TMPL_UPDATABLE` for updatability / immutability control
+- `TMPL_DELETABLE` for deletability / permanence control
 
 Note: If these values are defined, but the corresponding `TMPL_*` value
- isn't in the teal code it will throw an exception.
+isn't in the teal code it will throw an exception.
 
 #### Parameters
 
@@ -551,10 +566,13 @@ The replaced TEAL code
 #### Example
 
 ```typescript
-const tealCode = AppManager.replaceTealTemplateDeployTimeControlParams(tealTemplate, { updatable: true, deletable: false });
+const tealCode = AppManager.replaceTealTemplateDeployTimeControlParams(tealTemplate, {
+  updatable: true,
+  deletable: false,
+});
 ```
 
-***
+---
 
 ### replaceTealTemplateParams()
 
@@ -592,7 +610,7 @@ The TEAL code with replacements
 const tealCode = AppManager.replaceTealTemplateParams(tealTemplate, { TMPL_APP_ID: 12345n });
 ```
 
-***
+---
 
 ### stripTealComments()
 

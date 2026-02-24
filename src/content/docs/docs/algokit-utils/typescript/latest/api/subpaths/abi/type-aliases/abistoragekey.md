@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIStorageKey"
+title: 'ABIStorageKey'
 ---
 
 > **ABIStorageKey** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:16](https://github.com/larkiny/a
 
 Description of what this storage key holds
 
-***
+---
 
 ### key
 
@@ -31,7 +31,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:10](https://github.com/larkiny/a
 
 The bytes of the key encoded as base64
 
-***
+---
 
 ### keyType
 
@@ -41,7 +41,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:12](https://github.com/larkiny/a
 
 The parsed type of the key (ABI type or AVM type)
 
-***
+---
 
 ### valueType
 

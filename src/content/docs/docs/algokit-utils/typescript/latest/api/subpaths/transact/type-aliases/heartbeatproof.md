@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "HeartbeatProof"
+title: 'HeartbeatProof'
 ---
 
 > **HeartbeatProof** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/transact/src/transactions/heartbeat.ts:31](https://github.
 
 Public key (32 bytes)
 
-***
+---
 
 ### pk1Sig
 
@@ -31,7 +31,7 @@ Defined in: [packages/transact/src/transactions/heartbeat.ts:37](https://github.
 
 Public key 1 signature (64 bytes)
 
-***
+---
 
 ### pk2
 
@@ -41,7 +41,7 @@ Defined in: [packages/transact/src/transactions/heartbeat.ts:34](https://github.
 
 Public key 2 (32 bytes)
 
-***
+---
 
 ### pk2Sig
 
@@ -51,7 +51,7 @@ Defined in: [packages/transact/src/transactions/heartbeat.ts:40](https://github.
 
 Public key 2 signature (64 bytes)
 
-***
+---
 
 ### sig
 

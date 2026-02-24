@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SendingAddress"
+title: 'SendingAddress'
 ---
 
 > **SendingAddress** = [`ReadableAddress`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/readableaddress/) \| [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/)

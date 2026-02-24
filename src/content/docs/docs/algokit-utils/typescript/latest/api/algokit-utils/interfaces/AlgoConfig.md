@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AlgoConfig"
+title: 'AlgoConfig'
 ---
 
 Defined in: [src/network-client.ts:12](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L12)
@@ -19,7 +19,7 @@ Defined in: [src/network-client.ts:14](https://github.com/larkiny/algokit-utils-
 
 Algod client configuration
 
-***
+---
 
 ### indexerConfig?
 
@@ -29,7 +29,7 @@ Defined in: [src/network-client.ts:16](https://github.com/larkiny/algokit-utils-
 
 Indexer client configuration
 
-***
+---
 
 ### kmdConfig?
 

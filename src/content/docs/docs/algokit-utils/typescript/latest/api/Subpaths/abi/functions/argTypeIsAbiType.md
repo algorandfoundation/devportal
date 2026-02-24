@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "argTypeIsAbiType"
+title: 'argTypeIsAbiType'
 ---
 
 > **argTypeIsAbiType**(`type`): `type is ABIType`

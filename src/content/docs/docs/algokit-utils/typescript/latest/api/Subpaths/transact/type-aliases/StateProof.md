@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StateProof"
+title: 'StateProof'
 ---
 
 > **StateProof** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:15](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L20)
 
-***
+---
 
 ### partProofs
 
@@ -25,7 +25,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:20](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L19)
 
-***
+---
 
 ### positionsToReveal
 
@@ -33,7 +33,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:19](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:22](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L22)
 
-***
+---
 
 ### reveals
 
@@ -41,7 +41,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:22](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L21)
 
-***
+---
 
 ### sigCommit
 
@@ -49,7 +49,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:21](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L16)
 
-***
+---
 
 ### signedWeight
 
@@ -57,7 +57,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:16](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:17](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L17)
 
-***
+---
 
 ### sigProofs
 

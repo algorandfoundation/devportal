@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "TypedAppClient"
+title: 'TypedAppClient'
 ---
 
 Defined in: [src/client-manager.ts:703](https://github.com/larkiny/algokit-utils-ts/blob/main/src/client-manager.ts#L703)
@@ -51,7 +51,7 @@ Defined in: [src/client-manager.ts:706](https://github.com/larkiny/algokit-utils
 
 `Promise`\<`TClient`\>
 
-***
+---
 
 ### fromNetwork()
 

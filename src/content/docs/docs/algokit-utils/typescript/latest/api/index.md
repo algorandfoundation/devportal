@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "@algorandfoundation/algokit-utils"
+title: '@algorandfoundation/algokit-utils'
 ---
 
 ## Modules

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIMethodReturn"
+title: 'ABIMethodReturn'
 ---
 
 > **ABIMethodReturn** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/abi/src/abi-method.ts:31](https://github.com/larkiny/algok
 
 Defined in: [packages/abi/src/abi-method.ts:33](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L33)
 
-***
+---
 
 ### type
 

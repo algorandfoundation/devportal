@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "StorageKey"
+title: 'StorageKey'
 ---
 
 > **StorageKey** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:265](https://github.com/larkiny/
 
 Description of what this storage key holds
 
-***
+---
 
 ### key
 
@@ -31,7 +31,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:272](https://github.com/larkiny/
 
 The bytes of the key encoded as base64
 
-***
+---
 
 ### keyType
 
@@ -41,7 +41,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:267](https://github.com/larkiny/
 
 The type of the key
 
-***
+---
 
 ### valueType
 

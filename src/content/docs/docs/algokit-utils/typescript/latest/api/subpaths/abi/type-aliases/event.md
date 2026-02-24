@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Event"
+title: 'Event'
 ---
 
 > **Event** = `object`
@@ -45,7 +45,7 @@ If the type is a struct, the name of the struct
 
 The type of the argument. The `struct` field should also be checked to determine if this arg is a struct.
 
-***
+---
 
 ### desc?
 
@@ -55,7 +55,7 @@ Defined in: [packages/abi/src/arc56-contract.ts:222](https://github.com/larkiny/
 
 Optional, user-friendly description for the event
 
-***
+---
 
 ### name
 

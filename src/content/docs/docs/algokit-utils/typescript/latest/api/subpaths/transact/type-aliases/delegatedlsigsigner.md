@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "DelegatedLsigSigner"
+title: 'DelegatedLsigSigner'
 ---
 
 > **DelegatedLsigSigner** = (`lsig`, `msig?`) => `Promise`\<`object` & \{ `sig?`: `Uint8Array`; \} \| \{ `lmsig?`: [`MultisigSignature`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/multisigsignature/); \}\>

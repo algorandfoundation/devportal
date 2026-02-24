@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ClientAppClientParams"
+title: 'ClientAppClientParams'
 ---
 
 > **ClientAppClientParams** = `Expand`\<`Omit`\<[`AppClientParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appclientparams/), `"algorand"`\>\>

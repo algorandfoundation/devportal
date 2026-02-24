@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SendAppCreateTransactionResult"
+title: 'SendAppCreateTransactionResult'
 ---
 
 > **SendAppCreateTransactionResult** = `Expand`\<[`SendAppUpdateTransactionResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/sendappupdatetransactionresult/) & `object`\>

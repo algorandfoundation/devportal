@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "BulkAssetOptInOutResult"
+title: 'BulkAssetOptInOutResult'
 ---
 
 Defined in: [src/asset-manager.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/src/asset-manager.ts#L10)
@@ -19,7 +19,7 @@ Defined in: [src/asset-manager.ts:12](https://github.com/larkiny/algokit-utils-t
 
 The ID of the asset opted into / out of
 
-***
+---
 
 ### transactionId
 

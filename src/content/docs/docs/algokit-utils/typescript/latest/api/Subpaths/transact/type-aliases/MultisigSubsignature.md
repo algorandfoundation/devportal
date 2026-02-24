@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "MultisigSubsignature"
+title: 'MultisigSubsignature'
 ---
 
 > **MultisigSubsignature** = `object`
@@ -23,7 +23,7 @@ Defined in: [packages/transact/src/transactions/signed-transaction.ts:45](https:
 
 Public key of a keypair account participant that is sub-signing a multisignature transaction.
 
-***
+---
 
 ### sig?
 

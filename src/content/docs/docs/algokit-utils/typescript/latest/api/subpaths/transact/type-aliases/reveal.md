@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "Reveal"
+title: 'Reveal'
 ---
 
 > **Reveal** = `object`
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:61](https://githu
 
 Defined in: [packages/transact/src/transactions/state-proof.ts:63](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L63)
 
-***
+---
 
 ### sigslot
 

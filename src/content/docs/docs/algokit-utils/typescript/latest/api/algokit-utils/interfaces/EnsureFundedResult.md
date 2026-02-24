@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "EnsureFundedResult"
+title: 'EnsureFundedResult'
 ---
 
 Defined in: [src/account-manager.ts:26](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account-manager.ts#L26)
@@ -19,7 +19,7 @@ Defined in: [src/account-manager.ts:30](https://github.com/larkiny/algokit-utils
 
 The amount that was sent to the account.
 
-***
+---
 
 ### transactionId
 

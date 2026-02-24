@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: "BaseHttpRequest"
+title: 'BaseHttpRequest'
 ---
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L19)
+Defined in: [packages/algod_client/src/core/base-http-request.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L19)
 
 ## Extended by
 
@@ -17,7 +17,7 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:19](https://gi
 
 > **new BaseHttpRequest**(`config`): `BaseHttpRequest`
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
+Defined in: [packages/algod_client/src/core/base-http-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
 
 #### Parameters
 
@@ -35,7 +35,7 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://gi
 
 > `readonly` **config**: [`ClientConfig`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/interfaces/clientconfig/)
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
+Defined in: [packages/algod_client/src/core/base-http-request.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L20)
 
 ## Methods
 
@@ -43,7 +43,7 @@ Defined in: [packages/algod\_client/src/core/base-http-request.ts:20](https://gi
 
 > `abstract` **request**\<`T`\>(`options`): `Promise`\<`T`\>
 
-Defined in: [packages/algod\_client/src/core/base-http-request.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L21)
+Defined in: [packages/algod_client/src/core/base-http-request.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/core/base-http-request.ts#L21)
 
 #### Type Parameters
 

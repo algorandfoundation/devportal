@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "ABIStructField"
+title: 'ABIStructField'
 ---
 
 > **ABIStructField** = `object`
@@ -21,7 +21,7 @@ Defined in: [packages/abi/src/abi-type.ts:23](https://github.com/larkiny/algokit
 
 The name of the struct field
 
-***
+---
 
 ### type
 

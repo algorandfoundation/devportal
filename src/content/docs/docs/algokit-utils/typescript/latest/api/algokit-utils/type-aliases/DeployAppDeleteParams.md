@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "DeployAppDeleteParams"
+title: 'DeployAppDeleteParams'
 ---
 
 > **DeployAppDeleteParams** = `Expand`\<`Omit`\<[`AppDeleteParams`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/appdeleteparams/), `"appId"`\>\>

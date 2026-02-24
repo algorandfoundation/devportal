@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "getABIDecodedValue"
+title: 'getABIDecodedValue'
 ---
 
 > **getABIDecodedValue**(`type`, `bytes`): [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)

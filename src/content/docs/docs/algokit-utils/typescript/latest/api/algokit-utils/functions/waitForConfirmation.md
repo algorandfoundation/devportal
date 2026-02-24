@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "waitForConfirmation"
+title: 'waitForConfirmation'
 ---
 
 > **waitForConfirmation**(`transactionId`, `maxRoundsToWait`, `algod`): `Promise`\<[`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)\>

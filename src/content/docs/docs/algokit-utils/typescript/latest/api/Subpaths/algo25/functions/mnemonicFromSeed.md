@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "mnemonicFromSeed"
+title: 'mnemonicFromSeed'
 ---
 
 > **mnemonicFromSeed**(`seed`): `string`

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "checkServerHealth"
+title: 'checkServerHealth'
 ---
 
 > **checkServerHealth**(`url`, `timeout`): `Promise`\<`boolean`\>

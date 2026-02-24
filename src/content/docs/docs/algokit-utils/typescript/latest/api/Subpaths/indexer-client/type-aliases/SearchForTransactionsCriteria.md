@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SearchForTransactionsCriteria"
+title: 'SearchForTransactionsCriteria'
 ---
 
 > **SearchForTransactionsCriteria** = `Omit`\<`NonNullable`\<`Parameters`\<[`IndexerClient`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/classes/indexerclient/)\[`"searchForTransactions"`\]\>\[`0`\]\>, `"limit"` \| `"next"`\>

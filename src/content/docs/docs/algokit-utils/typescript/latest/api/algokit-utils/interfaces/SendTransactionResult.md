@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "SendTransactionResult"
+title: 'SendTransactionResult'
 ---
 
 Defined in: [src/transaction/types.ts:49](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/types.ts#L49)
@@ -24,7 +24,7 @@ Defined in: [src/transaction/types.ts:53](https://github.com/larkiny/algokit-uti
 
 The response if the transaction was sent and waited for
 
-***
+---
 
 ### transaction
 

@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "AppLookup"
+title: 'AppLookup'
 ---
 
 Defined in: [src/app-deployer.ts:91](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L91)
@@ -23,7 +23,7 @@ A hash map of app name to app metadata
 
 \[`name`: `string`\]: [`AppMetadata`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appmetadata/)
 
-***
+---
 
 ### creator
 

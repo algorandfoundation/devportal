@@ -2,7 +2,7 @@
 editUrl: false
 next: false
 prev: false
-title: "MultisigMetadata"
+title: 'MultisigMetadata'
 ---
 
 Defined in: [packages/transact/src/multisig.ts:368](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/multisig.ts#L368)
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/multisig.ts:383](https://github.com/larkiny/a
 
 A list of Algorand addresses representing possible signers for this multisig. Order is important.
 
-***
+---
 
 ### threshold
 
@@ -28,7 +28,7 @@ Defined in: [packages/transact/src/multisig.ts:378](https://github.com/larkiny/a
 Multisig threshold value. Authorization requires a subset of signatures,
 equal to or greater than the threshold value.
 
-***
+---
 
 ### version
 
