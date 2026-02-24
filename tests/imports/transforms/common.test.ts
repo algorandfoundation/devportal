@@ -84,7 +84,7 @@ describe('conditionalTransform', () => {
   it('should apply transform when string pattern matches', () => {
     const transform = conditionalTransform(
       '**/*.md',
-      (content, _ctx) => content + ' [transformed]',
+      (content) => content + ' [transformed]',
     );
     const ctx = makeContext({ path: 'docs/guide.md' });
 
@@ -94,7 +94,7 @@ describe('conditionalTransform', () => {
   it('should skip transform when string pattern does not match', () => {
     const transform = conditionalTransform(
       '**/*.md',
-      (content, _ctx) => content + ' [transformed]',
+      (content) => content + ' [transformed]',
     );
     const ctx = makeContext({ path: 'docs/guide.ts' });
 
@@ -104,7 +104,7 @@ describe('conditionalTransform', () => {
   it('should apply transform when function predicate returns true', () => {
     const transform = conditionalTransform(
       (path) => path.includes('api'),
-      (content, _ctx) => content + ' [api]',
+      (content) => content + ' [api]',
     );
     const ctx = makeContext({ path: 'docs/api/ref.md' });
 
@@ -114,7 +114,7 @@ describe('conditionalTransform', () => {
   it('should skip transform when function predicate returns false', () => {
     const transform = conditionalTransform(
       (path) => path.includes('api'),
-      (content, _ctx) => content + ' [api]',
+      (content) => content + ' [api]',
     );
     const ctx = makeContext({ path: 'docs/guides/intro.md' });
 

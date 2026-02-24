@@ -162,7 +162,7 @@ describe('generateLinkMappings', () => {
     });
 
     const pattern = mappings[0].pattern as RegExp;
-    const replaceFn = mappings[0].replacement as Function;
+    const replaceFn = mappings[0].replacement as (...args: string[]) => string;
 
     // Pattern should match paths starting with api/
     expect(pattern.test('api/client.md')).toBe(true);
@@ -177,7 +177,7 @@ describe('generateLinkMappings', () => {
       'api/': '',
     });
 
-    const replaceFn = mappings[0].replacement as Function;
+    const replaceFn = mappings[0].replacement as (...args: string[]) => string;
     const result = replaceFn('api/client.md', 'client.md');
     expect(result).toBe('/client/');
   });
@@ -189,7 +189,7 @@ describe('generateLinkMappings', () => {
     );
 
     expect(mappings).toHaveLength(1);
-    const replaceFn = mappings[0].replacement as Function;
+    const replaceFn = mappings[0].replacement as (...args: string[]) => string;
     const result = replaceFn('api/client.md', 'client.md');
     expect(result).toContain('/reference/algokit-utils-ts/api');
   });
@@ -200,7 +200,7 @@ describe('generateLinkMappings', () => {
       { crossSectionPath: '/reference/algokit-utils-ts' },
     );
 
-    const replaceFn = mappings[0].replacement as Function;
+    const replaceFn = mappings[0].replacement as (...args: string[]) => string;
     const result = replaceFn('README.md');
     expect(result).toContain('/reference/algokit-utils-ts');
   });

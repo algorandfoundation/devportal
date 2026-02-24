@@ -142,6 +142,7 @@ describe('slugsToLinks', () => {
 
   it('should use existing label if present on slug entry', () => {
     const entries: SidebarJsonEntry[] = [
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       { slug: 'docs/guide', label: 'My Guide' } as any,
     ];
 

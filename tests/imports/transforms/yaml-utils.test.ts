@@ -92,6 +92,7 @@ describe('serializeFrontmatter', () => {
   });
 
   it('should return empty string for null-ish input', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(serializeFrontmatter(null as any)).toBe('');
   });
 
@@ -294,6 +295,7 @@ describe('isPlainObject', () => {
     [true, false],
     [new Date(), false],
   ] as const)('should return %s for %s', (value, expected) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(isPlainObject(value as any)).toBe(expected);
   });
 });
