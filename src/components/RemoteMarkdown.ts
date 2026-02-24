@@ -19,7 +19,7 @@ export async function fetchRemoteMarkdown(
 }
 
 // Function to extract a markdown section based on any heading level (e.g., #, ##, ###)
-function extractSection(markdownContent: string, sectionName: string) {
+export function extractSection(markdownContent: string, sectionName: string) {
   const lines = markdownContent.split('\n');
   let isInSection = false;
   const extractedLines: string[] = [];
