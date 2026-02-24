@@ -70,8 +70,7 @@
     "starlight-links-validator": "^0.19.2",
     "starlight-llms-txt": "^0.7.0",
     "starlight-openapi": "^0.22.0",
-    "tailwindcss": "^4.1.18",
-    "widdershins": "^4.0.1"
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
@@ -111,7 +110,11 @@
       "esbuild",
       "sharp"
     ],
-    "overrides": {},
+    "overrides": {
+      "devalue": ">=5.6.3",
+      "tar": ">=7.5.9",
+      "mdast-util-to-hast": ">=13.2.1"
+    },
     "patchedDependencies": {
       "starlight-links-validator": "patches/starlight-links-validator.patch"
     }
