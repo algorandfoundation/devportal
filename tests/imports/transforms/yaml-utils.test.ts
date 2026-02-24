@@ -65,6 +65,16 @@ describe('parseFrontmatter', () => {
     expect(result.hasFrontmatter).toBe(false);
     expect(result.content).toBe(input);
   });
+
+  it('should handle malformed YAML gracefully', () => {
+    const input = '---\n: invalid: yaml:\n---\nContent';
+
+    const result = parseFrontmatter(input);
+
+    expect(result.hasFrontmatter).toBe(false);
+    expect(result.data).toEqual({});
+    expect(result.content).toBe(input);
+  });
 });
 
 // ─── serializeFrontmatter ────────────────────────────────────────────
@@ -164,6 +174,24 @@ describe('deepMerge', () => {
     expect(result).toEqual({ a: 1 });
   });
 
+  it('should replace scalar with object when preserveExisting=false', () => {
+    const target = { sidebar: 1 };
+    const source = { sidebar: { order: 1 } };
+
+    const result = deepMerge(target, source, false);
+
+    expect(result).toEqual({ sidebar: { order: 1 } });
+  });
+
+  it('should replace object with scalar when preserveExisting=false', () => {
+    const target = { sidebar: { order: 1 } };
+    const source = { sidebar: 99 };
+
+    const result = deepMerge(target, source, false);
+
+    expect(result).toEqual({ sidebar: 99 });
+  });
+
   it('should not mutate the target object', () => {
     const target = { a: 1 };
     deepMerge(target, { b: 2 }, true);
@@ -190,11 +218,11 @@ describe('combineFrontmatterAndContent', () => {
     expect(result).toBe('Just content');
   });
 
-  it('should handle content that starts with newline', () => {
+  it('should preserve leading newline without doubling', () => {
     const result = combineFrontmatterAndContent({ title: 'T' }, '\nBody');
 
-    // Should not double up the newline
-    expect(result).not.toContain('\n\n\nBody');
+    // Content's leading \n is kept; no extra newline injected
+    expect(result).toMatch(/---\nBody$/);
   });
 });
 
@@ -241,12 +269,14 @@ describe('validateStarlightFrontmatter', () => {
     const result = validateStarlightFrontmatter({ title: 'T', draft: 'yes' });
 
     expect(result.isValid).toBe(false);
+    expect(result.errors).toContain('Draft must be a boolean');
   });
 
   it('should reject non-boolean pagefind', () => {
     const result = validateStarlightFrontmatter({ title: 'T', pagefind: 1 });
 
     expect(result.isValid).toBe(false);
+    expect(result.errors).toContain('Pagefind must be a boolean');
   });
 });
 
