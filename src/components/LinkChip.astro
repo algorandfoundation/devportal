@@ -25,6 +25,7 @@ const { href, label, icon, accentColor, class: className } = Astro.props;
   {
     icon && (
       <span class='link-chip-icon'>
+        {/* Safe: icon is an SVG string from src/config/lang-icons.ts */}
         <Fragment set:html={icon} />
       </span>
     )

@@ -32,6 +32,7 @@ const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 
 <a href={logoHref} class='site-title sl-flex'>
   {
+    /* Safe: libraryLogo is an SVG string from imports/configs/ loaded at build time */
     libraryLogo ? (
       <span
         class='library-logo'

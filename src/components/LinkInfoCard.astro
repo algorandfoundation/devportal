@@ -14,6 +14,7 @@ const { icon, title, href } = Astro.props;
   <article class='card sl-flex'>
     <p class='title sl-flex'>
       {icon && <Icon name={icon} class='icon' size={32} />}
+      {/* Safe: title comes from MDX component props authored by maintainers */}
       <span set:html={title} />
     </p>
     <div class='body'><slot /></div>
