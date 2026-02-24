@@ -73,7 +73,7 @@ describe('buildLibraryUrl', () => {
   it('should build URL with page path', () => {
     const result = buildLibraryUrl(mockLib, 'TypeScript', 'latest', 'guides/accounts');
 
-    expect(result).toContain('guides/accounts/');
+    expect(result).toBe('/docs/algokit-utils/typescript/latest/guides/accounts/');
   });
 
   it('should normalize trailing slashes', () => {
@@ -225,7 +225,7 @@ describe('getLibraryBySlug', () => {
 
       const result = getLibraryBySlug(first.slug);
 
-      expect(result).toMatchObject({ slug: first.slug });
+      expect(result).toBe(first);
     });
   }
 });
@@ -261,7 +261,7 @@ describe('getLibraryFromPath', () => {
 
       const result = getLibraryFromPath(`/docs/${first.slug}/some/page`);
 
-      expect(result).toMatchObject({ slug: first.slug });
+      expect(result).toBe(first);
     });
   }
 });
