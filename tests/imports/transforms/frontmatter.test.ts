@@ -189,6 +189,9 @@ describe('createSourceInfoTransform', () => {
       repo: 'docs',
       ref: 'v2',
     });
+    const source = parsed.data.source as Record<string, unknown>;
+    expect(typeof source.importedAt).toBe('string');
+    expect(parsed.data.description).toContain('algorand/docs');
   });
 });
 
