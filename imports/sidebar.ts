@@ -77,7 +77,7 @@ export function rebaseSidebarEntries(
  * Autogenerate entries are converted to a single link to the directory.
  * Groups with items are recursed.
  */
-function slugsToLinks(entries: SidebarJsonEntry[]): SidebarJsonEntry[] {
+export function slugsToLinks(entries: SidebarJsonEntry[]): SidebarJsonEntry[] {
   return entries.map((entry) => {
     if ('slug' in entry) {
       const s = entry.slug;
