@@ -14,7 +14,6 @@
     "astro": "astro",
     "test": "vitest run",
     "test:watch": "vitest",
-    "validate:links": "pkill -f 'astro preview' || true; pkill -f 'astro dev' || true; pnpm run preview & sleep 3 && lychee --config ./lychee.toml --base-url 'http://localhost:4321' './dist/**/*.html'",
     "_section:utils": "====================== Helper Scripts ======================",
     "generate-opcode-list": "npx tsx scripts/generate-opcode-list.js",
     "prose:check": "npx tsx scripts/prose-check.ts $(git diff --name-only --cached -- 'src/content/docs/**/*.md' 'src/content/docs/**/*.mdx' | tr '\\n' ' ')",
