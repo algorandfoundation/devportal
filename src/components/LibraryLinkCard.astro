@@ -21,6 +21,7 @@ const defaultVersion = lib.versions[0]?.slug ?? 'latest';
 
 <div class='library-link-card not-content'>
   {
+    /* Safe: logo is an SVG string from imports/configs/ loaded at build time */
     logo ? (
       <span
         class='library-link-card-logo'
