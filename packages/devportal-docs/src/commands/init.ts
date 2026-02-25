@@ -103,14 +103,54 @@ export function checkWorkflow(repoRoot: string): WorkflowCheckResult {
 }
 
 // ---------------------------------------------------------------------------
-// Check: theme CSS reference in astro.config.mjs
+// Scaffold: theme CSS in astro.config.mjs
 // ---------------------------------------------------------------------------
 
-export function checkThemeReference(docsDir: string): boolean {
+export interface ThemeCheckResult {
+  status: 'ok' | 'added' | 'error';
+  message: string;
+}
+
+const THEME_IMPORT_LINE = `import { css, fonts } from '${THEME_IMPORT}';`;
+
+export function ensureThemeInConfig(docsDir: string, dryRun: boolean): ThemeCheckResult {
   const configPath = join(docsDir, 'astro.config.mjs');
-  if (!existsSync(configPath)) return false;
-  const content = readFileSync(configPath, 'utf-8');
-  return content.includes(THEME_IMPORT);
+  if (!existsSync(configPath)) {
+    return { status: 'error', message: 'No astro.config.mjs found' };
+  }
+
+  let content = readFileSync(configPath, 'utf-8');
+
+  // Already present
+  if (content.includes(THEME_IMPORT)) {
+    return { status: 'ok', message: 'Theme CSS already referenced in astro.config.mjs' };
+  }
+
+  if (dryRun) {
+    return { status: 'added', message: 'Would add theme CSS import and customCss entries to astro.config.mjs' };
+  }
+
+  // 1. Add import statement after the last existing import
+  const lines = content.split('\n');
+  let lastImportIndex = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (/^import\s/.test(lines[i])) lastImportIndex = i;
+  }
+  if (lastImportIndex >= 0) {
+    lines.splice(lastImportIndex + 1, 0, THEME_IMPORT_LINE);
+  } else {
+    lines.unshift(THEME_IMPORT_LINE);
+  }
+  content = lines.join('\n');
+
+  // 2. Add css, fonts to customCss array
+  content = content.replace(
+    /customCss:\s*\[/,
+    'customCss: [\n        css,\n        fonts,',
+  );
+
+  writeFileSync(configPath, content);
+  return { status: 'added', message: 'Added theme CSS import and customCss entries to astro.config.mjs' };
 }
 
 // ---------------------------------------------------------------------------
@@ -154,13 +194,10 @@ export function run(args: string[], docsDir: string): void {
     console.log('  Add: uses: algorandfoundation/devportal/.github/actions/publish-devportal-docs@main');
   }
 
-  // 3. Check theme CSS
-  const hasTheme = checkThemeReference(docsDir);
-  if (hasTheme) {
-    console.log('\u2713 Theme CSS referenced in astro.config.mjs');
-  } else {
-    console.log(`\u26A0 Theme CSS not found in astro.config.mjs \u2014 add @algorandfoundation/devportal-docs/theme to customCss`);
-  }
+  // 3. Ensure theme CSS
+  const themeResult = ensureThemeInConfig(docsDir, dryRun);
+  const themeIcon = themeResult.status === 'ok' || themeResult.status === 'added' ? '\u2713' : '\u26A0';
+  console.log(`${themeIcon} ${themeResult.message}`);
 
   // Exit code
   const failed = !workflowResult.actionFound || scriptResult.status === 'error';

@@ -3,7 +3,7 @@ import {
   findRepoRoot,
   checkDocScript,
   checkWorkflow,
-  checkThemeReference,
+  ensureThemeInConfig,
 } from '../../src/commands/init.js';
 import { mkdtempSync, writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -199,26 +199,100 @@ describe('checkWorkflow', () => {
   });
 });
 
-describe('checkThemeReference', () => {
-  it('passes when astro.config.mjs references theme', () => {
+describe('ensureThemeInConfig', () => {
+  it('reports ok when theme already referenced', () => {
     const { docsDir } = makeRepoWithDocs();
     writeFileSync(
       join(docsDir, 'astro.config.mjs'),
-      `import { css } from '@algorandfoundation/devportal-docs/theme';`,
+      `import { css, fonts } from '@algorandfoundation/devportal-docs/theme';\nexport default {};`,
     );
 
-    expect(checkThemeReference(docsDir)).toBe(true);
+    const result = ensureThemeInConfig(docsDir, false);
+    expect(result.status).toBe('ok');
   });
 
-  it('fails when no theme reference', () => {
+  it('adds import after last existing import', () => {
     const { docsDir } = makeRepoWithDocs();
-    writeFileSync(join(docsDir, 'astro.config.mjs'), `export default {};`);
+    writeFileSync(
+      join(docsDir, 'astro.config.mjs'),
+      [
+        "import starlight from '@astrojs/starlight';",
+        "import { defineConfig } from 'astro/config';",
+        '',
+        'export default defineConfig({',
+        '  integrations: [starlight({ customCss: [] })],',
+        '});',
+      ].join('\n'),
+    );
 
-    expect(checkThemeReference(docsDir)).toBe(false);
+    const result = ensureThemeInConfig(docsDir, false);
+    expect(result.status).toBe('added');
+
+    const content = readFileSync(join(docsDir, 'astro.config.mjs'), 'utf-8');
+    expect(content).toContain("import { css, fonts } from '@algorandfoundation/devportal-docs/theme';");
+
+    // Import should appear after the defineConfig import
+    const lines = content.split('\n');
+    const starlightLine = lines.findIndex((l) => l.includes('@astrojs/starlight'));
+    const defineConfigLine = lines.findIndex((l) => l.includes('astro/config'));
+    const themeLine = lines.findIndex((l) => l.includes('devportal-docs/theme'));
+    expect(themeLine).toBeGreaterThan(defineConfigLine);
+    expect(themeLine).toBeGreaterThan(starlightLine);
   });
 
-  it('returns false when no astro.config.mjs', () => {
+  it('adds css and fonts to customCss array', () => {
+    const { docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'astro.config.mjs'),
+      [
+        "import starlight from '@astrojs/starlight';",
+        "import { defineConfig } from 'astro/config';",
+        '',
+        'export default defineConfig({',
+        '  integrations: [starlight({',
+        "      customCss: ['./src/styles/global.css'],",
+        '  })],',
+        '});',
+      ].join('\n'),
+    );
+
+    ensureThemeInConfig(docsDir, false);
+    const content = readFileSync(join(docsDir, 'astro.config.mjs'), 'utf-8');
+    expect(content).toContain('css,');
+    expect(content).toContain('fonts,');
+    // css should appear before the existing entry
+    const cssPos = content.indexOf('css,');
+    const globalPos = content.indexOf('./src/styles/global.css');
+    expect(cssPos).toBeLessThan(globalPos);
+  });
+
+  it('dry-run does not modify astro.config.mjs', () => {
+    const { docsDir } = makeRepoWithDocs();
+    const original = "import { defineConfig } from 'astro/config';\nexport default defineConfig({ integrations: [starlight({ customCss: [] })] });";
+    writeFileSync(join(docsDir, 'astro.config.mjs'), original);
+
+    const result = ensureThemeInConfig(docsDir, true);
+    expect(result.status).toBe('added');
+
+    const content = readFileSync(join(docsDir, 'astro.config.mjs'), 'utf-8');
+    expect(content).toBe(original);
+  });
+
+  it('returns error when no astro.config.mjs', () => {
     const dir = makeTmpDir();
-    expect(checkThemeReference(dir)).toBe(false);
+    const result = ensureThemeInConfig(dir, false);
+    expect(result.status).toBe('error');
+  });
+
+  it('adds import at top when no existing imports', () => {
+    const { docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'astro.config.mjs'),
+      'export default { integrations: [starlight({ customCss: [] })] };',
+    );
+
+    ensureThemeInConfig(docsDir, false);
+    const content = readFileSync(join(docsDir, 'astro.config.mjs'), 'utf-8');
+    expect(content.startsWith("import { css, fonts }")).toBe(true);
   });
 });
