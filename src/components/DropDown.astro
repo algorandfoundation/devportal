@@ -1,8 +1,15 @@
 ---
+import type { StarlightRouteData } from '@astrojs/starlight/route-data';
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+
+interface Props {
+  label: string;
+  items: StarlightRouteData['sidebar'];
+}
+
 const { label, items } = Astro.props;
 const menuBtnId = `menu-button-${label.toLowerCase().replace(' ', '-')}`;
 const aMenuId = `menu-${label.toLowerCase().replace(' ', '-')}`;
-import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
 ---
 
 <div class='relative inline-block text-left'>

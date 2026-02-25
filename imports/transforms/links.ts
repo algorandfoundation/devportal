@@ -53,7 +53,7 @@ export function generateStarlightLinkMappings(): LinkMapping[] {
  * @param path - The path to convert
  * @returns Starlight-compatible URL
  */
-function pathToStarlightUrl(path: string): string {
+export function pathToStarlightUrl(path: string): string {
   // Remove .md/.mdx extensions
   let url = path.replace(/\.(md|mdx)$/i, '');
 

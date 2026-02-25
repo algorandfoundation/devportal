@@ -1,4 +1,4 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "exclude": ["./examples", "./dist", "./scripts/library-templates"]
+  "exclude": ["./examples", "./dist", "./scripts/library-templates", "./tests"]
 }

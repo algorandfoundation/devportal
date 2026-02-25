@@ -180,7 +180,7 @@ export function createDraftTransform(isDraft = true): TransformFunction {
  * @param path - File path
  * @returns Formatted title string
  */
-function deriveTitleFromPath(path: string): string {
+export function deriveTitleFromPath(path: string): string {
   // Remove file extension and directory paths
   const basename =
     path
