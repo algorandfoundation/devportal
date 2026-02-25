@@ -103,6 +103,43 @@ export function checkWorkflow(repoRoot: string): WorkflowCheckResult {
 }
 
 // ---------------------------------------------------------------------------
+// Check: Tailwind CSS v4
+// ---------------------------------------------------------------------------
+
+export interface TailwindCheckResult {
+  status: 'ok' | 'warn' | 'error';
+  message: string;
+}
+
+export function checkTailwind(docsDir: string): TailwindCheckResult {
+  const pkgPath = join(docsDir, 'package.json');
+  if (!existsSync(pkgPath)) {
+    return { status: 'error', message: 'No package.json found — cannot check Tailwind' };
+  }
+
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
+  const allDeps = { ...pkg.dependencies, ...pkg.devDependencies };
+  const twRange = allDeps['tailwindcss'];
+
+  if (!twRange) {
+    return { status: 'error', message: 'tailwindcss not found in dependencies — install tailwindcss v4+' };
+  }
+
+  // Extract the first numeric version from the range (e.g. "^4.2.1" → 4, "~3.4.0" → 3)
+  const majorMatch = twRange.match(/(\d+)/);
+  if (!majorMatch) {
+    return { status: 'warn', message: `tailwindcss found but could not parse version range: "${twRange}"` };
+  }
+
+  const major = parseInt(majorMatch[1], 10);
+  if (major < 4) {
+    return { status: 'error', message: `tailwindcss v${major}.x found — theme requires v4+` };
+  }
+
+  return { status: 'ok', message: `tailwindcss v4 found (${twRange})` };
+}
+
+// ---------------------------------------------------------------------------
 // Scaffold: theme CSS in astro.config.mjs
 // ---------------------------------------------------------------------------
 
@@ -194,13 +231,18 @@ export function run(args: string[], docsDir: string): void {
     console.log('  Add: uses: algorandfoundation/devportal/.github/actions/publish-devportal-docs@main');
   }
 
-  // 3. Ensure theme CSS
+  // 3. Check Tailwind v4
+  const twResult = checkTailwind(docsDir);
+  const twIcon = twResult.status === 'ok' ? '\u2713' : twResult.status === 'warn' ? '\u26A0' : '\u2717';
+  console.log(`${twIcon} ${twResult.message}`);
+
+  // 4. Ensure theme CSS
   const themeResult = ensureThemeInConfig(docsDir, dryRun);
   const themeIcon = themeResult.status === 'ok' || themeResult.status === 'added' ? '\u2713' : '\u26A0';
   console.log(`${themeIcon} ${themeResult.message}`);
 
   // Exit code
-  const failed = !workflowResult.actionFound || scriptResult.status === 'error';
+  const failed = !workflowResult.actionFound || scriptResult.status === 'error' || twResult.status === 'error';
   if (failed) {
     process.exit(1);
   }

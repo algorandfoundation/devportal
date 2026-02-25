@@ -3,6 +3,7 @@ import {
   findRepoRoot,
   checkDocScript,
   checkWorkflow,
+  checkTailwind,
   ensureThemeInConfig,
 } from '../../src/commands/init.js';
 import { mkdtempSync, writeFileSync, mkdirSync, readFileSync } from 'node:fs';
@@ -196,6 +197,67 @@ describe('checkWorkflow', () => {
 
     const result = checkWorkflow(repoRoot);
     expect(result.actionFound).toBe(true);
+  });
+});
+
+describe('checkTailwind', () => {
+  it('passes when tailwindcss v4+ is in dependencies', () => {
+    const { docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({ dependencies: { tailwindcss: '^4.2.1' } }),
+    );
+
+    const result = checkTailwind(docsDir);
+    expect(result.status).toBe('ok');
+    expect(result.message).toContain('v4');
+  });
+
+  it('passes when tailwindcss v4+ is in devDependencies', () => {
+    const { docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({ devDependencies: { tailwindcss: '~4.0.0' } }),
+    );
+
+    const result = checkTailwind(docsDir);
+    expect(result.status).toBe('ok');
+  });
+
+  it('errors when tailwindcss is v3', () => {
+    const { docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({ dependencies: { tailwindcss: '^3.4.0' } }),
+    );
+
+    const result = checkTailwind(docsDir);
+    expect(result.status).toBe('error');
+    expect(result.message).toContain('v3');
+    expect(result.message).toContain('v4+');
+  });
+
+  it('errors when tailwindcss is not installed', () => {
+    const { docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({ dependencies: { astro: '^5.0.0' } }),
+    );
+
+    const result = checkTailwind(docsDir);
+    expect(result.status).toBe('error');
+    expect(result.message).toContain('not found');
+  });
+
+  it('warns when version range is unparseable', () => {
+    const { docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({ dependencies: { tailwindcss: 'latest' } }),
+    );
+
+    const result = checkTailwind(docsDir);
+    expect(result.status).toBe('warn');
   });
 });
 
