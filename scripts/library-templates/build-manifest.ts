@@ -11,7 +11,7 @@
  *   npx tsx build-manifest.ts --base /algokit-utils-ts
  */
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -53,6 +53,7 @@ function main(): void {
     timestamp: new Date().toISOString(),
   };
 
+  mkdirSync(dirname(outPath), { recursive: true });
   writeFileSync(outPath, JSON.stringify(manifest, null, 2) + '\n');
   console.log(`Wrote manifest.json (base: ${base})`);
 }

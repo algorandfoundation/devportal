@@ -347,8 +347,8 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
       try {
         const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
         if (manifest.base && manifest.base !== '/') {
-          // Strip leading slash — normalizeLinks expects bare name (e.g. 'algokit-utils-ts')
-          siteBase = manifest.base.replace(/^\//, '');
+          // Strip leading/trailing slashes — normalizeLinks expects bare name (e.g. 'algokit-utils-ts')
+          siteBase = manifest.base.replace(/^\//, '').replace(/\/$/, '');
         }
       } catch {
         console.warn(`  Warning: could not parse manifest.json, using repo name as siteBase`);
