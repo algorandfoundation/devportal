@@ -13,6 +13,7 @@ raw-file import strategy with a faster, more reliable pipeline.
 | File | Copy to | Purpose |
 |------|---------|---------|
 | `build-sidebar-json.ts` | `docs/build-sidebar-json.ts` | Serializes `sidebar.config.ts` → `sidebar.json` |
+| `build-manifest.ts` | `docs/build-manifest.ts` | Writes `manifest.json` with site base and metadata |
 | `normalize-links.ts` | `docs/normalize-links.ts` | Converts relative markdown links to absolute paths |
 | `publish-devportal-docs.yml` | `.github/workflows/publish-devportal-docs.yml` | CI workflow for publishing doc artifacts |
 
@@ -20,7 +21,7 @@ raw-file import strategy with a faster, more reliable pipeline.
 
 ### 1. Copy template files
 
-Copy all three template files into your library repo at the paths
+Copy all four template files into your library repo at the paths
 shown in the table above.
 
 ### 2. Add tsx dev dependency
@@ -38,9 +39,10 @@ Your `docs/package.json` must define these scripts:
 ```json
 {
   "scripts": {
-    "build-devportal": "pnpm build && pnpm run normalize-links && pnpm run build-sidebar",
+    "build-devportal": "pnpm build && pnpm run normalize-links && pnpm run build-sidebar && pnpm run build-manifest",
     "normalize-links": "npx tsx normalize-links.ts",
-    "build-sidebar": "npx tsx build-sidebar-json.ts"
+    "build-sidebar": "npx tsx build-sidebar-json.ts",
+    "build-manifest": "npx tsx build-manifest.ts"
   }
 }
 ```
@@ -89,7 +91,7 @@ workflow YAML if your paths differ):
 cd docs
 pnpm run build-devportal
 ls dist-devportal/
-# Should contain: content/, sidebar.json
+# Should contain: content/, sidebar.json, manifest.json
 ```
 
 ## How it works
@@ -98,6 +100,7 @@ ls dist-devportal/
    - Builds the Starlight site (`pnpm build`)
    - Normalizes relative links to absolute paths (`normalize-links.ts`)
    - Serializes the sidebar config to JSON (`build-sidebar-json.ts`)
+   - Writes manifest with site base metadata (`build-manifest.ts`)
 2. **Package**: Copies `guides/`, `api/`, and root content files +
    sidebar.json + manifest.json into a tarball (`devportal-docs.tar.gz`)
 3. **Publish**: Attaches tarball to a GitHub Release
@@ -177,8 +180,8 @@ jobs:
 ```
 
 The composite action handles: dependency install, `build-devportal`,
-content packaging, manifest generation, tarball creation, and GitHub
-Release publishing.
+content packaging, CI provenance enrichment of the manifest, tarball
+creation, and GitHub Release publishing.
 
 ## No secrets required
 
