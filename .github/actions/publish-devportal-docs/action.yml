@@ -48,8 +48,21 @@ runs:
         cp -R src/content/docs/guides dist-devportal/content/ 2>/dev/null || true
         cp -R src/content/docs/api dist-devportal/content/ 2>/dev/null || true
 
-        # Generate manifest
-        cat > dist-devportal/manifest.json <<MANIFEST
+        # Merge CI provenance into manifest.json (base + timestamp
+        # written by build-devportal; repo/ref/tag added here)
+        if [ -f dist-devportal/manifest.json ]; then
+          node -e "
+            const m = JSON.parse(require('fs').readFileSync('dist-devportal/manifest.json','utf-8'));
+            Object.assign(m, {
+              repo: process.env.GITHUB_REPOSITORY,
+              ref: process.env.GITHUB_SHA,
+              tag: process.env.GITHUB_REF_NAME
+            });
+            require('fs').writeFileSync('dist-devportal/manifest.json', JSON.stringify(m,null,2)+'\n');
+          "
+        else
+          echo '::warning::manifest.json not found — build-devportal should run build-manifest'
+          cat > dist-devportal/manifest.json <<MANIFEST
         {
           "repo": "${GITHUB_REPOSITORY}",
           "ref": "${GITHUB_SHA}",
@@ -57,6 +70,7 @@ runs:
           "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
         }
         MANIFEST
+        fi
 
     - name: Create tarball
       shell: bash

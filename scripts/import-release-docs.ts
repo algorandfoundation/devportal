@@ -339,11 +339,27 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
       console.log(`  Copied sidebar.json -> ${prefix}/sidebar.json`);
     }
 
-    // 8. Normalize links: rewrite library site-base URLs and resolve
-    //    relative links to absolute devportal paths.
-    normalizeAllLinks(destDir, variant.repo, prefix);
+    // 8. Read site base from manifest (self-describing artifact),
+    //    falling back to repo name for older tarballs without it.
+    const manifestPath = join(extractDir, 'manifest.json');
+    let siteBase = variant.repo;
+    if (existsSync(manifestPath)) {
+      try {
+        const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
+        if (manifest.base && manifest.base !== '/') {
+          // Strip leading slash — normalizeLinks expects bare name (e.g. 'algokit-utils-ts')
+          siteBase = manifest.base.replace(/^\//, '');
+        }
+      } catch {
+        console.warn(`  Warning: could not parse manifest.json, using repo name as siteBase`);
+      }
+    }
 
-    // 9. Apply post-import transforms (e.g. strip upstream-only frontmatter)
+    // 9. Normalize links: rewrite library site-base URLs and resolve
+    //    relative links to absolute devportal paths.
+    normalizeAllLinks(destDir, siteBase, prefix);
+
+    // 10. Apply post-import transforms (e.g. strip upstream-only frontmatter)
     if (task.postImportTransforms?.length) {
       applyPostImportTransforms(destDir, task.postImportTransforms, prefix);
     }
