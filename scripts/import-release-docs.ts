@@ -19,7 +19,7 @@ import {
   writeFileSync,
 } from 'fs';
 import { execSync } from 'child_process';
-import { join, relative } from 'path';
+import { join, posix, relative } from 'path';
 import { tmpdir } from 'os';
 
 import { Octokit } from 'octokit';
@@ -140,6 +140,128 @@ function applyPostImportTransforms(
   }
 }
 
+// ---------------------------------------------------------------------------
+// Link normalization
+// ---------------------------------------------------------------------------
+
+/**
+ * Markdown link regex — matches `[text](url)` capturing the URL.
+ * Handles optional titles: `[text](url "title")`.
+ */
+const MD_LINK_RE = /\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g;
+
+/**
+ * Normalize all markdown links in a file to absolute devportal paths.
+ *
+ * Two rewrites:
+ * 1. Absolute links starting with `/<siteBase>/` → `/<prefix>/rest`
+ *    (library's Starlight site base → devportal content path)
+ * 2. Relative links (starting with `.` or no `/` prefix) → resolved to
+ *    absolute `/<prefix>/resolved` based on the file's location
+ *
+ * Also strips `.md`/`.mdx` extensions and normalises `/index` → `/`.
+ */
+function normalizeLinks(
+  content: string,
+  filePath: string,
+  siteBase: string,
+  prefix: string,
+): string {
+  return content.replace(MD_LINK_RE, (match, text, url: string) => {
+    // Preserve external links, anchors-only, and mailto/tel
+    if (/^(https?:|mailto:|tel:|#)/.test(url)) return match;
+
+    // Split off anchor fragment
+    const hashIdx = url.indexOf('#');
+    let path = hashIdx >= 0 ? url.slice(0, hashIdx) : url;
+    const anchor = hashIdx >= 0 ? url.slice(hashIdx) : '';
+
+    // Skip empty paths (anchor-only after split)
+    if (!path) return match;
+
+    let absolute: string;
+
+    if (path.startsWith(`/${siteBase}/`)) {
+      // Rewrite: /algokit-utils-ts/api/foo → /docs/algokit-utils/typescript/latest/api/foo
+      absolute = `/${prefix}/${path.slice(siteBase.length + 2)}`;
+    } else if (path.startsWith('/')) {
+      // Other absolute links — leave as-is (could be cross-library or site-wide)
+      return match;
+    } else {
+      // Relative link resolution strategy depends on whether the link
+      // target has a .md/.mdx extension:
+      //
+      // - WITH extension (e.g. `./app-deploy.md`): file-relative. Resolved
+      //   against the file's directory on the filesystem.
+      // - WITHOUT extension (e.g. `../../core/algorand-client`): URL-relative.
+      //   The page slug acts as an additional directory level (Starlight pages
+      //   have trailing-slash URLs like `/concepts/building/app-client/`).
+      //   Index files are the exception — they map to the directory URL.
+      const hasExtension = /\.(md|mdx)$/i.test(path);
+      let baseDir: string;
+
+      if (hasExtension) {
+        // File-relative: use the file's directory
+        baseDir = posix.dirname(filePath);
+      } else {
+        // URL-relative: page slug adds a directory level (except index files)
+        const isIndex = /(?:^|\/)?index\.(md|mdx)$/i.test(filePath);
+        baseDir = isIndex
+          ? posix.dirname(filePath)
+          : filePath.replace(/\.(md|mdx)$/i, '');
+      }
+
+      const resolved = posix.normalize(posix.join(baseDir, path));
+      // Guard against paths that escape the content root
+      if (resolved.startsWith('..')) return match;
+      absolute = `/${prefix}/${resolved}`;
+    }
+
+    // Strip .md/.mdx extensions
+    absolute = absolute.replace(/\.(md|mdx)$/i, '');
+
+    // Normalise /index → /
+    absolute = absolute.replace(/\/index$/, '/');
+
+    // Ensure trailing slash for directory-style URLs (no extension, no trailing /)
+    if (!absolute.endsWith('/') && !posix.extname(absolute)) {
+      absolute += '/';
+    }
+
+    return `[${text}](${absolute}${anchor})`;
+  });
+}
+
+/**
+ * Normalize links in all markdown files within a directory.
+ * Called as a built-in step after unpacking — no per-library config needed.
+ */
+function normalizeAllLinks(
+  destDir: string,
+  siteBase: string,
+  prefix: string,
+): void {
+  const allFiles = walkFiles(destDir);
+  let count = 0;
+
+  for (const filePath of allFiles) {
+    if (!/\.(md|mdx)$/i.test(filePath)) continue;
+
+    const rel = relative(destDir, filePath);
+    const content = readFileSync(filePath, 'utf-8');
+    const normalized = normalizeLinks(content, rel, siteBase, prefix);
+
+    if (normalized !== content) {
+      writeFileSync(filePath, normalized);
+      count++;
+    }
+  }
+
+  if (count > 0) {
+    console.log(`  Normalized links in ${count} file(s)`);
+  }
+}
+
 async function downloadAndUnpack(task: DownloadTask): Promise<void> {
   const { variant, version, releaseTag, destDir, prefix } = task;
   const label = `${variant.owner}/${variant.repo}@${releaseTag} (${variant.language} ${version.slug})`;
@@ -217,7 +339,11 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
       console.log(`  Copied sidebar.json -> ${prefix}/sidebar.json`);
     }
 
-    // 8. Apply post-import transforms (e.g. strip upstream-only frontmatter)
+    // 8. Normalize links: rewrite library site-base URLs and resolve
+    //    relative links to absolute devportal paths.
+    normalizeAllLinks(destDir, variant.repo, prefix);
+
+    // 9. Apply post-import transforms (e.g. strip upstream-only frontmatter)
     if (task.postImportTransforms?.length) {
       applyPostImportTransforms(destDir, task.postImportTransforms, prefix);
     }
