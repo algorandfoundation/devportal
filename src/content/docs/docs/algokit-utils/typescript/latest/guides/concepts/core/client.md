@@ -1,0 +1,124 @@
+---
+title: 'Client management'
+description: 'Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) [algod](https://dev.algorand.co/reference/rest-apis/algod), [indexer](https://dev.algorand.co/reference/rest-apis/indexer) and [kmd](https://dev.algorand.co/reference/rest-apis/kmd) clients against various networks resolved from environment or specified configuration.'
+---
+
+Client management is one of the core capabilities provided by AlgoKit Utils. It allows you to create (auto-retry) [algod](https://dev.algorand.co/reference/rest-apis/algod), [indexer](https://dev.algorand.co/reference/rest-apis/indexer) and [kmd](https://dev.algorand.co/reference/rest-apis/kmd) clients against various networks resolved from environment or specified configuration.
+
+> [!TIP]
+> The API client types are available from the [modular imports](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/modular-imports/): Algod types from `@algorandfoundation/algokit-utils/algod-client`, Indexer types from `@algorandfoundation/algokit-utils/indexer-client`, and KMD types from `@algorandfoundation/algokit-utils/kmd-client`.
+
+To see some usage examples check out the `automated tests`.
+
+## `ClientManager`
+
+The `ClientManager` is a class that is used to manage client instances.
+
+To get an instance of `ClientManager` you can get it from either [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/) via `algorand.client` or instantiate it directly:
+
+```typescript
+import { ClientManager } from '@algorandfoundation/algokit-utils/client-manager';
+
+// Algod client only
+const clientManager = new ClientManager({ algod: algodClient });
+// All clients
+const clientManager = new ClientManager({
+  algod: algodClient,
+  indexer: indexerClient,
+  kmd: kmdClient,
+});
+// Algod config only
+const clientManager = new ClientManager({ algodConfig });
+// All client configs
+const clientManager = new ClientManager({ algodConfig, indexerConfig, kmdConfig });
+```
+
+## Network configuration
+
+The network configuration is specified using the `AlgoClientConfig` interface.
+
+There are a number of ways to produce one of these configuration objects:
+
+- Manually specifying an object that conforms with the interface, e.g.
+  ```typescript
+  {
+    server: 'https://myalgodnode.com'
+  }
+  // Or with the optional values:
+  {
+    server: 'https://myalgodnode.com',
+    port: 443,
+    token: 'SECRET_TOKEN'
+  }
+  ```
+- `ClientManager.getConfigFromEnvironmentOrLocalNet()` - Loads the Algod client config, the Indexer client config and the Kmd config from well-known environment variables or if not found then default LocalNet; this is useful to have code that can work across multiple blockchain environments (including LocalNet), without having to change
+- `ClientManager.getAlgodConfigFromEnvironment()` - Loads an Algod client config from well-known environment variables
+- `ClientManager.getIndexerConfigFromEnvironment()` - Loads an Indexer client config from well-known environment variables; useful to have code that can work across multiple blockchain environments (including LocalNet), without having to change
+- `ClientManager.getAlgoNodeConfig(network, config)` - Loads an Algod or indexer config against [AlgoNode free tier](https://nodely.io/docs/free/start) to either MainNet or TestNet
+- `ClientManager.getDefaultLocalNetConfig(configOrPort)` - Loads an Algod, Indexer or Kmd config against [LocalNet](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/features/localnet.md) using the default configuration
+
+## Clients
+
+### Creating an SDK client instance
+
+Once you have the configuration for a client, to get a new client you can use the following functions:
+
+- `ClientManager.getAlgoClient(config)` - Returns an Algod client for the given configuration; the client automatically retries on transient HTTP errors
+- `ClientManager.getIndexerClient(config, overrideIntDecoding)` - Returns an Indexer client for given configuration
+- `ClientManager.getKmdClient(config)` - Returns a Kmd client for the given configuration
+
+You can also shortcut needing to write the likes of `ClientManager.getAlgoClient(ClientManager.getAlgodConfigFromEnvironment())` with environment shortcut methods:
+
+- `ClientManager.getAlgodClientFromEnvironment(config)` - Returns an Algod client by loading the config from environment variables
+- `ClientManager.getIndexerClientFromEnvironment(config)` - Returns an indexer client by loading the config from environment variables
+- `ClientManager.getKmdClientFromEnvironment(config)` - Returns a kmd client by loading the config from environment variables
+
+### Accessing SDK clients via ClientManager instance
+
+Once you have a `ClientManager` instance, you can access the SDK clients for the various Algorand APIs from it (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/)):
+
+```typescript
+const algorand = AlgorandClient.defaultLocalNet();
+
+const algodClient = algorand.client.algod;
+const indexerClient = algorand.client.indexer;
+const kmdClient = algorand.client.kmd;
+```
+
+If the method to create the `ClientManager` doesn't configure indexer or kmd ([both of which are optional](#client-management)), then accessing those clients will trigger an error to be thrown:
+
+```typescript
+const algorand = AlgorandClient.fromClients({ algod });
+
+const algodClient = algorand.client.algod; // OK
+algorand.client.indexer; // Throws error
+algorand.client.kmd; // Throws error
+```
+
+### Creating an app client instance
+
+See [how to create app clients via ClientManager via AlgorandClient](/docs/algokit-utils/typescript/latest/guides/concepts/building/app-client/#dynamically-creating-clients-for-a-given-app-spec).
+
+### Creating a TestNet dispenser API client instance
+
+You can also create a [TestNet dispenser API client instance](/docs/algokit-utils/typescript/latest/guides/concepts/advanced/dispenser-client/#creating-a-dispenser-client) from `ClientManager` too.
+
+## Automatic retry
+
+When receiving an Algod or Indexer client from AlgoKit Utils, it will be a special wrapper client that handles retrying transient failures. This is done via the `AlgoHttpClientWithRetry` class.
+
+## Network information
+
+To get information about the current network you are connected to, you can use the `network()` method on `ClientManager` or the `is{Network}()` methods (which in turn call `network()`) as shown below (expressed here as `algorand.client` to denote the syntax via an [`AlgorandClient`](/docs/algokit-utils/typescript/latest/guides/concepts/core/algorand-client/)):
+
+```typescript
+const algorand = AlgorandClient.defaultLocalNet();
+
+const { isTestNet, isMainNet, isLocalNet, genesisId, genesisHash } =
+  await algorand.client.network();
+const testNet = await algorand.client.isTestNet();
+const mainNet = await algorand.client.isMainNet();
+const localNet = await algorand.client.isLocalNet();
+```
+
+The first time `network()` is called it will make a HTTP call to algod to get the network parameters, but from then on it will be cached within that `ClientManager` instance for subsequent calls.

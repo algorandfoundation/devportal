@@ -1,0 +1,59 @@
+---
+title: AlgoKit Utils Python
+description: A set of core Algorand utilities that make it easier to build solutions on Algorand
+---
+
+import { Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Installation
+
+<Tabs>
+  <TabItem label='pip'>```bash pip install algokit-utils ```</TabItem>
+  <TabItem label='poetry'>```bash poetry add algokit-utils ```</TabItem>
+  <TabItem label='uv'>```bash uv add algokit-utils ```</TabItem>
+</Tabs>
+
+## Quick Example
+
+```python
+from algokit_utils import AlgorandClient, AlgoAmount, PaymentParams
+
+# Connect to LocalNet
+algorand = AlgorandClient.from_environment()
+
+# Create and fund a test account
+account = algorand.account.random()
+algorand.account.ensure_funded(
+    account_to_fund=account,
+    dispenser_account=algorand.account.localnet_dispenser(),
+    min_spending_balance=AlgoAmount.from_algo(10),
+)
+
+# Send a payment
+result = algorand.send.payment(
+    PaymentParams(
+        sender=account.addr,
+        receiver="RECEIVERADDRESS",
+        amount=AlgoAmount.from_algo(1),
+    )
+)
+
+print("Transaction ID:", result.tx_id)
+```
+
+## Features
+
+<CardGrid>
+  <Card title='AlgorandClient' icon='rocket'>
+    The main entry point for interacting with Algorand networks.
+  </Card>
+  <Card title='Transaction Composer' icon='puzzle'>
+    Build and send atomic transaction groups with ease.
+  </Card>
+  <Card title='App Client' icon='document'>
+    Deploy and interact with smart contracts.
+  </Card>
+  <Card title='Testing Utilities' icon='approve-check'>
+    Comprehensive testing support for LocalNet.
+  </Card>
+</CardGrid>

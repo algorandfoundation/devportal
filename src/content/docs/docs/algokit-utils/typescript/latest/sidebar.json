@@ -1,0 +1,145 @@
+[
+  {
+    "label": "Home",
+    "link": "/"
+  },
+  {
+    "label": "Getting Started",
+    "items": [
+      {
+        "label": "Quick Start",
+        "slug": "guides/tutorials/quick-start"
+      }
+    ]
+  },
+  {
+    "label": "Core Concepts",
+    "items": [
+      {
+        "slug": "guides/concepts/core/algorand-client"
+      },
+      {
+        "slug": "guides/concepts/core/account"
+      },
+      {
+        "slug": "guides/concepts/core/transaction"
+      },
+      {
+        "slug": "guides/concepts/core/amount"
+      },
+      {
+        "slug": "guides/concepts/core/client"
+      }
+    ]
+  },
+  {
+    "label": "Building Applications",
+    "items": [
+      {
+        "slug": "guides/concepts/building/app-client"
+      },
+      {
+        "slug": "guides/concepts/building/app-deploy"
+      },
+      {
+        "slug": "guides/concepts/building/app"
+      },
+      {
+        "slug": "guides/concepts/building/typed-app-clients"
+      },
+      {
+        "slug": "guides/concepts/building/asset"
+      },
+      {
+        "slug": "guides/concepts/building/transfer"
+      },
+      {
+        "slug": "guides/concepts/building/testing"
+      }
+    ]
+  },
+  {
+    "label": "Advanced Topics",
+    "collapsed": true,
+    "items": [
+      {
+        "slug": "guides/concepts/advanced/transaction-composer"
+      },
+      {
+        "slug": "guides/concepts/advanced/modular-imports"
+      },
+      {
+        "slug": "guides/concepts/advanced/debugging"
+      },
+      {
+        "slug": "guides/concepts/advanced/indexer"
+      },
+      {
+        "slug": "guides/concepts/advanced/event-emitter"
+      },
+      {
+        "slug": "guides/concepts/advanced/dispenser-client"
+      }
+    ]
+  },
+  {
+    "label": "Migration Guides",
+    "collapsed": true,
+    "autogenerate": {
+      "directory": "guides/migration"
+    }
+  },
+  {
+    "label": "Examples",
+    "collapsed": true,
+    "items": [
+      {
+        "label": "Overview",
+        "link": "/examples/"
+      },
+      {
+        "label": "ABI Encoding",
+        "link": "/examples/abi/"
+      },
+      {
+        "label": "Mnemonic Utilities",
+        "link": "/examples/algo25/"
+      },
+      {
+        "label": "Algod Client",
+        "link": "/examples/algod-client/"
+      },
+      {
+        "label": "Algorand Client",
+        "link": "/examples/algorand-client/"
+      },
+      {
+        "label": "Common Utilities",
+        "link": "/examples/common/"
+      },
+      {
+        "label": "Indexer Client",
+        "link": "/examples/indexer-client/"
+      },
+      {
+        "label": "KMD Client",
+        "link": "/examples/kmd-client/"
+      },
+      {
+        "label": "Testing",
+        "link": "/examples/testing/"
+      },
+      {
+        "label": "Transactions",
+        "link": "/examples/transact/"
+      }
+    ]
+  },
+  {
+    "label": "API Reference",
+    "collapsed": true,
+    "autogenerate": {
+      "directory": "api"
+    }
+  }
+]

@@ -9,7 +9,7 @@
  *   npx tsx normalize-links.ts --base /algokit-utils-ts
  */
 
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -61,6 +61,60 @@ function slugExists(contentRoot: string, slug: string): boolean {
     existsSync(join(base, 'index.md')) ||
     existsSync(join(base, 'index.mdx'))
   );
+}
+
+// ---------------------------------------------------------------------------
+// Path lowercasing
+// ---------------------------------------------------------------------------
+
+/**
+ * Compute the target filename: lowercase, and rename `readme` → `index`
+ * so that TypeDoc module overviews become proper index pages.
+ */
+function targetName(name: string): string {
+  const lower = name.toLowerCase();
+  return lower.replace(/^readme(\.(md|mdx))$/, 'index$1');
+}
+
+/**
+ * Recursively lowercase all file and directory names under `dir`,
+ * and rename `readme.md` → `index.md`. Processes depth-first so
+ * children are renamed before their parent directories.
+ * Returns the number of entries renamed.
+ */
+function lowercaseContentPaths(dir: string): number {
+  let count = 0;
+
+  // Recurse into subdirectories first
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) {
+      count += lowercaseContentPaths(join(dir, entry.name));
+    }
+  }
+
+  // Group entries by target name to detect conflicts
+  const entries = readdirSync(dir, { withFileTypes: true });
+  const groups = new Map<string, string[]>();
+  for (const entry of entries) {
+    const target = targetName(entry.name);
+    const existing = groups.get(target) ?? [];
+    existing.push(entry.name);
+    groups.set(target, existing);
+  }
+
+  for (const [target, names] of groups) {
+    if (names.length > 1) {
+      console.warn(`  CONFLICT: multiple entries map to '${target}': ${names.join(', ')}`);
+      continue;
+    }
+    const name = names[0];
+    if (name !== target) {
+      renameSync(join(dir, name), join(dir, target));
+      count++;
+    }
+  }
+
+  return count;
 }
 
 // ---------------------------------------------------------------------------
@@ -174,7 +228,7 @@ function normalizeLinksInContent(
 
       let resolved = resolveRelativePath(opts.fileDir, path);
       resolved = resolved.replace(/\.mdx?$/i, '');
-      resolved = resolved.replace(/(?:^|\/)index$/, '');
+      resolved = resolved.replace(/(?:^|\/)(?:index|readme)$/, '');
 
       if (opts.useFallback && resolved && !slugExists(opts.contentRoot, resolved)) {
         const found = findBestMatch(opts.fileIndex, resolved);
@@ -207,6 +261,60 @@ function normalizeLinksInContent(
 }
 
 // ---------------------------------------------------------------------------
+// readme → index link rewriting
+// ---------------------------------------------------------------------------
+
+/**
+ * Rewrite `/readme/` link targets to `/` since readme.md files are renamed
+ * to index.md. Handles both absolute and resolved links.
+ */
+function rewriteReadmeLinks(content: string): string {
+  return content.replace(
+    /\[([^\]]*)\]\(([^)]+)\)/g,
+    (match, text: string, url: string) => {
+      const rewritten = url
+        .replace(/\/readme\//, '/')
+        .replace(/\/readme$/, '/');
+      return rewritten !== url ? `[${text}](${rewritten})` : match;
+    },
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Dead-link stripping
+// ---------------------------------------------------------------------------
+
+/**
+ * Strip links whose absolute targets don't exist as content files.
+ * Converts `[text](url)` → `text` for dead links so downstream
+ * validators don't flag them.
+ */
+function stripDeadLinks(
+  content: string,
+  contentRoot: string,
+  siteBase: string,
+): string {
+  return content.replace(
+    /\[([^\]]*)\]\(([^)]+)\)/g,
+    (match, text: string, url: string) => {
+      // Only check internal absolute links under the site base
+      if (!url.startsWith(`${siteBase}/`)) return match;
+
+      // Extract slug: strip site base prefix and trailing slash
+      let slug = url.slice(siteBase.length + 1);
+      slug = slug.replace(/#.*$/, '');
+      slug = slug.replace(/\/$/, '');
+      if (!slug) return match;
+
+      if (slugExists(contentRoot, slug)) return match;
+
+      console.log(`  Stripped dead link: [${text}](${url})`);
+      return text;
+    },
+  );
+}
+
+// ---------------------------------------------------------------------------
 // File processing
 // ---------------------------------------------------------------------------
 
@@ -230,8 +338,16 @@ function processFile(
     filePath: relPath,
   });
 
-  if (result.changed) {
-    writeFileSync(filePath, result.content, 'utf-8');
+  // Rewrite /readme/ links to match readme.md → index.md rename
+  let final = rewriteReadmeLinks(result.content);
+
+  // Strip links to content pages that don't exist on disk
+  final = stripDeadLinks(final, contentRoot, siteBase);
+
+  const changed = final !== content;
+
+  if (changed) {
+    writeFileSync(filePath, final, 'utf-8');
     console.log(`Updated: ${relPath}`);
   }
 
@@ -305,6 +421,19 @@ function main(): void {
 
   console.log(`Site base: ${siteBase}`);
   console.log(`Content root: ${contentRoot}`);
+
+  // Lowercase file/directory names so slugs match TypeDoc's slugified links
+  console.log('\n==> Lowercasing content paths...');
+  let totalRenamed = 0;
+  for (const { dir } of TARGETS) {
+    const fullDir = join(contentRoot, dir);
+    if (existsSync(fullDir)) {
+      totalRenamed += lowercaseContentPaths(fullDir);
+    }
+  }
+  console.log(totalRenamed > 0
+    ? `Renamed ${totalRenamed} path(s) to lowercase.`
+    : 'All paths already lowercase.');
 
   const fileIndex = buildFileIndex(contentRoot);
 
