@@ -13,8 +13,11 @@ import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import { buildAllLibrarySidebarEntries } from './imports/sidebar.js';
+import { buildAllLibrarySidebarEntries, readSidebarJson } from './imports/sidebar.js';
 import { LIBRARY_CONFIGS } from './imports/configs/index.js';
+
+const algokitUtilsTsSidebar = readSidebarJson('algokit-utils', 'typescript', 'latest') ?? [];
+const algokitUtilsPySidebar = readSidebarJson('algokit-utils', 'python', 'latest') ?? [];
 
 const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -78,14 +81,10 @@ export default defineConfig({
             // Unit-testing docs — references unimported sibling pages
             if (slug.startsWith('algokit/unit-testing/')) return true;
 
-            // AlgoKit Utils legacy guides — untransformed autoapi refs
-            if (slug.startsWith('algokit/utils/')) return true;
 
             // Algorand TypeScript API docs — TypeDoc cross-refs
             if (/^docs\/algorand-typescript\/.*\/api\//.test(slug)) return true;
 
-            // AlgoKit Utils TS — content not yet imported (pending reimport)
-            if (link.startsWith('/docs/algokit-utils/typescript/latest/')) return true;
 
             // ARC standards — cross-references between ARC spec pages
             if (slug.startsWith('arc-standards/') && /^\.\/arc-\d+/.test(link)) return true;
@@ -423,49 +422,11 @@ export default defineConfig({
                 { slug: 'algokit/utils/algokit-clients' },
                 {
                   label: 'TypeScript',
-                  items: [
-                    { slug: 'algokit/utils/typescript/overview' },
-                    { slug: 'algokit/utils/typescript/account' },
-                    { slug: 'algokit/utils/typescript/algorand-client' },
-                    { slug: 'algokit/utils/typescript/amount' },
-                    { slug: 'algokit/utils/typescript/app-client' },
-                    { slug: 'algokit/utils/typescript/app-deploy' },
-                    { slug: 'algokit/utils/typescript/asset' },
-                    { slug: 'algokit/utils/typescript/client' },
-                    { slug: 'algokit/utils/typescript/debugging' },
-                    { slug: 'algokit/utils/typescript/dispenser-client' },
-                    { slug: 'algokit/utils/typescript/event-emitter' },
-                    { slug: 'algokit/utils/typescript/indexer' },
-                    { slug: 'algokit/utils/typescript/dispenser-client' },
-                    { slug: 'algokit/utils/typescript/testing' },
-                    { slug: 'algokit/utils/typescript/transaction-composer' },
-                    { slug: 'algokit/utils/typescript/transaction' },
-                    { slug: 'algokit/utils/typescript/transfer' },
-                    { slug: 'algokit/utils/typescript/typed-app-clients' },
-                    { slug: 'algokit/utils/typescript/v7-migration' },
-                    { slug: 'algokit/utils/typescript/v8-migration' },
-                  ],
+                  items: algokitUtilsTsSidebar,
                 },
                 {
                   label: 'Python',
-                  items: [
-                    { slug: 'algokit/utils/python/overview' },
-                    { slug: 'algokit/utils/python/account' },
-                    { slug: 'algokit/utils/python/algorand-client' },
-                    { slug: 'algokit/utils/python/amount' },
-                    { slug: 'algokit/utils/python/app-client' },
-                    { slug: 'algokit/utils/python/app-deploy' },
-                    { slug: 'algokit/utils/python/app' },
-                    { slug: 'algokit/utils/python/asset' },
-                    { slug: 'algokit/utils/python/client' },
-                    { slug: 'algokit/utils/python/debugging' },
-                    { slug: 'algokit/utils/python/dispenser-client' },
-                    { slug: 'algokit/utils/python/testing' },
-                    { slug: 'algokit/utils/python/transaction-composer' },
-                    { slug: 'algokit/utils/python/transaction' },
-                    { slug: 'algokit/utils/python/transfer' },
-                    { slug: 'algokit/utils/python/typed-app-clients' },
-                  ],
+                  items: algokitUtilsPySidebar,
                 },
               ],
             },
