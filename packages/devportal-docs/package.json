@@ -21,16 +21,8 @@
     "test:watch": "vitest",
     "prepublishOnly": "tsc"
   },
-  "peerDependencies": {
-    "@astrojs/starlight": ">=0.30.0"
-  },
-  "peerDependenciesMeta": {
-    "@astrojs/starlight": {
-      "optional": false
-    }
-  },
   "devDependencies": {
-    "@astrojs/starlight": ">=0.30.0",
+    "@types/node": "^22.0.0",
     "typescript": "^5.9.0",
     "vitest": "^4.0.0"
   },
