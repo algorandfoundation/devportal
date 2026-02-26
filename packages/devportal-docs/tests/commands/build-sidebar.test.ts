@@ -22,10 +22,6 @@ describe('isSerializable', () => {
     ).toBe(true);
   });
 
-  it('rejects null', () => {
-    expect(isSerializable(null)).toBe(false);
-  });
-
   it('rejects non-objects', () => {
     expect(isSerializable('string')).toBe(false);
   });

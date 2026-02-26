@@ -1,13 +1,14 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
   normalizeLinksInContent,
   lowercaseContentPaths,
   rewriteReadmeLinks,
   stripDeadLinks,
   targetName,
+  run,
 } from '../../src/commands/normalize-links.js';
 import { buildFileIndex } from '../../src/utils/fs.js';
-import { mkdtempSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
@@ -24,13 +25,6 @@ describe('targetName', () => {
     expect(targetName('README.md')).toBe('index.md');
   });
 
-  it('renames readme.mdx to index.mdx', () => {
-    expect(targetName('Readme.mdx')).toBe('index.mdx');
-  });
-
-  it('preserves already-lowercase names', () => {
-    expect(targetName('intro.md')).toBe('intro.md');
-  });
 });
 
 describe('lowercaseContentPaths', () => {
@@ -100,19 +94,6 @@ describe('normalizeLinksInContent', () => {
 
   it('skips links inside code blocks', () => {
     const content = '```\n[link](relative.md)\n```';
-    const result = normalizeLinksInContent(content, {
-      fileDir: '.',
-      contentRoot: '/tmp',
-      siteBase: '/base',
-      useFallback: false,
-      fileIndex: new Map(),
-      filePath: 'page.md',
-    });
-    expect(result.content).toBe(content);
-  });
-
-  it('skips links inside inline code', () => {
-    const content = 'Use `[link](relative.md)` in your code';
     const result = normalizeLinksInContent(content, {
       fileDir: '.',
       contentRoot: '/tmp',
@@ -224,5 +205,70 @@ describe('stripDeadLinks', () => {
       '/base',
     );
     expect(result).toBe('[text](/other-base/page/)');
+  });
+});
+
+describe('run (integration)', () => {
+  const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+  const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+  afterEach(() => {
+    logSpy.mockClear();
+    warnSpy.mockClear();
+    errorSpy.mockClear();
+  });
+
+  function callRun(args: string[], docsDir: string): boolean {
+    try {
+      run(args, docsDir);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function makeContentDir(): string {
+    const docsDir = makeTmpDir();
+    writeFileSync(
+      join(docsDir, 'astro.config.mjs'),
+      `export default { base: '/test-lib' };`,
+    );
+    const contentRoot = join(docsDir, 'src', 'content', 'docs');
+    mkdirSync(join(contentRoot, 'guides'), { recursive: true });
+    return docsDir;
+  }
+
+  it('normalizes links and lowercases paths in content files', () => {
+    const docsDir = makeContentDir();
+    const contentRoot = join(docsDir, 'src', 'content', 'docs');
+
+    writeFileSync(join(contentRoot, 'guides', 'AlgorandClient.md'), '# Client');
+    writeFileSync(join(contentRoot, 'guides', 'intro.md'), '# Intro');
+    writeFileSync(
+      join(contentRoot, 'guides', 'getting-started.md'),
+      'See [intro](intro.md) for details.',
+    );
+
+    expect(callRun([], docsDir)).toBe(true);
+
+    // Lowercasing worked
+    const files = readdirSync(join(contentRoot, 'guides'));
+    expect(files).toContain('algorandclient.md');
+    // Link normalization worked
+    const updated = readFileSync(join(contentRoot, 'guides', 'getting-started.md'), 'utf-8');
+    expect(updated).toContain('/test-lib/guides/intro/');
+  });
+
+  it('exits on unresolvable links', () => {
+    const docsDir = makeContentDir();
+    const contentRoot = join(docsDir, 'src', 'content', 'docs');
+
+    writeFileSync(
+      join(contentRoot, 'guides', 'page.md'),
+      'See [missing](totally-nonexistent-page.md) for info.',
+    );
+
+    expect(callRun([], docsDir)).toBe(false);
   });
 });

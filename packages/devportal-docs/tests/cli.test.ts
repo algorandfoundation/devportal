@@ -2,31 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { parseCommand } from '../src/cli.js';
 
 describe('parseCommand', () => {
-  it('parses "init" command', () => {
-    const result = parseCommand(['init']);
-    expect(result.command).toBe('init');
-    expect(result.args).toEqual([]);
-  });
-
-  it('parses "build" command', () => {
-    const result = parseCommand(['build']);
-    expect(result.command).toBe('build');
-  });
-
-  it('parses "normalize-links" command', () => {
-    const result = parseCommand(['normalize-links']);
-    expect(result.command).toBe('normalize-links');
-  });
-
-  it('parses "build-sidebar" command', () => {
-    const result = parseCommand(['build-sidebar']);
-    expect(result.command).toBe('build-sidebar');
-  });
-
-  it('parses "build-manifest" command', () => {
-    const result = parseCommand(['build-manifest']);
-    expect(result.command).toBe('build-manifest');
-  });
+  it.each(['init', 'build', 'normalize-links', 'build-sidebar', 'build-manifest'])(
+    'parses "%s" command',
+    (cmd) => {
+      const result = parseCommand([cmd]);
+      expect(result.command).toBe(cmd);
+    },
+  );
 
   it('passes remaining args through', () => {
     const result = parseCommand(['build', '--base', '/test', '--verbose']);

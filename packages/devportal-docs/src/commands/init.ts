@@ -34,8 +34,13 @@ export function checkDocScript(docsDir: string, dryRun: boolean): ScriptCheckRes
     return { status: 'error', message: 'No package.json found in docs directory' };
   }
 
-  const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
-  const scripts = pkg.scripts ?? {};
+  let pkg: Record<string, unknown>;
+  try {
+    pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
+  } catch (err) {
+    return { status: 'error', message: `Failed to read package.json: ${(err as Error).message}` };
+  }
+  const scripts = (pkg.scripts ?? {}) as Record<string, string>;
   const existing = scripts['docs:devportal'];
 
   if (existing === DEFAULT_SCRIPT) {
@@ -55,8 +60,8 @@ export function checkDocScript(docsDir: string, dryRun: boolean): ScriptCheckRes
 
   // Script missing — add it
   if (!dryRun) {
+    scripts['docs:devportal'] = DEFAULT_SCRIPT;
     pkg.scripts = scripts;
-    pkg.scripts['docs:devportal'] = DEFAULT_SCRIPT;
     writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
   }
 
@@ -117,8 +122,15 @@ export function checkTailwind(docsDir: string): TailwindCheckResult {
     return { status: 'error', message: 'No package.json found — cannot check Tailwind' };
   }
 
-  const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
-  const allDeps = { ...pkg.dependencies, ...pkg.devDependencies };
+  let pkg: Record<string, unknown>;
+  try {
+    pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
+  } catch {
+    return { status: 'error', message: 'Failed to parse package.json — cannot check Tailwind' };
+  }
+  const deps = (pkg.dependencies ?? {}) as Record<string, string>;
+  const devDeps = (pkg.devDependencies ?? {}) as Record<string, string>;
+  const allDeps = { ...deps, ...devDeps };
   const twRange = allDeps['tailwindcss'];
 
   if (!twRange) {

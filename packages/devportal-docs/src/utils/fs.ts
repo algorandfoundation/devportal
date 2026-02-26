@@ -28,10 +28,9 @@ export function slugExists(contentRoot: string, slug: string): boolean {
   );
 }
 
-/** Recursively walk a directory and return all .md/.mdx file paths. */
-export function walkMdFiles(dir: string): string[] {
-  if (!existsSync(dir)) return [];
-  const results: string[] = [];
+/** Recursively walk a directory, calling `visitor` for each .md/.mdx file. */
+export function walkMdDir(dir: string, visitor: (filePath: string) => void): void {
+  if (!existsSync(dir)) return;
 
   function walk(d: string): void {
     for (const entry of readdirSync(d, { withFileTypes: true })) {
@@ -39,12 +38,18 @@ export function walkMdFiles(dir: string): string[] {
       if (entry.isDirectory()) {
         walk(full);
       } else if (/\.mdx?$/.test(entry.name)) {
-        results.push(full);
+        visitor(full);
       }
     }
   }
 
   walk(dir);
+}
+
+/** Recursively walk a directory and return all .md/.mdx file paths. */
+export function walkMdFiles(dir: string): string[] {
+  const results: string[] = [];
+  walkMdDir(dir, (filePath) => results.push(filePath));
   return results;
 }
 
@@ -55,24 +60,16 @@ export type FileIndex = Map<string, string[]>;
 export function buildFileIndex(contentRoot: string): FileIndex {
   const index: FileIndex = new Map();
 
-  function walk(dir: string): void {
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      const full = join(dir, entry.name);
-      if (entry.isDirectory()) {
-        walk(full);
-      } else if (/\.mdx?$/.test(entry.name)) {
-        let slug = relative(contentRoot, full).split('\\').join('/');
-        slug = slug.replace(/\.mdx?$/i, '');
-        slug = slug.replace(/\/index$/, '');
-        const key = slug.includes('/') ? slug.split('/').pop()! : slug;
-        const existing = index.get(key) ?? [];
-        existing.push(slug);
-        index.set(key, existing);
-      }
-    }
-  }
+  walkMdDir(contentRoot, (full) => {
+    let slug = relative(contentRoot, full).split('\\').join('/');
+    slug = slug.replace(/\.mdx?$/i, '');
+    slug = slug.replace(/\/index$/, '');
+    const key = slug.includes('/') ? slug.split('/').pop()! : slug;
+    const existing = index.get(key) ?? [];
+    existing.push(slug);
+    index.set(key, existing);
+  });
 
-  walk(contentRoot);
   return index;
 }
 

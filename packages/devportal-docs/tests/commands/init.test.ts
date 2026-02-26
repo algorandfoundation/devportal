@@ -1,10 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
   findRepoRoot,
   checkDocScript,
   checkWorkflow,
   checkTailwind,
   ensureThemeInConfig,
+  run,
 } from '../../src/commands/init.js';
 import { mkdtempSync, writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -356,5 +357,120 @@ describe('ensureThemeInConfig', () => {
     ensureThemeInConfig(docsDir, false);
     const content = readFileSync(join(docsDir, 'astro.config.mjs'), 'utf-8');
     expect(content.startsWith("import { css, fonts }")).toBe(true);
+  });
+});
+
+describe('run (integration)', () => {
+  const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+  const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+  afterEach(() => {
+    logSpy.mockClear();
+    warnSpy.mockClear();
+    errorSpy.mockClear();
+  });
+
+  // Vitest intercepts process.exit and throws — we catch the throw
+  // and verify the error path was reached via console output.
+  function callRun(args: string[], docsDir: string): boolean {
+    try {
+      run(args, docsDir);
+      return true; // completed without exit
+    } catch {
+      return false; // process.exit was called (vitest threw)
+    }
+  }
+
+  function makeFullSetup(): string {
+    const { repoRoot, docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({
+        scripts: { 'docs:devportal': 'astro build && devportal-docs build' },
+        devDependencies: { tailwindcss: '^4.2.1' },
+      }),
+    );
+    writeFileSync(
+      join(docsDir, 'astro.config.mjs'),
+      [
+        "import { css, fonts } from '@algorandfoundation/devportal-docs/theme';",
+        "import { defineConfig } from 'astro/config';",
+        'export default defineConfig({ integrations: [starlight({ customCss: [css, fonts] })] });',
+      ].join('\n'),
+    );
+    mkdirSync(join(repoRoot, '.github', 'workflows'), { recursive: true });
+    writeFileSync(
+      join(repoRoot, '.github', 'workflows', 'publish-docs.yml'),
+      'permissions:\n  contents: write\nsteps:\n  - uses: algorandfoundation/devportal/.github/actions/publish-devportal-docs@main',
+    );
+    return docsDir;
+  }
+
+  it('succeeds when all checks pass', () => {
+    const docsDir = makeFullSetup();
+    expect(callRun([], docsDir)).toBe(true);
+  });
+
+  it('exits when no astro.config.mjs exists', () => {
+    const dir = makeTmpDir();
+    expect(callRun([], dir)).toBe(false);
+  });
+
+  it('exits when no workflow references the composite action', () => {
+    const { docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({
+        scripts: { 'docs:devportal': 'astro build && devportal-docs build' },
+        devDependencies: { tailwindcss: '^4.2.1' },
+      }),
+    );
+    writeFileSync(
+      join(docsDir, 'astro.config.mjs'),
+      "import { css, fonts } from '@algorandfoundation/devportal-docs/theme';\nexport default {};",
+    );
+
+    expect(callRun([], docsDir)).toBe(false);
+  });
+
+  it('exits when tailwind is missing', () => {
+    const { repoRoot, docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({
+        scripts: { 'docs:devportal': 'astro build && devportal-docs build' },
+        dependencies: {},
+      }),
+    );
+    writeFileSync(
+      join(docsDir, 'astro.config.mjs'),
+      "import { css, fonts } from '@algorandfoundation/devportal-docs/theme';\nexport default {};",
+    );
+    mkdirSync(join(repoRoot, '.github', 'workflows'), { recursive: true });
+    writeFileSync(
+      join(repoRoot, '.github', 'workflows', 'publish.yml'),
+      'permissions:\n  contents: write\nsteps:\n  - uses: algorandfoundation/devportal/.github/actions/publish-devportal-docs@main',
+    );
+
+    expect(callRun([], docsDir)).toBe(false);
+  });
+
+  it('dry-run flag prevents file modifications', () => {
+    const { repoRoot, docsDir } = makeRepoWithDocs();
+    writeFileSync(
+      join(docsDir, 'package.json'),
+      JSON.stringify({ scripts: {}, devDependencies: { tailwindcss: '^4.2.1' } }),
+    );
+    mkdirSync(join(repoRoot, '.github', 'workflows'), { recursive: true });
+    writeFileSync(
+      join(repoRoot, '.github', 'workflows', 'publish.yml'),
+      'permissions:\n  contents: write\nsteps:\n  - uses: algorandfoundation/devportal/.github/actions/publish-devportal-docs@main',
+    );
+
+    callRun(['--dry-run'], docsDir);
+
+    const pkg = JSON.parse(readFileSync(join(docsDir, 'package.json'), 'utf-8'));
+    expect(pkg.scripts['docs:devportal']).toBeUndefined();
   });
 });

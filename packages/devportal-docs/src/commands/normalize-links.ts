@@ -5,6 +5,7 @@ import {
   slugExists,
   buildFileIndex,
   findBestMatch,
+  walkMdDir,
   type FileIndex,
 } from '../utils/fs.js';
 import { resolveBase } from '../utils/resolve-base.js';
@@ -192,8 +193,16 @@ function processFile(
   useFallback: boolean,
   fileIndex: FileIndex,
 ): string[] {
-  const content = readFileSync(filePath, 'utf-8');
   const relPath = relative(contentRoot, filePath).split('\\').join('/');
+
+  let content: string;
+  try {
+    content = readFileSync(filePath, 'utf-8');
+  } catch (err) {
+    console.error(`  Error reading ${relPath}: ${(err as Error).message}`);
+    return [`Failed to read ${relPath}`];
+  }
+
   const fileDir = dirname(relPath);
 
   const result = normalizeLinksInContent(content, {
@@ -209,8 +218,13 @@ function processFile(
   final = stripDeadLinks(final, contentRoot, siteBase);
 
   if (final !== content) {
-    writeFileSync(filePath, final, 'utf-8');
-    console.log(`Updated: ${relPath}`);
+    try {
+      writeFileSync(filePath, final, 'utf-8');
+      console.log(`Updated: ${relPath}`);
+    } catch (err) {
+      console.error(`  Error writing ${relPath}: ${(err as Error).message}`);
+      return [...result.warnings, `Failed to write ${relPath}`];
+    }
   }
 
   return result.warnings;
@@ -230,19 +244,9 @@ function processDirectory(
   }
 
   const warnings: string[] = [];
-
-  function walk(d: string): void {
-    for (const entry of readdirSync(d, { withFileTypes: true })) {
-      const full = join(d, entry.name);
-      if (entry.isDirectory()) {
-        walk(full);
-      } else if (/\.mdx?$/.test(entry.name)) {
-        warnings.push(...processFile(full, contentRoot, siteBase, useFallback, fileIndex));
-      }
-    }
-  }
-
-  walk(fullDir);
+  walkMdDir(fullDir, (filePath) => {
+    warnings.push(...processFile(filePath, contentRoot, siteBase, useFallback, fileIndex));
+  });
   return warnings;
 }
 

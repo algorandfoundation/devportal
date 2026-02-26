@@ -44,11 +44,16 @@ export async function run(_args: string[], docsDir: string): Promise<void> {
     const mod = await tsImport(configPath, import.meta.url);
     sidebar = mod.sidebar;
     devportalFallbacks = mod.devportalFallbacks;
-  } catch {
+  } catch (primaryErr) {
     // Fallback: try direct import (works if file is .mjs or tsx is registered)
-    const mod = await import(configPath);
-    sidebar = mod.sidebar;
-    devportalFallbacks = mod.devportalFallbacks;
+    try {
+      const mod = await import(configPath);
+      sidebar = mod.sidebar;
+      devportalFallbacks = mod.devportalFallbacks;
+    } catch {
+      // Surface the original tsx error — it's more useful than the fallback error
+      throw primaryErr;
+    }
   }
 
   const filtered = filterSerializable(sidebar);
