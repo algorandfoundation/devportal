@@ -22,7 +22,6 @@
     "import:docs": "pnpm run import:release && IMPORT_GITHUB=true astro sync && pnpm run sidebar:generate && pnpm run lint:fix",
     "import:force": "FORCE_IMPORT=true pnpm run import:docs",
     "import:dry-run": "IMPORT_GITHUB=true IMPORT_DRY_RUN=true astro sync",
-    "import:clear": "tsx scripts/clean-docs-import.ts",
     "import:release": "npx tsx scripts/import-release-docs.ts",
     "import:release:dry-run": "npx tsx scripts/import-release-docs.ts --dry-run",
     "_section:sidebar": "====================== Sidebar Scripts ======================",

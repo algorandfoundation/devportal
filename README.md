@@ -14,6 +14,8 @@
 
 The official Algorand Developer Portal - a comprehensive documentation site for Algorand blockchain developers.
 
+**Live site: [dev.algorand.co](https://dev.algorand.co)**
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
@@ -78,7 +80,6 @@ Before you begin, ensure you have the following installed:
 │   └── transforms/        # Content transformation utilities
 ├── public/                # Static assets (favicons, etc.)
 ├── scripts/               # Build and utility scripts
-│   ├── clean-docs-import.ts       # Clear imported documentation
 │   ├── generate-opcode-list.js    # Generate Algorand opcodes list
 │   ├── manage-sidebar-meta.ts     # Sidebar metadata generator
 │   └── prose-check.ts             # AI-powered prose quality checker
@@ -168,7 +169,6 @@ Documentation is imported from external GitHub repositories using `@larkiny/astr
 | `pnpm run import:docs`    | Import all content from GitHub, regenerate sidebar, and fix linting |
 | `pnpm run import:force`   | Force re-import all content, ignoring cache                         |
 | `pnpm run import:dry-run` | Preview GitHub content imports without making changes               |
-| `pnpm run import:clear`   | Remove all imported documentation content                           |
 
 ### Auto-Sidebar Management
 

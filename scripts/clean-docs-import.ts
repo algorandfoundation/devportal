@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+Is #!/usr/bin/env tsx
 
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
