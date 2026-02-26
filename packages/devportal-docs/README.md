@@ -20,7 +20,8 @@ npm run docs:devportal
 `init` will:
 - Add a `docs:devportal` script to your `package.json` (`astro build && devportal-docs build`)
 - Check that your GitHub workflow references the devportal composite action
-- Check that the theme CSS is referenced in `astro.config.mjs`
+- Verify that Tailwind CSS v4+ is installed
+- Add theme CSS imports to `astro.config.mjs`
 
 ## CLI Commands
 
@@ -36,7 +37,6 @@ npm run docs:devportal
 
 - `--base <path>` — Override the auto-detected site base (read from `astro.config.mjs`)
 - `--dry-run` — (init only) Show what would change without modifying files
-- `--verbose` — Extra logging
 
 ## Theme Setup
 

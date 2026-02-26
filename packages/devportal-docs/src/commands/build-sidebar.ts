@@ -56,6 +56,10 @@ export async function run(_args: string[], docsDir: string): Promise<void> {
     }
   }
 
+  if (!Array.isArray(sidebar)) {
+    throw new Error("sidebar.config.ts must export a named 'sidebar' array");
+  }
+
   const filtered = filterSerializable(sidebar);
   const fallbacks = Array.isArray(devportalFallbacks) ? devportalFallbacks : [];
   const result = [...filtered, ...fallbacks];

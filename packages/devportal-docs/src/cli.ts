@@ -34,7 +34,6 @@ Commands:
 Options:
   --base <path>     Override auto-detected site base
   --dry-run         (init only) Show what would change without modifying files
-  --verbose         Extra logging
 `.trim());
 }
 

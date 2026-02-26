@@ -193,12 +193,17 @@ export function ensureThemeInConfig(docsDir: string, dryRun: boolean): ThemeChec
   content = lines.join('\n');
 
   // 2. Add css, fonts to customCss array
+  const hadCustomCss = /customCss:\s*\[/.test(content);
   content = content.replace(
     /customCss:\s*\[/,
     'customCss: [\n        css,\n        fonts,',
   );
 
   writeFileSync(configPath, content);
+
+  if (!hadCustomCss) {
+    return { status: 'added', message: 'Added theme import but customCss array not found — add css, fonts to customCss manually' };
+  }
   return { status: 'added', message: 'Added theme CSS import and customCss entries to astro.config.mjs' };
 }
 
@@ -254,7 +259,7 @@ export function run(args: string[], docsDir: string): void {
   console.log(`${themeIcon} ${themeResult.message}`);
 
   // Exit code
-  const failed = !workflowResult.actionFound || scriptResult.status === 'error' || twResult.status === 'error';
+  const failed = !workflowResult.actionFound || scriptResult.status === 'error' || twResult.status === 'error' || themeResult.status === 'error';
   if (failed) {
     process.exit(1);
   }
