@@ -92,6 +92,7 @@ export function normalizeLinksInContent(
   let changed = false;
 
   const codeSlots: string[] = [];
+  // eslint-disable-next-line no-control-regex
   const placeholder = (i: number) => `\x00CODE${i}\x00`;
   let safeContent = content.replace(/```[\s\S]*?```|`[^`\n]+`/g, (m) => {
     codeSlots.push(m);
@@ -135,6 +136,7 @@ export function normalizeLinksInContent(
     },
   );
 
+  // eslint-disable-next-line no-control-regex
   const result = safeContent.replace(/\x00CODE(\d+)\x00/g, (_, i) => codeSlots[Number(i)]);
   return { content: result, changed, warnings };
 }

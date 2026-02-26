@@ -12,6 +12,7 @@ export default [
       'src/global.d.ts',
       'imports/*',
       'scripts/*',
+      'packages/*',
     ],
   },
   eslintConfigPrettier,
