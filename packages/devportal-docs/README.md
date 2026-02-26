@@ -83,7 +83,7 @@ The `DevportalSidebarConfig` interface expects:
    - **normalize-links** — Rewrites relative markdown links to use the site's base path, lowercases content paths, and strips dead links
    - **build-sidebar** — Dynamically imports `sidebar.config.ts`, filters non-serializable entries, and writes `dist-devportal/sidebar.json`
    - **build-manifest** — Writes `dist-devportal/manifest.json` with the site's base path and a timestamp
-4. The composite action publishes the `dist-devportal/` artifact to the developer portal
+4. The composite action packages the `dist-devportal/` contents and attaches the artifact to the tagged release (special `docs-latest` tag gets updated nightly)
 
 ## Directory Conventions
 
