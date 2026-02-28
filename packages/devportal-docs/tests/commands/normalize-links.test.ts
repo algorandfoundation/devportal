@@ -57,6 +57,18 @@ describe('lowercaseContentPaths', () => {
     writeFileSync(join(dir, 'already-lower.md'), '');
     expect(lowercaseContentPaths(dir)).toBe(0);
   });
+
+  it('uses two-step rename for case-only changes', () => {
+    const dir = makeTmpDir();
+    writeFileSync(join(dir, 'MyFile.md'), '# Content');
+    lowercaseContentPaths(dir);
+    // On any filesystem (case-sensitive or not), the file should be lowercase
+    const files = readdirSync(dir);
+    expect(files).toContain('myfile.md');
+    expect(files).not.toContain('MyFile.md');
+    // Content is preserved
+    expect(readFileSync(join(dir, 'myfile.md'), 'utf-8')).toBe('# Content');
+  });
 });
 
 describe('normalizeLinksInContent', () => {

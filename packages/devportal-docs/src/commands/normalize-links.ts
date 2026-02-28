@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import {
@@ -32,6 +33,25 @@ export function targetName(name: string): string {
   return lower.replace(/^readme(\.(md|mdx))$/, 'index$1');
 }
 
+function caseRename(dir: string, oldName: string, newName: string): void {
+  const oldPath = join(dir, oldName);
+  const newPath = join(dir, newName);
+
+  // Two-step rename via temp name — safe on case-insensitive filesystems
+  // where renameSync('FooBar.md', 'foobar.md') may not update git's index.
+  const tmpPath = join(dir, `${oldName}.__tmp__`);
+  renameSync(oldPath, tmpPath);
+  renameSync(tmpPath, newPath);
+
+  // Best-effort: update git index so the case change is tracked.
+  // Silently ignored if git is unavailable or the file is untracked.
+  try {
+    execFileSync('git', ['mv', '-f', oldPath, newPath], { stdio: 'pipe' });
+  } catch {
+    // Not in a git repo, or file not tracked — filesystem rename is enough.
+  }
+}
+
 export function lowercaseContentPaths(dir: string): number {
   let count = 0;
 
@@ -57,7 +77,7 @@ export function lowercaseContentPaths(dir: string): number {
     }
     const name = names[0];
     if (name !== target) {
-      renameSync(join(dir, name), join(dir, target));
+      caseRename(dir, name, target);
       count++;
     }
   }
