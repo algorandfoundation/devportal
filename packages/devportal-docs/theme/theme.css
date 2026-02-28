@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Algorand Developer Portal — Library Theme
+   Brand colors, Starlight overrides, and font sizing.
+   ========================================================================== */
+
+/* ---- Font families ---- */
+:root {
+  --__sl-font: 'Inter', sans-serif;
+  --font-sans: Inter, sans-serif;
+  --font-mono: Source Code Pro, monospace;
+}
+
+/* ---- Brand palette: Algorand Teal ---- */
+:root {
+  --color-algo-teal-100: #e7faf9;
+  --color-algo-teal-200: #d1f4f4;
+  --color-algo-teal-300: #b9efee;
+  --color-algo-teal-400: #74dfdd;
+  --color-algo-teal-500: #45d5d1;
+  --color-algo-teal-600: #17cac6;
+  --color-algo-teal-700: #5cdad7;
+}
+
+/* ---- Brand palette: Algorand Lavender ---- */
+:root {
+  --color-algo-lavender-100: #e9e9fd;
+  --color-algo-lavender-200: #8080f3;
+  --color-algo-lavender-300: #4444ed;
+  --color-algo-lavender-400: #2d2df1;
+}
+
+/* ---- Brand palette: Algorand Navy ---- */
+:root {
+  --color-algo-navy: #001324;
+}
+
+/* ==========================================================================
+   Starlight Overrides — Dark Mode (default)
+   ========================================================================== */
+:root {
+  --sl-color-accent-low: #131e4f;
+  --sl-color-accent: #a2eae8;
+  --sl-color-accent-high: var(--color-algo-teal-600);
+  --sl-color-white: #dfe1e5;
+  --sl-color-gray-1: #e5e7e9;
+  --sl-color-gray-2: #ccd0d3;
+  --sl-color-gray-3: #66717c;
+  --sl-color-gray-4: #334250;
+  --sl-color-gray-5: #192a39;
+  --sl-color-gray-6: var(--color-algo-navy);
+  --sl-color-black: var(--color-algo-navy);
+  --sl-color-text-accent: var(--color-algo-teal-600);
+  --sl-color-accent-medium: var(--color-algo-teal-700);
+}
+
+/* ==========================================================================
+   Starlight Overrides — Light Mode
+   ========================================================================== */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #c7d6ff;
+  --sl-color-accent: var(--color-algo-lavender-400);
+  --sl-color-accent-high: var(--color-algo-lavender-200);
+  --sl-color-white: #282930;
+  --sl-color-gray-1: #24272f;
+  --sl-color-gray-2: #353841;
+  --sl-color-gray-3: #60646e;
+  --sl-color-gray-4: #888b96;
+  --sl-color-gray-5: #c0c2c7;
+  --sl-color-gray-6: #ccd0d3;
+  --sl-color-gray-7: #f6f6f6;
+  --sl-color-black: #f6f6f6;
+  --sl-color-text-accent: var(--color-algo-lavender-400);
+  --sl-color-accent-medium: #c7d6ff;
+}
+
+/* ==========================================================================
+   Starlight Font Overrides
+   ========================================================================== */
+:root {
+  --sl-text-3xs: 0.6rem;
+  --sl-text-2xs: 0.75rem;
+  --sl-text-xs: 0.825rem;
+  --sl-text-sm: 0.85rem;
+  --sl-text-base: 0.875rem;
+  --sl-text-lg: 1.125rem;
+  --sl-text-xl: 1.25rem;
+  --sl-text-2xl: 1.5rem;
+  --sl-text-3xl: 1.8125rem;
+  --sl-text-4xl: 2.1875rem;
+  --sl-text-5xl: 2.625rem;
+  --sl-text-6xl: 4rem;
+  --sl-text-body: var(--sl-text-base);
+  --sl-text-body-sm: var(--sl-text-xs);
+  --sl-text-code: var(--sl-text-sm);
+  --sl-text-code-sm: var(--sl-text-xs);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Aeonik', sans-serif;
+}
+
+/* ---- Panel borders (hidden) ---- */
+.sidebar-pane {
+  border: none;
+}
+.right-sidebar {
+  border: none;
+}
+.content-panel + .content-panel {
+  border: none;
+}
+header.header {
+  border: none;
+}

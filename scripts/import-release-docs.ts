@@ -18,7 +18,7 @@ import {
   rmSync,
   writeFileSync,
 } from 'fs';
-import { execSync } from 'child_process';
+import { execFileSync, execSync } from 'child_process';
 import { join, posix, relative } from 'path';
 import { tmpdir } from 'os';
 
@@ -113,6 +113,54 @@ function walkFiles(dir: string): string[] {
     }
   }
   return results;
+}
+
+/**
+ * Fix case-only mismatches between git's index and the filesystem.
+ *
+ * On macOS (core.ignorecase=true), after rmSync + cp -R with correctly-cased
+ * content from a tarball, git's index may still track the old PascalCase
+ * names. This function detects mismatches and uses git mv -f to reconcile.
+ */
+function fixGitCaseMismatches(dir: string): void {
+  let trackedFiles: string[];
+  try {
+    const output = execFileSync('git', ['ls-files', dir], {
+      encoding: 'utf-8',
+      stdio: 'pipe',
+    });
+    trackedFiles = output.trim().split('\n').filter(Boolean);
+  } catch {
+    // Not in a git repo — nothing to fix.
+    return;
+  }
+
+  if (trackedFiles.length === 0) return;
+
+  // Build a map from lowercase path to actual filesystem path
+  const fsFiles = walkFiles(dir);
+  const fsMap = new Map<string, string>();
+  for (const f of fsFiles) {
+    fsMap.set(f.toLowerCase(), f);
+  }
+
+  let fixCount = 0;
+  for (const tracked of trackedFiles) {
+    const fsPath = fsMap.get(tracked.toLowerCase());
+    if (!fsPath || fsPath === tracked) continue;
+
+    // Case mismatch: git tracks 'FooBar.md' but filesystem has 'foobar.md'
+    try {
+      execFileSync('git', ['mv', '-f', tracked, fsPath], { stdio: 'pipe' });
+      fixCount++;
+    } catch {
+      // File may have been deleted or is otherwise not fixable — skip.
+    }
+  }
+
+  if (fixCount > 0) {
+    console.log(`  Fixed ${fixCount} case mismatch(es) in git index`);
+  }
 }
 
 /** Apply post-import transforms to files matching their glob patterns. */
@@ -328,6 +376,10 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
     }
     mkdirSync(destDir, { recursive: true });
     execSync(`cp -R "${contentSrc}/"* "${destDir}/"`, { stdio: 'pipe' });
+
+    // 6b. Fix case mismatches between git index and extracted content.
+    //     On macOS, git may still track PascalCase names from a prior import.
+    fixGitCaseMismatches(destDir);
 
     // 7. Copy sidebar.json if present in artifact (written as-is;
     //    rebasing happens in buildSidebarEntries() at Astro config time)
