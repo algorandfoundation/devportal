@@ -6,12 +6,12 @@ on:
     branches:
       - main
       - main-dist
-      - refactor/library-enablement
+      - release/ak-v4
   pull_request:
     branches:
       - main
       - main-dist
-      - refactor/library-enablement
+      - release/ak-v4
 jobs:
   deploy:
     runs-on: ubuntu-latest
