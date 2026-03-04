@@ -55,6 +55,8 @@
     "js-yaml": "^4.1.1",
     "marked": "^17.0.1",
     "nanostores": "^1.1.0",
+    "node-addon-api": "8.6.0",
+    "node-gyp": "12.2.0",
     "octokit": "^5.0.5",
     "prismjs": "^1.30.0",
     "react": "^19.2.4",
