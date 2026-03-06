@@ -15,6 +15,7 @@ import {
   mkdtempSync,
   readFileSync,
   readdirSync,
+  renameSync,
   rmSync,
   writeFileSync,
 } from 'fs';
@@ -113,6 +114,50 @@ function walkFiles(dir: string): string[] {
     }
   }
   return results;
+}
+
+/**
+ * Recursively lowercase all filenames and directory names.
+ * Processes bottom-up (deepest files first) to avoid path conflicts.
+ * Needed because starlight-typedoc generates mixed-case filenames
+ * (e.g. AlgorandClient.md) while its links are already lowercase.
+ */
+function lowercaseFilenames(dir: string): void {
+  const entries = readdirSync(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      const fullPath = join(dir, entry.name);
+      lowercaseFilenames(fullPath);
+
+      const lower = entry.name.toLowerCase();
+      if (lower !== entry.name) {
+        renameSync(fullPath, join(dir, lower));
+      }
+    }
+  }
+
+  for (const entry of entries) {
+    if (entry.isFile()) {
+      const lower = entry.name.toLowerCase();
+      if (lower !== entry.name) {
+        renameSync(join(dir, entry.name), join(dir, lower));
+      }
+    }
+  }
+}
+
+/**
+ * Rename any readme.md files to index.md (must run after lowercaseFilenames).
+ * Starlight expects index.md for directory routing.
+ */
+function renameReadmeToIndex(dir: string): void {
+  for (const filePath of walkFiles(dir)) {
+    if (posix.basename(filePath).toLowerCase() === 'readme.md') {
+      const indexPath = join(posix.dirname(filePath), 'index.md');
+      renameSync(filePath, indexPath);
+    }
+  }
 }
 
 /** Apply post-import transforms to files matching their glob patterns. */
@@ -228,6 +273,9 @@ function normalizeLinks(
       absolute += '/';
     }
 
+    // Lowercase to match lowercased filenames on disk
+    absolute = absolute.toLowerCase();
+
     return `[${text}](${absolute}${anchor})`;
   });
 }
@@ -329,7 +377,13 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
     mkdirSync(destDir, { recursive: true });
     execSync(`cp -R "${contentSrc}/"* "${destDir}/"`, { stdio: 'pipe' });
 
-    // 7. Copy sidebar.json if present in artifact (written as-is;
+    // 7. Lowercase all filenames (handles TypeDoc mixed-case output)
+    lowercaseFilenames(destDir);
+
+    // 8. Rename readme.md → index.md (Starlight convention)
+    renameReadmeToIndex(destDir);
+
+    // 9. Copy sidebar.json if present in artifact (written as-is;
     //    rebasing happens in buildSidebarEntries() at Astro config time)
     const sidebarSrc = join(extractDir, 'sidebar.json');
     if (existsSync(sidebarSrc)) {
@@ -339,8 +393,8 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
       console.log(`  Copied sidebar.json -> ${prefix}/sidebar.json`);
     }
 
-    // 8. Read site base from manifest (self-describing artifact),
-    //    falling back to repo name for older tarballs without it.
+    // 10. Read site base from manifest (self-describing artifact),
+    //     falling back to repo name for older tarballs without it.
     const manifestPath = join(extractDir, 'manifest.json');
     let siteBase = variant.repo;
     if (existsSync(manifestPath)) {
@@ -355,11 +409,11 @@ async function downloadAndUnpack(task: DownloadTask): Promise<void> {
       }
     }
 
-    // 9. Normalize links: rewrite library site-base URLs and resolve
-    //    relative links to absolute devportal paths.
+    // 11. Normalize links: rewrite library site-base URLs and resolve
+    //     relative links to absolute devportal paths.
     normalizeAllLinks(destDir, siteBase, prefix);
 
-    // 10. Apply post-import transforms (e.g. strip upstream-only frontmatter)
+    // 12. Apply post-import transforms (e.g. strip upstream-only frontmatter)
     if (task.postImportTransforms?.length) {
       applyPostImportTransforms(destDir, task.postImportTransforms, prefix);
     }

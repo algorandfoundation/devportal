@@ -11,7 +11,6 @@
 #   - Node.js and pnpm must already be set up by the caller
 #   - Language-specific deps (Python/uv, root npm ci, etc.) must be
 #     installed by the caller before invoking this action
-#   - docs/package.json must define a "build-devportal" script
 #   - The caller workflow must set `permissions: contents: write`
 
 name: Publish DevPortal Docs
@@ -30,10 +29,10 @@ runs:
       shell: bash
       run: pnpm install --frozen-lockfile --dir ${{ inputs.docs-dir }}
 
-    - name: Build devportal artifact
+    - name: Build docs
       shell: bash
       working-directory: ${{ inputs.docs-dir }}
-      run: pnpm run build-devportal
+      run: pnpm run build
 
     - name: Prepare dist-devportal
       shell: bash
@@ -41,36 +40,25 @@ runs:
       run: |
         mkdir -p dist-devportal/content
 
-        # Copy root content files (index.mdx etc)
-        find src/content/docs -maxdepth 1 -type f \( -name '*.md' -o -name '*.mdx' \) -exec cp {} dist-devportal/content/ \;
+        # Copy all content docs (guides, api, examples, root MDX files, etc.)
+        cp -R src/content/docs/. dist-devportal/content/
 
-        # Copy guides and API content
-        cp -R src/content/docs/guides dist-devportal/content/ 2>/dev/null || true
-        cp -R src/content/docs/api dist-devportal/content/ 2>/dev/null || true
+        # Copy sidebar config if present
+        if [ -f sidebar.config.json ]; then
+          cp sidebar.config.json dist-devportal/sidebar.json
+        fi
 
-        # Merge CI provenance into manifest.json (base + timestamp
-        # written by build-devportal; repo/ref/tag added here)
-        if [ -f dist-devportal/manifest.json ]; then
-          node -e "
-            const m = JSON.parse(require('fs').readFileSync('dist-devportal/manifest.json','utf-8'));
-            Object.assign(m, {
-              repo: process.env.GITHUB_REPOSITORY,
-              ref: process.env.GITHUB_SHA,
-              tag: process.env.GITHUB_REF_NAME
-            });
-            require('fs').writeFileSync('dist-devportal/manifest.json', JSON.stringify(m,null,2)+'\n');
-          "
-        else
-          echo '::warning::manifest.json not found — build-devportal should run build-manifest'
-          cat > dist-devportal/manifest.json <<MANIFEST
+        # Write manifest — base is derived from repo name (e.g. algokit-utils-ts)
+        REPO_NAME="${GITHUB_REPOSITORY#*/}"
+        cat > dist-devportal/manifest.json <<MANIFEST
         {
+          "base": "${REPO_NAME}",
           "repo": "${GITHUB_REPOSITORY}",
           "ref": "${GITHUB_SHA}",
           "tag": "${GITHUB_REF_NAME}",
           "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
         }
         MANIFEST
-        fi
 
     - name: Create tarball
       shell: bash

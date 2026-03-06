@@ -25,7 +25,7 @@ export const config: LibraryImportConfig = {
       source: 'github-artifact',
       language: 'TypeScript',
       versions: [{ slug: 'latest', label: 'Latest' }],
-      owner: 'larkiny',
+      owner: 'algorandfoundation',
       repo: 'algokit-utils-ts',
       postImportTransforms: [
         {
@@ -38,7 +38,7 @@ export const config: LibraryImportConfig = {
       source: 'github-artifact',
       language: 'Python',
       versions: [{ slug: 'latest', label: 'Latest' }],
-      owner: 'larkiny',
+      owner: 'algorandfoundation',
       repo: 'algokit-utils-py',
       postImportTransforms: [
         {
