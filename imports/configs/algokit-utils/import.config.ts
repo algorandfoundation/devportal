@@ -34,19 +34,19 @@ export const config: LibraryImportConfig = {
         },
       ],
     },
-    {
-      source: 'github-artifact',
-      language: 'Python',
-      versions: [{ slug: 'latest', label: 'Latest' }],
-      owner: 'algorandfoundation',
-      repo: 'algokit-utils-py',
-      postImportTransforms: [
-        {
-          pattern: '**/*.{md,mdx}',
-          transform: stripFrontmatterKeys(['hero', 'template']),
-        },
-      ],
-    },
+    // {
+    //   source: 'github-artifact',
+    //   language: 'Python',
+    //   versions: [{ slug: 'latest', label: 'Latest' }],
+    //   owner: 'algorandfoundation',
+    //   repo: 'algokit-utils-py',
+    //   postImportTransforms: [
+    //     {
+    //       pattern: '**/*.{md,mdx}',
+    //       transform: stripFrontmatterKeys(['hero', 'template']),
+    //     },
+    //   ],
+    // },
     {
       language: 'TypeScript',
       versions: [{ slug: 'latest', label: 'Latest' }],
