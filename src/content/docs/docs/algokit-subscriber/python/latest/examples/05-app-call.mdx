@@ -1,0 +1,263 @@
+---
+title: "App Call Subscription"
+description: "Demonstrates application call subscription with ABI method filtering:"
+sidebar:
+  order: 5
+---
+
+[← Back to Examples](/docs/algokit-subscriber/python/latest/examples/)
+
+## Description
+
+Demonstrates application call subscription with ABI method filtering:
+- Deploy TestingApp from ARC-56 spec
+- Call set_global, emitSwapped, opt_in ABI methods
+- Filter by app_create, method_signature, app_on_complete, app_call_arguments_match
+- Verify each filter matches the expected transactions
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples/subscriber` directory:
+
+```bash
+cd examples/subscriber
+uv run python 05_app_call.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-subscriber-py/blob/main/examples/subscriber/05_app_call.py)
+
+```python title="05_app_call.py"
+"""Example 05: App Call Subscription
+
+Demonstrates application call subscription with ABI method filtering:
+- Deploy TestingApp from ARC-56 spec
+- Call set_global, emitSwapped, opt_in ABI methods
+- Filter by app_create, method_signature, app_on_complete, app_call_arguments_match
+- Verify each filter matches the expected transactions
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from pathlib import Path
+
+from algokit_utils import (
+    AlgoAmount,
+    AlgorandClient,
+    AppClientMethodCallParams,
+    AppFactory,
+    AppFactoryParams,
+    PaymentParams,
+)
+from shared import (
+    ALGOD_CONFIG,
+    KMD_CONFIG,
+    create_filter_tester,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_subscriber import SubscribedTransaction
+
+SPEC_PATH = Path(__file__).parent / "shared" / "artifacts" / "testing-app.arc56.json"
+
+# Method selector for emitSwapped(uint64,uint64)void (first 4 bytes of SHA-512/256)
+EMIT_SWAPPED_SELECTOR = "d43cee5d"
+
+
+def main() -> None:
+    print_header("05 — App Call Subscription")
+
+    # Step 1: Connect to LocalNet and fund an account
+    print_step(1, "Connect to LocalNet and fund account")
+    algorand = AlgorandClient.from_config(algod_config=ALGOD_CONFIG, kmd_config=KMD_CONFIG)
+    creator = algorand.account.random().addr
+    dispenser = algorand.account.localnet_dispenser().addr
+    algorand.send.payment(
+        PaymentParams(sender=dispenser, receiver=creator, amount=AlgoAmount(algo=100))
+    )
+    print_info(f"Creator: {shorten_address(creator)}")
+    print_success("Account created and funded")
+
+    # Step 2: Deploy TestingApp from ARC-56 spec
+    print_step(2, "Deploy TestingApp via AppFactory")
+    factory = AppFactory(
+        AppFactoryParams(
+            algorand=algorand,
+            app_spec=SPEC_PATH.read_text("utf-8"),
+            default_sender=creator,
+        )
+    )
+    app_client, create_result = factory.send.bare.create()
+    app_id = create_result.app_id
+    create_round = create_result.confirmation.confirmed_round
+    assert create_round is not None
+    print_info(f"App ID: {app_id}")
+    print_info(f"Create round: {create_round}")
+    print_success("TestingApp deployed")
+
+    # Step 3: Make ABI method calls
+    print_step(3, "Make ABI method calls")
+
+    # set_global(uint64,uint64,string,byte[4])void — NoOp
+    set_global_result = app_client.send.call(
+        AppClientMethodCallParams(
+            method="set_global(uint64,uint64,string,byte[4])void",
+            args=[1, 2, "test", b"\x00\x01\x02\x03"],
+        )
+    )
+    print_info(f"set_global txn: {set_global_result.tx_ids[0]}")
+
+    # emitSwapped(uint64,uint64)void — NoOp (emits ARC-28 event)
+    emit_result = app_client.send.call(
+        AppClientMethodCallParams(
+            method="emitSwapped(uint64,uint64)void",
+            args=[42, 99],
+        )
+    )
+    print_info(f"emitSwapped txn: {emit_result.tx_ids[0]}")
+
+    # opt_in()void — OptIn on-complete
+    opt_in_result = app_client.send.opt_in(AppClientMethodCallParams(method="opt_in()void"))
+    print_info(f"opt_in txn: {opt_in_result.tx_ids[0]}")
+    print_success("3 ABI method calls sent")
+
+    # Watermark: just before the app creation round
+    watermark_before = create_round - 1
+    test_filter = create_filter_tester(algorand.client.algod, watermark_before)
+
+    # Step 4: Filter: app_create = True
+    print_step(4, "Filter: appCreate = true")
+    create_txns = test_filter(
+        "app-create",
+        {"app_create": True},
+        1,
+        "appCreate filter matched 1 app creation transaction",
+        _fmt_create,
+    )
+
+    # Step 5: Filter: appId + methodSignature = set_global
+    print_step(5, "Filter: appId + methodSignature = set_global")
+    method_txns = test_filter(
+        "set-global-method",
+        {
+            "app_id": app_id,
+            "method_signature": "set_global(uint64,uint64,string,byte[4])void",
+        },
+        1,
+        "methodSignature filter matched 1 set_global call",
+        _fmt_method,
+    )
+
+    # Step 6: Filter: appOnComplete = optin
+    print_step(6, "Filter: appOnComplete = optin")
+    optin_txns = test_filter(
+        "optin-calls",
+        {"app_on_complete": "optin"},
+        1,
+        "appOnComplete filter matched 1 opt-in transaction",
+        _fmt_optin,
+    )
+
+    # Step 7: Filter: appCallArgumentsMatch predicate
+    print_step(7, "Filter: appCallArgumentsMatch predicate")
+    arg_match_txns = test_filter(
+        "arg-match",
+        {
+            "app_id": app_id,
+            "app_call_arguments_match": _match_emit_swapped,
+        },
+        1,
+        "appCallArgumentsMatch predicate matched 1 emitSwapped call",
+        _fmt_arg_match,
+    )
+
+    # Step 8: Summary
+    print_step(8, "Summary")
+    print_info(f"App ID: {app_id}")
+    print_info(f"appCreate filter: {len(create_txns)} matched (creation)")
+    print_info(f"methodSignature filter: {len(method_txns)} matched (set_global)")
+    print_info(f"appOnComplete filter: {len(optin_txns)} matched (opt-in)")
+    print_info(
+        f"appCallArgumentsMatch filter: {len(arg_match_txns)} matched (emitSwapped by selector)"
+    )
+
+    print_header("Example complete")
+
+
+def _match_emit_swapped(args: list[bytes] | None) -> bool:
+    """Predicate: match emitSwapped calls by checking the method selector."""
+    if not args or len(args) == 0:
+        return False
+    selector_hex = args[0][:4].hex()
+    return selector_hex == EMIT_SWAPPED_SELECTOR
+
+
+def _fmt_create(txn: SubscribedTransaction) -> None:
+    app_txn = txn.application_transaction
+    on_complete = app_txn.on_completion.value if app_txn else "N/A"
+    print_info(f"  Created app: {txn.created_app_id} | onComplete: {on_complete} | txn: {txn.id_}")
+
+
+def _fmt_method(txn: SubscribedTransaction) -> None:
+    app_txn = txn.application_transaction
+    app_args = app_txn.application_args if app_txn else None
+    selector = app_args[0][:4].hex() if app_args else "N/A"
+    filters = ", ".join(txn.filters_matched or [])
+    print_info(f"  Method call: selector: 0x{selector} | filters: [{filters}] | txn: {txn.id_}")
+
+
+def _fmt_optin(txn: SubscribedTransaction) -> None:
+    app_txn = txn.application_transaction
+    app_id_val = app_txn.application_id if app_txn else "N/A"
+    on_complete = app_txn.on_completion.value if app_txn else "N/A"
+    filters = ", ".join(txn.filters_matched or [])
+    print_info(
+        f"  OptIn call: app: {app_id_val}"
+        f" | onComplete: {on_complete} | filters: [{filters}]"
+        f" | txn: {txn.id_}"
+    )
+
+
+def _fmt_arg_match(txn: SubscribedTransaction) -> None:
+    app_txn = txn.application_transaction
+    app_args = app_txn.application_args if app_txn else None
+    if app_args:
+        selector = app_args[0][:4].hex()
+        filters = ", ".join(txn.filters_matched or [])
+        print_info(f"  Arg match: selector: 0x{selector} | filters: [{filters}] | txn: {txn.id_}")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples
+
+- [Basic Poll Once](/docs/algokit-subscriber/python/latest/examples/01-basic-poll-once/)
+- [Continuous Subscriber](/docs/algokit-subscriber/python/latest/examples/02-continuous-subscriber/)
+- [Payment Filters](/docs/algokit-subscriber/python/latest/examples/03-payment-filters/)
+- [Asset Transfer](/docs/algokit-subscriber/python/latest/examples/04-asset-transfer/)
+- **App Call Subscription**
+- [Multiple Named Filters](/docs/algokit-subscriber/python/latest/examples/06-multiple-filters/)
+- [Balance Change Tracking](/docs/algokit-subscriber/python/latest/examples/07-balance-changes/)
+- [ARC-28 Event Subscription](/docs/algokit-subscriber/python/latest/examples/08-arc28-events/)
+- [Inner Transaction Subscription](/docs/algokit-subscriber/python/latest/examples/09-inner-transactions/)
+- [Batch Handling & Data Mappers](/docs/algokit-subscriber/python/latest/examples/10-batch-and-mappers/)
+- [Watermark Persistence](/docs/algokit-subscriber/python/latest/examples/11-watermark-persistence/)
+- [Sync Behaviours](/docs/algokit-subscriber/python/latest/examples/12-sync-behaviours/)
+- [Custom Filters](/docs/algokit-subscriber/python/latest/examples/13-custom-filters/)
+- [Stateless Subscriptions](/docs/algokit-subscriber/python/latest/examples/14-stateless-subscriptions/)
+- [Lifecycle Hooks & Error Handling](/docs/algokit-subscriber/python/latest/examples/15-lifecycle-hooks/)

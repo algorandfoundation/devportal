@@ -1,0 +1,280 @@
+---
+title: "Custom Filters"
+description: "Demonstrates custom filter predicates with multi-condition logic:"
+sidebar:
+  order: 13
+---
+
+[← Back to Examples](/docs/algokit-subscriber/python/latest/examples/)
+
+## Description
+
+Demonstrates custom filter predicates with multi-condition logic:
+- Use customFilter for complex matching (amount + note + sender allowlist)
+- Compose customFilter with standard filter fields
+- Inspect full SubscribedTransaction fields available in customFilter
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples/subscriber` directory:
+
+```bash
+cd examples/subscriber
+uv run python 13_custom_filters.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-subscriber-py/blob/main/examples/subscriber/13_custom_filters.py)
+
+```python title="13_custom_filters.py"
+"""Example 13: Custom Filters
+
+Demonstrates custom filter predicates with multi-condition logic:
+- Use customFilter for complex matching (amount + note + sender allowlist)
+- Compose customFilter with standard filter fields
+- Inspect full SubscribedTransaction fields available in customFilter
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from __future__ import annotations
+
+import dataclasses
+from typing import TYPE_CHECKING
+
+from algokit_utils import AlgoAmount, AlgorandClient, PaymentParams
+from shared import (
+    ALGOD_CONFIG,
+    KMD_CONFIG,
+    create_filter_tester,
+    format_micro_algo,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+if TYPE_CHECKING:
+    from algokit_subscriber import SubscribedTransaction
+
+THRESHOLD = 2_000_000  # 2 ALGO in microAlgos
+
+
+def setup_and_send() -> tuple[AlgorandClient, str, set[str], list[tuple[str, str, int, str]], int]:
+    """Steps 1-3: connect, create accounts, send 6 payments."""
+    # Step 1: Connect to LocalNet
+    print_step(1, "Connect to LocalNet")
+    algorand = AlgorandClient.from_config(algod_config=ALGOD_CONFIG, kmd_config=KMD_CONFIG)
+    status = algorand.client.algod.status()
+    print_info(f"Current round: {status.last_round}")
+    print_success("Connected to LocalNet")
+
+    # Step 2: Create and fund 3 accounts
+    print_step(2, "Create and fund 3 accounts")
+    dispenser = algorand.account.localnet_dispenser().addr
+    sender = algorand.account.random().addr
+    receiver = algorand.account.random().addr
+    outsider = algorand.account.random().addr
+    for acct in (sender, receiver, outsider):
+        algorand.send.payment(
+            PaymentParams(
+                sender=dispenser,
+                receiver=acct,
+                amount=AlgoAmount(algo=100),
+            )
+        )
+    print_info(f"Sender: {shorten_address(sender)}")
+    print_info(f"Receiver: {shorten_address(receiver)}")
+    print_info(f"Outsider: {shorten_address(outsider)}")
+    print_success("3 accounts created and funded")
+
+    # Step 3: Send 6 payments with varying senders, amounts, and notes
+    print_step(3, "Send 6 payments with varying senders, amounts, and notes")
+    allowlist = {sender, receiver}
+    # Txn 1: PASS (allowlisted, >=2 ALGO, "transfer" keyword)
+    # Txn 2: FAIL (amount < 2 ALGO)
+    # Txn 3: PASS (allowlisted, >=2 ALGO, "transfer" keyword)
+    # Txn 4: FAIL (outsider not in allowlist)
+    # Txn 5: FAIL (note doesn't contain "transfer")
+    # Txn 6: PASS (allowlisted, >=2 ALGO, "transfer" keyword)
+    payments: list[tuple[str, str, int, str]] = [
+        (sender, receiver, 5_000_000, "transfer-urgent"),
+        (sender, outsider, 1_000_000, "transfer-low"),
+        (receiver, sender, 3_000_000, "transfer-normal"),
+        (outsider, receiver, 4_000_000, "transfer-big"),
+        (sender, receiver, 2_000_000, "payment-misc"),
+        (receiver, outsider, 10_000_000, "transfer-final"),
+    ]
+
+    first_round: int | None = None
+    for i, (s, r, amount, note) in enumerate(payments):
+        result = algorand.send.payment(
+            PaymentParams(
+                sender=s,
+                receiver=r,
+                amount=AlgoAmount(micro_algo=amount),
+                note=note.encode(),
+            )
+        )
+        if first_round is None:
+            first_round = result.confirmation.confirmed_round
+        print_info(
+            f"Txn {i + 1}: {shorten_address(s)} -> {shorten_address(r)}"
+            f' | {format_micro_algo(amount)} | note: "{note}"'
+        )
+    assert first_round is not None
+    print_success(f"Sent {len(payments)} payments")
+
+    watermark_before = first_round - 1
+    return algorand, sender, allowlist, payments, watermark_before
+
+
+def print_pass_fail(
+    payments: list[tuple[str, str, int, str]],
+    allowlist: set[str],
+) -> None:
+    """Print pass/fail analysis for all 6 transactions."""
+    for i, (s, _r, amount, note) in enumerate(payments):
+        amount_ok = amount >= THRESHOLD
+        note_ok = "transfer" in note
+        sender_ok = s in allowlist
+        passed = amount_ok and note_ok and sender_ok
+
+        reasons: list[str] = []
+        if not amount_ok:
+            reasons.append(f"amount {format_micro_algo(amount)} < {format_micro_algo(THRESHOLD)}")
+        if not note_ok:
+            reasons.append(f'note "{note}" missing "transfer"')
+        if not sender_ok:
+            reasons.append(f"sender {shorten_address(s)} not in allowlist")
+
+        tag = "PASS" if passed else "FAIL"
+        detail = "all conditions met" if passed else ", ".join(reasons)
+        print_info(f"  Txn {i + 1} [{tag}]: {detail}")
+
+
+def main() -> None:
+    print_header("13 — Custom Filters")
+
+    algorand, sender, allowlist, payments, watermark_before = setup_and_send()
+    test_filter = create_filter_tester(algorand.client.algod, watermark_before)
+
+    # Step 4: customFilter only — multi-condition logic
+    print_step(
+        4,
+        'Custom filter: amount >= 2 ALGO AND note contains "transfer" AND sender in allowlist',
+    )
+
+    def custom_filter(txn: SubscribedTransaction) -> bool:
+        amount = txn.payment_transaction.amount if txn.payment_transaction else 0
+        note = txn.note.decode() if txn.note else ""
+        return amount >= THRESHOLD and "transfer" in note and txn.sender in allowlist
+
+    custom_only_txns = test_filter(
+        "custom-only",
+        {"custom_filter": custom_filter},
+        3,
+        "Custom filter matched exactly 3 transactions (txns 1, 3, 6)",
+    )
+
+    print()
+
+    # Print pass/fail for all 6 transactions
+    print_info("Pass/Fail analysis: all 6 transactions")
+    print_pass_fail(payments, allowlist)
+
+    # Step 5: Combine customFilter with standard filter fields
+    print_step(
+        5,
+        "Composition: sender=sender account (standard)"
+        " + customFilter (amount >= 2 ALGO AND note contains"
+        ' "transfer")',
+    )
+
+    def composed_filter(txn: SubscribedTransaction) -> bool:
+        amount = txn.payment_transaction.amount if txn.payment_transaction else 0
+        note = txn.note.decode() if txn.note else ""
+        return amount >= THRESHOLD and "transfer" in note
+
+    def format_composed(txn: SubscribedTransaction) -> None:
+        amount = txn.payment_transaction.amount if txn.payment_transaction else 0
+        note = txn.note.decode() if txn.note else ""
+        print_info(f'  Matched: {txn.id_} | {format_micro_algo(amount)} | note: "{note}"')
+
+    composed_txns = test_filter(
+        "composed",
+        {"sender": sender, "custom_filter": composed_filter},
+        1,
+        'Composed filter matched 1 transaction (txn 1: sender, 5 ALGO, "transfer-urgent")',
+        format_composed,
+    )
+
+    # Step 6: Show customFilter receives full SubscribedTransaction fields
+    print_step(
+        6,
+        "Inspect full SubscribedTransaction fields available in customFilter",
+    )
+
+    inspected_fields: list[str] = []
+
+    def inspect_filter(txn: SubscribedTransaction) -> bool:
+        if not inspected_fields:
+            fields = [f.name for f in dataclasses.fields(txn) if getattr(txn, f.name) is not None]
+            inspected_fields.extend(fields)
+        return True  # match all
+
+    test_filter("inspect", {"custom_filter": inspect_filter})
+
+    print_info(f"Available fields on SubscribedTransaction: {len(inspected_fields)}")
+    print_info(f"Fields: {', '.join(inspected_fields)}")
+    print_success("customFilter receives fully decoded SubscribedTransaction with all fields")
+
+    # Step 7: Summary
+    print_step(7, "Summary")
+    print_info(
+        f"Custom filter only: {len(custom_only_txns)} matched"
+        " (multi-condition: amount + note + sender allowlist)"
+    )
+    print_info(
+        f"Composed filter: {len(composed_txns)} matched (standard sender + custom amount/note)"
+    )
+    print_info("Key takeaway: customFilter is AND-composed with standard filter fields")
+    print_info(
+        "Key takeaway: customFilter receives the full"
+        " SubscribedTransaction with all decoded fields"
+    )
+
+    print_header("Example complete")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples
+
+- [Basic Poll Once](/docs/algokit-subscriber/python/latest/examples/01-basic-poll-once/)
+- [Continuous Subscriber](/docs/algokit-subscriber/python/latest/examples/02-continuous-subscriber/)
+- [Payment Filters](/docs/algokit-subscriber/python/latest/examples/03-payment-filters/)
+- [Asset Transfer](/docs/algokit-subscriber/python/latest/examples/04-asset-transfer/)
+- [App Call Subscription](/docs/algokit-subscriber/python/latest/examples/05-app-call/)
+- [Multiple Named Filters](/docs/algokit-subscriber/python/latest/examples/06-multiple-filters/)
+- [Balance Change Tracking](/docs/algokit-subscriber/python/latest/examples/07-balance-changes/)
+- [ARC-28 Event Subscription](/docs/algokit-subscriber/python/latest/examples/08-arc28-events/)
+- [Inner Transaction Subscription](/docs/algokit-subscriber/python/latest/examples/09-inner-transactions/)
+- [Batch Handling & Data Mappers](/docs/algokit-subscriber/python/latest/examples/10-batch-and-mappers/)
+- [Watermark Persistence](/docs/algokit-subscriber/python/latest/examples/11-watermark-persistence/)
+- [Sync Behaviours](/docs/algokit-subscriber/python/latest/examples/12-sync-behaviours/)
+- **Custom Filters**
+- [Stateless Subscriptions](/docs/algokit-subscriber/python/latest/examples/14-stateless-subscriptions/)
+- [Lifecycle Hooks & Error Handling](/docs/algokit-subscriber/python/latest/examples/15-lifecycle-hooks/)

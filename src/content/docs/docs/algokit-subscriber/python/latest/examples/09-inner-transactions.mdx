@@ -1,0 +1,356 @@
+---
+title: "Inner Transaction Subscription"
+description: "Demonstrates inner transaction subscription and parent-child relationships:"
+sidebar:
+  order: 9
+---
+
+[← Back to Examples](/docs/algokit-subscriber/python/latest/examples/)
+
+## Description
+
+Demonstrates inner transaction subscription and parent-child relationships:
+- Subscribe to inner payment transactions by sender/receiver
+- Verify parentTransactionId links to the parent app call
+- Inspect inner transaction ID format
+- Verify parent transaction's inner_txns array
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples/subscriber` directory:
+
+```bash
+cd examples/subscriber
+uv run python 09_inner_transactions.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-subscriber-py/blob/main/examples/subscriber/09_inner_transactions.py)
+
+```python title="09_inner_transactions.py"
+"""Example 09: Inner Transaction Subscription
+
+Demonstrates inner transaction subscription and parent-child relationships:
+- Subscribe to inner payment transactions by sender/receiver
+- Verify parentTransactionId links to the parent app call
+- Inspect inner transaction ID format
+- Verify parent transaction's inner_txns array
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import re
+from pathlib import Path
+
+from algokit_utils import (
+    AlgoAmount,
+    AlgorandClient,
+    AppClientMethodCallParams,
+    AppFactory,
+    AppFactoryParams,
+    PaymentParams,
+)
+from shared import (
+    ALGOD_CONFIG,
+    KMD_CONFIG,
+    format_algo,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_subscriber import (
+    AlgorandSubscriber,
+    AlgorandSubscriberConfig,
+    SubscribedTransaction,
+    SubscriberConfigFilter,
+    TransactionFilter,
+    in_memory_watermark,
+)
+
+SPEC_PATH = Path(__file__).parent / "shared" / "artifacts" / "testing-app.arc56.json"
+INNER_TXN_PATTERN = re.compile(r"^[A-Z0-9]+/inner/\d+$")
+
+
+def deploy_and_call(algorand: AlgorandClient, caller: str) -> tuple[int, str, str, int, int]:
+    """Steps 3-5: Deploy TestingApp, fund it, and call issue_transfer_to_sender.
+
+    Returns (app_id, app_addr, app_call_txn_id, app_call_round, transfer_amount).
+    """
+    # Step 3: Deploy TestingApp via AppFactory
+    print_step(3, "Deploy TestingApp via AppFactory")
+    factory = AppFactory(
+        AppFactoryParams(
+            algorand=algorand,
+            app_spec=SPEC_PATH.read_text("utf-8"),
+            default_sender=caller,
+        )
+    )
+    app_client, create_result = factory.send.bare.create()
+    app_id = create_result.app_id
+    create_round = create_result.confirmation.confirmed_round
+    assert create_round is not None
+    print_info(f"App ID: {app_id}")
+    print_info(f"Create round: {create_round}")
+    print_success("TestingApp deployed")
+
+    # Step 4: Fund app account for inner transactions
+    print_step(4, "Fund app account for inner transactions")
+    app_addr = app_client.app_address
+    print_info(f"App address: {shorten_address(app_addr)}")
+    algorand.send.payment(
+        PaymentParams(
+            sender=caller,
+            receiver=app_addr,
+            amount=AlgoAmount(algo=10),
+        )
+    )
+    print_success("App account funded with 10 ALGO")
+
+    # Step 5: Call issue_transfer_to_sender (creates inner payment)
+    print_step(5, "Call issue_transfer_to_sender (creates inner payment)")
+    transfer_amount = 1_000_000  # 1 ALGO in microAlgos
+    call_result = app_client.send.call(
+        AppClientMethodCallParams(
+            method="issue_transfer_to_sender(uint64)void",
+            args=[transfer_amount],
+            extra_fee=AlgoAmount(micro_algo=1000),
+        )
+    )
+    app_call_txn_id = call_result.tx_ids[0]
+    app_call_round = call_result.confirmation.confirmed_round
+    assert app_call_round is not None
+    print_info(f"App call txn: {app_call_txn_id}")
+    print_info(f"Confirmed round: {app_call_round}")
+    print_info(f"Transfer amount: {format_algo(transfer_amount)}")
+    print_success("issue_transfer_to_sender called — inner payment created")
+
+    return app_id, app_addr, app_call_txn_id, app_call_round, transfer_amount
+
+
+def verify_inner(inner_txn: SubscribedTransaction) -> None:
+    """Steps 7-8: Verify parentTransactionId and inner txn ID format."""
+    # Step 7: Inspect inner transaction — parentTransactionId
+    print_step(7, "Inspect inner transaction — parentTransactionId")
+    print_info(f"Inner txn ID: {inner_txn.id_}")
+    print_info(f"parentTransactionId: {inner_txn.parent_transaction_id or 'None'}")
+    assert inner_txn.parent_transaction_id, (
+        "Expected inner transaction to have parentTransactionId set"
+    )
+    print_success("parentTransactionId is set on the inner transaction")
+
+    # Step 8: Verify inner transaction ID format
+    print_step(8, "Verify inner transaction ID format")
+    print_info("Expected format: <rootTxId>/inner/<N>")
+    print_info(f"Actual ID: {inner_txn.id_}")
+    assert INNER_TXN_PATTERN.match(inner_txn.id_), (
+        f"Inner transaction ID does not match expected format: {inner_txn.id_}"
+    )
+    print_success("Inner transaction ID matches <rootTxId>/inner/<N> format")
+
+
+def verify_parent(
+    algorand: AlgorandClient,
+    app_id: int,
+    caller: str,
+    inner_txn: SubscribedTransaction,
+    watermark_before: int,
+) -> SubscribedTransaction:
+    """Step 9: Poll for parent app call, verify its innerTxns."""
+    print_step(9, "Verify parent has innerTxns containing this transaction")
+    parent_subscriber = AlgorandSubscriber(
+        config=AlgorandSubscriberConfig(
+            filters=[
+                SubscriberConfigFilter(
+                    name="parent-app-call",
+                    filter=TransactionFilter(
+                        app_id=app_id,
+                        sender=caller,
+                    ),
+                ),
+            ],
+            watermark_persistence=in_memory_watermark(watermark_before),
+            sync_behaviour="sync-oldest",
+            max_rounds_to_sync=100,
+        ),
+        algod_client=algorand.client.algod,
+    )
+
+    parent_result = parent_subscriber.poll_once()
+    parent_txn = next(
+        (
+            t
+            for t in parent_result.subscribed_transactions
+            if t.id_ == inner_txn.parent_transaction_id
+        ),
+        None,
+    )
+    assert parent_txn, (
+        f"Could not find parent transaction with ID: {inner_txn.parent_transaction_id}"
+    )
+
+    print_info(f"Parent txn ID: {parent_txn.id_}")
+    print_info(f"Parent innerTxns count: {len(parent_txn.inner_txns)}")
+    assert parent_txn.inner_txns, "Parent transaction has no innerTxns"
+
+    matched_inner = next((t for t in parent_txn.inner_txns if t.id_ == inner_txn.id_), None)
+    if matched_inner:
+        print_info(f"Inner txn in parent: {matched_inner.id_}")
+    else:
+        payment_inner = next(
+            (
+                t
+                for t in parent_txn.inner_txns
+                if t.payment_transaction and t.payment_transaction.receiver == caller
+            ),
+            None,
+        )
+        if payment_inner:
+            print_info(f"Inner txn in parent: {payment_inner.id_ or '(present)'}")
+        else:
+            raise RuntimeError("Inner transaction not found in parent innerTxns array")
+    print_success("Parent transaction innerTxns array contains the inner transaction")
+    return parent_txn
+
+
+def print_parent_child(
+    parent_txn: SubscribedTransaction,
+    inner_txn: SubscribedTransaction,
+    app_id: int,
+    app_addr: str,
+    caller: str,
+) -> None:
+    """Step 10: Print parent-child relationship tree."""
+    print_step(10, "Parent-child relationship")
+    print()
+    print("  Parent (app call):")
+    print_info(f"    ID: {parent_txn.id_}")
+    print_info("    Type: appl (application call)")
+    parent_app_id = (
+        parent_txn.application_transaction.application_id
+        if parent_txn.application_transaction
+        else app_id
+    )
+    print_info(f"    App ID: {parent_app_id}")
+    print_info("    Method: issue_transfer_to_sender(uint64)void")
+    print_info(f"    Sender: {shorten_address(caller)}")
+    print_info(f"    innerTxns count: {len(parent_txn.inner_txns)}")
+    print()
+    print("  └── Inner (payment):")
+    print_info(f"      ID: {inner_txn.id_}")
+    print_info("      Type: pay (payment)")
+    print_info(f"      Sender: {shorten_address(app_addr)}")
+    print_info(f"      Receiver: {shorten_address(caller)}")
+    amt = inner_txn.payment_transaction.amount if inner_txn.payment_transaction else 0
+    print_info(f"      Amount: {format_algo(amt)}")
+    print_info(f"      parentTransactionId: {inner_txn.parent_transaction_id}")
+    print()
+    print_success("Parent-child relationship displayed")
+
+
+def main() -> None:
+    print_header("09 — Inner Transaction Subscription")
+
+    # Step 1: Connect to LocalNet
+    print_step(1, "Connect to LocalNet")
+    algorand = AlgorandClient.from_config(algod_config=ALGOD_CONFIG, kmd_config=KMD_CONFIG)
+    status = algorand.client.algod.status()
+    print_info(f"Current round: {status.last_round}")
+    print_success("Connected to LocalNet")
+
+    # Step 2: Create and fund account
+    print_step(2, "Create and fund account")
+    caller = algorand.account.random().addr
+    dispenser = algorand.account.localnet_dispenser().addr
+    algorand.send.payment(
+        PaymentParams(sender=dispenser, receiver=caller, amount=AlgoAmount(algo=100))
+    )
+    print_info(f"Caller: {shorten_address(caller)}")
+    print_success("Account created and funded")
+
+    # Steps 3-5: Deploy, fund, call
+    app_id, app_addr, _app_call_txn_id, app_call_round, _transfer_amount = deploy_and_call(
+        algorand, caller
+    )
+    watermark_before = app_call_round - 1
+
+    # Step 6: Subscribe with payment filter matching inner transaction
+    print_step(6, "Subscribe with payment filter matching inner transaction")
+    subscriber = AlgorandSubscriber(
+        config=AlgorandSubscriberConfig(
+            filters=[
+                SubscriberConfigFilter(
+                    name="inner-payments",
+                    filter=TransactionFilter(
+                        receiver=caller,
+                        sender=app_addr,
+                    ),
+                ),
+            ],
+            watermark_persistence=in_memory_watermark(watermark_before),
+            sync_behaviour="sync-oldest",
+            max_rounds_to_sync=100,
+        ),
+        algod_client=algorand.client.algod,
+    )
+    result = subscriber.poll_once()
+    matched = result.subscribed_transactions
+    print_info(f"Matched count: {len(matched)}")
+    assert len(matched) == 1, f"Expected 1 matched inner transaction, got {len(matched)}"
+    print_success("Payment filter matched 1 inner transaction")
+    inner_txn = matched[0]
+
+    # Steps 7-8: Verify inner transaction
+    verify_inner(inner_txn)
+
+    # Step 9: Verify parent has innerTxns
+    parent_txn = verify_parent(algorand, app_id, caller, inner_txn, watermark_before)
+
+    # Step 10: Parent-child relationship
+    print_parent_child(parent_txn, inner_txn, app_id, app_addr, caller)
+
+    # Step 11: Summary
+    print_step(11, "Summary")
+    print_info(f"App ID: {app_id}")
+    print_info(f"App address: {shorten_address(app_addr)}")
+    print_info("Method called: issue_transfer_to_sender(1_000_000) — 1 ALGO inner payment")
+    print_info("Inner txn matched: by payment filter (sender: app, receiver: caller)")
+    print_info("parentTransactionId: set on inner txn — links to parent app call")
+    print_info("Inner txn ID format: <rootTxId>/inner/<N>")
+    print_info("Parent innerTxns: contains the inner transaction")
+
+    print_header("Example complete")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples
+
+- [Basic Poll Once](/docs/algokit-subscriber/python/latest/examples/01-basic-poll-once/)
+- [Continuous Subscriber](/docs/algokit-subscriber/python/latest/examples/02-continuous-subscriber/)
+- [Payment Filters](/docs/algokit-subscriber/python/latest/examples/03-payment-filters/)
+- [Asset Transfer](/docs/algokit-subscriber/python/latest/examples/04-asset-transfer/)
+- [App Call Subscription](/docs/algokit-subscriber/python/latest/examples/05-app-call/)
+- [Multiple Named Filters](/docs/algokit-subscriber/python/latest/examples/06-multiple-filters/)
+- [Balance Change Tracking](/docs/algokit-subscriber/python/latest/examples/07-balance-changes/)
+- [ARC-28 Event Subscription](/docs/algokit-subscriber/python/latest/examples/08-arc28-events/)
+- **Inner Transaction Subscription**
+- [Batch Handling & Data Mappers](/docs/algokit-subscriber/python/latest/examples/10-batch-and-mappers/)
+- [Watermark Persistence](/docs/algokit-subscriber/python/latest/examples/11-watermark-persistence/)
+- [Sync Behaviours](/docs/algokit-subscriber/python/latest/examples/12-sync-behaviours/)
+- [Custom Filters](/docs/algokit-subscriber/python/latest/examples/13-custom-filters/)
+- [Stateless Subscriptions](/docs/algokit-subscriber/python/latest/examples/14-stateless-subscriptions/)
+- [Lifecycle Hooks & Error Handling](/docs/algokit-subscriber/python/latest/examples/15-lifecycle-hooks/)
