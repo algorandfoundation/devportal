@@ -1,0 +1,410 @@
+---
+title: "Send and Confirm Transaction"
+description: "This example demonstrates how to send transactions and wait for confirmation using send_raw_transaction() and pending_transaction_information(). It shows the complete lifecycle of submitting a transaction to the Algorand network."
+sidebar:
+  order: 6
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to send transactions and wait for confirmation using send_raw_transaction() and pending_transaction_information(). It shows the complete lifecycle of submitting a transaction to the Algorand network.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/06_send_transaction.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/06_send_transaction.py)
+
+```python title="06_send_transaction.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, ANN401
+"""
+Example: Send and Confirm Transaction
+
+This example demonstrates how to send transactions and wait for confirmation
+using send_raw_transaction() and pending_transaction_information(). It shows
+the complete lifecycle of submitting a transaction to the Algorand network.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from typing import Any
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    format_micro_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, PaymentParams
+
+
+def format_fee(micro_algos: int) -> str:
+    """Format a fee as microAlgos and Algos."""
+    algo_value = micro_algos / 1_000_000
+    return f"{micro_algos:,} uALGO ({algo_value:.6f} ALGO)"
+
+
+def wait_for_confirmation(
+    algod: Any,
+    tx_id: str,
+    max_rounds: int = 10,
+) -> Any:
+    """
+    Wait for a transaction to be confirmed using pending_transaction_information.
+    This implements a polling loop to check transaction status.
+
+    Args:
+        algod: The AlgodClient instance
+        tx_id: The transaction ID to wait for
+        max_rounds: Maximum number of rounds to wait (default: 10)
+
+    Returns:
+        The PendingTransactionResponse when confirmed
+    """
+    # Get the current status to know what round we're on
+    status = algod.status()
+    current_round = status.last_round
+    end_round = current_round + max_rounds
+
+    print_info(f"  Starting at round: {current_round:,}")
+    print_info(f"  Will wait until round: {end_round:,}")
+    print_info("")
+
+    while current_round < end_round:
+        # Check the transaction status
+        pending_info = algod.pending_transaction_information(tx_id)
+
+        # Case 1: Transaction is confirmed (confirmed-round > 0)
+        confirmed_round = pending_info.confirmed_round or 0
+        if confirmed_round > 0:
+            print_info(f"  Transaction confirmed in round {confirmed_round:,}")
+            return pending_info
+
+        # Case 2: Transaction was rejected (pool-error is not empty)
+        pool_error = pending_info.pool_error or ""
+        if pool_error:
+            raise Exception(f"Transaction rejected: {pool_error}")
+
+        # Case 3: Transaction is still pending (confirmed-round = 0, pool-error = "")
+        print_info(f"  Round {current_round:,}: Transaction still pending...")
+
+        # Wait for the next block
+        algod.status_after_block(current_round)
+        current_round += 1
+
+    raise Exception(f"Transaction {tx_id} not confirmed after {max_rounds} rounds")
+
+
+def main() -> None:
+    print_header("Send and Confirm Transaction Example")
+
+    # Create clients
+    algod = create_algod_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account and create a receiver
+    # =========================================================================
+    print_step(1, "Setting up sender and receiver accounts")
+
+    # Get a funded account from LocalNet (the dispenser)
+    sender = algorand.account.localnet_dispenser()
+    print_info(f"Sender address: {shorten_address(str(sender.addr))}")
+
+    # Get sender balance
+    sender_info = algod.account_information(str(sender.addr))
+    print_info(f"Sender balance: {format_micro_algo(sender_info.amount)}")
+
+    # Create a new random account as receiver
+    receiver = algorand.account.random()
+    print_info(f"Receiver address: {shorten_address(str(receiver.addr))}")
+    print_info("Receiver is a new unfunded account")
+    print_info("")
+
+    # =========================================================================
+    # Step 2: Get suggested transaction parameters
+    # =========================================================================
+    print_step(2, "Getting suggested transaction parameters")
+
+    suggested_params = algod.suggested_params()
+    print_info(f"Last round: {suggested_params.last_valid:,}")
+    print_info(f"Min fee: {format_fee(suggested_params.min_fee)}")
+    print_info(f"Genesis ID: {suggested_params.genesis_id}")
+    print_info("")
+
+    # =========================================================================
+    # Step 3: Create a payment transaction using algokit
+    # =========================================================================
+    print_step(3, "Creating a payment transaction")
+
+    payment_amount = AlgoAmount.from_algo(1)  # 1 ALGO
+    print_info(f"Payment amount: {payment_amount.algo} ALGO ({payment_amount.micro_algo:,} uALGO)")
+    print_info(f"Sender: {shorten_address(str(sender.addr))}")
+    print_info(f"Receiver: {shorten_address(str(receiver.addr))}")
+    print_info("")
+
+    # Build the transaction using AlgorandClient.create_transaction
+    # This creates an unsigned Transaction object
+    payment_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=payment_amount,
+        )
+    )
+
+    # Get the transaction ID before sending
+    tx_id = payment_txn.tx_id()
+    print_info(f"Transaction ID: {tx_id}")
+
+    # Sign the transaction using the sender's signer
+    signed_txn = sender.signer([payment_txn], [0])
+    print_success("Transaction signed successfully!")
+    print_info("")
+
+    # =========================================================================
+    # Step 4: Submit the transaction using send_raw_transaction()
+    # =========================================================================
+    print_step(4, "Submitting transaction with send_raw_transaction()")
+
+    try:
+        submit_response = algod.send_raw_transaction(signed_txn)
+        print_success("Transaction submitted successfully!")
+        print_info(f"Transaction ID from response: {submit_response}")
+        print_info("")
+
+        print_info("send_raw_transaction() accepts:")
+        print_info("  - A single signed transaction (bytes)")
+        print_info("  - An array of signed transactions (list[bytes])")
+        print_info("Returns PostTransactionsResponse with txId field")
+        print_info("")
+
+    except Exception as e:
+        print_error(f"Failed to submit transaction: {e}")
+        print_info("Common errors:")
+        print_info('  - "txn dead" - Transaction validity window has passed')
+        print_info('  - "overspend" - Sender has insufficient funds')
+        print_info('  - "fee too small" - Transaction fee is below minimum')
+        raise
+
+    # =========================================================================
+    # Step 5: Check transaction status with pending_transaction_information()
+    # =========================================================================
+    print_step(5, "Checking transaction status with pending_transaction_information()")
+
+    # First, let's check the initial status (may already be confirmed on LocalNet)
+    initial_status = algod.pending_transaction_information(tx_id)
+    confirmed_round_value = initial_status.confirmed_round
+    print_info("Initial transaction status:")
+    if confirmed_round_value:
+        print_info(f"  confirmed-round: {confirmed_round_value}")
+    else:
+        print_info("  confirmed-round: undefined (not yet confirmed)")
+    pool_error_value = initial_status.pool_error or ""
+    error_note = "(ERROR!)" if pool_error_value else "(empty = no error)"
+    print_info(f'  pool-error: "{pool_error_value}" {error_note}')
+    print_info("")
+
+    print_info("pending_transaction_information() returns PendingTransactionResponse with:")
+    print_info("  - confirmed-round: The round the txn was confirmed (0 or None if pending)")
+    print_info("  - pool-error: Error message if txn was rejected (empty if OK)")
+    print_info("  - txn: The signed transaction object")
+    print_info("  - And other fields like rewards, inner transactions, etc.")
+    print_info("")
+
+    # =========================================================================
+    # Step 6: Wait for confirmation using a polling loop
+    # =========================================================================
+    print_step(6, "Implementing waitForConfirmation loop")
+
+    print_info("The waitForConfirmation pattern:")
+    print_info("  1. Call pending_transaction_information(tx_id)")
+    print_info("  2. If confirmed-round > 0: Transaction confirmed!")
+    print_info("  3. If pool-error is not empty: Transaction rejected!")
+    print_info("  4. Otherwise: Wait for next block with status_after_block(round)")
+    print_info("  5. Repeat until confirmed, rejected, or timeout")
+    print_info("")
+
+    confirmed_info: Any
+
+    # On LocalNet in dev mode, the transaction may already be confirmed
+    initial_confirmed = initial_status.confirmed_round or 0
+    if initial_confirmed > 0:
+        print_info("Transaction was already confirmed (LocalNet dev mode)")
+        confirmed_info = initial_status
+    else:
+        print_info("Waiting for confirmation...")
+        print_info("")
+        confirmed_info = wait_for_confirmation(algod, tx_id, 10)
+
+    print_success("Transaction confirmed!")
+    print_info("")
+
+    # =========================================================================
+    # Step 7: Display confirmed transaction details
+    # =========================================================================
+    print_step(7, "Displaying confirmed transaction details")
+
+    print_info("Confirmed Transaction Details:")
+    print_info(f"  confirmed-round: {confirmed_info.confirmed_round or 0:,}")
+    print_info("")
+
+    # Display the transaction object details
+    print_info("Transaction Object (txn):")
+    # confirmed_info.txn is a SignedTransaction, and .txn is the inner Transaction
+    signed_txn_obj = confirmed_info.txn
+    txn = signed_txn_obj.txn if signed_txn_obj else None
+    if txn:
+        print_info(f"  type: {txn.transaction_type}")
+        print_info(f"  sender: {shorten_address(str(txn.sender))}")
+        print_info(f"  fee: {format_fee(txn.fee)}")
+        print_info(f"  first-valid: {txn.first_valid:,}")
+        print_info(f"  last-valid: {txn.last_valid:,}")
+        print_info(f"  genesis-id: {txn.genesis_id}")
+
+        # Payment-specific fields
+        if txn.payment:
+            print_info("")
+            print_info("Payment Fields:")
+            print_info(f"  receiver: {shorten_address(str(txn.payment.receiver))}")
+            print_info(f"  amount: {format_micro_algo(txn.payment.amount)}")
+    else:
+        print_info("  (Transaction details not available)")
+    print_info("")
+
+    # Display rewards (if any)
+    sender_rewards = confirmed_info.sender_rewards
+    if sender_rewards is not None:
+        print_info("Rewards:")
+        print_info(f"  sender-rewards: {format_micro_algo(sender_rewards)}")
+        receiver_rewards = confirmed_info.receiver_rewards
+        if receiver_rewards is not None:
+            print_info(f"  receiver-rewards: {format_micro_algo(receiver_rewards)}")
+        print_info("")
+
+    # =========================================================================
+    # Step 8: Handle and display transaction errors
+    # =========================================================================
+    print_step(8, "Demonstrating error handling (pool-error)")
+
+    print_info("The pool-error field in PendingTransactionResponse indicates why a")
+    print_info("transaction was rejected from the transaction pool.")
+    print_info("")
+
+    print_info("Common pool-error values:")
+    print_info('  "" (empty string) - Transaction is valid and in pool/confirmed')
+    print_info('  "transaction already in ledger" - Duplicate transaction')
+    print_info('  "txn dead" - Transaction validity window expired')
+    print_info('  "overspend" - Sender has insufficient funds')
+    print_info('  "fee too small" - Fee is below network minimum')
+    print_info('  "asset frozen" - Asset is frozen for the account')
+    print_info('  "logic eval error" - Smart contract evaluation failed')
+    print_info("")
+
+    print_info("Best practice: Always check pool-error before assuming success")
+    print_info("")
+
+    # Example of checking pool-error
+    print_info("Example error handling pattern:")
+    print_info("```")
+    print_info("pending_info = algod.pending_transaction_information(tx_id)")
+    print_info("if pending_info.get('pool-error'):")
+    print_info("    raise Exception(f\"Transaction rejected: {pending_info['pool-error']}\")")
+    print_info("if pending_info.get('confirmed-round', 0) > 0:")
+    print_info("    print('Transaction confirmed!')")
+    print_info("```")
+    print_info("")
+
+    # =========================================================================
+    # Step 9: Verify the payment was received
+    # =========================================================================
+    print_step(9, "Verifying the receiver got the funds")
+
+    receiver_info = algod.account_information(str(receiver.addr))
+    print_info(f"Receiver balance: {format_micro_algo(receiver_info.amount)}")
+
+    if receiver_info.amount == payment_amount.micro_algo:
+        print_success(f"Payment of {payment_amount.algo} ALGO received successfully!")
+    else:
+        print_error(f"Expected {payment_amount.micro_algo} uALGO but got {receiver_info.amount} uALGO")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. send_raw_transaction(signed_txn) - Submit a signed transaction")
+    print_info("  2. pending_transaction_information(tx_id) - Check transaction status")
+    print_info("  3. waitForConfirmation loop - Poll until confirmed or rejected")
+    print_info("  4. Confirmed transaction details: confirmed-round, txn, fee")
+    print_info("  5. Error handling with pool-error field")
+    print_info("")
+    print_info("Key PendingTransactionResponse fields:")
+    print_info("  - confirmed-round: Round when confirmed (int, None if pending)")
+    print_info("  - pool-error: Error message if rejected (string, empty if OK)")
+    print_info("  - txn: The SignedTransaction object")
+    print_info("  - sender-rewards: Rewards applied to sender (int)")
+    print_info("  - receiver-rewards: Rewards applied to receiver (int)")
+    print_info("  - closing-amount: Amount sent to close-to address (int)")
+    print_info("")
+    print_info("Transaction Status Cases:")
+    print_info("  - confirmed-round > 0: Transaction committed to ledger")
+    print_info('  - confirmed-round = 0, pool-error = "": Still pending in pool')
+    print_info('  - confirmed-round = 0, pool-error != "": Rejected from pool')
+    print_info("")
+    print_info("Best practices:")
+    print_info("  - Always wait for confirmation before considering a transaction final")
+    print_info("  - Check pool-error for rejection reasons")
+    print_info("  - Use appropriate timeout (validity window is typically 1000 rounds)")
+    print_info("  - On LocalNet dev mode, transactions confirm immediately")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- **Send and Confirm Transaction**
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

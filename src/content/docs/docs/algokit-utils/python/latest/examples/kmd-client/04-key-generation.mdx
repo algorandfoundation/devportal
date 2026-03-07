@@ -1,0 +1,221 @@
+---
+title: "Key Generation"
+description: "This example demonstrates how to generate new keys in a wallet using the KMD generate_key() method. Keys are generated deterministically from the wallet's master derivation key, which means they can be recovered if you have the wallet's mnemonic or master derivation key."
+sidebar:
+  order: 4
+---
+
+[← Back to KMD Client](/docs/algokit-utils/python/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to generate new keys in a wallet using the KMD generate_key() method. Keys are generated deterministically from the wallet's master derivation key, which means they can be recovered if you have the wallet's mnemonic or master derivation key.
+ Prerequisites:
+ Covered operations:
+- generate_key() - Generate a new key in the wallet
+- list_keys() - List all keys in the wallet
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python kmd_client/04_key_generation.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/kmd_client/04_key_generation.py)
+
+```python title="04_key_generation.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Key Generation
+
+This example demonstrates how to generate new keys in a wallet using the
+KMD generate_key() method. Keys are generated deterministically from the
+wallet's master derivation key, which means they can be recovered if you
+have the wallet's mnemonic or master derivation key.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Covered operations:
+- generate_key() - Generate a new key in the wallet
+- list_keys() - List all keys in the wallet
+"""
+
+import sys
+
+from shared import (
+    cleanup_test_wallet,
+    create_kmd_client,
+    create_test_wallet,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_kmd_client.models import GenerateKeyRequest, ListKeysRequest
+
+
+def main() -> None:
+    print_header("KMD Key Generation Example")
+
+    kmd = create_kmd_client()
+    wallet_handle_token = ""
+
+    try:
+        # =========================================================================
+        # Step 1: Create a Test Wallet
+        # =========================================================================
+        print_step(1, "Creating a test wallet for key generation")
+
+        test_wallet = create_test_wallet(kmd, "test-password")
+        wallet_handle_token = test_wallet["wallet_handle_token"]
+
+        print_success(f"Test wallet created: {test_wallet['wallet_name']}")
+        print_info(f"Wallet ID: {test_wallet['wallet_id']}")
+
+        # =========================================================================
+        # Step 2: Generate a Single Key
+        # =========================================================================
+        print_step(2, "Generating a new key with generate_key()")
+
+        key_address = kmd.generate_key(GenerateKeyRequest(wallet_handle_token=wallet_handle_token)).address
+
+        print_success("Key generated successfully!")
+        print_info("")
+        print_info("generate_key() response:")
+        print_info(f"  address: {key_address}")
+        print_info("")
+        print_info("The address is the public key (account address) for the generated key.")
+        print_info("The corresponding private key is stored securely in the wallet.")
+
+        # =========================================================================
+        # Step 3: Generate Multiple Keys (Deterministic Derivation)
+        # =========================================================================
+        print_step(3, "Generating multiple keys to demonstrate deterministic derivation")
+
+        generated_addresses: list[str] = [key_address]
+
+        print_info("Generating 4 more keys...")
+        print_info("")
+
+        for i in range(4):
+            address = kmd.generate_key(GenerateKeyRequest(wallet_handle_token=wallet_handle_token)).address
+            generated_addresses.append(address)
+            print_info(f"  Key {i + 2}: {address}")
+
+        print_success(f"Generated {len(generated_addresses)} keys total")
+        print_info("")
+        print_info("Each key is derived from the master derivation key (MDK) using a")
+        print_info("deterministic sequence. This means if you create a new wallet with")
+        print_info("the same MDK (or mnemonic), you can regenerate these same keys")
+        print_info("in the same order.")
+
+        # =========================================================================
+        # Step 4: List All Keys in the Wallet
+        # =========================================================================
+        print_step(4, "Listing all keys in the wallet with list_keys()")
+
+        list_result = kmd.list_keys_in_wallet(ListKeysRequest(wallet_handle_token=wallet_handle_token)).addresses
+
+        print_success(f"Found {len(list_result)} keys in wallet")
+        print_info("")
+        print_info("All keys in the wallet:")
+
+        for index, address in enumerate(list_result):
+            print_info(f"  {index + 1}. {address}")
+
+        # =========================================================================
+        # Step 5: Verify Generated Keys Match Listed Keys
+        # =========================================================================
+        print_step(5, "Verifying generated keys match listed keys")
+
+        listed_addresses = list_result
+        all_found = all(addr in listed_addresses for addr in generated_addresses)
+
+        if all_found:
+            print_success("All generated keys are present in the wallet!")
+        else:
+            print_error("Some generated keys are missing from the wallet list")
+
+        # =========================================================================
+        # Cleanup
+        # =========================================================================
+        print_step(6, "Cleaning up test wallet")
+
+        cleanup_test_wallet(kmd, wallet_handle_token)
+        wallet_handle_token = ""  # Mark as cleaned up
+
+        print_success("Test wallet handle released")
+
+        # =========================================================================
+        # Summary
+        # =========================================================================
+        print_header("Summary")
+        print_info("This example demonstrated key generation in KMD:")
+        print_info("")
+        print_info("  1. generate_key() - Generate a new key, returns the public address")
+        print_info("  2. list_keys()    - List all keys (addresses) in the wallet")
+        print_info("")
+        print_info("Key concepts:")
+        print_info("  - Keys are generated deterministically from the master derivation key")
+        print_info("  - Each generate_key() call creates the next key in the sequence")
+        print_info("  - Generated keys can be recovered by restoring the wallet from its")
+        print_info("    mnemonic or master derivation key")
+        print_info("  - The private keys are stored securely in the wallet, only public")
+        print_info("    addresses are returned")
+        print_info("")
+        print_info("Recovery note:")
+        print_info("  If you need to recover generated keys, you can:")
+        print_info("  1. Create a new wallet with the same master derivation key")
+        print_info("  2. Call generate_key() the same number of times")
+        print_info("  3. The same addresses will be generated in the same order")
+        print_info("")
+        print_info("Note: The test wallet remains in KMD (wallets cannot be deleted via API).")
+    except Exception as e:
+        print_error(f"Error: {e}")
+        print_info("")
+        print_info("Troubleshooting:")
+        print_info("  - Ensure LocalNet is running: algokit localnet start")
+        print_info("  - If LocalNet issues occur: algokit localnet reset")
+        print_info("  - Check that KMD is accessible on port 4002")
+
+        # Cleanup on error
+        if wallet_handle_token:
+            cleanup_test_wallet(kmd, wallet_handle_token)
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/python/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/python/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/python/latest/examples/kmd-client/03-wallet-sessions/)
+- **Key Generation**
+- [Key Import and Export](/docs/algokit-utils/python/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/python/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/python/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/python/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/python/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/13-multisig-program-signing/)

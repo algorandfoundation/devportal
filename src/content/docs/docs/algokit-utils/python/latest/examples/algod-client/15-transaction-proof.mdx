@@ -1,0 +1,382 @@
+---
+title: "Transaction Proof"
+description: "This example demonstrates how to get transaction proofs using:"
+sidebar:
+  order: 15
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to get transaction proofs using:
+- transaction_proof(round, tx_id) - Get the Merkle proof for a transaction
+ Transaction proofs are cryptographic proofs that a transaction is included in a specific block. They are used for light client verification, allowing clients to verify transaction inclusion without downloading the entire blockchain.
+ The proof uses a Merkle tree structure where:
+- Each transaction in a block is a leaf in the tree
+- The root of the tree is committed in the block header
+- The proof provides the sibling hashes needed to reconstruct the root
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/15_transaction_proof.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/15_transaction_proof.py)
+
+```python title="15_transaction_proof.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Transaction Proof
+
+This example demonstrates how to get transaction proofs using:
+- transaction_proof(round, tx_id) - Get the Merkle proof for a transaction
+
+Transaction proofs are cryptographic proofs that a transaction is included in a specific
+block. They are used for light client verification, allowing clients to verify transaction
+inclusion without downloading the entire blockchain.
+
+The proof uses a Merkle tree structure where:
+- Each transaction in a block is a leaf in the tree
+- The root of the tree is committed in the block header
+- The proof provides the sibling hashes needed to reconstruct the root
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from decimal import Decimal
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_algod_client.models import TransactionProof
+from algokit_utils import AlgoAmount, PaymentParams
+
+
+def display_transaction_proof(proof: TransactionProof) -> None:
+    """Display details from a TransactionProof."""
+    print_info("  TransactionProof fields:")
+    print_info(f"    idx: {proof.idx}")
+    print_info("         Index of the transaction in the block's payset")
+    print_info("")
+
+    if proof.proof and len(proof.proof) > 0:
+        hex_str = proof.proof.hex()[:64]
+        print_info(f"    proof: {hex_str}...")
+        print_info(f"           ({len(proof.proof)} bytes total - Merkle proof data)")
+    else:
+        print_info("    proof: (empty - single transaction in block)")
+        print_info("           When treedepth=0, stibhash IS the Merkle root")
+    print_info("")
+
+    print_info(f"    stibhash: {proof.stibhash.hex()}")
+    print_info(f"              ({len(proof.stibhash)} bytes - Hash of SignedTxnInBlock)")
+    print_info("")
+
+    print_info(f"    treedepth: {proof.treedepth}")
+    print_info("               Number of edges from leaf to root in the Merkle tree")
+    print_info("")
+
+    print_info(f'    hashtype: "{proof.hashtype}"')
+    print_info("              Hash function used to create the proof")
+    print_info("")
+
+
+def main() -> None:
+    print_header("Transaction Proof Example")
+
+    # Create clients
+    algod = create_algod_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Submit a transaction and wait for confirmation
+    # =========================================================================
+    print_step(1, "Submitting a transaction and waiting for confirmation")
+
+    # Get a funded account from LocalNet (the dispenser)
+    sender = algorand.account.localnet_dispenser()
+    print_info(f"Sender address: {shorten_address(str(sender.addr))}")
+
+    # Create a new random account as receiver
+    receiver = algorand.account.random()
+    print_info(f"Receiver address: {shorten_address(str(receiver.addr))}")
+
+    # Submit a payment transaction
+    payment_amount = AlgoAmount.from_algo(1)
+    print_info(f"Sending {payment_amount.algo} ALGO to receiver...")
+
+    result = algorand.send.payment(
+        PaymentParams(
+            sender=str(sender.addr),
+            receiver=str(receiver.addr),
+            amount=payment_amount,
+        )
+    )
+
+    tx_id = result.tx_ids[0]
+    confirmed_round = result.confirmation.confirmed_round or 0
+
+    print_success("Transaction confirmed!")
+    print_info(f"Transaction ID: {tx_id}")
+    print_info(f"Confirmed in round: {confirmed_round:,}")
+    print_info("")
+
+    # =========================================================================
+    # Step 2: Get transaction proof using transaction_proof(round, tx_id)
+    # =========================================================================
+    print_step(2, "Getting transaction proof using transaction_proof(round, tx_id)")
+
+    print_info("transaction_proof(round, tx_id) returns a Merkle proof that the transaction")
+    print_info("is included in the specified block. This is used for light client verification.")
+    print_info("")
+
+    try:
+        proof = algod.transaction_proof(confirmed_round, tx_id)
+        print_success("Successfully retrieved transaction proof!")
+        print_info("")
+
+        display_transaction_proof(proof)
+    except Exception as e:
+        error_message = str(e)
+        print_error(f"Error getting transaction proof: {error_message}")
+        print_info("")
+
+    # =========================================================================
+    # Step 3: Demonstrate proof with different hash type (sha256)
+    # =========================================================================
+    print_step(3, "Getting transaction proof with SHA-256 hash type")
+
+    print_info("The hashtype parameter specifies the hash function used to create the proof.")
+    print_info('Supported values: "sha512_256" (default) and "sha256"')
+    print_info("")
+
+    try:
+        proof_sha256 = algod.transaction_proof(confirmed_round, tx_id, hashtype="sha256")
+        print_success("Successfully retrieved transaction proof with SHA-256!")
+        print_info("")
+
+        display_transaction_proof(proof_sha256)
+    except Exception as e:
+        error_message = str(e)
+        if "not supported" in error_message or "400" in error_message:
+            print_error("SHA-256 hash type may not be supported on this node configuration.")
+            print_info("The default SHA-512/256 is the native Algorand hash function.")
+        else:
+            print_error(f"Error getting transaction proof with SHA-256: {error_message}")
+        print_info("")
+
+    # =========================================================================
+    # Step 4: Demonstrate structure of Merkle proof data
+    # =========================================================================
+    print_step(4, "Understanding the Merkle proof structure")
+
+    print_info("The transaction proof contains data needed to verify transaction inclusion:")
+    print_info("")
+
+    try:
+        proof = algod.transaction_proof(confirmed_round, tx_id)
+
+        print_info("  Merkle Proof Structure:")
+        print_info("")
+        print_info("  1. idx (index): Position of the transaction in the block's payset")
+        print_info(f"     Value: {proof.idx}")
+        print_info("     This tells you which leaf in the Merkle tree corresponds to this transaction.")
+        print_info("")
+
+        print_info("  2. treedepth: Number of levels in the Merkle tree")
+        print_info(f"     Value: {proof.treedepth}")
+        max_txns = 2**proof.treedepth if proof.treedepth > 0 else 1
+        print_info(f"     A tree with depth {proof.treedepth} can hold up to {max_txns} transactions.")
+        print_info("")
+
+        print_info("  3. proof: Sibling hashes needed to reconstruct the Merkle root")
+        print_info(f"     Length: {len(proof.proof)} bytes")
+        if proof.treedepth > 0:
+            print_info(f"     Number of hashes: {proof.treedepth} (one for each level)")
+            hash_size = len(proof.proof) // proof.treedepth if proof.treedepth > 0 else 0
+            print_info(f"     Hash size: {hash_size} bytes per hash")
+        else:
+            print_info("     (Empty - single transaction in block, stibhash IS the Merkle root)")
+        print_info("")
+
+        print_info("  4. stibhash: Hash of SignedTxnInBlock")
+        print_info(f"     Length: {len(proof.stibhash)} bytes")
+        print_info("     This is the leaf value - the hash of the transaction as stored in the block.")
+        print_info("")
+
+        print_info("  5. hashtype: Hash function used")
+        print_info(f'     Value: "{proof.hashtype}"')
+        print_info("     SHA-512/256 is Algorand's native hash function (first 256 bits of SHA-512).")
+        print_info("")
+    except Exception as e:
+        error_message = str(e)
+        print_error(f"Error demonstrating proof structure: {error_message}")
+        print_info("")
+
+    # =========================================================================
+    # Step 5: Handle errors - invalid round or transaction ID
+    # =========================================================================
+    print_step(5, "Handling errors when proof is not available")
+
+    print_info("Transaction proofs may not be available if:")
+    print_info("  - The round number is invalid or not yet committed")
+    print_info("  - The transaction ID does not exist in the specified round")
+    print_info("  - The node does not have the block data")
+    print_info("")
+
+    # Try getting proof for a non-existent transaction ID
+    fake_tx_id = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    try:
+        algod.transaction_proof(confirmed_round, fake_tx_id)
+        print_info("Unexpectedly succeeded with fake transaction ID")
+    except Exception as e:
+        error_message = str(e)
+        print_success("Correctly rejected invalid transaction ID")
+        print_info(f"Error: {error_message[:100]}...")
+    print_info("")
+
+    # Try getting proof for a future round
+    status = algod.status()
+    last_round = status.last_round
+    future_round = last_round + 1000
+    try:
+        algod.transaction_proof(future_round, tx_id)
+        print_info("Unexpectedly succeeded with future round")
+    except Exception as e:
+        error_message = str(e)
+        print_success("Correctly rejected future round")
+        print_info(f"Error: {error_message[:100]}...")
+    print_info("")
+
+    # =========================================================================
+    # Step 6: Submit multiple transactions and compare proofs
+    # =========================================================================
+    print_step(6, "Comparing proofs for multiple transactions in the same block")
+
+    print_info("Each transaction in a block has a unique position (idx) in the Merkle tree.")
+    print_info("Submitting multiple transactions to observe different proof indices...")
+    print_info("")
+
+    # Submit multiple transactions in sequence (they may end up in different blocks on LocalNet dev mode)
+    tx_ids: list[str] = []
+    confirmed_rounds: list[int] = []
+
+    for _i in range(3):
+        new_receiver = algorand.account.random()
+        tx_result = algorand.send.payment(
+            PaymentParams(
+                sender=str(sender.addr),
+                receiver=str(new_receiver.addr),
+                amount=AlgoAmount.from_algo(Decimal("0.1")),
+            )
+        )
+        tx_ids.append(tx_result.tx_ids[0])
+        confirmed_rounds.append(tx_result.confirmation.confirmed_round or 0)
+
+    print_info(f"Submitted {len(tx_ids)} transactions")
+    print_info("")
+
+    # Get proofs for each transaction
+    for i in range(len(tx_ids)):
+        try:
+            proof = algod.transaction_proof(confirmed_rounds[i], tx_ids[i])
+            print_info(f"  Transaction {i + 1}:")
+            print_info(f"    Round: {confirmed_rounds[i]:,}")
+            print_info(f"    TX ID: {tx_ids[i][:20]}...")
+            print_info(f"    Index in block (idx): {proof.idx}")
+            print_info(f"    Tree depth: {proof.treedepth}")
+            print_info("")
+        except Exception as e:
+            error_message = str(e)
+            print_error(f"Error getting proof for transaction {i + 1}: {error_message}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+
+    print_info("Transaction Proof Use Cases:")
+    print_info("")
+    print_info("1. Light Client Verification:")
+    print_info("   - Verify a transaction is included in the blockchain without downloading all blocks")
+    print_info("   - Only need the block header (with Merkle root) and the proof")
+    print_info("   - Reduces bandwidth and storage requirements significantly")
+    print_info("")
+    print_info("2. Cross-Chain Bridges:")
+    print_info("   - Prove to another blockchain that a transaction occurred on Algorand")
+    print_info("   - The proof can be verified by a smart contract on the target chain")
+    print_info("")
+    print_info("3. Auditing and Compliance:")
+    print_info("   - Provide cryptographic proof of transaction inclusion")
+    print_info("   - Third parties can verify without trusting the provider")
+    print_info("")
+    print_info("TransactionProof Type Structure:")
+    print_info("  proof: bytes           - Merkle proof (sibling hashes concatenated)")
+    print_info("  stibhash: bytes        - Hash of SignedTxnInBlock (leaf value)")
+    print_info("  treedepth: int         - Depth of the Merkle tree")
+    print_info("  idx: int               - Transaction index in the block's payset")
+    print_info("  hashtype: str          - Hash function used ('sha512_256' or 'sha256')")
+    print_info("")
+    print_info("API Method:")
+    print_info("  transaction_proof(round, tx_id, hashtype=None)")
+    print_info("    round: int           - The round (block) containing the transaction")
+    print_info("    tx_id: str           - The transaction ID")
+    print_info("    hashtype: str        - 'sha512_256' (default) or 'sha256'")
+    print_info("")
+    print_info("Verification Process:")
+    print_info("  1. Get the stibhash (leaf value) from the proof")
+    print_info("  2. Use idx to determine if leaf is left or right child at each level")
+    print_info("  3. Combine with sibling hashes from proof, hashing up the tree")
+    print_info("  4. Compare computed root with the txnCommitments in the block header")
+    print_info("  5. If they match, the transaction is verified as included in the block")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- **Transaction Proof**
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

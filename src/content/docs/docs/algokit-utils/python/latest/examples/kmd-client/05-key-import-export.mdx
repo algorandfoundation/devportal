@@ -1,0 +1,292 @@
+---
+title: "Key Import and Export"
+description: "This example demonstrates how to import and export keys using the KMD import_key() and export_key() methods."
+sidebar:
+  order: 5
+---
+
+[← Back to KMD Client](/docs/algokit-utils/python/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to import and export keys using the KMD import_key() and export_key() methods.
+ Key concepts:
+- Importing externally generated keys into a wallet
+- Exporting private keys from a wallet
+- Understanding that imported keys are NOT backed up by the master derivation key
+ Prerequisites:
+ Covered operations:
+- import_key() - Import an external private key into the wallet
+- export_key() - Export a private key from the wallet
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python kmd_client/05_key_import_export.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/kmd_client/05_key_import_export.py)
+
+```python title="05_key_import_export.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Key Import and Export
+
+This example demonstrates how to import and export keys using the KMD
+import_key() and export_key() methods.
+
+Key concepts:
+- Importing externally generated keys into a wallet
+- Exporting private keys from a wallet
+- Understanding that imported keys are NOT backed up by the master derivation key
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Covered operations:
+- import_key() - Import an external private key into the wallet
+- export_key() - Export a private key from the wallet
+"""
+
+import secrets
+import sys
+
+from nacl.signing import SigningKey
+from shared import (
+    cleanup_test_wallet,
+    create_kmd_client,
+    create_test_wallet,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_kmd_client.models import ExportKeyRequest, ImportKeyRequest, ListKeysRequest
+
+
+def format_bytes_for_display(data: bytes, show_first: int = 4, show_last: int = 4) -> str:
+    """Format a byte array for display, showing first and last few bytes for security."""
+    hex_str = data.hex()
+    if len(data) <= show_first + show_last:
+        return hex_str
+    first_bytes = hex_str[: show_first * 2]
+    last_bytes = hex_str[-(show_last * 2) :]
+    return f"{first_bytes}...{last_bytes}"
+
+
+def main() -> None:
+    print_header("KMD Key Import and Export Example")
+
+    kmd = create_kmd_client()
+    wallet_handle_token = ""
+    wallet_password = "test-password"
+
+    try:
+        # =========================================================================
+        # Step 1: Create a Test Wallet
+        # =========================================================================
+        print_step(1, "Creating a test wallet for key import/export")
+
+        test_wallet = create_test_wallet(kmd, wallet_password)
+        wallet_handle_token = test_wallet["wallet_handle_token"]
+
+        print_success(f"Test wallet created: {test_wallet['wallet_name']}")
+        print_info(f"Wallet ID: {test_wallet['wallet_id']}")
+
+        # =========================================================================
+        # Step 2: Create a Random Account Using nacl
+        # =========================================================================
+        print_step(2, "Creating a random account to get a private key")
+
+        # Generate a random ed25519 keypair using PyNaCl
+        # - public_key: 32 bytes (used to derive the Algorand address)
+        # - private_key: 64 bytes (32-byte seed + 32-byte public key)
+        seed = secrets.token_bytes(32)
+        signing_key = SigningKey(seed)
+        public_key = bytes(signing_key.verify_key)
+        # The full private key is seed (32 bytes) + public key (32 bytes) = 64 bytes
+        original_private_key = seed + public_key
+
+        print_success("Random keypair generated!")
+        print_info("")
+        print_info("Keypair details:")
+        print_info(f"  Public key (32 bytes): {format_bytes_for_display(public_key)}")
+        print_info(f"  Private key (64 bytes): {format_bytes_for_display(original_private_key)}")
+        print_info("")
+        print_info("Note: The ed25519 private key is 64 bytes because it contains")
+        print_info("      both the 32-byte private seed AND the 32-byte public key.")
+
+        # =========================================================================
+        # Step 3: Import the Private Key into the Wallet
+        # =========================================================================
+        print_step(3, "Importing the private key with import_key()")
+
+        imported_address = kmd.import_key(
+            ImportKeyRequest(wallet_handle_token=wallet_handle_token, private_key=original_private_key)
+        ).address
+
+        print_success("Key imported successfully!")
+        print_info("")
+        print_info("import_key() response:")
+        print_info(f"  address: {imported_address}")
+        print_info("")
+        print_info("The imported address is derived from the public key portion")
+        print_info("of the private key that was imported.")
+
+        # =========================================================================
+        # Step 4: Verify the Key is in the Wallet
+        # =========================================================================
+        print_step(4, "Verifying the key is in the wallet")
+
+        list_result = kmd.list_keys_in_wallet(ListKeysRequest(wallet_handle_token=wallet_handle_token)).addresses
+
+        key_found = imported_address in list_result
+
+        if key_found:
+            print_success("Imported key found in wallet!")
+        else:
+            print_error("Imported key not found in wallet list")
+
+        print_info(f"Wallet contains {len(list_result)} key(s)")
+
+        # =========================================================================
+        # Step 5: Export the Private Key
+        # =========================================================================
+        print_step(5, "Exporting the private key with export_key()")
+
+        exported_private_key = kmd.export_key(
+            ExportKeyRequest(
+                wallet_handle_token=wallet_handle_token,
+                wallet_password=wallet_password,
+                address=imported_address,
+            )
+        ).private_key
+
+        print_success("Key exported successfully!")
+        print_info("")
+        print_info("export_key() response:")
+        print_info(f"  privateKey (64 bytes): {format_bytes_for_display(exported_private_key)}")
+        print_info("")
+        print_info("Note: Exporting private keys requires the wallet password for security.")
+
+        # =========================================================================
+        # Step 6: Verify the Exported Key Matches the Original
+        # =========================================================================
+        print_step(6, "Verifying the exported key matches the original")
+
+        keys_match = original_private_key == exported_private_key
+
+        if keys_match:
+            print_success("Exported key matches the original key!")
+            print_info("")
+            print_info("Verification details:")
+            print_info(f"  Original key length:  {len(original_private_key)} bytes")
+            print_info(f"  Exported key length:  {len(exported_private_key)} bytes")
+            print_info("  Keys are identical:   true")
+        else:
+            print_error("Keys do not match!")
+            print_info("")
+            print_info(f"Original key: {format_bytes_for_display(original_private_key)}")
+            print_info(f"Exported key: {format_bytes_for_display(exported_private_key)}")
+
+        # =========================================================================
+        # Important Note About Imported Keys
+        # =========================================================================
+        print_step(7, "Important note about imported keys")
+
+        print_info("")
+        print_info("IMPORTANT: Imported keys are NOT backed up by the master derivation key!")
+        print_info("")
+        print_info("When you import a key:")
+        print_info("  - The key is stored in the wallet database")
+        print_info("  - It can be used for signing transactions")
+        print_info("  - It can be exported using export_key()")
+        print_info("")
+        print_info("However, imported keys CANNOT be recovered by:")
+        print_info("  - Restoring the wallet from its mnemonic/MDK")
+        print_info("  - Using generate_key() (which only regenerates derived keys)")
+        print_info("")
+        print_info("To backup imported keys, you must either:")
+        print_info("  1. Export the key and store it securely")
+        print_info("  2. Backup the entire wallet database file")
+
+        # =========================================================================
+        # Cleanup
+        # =========================================================================
+        print_step(8, "Cleaning up test wallet")
+
+        cleanup_test_wallet(kmd, wallet_handle_token)
+        wallet_handle_token = ""  # Mark as cleaned up
+
+        print_success("Test wallet handle released")
+
+        # =========================================================================
+        # Summary
+        # =========================================================================
+        print_header("Summary")
+        print_info("This example demonstrated key import and export in KMD:")
+        print_info("")
+        print_info("  1. import_key()  - Import an external private key into a wallet")
+        print_info("     Parameters:  wallet_handle_token, private_key (64-byte bytes)")
+        print_info("     Returns:     address of the imported key")
+        print_info("")
+        print_info("  2. export_key()  - Export a private key from a wallet")
+        print_info("     Parameters:  wallet_handle_token, wallet_password, address")
+        print_info("     Returns:     private_key (64-byte bytes)")
+        print_info("")
+        print_info("Key takeaways:")
+        print_info("  - Private keys are 64 bytes (32-byte seed + 32-byte public key)")
+        print_info("  - Importing returns the corresponding Algorand address")
+        print_info("  - Exporting requires the wallet password for security")
+        print_info("  - Imported keys are NOT protected by the wallet mnemonic/MDK")
+        print_info("  - Always backup imported keys separately!")
+        print_info("")
+        print_info("Note: The test wallet remains in KMD (wallets cannot be deleted via API).")
+    except Exception as e:
+        print_error(f"Error: {e}")
+        print_info("")
+        print_info("Troubleshooting:")
+        print_info("  - Ensure LocalNet is running: algokit localnet start")
+        print_info("  - If LocalNet issues occur: algokit localnet reset")
+        print_info("  - Check that KMD is accessible on port 4002")
+
+        # Cleanup on error
+        if wallet_handle_token:
+            cleanup_test_wallet(kmd, wallet_handle_token)
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/python/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/python/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/python/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/python/latest/examples/kmd-client/04-key-generation/)
+- **Key Import and Export**
+- [Key Listing and Deletion](/docs/algokit-utils/python/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/python/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/python/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/python/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/13-multisig-program-signing/)

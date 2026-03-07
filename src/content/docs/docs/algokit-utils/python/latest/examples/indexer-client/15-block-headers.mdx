@@ -1,0 +1,482 @@
+---
+title: "Block Headers Search"
+description: "This example demonstrates how to search for block headers using the IndexerClient search_for_block_headers() method."
+sidebar:
+  order: 15
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to search for block headers using the IndexerClient search_for_block_headers() method.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/15_block_headers.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/15_block_headers.py)
+
+```python title="15_block_headers.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Block Headers Search
+
+This example demonstrates how to search for block headers using
+the IndexerClient search_for_block_headers() method.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import time
+from datetime import datetime, timezone
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, PaymentParams
+
+
+def format_timestamp(timestamp: int) -> str:
+    """Format a Unix timestamp to a human-readable date."""
+    return datetime.fromtimestamp(timestamp, tz=timezone.utc).isoformat()
+
+
+def main() -> None:
+    print_header("Block Headers Search Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Basic search_for_block_headers() call
+    # =========================================================================
+    print_step(1, "Basic search_for_block_headers() call")
+
+    try:
+        # Search for recent block headers with a limit
+        result = indexer.search_for_block_headers(limit=5)
+
+        print_success(f"Retrieved {len(result.blocks or [])} block header(s)")
+        print_info(f"Current round: {result.current_round}")
+        print_info("")
+
+        print_info("Block headers (results are returned in ascending round order):")
+        for block in result.blocks or []:
+            print_info(f"  Round {block.round_}:")
+            print_info(f"    Timestamp:  {block.timestamp} ({format_timestamp(block.timestamp)})")
+            if hasattr(block, "proposer") and block.proposer:
+                print_info(f"    Proposer:   {shorten_address(str(block.proposer))}")
+            else:
+                print_info("    Proposer:   (not available)")
+        print_info("")
+
+        print_info("Note: Results are returned in ascending round order (oldest first)")
+    except Exception as e:
+        print_error(f"search_for_block_headers failed: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Get the current round to define search ranges
+    # =========================================================================
+    print_step(2, "Getting current round for search range examples")
+
+    try:
+        health = indexer.health_check()
+        current_round = health.round_
+        print_success(f"Current indexer round: {current_round}")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to get current round: {e}")
+        return
+
+    # =========================================================================
+    # Step 3: Filter by min_round and max_round
+    # =========================================================================
+    print_step(3, "Filtering by min_round and max_round")
+
+    try:
+        # Search for blocks in a specific round range
+        min_round = current_round - 10 if current_round > 10 else 1
+        max_round = current_round - 5 if current_round > 5 else current_round
+
+        print_info(f"Searching for blocks between round {min_round} and {max_round}...")
+
+        result = indexer.search_for_block_headers(
+            min_round=min_round,
+            max_round=max_round,
+            limit=10,
+        )
+
+        print_success(f"Found {len(result.blocks or [])} block(s) in range")
+        print_info("")
+
+        if len(result.blocks or []) > 0:
+            print_info("Block rounds found:")
+            for block in result.blocks or []:
+                print_info(f"  Round {block.round_} - {format_timestamp(block.timestamp)}")
+        print_info("")
+
+        print_info("min_round and max_round parameters:")
+        print_info("  - min_round: Only include blocks at or after this round")
+        print_info("  - max_round: Only include blocks at or before this round")
+    except Exception as e:
+        print_error(f"Round range search failed: {e}")
+
+    # =========================================================================
+    # Step 4: Filter by before_time and after_time
+    # =========================================================================
+    print_step(4, "Filtering by before_time and after_time")
+
+    try:
+        # Get a timestamp from a recent block to use as a reference
+        recent_blocks = indexer.search_for_block_headers(limit=1)
+
+        if len(recent_blocks.blocks or []) > 0:
+            ref_timestamp = recent_blocks.blocks[0].timestamp
+
+            # Search for blocks in a time window (before the reference time)
+            # Create a time 1 hour before the reference
+            before_date = datetime.fromtimestamp(ref_timestamp, tz=timezone.utc)
+            after_date = datetime.fromtimestamp(ref_timestamp - 3600, tz=timezone.utc)  # 1 hour before
+
+            print_info("Searching for blocks between:")
+            print_info(f"  After:  {after_date.isoformat()}")
+            print_info(f"  Before: {before_date.isoformat()}")
+            print_info("")
+
+            result = indexer.search_for_block_headers(
+                after_time=after_date.isoformat(),
+                before_time=before_date.isoformat(),
+                limit=5,
+            )
+
+            print_success(f"Found {len(result.blocks or [])} block(s) in time range")
+            print_info("")
+
+            if len(result.blocks or []) > 0:
+                print_info("Blocks found:")
+                for block in result.blocks or []:
+                    print_info(f"  Round {block.round_} - {format_timestamp(block.timestamp)}")
+        print_info("")
+
+        print_info("Time filter parameters (RFC 3339 / ISO 8601 format):")
+        print_info("  - after_time: Only include blocks created after this timestamp")
+        print_info("  - before_time: Only include blocks created before this timestamp")
+        print_info('  - Example format: "2026-01-26T10:00:00.000Z"')
+    except Exception as e:
+        print_error(f"Time range search failed: {e}")
+
+    # =========================================================================
+    # Step 5: Create transactions to have blocks with a known proposer
+    # =========================================================================
+    print_step(5, "Creating transactions to populate blocks with proposer info")
+
+    proposer_address: str | None = None
+
+    try:
+        # Get a funded account
+        dispenser = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(dispenser)
+        dispenser_address = dispenser.addr
+        print_info(f"Using dispenser: {shorten_address(dispenser_address)}")
+
+        # Create a few transactions to generate activity
+        print_info("Creating 3 payment transactions...")
+        receiver = algorand.account.random()
+
+        for i in range(3):
+            algorand.send.payment(
+                PaymentParams(
+                    sender=dispenser_address,
+                    receiver=receiver.addr,
+                    amount=AlgoAmount.from_micro_algo(100000),
+                    note=f"Block headers example payment {i + 1}".encode(),
+                )
+            )
+
+        print_success("Created 3 transactions")
+
+        # Wait a moment for indexer to catch up
+        print_info("Waiting for indexer to index the transactions...")
+        time.sleep(2)
+
+        # Get recent block headers to find a proposer
+        recent_headers = indexer.search_for_block_headers(limit=10)
+
+        # Find a block with a proposer
+        for block in recent_headers.blocks or []:
+            if hasattr(block, "proposer") and block.proposer:
+                proposer_address = str(block.proposer)
+                print_success(f"Found block with proposer: {shorten_address(proposer_address)}")
+                print_info(f"  Block round: {block.round_}")
+                break
+
+        if not proposer_address:
+            print_info("No blocks with proposer info found (proposer may not be set on LocalNet)")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create transactions: {e}")
+        print_info("This step requires LocalNet - continuing with other demonstrations...")
+        print_info("")
+
+    # =========================================================================
+    # Step 6: Filter by proposers array to find blocks by specific accounts
+    # =========================================================================
+    print_step(6, "Filtering by proposers array")
+
+    try:
+        if proposer_address:
+            print_info(f"Searching for blocks proposed by: {shorten_address(proposer_address)}")
+
+            result = indexer.search_for_block_headers(
+                proposers=[proposer_address],
+                limit=5,
+            )
+
+            print_success(f"Found {len(result.blocks or [])} block(s) proposed by this account")
+            print_info("")
+
+            if len(result.blocks or []) > 0:
+                print_info("Blocks found:")
+                for block in result.blocks or []:
+                    proposer_str = (
+                        shorten_address(str(block.proposer))
+                        if hasattr(block, "proposer") and block.proposer
+                        else "(unknown)"
+                    )
+                    print_info(f"  Round {block.round_} - Proposer: {proposer_str}")
+        else:
+            print_info("No proposer address available to demonstrate filtering")
+            print_info("On MainNet/TestNet, you would use a known validator address")
+        print_info("")
+
+        print_info("proposers parameter:")
+        print_info("  - Array of addresses to filter by block proposer")
+        print_info("  - Find all blocks proposed by specific validator accounts")
+        print_info("  - Useful for analyzing validator participation")
+    except Exception as e:
+        print_error(f"Proposers filter search failed: {e}")
+
+    # =========================================================================
+    # Step 7: Demonstrate additional filters (expired and absent)
+    # =========================================================================
+    print_step(7, "Demonstrating expired and absent participation filters")
+
+    try:
+        print_info("The search_for_block_headers() method also supports:")
+        print_info("")
+        print_info("expired parameter:")
+        print_info("  - Array of addresses to filter by expired participation accounts")
+        print_info("  - Finds blocks where specified accounts had their participation keys expire")
+        print_info("")
+        print_info("absent parameter:")
+        print_info("  - Array of addresses to filter by absent participation accounts")
+        print_info("  - Finds blocks where specified accounts were marked absent")
+        print_info("  - Absent accounts are those that failed to participate in consensus")
+        print_info("")
+
+        # Try searching with these filters (likely no results on LocalNet)
+        if proposer_address:
+            expired_result = indexer.search_for_block_headers(
+                expired=[proposer_address],
+                limit=5,
+            )
+            print_info(f"Blocks with expired participation for this address: {len(expired_result.blocks or [])}")
+
+            absent_result = indexer.search_for_block_headers(
+                absent=[proposer_address],
+                limit=5,
+            )
+            print_info(f"Blocks with absent status for this address: {len(absent_result.blocks or [])}")
+        print_info("")
+
+        print_info("Note: On LocalNet, these filters typically return no results")
+        print_info("as participation tracking is primarily relevant on MainNet/TestNet")
+    except Exception as e:
+        print_error(f"Participation filter search failed: {e}")
+
+    # =========================================================================
+    # Step 8: Demonstrate pagination for fetching multiple block headers
+    # =========================================================================
+    print_step(8, "Demonstrating pagination")
+
+    try:
+        print_info("Fetching block headers with pagination (3 per page)...")
+        print_info("")
+
+        next_token: str | None = None
+        page_count = 0
+        total_blocks = 0
+        max_pages = 3
+
+        while True:
+            result = indexer.search_for_block_headers(
+                limit=3,
+                next_=next_token,
+            )
+
+            page_count += 1
+            total_blocks += len(result.blocks or [])
+
+            print_info(f"Page {page_count}: Retrieved {len(result.blocks or [])} block(s)")
+            for block in result.blocks or []:
+                print_info(f"  Round {block.round_} - {format_timestamp(block.timestamp)}")
+
+            if result.next_token:
+                token_preview = str(result.next_token)[:30]
+                print_info(f"  Next token: {token_preview}...")
+            else:
+                print_info("  No more pages")
+
+            print_info("")
+
+            next_token = result.next_token
+
+            if not next_token or page_count >= max_pages:
+                break
+
+        print_success(f"Retrieved {total_blocks} total block(s) across {page_count} page(s)")
+        print_info("")
+
+        print_info("Pagination parameters:")
+        print_info("  - limit: Maximum number of results per page")
+        print_info("  - next: Token from previous response to get next page")
+        print_info("  - Response includes next_token if more results are available")
+    except Exception as e:
+        print_error(f"Pagination demo failed: {e}")
+
+    # =========================================================================
+    # Step 9: Combining multiple filters
+    # =========================================================================
+    print_step(9, "Combining multiple filters")
+
+    try:
+        # Combine round range with limit
+        min_round = current_round - 20 if current_round > 20 else 1
+        max_round = current_round
+
+        print_info("Combining filters: round range + limit")
+        print_info(f"  min_round: {min_round}")
+        print_info(f"  max_round: {max_round}")
+        print_info("  limit: 5")
+        print_info("")
+
+        result = indexer.search_for_block_headers(
+            min_round=min_round,
+            max_round=max_round,
+            limit=5,
+        )
+
+        print_success(f"Found {len(result.blocks or [])} block(s)")
+        print_info("")
+
+        if len(result.blocks or []) > 0:
+            print_info("Blocks found:")
+            for block in result.blocks or []:
+                proposer_str = (
+                    shorten_address(str(block.proposer))
+                    if hasattr(block, "proposer") and block.proposer
+                    else "(unknown)"
+                )
+                print_info(f"  Round {block.round_} - Proposer: {proposer_str}")
+        print_info("")
+
+        print_info("Multiple filters can be combined:")
+        print_info("  - Round range (min_round, max_round) + time range (before_time, after_time)")
+        print_info("  - Proposers filter + round/time range")
+        print_info("  - Any combination to narrow down results")
+    except Exception as e:
+        print_error(f"Combined filters search failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Basic search_for_block_headers() call")
+    print_info("  2. Getting current round for search ranges")
+    print_info("  3. Filtering by min_round and max_round")
+    print_info("  4. Filtering by before_time and after_time (RFC 3339 format)")
+    print_info("  5. Creating transactions to populate blocks")
+    print_info("  6. Filtering by proposers array")
+    print_info("  7. Additional filters: expired and absent participation")
+    print_info("  8. Pagination with limit and next parameters")
+    print_info("  9. Combining multiple filters")
+    print_info("")
+    print_info("search_for_block_headers() parameters:")
+    print_info("  - limit: Maximum number of results to return")
+    print_info("  - next: Pagination token from previous response")
+    print_info("  - min_round: Only include blocks at or after this round")
+    print_info("  - max_round: Only include blocks at or before this round")
+    print_info("  - before_time: Only include blocks created before this timestamp (RFC 3339)")
+    print_info("  - after_time: Only include blocks created after this timestamp (RFC 3339)")
+    print_info("  - proposers: Array of addresses to filter by block proposer")
+    print_info("  - expired: Array of addresses to filter by expired participation")
+    print_info("  - absent: Array of addresses to filter by absent participation")
+    print_info("")
+    print_info("BlockHeadersResponse fields:")
+    print_info("  - current_round: Round at which results were computed (int)")
+    print_info("  - next_token: Pagination token for next page (optional string)")
+    print_info("  - blocks: Array of Block objects")
+    print_info("")
+    print_info("Key Block header fields:")
+    print_info("  - round: Block round number (int)")
+    print_info("  - timestamp: Unix timestamp in seconds (int)")
+    print_info("  - proposer: Block proposer address (optional, newer blocks)")
+    print_info("  - genesis_id: Genesis block identifier (string)")
+    print_info("  - genesis_hash: Hash of genesis block (bytes)")
+    print_info("")
+    print_info("Note: Results are returned in ascending round order (oldest first)")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- **Block Headers Search**
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

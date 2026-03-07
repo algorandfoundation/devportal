@@ -1,0 +1,304 @@
+---
+title: "Array Utilities"
+description: "This example demonstrates array utility operations for comparing and concatenating byte arrays in Python:"
+sidebar:
+  order: 3
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates array utility operations for comparing and concatenating byte arrays in Python:
+- Comparing arrays with == operator for element-by-element comparison
+- Concatenating arrays using + operator or bytes concatenation
+- Using list comprehensions for array manipulation
+ Note: Python's bytes type provides native support for these operations, unlike JavaScript's Uint8Array which needs utility functions.
+
+## Prerequisites
+
+No LocalNet required - pure utility functions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/03_array_utilities.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/03_array_utilities.py)
+
+```python title="03_array_utilities.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Array Utilities
+
+This example demonstrates array utility operations for comparing and
+concatenating byte arrays in Python:
+- Comparing arrays with == operator for element-by-element comparison
+- Concatenating arrays using + operator or bytes concatenation
+- Using list comprehensions for array manipulation
+
+Note: Python's bytes type provides native support for these operations,
+unlike JavaScript's Uint8Array which needs utility functions.
+
+No LocalNet required - pure utility functions
+"""
+
+from shared import (
+    format_bytes,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+
+def array_equal(a: bytes, b: bytes) -> bool:
+    """
+    Compare two byte arrays element-by-element.
+
+    Python's bytes == operator already does this, but we define
+    this for parity with the TypeScript SDK's arrayEqual() function.
+    """
+    return a == b
+
+
+def concat_arrays(*arrays: bytes) -> bytes:
+    """
+    Concatenate multiple byte arrays into a new array.
+
+    Python's bytes can be concatenated with +, or we can use b''.join().
+    """
+    return b"".join(arrays)
+
+
+def main() -> None:
+    print_header("Array Utilities Example")
+
+    # Step 1: Array comparison - Comparing Equal Arrays
+    print_step(1, "array_equal() - Comparing Equal Arrays")
+
+    arr1 = bytes([1, 2, 3, 4, 5])
+    arr2 = bytes([1, 2, 3, 4, 5])
+
+    print_info(f"Array 1: {format_bytes(arr1)}")
+    print_info(f"Array 2: {format_bytes(arr2)}")
+    print_info(f"array_equal(arr1, arr2): {array_equal(arr1, arr2)}")
+    print_info("Arrays with identical content return True")
+
+    # Step 2: array_equal() - Different Length Arrays
+    print_step(2, "array_equal() - Different Length Arrays")
+
+    short_arr = bytes([1, 2, 3])
+    long_arr = bytes([1, 2, 3, 4, 5])
+
+    print_info(f"Short array (length {len(short_arr)}): {format_bytes(short_arr)}")
+    print_info(f"Long array (length {len(long_arr)}): {format_bytes(long_arr)}")
+    print_info(f"array_equal(short_arr, long_arr): {array_equal(short_arr, long_arr)}")
+    print_info("Different lengths return False (fast check before element comparison)")
+
+    # Step 3: array_equal() - Same Length, Different Content
+    print_step(3, "array_equal() - Same Length, Different Content")
+
+    arr_a = bytes([1, 2, 3, 4, 5])
+    arr_b = bytes([1, 2, 99, 4, 5])  # Different value at index 2
+
+    print_info(f"Array A: {format_bytes(arr_a)}")
+    print_info(f"Array B: {format_bytes(arr_b)}")
+    print_info(f"array_equal(arr_a, arr_b): {array_equal(arr_a, arr_b)}")
+    print_info("Same length but different content at index 2 returns False")
+
+    # Step 4: array_equal() - Edge Cases
+    print_step(4, "array_equal() - Edge Cases")
+
+    # Empty arrays
+    empty1 = b""
+    empty2 = b""
+    print_info(f"Empty arrays: array_equal(b'', b''): {array_equal(empty1, empty2)}")
+
+    # Single element
+    single1 = bytes([42])
+    single2 = bytes([42])
+    print_info(f"Single element: array_equal([42], [42]): {array_equal(single1, single2)}")
+
+    # Same reference
+    same_ref = bytes([1, 2, 3])
+    print_info(f"Same reference: array_equal(arr, arr): {array_equal(same_ref, same_ref)}")
+
+    # Step 5: concat_arrays() - Joining Multiple Arrays
+    print_step(5, "concat_arrays() - Joining Multiple Arrays")
+
+    first = bytes([1, 2, 3])
+    second = bytes([4, 5, 6])
+    third = bytes([7, 8, 9])
+
+    print_info(f"First array: {format_bytes(first)}")
+    print_info(f"Second array: {format_bytes(second)}")
+    print_info(f"Third array: {format_bytes(third)}")
+
+    concatenated = concat_arrays(first, second, third)
+    print_info("\nconcat_arrays(first, second, third):")
+    print_info(f"Result: {format_bytes(concatenated)}")
+    print_info(f"Result length: {len(concatenated)} bytes")
+
+    # Step 6: concat_arrays() - Different Sized Arrays
+    print_step(6, "concat_arrays() - Different Sized Arrays")
+
+    tiny = bytes([1])
+    small = bytes([2, 3])
+    medium = bytes([4, 5, 6, 7])
+    large = bytes([8, 9, 10, 11, 12, 13, 14, 15])
+
+    print_info(f"Tiny (1 byte): {format_bytes(tiny)}")
+    print_info(f"Small (2 bytes): {format_bytes(small)}")
+    print_info(f"Medium (4 bytes): {format_bytes(medium)}")
+    print_info(f"Large (8 bytes): {format_bytes(large)}")
+
+    combined = concat_arrays(tiny, small, medium, large)
+    print_info("\nconcat_arrays(tiny, small, medium, large):")
+    print_info(f"Result: {format_bytes(combined)}")
+    print_info(f"Result length: {len(combined)} bytes (1 + 2 + 4 + 8 = 15)")
+
+    # Step 7: concat_arrays() Returns New Array (Doesn't Modify Inputs)
+    print_step(7, "concat_arrays() - Returns New Array (Non-Mutating)")
+
+    original1 = bytes([10, 20, 30])
+    original2 = bytes([40, 50, 60])
+
+    print_info("Before concat:")
+    print_info(f"  original1: {format_bytes(original1)}")
+    print_info(f"  original2: {format_bytes(original2)}")
+
+    result = concat_arrays(original1, original2)
+
+    print_info("\nAfter concat:")
+    print_info(f"  original1: {format_bytes(original1)} (unchanged)")
+    print_info(f"  original2: {format_bytes(original2)} (unchanged)")
+    print_info(f"  result: {format_bytes(result)} (new array)")
+
+    # Prove they are different objects
+    print_info("\nVerifying result is a new array:")
+    print_info(f"  result is original1: {result is original1}")
+    print_info(f"  result is original2: {result is original2}")
+
+    # Note: Python bytes are immutable, so we can't modify result in place
+    # This is different from TypeScript Uint8Array which is mutable
+    print_info("\nNote: Python bytes are immutable (cannot modify result[0])")
+    print_info("  This provides additional safety compared to mutable arrays")
+
+    # Step 8: concat_arrays() - Edge Cases
+    print_step(8, "concat_arrays() - Edge Cases")
+
+    # Single array
+    single_input = bytes([1, 2, 3])
+    single_result = concat_arrays(single_input)
+    print_info(f"Single input: concat_arrays([1,2,3]) = {format_bytes(single_result)}")
+    print_info(f"  Is new object: {single_result is not single_input}")
+
+    # Empty arrays
+    empty_result = concat_arrays(b"", bytes([1, 2]), b"")
+    print_info(f"With empty arrays: concat_arrays(b'', [1,2], b'') = {format_bytes(empty_result)}")
+
+    # No arguments
+    no_args = concat_arrays()
+    print_info(f"No arguments: concat_arrays() = {format_bytes(no_args)} (empty bytes)")
+
+    # Step 9: Python Native Array Operations
+    print_step(9, "Python Native Array Operations")
+
+    print_info("Python provides native support for byte array operations:")
+
+    # Direct comparison with ==
+    bytes_a = bytes([1, 2, 3])
+    bytes_b = bytes([1, 2, 3])
+    print_info("\n1. Direct comparison with ==:")
+    print_info(f"   bytes([1,2,3]) == bytes([1,2,3]): {bytes_a == bytes_b}")
+
+    # Concatenation with +
+    bytes_c = bytes_a + bytes([4, 5, 6])
+    print_info("\n2. Concatenation with +:")
+    print_info(f"   bytes([1,2,3]) + bytes([4,5,6]) = {format_bytes(bytes_c)}")
+
+    # Using b''.join()
+    arrays_to_join = [bytes([1, 2]), bytes([3, 4]), bytes([5, 6])]
+    joined = b"".join(arrays_to_join)
+    print_info("\n3. Using b''.join():")
+    print_info(f"   b''.join([...]) = {format_bytes(joined)}")
+
+    # Slicing
+    sliced = bytes_c[2:5]
+    print_info("\n4. Slicing:")
+    print_info(f"   bytes([1,2,3,4,5,6])[2:5] = {format_bytes(sliced)}")
+
+    # Step 10: Practical Use Cases
+    print_step(10, "Practical Use Cases")
+
+    print_info("Common scenarios for array utilities:")
+
+    print_info("\n1. Comparing cryptographic hashes:")
+    hash1 = bytes([0xAB, 0xCD, 0xEF, 0x12])
+    hash2 = bytes([0xAB, 0xCD, 0xEF, 0x12])
+    print_info(f"   hash1 is hash2 (reference): {hash1 is hash2}")
+    print_info(f"   hash1 == hash2 (content): {hash1 == hash2}")
+
+    print_info("\n2. Building transaction data:")
+    prefix = bytes([0x54, 0x58])  # "TX"
+    tx_data = bytes([0x01, 0x02, 0x03])
+    prefixed_tx = concat_arrays(prefix, tx_data)
+    print_info(f"   Prefix + TxData: {format_bytes(prefixed_tx)}")
+
+    print_info("\n3. Concatenating signature components:")
+    r = bytes([0x30, 0x31, 0x32, 0x33])  # r component
+    s = bytes([0x40, 0x41, 0x42, 0x43])  # s component
+    signature = concat_arrays(r, s)
+    print_info(f"   r + s = {format_bytes(signature)}")
+
+    # Step 11: Summary
+    print_step(11, "Summary")
+
+    print_info("Array Comparison:")
+    print_info("  - array_equal(a, b) - Compare two arrays element-by-element")
+    print_info("  - Python's == operator does the same natively")
+    print_info("  - Returns False immediately if lengths differ (efficient)")
+
+    print_info("\nArray Concatenation:")
+    print_info("  - concat_arrays(*arrays) - Join multiple byte arrays")
+    print_info("  - Returns a new bytes object (non-mutating)")
+    print_info("  - Python's + operator and b''.join() work natively")
+    print_info("  - Handles empty arrays and single inputs gracefully")
+
+    print_info("\nPython bytes vs TypeScript Uint8Array:")
+    print_info("  - Python bytes are immutable (safer)")
+    print_info("  - Native == comparison (no utility function needed)")
+    print_info("  - Native + concatenation (no utility function needed)")
+    print_info("  - Native slicing with [start:end] syntax")
+
+    print_success("Array Utilities example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- **Array Utilities**
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

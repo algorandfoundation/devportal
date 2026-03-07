@@ -1,0 +1,213 @@
+---
+title: "ABI String Type"
+description: "This example demonstrates how to encode and decode dynamic strings using StringType:"
+sidebar:
+  order: 4
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode dynamic strings using StringType:
+- StringType encodes strings with a 2-byte length prefix followed by UTF-8 content
+- Shows encoding of empty strings, ASCII text, and Unicode characters
+- Demonstrates that strings are dynamic types (variable length)
+- Displays byte breakdown: length prefix vs content bytes
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/04_string_type.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/04_string_type.py)
+
+```python title="04_string_type.py"
+# ruff: noqa: N999, PLR0915
+"""
+Example: ABI String Type
+
+This example demonstrates how to encode and decode dynamic strings using StringType:
+- StringType encodes strings with a 2-byte length prefix followed by UTF-8 content
+- Shows encoding of empty strings, ASCII text, and Unicode characters
+- Demonstrates that strings are dynamic types (variable length)
+- Displays byte breakdown: length prefix vs content bytes
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+
+
+def main() -> None:
+    print_header("ABI String Type Example")
+
+    # Step 1: StringType basics
+    print_step(1, "StringType - Basic Properties")
+
+    string_type = abi.StringType()
+
+    print_info(f"type: {string_type}")
+    print_info(f"is_dynamic: {string_type.is_dynamic()}")
+    print_info("Note: Strings are dynamic types - their encoded length varies with content")
+
+    # Step 2: Encoding an empty string
+    print_step(2, "Encoding Empty String")
+
+    empty_string = ""
+    empty_encoded = string_type.encode(empty_string)
+    empty_decoded = string_type.decode(empty_encoded)
+
+    print_info('string value: "" (empty)')
+    print_info(f"  encoded: {format_hex(empty_encoded)}")
+    print_info(f"  total bytes: {len(empty_encoded)}")
+    length_prefix = (empty_encoded[0] << 8) | empty_encoded[1]
+    print_info(f"  length prefix (2 bytes): {format_hex(empty_encoded[:2])} = {length_prefix}")
+    print_info(f"  content bytes: {len(empty_encoded) - 2}")
+    print_info(f'  decoded: "{empty_decoded}"')
+    print_info(f"  round-trip verified: {empty_decoded == empty_string}")
+
+    # Step 3: Encoding a short ASCII string
+    print_step(3, "Encoding Short ASCII String")
+
+    hello_string = "Hello"
+    hello_encoded = string_type.encode(hello_string)
+    hello_decoded = string_type.decode(hello_encoded)
+
+    print_info(f'string value: "{hello_string}"')
+    print_info(f"  encoded: {format_hex(hello_encoded)}")
+    print_info(f"  total bytes: {len(hello_encoded)}")
+    length_prefix = (hello_encoded[0] << 8) | hello_encoded[1]
+    print_info(f"  length prefix (2 bytes): {format_hex(hello_encoded[:2])} = {length_prefix}")
+    print_info(f"  content bytes: {len(hello_encoded) - 2}")
+
+    # Show individual character encoding
+    print_info("\n  Byte breakdown:")
+    print_info(f"    [0-1] Length prefix: {format_hex(hello_encoded[:2])} ({len(hello_string)})")
+    for i, char in enumerate(hello_string):
+        char_byte = hello_encoded[i + 2]
+        print_info(f"    [{i + 2}]   '{char}' -> 0x{char_byte:02x} ({char_byte})")
+
+    print_info(f'\n  decoded: "{hello_decoded}"')
+    print_info(f"  round-trip verified: {hello_decoded == hello_string}")
+
+    # Step 4: Encoding a longer ASCII string
+    print_step(4, "Encoding Longer ASCII String")
+
+    lorem_string = "The quick brown fox jumps over the lazy dog."
+    lorem_encoded = string_type.encode(lorem_string)
+    lorem_decoded = string_type.decode(lorem_encoded)
+
+    print_info(f'string value: "{lorem_string}"')
+    print_info(f"  encoded: {format_hex(lorem_encoded)}")
+    print_info(f"  total bytes: {len(lorem_encoded)}")
+    length_prefix = (lorem_encoded[0] << 8) | lorem_encoded[1]
+    print_info(f"  length prefix (2 bytes): {format_hex(lorem_encoded[:2])} = {length_prefix}")
+    print_info(f"  content bytes: {len(lorem_encoded) - 2}")
+    print_info(f'  decoded: "{lorem_decoded}"')
+    print_info(f"  round-trip verified: {lorem_decoded == lorem_string}")
+
+    # Step 5: Encoding Unicode characters
+    print_step(5, "Encoding Unicode Characters")
+
+    unicode_string = "Hello, 世界! 🌍"
+    unicode_encoded = string_type.encode(unicode_string)
+    unicode_decoded = string_type.decode(unicode_encoded)
+
+    print_info(f'string value: "{unicode_string}"')
+    print_info(f"  encoded: {format_hex(unicode_encoded)}")
+    print_info(f"  total bytes: {len(unicode_encoded)}")
+    length_prefix = (unicode_encoded[0] << 8) | unicode_encoded[1]
+    print_info(f"  length prefix (2 bytes): {format_hex(unicode_encoded[:2])} = {length_prefix}")
+    print_info(f"  content bytes: {len(unicode_encoded) - 2}")
+    print_info(f"  Python string length: {len(unicode_string)} (characters)")
+    print_info(f"  UTF-8 byte length: {len(unicode_encoded) - 2} (bytes)")
+    print_info("  Note: Unicode characters may use multiple bytes in UTF-8 encoding")
+    print_info(f'  decoded: "{unicode_decoded}"')
+    print_info(f"  round-trip verified: {unicode_decoded == unicode_string}")
+
+    # Step 6: Encoding emoji-only string
+    print_step(6, "Encoding Emoji String")
+
+    emoji_string = "🚀🎉💻"
+    emoji_encoded = string_type.encode(emoji_string)
+    emoji_decoded = string_type.decode(emoji_encoded)
+
+    print_info(f'string value: "{emoji_string}"')
+    print_info(f"  encoded: {format_hex(emoji_encoded)}")
+    print_info(f"  total bytes: {len(emoji_encoded)}")
+    length_prefix = (emoji_encoded[0] << 8) | emoji_encoded[1]
+    print_info(f"  length prefix (2 bytes): {format_hex(emoji_encoded[:2])} = {length_prefix}")
+    print_info(f"  content bytes: {len(emoji_encoded) - 2}")
+    print_info(f"  Python string length: {len(emoji_string)} (characters)")
+    print_info(f"  UTF-8 byte length: {len(emoji_encoded) - 2} (bytes, emojis use 4 bytes each)")
+    print_info(f'  decoded: "{emoji_decoded}"')
+    print_info(f"  round-trip verified: {emoji_decoded == emoji_string}")
+
+    # Step 7: Maximum length demonstration
+    print_step(7, "String Length Limits")
+
+    print_info("String encoding uses a 2-byte (uint16) length prefix:")
+    print_info("  Maximum string length: 65535 bytes (2^16 - 1)")
+    print_info("  Length prefix is big-endian encoded")
+
+    # Demonstrate a string that would have a length > 255 (requiring both bytes)
+    long_string = "A" * 300
+    long_encoded = string_type.encode(long_string)
+
+    print_info("\nExample with 300-character string:")
+    print_info(f"  length prefix: {format_hex(long_encoded[:2])}")
+    print_info(f"  high byte: 0x{long_encoded[0]:02x} = {long_encoded[0]}")
+    print_info(f"  low byte:  0x{long_encoded[1]:02x} = {long_encoded[1]}")
+    decoded_length = (long_encoded[0] << 8) | long_encoded[1]
+    print_info(f"  decoded length: ({long_encoded[0]} << 8) | {long_encoded[1]} = {decoded_length}")
+
+    # Step 8: Summary
+    print_step(8, "Summary - Dynamic Type Behavior")
+
+    print_info("Key points about StringType:")
+    print_info("  - Strings are dynamic types (is_dynamic() returns True)")
+    print_info("  - Encoding format: 2-byte length prefix + UTF-8 content")
+    print_info("  - Length prefix is big-endian (most significant byte first)")
+    print_info("  - UTF-8 encoding means characters may use 1-4 bytes")
+    print_info("  - Maximum string length: 65535 bytes")
+
+    print_success("ABI String Type example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- **ABI String Type**
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

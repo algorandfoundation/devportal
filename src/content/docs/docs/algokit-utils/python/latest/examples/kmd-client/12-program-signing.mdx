@@ -1,0 +1,363 @@
+---
+title: "Program Signing (Delegated Logic Signatures) with KMD"
+description: "This example demonstrates how to sign programs/contracts using the KMD sign_program() method. It shows:"
+sidebar:
+  order: 12
+---
+
+[← Back to KMD Client](/docs/algokit-utils/python/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to sign programs/contracts using the KMD sign_program() method. It shows:
+- Creating a simple TEAL program (logic signature)
+- Compiling the TEAL program using algod's teal_compile
+- Signing the compiled program bytes with sign_program()
+- Understanding the resulting signature for delegated logic signatures
+- How to use the signature with a LogicSigAccount
+ What is Program Signing? Program signing creates a "delegated logic signature" (delegated lsig). This allows an account holder to authorize a smart contract (TEAL program) to sign transactions on their behalf. When you sign a program: 1. You're attesting that you authorize this program to act for your account 2. Transactions signed by this delegated lsig will be authorized by your account 3. The program logic determines which transactions are approved
+ Use cases for delegated logic signatures:
+- Recurring payments (program checks amount and frequency)
+- Subscription services (program validates payment recipients)
+- Limited spending authorizations (program enforces constraints)
+- Conditional transfers (program checks external conditions)
+ Prerequisites:
+ Covered operations:
+- sign_program() - Sign a compiled TEAL program with a wallet key
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python kmd_client/12_program_signing.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/kmd_client/12_program_signing.py)
+
+```python title="12_program_signing.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Program Signing (Delegated Logic Signatures) with KMD
+
+This example demonstrates how to sign programs/contracts using the KMD
+sign_program() method. It shows:
+  - Creating a simple TEAL program (logic signature)
+  - Compiling the TEAL program using algod's teal_compile
+  - Signing the compiled program bytes with sign_program()
+  - Understanding the resulting signature for delegated logic signatures
+  - How to use the signature with a LogicSigAccount
+
+What is Program Signing?
+Program signing creates a "delegated logic signature" (delegated lsig).
+This allows an account holder to authorize a smart contract (TEAL program)
+to sign transactions on their behalf. When you sign a program:
+  1. You're attesting that you authorize this program to act for your account
+  2. Transactions signed by this delegated lsig will be authorized by your account
+  3. The program logic determines which transactions are approved
+
+Use cases for delegated logic signatures:
+  - Recurring payments (program checks amount and frequency)
+  - Subscription services (program validates payment recipients)
+  - Limited spending authorizations (program enforces constraints)
+  - Conditional transfers (program checks external conditions)
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Covered operations:
+- sign_program() - Sign a compiled TEAL program with a wallet key
+"""
+
+import base64
+import sys
+
+from shared import (
+    cleanup_test_wallet,
+    create_algod_client,
+    create_kmd_client,
+    create_test_wallet,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_kmd_client.models import GenerateKeyRequest, SignProgramRequest
+from algokit_transact import LogicSigAccount
+
+
+def format_bytes_for_display(data: bytes, show_first: int = 8, show_last: int = 8) -> str:
+    """Format a byte array for display, showing first and last few bytes."""
+    hex_str = data.hex()
+    if len(data) <= show_first + show_last:
+        return hex_str
+    first_bytes = hex_str[: show_first * 2]
+    last_bytes = hex_str[-(show_last * 2) :]
+    return f"{first_bytes}...{last_bytes}"
+
+
+def main() -> None:
+    print_header("KMD Program Signing Example")
+
+    kmd = create_kmd_client()
+    algod = create_algod_client()
+    wallet_handle_token = ""
+    wallet_password = "test-password"
+
+    try:
+        # =========================================================================
+        # Step 1: Create a Test Wallet
+        # =========================================================================
+        print_step(1, "Creating a test wallet for program signing")
+
+        test_wallet = create_test_wallet(kmd, wallet_password)
+        wallet_handle_token = test_wallet["wallet_handle_token"]
+
+        print_success(f"Test wallet created: {test_wallet['wallet_name']}")
+        print_info(f"Wallet ID: {test_wallet['wallet_id']}")
+
+        # =========================================================================
+        # Step 2: Generate a Key in the Wallet
+        # =========================================================================
+        print_step(2, "Generating a key in the wallet")
+
+        generate_key_response = kmd.generate_key(
+            GenerateKeyRequest(
+                wallet_handle_token=wallet_handle_token,
+            )
+        )
+        signer_address = generate_key_response.address
+
+        print_success("Key generated!")
+        print_info(f"Address: {signer_address}")
+        print_info(f"Shortened: {shorten_address(signer_address)}")
+
+        # =========================================================================
+        # Step 3: Create a Simple TEAL Program
+        # =========================================================================
+        print_step(3, "Creating a simple TEAL program")
+
+        # Load the delegated payment limit TEAL program from shared artifacts
+        # This program approves payment transactions up to 1 ALGO
+        teal_source = load_teal_source("delegated-payment-limit.teal")
+
+        print_info("TEAL Program Source:")
+        print_info("")
+        for line in teal_source.split("\n"):
+            print_info(f"    {line}")
+        print_info("")
+        print_info("This program approves payment transactions up to 1 ALGO.")
+        print_info("When signed by an account, it creates a 'delegated logic signature'")
+        print_info("that can authorize small payments on behalf of that account.")
+
+        # =========================================================================
+        # Step 4: Compile the TEAL Program
+        # =========================================================================
+        print_step(4, "Compiling the TEAL program using algod teal_compile")
+
+        compile_result = algod.teal_compile(teal_source)
+
+        # Decode base64 result to bytes
+        program_bytes = base64.b64decode(compile_result.result)
+
+        print_success("TEAL program compiled successfully!")
+        print_info("")
+        print_info("Compilation Result:")
+        print_info(f"  Hash (address):    {compile_result.hash_}")
+        print_info(f"  Compiled size:     {len(program_bytes)} bytes")
+        print_info(f"  Compiled bytes:    {format_bytes_for_display(program_bytes)}")
+        print_info("")
+        print_info("The hash is the 'contract address' - the address of the logic signature")
+        print_info("when used in non-delegated mode (without a signature).")
+
+        # =========================================================================
+        # Step 5: Sign the Program with sign_program()
+        # =========================================================================
+        print_step(5, "Signing the program with sign_program()")
+
+        print_info(f"Signer: {shorten_address(signer_address)}")
+        print_info("")
+
+        sign_program_response = kmd.sign_program(
+            SignProgramRequest(
+                address=signer_address,
+                program=program_bytes,
+                wallet_handle_token=wallet_handle_token,
+                wallet_password=wallet_password,
+            )
+        )
+        signature = sign_program_response.sig
+
+        print_success("Program signed successfully!")
+        print_info("")
+        print_info("sign_program() return value:")
+        print_info(f"  sig: bytes ({len(signature)} bytes)")
+        print_info("")
+        print_info("Signature Details:")
+        print_info(f"  Signature:         {format_bytes_for_display(signature)}")
+        print_info(f"  Signature length:  {len(signature)} bytes (ed25519 signature)")
+        print_info("")
+        print_info("This signature attests that the signer authorizes this program")
+        print_info("to sign transactions on their behalf.")
+
+        # =========================================================================
+        # Step 6: Create a LogicSigAccount with the Signature
+        # =========================================================================
+        print_step(6, "Creating a LogicSigAccount with the signature")
+
+        print_info("A LogicSigAccount combines:")
+        print_info("  1. The compiled program (logic)")
+        print_info("  2. The signature (delegation proof)")
+        print_info("  3. The delegator address (who authorized it)")
+        print_info("")
+
+        # First, get the program address (hash of "Program" + logic)
+        # This is what the address would be in non-delegated mode
+        non_delegated_lsig = LogicSigAccount(logic=program_bytes)
+        program_address = non_delegated_lsig.address
+
+        # Create a LogicSigAccount for delegation
+        lsig_account = LogicSigAccount(logic=program_bytes, _address=signer_address, sig=signature)
+
+        print_success("LogicSigAccount created!")
+        print_info("")
+        print_info("LogicSigAccount properties:")
+        print_info(f"  Program address:   {shorten_address(program_address)}")
+        print_info(f"  Delegator address: {shorten_address(signer_address)}")
+        print_info(f"  Has signature:     {lsig_account.sig is not None}")
+        print_info(f"  Logic size:        {len(lsig_account.logic)} bytes")
+        print_info("")
+
+        # Show that the lsig_account's addr is the delegator, not the program
+        print_info("Important distinction:")
+        print_info(f"  - Program address: {shorten_address(program_address)}")
+        print_info("    Hash of the logic - this is the 'contract account' in non-delegated mode")
+        print_info("")
+        print_info(f"  - lsig_account.addr: {shorten_address(lsig_account.addr)}")
+        print_info("    This is the DELEGATOR - the account authorizing the program")
+        print_info("")
+        print_info("When using this delegated lsig, transactions will be authorized")
+        print_info(f"as if signed by {shorten_address(signer_address)} (the delegator).")
+
+        # =========================================================================
+        # Step 7: Demonstrate How to Use the LogicSigAccount
+        # =========================================================================
+        print_step(7, "Understanding how to use the delegated LogicSigAccount")
+
+        print_info("To use this delegated logic signature in a transaction:")
+        print_info("")
+        print_info("  1. Create a Transaction with sender = delegator address")
+        print_info("")
+        print_info("  2. Use the LogicSigAccount.signer to sign the transaction:")
+        print_info("")
+        print_info("     signed_txns = lsig_account.signer([txn], [0])")
+        print_info("")
+        print_info("  3. The signed transaction will include:")
+        print_info("     - lsig.logic:  The compiled TEAL program")
+        print_info("     - lsig.sig:    The delegation signature from sign_program()")
+        print_info("")
+        print_info("  4. When submitted, the network validates:")
+        print_info("     - The signature is valid for the program + delegator")
+        print_info("     - The program logic approves the transaction")
+        print_info("")
+        print_info("Example use case - a subscription payment service:")
+        print_info("  - User signs a program allowing monthly $10 payments to service")
+        print_info("  - Service can execute payments without additional user approval")
+        print_info("  - Program logic ensures payments stay within authorized limits")
+
+        # =========================================================================
+        # Cleanup
+        # =========================================================================
+        print_step(8, "Cleaning up test wallet")
+
+        cleanup_test_wallet(kmd, wallet_handle_token)
+        wallet_handle_token = ""  # Mark as cleaned up
+
+        print_success("Test wallet handle released")
+
+        # =========================================================================
+        # Summary
+        # =========================================================================
+        print_header("Summary")
+        print_info("This example demonstrated program signing with KMD:")
+        print_info("")
+        print_info("  sign_program() - Sign a TEAL program for delegation")
+        print_info("     Parameters:")
+        print_info("       - wallet_handle_token: The wallet session token")
+        print_info("       - wallet_password:     The wallet password")
+        print_info("       - address:             The account that will delegate authority")
+        print_info("       - program:             The compiled TEAL program bytes")
+        print_info("     Returns:")
+        print_info("       - sig: bytes (64-byte ed25519 signature)")
+        print_info("")
+        print_info("Program signing workflow:")
+        print_info("  1. Write a TEAL program with the desired authorization logic")
+        print_info("  2. Compile the program using algod.teal_compile()")
+        print_info("  3. Sign the program bytes using kmd.sign_program()")
+        print_info("  4. Create a LogicSigAccount with the program, signature, and delegator")
+        print_info("  5. Use the LogicSigAccount.signer to sign authorized transactions")
+        print_info("")
+        print_info("Key concepts:")
+        print_info("  - Delegated vs Non-delegated Logic Signatures:")
+        print_info("    - Non-delegated: Program itself is the 'account', no signature needed")
+        print_info("    - Delegated: Program acts on behalf of a real account (requires signature)")
+        print_info("")
+        print_info("  - The signature proves the delegator authorized the program")
+        print_info("  - The program logic controls which transactions are approved")
+        print_info("  - Anyone with the lsig can submit transactions (if program approves)")
+        print_info("")
+        print_info("Security considerations:")
+        print_info("  - Write program logic carefully - it controls your account!")
+        print_info("  - Always limit amounts, recipients, or other transaction fields")
+        print_info("  - Consider adding time bounds or counters for recurring payments")
+        print_info("")
+        print_info("Note: The test wallet remains in KMD (wallets cannot be deleted via API).")
+    except Exception as e:
+        print_error(f"Error: {e}")
+        print_info("")
+        print_info("Troubleshooting:")
+        print_info("  - Ensure LocalNet is running: algokit localnet start")
+        print_info("  - If LocalNet issues occur: algokit localnet reset")
+        print_info("  - Check that KMD is accessible on port 4002")
+        print_info("  - Check that Algod is accessible on port 4001")
+
+        # Cleanup on error
+        if wallet_handle_token:
+            cleanup_test_wallet(kmd, wallet_handle_token)
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/python/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/python/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/python/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/python/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/python/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/python/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/python/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/python/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/python/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/11-multisig-signing/)
+- **Program Signing (Delegated Logic Signatures) with KMD**
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/13-multisig-program-signing/)

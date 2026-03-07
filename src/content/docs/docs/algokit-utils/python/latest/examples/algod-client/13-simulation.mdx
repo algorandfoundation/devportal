@@ -1,0 +1,525 @@
+---
+title: "Transaction Simulation"
+description: "This example demonstrates how to simulate transactions before submitting them to the Algorand network. Simulation allows you to:"
+sidebar:
+  order: 13
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to simulate transactions before submitting them to the Algorand network. Simulation allows you to:
+- Preview transaction outcomes without committing to the blockchain
+- Estimate transaction fees
+- Detect potential errors before spending fees
+- Debug smart contract execution
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/13_simulation.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/13_simulation.py)
+
+```python title="13_simulation.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Transaction Simulation
+
+This example demonstrates how to simulate transactions before submitting them
+to the Algorand network. Simulation allows you to:
+- Preview transaction outcomes without committing to the blockchain
+- Estimate transaction fees
+- Detect potential errors before spending fees
+- Debug smart contract execution
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from decimal import Decimal
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    format_micro_algo,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_algod_client.models import SimulateRequest, SimulateRequestTransactionGroup
+from algokit_transact import SignedTransaction, decode_signed_transaction
+from algokit_utils import AlgoAmount, PaymentParams
+
+
+def main() -> None:
+    print_header("Transaction Simulation Example")
+
+    # Create clients
+    algod = create_algod_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Set up accounts for simulation
+    # =========================================================================
+    print_step(1, "Setting up accounts for simulation")
+
+    # Get a funded account from LocalNet (the dispenser)
+    sender = algorand.account.localnet_dispenser()
+    print_info(f"Sender address: {shorten_address(str(sender.addr))}")
+
+    # Get sender balance
+    sender_info = algod.account_information(str(sender.addr))
+    print_info(f"Sender balance: {format_micro_algo(sender_info.amount)}")
+
+    # Create a new random account as receiver
+    receiver = algorand.account.random()
+    print_info(f"Receiver address: {shorten_address(str(receiver.addr))}")
+    print_info("Receiver is a new unfunded account")
+    print_info("")
+
+    # =========================================================================
+    # Step 2: Create a payment transaction for simulation
+    # =========================================================================
+    print_step(2, "Creating a payment transaction for simulation")
+
+    payment_amount = AlgoAmount.from_algo(1)  # 1 ALGO
+    print_info(f"Payment amount: {payment_amount.algo} ALGO")
+
+    # Build the transaction using AlgorandClient.create_transaction
+    payment_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=payment_amount,
+        )
+    )
+
+    # Get the transaction ID
+    tx_id = payment_txn.tx_id()
+    print_info(f"Transaction ID: {tx_id}")
+
+    # Sign the transaction
+    signed_txn_bytes = sender.signer([payment_txn], [0])
+    print_success("Transaction signed successfully!")
+    print_info("")
+
+    # =========================================================================
+    # Step 3: Simulate using simulate_transactions()
+    # =========================================================================
+    print_step(3, "Simulating with simulate_transactions(SimulateRequest)")
+
+    print_info("simulate_transactions() accepts a SimulateRequest object that:")
+    print_info("  - Contains transaction groups to simulate")
+    print_info("  - Can include options like allow_empty_signatures, fix_signers")
+    print_info("  - Returns SimulateResponse with detailed results")
+    print_info("")
+
+    # Create a SimulateRequest with the signed transaction
+    # Decode the signed transaction bytes to get a SignedTransaction object
+    signed_txn = decode_signed_transaction(signed_txn_bytes[0])
+    sim_request = SimulateRequest(txn_groups=[SimulateRequestTransactionGroup(txns=[signed_txn])])
+
+    sim_result = algod.simulate_transactions(sim_request)
+
+    print_success("Simulation completed!")
+    print_info("")
+
+    # =========================================================================
+    # Step 4: Display simulation results
+    # =========================================================================
+    print_step(4, "Displaying simulation results")
+
+    print_info("SimulateResponse structure:")
+    print_info(f"  version: {sim_result.version}")
+    print_info(f"  last_round: {sim_result.last_round:,}")
+    txn_groups = sim_result.txn_groups
+    print_info(f"  txn_groups: {len(txn_groups)} group(s)")
+    print_info("")
+
+    # Check if the transaction would succeed
+    if txn_groups:
+        txn_group = txn_groups[0]
+        failure_message = txn_group.failure_message
+        would_succeed = not failure_message
+
+        print_info("Transaction Group Result:")
+        print_info(f"  Would succeed: {'Yes' if would_succeed else 'No'}")
+        if failure_message:
+            print_info(f"  Failure message: {failure_message}")
+            failed_at = txn_group.failed_at
+            if failed_at:
+                print_info(f"  Failed at: {failed_at}")
+        print_info("")
+
+        # Display budget information (for app calls)
+        app_budget_added = txn_group.app_budget_added
+        app_budget_consumed = txn_group.app_budget_consumed
+        if app_budget_added is not None or app_budget_consumed is not None:
+            print_info("App Budget:")
+            print_info(f"  Budget added: {app_budget_added if app_budget_added else 'N/A'}")
+            print_info(f"  Budget consumed: {app_budget_consumed if app_budget_consumed else 'N/A'}")
+            print_info("")
+
+    # =========================================================================
+    # Step 5: Display individual transaction results
+    # =========================================================================
+    print_step(5, "Displaying individual transaction results")
+
+    if txn_groups:
+        txn_results = txn_groups[0].txn_results
+        for i, txn_result in enumerate(txn_results):
+            print_info(f"Transaction {i + 1}:")
+
+            # The txn_result contains a PendingTransactionResponse
+            pending_response = txn_result.txn_result
+            inner_txn = pending_response.txn.txn
+            print_info(f"  Transaction type: {inner_txn.transaction_type.value}")
+
+            # Display fixed_signer if present (indicates missing/wrong signature)
+            fixed_signer = txn_result.fixed_signer
+            if fixed_signer:
+                print_info(f"  Fixed signer: {shorten_address(str(fixed_signer))}")
+                print_info("  ^ This indicates the correct signer when simulation used allow_empty_signatures")
+            else:
+                print_info("  Fixed signer: None (signature was correct)")
+
+            # Display budget consumed (for app calls)
+            app_budget = txn_result.app_budget_consumed
+            if app_budget is not None:
+                print_info(f"  App budget consumed: {app_budget}")
+
+            logic_sig_budget = txn_result.logic_sig_budget_consumed
+            if logic_sig_budget is not None:
+                print_info(f"  LogicSig budget consumed: {logic_sig_budget}")
+            print_info("")
+
+    # =========================================================================
+    # Step 6: Show transaction group details
+    # =========================================================================
+    print_step(6, "Show transaction group details from simulation")
+
+    print_info("Each SimulateTransactionResult contains txn_result (PendingTransactionResponse)")
+    print_info("which includes the transaction details as if it were confirmed.")
+    print_info("")
+
+    if txn_groups and txn_groups[0].txn_results:
+        txn_details = txn_groups[0].txn_results[0].txn_result
+        inner_txn = txn_details.txn.txn
+
+        print_info("Simulated Transaction Details:")
+        print_info(f"  Type: {inner_txn.transaction_type.value}")
+        print_info(f"  Sender: {shorten_address(str(inner_txn.sender))}")
+        print_info(f"  Fee: {format_micro_algo(inner_txn.fee or 0)}")
+        print_info(f"  First valid: {inner_txn.first_valid:,}")
+        print_info(f"  Last valid: {inner_txn.last_valid:,}")
+
+        if inner_txn.payment:
+            print_info("")
+            print_info("  Payment fields:")
+            print_info(f"    Receiver: {shorten_address(str(inner_txn.payment.receiver))}")
+            print_info(f"    Amount: {format_micro_algo(inner_txn.payment.amount)}")
+        print_info("")
+
+    # =========================================================================
+    # Step 7: Demonstrate simulation with extra budget options
+    # =========================================================================
+    print_step(7, "Demonstrating simulation with extra budget options")
+
+    print_info("simulate_transactions() accepts a SimulateRequest with various options:")
+    print_info("  - allow_empty_signatures: Simulate unsigned transactions")
+    print_info("  - allow_more_logging: Lift limits on log opcode usage")
+    print_info("  - allow_unnamed_resources: Access resources not in txn references")
+    print_info("  - extra_opcode_budget: Add extra opcode budget for app calls")
+    print_info("  - fix_signers: Auto-fix incorrect signers in simulation")
+    print_info("")
+
+    # Demonstrate with allow_empty_signatures (useful for fee estimation without signing)
+    print_info("Simulating an UNSIGNED transaction with allow_empty_signatures=True:")
+    print_info("")
+
+    # Create an unsigned transaction
+    unsigned_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(Decimal("0.5")),
+        )
+    )
+
+    # Build a simulate request with allow_empty_signatures
+    unsigned_sim_request = SimulateRequest(
+        txn_groups=[
+            SimulateRequestTransactionGroup(
+                txns=[SignedTransaction(txn=unsigned_txn)]  # No signature
+            )
+        ],
+        allow_empty_signatures=True,
+        fix_signers=True,
+    )
+
+    unsigned_sim_result = algod.simulate_transactions(unsigned_sim_request)
+
+    unsigned_groups = unsigned_sim_result.txn_groups
+    print_info("Unsigned transaction simulation result:")
+    if unsigned_groups:
+        would_succeed = not unsigned_groups[0].failure_message
+        print_info(f"  Would succeed: {'Yes' if would_succeed else 'No'}")
+
+        # Check if fixed_signer shows the required signer
+        unsigned_results = unsigned_groups[0].txn_results
+        if unsigned_results:
+            fixed_signer = unsigned_results[0].fixed_signer
+            if fixed_signer:
+                print_info(f"  Required signer: {shorten_address(str(fixed_signer))}")
+    print_info("")
+
+    # Demonstrate with extra_opcode_budget
+    print_info("extra_opcode_budget is useful for complex app calls that need more compute:")
+    print_info("")
+
+    extra_budget_request = SimulateRequest(
+        txn_groups=[
+            SimulateRequestTransactionGroup(
+                txns=[SignedTransaction(txn=unsigned_txn)]  # No signature
+            )
+        ],
+        allow_empty_signatures=True,
+        extra_opcode_budget=10000,  # Add 10,000 extra opcodes
+    )
+
+    extra_budget_result = algod.simulate_transactions(extra_budget_request)
+    extra_groups = extra_budget_result.txn_groups
+    print_info("Simulation with extra budget:")
+    if extra_groups:
+        would_succeed = not extra_groups[0].failure_message
+        print_info(f"  Would succeed: {'Yes' if would_succeed else 'No'}")
+    print_info("  (extra_opcode_budget is mainly useful for app calls, not simple payments)")
+    print_info("")
+
+    # =========================================================================
+    # Step 8: Show how simulation can estimate fees and detect errors
+    # =========================================================================
+    print_step(8, "Using simulation to estimate fees and detect errors")
+
+    print_info("Simulation helps with fee estimation by:")
+    print_info("  1. Determining minimum fee for transaction to succeed")
+    print_info("  2. Checking if your fee is sufficient before sending")
+    print_info("  3. Avoiding wasted fees on transactions that would fail")
+    print_info("")
+
+    # Get current suggested params to show fee structure
+    params = algod.suggested_params()
+    print_info("Current fee structure:")
+    print_info(f"  Min fee: {format_micro_algo(params.min_fee)}")
+    print_info(f"  Suggested fee: {format_micro_algo(params.fee)}")
+    print_info("")
+
+    print_info("Simulation can detect errors BEFORE spending fees:")
+    print_info("")
+
+    # Error detection example - insufficient balance
+    print_info("Example: Detecting an overspend error")
+
+    # Create a transaction that would overspend
+    poor_account = algorand.account.random()
+    overspend_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=poor_account.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(1000000),  # 1 million ALGO - way more than account has
+        )
+    )
+
+    overspend_request = SimulateRequest(
+        txn_groups=[SimulateRequestTransactionGroup(txns=[SignedTransaction(txn=overspend_txn)])],
+        allow_empty_signatures=True,
+    )
+
+    overspend_result = algod.simulate_transactions(overspend_request)
+    overspend_groups = overspend_result.txn_groups
+
+    print_info("  Overspend simulation result:")
+    if overspend_groups:
+        overspend_group = overspend_groups[0]
+        would_succeed = not overspend_group.failure_message
+        print_info(f"    Would succeed: {'Yes' if would_succeed else 'No'}")
+        failure = overspend_group.failure_message
+        if failure:
+            print_info(f"    Failure: {failure}")
+    print_info("")
+
+    # =========================================================================
+    # Step 9: Simulate a failing transaction and display the failure reason
+    # =========================================================================
+    print_step(9, "Simulating failing transactions")
+
+    print_info("Demonstrating various failure scenarios:")
+    print_info("")
+
+    # Failure scenario 1: Insufficient funds (already shown above)
+    print_info("1. Insufficient funds:")
+    if overspend_groups:
+        failure = overspend_groups[0].failure_message or "N/A"
+        print_info(f"   Error: {failure}")
+    print_info("")
+
+    # Failure scenario 2: Sending to zero balance account and closing
+    print_info("2. Sending to zero balance account and closing:")
+    print_info("   Simulating a close-out transaction to demonstrate simulation details")
+
+    # Create a transaction that closes out to a specific address
+    close_out_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0),
+            close_remainder_to=receiver.addr,  # Close account to receiver
+        )
+    )
+
+    close_out_request = SimulateRequest(
+        txn_groups=[SimulateRequestTransactionGroup(txns=[SignedTransaction(txn=close_out_txn)])],
+        allow_empty_signatures=True,
+    )
+
+    close_out_result = algod.simulate_transactions(close_out_request)
+    close_out_groups = close_out_result.txn_groups
+
+    if close_out_groups:
+        close_out_group = close_out_groups[0]
+        would_succeed = not close_out_group.failure_message
+        print_info(f"   Would succeed: {'Yes' if would_succeed else 'No'}")
+        failure = close_out_group.failure_message
+        if failure:
+            print_info(f"   Failure: {failure}")
+        else:
+            print_info("   This would succeed (sender can close to receiver)")
+    print_info("")
+
+    # Failure scenario 3: Insufficient fee (below minimum)
+    print_info("3. Transaction with fee below minimum:")
+    print_info("   Note: Very low fees are rejected before simulation even runs")
+
+    # Create a transaction with a fee set to 0 (below min fee of 1000)
+    low_fee_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(Decimal("0.1")),
+            static_fee=AlgoAmount.from_micro_algo(0),  # 0 fee - below minimum
+        )
+    )
+
+    low_fee_request = SimulateRequest(
+        txn_groups=[SimulateRequestTransactionGroup(txns=[SignedTransaction(txn=low_fee_txn)])],
+        allow_empty_signatures=True,
+    )
+
+    try:
+        low_fee_result = algod.simulate_transactions(low_fee_request)
+        low_fee_groups = low_fee_result.txn_groups
+        if low_fee_groups:
+            low_fee_group = low_fee_groups[0]
+            would_succeed = not low_fee_group.failure_message
+            print_info(f"   Would succeed: {'Yes' if would_succeed else 'No'}")
+            failure = low_fee_group.failure_message
+            if failure:
+                print_info(f"   Failure: {failure}")
+    except Exception as e:
+        # Fee too low errors are caught at the API level, not in simulation results
+        error_message = str(e)
+        if "less than the minimum" in error_message.lower() or "fee" in error_message.lower():
+            print_info("   Rejected before simulation: Fee too low")
+            print_info("   Algod validates minimum fees before running simulation")
+        else:
+            print_info(f"   Error: {error_message}")
+    print_info("")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+
+    print_info("This example demonstrated:")
+    print_info("")
+    print_info("1. simulate_transactions(SimulateRequest):")
+    print_info("   - Method for simulating transactions")
+    print_info("   - Accepts SimulateRequest with transaction groups")
+    print_info("   - Returns SimulateResponse with detailed results")
+    print_info("")
+    print_info("2. SimulateResponse structure:")
+    print_info("   - version: API version number")
+    print_info("   - last_round: Round at which simulation was performed")
+    print_info("   - txn_groups: List of SimulateTransactionGroupResult")
+    print_info("")
+    print_info("3. SimulateTransactionGroupResult:")
+    print_info("   - txn_results: List of individual transaction results")
+    print_info("   - failure_message: Error message if group would fail (None if OK)")
+    print_info("   - failed_at: Index path to failing transaction (None if OK)")
+    print_info("   - app_budget_added/consumed: App call budget tracking")
+    print_info("")
+    print_info("4. SimulateTransactionResult:")
+    print_info("   - txn_result: PendingTransactionResponse with full details")
+    print_info("   - fixed_signer: Address that should have signed (None if correct)")
+    print_info("   - app_budget_consumed: Budget used by this transaction")
+    print_info("   - logic_sig_budget_consumed: Budget used by logic signature")
+    print_info("")
+    print_info("5. SimulateRequest options:")
+    print_info("   - allow_empty_signatures: Simulate without signatures")
+    print_info("   - allow_more_logging: Lift log opcode limits")
+    print_info("   - allow_unnamed_resources: Access unref'd resources")
+    print_info("   - extra_opcode_budget: Add extra compute budget")
+    print_info("   - fix_signers: Auto-fix incorrect signers")
+    print_info("")
+    print_info("6. Use cases for simulation:")
+    print_info("   - Fee estimation without signing")
+    print_info("   - Error detection before spending fees")
+    print_info("   - Debugging smart contract execution")
+    print_info("   - Validating transaction groups")
+    print_info("   - Testing complex app interactions")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- **Transaction Simulation**
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

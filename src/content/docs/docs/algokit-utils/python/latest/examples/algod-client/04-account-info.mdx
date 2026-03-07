@@ -1,0 +1,367 @@
+---
+title: "Account Information"
+description: "This example demonstrates how to retrieve comprehensive account information using the AlgodClient methods: account_information(), account_application_information(), and account_asset_information()."
+sidebar:
+  order: 4
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve comprehensive account information using the AlgodClient methods: account_information(), account_application_information(), and account_asset_information().
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/04_account_info.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/04_account_info.py)
+
+```python title="04_account_info.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Account Information
+
+This example demonstrates how to retrieve comprehensive account information using
+the AlgodClient methods: account_information(), account_application_information(), and
+account_asset_information().
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    get_funded_account,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+
+def format_amount(micro_algos: int) -> dict[str, str]:
+    """Format a bigint microAlgos value to both microAlgo and Algo representations."""
+    micro_algo_str = f"{micro_algos:,} uALGO"
+    algo_value = micro_algos / 1_000_000
+    algo_str = f"{algo_value:,.6f} ALGO"
+    return {
+        "micro_algo": micro_algo_str,
+        "algo": algo_str,
+    }
+
+
+def main() -> None:
+    print_header("Account Information Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # Create an AlgorandClient to get a funded account
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a Funded Account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    account_address: str
+    try:
+        funded_account = get_funded_account(algorand)
+        account_address = str(funded_account.addr)
+        print_success(f"Got funded account: {account_address}")
+    except Exception as e:
+        print_error(f"Failed to get funded account: {e}")
+        print_info("Make sure LocalNet is running with `algokit localnet start`")
+        print_info("If issues persist, try `algokit localnet reset`")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 2: Get Full Account Information
+    # =========================================================================
+    print_step(2, "Getting full account information with account_information()")
+
+    try:
+        account_info = algod.account_information(account_address)
+
+        print_success("Account information retrieved successfully!")
+        print_info("")
+
+        # Display core account fields
+        print_info("Core Account Information:")
+        print_info(f"  Address:     {account_info.address}")
+        print_info(f"  Short:       {shorten_address(str(account_info.address))}")
+
+        balance = format_amount(account_info.amount)
+        print_info(f"  Balance:     {balance['algo']} ({balance['micro_algo']})")
+
+        min_balance = format_amount(account_info.min_balance)
+        print_info(f"  Min Balance: {min_balance['algo']} ({min_balance['micro_algo']})")
+
+        print_info(f"  Status:      {account_info.status}")
+        print_info(f"  Round:       {account_info.round_:,}")
+        print_info("")
+
+        # =====================================================================
+        # Step 3: Display Additional Account Fields
+        # =====================================================================
+        print_step(3, "Displaying additional account fields")
+
+        pending_rewards = format_amount(account_info.pending_rewards or 0)
+        total_rewards = format_amount(account_info.rewards or 0)
+        amount_without_rewards = format_amount(account_info.amount_without_pending_rewards or 0)
+
+        print_info("Rewards Information:")
+        print_info(f"  Pending Rewards:          {pending_rewards['algo']}")
+        print_info(f"  Total Rewards:            {total_rewards['algo']}")
+        print_info(f"  Amount Without Rewards:   {amount_without_rewards['algo']}")
+        print_info("")
+
+        # =====================================================================
+        # Step 4: Display Asset Holdings
+        # =====================================================================
+        print_step(4, "Displaying assets held by the account (assets)")
+
+        print_info("Asset Holdings:")
+        print_info(f"  Total Assets Opted In: {account_info.total_assets_opted_in or 0}")
+
+        assets = account_info.assets or []
+        if assets:
+            print_info("  Asset Holdings:")
+            for asset in assets:
+                print_info(f"    - Asset ID: {asset.asset_id}")
+                print_info(f"      Amount: {asset.amount:,}")
+                print_info(f"      Frozen: {asset.is_frozen or False}")
+        else:
+            print_info("  No assets held by this account")
+            print_info("On LocalNet, dispenser accounts typically do not hold any ASAs")
+        print_info("")
+
+        # =====================================================================
+        # Step 5: Display Created Applications
+        # =====================================================================
+        print_step(5, "Displaying applications created by the account (created-apps)")
+
+        print_info("Created Applications:")
+        print_info(f"  Total Created Apps: {account_info.total_created_apps or 0}")
+
+        created_apps = account_info.created_apps or []
+        if created_apps:
+            print_info("  Created Applications:")
+            for app in created_apps:
+                print_info(f"    - App ID: {app.id}")
+                if app.params and app.params.creator:
+                    print_info(f"      Creator: {shorten_address(str(app.params.creator))}")
+        else:
+            print_info("  No applications created by this account")
+            print_info("This account has not deployed any smart contracts")
+        print_info("")
+
+        # =====================================================================
+        # Step 6: Display Opted-In Applications
+        # =====================================================================
+        print_step(6, "Displaying applications the account has opted into (apps-local-state)")
+
+        print_info("Opted-In Applications (Local State):")
+        print_info(f"  Total Apps Opted In: {account_info.total_apps_opted_in or 0}")
+
+        apps_local_state = account_info.apps_local_state or []
+        if apps_local_state:
+            print_info("  Local State Entries:")
+            for local_state in apps_local_state:
+                print_info(f"    - App ID: {local_state.id}")
+                schema = local_state.schema
+                num_uint = schema.num_uint if schema else 0
+                num_byte = schema.num_byte_slice if schema else 0
+                print_info(f"      Schema: {num_uint} uints, {num_byte} byte slices")
+                key_value = local_state.key_value or []
+                if key_value:
+                    print_info(f"      Key-Value Pairs: {len(key_value)}")
+        else:
+            print_info("  No applications opted into")
+            print_info("This account has not opted into any applications")
+        print_info("")
+
+        # =====================================================================
+        # Step 7: Display Created Assets
+        # =====================================================================
+        print_step(7, "Displaying assets created by the account (created-assets)")
+
+        print_info("Created Assets:")
+        print_info(f"  Total Created Assets: {account_info.total_created_assets or 0}")
+
+        created_assets = account_info.created_assets or []
+        if created_assets:
+            print_info("  Created Assets:")
+            for asset in created_assets:
+                print_info(f"    - Asset ID: {asset.index}")
+                params = asset.params
+                if params and params.name:
+                    print_info(f"      Name: {params.name}")
+                if params and params.unit_name:
+                    print_info(f"      Unit: {params.unit_name}")
+                print_info(f"      Total: {(params.total if params else 0):,}")
+                print_info(f"      Decimals: {params.decimals if params else 0}")
+        else:
+            print_info("  No assets created by this account")
+        print_info("")
+
+        # =====================================================================
+        # Step 8: Demonstrate account_application_information() (if apps exist)
+        # =====================================================================
+        print_step(8, "Demonstrating account_application_information(address, app_id)")
+
+        if apps_local_state:
+            app_id = apps_local_state[0].id
+            print_info(f"Querying specific application info for App ID: {app_id}")
+
+            app_info = algod.account_application_information(account_address, app_id)
+            print_success("Application-specific information retrieved!")
+            print_info(f"  Round: {app_info.round_:,}")
+            if app_info.app_local_state:
+                print_info("  Has Local State: Yes")
+                local_schema = app_info.app_local_state.schema
+                num_uint = local_schema.num_uint if local_schema else 0
+                num_byte = local_schema.num_byte_slice if local_schema else 0
+                print_info(f"    Schema: {num_uint} uints, {num_byte} byte slices")
+            if app_info.created_app:
+                print_info("  Is Creator: Yes")
+        elif created_apps:
+            app_id = created_apps[0].id
+            print_info(f"Querying specific application info for App ID: {app_id}")
+
+            app_info = algod.account_application_information(account_address, app_id)
+            print_success("Application-specific information retrieved!")
+            print_info(f"  Round: {app_info.round_:,}")
+            if app_info.created_app:
+                print_info("  Is Creator: Yes")
+                created_app = app_info.created_app
+                approval_size = len(created_app.approval_program or b"")
+                clear_size = len(created_app.clear_state_program or b"")
+                print_info(f"    Approval Program Size: {approval_size} bytes")
+                print_info(f"    Clear Program Size: {clear_size} bytes")
+        else:
+            print_info("No applications to query.")
+            print_info("account_application_information() requires an app ID that the account has interacted with.")
+            print_info("It returns both local state (if opted in) and global state (if creator).")
+        print_info("")
+
+        # =====================================================================
+        # Step 9: Demonstrate account_asset_information() (if assets exist)
+        # =====================================================================
+        print_step(9, "Demonstrating account_asset_information(address, asset_id)")
+
+        if assets:
+            asset_id = assets[0].asset_id
+            print_info(f"Querying specific asset info for Asset ID: {asset_id}")
+
+            asset_info = algod.account_asset_information(account_address, asset_id)
+            print_success("Asset-specific information retrieved!")
+            print_info(f"  Round: {asset_info.round_:,}")
+            if asset_info.asset_holding:
+                holding = asset_info.asset_holding
+                print_info(f"  Holding Amount: {holding.amount:,}")
+                print_info(f"  Is Frozen: {holding.is_frozen or False}")
+            if asset_info.created_asset:
+                print_info("  Is Creator: Yes")
+                created = asset_info.created_asset
+                print_info(f"    Total Supply: {created.total or 0:,}")
+        elif created_assets:
+            asset_id = created_assets[0].index
+            print_info(f"Querying specific asset info for Asset ID: {asset_id}")
+
+            asset_info = algod.account_asset_information(account_address, asset_id)
+            print_success("Asset-specific information retrieved!")
+            print_info(f"  Round: {asset_info.round_:,}")
+            if asset_info.asset_holding:
+                holding = asset_info.asset_holding
+                print_info(f"  Holding Amount: {holding.amount:,}")
+            if asset_info.created_asset:
+                print_info("  Is Creator: Yes")
+                created = asset_info.created_asset
+                print_info(f"    Total Supply: {created.total or 0:,}")
+                print_info(f"    Decimals: {created.decimals or 0}")
+        else:
+            print_info("No assets to query.")
+            print_info("account_asset_information() requires an asset ID that the account has interacted with.")
+            print_info("It returns both the holding info and asset params (if creator).")
+    except Exception as e:
+        print_error(f"Failed to get account information: {e}")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. account_information(address) - Get full account details")
+    print_info("  2. Key fields: address, amount, min-balance, status, round")
+    print_info("  3. Asset holdings (assets array)")
+    print_info("  4. Created applications (created-apps array)")
+    print_info("  5. Opted-in applications (apps-local-state array)")
+    print_info("  6. Created assets (created-assets array)")
+    print_info("  7. account_application_information(address, app_id) - Get specific app info")
+    print_info("  8. account_asset_information(address, asset_id) - Get specific asset info")
+    print_info("")
+    print_info("Key Account fields:")
+    print_info("  - address: The account public key")
+    print_info("  - amount: Total MicroAlgos in the account")
+    print_info("  - min-balance: Minimum balance required based on usage")
+    print_info('  - status: "Offline", "Online", or "NotParticipating"')
+    print_info("  - round: The round this information is valid for")
+    print_info("  - assets: Array of AssetHolding (asset-id, amount, is-frozen)")
+    print_info("  - apps-local-state: Array of ApplicationLocalState (opted-in apps)")
+    print_info("  - created-apps: Array of Application (apps created by this account)")
+    print_info("  - created-assets: Array of Asset (ASAs created by this account)")
+    print_info("")
+    print_info("Use cases:")
+    print_info("  - Check account balance before transactions")
+    print_info("  - Verify minimum balance requirements")
+    print_info("  - Enumerate assets held or created by an account")
+    print_info("  - Check application opt-in status")
+    print_info("  - Query specific asset or app details for an account")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- **Account Information**
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

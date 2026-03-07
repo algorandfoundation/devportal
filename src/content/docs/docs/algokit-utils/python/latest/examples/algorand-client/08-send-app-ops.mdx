@@ -1,0 +1,530 @@
+---
+title: "Send Application Operations"
+description: "This example demonstrates how to perform smart contract (application) operations:"
+sidebar:
+  order: 8
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to perform smart contract (application) operations:
+- algorand.send.app_create() to deploy a new application with global/local schema
+- algorand.send.app_update() to update application code
+- algorand.send.app_call() for NoOp application calls with args
+- algorand.send.app_call() with OnComplete.OptIn for account opt-in
+- algorand.send.app_call() with OnComplete.CloseOut for account close-out
+- algorand.send.app_call() with OnComplete.ClearState to clear local state
+- algorand.send.app_delete() to delete the application
+- Passing application arguments, accounts, assets, apps references
+
+## Prerequisites
+
+LocalNet required for sending transactions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/08_send_app_ops.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/08_send_app_ops.py)
+
+```python title="08_send_app_ops.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Send Application Operations
+
+This example demonstrates how to perform smart contract (application) operations:
+- algorand.send.app_create() to deploy a new application with global/local schema
+- algorand.send.app_update() to update application code
+- algorand.send.app_call() for NoOp application calls with args
+- algorand.send.app_call() with OnComplete.OptIn for account opt-in
+- algorand.send.app_call() with OnComplete.CloseOut for account close-out
+- algorand.send.app_call() with OnComplete.ClearState to clear local state
+- algorand.send.app_delete() to delete the application
+- Passing application arguments, accounts, assets, apps references
+
+LocalNet required for sending transactions
+"""
+
+from shared import (
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_transact import OnApplicationComplete
+from algokit_utils import AlgoAmount, AlgorandClient
+from algokit_utils.transactions.types import (
+    AppCallParams,
+    AppCreateParams,
+    AppDeleteParams,
+    AppUpdateParams,
+    AssetCreateParams,
+)
+
+# ============================================================================
+# TEAL Programs - loaded from shared artifacts
+# ============================================================================
+
+# A counter app that supports all lifecycle operations
+APPROVAL_PROGRAM = load_teal_source("approval-lifecycle-full.teal")
+
+# Updated version of the approval program (increments by 2 instead of 1)
+APPROVAL_PROGRAM_V2 = load_teal_source("approval-lifecycle-full-v2.teal")
+
+# Clear state program (must always approve)
+CLEAR_STATE_PROGRAM = load_teal_source("clear-state-approve.teal")
+
+
+def main() -> None:
+    print_header("Send Application Operations Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create and fund test accounts
+    print_step(1, "Create and fund test accounts")
+    print_info("Creating creator and user accounts for app operations")
+
+    creator = algorand.account.random()
+    user = algorand.account.random()
+
+    print_info("")
+    print_info("Created accounts:")
+    print_info(f"  Creator: {shorten_address(str(creator.addr))}")
+    print_info(f"  User: {shorten_address(str(user.addr))}")
+
+    # Fund all accounts
+    algorand.account.ensure_funded_from_environment(creator.addr, AlgoAmount.from_algo(10))
+    algorand.account.ensure_funded_from_environment(user.addr, AlgoAmount.from_algo(5))
+
+    print_success("Created and funded test accounts")
+
+    # Step 2: Create a new application with algorand.send.app_create()
+    print_step(2, "Create a new application with algorand.send.app_create()")
+    print_info("Deploying a counter app with global and local state schema")
+    print_info("")
+    print_info("Schema specification:")
+    print_info("  globalInts: 1 (for the counter)")
+    print_info("  globalByteSlices: 1 (for the message)")
+    print_info("  localInts: 1 (for user_visits)")
+    print_info("  localByteSlices: 0")
+
+    create_result = algorand.send.app_create(
+        AppCreateParams(
+            sender=creator.addr,
+            approval_program=APPROVAL_PROGRAM,
+            clear_state_program=CLEAR_STATE_PROGRAM,
+            schema={
+                "global_ints": 1,
+                "global_byte_slices": 1,
+                "local_ints": 1,
+                "local_byte_slices": 0,
+            },
+        )
+    )
+
+    app_id = create_result.app_id
+    app_address = create_result.app_address
+
+    print_info("")
+    print_info("Application created:")
+    print_info(f"  App ID: {app_id}")
+    print_info(f"  App Address: {shorten_address(str(app_address))}")
+    print_info(f"  Transaction ID: {create_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {create_result.confirmation.confirmed_round}")
+
+    # Check global state after creation
+    global_state = algorand.app.get_global_state(app_id)
+    counter_state = global_state.get("counter")
+    counter_value = counter_state.value if counter_state else 0
+    message_state = global_state.get("message")
+    message_value = message_state.value if message_state else ""
+    print_info("")
+    print_info("Initial global state:")
+    print_info(f"  counter: {counter_value}")
+    print_info(f'  message: "{message_value}"')
+
+    print_success("Application created successfully")
+
+    # Step 3: Call the application with algorand.send.app_call() - NoOp
+    print_step(3, "Call the application with algorand.send.app_call() - NoOp")
+    print_info("Calling the app to increment the counter")
+
+    call_result = algorand.send.app_call(
+        AppCallParams(
+            sender=creator.addr,
+            app_id=app_id,
+            note=b"First NoOp call",
+            # on_complete defaults to NoOp
+        )
+    )
+
+    print_info("")
+    print_info("NoOp call completed:")
+    print_info(f"  Transaction ID: {call_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {call_result.confirmation.confirmed_round}")
+
+    # Check global state after call
+    state_after_call = algorand.app.get_global_state(app_id)
+    counter_after_state = state_after_call.get("counter")
+    counter_after = counter_after_state.value if counter_after_state else 0
+    print_info(f"  Counter after call: {counter_after}")
+
+    print_success("NoOp call completed successfully")
+
+    # Step 4: Call with application arguments
+    print_step(4, "Call with application arguments")
+    print_info("Passing arguments to the app call (will be logged)")
+
+    # Arguments must be bytes
+    arg1 = b"hello"
+    arg2 = b"world"
+
+    call_with_args_result = algorand.send.app_call(
+        AppCallParams(
+            sender=creator.addr,
+            app_id=app_id,
+            args=[arg1, arg2],
+            note=b"Call with arguments",
+        )
+    )
+
+    print_info("")
+    print_info("Call with arguments:")
+    print_info(f"  Transaction ID: {call_with_args_result.tx_ids[0]}")
+    print_info('  Args passed: ["hello", "world"]')
+
+    # Check logs from the transaction
+    logs = call_with_args_result.confirmation.logs or []
+    print_info(f"  Logs from app: {len(logs)} entries")
+    if logs:
+        first_log = logs[0].decode("utf-8", errors="replace")
+        print_info(f'  First log: "{first_log}"')
+
+    state_after_args = algorand.app.get_global_state(app_id)
+    counter_after_args_state = state_after_args.get("counter")
+    counter_after_args = counter_after_args_state.value if counter_after_args_state else 0
+    print_info(f"  Counter after call: {counter_after_args}")
+
+    print_success("Call with arguments completed")
+
+    # Step 5: Opt-in to the application with OnComplete.OptIn
+    print_step(5, "Opt-in to the application with app_call and OptIn")
+    print_info("User opting in to the app to enable local state")
+
+    opt_in_result = algorand.send.app_call(
+        AppCallParams(
+            sender=user.addr,
+            app_id=app_id,
+            on_complete=OnApplicationComplete.OptIn,
+            note=b"Initial opt-in",
+        )
+    )
+
+    print_info("")
+    print_info("Opt-in completed:")
+    print_info(f"  Transaction ID: {opt_in_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {opt_in_result.confirmation.confirmed_round}")
+
+    # Check local state after opt-in
+    local_state = algorand.app.get_local_state(app_id, user.addr)
+    user_visits_state = local_state.get("user_visits")
+    user_visits = user_visits_state.value if user_visits_state else 0
+    print_info("  User local state:")
+    print_info(f"    user_visits: {user_visits}")
+
+    print_success("User opted in successfully")
+
+    # Step 6: Update the application with algorand.send.app_update()
+    print_step(6, "Update the application with algorand.send.app_update()")
+    print_info("Updating the app to increment by 2 instead of 1")
+
+    update_result = algorand.send.app_update(
+        AppUpdateParams(
+            sender=creator.addr,
+            app_id=app_id,
+            approval_program=APPROVAL_PROGRAM_V2,
+            clear_state_program=CLEAR_STATE_PROGRAM,
+        )
+    )
+
+    print_info("")
+    print_info("Application updated:")
+    print_info(f"  Transaction ID: {update_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {update_result.confirmation.confirmed_round}")
+
+    # Test the updated logic
+    pre_update_state = algorand.app.get_global_state(app_id)
+    pre_update_counter_state = pre_update_state.get("counter")
+    pre_update_counter = pre_update_counter_state.value if pre_update_counter_state else 0
+
+    algorand.send.app_call(
+        AppCallParams(
+            sender=creator.addr,
+            app_id=app_id,
+            note=b"Testing updated logic",
+        )
+    )
+
+    state_after_update = algorand.app.get_global_state(app_id)
+    post_update_counter_state = state_after_update.get("counter")
+    post_update_counter = post_update_counter_state.value if post_update_counter_state else 0
+
+    print_info("")
+    print_info("Verifying updated logic:")
+    print_info(f"  Counter before update call: {pre_update_counter}")
+    print_info(f"  Counter after update call: {post_update_counter}")
+    increment = int(post_update_counter) - int(pre_update_counter)
+    print_info(f"  Increment amount: {increment} (was 1, now 2)")
+
+    print_success("Application updated successfully")
+
+    # Step 7: Demonstrate passing references (accounts, apps, assets)
+    print_step(7, "Demonstrate passing references to app calls")
+    print_info("App calls can include references to accounts, assets, and other apps")
+
+    # Create a dummy asset to reference
+    asset_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=creator.addr,
+            total=1000,
+            decimals=0,
+            asset_name="Reference Test",
+            unit_name="REF",
+        )
+    )
+
+    asset_id = asset_result.asset_id
+
+    # Create another app to reference
+    other_app_result = algorand.send.app_create(
+        AppCreateParams(
+            sender=creator.addr,
+            approval_program=load_teal_source("simple-approve.teal"),
+            clear_state_program=load_teal_source("clear-state-approve.teal"),
+        )
+    )
+
+    other_app_id = other_app_result.app_id
+
+    # Make a call with all reference types
+    ref_call_result = algorand.send.app_call(
+        AppCallParams(
+            sender=creator.addr,
+            app_id=app_id,
+            account_references=[user.addr],  # Reference another account
+            app_references=[other_app_id],  # Reference another app
+            asset_references=[asset_id],  # Reference an asset
+            note=b"Call with references",
+        )
+    )
+
+    print_info("")
+    print_info("Call with references:")
+    print_info(f"  Transaction ID: {ref_call_result.tx_ids[0]}")
+    print_info(f"  Account references: [{shorten_address(str(user.addr))}]")
+    print_info(f"  App references: [{other_app_id}]")
+    print_info(f"  Asset references: [{asset_id}]")
+    print_info("  Note: These references allow the app to read data from these resources")
+
+    print_success("References passed successfully")
+
+    # Step 8: Close out of the application
+    print_step(8, "Close out with app_call and CloseOut")
+    print_info("User closing out of the app (removes local state)")
+
+    close_out_result = algorand.send.app_call(
+        AppCallParams(
+            sender=user.addr,
+            app_id=app_id,
+            on_complete=OnApplicationComplete.CloseOut,
+            note=b"Close out from app",
+        )
+    )
+
+    print_info("")
+    print_info("Close out completed:")
+    print_info(f"  Transaction ID: {close_out_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {close_out_result.confirmation.confirmed_round}")
+
+    # Verify user is no longer opted in
+    try:
+        algorand.app.get_local_state(app_id, user.addr)
+        print_error("User should not have local state after close out!")
+    except Exception:
+        print_info("  User no longer has local state (as expected)")
+
+    print_success("User closed out successfully")
+
+    # Step 9: Demonstrate ClearState
+    print_step(9, "Demonstrate ClearState operation")
+    print_info("ClearState forcefully removes local state (cannot be rejected by the app)")
+
+    # First, opt the user back in
+    algorand.send.app_call(
+        AppCallParams(
+            sender=user.addr,
+            app_id=app_id,
+            on_complete=OnApplicationComplete.OptIn,
+            note=b"Re-opt-in for ClearState demo",
+        )
+    )
+    print_info("User re-opted in to demonstrate ClearState")
+
+    # Now use ClearState
+    clear_state_result = algorand.send.app_call(
+        AppCallParams(
+            sender=user.addr,
+            app_id=app_id,
+            on_complete=OnApplicationComplete.ClearState,
+            note=b"Clear state operation",
+        )
+    )
+
+    print_info("")
+    print_info("ClearState completed:")
+    print_info(f"  Transaction ID: {clear_state_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {clear_state_result.confirmation.confirmed_round}")
+    print_info("  Note: ClearState always succeeds, even if the clear program rejects")
+
+    # Verify user is no longer opted in
+    try:
+        algorand.app.get_local_state(app_id, user.addr)
+        print_error("User should not have local state after clear state!")
+    except Exception:
+        print_info("  User local state cleared (as expected)")
+
+    print_success("ClearState completed successfully")
+
+    # Step 10: Delete the application with algorand.send.app_delete()
+    print_step(10, "Delete the application with algorand.send.app_delete()")
+    print_info("Deleting the app (only creator can delete in this example)")
+
+    # Get final state before deletion
+    final_state = algorand.app.get_global_state(app_id)
+    final_counter_state = final_state.get("counter")
+    final_counter = final_counter_state.value if final_counter_state else 0
+    final_message_state = final_state.get("message")
+    final_message = final_message_state.value if final_message_state else ""
+    print_info("")
+    print_info("Final global state before deletion:")
+    print_info(f"  counter: {final_counter}")
+    print_info(f'  message: "{final_message}"')
+
+    delete_result = algorand.send.app_delete(
+        AppDeleteParams(
+            sender=creator.addr,
+            app_id=app_id,
+        )
+    )
+
+    print_info("")
+    print_info("Application deleted:")
+    print_info(f"  Transaction ID: {delete_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {delete_result.confirmation.confirmed_round}")
+
+    print_info(f"  App {app_id} deleted from the ledger")
+
+    print_success("Application deleted successfully")
+
+    # Clean up the other test app
+    algorand.send.app_delete(
+        AppDeleteParams(
+            sender=creator.addr,
+            app_id=other_app_id,
+        )
+    )
+
+    # Step 11: Summary of application operations
+    print_step(11, "Summary - Application Operations API")
+    print_info("Application operations available through algorand.send:")
+    print_info("")
+    print_info("app_create(params):")
+    print_info("  sender: str - Creator of the application")
+    print_info("  approval_program: str | bytes - TEAL code or compiled bytes")
+    print_info("  clear_state_program: str | bytes - TEAL code or compiled bytes")
+    print_info("  schema: { global_ints, global_byte_slices, local_ints, local_byte_slices }")
+    print_info("  extra_program_pages: int - For large programs (auto-calculated)")
+    print_info("  Returns: { app_id, app_address, ...SendSingleTransactionResult }")
+    print_info("")
+    print_info("app_update(params):")
+    print_info("  sender: str - Must be authorized to update")
+    print_info("  app_id: int - Application to update")
+    print_info("  approval_program: str | bytes - New TEAL code")
+    print_info("  clear_state_program: str | bytes - New TEAL code")
+    print_info("")
+    print_info("app_call(params):")
+    print_info("  sender: str - Caller")
+    print_info("  app_id: int - Application to call")
+    print_info("  on_complete: OnComplete - NoOp, OptIn, CloseOut, ClearState")
+    print_info("  args: list[bytes] - Application arguments")
+    print_info("  account_references: list[str] - Accounts the app can access")
+    print_info("  app_references: list[int] - Apps the app can call")
+    print_info("  asset_references: list[int] - Assets the app can read")
+    print_info("  box_references: list[BoxReference] - Boxes the app can access")
+    print_info("")
+    print_info("app_delete(params):")
+    print_info("  sender: str - Must be authorized to delete")
+    print_info("  app_id: int - Application to delete")
+    print_info("")
+    print_info("OnComplete enum values:")
+    print_info("  NoOp (0) - Call without state changes")
+    print_info("  OptIn (1) - Opt into app (creates local state)")
+    print_info("  CloseOut (2) - Close out of app (removes local state)")
+    print_info("  ClearState (3) - Force clear local state (always succeeds)")
+    print_info("  UpdateApplication (4) - Update app code")
+    print_info("  DeleteApplication (5) - Delete the app")
+    print_info("")
+    print_info("Reading app state:")
+    print_info("  algorand.app.get_global_state(app_id) - Get global state")
+    print_info("  algorand.app.get_local_state(app_id, address) - Get local state")
+    print_info("  algorand.app.get_by_id(app_id) - Get app info including state")
+
+    print_success("Send Application Operations example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- **Send Application Operations**
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

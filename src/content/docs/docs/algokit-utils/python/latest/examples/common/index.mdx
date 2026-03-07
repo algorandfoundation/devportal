@@ -1,0 +1,40 @@
+---
+title: "Common Utilities"
+description: "Utility functions and helpers."
+sidebar:
+  label: "Common Utilities"
+  order: 0
+---
+
+[← Back to Examples Overview](/docs/algokit-utils/python/latest/examples/)
+
+Utility functions and helpers.
+
+## Examples (12)
+
+<table>
+<thead><tr><th>Example</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><a href="01-address-basics/">Address Basics</a></td><td><p>This example demonstrates basic address operations using the algokit_common module:</p><ul><li>Parsing addresses from base32 strings with public_key_from_address()</li><li>Creating addresses from public keys with address_from_public_key()</li><li>Using the zero address constant ZERO_ADDRESS</li><li>Computing the 4-byte checksum via SHA-512/256</li><li>Validating addresses by attempting to parse them</li><li>Accessing the 32-byte public key from an address</li><li>Using address constants: ADDRESS_LENGTH, ZERO_ADDRESS</li></ul></td></tr>
+<tr><td><a href="02-address-encoding/">Address Encoding</a></td><td><p>This example demonstrates how to encode and decode addresses between different formats and compute application addresses:</p><ul><li>address_from_public_key() to convert 32-byte public key to base32 string</li><li>public_key_from_address() to convert base32 string to public key bytes</li><li>get_application_address() to compute an app's escrow address from app ID</li><li>Round-trip verification: encode(decode(address)) equals original</li><li>Understanding the relationship between public key bytes and checksum</li></ul></td></tr>
+<tr><td><a href="03-array-utilities/">Array Utilities</a></td><td><p>This example demonstrates array utility operations for comparing and concatenating byte arrays in Python:</p><ul><li>Comparing arrays with == operator for element-by-element comparison</li><li>Concatenating arrays using + operator or bytes concatenation</li><li>Using list comprehensions for array manipulation</li></ul><p>Note: Python's bytes type provides native support for these operations, unlike JavaScript's Uint8Array which needs utility functions.</p></td></tr>
+<tr><td><a href="04-constants/">Constants Reference</a></td><td><p>This example displays all the protocol constants available in the algokit_common package. These constants define limits, sizes, and separators used throughout Algorand.</p></td></tr>
+<tr><td><a href="05-crypto-hash/">Crypto Hash (SHA-512/256)</a></td><td><p>This example demonstrates the sha512_256() function for computing Algorand-compatible SHA-512/256 hashes. This hash algorithm is used throughout Algorand for:</p><ul><li>Transaction IDs</li><li>Address checksums</li><li>Application escrow addresses</li><li>State proof verification</li></ul></td></tr>
+<tr><td><a href="06-logger/">Example</a></td><td><p>Logger Type Example</p><p>This example demonstrates the Logger protocol/interface for consistent logging across the AlgoKit Utils SDK.</p><p>Topics covered:</p><ul><li>Logger protocol definition with all log levels</li><li>Console-based Logger implementation</li><li>No-op (silent) logger for production</li><li>Custom formatting logger</li><li>Compatibility with common logging patterns</li></ul></td></tr>
+<tr><td><a href="07-json-bigint/">JSON BigInt Support</a></td><td><p>This example demonstrates how Python handles large integers in JSON, which is simpler than JavaScript due to Python's native arbitrary-precision integers.</p><p>Topics covered:</p><ul><li>Python's int type has unlimited precision (no MAX_SAFE_INTEGER limit)</li><li>json.dumps() and json.loads() work with large integers natively</li><li>Round-trip preservation of large numbers</li><li>Comparison with JavaScript's precision issues</li><li>Algorand-relevant examples with microAlgo amounts</li><li>Custom JSON encoders for specific serialization needs</li></ul></td></tr>
+<tr><td><a href="08-msgpack/">MessagePack Encoding</a></td><td><p>This example demonstrates encoding and decoding MessagePack data, which is used for Algorand transaction encoding.</p><p>Topics covered:</p><ul><li>encode_msgpack() to serialize data to MessagePack format</li><li>decode_msgpack() to deserialize MessagePack bytes</li><li>Encoding simple objects with various types (strings, numbers, bytes)</li><li>Key handling in MessagePack</li><li>Uint8Array (bytes) encoding</li><li>Size comparison: MessagePack vs JSON</li></ul></td></tr>
+<tr><td><a href="09-primitive-codecs/">Primitive Serde (Serialization/Deserialization)</a></td><td><p>This example demonstrates how to use primitive serialization patterns in Python for encoding/decoding basic values in wire format.</p><p>Note: Unlike the TypeScript SDK which uses explicit codec classes (numberCodec, bigIntCodec, etc.), the Python SDK uses a dataclass-based approach with field metadata helpers. This example shows both native Python serialization and the serde utilities available in algokit_common.</p><p>Topics covered:</p><ul><li>Python's native type handling for serialization</li><li>Using wire() metadata for dataclass fields</li><li>Address encoding/decoding with addr() helper</li><li>Bytes encoding (base64 for JSON, raw for msgpack)</li><li>Round-trip verification for various types</li><li>The serde module's to_wire() and from_wire() functions</li></ul></td></tr>
+<tr><td><a href="10-composite-codecs/">Composite Serde (Serialization/Deserialization)</a></td><td><p>This example demonstrates how to serialize/deserialize composite data structures like arrays, maps, and records in Python using the serde utilities.</p><p>Note: Unlike the TypeScript SDK which uses explicit ArrayCodec, MapCodec, and RecordCodec classes, the Python SDK handles these natively through:</p><ul><li>Native Python lists for arrays</li><li>Native Python dicts for records/maps</li><li>Dataclass fields with serde helpers for structured data</li></ul><p>Topics covered:</p><ul><li>Encoding/decoding typed arrays (lists)</li><li>Encoding/decoding maps (dictionaries)</li><li>Using bytes_seq(), int_seq(), addr_seq() helpers</li><li>Nested structures (list of lists, dict of lists)</li><li>Round-trip verification for composite types</li></ul></td></tr>
+<tr><td><a href="11-model-codecs/">Model Serde (Object Model Serialization)</a></td><td><p>This example demonstrates how to use dataclass-based serialization for complex object structures with field metadata in Python.</p><p>Note: Unlike the TypeScript SDK which uses ObjectModelCodec, PrimitiveModelCodec, and ArrayModelCodec classes, the Python SDK uses dataclasses with field metadata helpers. This is a more Pythonic approach that achieves the same goals.</p><p>Topics covered:</p><ul><li>Defining dataclasses with field metadata using wire()</li><li>Encoding format options: to_wire() produces dict for JSON or msgpack</li><li>Handling optional fields with omit_if_none</li><li>Field renaming with wire key aliases</li><li>Nested dataclasses</li><li>Round-trip encoding with to_wire() and from_wire()</li><li>Default values and omission rules</li></ul></td></tr>
+<tr><td><a href="12-sourcemap/">Sourcemap for TEAL Debugging</a></td><td><p>This example demonstrates how to use ProgramSourceMap for mapping TEAL program counters (PC) to source locations for debugging purposes.</p><p>Topics covered:</p><ul><li>ProgramSourceMap class construction from sourcemap data</li><li>Sourcemap format: version, sources, mappings</li><li>get_line_for_pc() to get source line for a specific PC</li><li>get_pcs_for_line() to find PCs for a source line</li><li>pc_to_line and line_to_pc dictionaries</li><li>How sourcemaps enable TEAL debugging by mapping PC to source</li></ul></td></tr>
+</tbody>
+</table>
+
+## Quick Start
+
+Run any example from the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/01_address_basics.py
+```

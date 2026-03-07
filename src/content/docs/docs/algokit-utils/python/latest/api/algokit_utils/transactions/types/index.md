@@ -1,5 +1,5 @@
 ---
-title: 'algokit_utils.transactions.types'
+title: "algokit_utils.transactions.types"
 ---
 
 <div class="api-ref">
@@ -8,14 +8,14 @@ title: 'algokit_utils.transactions.types'
 
 ## Attributes
 
-| [`MethodCallParams`](#algokit_utils.transactions.types.MethodCallParams) |     |
-| ------------------------------------------------------------------------ | --- |
-| [`TxnParams`](#algokit_utils.transactions.types.TxnParams)               |     |
+| [`MethodCallParams`](#algokit_utils.transactions.types.MethodCallParams)   |    |
+|----------------------------------------------------------------------------|----|
+| [`TxnParams`](#algokit_utils.transactions.types.TxnParams)                 |    |
 
 ## Classes
 
 | [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)                           |                                |
-| ------------------------------------------------------------------------------------------------ | ------------------------------ |
+|--------------------------------------------------------------------------------------------------|--------------------------------|
 | [`PaymentParams`](#algokit_utils.transactions.types.PaymentParams)                               |                                |
 | [`AssetCreateParams`](#algokit_utils.transactions.types.AssetCreateParams)                       |                                |
 | [`AssetConfigParams`](#algokit_utils.transactions.types.AssetConfigParams)                       |                                |
@@ -39,167 +39,167 @@ title: 'algokit_utils.transactions.types'
 
 ## Module Contents
 
-### _class_ CommonTxnParams
+### *class* CommonTxnParams
 
-#### sender _: str_
+#### sender *: str*
 
-#### signer _: TransactionSigner | AddressWithTransactionSigner | None_ _= None_
+#### signer *: TransactionSigner | AddressWithTransactionSigner | None* *= None*
 
-#### rekey*to *: str | None\_ _= None_
+#### rekey_to *: str | None* *= None*
 
-#### note _: bytes | None_ _= None_
+#### note *: bytes | None* *= None*
 
-#### lease _: bytes | None_ _= None_
+#### lease *: bytes | None* *= None*
 
-#### static*fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
+#### static_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
-#### extra*fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
+#### extra_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
-#### max*fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None\_ _= None_
+#### max_fee *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount) | None* *= None*
 
-#### validity*window *: int | None\_ _= None_
+#### validity_window *: int | None* *= None*
 
-#### first*valid_round *: int | None\_ _= None_
+#### first_valid_round *: int | None* *= None*
 
-#### last*valid_round *: int | None\_ _= None_
+#### last_valid_round *: int | None* *= None*
 
-### _class_ PaymentParams
-
-Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
-
-#### receiver _: str_
-
-#### amount _: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)_
-
-#### close*remainder_to *: str | None\_ _= None_
-
-### _class_ AssetCreateParams
+### *class* PaymentParams
 
 Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
-#### total _: int_
+#### receiver *: str*
 
-#### asset*name *: str | None\_ _= None_
+#### amount *: [AlgoAmount](/docs/algokit-utils/python/latest/api/algokit_utils/models/amount/#algokit_utils.models.amount.AlgoAmount)*
 
-#### unit*name *: str | None\_ _= None_
+#### close_remainder_to *: str | None* *= None*
 
-#### url _: str | None_ _= None_
-
-#### decimals _: int | None_ _= None_
-
-#### default*frozen *: bool | None\_ _= None_
-
-#### manager _: str | None_ _= None_
-
-#### reserve _: str | None_ _= None_
-
-#### freeze _: str | None_ _= None_
-
-#### clawback _: str | None_ _= None_
-
-#### metadata*hash *: bytes | None\_ _= None_
-
-### _class_ AssetConfigParams
+### *class* AssetCreateParams
 
 Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
-#### asset*id *: int\_
+#### total *: int*
 
-#### manager _: str | None_ _= None_
+#### asset_name *: str | None* *= None*
 
-#### reserve _: str | None_ _= None_
+#### unit_name *: str | None* *= None*
 
-#### freeze _: str | None_ _= None_
+#### url *: str | None* *= None*
 
-#### clawback _: str | None_ _= None_
+#### decimals *: int | None* *= None*
 
-### _class_ AssetFreezeParams
+#### default_frozen *: bool | None* *= None*
 
-Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+#### manager *: str | None* *= None*
 
-#### asset*id *: int\_
+#### reserve *: str | None* *= None*
 
-#### account _: str_
+#### freeze *: str | None* *= None*
 
-#### frozen _: bool_
+#### clawback *: str | None* *= None*
 
-### _class_ AssetDestroyParams
+#### metadata_hash *: bytes | None* *= None*
 
-Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
-
-#### asset*id *: int\_
-
-### _class_ OnlineKeyRegistrationParams
+### *class* AssetConfigParams
 
 Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
-#### vote*key *: str\_
+#### asset_id *: int*
 
-#### selection*key *: str\_
+#### manager *: str | None* *= None*
 
-#### state*proof_key *: bytes | None\_ _= None_
+#### reserve *: str | None* *= None*
 
-#### vote*first *: int\_ _= 0_
+#### freeze *: str | None* *= None*
 
-#### vote*last *: int\_ _= 0_
+#### clawback *: str | None* *= None*
 
-#### vote*key_dilution *: int\_ _= 0_
-
-#### nonparticipation _: bool | None_ _= None_
-
-### _class_ OfflineKeyRegistrationParams
+### *class* AssetFreezeParams
 
 Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
-#### prevent*account_from_ever_participating_again *: bool\_ _= True_
+#### asset_id *: int*
 
-### _class_ AssetTransferParams
+#### account *: str*
 
-Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+#### frozen *: bool*
 
-#### asset*id *: int\_
-
-#### amount _: int_
-
-#### receiver _: str_
-
-#### close*asset_to *: str | None\_ _= None_
-
-#### clawback*target *: str | None\_ _= None_
-
-### _class_ AssetOptInParams
+### *class* AssetDestroyParams
 
 Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
-#### asset*id *: int\_
+#### asset_id *: int*
 
-### _class_ AssetOptOutParams
-
-Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
-
-#### asset*id *: int\_
-
-#### creator _: str_
-
-### _class_ AppCallParams
+### *class* OnlineKeyRegistrationParams
 
 Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
-#### app*id *: int\_
+#### vote_key *: str*
 
-#### args _: list[bytes] | None_ _= None_
+#### selection_key *: str*
 
-#### account*references *: list[str] | None\_ _= None_
+#### state_proof_key *: bytes | None* *= None*
 
-#### app*references *: list[int] | None\_ _= None_
+#### vote_first *: int* *= 0*
 
-#### asset*references *: list[int] | None\_ _= None_
+#### vote_last *: int* *= 0*
 
-#### box*references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None\_ _= None_
+#### vote_key_dilution *: int* *= 0*
 
-#### on*complete *: OnApplicationComplete | None\_ _= None_
+#### nonparticipation *: bool | None* *= None*
 
-### _class_ AppCreateSchema
+### *class* OfflineKeyRegistrationParams
+
+Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+
+#### prevent_account_from_ever_participating_again *: bool* *= True*
+
+### *class* AssetTransferParams
+
+Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+
+#### asset_id *: int*
+
+#### amount *: int*
+
+#### receiver *: str*
+
+#### close_asset_to *: str | None* *= None*
+
+#### clawback_target *: str | None* *= None*
+
+### *class* AssetOptInParams
+
+Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+
+#### asset_id *: int*
+
+### *class* AssetOptOutParams
+
+Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+
+#### asset_id *: int*
+
+#### creator *: str*
+
+### *class* AppCallParams
+
+Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+
+#### app_id *: int*
+
+#### args *: list[bytes] | None* *= None*
+
+#### account_references *: list[str] | None* *= None*
+
+#### app_references *: list[int] | None* *= None*
+
+#### asset_references *: list[int] | None* *= None*
+
+#### box_references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None* *= None*
+
+#### on_complete *: OnApplicationComplete | None* *= None*
+
+### *class* AppCreateSchema
 
 Bases: `TypedDict`
 
@@ -210,8 +210,7 @@ dict(mapping) -> new dictionary initialized from a mapping object’s
 
 dict(iterable) -> new dictionary initialized as if via:
 : d = {}
-for k, v in iterable:
-
+  for k, v in iterable:
   <br/>
   > d[k] = v
 
@@ -222,142 +221,143 @@ dict(
 ```
 
 kwargs) -> new dictionary initialized with the name=value pairs
-: in the keyword argument list. For example: dict(one=1, two=2)
+: in the keyword argument list.  For example:  dict(one=1, two=2)
 
-#### global*ints *: int\_
+#### global_ints *: int*
 
-#### global*byte_slices *: int\_
+#### global_byte_slices *: int*
 
-#### local*ints *: int\_
+#### local_ints *: int*
 
-#### local*byte_slices *: int\_
+#### local_byte_slices *: int*
 
-### _class_ AppCreateParams
-
-Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
-
-#### approval*program *: str | bytes\_
-
-#### clear*state_program *: str | bytes\_
-
-#### schema _: [AppCreateSchema](#algokit_utils.transactions.types.AppCreateSchema) | None_ _= None_
-
-#### on*complete *: OnApplicationComplete | None\_ _= None_
-
-#### args _: list[bytes] | None_ _= None_
-
-#### account*references *: list[str] | None\_ _= None_
-
-#### app*references *: list[int] | None\_ _= None_
-
-#### asset*references *: list[int] | None\_ _= None_
-
-#### box*references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None\_ _= None_
-
-#### extra*program_pages *: int | None\_ _= None_
-
-### _class_ AppUpdateParams
+### *class* AppCreateParams
 
 Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
-#### app*id *: int\_
+#### approval_program *: str | bytes*
 
-#### approval*program *: str | bytes\_
+#### clear_state_program *: str | bytes*
 
-#### clear*state_program *: str | bytes\_
+#### schema *: [AppCreateSchema](#algokit_utils.transactions.types.AppCreateSchema) | None* *= None*
 
-#### args _: list[bytes] | None_ _= None_
+#### on_complete *: OnApplicationComplete | None* *= None*
 
-#### account*references *: list[str] | None\_ _= None_
+#### args *: list[bytes] | None* *= None*
 
-#### app*references *: list[int] | None\_ _= None_
+#### account_references *: list[str] | None* *= None*
 
-#### asset*references *: list[int] | None\_ _= None_
+#### app_references *: list[int] | None* *= None*
 
-#### box*references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None\_ _= None_
+#### asset_references *: list[int] | None* *= None*
 
-#### on*complete *: OnApplicationComplete\_
+#### box_references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None* *= None*
 
-### _class_ AppDeleteParams
+#### extra_program_pages *: int | None* *= None*
 
-Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
-
-#### app*id *: int\_
-
-#### args _: list[bytes] | None_ _= None_
-
-#### account*references *: list[str] | None\_ _= None_
-
-#### app*references *: list[int] | None\_ _= None_
-
-#### asset*references *: list[int] | None\_ _= None_
-
-#### box*references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None\_ _= None_
-
-#### on*complete *: OnApplicationComplete | None\_ _= None_
-
-### _class_ AppMethodCallParams
+### *class* AppUpdateParams
 
 Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
 
-#### app*id *: int\_
+#### app_id *: int*
 
-#### method _: Method_
+#### approval_program *: str | bytes*
 
-#### args _: list[bytes] | None_ _= None_
+#### clear_state_program *: str | bytes*
 
-#### on*complete *: OnApplicationComplete | None\_ _= None_
+#### args *: list[bytes] | None* *= None*
 
-#### account*references *: list[str] | None\_ _= None_
+#### account_references *: list[str] | None* *= None*
 
-#### app*references *: list[int] | None\_ _= None_
+#### app_references *: list[int] | None* *= None*
 
-#### asset*references *: list[int] | None\_ _= None_
+#### asset_references *: list[int] | None* *= None*
 
-#### box*references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None\_ _= None_
+#### box_references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None* *= None*
 
-### _class_ AppCallMethodCallParams
+#### on_complete *: OnApplicationComplete*
+
+### *class* AppDeleteParams
+
+Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+
+#### app_id *: int*
+
+#### args *: list[bytes] | None* *= None*
+
+#### account_references *: list[str] | None* *= None*
+
+#### app_references *: list[int] | None* *= None*
+
+#### asset_references *: list[int] | None* *= None*
+
+#### box_references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None* *= None*
+
+#### on_complete *: OnApplicationComplete | None* *= None*
+
+### *class* AppMethodCallParams
+
+Bases: [`CommonTxnParams`](#algokit_utils.transactions.types.CommonTxnParams)
+
+#### app_id *: int*
+
+#### method *: Method*
+
+#### args *: list[bytes] | None* *= None*
+
+#### on_complete *: OnApplicationComplete | None* *= None*
+
+#### account_references *: list[str] | None* *= None*
+
+#### app_references *: list[int] | None* *= None*
+
+#### asset_references *: list[int] | None* *= None*
+
+#### box_references *: list[algokit_utils.models.state.BoxReference | BoxIdentifier] | None* *= None*
+
+### *class* AppCallMethodCallParams
 
 Bases: `_BaseAppMethodCall`
 
-#### app*id *: int\_
+#### app_id *: int*
 
-#### on*complete *: OnApplicationComplete | None\_ _= None_
+#### on_complete *: OnApplicationComplete | None* *= None*
 
-### _class_ AppCreateMethodCallParams
-
-Bases: `_BaseAppMethodCall`
-
-#### approval*program *: str | bytes\_
-
-#### clear*state_program *: str | bytes\_
-
-#### schema _: [AppCreateSchema](#algokit_utils.transactions.types.AppCreateSchema) | None_ _= None_
-
-#### on*complete *: OnApplicationComplete | None\_ _= None_
-
-### _class_ AppUpdateMethodCallParams
+### *class* AppCreateMethodCallParams
 
 Bases: `_BaseAppMethodCall`
 
-#### app*id *: int\_
+#### approval_program *: str | bytes*
 
-#### approval*program *: str | bytes\_
+#### clear_state_program *: str | bytes*
 
-#### clear*state_program *: str | bytes\_
+#### schema *: [AppCreateSchema](#algokit_utils.transactions.types.AppCreateSchema) | None* *= None*
 
-#### on*complete *: OnApplicationComplete\_
+#### on_complete *: OnApplicationComplete | None* *= None*
 
-### _class_ AppDeleteMethodCallParams
+### *class* AppUpdateMethodCallParams
 
 Bases: `_BaseAppMethodCall`
 
-#### app*id *: int\_
+#### app_id *: int*
 
-#### on*complete *: OnApplicationComplete\_
+#### approval_program *: str | bytes*
 
-### algokit_utils.transactions.types.MethodCallParams
+#### clear_state_program *: str | bytes*
 
-### algokit_utils.transactions.types.TxnParams
+#### on_complete *: OnApplicationComplete*
+
+### *class* AppDeleteMethodCallParams
+
+Bases: `_BaseAppMethodCall`
+
+#### app_id *: int*
+
+#### on_complete *: OnApplicationComplete*
+
+### MethodCallParams
+
+### TxnParams
+
 
 </div>

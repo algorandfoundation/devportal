@@ -1,0 +1,330 @@
+---
+title: "Pending Transactions"
+description: "This example demonstrates how to query pending transactions in the transaction pool using pending_transactions() and pending_transactions_by_address(). Pending transactions are those that have been submitted but not yet confirmed in a block."
+sidebar:
+  order: 7
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to query pending transactions in the transaction pool using pending_transactions() and pending_transactions_by_address(). Pending transactions are those that have been submitted but not yet confirmed in a block.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/07_pending_transactions.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/07_pending_transactions.py)
+
+```python title="07_pending_transactions.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, ANN401
+"""
+Example: Pending Transactions
+
+This example demonstrates how to query pending transactions in the transaction
+pool using pending_transactions() and pending_transactions_by_address(). Pending
+transactions are those that have been submitted but not yet confirmed in a block.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from typing import Any
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    format_micro_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, PaymentParams
+
+
+def display_pending_transaction(signed_txn: Any, index: int) -> None:
+    """Display details of a signed transaction from the pending pool."""
+    print_info(f"  Transaction {index + 1}:")
+    if signed_txn.txn:
+        inner = signed_txn.txn
+        print_info(f"    Type: {inner.transaction_type.value}")
+        print_info(f"    Sender: {shorten_address(str(inner.sender))}")
+        if inner.fee:
+            print_info(f"    Fee: {format_micro_algo(inner.fee)}")
+        print_info(f"    First Valid: {inner.first_valid:,}")
+        print_info(f"    Last Valid: {inner.last_valid:,}")
+
+        # Payment-specific fields
+        if inner.payment:
+            print_info(f"    Receiver: {shorten_address(str(inner.payment.receiver))}")
+            print_info(f"    Amount: {format_micro_algo(inner.payment.amount)}")
+    print_info("")
+
+
+def main() -> None:
+    print_header("Pending Transactions Example")
+
+    # Create clients
+    algod = create_algod_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Query all pending transactions in the pool
+    # =========================================================================
+    print_step(1, "Querying all pending transactions with pending_transactions()")
+
+    print_info("pending_transactions() returns all transactions in the pending pool")
+    print_info("sorted by priority (fee per byte) in decreasing order.")
+    print_info("")
+
+    all_pending = algod.pending_transactions()
+
+    top_transactions = all_pending.top_transactions or []
+    print_info("PendingTransactionsResponse structure:")
+    print_info(f"  total_transactions: {all_pending.total_transactions} (total txns in pool)")
+    print_info("  top_transactions: SignedTransaction[] (array of pending txns)")
+    print_info(f"  top_transactions.length: {len(top_transactions)}")
+    print_info("")
+
+    if all_pending.total_transactions == 0:
+        print_info("No pending transactions in the pool (normal for LocalNet in dev mode)")
+        print_info("On LocalNet dev mode, transactions are confirmed immediately when submitted.")
+    else:
+        print_info(f"Found {all_pending.total_transactions} pending transaction(s)")
+        for i, pending_txn in enumerate(top_transactions):
+            display_pending_transaction(pending_txn, i)
+    print_info("")
+
+    # =========================================================================
+    # Step 2: Query pending transactions for a specific address
+    # =========================================================================
+    print_step(2, "Querying pending transactions by address with pending_transactions_by_address()")
+
+    # Get the dispenser account address for testing
+    dispenser = algorand.account.localnet_dispenser()
+    dispenser_address = str(dispenser.addr)
+
+    print_info(f"Checking pending transactions for: {shorten_address(dispenser_address)}")
+    print_info("")
+
+    address_pending = algod.pending_transactions_by_address(dispenser_address)
+
+    addr_top_transactions = address_pending.top_transactions or []
+    print_info("PendingTransactionsResponse for address:")
+    print_info(f"  total_transactions: {address_pending.total_transactions}")
+    print_info(f"  top_transactions.length: {len(addr_top_transactions)}")
+    print_info("")
+
+    if address_pending.total_transactions == 0:
+        print_info("No pending transactions for this address")
+    else:
+        print_info(f"Found {address_pending.total_transactions} pending transaction(s) for this address")
+        for i, pending_txn in enumerate(addr_top_transactions):
+            display_pending_transaction(pending_txn, i)
+    print_info("")
+
+    # =========================================================================
+    # Step 3: Using the max parameter to limit results
+    # =========================================================================
+    print_step(3, "Using the max parameter to limit results")
+
+    print_info("Both methods accept an optional max_ parameter")
+    print_info("When max_ = 0 (or not specified), all pending transactions are returned")
+    print_info("When max_ > 0, results are truncated to that many transactions")
+    print_info("")
+
+    # Query with max = 5
+    limited_pending = algod.pending_transactions(max_=5)
+    limited_top = limited_pending.top_transactions or []
+    print_info("pending_transactions(max_=5):")
+    print_info(f"  total_transactions: {limited_pending.total_transactions} (total in pool)")
+    print_info(f"  top_transactions.length: {len(limited_top)} (returned, max 5)")
+    print_info("")
+
+    # Query by address with max = 3
+    limited_by_address = algod.pending_transactions_by_address(dispenser_address, max_=3)
+    limited_addr_top = limited_by_address.top_transactions or []
+    print_info("pending_transactions_by_address(address, max_=3):")
+    print_info(f"  total_transactions: {limited_by_address.total_transactions}")
+    print_info(f"  top_transactions.length: {len(limited_addr_top)}")
+    print_info("")
+
+    # =========================================================================
+    # Step 4: Submit a transaction and immediately query the pending pool
+    # =========================================================================
+    print_step(4, "Submitting a transaction and immediately querying pending pool")
+
+    print_info("On LocalNet in dev mode, transactions are confirmed immediately,")
+    print_info("so they may not appear in the pending pool. On MainNet/TestNet,")
+    print_info("there is a window where the transaction is pending before confirmation.")
+    print_info("")
+
+    # Create a receiver account
+    receiver = algorand.account.random()
+    print_info(f"Sender: {shorten_address(str(dispenser.addr))}")
+    print_info(f"Receiver: {shorten_address(str(receiver.addr))}")
+    print_info("")
+
+    # Create and sign a payment transaction
+    payment_amount = AlgoAmount.from_algo(0.1)
+    payment_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=dispenser.addr,
+            receiver=receiver.addr,
+            amount=payment_amount,
+        )
+    )
+
+    tx_id = payment_txn.tx_id()
+    print_info(f"Transaction ID: {tx_id}")
+
+    # Sign the transaction
+    signed_txn = dispenser.signer([payment_txn], [0])
+
+    # Submit the transaction
+    print_info("Submitting transaction...")
+    algod.send_raw_transaction(signed_txn)
+    print_success("Transaction submitted!")
+    print_info("")
+
+    # Immediately query pending transactions
+    # Note: On LocalNet dev mode, this will likely show the transaction as already confirmed
+    pending_after_submit = algod.pending_transactions()
+    submit_top = pending_after_submit.top_transactions or []
+    print_info("Pending pool immediately after submission:")
+    print_info(f"  total_transactions: {pending_after_submit.total_transactions}")
+
+    if pending_after_submit.total_transactions == 0:
+        print_info("Transaction already confirmed (LocalNet dev mode behavior)")
+    else:
+        print_info("Transaction found in pending pool:")
+        for pending_txn in submit_top:
+            if pending_txn.txn:
+                display_pending_transaction(pending_txn, 0)
+    print_info("")
+
+    # Also check by sender address
+    sender_pending = algod.pending_transactions_by_address(str(dispenser.addr))
+    print_info(f"Pending for sender address: {sender_pending.total_transactions} transaction(s)")
+    print_info("")
+
+    # Verify the transaction was confirmed
+    pending_info = algod.pending_transaction_information(tx_id)
+    confirmed_round = pending_info.confirmed_round or 0
+    if confirmed_round > 0:
+        print_success(f"Transaction confirmed in round {confirmed_round:,}")
+    elif pending_info.pool_error:
+        print_error(f"Transaction rejected: {pending_info.pool_error}")
+    else:
+        print_info("Transaction is still pending...")
+    print_info("")
+
+    # =========================================================================
+    # Step 5: Understanding the SignedTransaction structure
+    # =========================================================================
+    print_step(5, "Understanding the SignedTransaction structure in pending pool")
+
+    print_info("Each transaction in top-transactions is a SignedTransaction with:")
+    print_info("  txn: Transaction      - The unsigned transaction details")
+    print_info("  sig?: bytes           - Signature bytes (for single-sig)")
+    print_info("  msig?: Multisig       - Multisig details (if multisig)")
+    print_info("  lsig?: LogicSig       - Logic signature (if using smart sig)")
+    print_info("  sgnr?: Address        - The actual signer (if rekeyed)")
+    print_info("")
+
+    print_info("The Transaction (txn) object contains:")
+    print_info("  type: string          - Transaction type (pay, axfer, appl, etc.)")
+    print_info("  snd: Address          - The sender address")
+    print_info("  fee?: int             - Transaction fee in microAlgos")
+    print_info("  fv: int               - First valid round")
+    print_info("  lv: int               - Last valid round")
+    print_info("  gen?: string          - Genesis ID (network identifier)")
+    print_info("  gh?: bytes            - Genesis hash")
+    print_info("  note?: bytes          - Transaction note")
+    print_info("  lx?: bytes            - Transaction lease")
+    print_info("  rekey?: Address       - Rekey-to address")
+    print_info("  grp?: bytes           - Group ID (if in atomic group)")
+    print_info("")
+
+    print_info("Type-specific fields (on the Transaction object):")
+    print_info("  pay (payment): rcv, amt, close")
+    print_info("  axfer (asset transfer): xaid, arcv, aamt, asnd, aclose")
+    print_info("  appl (application call): apid, apan, apat, apaa, ...")
+    print_info("  acfg (asset config): caid, apar")
+    print_info("  afrz (asset freeze): fadd, faid, afrz")
+    print_info("  keyreg (key registration): ...")
+    print_info("")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. pending_transactions() - Get all pending transactions in the pool")
+    print_info("  2. pending_transactions_by_address(address) - Get pending txns for an address")
+    print_info("  3. Using max_ parameter to limit results")
+    print_info("  4. Submitting and immediately querying for pending transactions")
+    print_info("  5. Understanding the SignedTransaction and Transaction structure")
+    print_info("")
+    print_info("Key PendingTransactionsResponse fields:")
+    print_info("  - total_transactions: Total number of transactions in the pool")
+    print_info("  - top_transactions: Array of SignedTransaction objects")
+    print_info("")
+    print_info("Use cases for pending transactions:")
+    print_info("  - Monitor your own pending transactions")
+    print_info("  - Check transaction pool congestion")
+    print_info("  - Verify a transaction was submitted before confirmation")
+    print_info("  - Build fee estimation based on current pool")
+    print_info("")
+    print_info("Notes:")
+    print_info("  - On LocalNet dev mode, transactions confirm immediately")
+    print_info("  - On MainNet/TestNet, pending pool shows unconfirmed transactions")
+    print_info("  - Transactions are sorted by priority (fee per byte)")
+    print_info("  - Use max_ parameter to avoid fetching large numbers of transactions")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- **Pending Transactions**
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

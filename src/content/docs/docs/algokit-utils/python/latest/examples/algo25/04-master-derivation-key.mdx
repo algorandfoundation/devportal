@@ -1,0 +1,212 @@
+---
+title: "Master Derivation Key Functions"
+description: "This example demonstrates the master derivation key (MDK) alias functions and shows their equivalence to the core seed/mnemonic functions."
+sidebar:
+  order: 4
+---
+
+[← Back to Mnemonic Utilities](/docs/algokit-utils/python/latest/examples/algo25/)
+
+## Description
+
+This example demonstrates the master derivation key (MDK) alias functions and shows their equivalence to the core seed/mnemonic functions.
+ Key concepts:
+- master_derivation_key_to_mnemonic() is an alias for mnemonic_from_seed()
+- mnemonic_to_master_derivation_key() is an alias for seed_from_mnemonic()
+- These aliases exist for wallet derivation workflows where the terminology
+"master derivation key" is more familiar than "seed"
+
+## Prerequisites
+
+No LocalNet required - pure utility functions (aliases)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algo25/04_master_derivation_key.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algo25/04_master_derivation_key.py)
+
+```python title="04_master_derivation_key.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Master Derivation Key Functions
+
+This example demonstrates the master derivation key (MDK) alias functions
+and shows their equivalence to the core seed/mnemonic functions.
+
+Key concepts:
+- master_derivation_key_to_mnemonic() is an alias for mnemonic_from_seed()
+- mnemonic_to_master_derivation_key() is an alias for seed_from_mnemonic()
+- These aliases exist for wallet derivation workflows where the terminology
+  "master derivation key" is more familiar than "seed"
+
+No LocalNet required - pure utility functions (aliases)
+"""
+
+import secrets
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_algo25 import (
+    master_derivation_key_to_mnemonic,
+    mnemonic_from_seed,
+    mnemonic_to_master_derivation_key,
+    seed_from_mnemonic,
+)
+
+
+def main() -> None:
+    print_header("Master Derivation Key Functions Example")
+
+    # Step 1: Generate a random 32-byte master derivation key (MDK)
+    print_step(1, "Generate a Random 32-byte Master Derivation Key")
+
+    mdk = secrets.token_bytes(32)
+
+    print_info(f"Master Derivation Key (MDK): {len(mdk)} bytes")
+    print_info(f"Hex: {format_hex(mdk)}")
+    print_info("")
+    print_info("A master derivation key is simply a 32-byte seed.")
+    print_info('The term "MDK" is used in wallet derivation contexts.')
+
+    # Step 2: Convert MDK to mnemonic using master_derivation_key_to_mnemonic
+    print_step(2, "Convert MDK to Mnemonic using master_derivation_key_to_mnemonic()")
+
+    mnemonic_from_mdk = master_derivation_key_to_mnemonic(mdk)
+    words = mnemonic_from_mdk.split(" ")
+
+    print_info(f"Mnemonic has {len(words)} words")
+    print_info("Mnemonic words:")
+    for i in range(0, len(words), 5):
+        row = words[i : i + 5]
+        numbered = " ".join(f"{i + j + 1:2}. {w:<10}" for j, w in enumerate(row))
+        print_info(f"  {numbered}")
+
+    # Step 3: Convert mnemonic back to MDK using mnemonic_to_master_derivation_key
+    print_step(3, "Convert Mnemonic Back to MDK using mnemonic_to_master_derivation_key()")
+
+    recovered_mdk = mnemonic_to_master_derivation_key(mnemonic_from_mdk)
+
+    print_info(f"Recovered MDK: {len(recovered_mdk)} bytes")
+    print_info(f"Hex: {format_hex(recovered_mdk)}")
+
+    mdk_match = mdk == recovered_mdk
+    print_info("")
+    print_info(f"Original MDK matches recovered MDK: {'Yes' if mdk_match else 'No'}")
+
+    if mdk_match:
+        print_success("Round-trip conversion successful!")
+
+    # Step 4: Show equivalence: master_derivation_key_to_mnemonic === mnemonic_from_seed
+    print_step(4, "Demonstrate Equivalence: master_derivation_key_to_mnemonic == mnemonic_from_seed")
+
+    mnemonic_via_mdk = master_derivation_key_to_mnemonic(mdk)
+    mnemonic_via_seed = mnemonic_from_seed(mdk)
+
+    print_info("Using master_derivation_key_to_mnemonic(mdk):")
+    print_info(f'  "{" ".join(mnemonic_via_mdk.split(" ")[:5])}..."')
+    print_info("")
+    print_info("Using mnemonic_from_seed(mdk):")
+    print_info(f'  "{" ".join(mnemonic_via_seed.split(" ")[:5])}..."')
+    print_info("")
+
+    mnemonics_equal = mnemonic_via_mdk == mnemonic_via_seed
+    print_info(f"Results identical: {'Yes' if mnemonics_equal else 'No'}")
+
+    if mnemonics_equal:
+        print_success("master_derivation_key_to_mnemonic(mdk) == mnemonic_from_seed(mdk)")
+
+    # Step 5: Show equivalence: mnemonic_to_master_derivation_key === seed_from_mnemonic
+    print_step(5, "Demonstrate Equivalence: mnemonic_to_master_derivation_key == seed_from_mnemonic")
+
+    mdk_from_alias = mnemonic_to_master_derivation_key(mnemonic_from_mdk)
+    seed_from_core = seed_from_mnemonic(mnemonic_from_mdk)
+
+    print_info("Using mnemonic_to_master_derivation_key(mnemonic):")
+    print_info(f"  {format_hex(mdk_from_alias)}")
+    print_info("")
+    print_info("Using seed_from_mnemonic(mnemonic):")
+    print_info(f"  {format_hex(seed_from_core)}")
+    print_info("")
+
+    seeds_equal = mdk_from_alias == seed_from_core
+    print_info(f"Results identical: {'Yes' if seeds_equal else 'No'}")
+
+    if seeds_equal:
+        print_success("mnemonic_to_master_derivation_key(mn) equals seed_from_mnemonic(mn)")
+
+    # Step 6: Explain why these aliases exist
+    print_step(6, "Why These Convenience Aliases Exist")
+
+    print_info("The MDK alias functions exist for wallet derivation workflows:")
+    print_info("")
+    print_info("Terminology mapping:")
+    print_info("  +--------------------------------+--------------------------------+")
+    print_info("  |     Wallet Context             |     Cryptographic Context      |")
+    print_info("  +--------------------------------+--------------------------------+")
+    print_info("  |  Master Derivation Key (MDK)   |         Seed                   |")
+    print_info("  |  master_derivation_key_to_mnemonic |     mnemonic_from_seed     |")
+    print_info("  |  mnemonic_to_master_derivation_key |     seed_from_mnemonic     |")
+    print_info("  +--------------------------------+--------------------------------+")
+    print_info("")
+    print_info("In hierarchical deterministic (HD) wallet implementations,")
+    print_info('the "master derivation key" is used to derive child keys.')
+    print_info("This is the same 32-byte value as the seed, just with")
+    print_info("terminology that matches wallet derivation standards.")
+
+    # Step 7: Practical usage examples
+    print_step(7, "When to Use MDK vs Seed Functions")
+
+    print_info("Use MDK functions when:")
+    print_info("  - Working with KMD (Key Management Daemon)")
+    print_info("  - Implementing HD wallet derivation")
+    print_info("  - Following wallet-specific documentation that uses MDK terminology")
+    print_info("")
+    print_info("Use seed functions when:")
+    print_info("  - Working with general cryptographic operations")
+    print_info("  - Following Algorand core documentation")
+    print_info("  - The context is account creation rather than wallet derivation")
+    print_info("")
+    print_info("Both function pairs are interchangeable - choose based on context.")
+
+    # Step 8: Summary
+    print_step(8, "Summary")
+
+    print_info("Master Derivation Key functions are convenience aliases:")
+    print_info("")
+    print_info("  master_derivation_key_to_mnemonic(mdk)")
+    print_info("    - Alias for: mnemonic_from_seed(mdk)")
+    print_info("    - Input: 32-byte bytes object")
+    print_info("    - Output: 25-word mnemonic string")
+    print_info("")
+    print_info("  mnemonic_to_master_derivation_key(mn)")
+    print_info("    - Alias for: seed_from_mnemonic(mn)")
+    print_info("    - Input: 25-word mnemonic string")
+    print_info("    - Output: 32-byte bytes object")
+    print_info("")
+    print_info("The aliases exist to provide familiar terminology for wallet workflows.")
+
+    print_success("Master Derivation Key Functions example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Mnemonic Utilities
+
+- [Mnemonic from Seed](/docs/algokit-utils/python/latest/examples/algo25/01-mnemonic-from-seed/)
+- [Seed from Mnemonic](/docs/algokit-utils/python/latest/examples/algo25/02-seed-from-mnemonic/)
+- [Secret Key to Mnemonic](/docs/algokit-utils/python/latest/examples/algo25/03-secret-key-to-mnemonic/)
+- **Master Derivation Key Functions**
+- [Error Handling for Mnemonic Functions](/docs/algokit-utils/python/latest/examples/algo25/05-error-handling/)

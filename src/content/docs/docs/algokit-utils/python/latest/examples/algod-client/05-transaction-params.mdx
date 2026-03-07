@@ -1,0 +1,283 @@
+---
+title: "Transaction Parameters"
+description: "This example demonstrates how to get suggested transaction parameters using suggested_params(). These parameters are essential for constructing valid transactions on the Algorand network."
+sidebar:
+  order: 5
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to get suggested transaction parameters using suggested_params(). These parameters are essential for constructing valid transactions on the Algorand network.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/05_transaction_params.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/05_transaction_params.py)
+
+```python title="05_transaction_params.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Transaction Parameters
+
+This example demonstrates how to get suggested transaction parameters using
+suggested_params(). These parameters are essential for constructing valid
+transactions on the Algorand network.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+
+def format_as_base64(data: bytes | str) -> str:
+    """Format bytes or base64 string for display."""
+    if isinstance(data, bytes):
+        return base64.b64encode(data).decode("utf-8")
+    return data
+
+
+def format_fee(micro_algos: int) -> str:
+    """Format a fee as microAlgos and Algos."""
+    algo_value = micro_algos / 1_000_000
+    return f"{micro_algos:,} uALGO ({algo_value:.6f} ALGO)"
+
+
+def main() -> None:
+    print_header("Transaction Parameters Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get Suggested Parameters using suggested_params()
+    # =========================================================================
+    print_step(1, "Getting suggested transaction parameters with suggested_params()")
+
+    try:
+        suggested_params = algod.suggested_params()
+
+        print_success("Suggested parameters retrieved successfully!")
+        print_info("")
+
+        # =====================================================================
+        # Step 2: Display Core Parameters
+        # =====================================================================
+        print_step(2, "Displaying suggested transaction parameters")
+
+        print_info("Core Transaction Parameters:")
+        print_info(f"  fee:              {format_fee(suggested_params.fee)}")
+        print_info(f"  min_fee:          {format_fee(suggested_params.min_fee)}")
+        print_info(f"  flat_fee:         {suggested_params.flat_fee}")
+        print_info("")
+
+        # =====================================================================
+        # Step 3: Display Validity Window Parameters
+        # =====================================================================
+        print_step(3, "Displaying validity window parameters (first_valid, last_valid)")
+
+        print_info("Validity Window:")
+        print_info(f"  first_valid:      {suggested_params.first_valid:,}")
+        print_info(f"  last_valid:       {suggested_params.last_valid:,}")
+        print_info("")
+
+        validity_window = suggested_params.last_valid - suggested_params.first_valid
+        print_info(f"  Validity Window:  {validity_window:,} rounds")
+        print_info("The default validity window is 1000 rounds (~1 hour on MainNet)")
+        print_info("A transaction is only valid between first_valid and last_valid rounds")
+        print_info("")
+
+        # =====================================================================
+        # Step 4: Display Network Identification Parameters
+        # =====================================================================
+        print_step(4, "Displaying network identification parameters")
+
+        print_info("Network Identification:")
+        print_info(f"  genesis_id:        {suggested_params.genesis_id}")
+        print_info(f"  genesis_hash:      {format_as_base64(suggested_params.genesis_hash)}")
+        print_info(f"  consensus_version: {suggested_params.consensus_version}")
+        print_info("")
+
+        print_info("genesis_id and genesis_hash uniquely identify the network")
+        print_info("Transactions are rejected if sent to the wrong network")
+        print_info("")
+
+        # =====================================================================
+        # Step 5: Explain Each Parameter's Purpose
+        # =====================================================================
+        print_step(5, "Explaining each parameter's purpose")
+
+        print_info("Parameter Purposes:")
+        print_info("")
+        print_info("  fee:")
+        print_info("    The suggested fee per byte for the transaction.")
+        print_info("    During network congestion, this value may increase.")
+        print_info("")
+        print_info("  min_fee:")
+        print_info("    The minimum fee required regardless of transaction size.")
+        print_info("    Currently 1000 uALGO (0.001 ALGO) on all Algorand networks.")
+        print_info("")
+        print_info("  flat_fee:")
+        print_info("    When false, fee is calculated as: fee * transactionSize")
+        print_info("    When true, fee is used directly as the total fee.")
+        print_info("")
+        print_info("  first_valid:")
+        print_info("    The first round this transaction is valid for.")
+        print_info("    Usually set to the current round from the node.")
+        print_info("")
+        print_info("  last_valid:")
+        print_info("    The last round this transaction is valid for.")
+        print_info("    Transaction will fail if not confirmed by this round.")
+        print_info("")
+        print_info("  genesis_id:")
+        print_info('    A human-readable network identifier (e.g., "mainnet-v1.0").')
+        print_info("    Prevents replaying transactions across networks.")
+        print_info("")
+        print_info("  genesis_hash:")
+        print_info("    The SHA256 hash of the genesis block, uniquely identifying the network.")
+        print_info("    Cryptographically ensures transaction is for the correct chain.")
+        print_info("")
+        print_info("  consensus_version:")
+        print_info("    The consensus protocol version at the current round.")
+        print_info("    Indicates which features and rules are active.")
+        print_info("")
+
+        # =====================================================================
+        # Step 6: Demonstrate Customizing Parameters
+        # =====================================================================
+        print_step(6, "Demonstrating how to customize transaction parameters")
+
+        print_info("Customizing Parameters:")
+        print_info("")
+
+        # Example 1: Setting a specific flat fee
+        custom_fee_value = 2000  # Set a fixed 2000 uALGO fee
+
+        print_info("  Example 1: Setting a flat fee")
+        print_info(f"    Original fee:      {format_fee(suggested_params.fee)}")
+        print_info(f"    Original flat_fee: {suggested_params.flat_fee}")
+        print_info(f"    Custom fee:        {format_fee(custom_fee_value)}")
+        print_info("    Custom flat_fee:   True")
+        print_info("Set flat_fee=True to use a fixed fee instead of per-byte")
+        print_info("")
+
+        # Example 2: Extending the validity window
+        first_valid = suggested_params.first_valid
+        last_valid = suggested_params.last_valid
+        extended_window = 2000  # 2000 rounds instead of default 1000
+        extended_last_valid = first_valid + extended_window
+
+        print_info("  Example 2: Extending the validity window")
+        print_info(f"    Original last_valid:  {last_valid:,}")
+        print_info(f"    Extended last_valid:  {extended_last_valid:,}")
+        print_info(f"    Original window:      {validity_window:,} rounds")
+        print_info(f"    Extended window:      {extended_window:,} rounds")
+        print_info("Extend validity window for offline signing or delayed submission")
+        print_info("")
+
+        # Example 3: Shortening the validity window
+        short_window = 100  # Only 100 rounds validity
+        short_last_valid = first_valid + short_window
+
+        print_info("  Example 3: Shortening the validity window")
+        print_info(f"    Original last_valid:  {last_valid:,}")
+        print_info(f"    Shortened last_valid: {short_last_valid:,}")
+        print_info(f"    Shortened window:     {short_window:,} rounds")
+        print_info("Shorter windows provide better replay protection")
+        print_info("")
+
+        # Example 4: Setting a specific first_valid for delayed execution
+        future_round = first_valid + 10  # Valid starting 10 rounds from now
+        future_last_valid = future_round + 1000
+
+        print_info("  Example 4: Delayed execution (future first_valid)")
+        print_info(f"    Original first_valid: {first_valid:,}")
+        print_info(f"    Delayed first_valid:  {future_round:,}")
+        print_info(f"    Delayed last_valid:   {future_last_valid:,}")
+        print_info("Set future first_valid to prevent immediate execution")
+
+    except Exception as e:
+        print_error(f"Failed to get transaction parameters: {e}")
+        print_info("Make sure LocalNet is running with `algokit localnet start`")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. suggested_params() - Get parameters for building transactions")
+    print_info("  2. Parameter fields: fee, min_fee, flat_fee, first_valid, last_valid")
+    print_info("  3. Network identification: genesis_id, genesis_hash, consensus_version")
+    print_info("  4. How first_valid and last_valid define the validity window")
+    print_info("  5. Customizing parameters: fees and validity windows")
+    print_info("")
+    print_info("Key suggested_params fields:")
+    print_info("  - fee: Suggested fee per byte (int)")
+    print_info("  - min_fee: Minimum transaction fee (int)")
+    print_info("  - flat_fee: Whether fee is flat or per-byte (bool)")
+    print_info("  - first_valid: First valid round (int)")
+    print_info("  - last_valid: Last valid round (int)")
+    print_info("  - genesis_id: Network identifier string")
+    print_info("  - genesis_hash: Genesis block hash (base64 string)")
+    print_info("  - consensus_version: Protocol version string")
+    print_info("")
+    print_info("Use cases:")
+    print_info("  - Building transactions with correct fees")
+    print_info("  - Setting appropriate validity windows")
+    print_info("  - Ensuring network compatibility")
+    print_info("  - Offline transaction signing with extended windows")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- **Transaction Parameters**
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

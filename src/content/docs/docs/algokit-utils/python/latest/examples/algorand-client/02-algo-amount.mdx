@@ -1,0 +1,346 @@
+---
+title: "AlgoAmount Utility"
+description: "This example demonstrates how to use the AlgoAmount utility class to work with ALGO and microALGO amounts safely, avoiding floating point precision issues."
+sidebar:
+  order: 2
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to use the AlgoAmount utility class to work with ALGO and microALGO amounts safely, avoiding floating point precision issues.
+ Topics covered:
+- Creating AlgoAmount using static factory methods
+- Accessing values in ALGO and microALGO
+- String formatting
+- Arithmetic operations (addition, subtraction)
+- Comparison operations
+- Using AlgoAmount with payment transactions
+- Avoiding floating point precision issues
+
+## Prerequisites
+
+No LocalNet required - pure utility class demonstration (except for payment example)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/02_algo_amount.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/02_algo_amount.py)
+
+```python title="02_algo_amount.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: AlgoAmount Utility
+
+This example demonstrates how to use the AlgoAmount utility class to work
+with ALGO and microALGO amounts safely, avoiding floating point precision issues.
+
+Topics covered:
+- Creating AlgoAmount using static factory methods
+- Accessing values in ALGO and microALGO
+- String formatting
+- Arithmetic operations (addition, subtraction)
+- Comparison operations
+- Using AlgoAmount with payment transactions
+- Avoiding floating point precision issues
+
+No LocalNet required - pure utility class demonstration (except for payment example)
+"""
+
+from shared import (
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AlgorandClient, PaymentParams
+
+
+def main() -> None:
+    print_header("AlgoAmount Utility Example")
+
+    # Step 1: Creating AlgoAmount using static factory methods
+    print_step(1, "Creating AlgoAmount using static factory methods")
+    print_info("AlgoAmount provides static factory methods:")
+    print_info("  - AlgoAmount.from_algo(amount) - Create from ALGO value")
+    print_info("  - AlgoAmount.from_micro_algo(amount) - Create from microALGO value")
+
+    # Create using AlgoAmount.from_algo()
+    one_and_half_algo = AlgoAmount.from_algo(1.5)
+    print_info("")
+    print_info(f"AlgoAmount.from_algo(1.5): {one_and_half_algo.algo} ALGO = {one_and_half_algo.micro_algo} uALGO")
+
+    # Create using AlgoAmount.from_micro_algo()
+    fifty_thousand_micro_algo = AlgoAmount.from_micro_algo(50_000)
+    print_info(
+        f"AlgoAmount.from_micro_algo(50000): {fifty_thousand_micro_algo.algo} ALGO = "
+        f"{fifty_thousand_micro_algo.micro_algo} uALGO"
+    )
+
+    # Create another amount
+    hundred_thousand_micro_algo = AlgoAmount.from_micro_algo(100_000)
+    print_info(
+        f"AlgoAmount.from_micro_algo(100000): {hundred_thousand_micro_algo.algo} ALGO = "
+        f"{hundred_thousand_micro_algo.micro_algo} uALGO"
+    )
+
+    print_success("Created AlgoAmount instances using factory methods")
+
+    # Step 2: Accessing values in ALGO and microALGO
+    print_step(2, "Accessing values using .algo and .micro_algo properties")
+    print_info("AlgoAmount provides getter properties to access the value:")
+    print_info("  - .algo - Get value in ALGO (as Decimal)")
+    print_info("  - .micro_algo - Get value in uALGO (as int)")
+
+    amount = AlgoAmount.from_algo(2.5)
+    print_info("")
+    print_info("For amount = AlgoAmount.from_algo(2.5):")
+    print_info(f"  .algo: {amount.algo} (type: {type(amount.algo).__name__})")
+    print_info(f"  .micro_algo: {amount.micro_algo} (type: {type(amount.micro_algo).__name__})")
+
+    print_success("Accessed values using getter properties")
+
+    # Step 3: String formatting with str()
+    print_step(3, "String formatting")
+    print_info("You can format AlgoAmount for display using properties")
+
+    formatted_amount = AlgoAmount.from_algo(1.234567)
+    print_info("")
+    print_info("AlgoAmount.from_algo(1.234567):")
+    print_info(f"  .algo: {formatted_amount.algo}")
+    print_info(f"  .micro_algo: {formatted_amount.micro_algo}")
+
+    large_amount = AlgoAmount.from_micro_algo(1_234_567_890)
+    print_info("AlgoAmount.from_micro_algo(1234567890):")
+    print_info(f"  .algo: {large_amount.algo}")
+    print_info(f"  .micro_algo: {large_amount.micro_algo:,}")
+
+    # Custom formatting using properties
+    print_info("")
+    print_info("Custom formatting examples:")
+    print_info(f"  {float(amount.algo):.2f} ALGO")
+    print_info(f"  {amount.micro_algo:,} uALGO")
+
+    print_success("Demonstrated string formatting")
+
+    # Step 4: Arithmetic operations
+    print_step(4, "Arithmetic operations (addition, subtraction)")
+    print_info("AlgoAmount uses int internally for precision.")
+    print_info("Arithmetic is done by accessing .micro_algo and creating new AlgoAmount:")
+
+    amount_a = AlgoAmount.from_algo(5)
+    amount_b = AlgoAmount.from_algo(2.5)
+    print_info("")
+    print_info(f"amount_a = AlgoAmount.from_algo(5): {amount_a.algo} ALGO")
+    print_info(f"amount_b = AlgoAmount.from_algo(2.5): {amount_b.algo} ALGO")
+
+    # Addition
+    sum_amount = AlgoAmount.from_micro_algo(amount_a.micro_algo + amount_b.micro_algo)
+    print_info("")
+    print_info("Addition: amount_a + amount_b")
+    print_info(f"  AlgoAmount.from_micro_algo({amount_a.micro_algo} + {amount_b.micro_algo})")
+    print_info(f"  = {sum_amount.algo} ALGO ({sum_amount.micro_algo:,} uALGO)")
+
+    # Subtraction
+    difference = AlgoAmount.from_micro_algo(amount_a.micro_algo - amount_b.micro_algo)
+    print_info("")
+    print_info("Subtraction: amount_a - amount_b")
+    print_info(f"  AlgoAmount.from_micro_algo({amount_a.micro_algo} - {amount_b.micro_algo})")
+    print_info(f"  = {difference.algo} ALGO ({difference.micro_algo:,} uALGO)")
+
+    # Adding transaction fees (minimum fee is 1000 microAlgo)
+    min_fee = 1000
+    amount_with_fee = AlgoAmount.from_micro_algo(amount_a.micro_algo + min_fee)
+    print_info("")
+    print_info("Adding transaction fee:")
+    print_info(f"  {amount_a.algo} ALGO + {min_fee} uALGO fee = {amount_with_fee.algo} ALGO")
+
+    print_success("Demonstrated arithmetic operations")
+
+    # Step 5: Comparison operations
+    print_step(5, "Comparison operations")
+    print_info("Compare AlgoAmount instances by comparing their .micro_algo values")
+
+    small = AlgoAmount.from_algo(1)
+    medium = AlgoAmount.from_algo(5)
+    large = AlgoAmount.from_algo(10)
+    equal_to_medium = AlgoAmount.from_micro_algo(5_000_000)
+
+    print_info("")
+    print_info("small = 1 ALGO, medium = 5 ALGO, large = 10 ALGO, equal_to_medium = 5_000_000 uALGO")
+
+    print_info("")
+    print_info("Comparison results (using .micro_algo):")
+    print_info(f"  small.micro_algo < medium.micro_algo: {small.micro_algo < medium.micro_algo}")
+    print_info(f"  medium.micro_algo < large.micro_algo: {medium.micro_algo < large.micro_algo}")
+    print_info(f"  large.micro_algo > small.micro_algo: {large.micro_algo > small.micro_algo}")
+    print_info(f"  medium.micro_algo >= equal_to_medium.micro_algo: {medium.micro_algo >= equal_to_medium.micro_algo}")
+    print_info(f"  medium.micro_algo <= equal_to_medium.micro_algo: {medium.micro_algo <= equal_to_medium.micro_algo}")
+
+    # Direct micro_algo comparison for exact equality (recommended)
+    print_info("")
+    print_info("For exact equality, compare micro_algo values (int):")
+    print_info(f"  medium.micro_algo == equal_to_medium.micro_algo: {medium.micro_algo == equal_to_medium.micro_algo}")
+
+    print_success("Demonstrated comparison operations")
+
+    # Step 6: Avoiding floating point precision issues
+    print_step(6, "Avoiding floating point precision issues")
+    print_info("Python floating point arithmetic has precision issues.")
+    print_info("AlgoAmount avoids this by using int internally for microAlgo.")
+
+    # Classic floating point problem
+    float_result = 0.1 + 0.2
+    print_info("")
+    print_info("Classic floating point problem:")
+    print_info(f"  0.1 + 0.2 = {float_result} (not 0.3!)")
+    print_info(f"  0.1 + 0.2 == 0.3: {float_result == 0.3}")
+
+    # AlgoAmount handles this correctly
+    algo_a = AlgoAmount.from_algo(0.1)
+    algo_b = AlgoAmount.from_algo(0.2)
+    algo_sum = AlgoAmount.from_micro_algo(algo_a.micro_algo + algo_b.micro_algo)
+
+    print_info("")
+    print_info("Using AlgoAmount:")
+    print_info(f"  AlgoAmount.from_algo(0.1).micro_algo = {algo_a.micro_algo}")
+    print_info(f"  AlgoAmount.from_algo(0.2).micro_algo = {algo_b.micro_algo}")
+    print_info(f"  Sum in micro_algo: {algo_a.micro_algo} + {algo_b.micro_algo} = {algo_sum.micro_algo}")
+    print_info(f"  Sum in Algo: {algo_sum.algo}")
+    algo_0_3 = AlgoAmount.from_algo(0.3)
+    print_info(f"  {algo_sum.micro_algo} == {algo_0_3.micro_algo}: {algo_sum.micro_algo == algo_0_3.micro_algo}")
+
+    # Another precision example
+    print_info("")
+    print_info("Another example with 1.23456789 ALGO:")
+    precise_amount = AlgoAmount.from_algo(1.23456789)
+    print_info(f"  AlgoAmount.from_algo(1.23456789).micro_algo = {precise_amount.micro_algo}")
+    print_info(f"  Stored as: {precise_amount.micro_algo:,} uALGO (rounded to 6 decimal places)")
+
+    print_success("Demonstrated floating point precision handling")
+
+    # Step 7: Using AlgoAmount with payment transactions
+    print_step(7, "Using AlgoAmount with payment transactions")
+    print_info("AlgoAmount integrates seamlessly with AlgorandClient payment methods")
+    print_info("This step requires LocalNet to be running")
+
+    try:
+        algorand = AlgorandClient.default_localnet()
+
+        # Verify connection
+        algorand.client.algod.status()
+
+        # Get accounts
+        dispenser = algorand.account.localnet_dispenser()
+        receiver = algorand.account.random()
+
+        print_info("")
+        print_info(f"Sender (dispenser): {shorten_address(str(dispenser.addr))}")
+        print_info(f"Receiver (random): {shorten_address(str(receiver.addr))}")
+
+        # Get initial balance
+        initial_info = algorand.account.get_information(dispenser.addr)
+        initial_balance = initial_info.amount
+        print_info("")
+        print_info(f"Initial sender balance: {initial_balance.algo} ALGO")
+
+        # Send payment using AlgoAmount
+        payment_amount = AlgoAmount.from_algo(1.5)
+        print_info("")
+        print_info(f"Sending {payment_amount.algo} ALGO ({payment_amount.micro_algo:,} uALGO)...")
+
+        result = algorand.send.payment(
+            PaymentParams(
+                sender=dispenser.addr,
+                receiver=receiver.addr,
+                amount=payment_amount,
+            )
+        )
+
+        print_info(f"Transaction ID: {result.tx_ids[0]}")
+        print_info(f"Confirmed in round: {result.confirmation.confirmed_round}")
+
+        # Check balances after
+        sender_info = algorand.account.get_information(dispenser.addr)
+        sender_balance = sender_info.amount
+        receiver_info = algorand.account.get_information(receiver.addr)
+        receiver_balance = receiver_info.amount
+
+        print_info("")
+        print_info("Final balances:")
+        print_info(f"  Sender: {sender_balance.algo} ALGO")
+        print_info(f"  Receiver: {receiver_balance.algo} ALGO ({receiver_balance.micro_algo:,} uALGO)")
+
+        # Verify the receiver got exactly the right amount
+        print_info("")
+        print_info("Verification:")
+        print_info(f"  Expected receiver balance: {payment_amount.micro_algo:,} uALGO")
+        print_info(f"  Actual receiver balance: {receiver_balance.micro_algo:,} uALGO")
+        print_info(f"  Match: {receiver_balance.micro_algo == payment_amount.micro_algo}")
+
+        print_success("Payment transaction completed successfully!")
+    except Exception as e:
+        print_error(f"Failed to run payment example: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        print_info("This step demonstrates AlgoAmount integration with transactions")
+
+    # Step 8: Summary
+    print_step(8, "Summary")
+    print_info("AlgoAmount is a wrapper class for safe ALGO/uALGO handling:")
+    print_info("")
+    print_info("Factory methods:")
+    print_info("  - AlgoAmount.from_algo(n) - From ALGO")
+    print_info("  - AlgoAmount.from_micro_algo(n) - From uALGO")
+    print_info("")
+    print_info("Properties:")
+    print_info("  - .algo - Get value in ALGO (Decimal)")
+    print_info("  - .micro_algo - Get value in uALGO (int)")
+    print_info("")
+    print_info("Operations:")
+    print_info("  - Arithmetic: Use .micro_algo + wrap result in AlgoAmount.from_micro_algo()")
+    print_info("  - Comparison: Compare .micro_algo values for exact equality")
+    print_info("")
+    print_info("Best practices:")
+    print_info("  - Always use AlgoAmount for financial calculations")
+    print_info("  - Perform arithmetic on .micro_algo (int) to avoid precision loss")
+    print_info("  - Use AlgoAmount factory methods for cleaner code")
+
+    print_success("AlgoAmount Utility example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- **AlgoAmount Utility**
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

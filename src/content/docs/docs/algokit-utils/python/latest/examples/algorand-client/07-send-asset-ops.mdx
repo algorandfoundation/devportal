@@ -1,0 +1,531 @@
+---
+title: "Send Asset Operations"
+description: "This example demonstrates how to perform ASA (Algorand Standard Asset) operations:"
+sidebar:
+  order: 7
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to perform ASA (Algorand Standard Asset) operations:
+- algorand.send.asset_create() to create a new ASA with all parameters
+- algorand.send.asset_config() to reconfigure an asset
+- algorand.send.asset_opt_in() for receiver to opt into the asset
+- algorand.send.asset_transfer() to transfer assets between accounts
+- algorand.send.asset_freeze() to freeze/unfreeze an account's asset holding
+- algorand.send.asset_transfer() with clawback_target for clawback operations
+- algorand.send.asset_opt_out() to opt out and close asset holding
+- algorand.send.asset_destroy() to destroy an asset
+
+## Prerequisites
+
+LocalNet required for sending transactions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/07_send_asset_ops.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/07_send_asset_ops.py)
+
+```python title="07_send_asset_ops.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Send Asset Operations
+
+This example demonstrates how to perform ASA (Algorand Standard Asset) operations:
+- algorand.send.asset_create() to create a new ASA with all parameters
+- algorand.send.asset_config() to reconfigure an asset
+- algorand.send.asset_opt_in() for receiver to opt into the asset
+- algorand.send.asset_transfer() to transfer assets between accounts
+- algorand.send.asset_freeze() to freeze/unfreeze an account's asset holding
+- algorand.send.asset_transfer() with clawback_target for clawback operations
+- algorand.send.asset_opt_out() to opt out and close asset holding
+- algorand.send.asset_destroy() to destroy an asset
+
+LocalNet required for sending transactions
+"""
+
+from shared import (
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AlgorandClient
+from algokit_utils.transactions.types import (
+    AssetConfigParams,
+    AssetCreateParams,
+    AssetDestroyParams,
+    AssetFreezeParams,
+    AssetOptInParams,
+    AssetOptOutParams,
+    AssetTransferParams,
+)
+
+
+def main() -> None:
+    print_header("Send Asset Operations Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create and fund test accounts
+    print_step(1, "Create and fund test accounts")
+    print_info("Creating creator, receiver, and frozen_account for asset operations")
+
+    creator = algorand.account.random()
+    receiver = algorand.account.random()
+    frozen_account = algorand.account.random()
+
+    print_info("")
+    print_info("Created accounts:")
+    print_info(f"  Creator: {shorten_address(str(creator.addr))}")
+    print_info(f"  Receiver: {shorten_address(str(receiver.addr))}")
+    print_info(f"  FrozenAccount: {shorten_address(str(frozen_account.addr))}")
+
+    # Fund all accounts
+    algorand.account.ensure_funded_from_environment(creator.addr, AlgoAmount.from_algo(10))
+    algorand.account.ensure_funded_from_environment(receiver.addr, AlgoAmount.from_algo(5))
+    algorand.account.ensure_funded_from_environment(frozen_account.addr, AlgoAmount.from_algo(5))
+
+    print_success("Created and funded test accounts")
+
+    # Step 2: Create a new ASA with all parameters
+    print_step(2, "Create a new ASA with algorand.send.asset_create()")
+    print_info("Creating an asset with all configurable parameters")
+
+    # Create a metadata hash (32 bytes)
+    metadata_hash = bytes(range(32))
+
+    create_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=creator.addr,
+            total=1_000_000,  # 1 million units (10,000 whole tokens with 2 decimals)
+            decimals=2,
+            asset_name="AlgoKit Example Token",
+            unit_name="AKEX",
+            url="https://example.com/asset",
+            metadata_hash=metadata_hash,
+            default_frozen=False,
+            manager=creator.addr,  # Can reconfigure the asset
+            reserve=creator.addr,  # Holds uncirculated supply
+            freeze=creator.addr,  # Can freeze/unfreeze accounts
+            clawback=creator.addr,  # Can clawback assets
+        )
+    )
+
+    asset_id = create_result.asset_id
+    print_info("")
+    print_info("Asset created:")
+    print_info(f"  Asset ID: {asset_id}")
+    print_info(f"  Transaction ID: {create_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {create_result.confirmation.confirmed_round}")
+
+    # Retrieve and display asset details
+    asset_info = algorand.asset.get_by_id(asset_id)
+    print_info("")
+    print_info("Asset details from chain:")
+    print_info(f"  Name: {asset_info.asset_name}")
+    print_info(f"  Unit: {asset_info.unit_name}")
+    print_info(f"  Total: {asset_info.total} (smallest units)")
+    print_info(f"  Decimals: {asset_info.decimals}")
+    print_info(f"  Creator: {shorten_address(str(asset_info.creator))}")
+    manager_addr = str(asset_info.manager) if asset_info.manager else "none"
+    reserve_addr = str(asset_info.reserve) if asset_info.reserve else "none"
+    freeze_addr = str(asset_info.freeze) if asset_info.freeze else "none"
+    clawback_addr = str(asset_info.clawback) if asset_info.clawback else "none"
+    print_info(f"  Manager: {shorten_address(manager_addr)}")
+    print_info(f"  Reserve: {shorten_address(reserve_addr)}")
+    print_info(f"  Freeze: {shorten_address(freeze_addr)}")
+    print_info(f"  Clawback: {shorten_address(clawback_addr)}")
+    print_info(f"  Default Frozen: {asset_info.default_frozen}")
+    print_info(f"  URL: {asset_info.url}")
+
+    print_success("Asset created successfully")
+
+    # Step 3: Reconfigure the asset
+    print_step(3, "Reconfigure the asset with algorand.send.asset_config()")
+    print_info("Changing the reserve address to a different account")
+
+    # Create a new reserve account
+    new_reserve = algorand.account.random()
+    algorand.account.ensure_funded_from_environment(new_reserve.addr, AlgoAmount.from_algo(1))
+
+    config_result = algorand.send.asset_config(
+        AssetConfigParams(
+            sender=creator.addr,  # Must be the manager
+            asset_id=asset_id,
+            manager=creator.addr,  # Keep manager the same
+            reserve=new_reserve.addr,  # Change reserve
+            freeze=creator.addr,  # Keep freeze the same
+            clawback=creator.addr,  # Keep clawback the same
+        )
+    )
+
+    print_info("")
+    print_info("Asset reconfigured:")
+    print_info(f"  Transaction ID: {config_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {config_result.confirmation.confirmed_round}")
+
+    # Verify the change
+    updated_asset_info = algorand.asset.get_by_id(asset_id)
+    updated_reserve = str(updated_asset_info.reserve) if updated_asset_info.reserve else "none"
+    print_info(f"  New Reserve: {shorten_address(updated_reserve)}")
+
+    print_success("Asset reconfigured successfully")
+
+    # Step 4: Opt-in receiver to the asset
+    print_step(4, "Opt-in receiver with algorand.send.asset_opt_in()")
+    print_info("Before receiving assets, an account must opt-in to the asset")
+
+    opt_in_result = algorand.send.asset_opt_in(
+        AssetOptInParams(
+            sender=receiver.addr,
+            asset_id=asset_id,
+        )
+    )
+
+    print_info("")
+    print_info("Receiver opted in:")
+    print_info(f"  Transaction ID: {opt_in_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {opt_in_result.confirmation.confirmed_round}")
+
+    # Verify opt-in
+    receiver_asset_info = algorand.asset.get_account_information(receiver.addr, asset_id)
+    print_info(f"  Receiver balance after opt-in: {receiver_asset_info.balance}")
+    print_info(f"  Receiver frozen status: {receiver_asset_info.frozen}")
+
+    print_success("Receiver opted in successfully")
+
+    # Step 5: Transfer assets to receiver
+    print_step(5, "Transfer assets with algorand.send.asset_transfer()")
+    print_info("Transferring 100 whole tokens (10000 smallest units) to receiver")
+
+    transfer_result = algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=creator.addr,
+            receiver=receiver.addr,
+            asset_id=asset_id,
+            amount=10_000,  # 100 whole tokens (100 * 10^2)
+            note=b"Initial token distribution",
+        )
+    )
+
+    print_info("")
+    print_info("Transfer completed:")
+    print_info(f"  Transaction ID: {transfer_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {transfer_result.confirmation.confirmed_round}")
+
+    # Check balances
+    creator_asset_info = algorand.asset.get_account_information(creator.addr, asset_id)
+    receiver_after_transfer = algorand.asset.get_account_information(receiver.addr, asset_id)
+    creator_tokens = creator_asset_info.balance / 100
+    receiver_tokens = receiver_after_transfer.balance / 100
+    print_info(f"  Creator balance: {creator_asset_info.balance} ({creator_tokens} tokens)")
+    print_info(f"  Receiver balance: {receiver_after_transfer.balance} ({receiver_tokens} tokens)")
+
+    print_success("Asset transfer completed successfully")
+
+    # Step 6: Freeze an account's asset holding
+    print_step(6, "Freeze account with algorand.send.asset_freeze()")
+    print_info("First opt-in frozen_account, then freeze its asset holding")
+
+    # Opt-in frozen_account
+    algorand.send.asset_opt_in(
+        AssetOptInParams(
+            sender=frozen_account.addr,
+            asset_id=asset_id,
+        )
+    )
+
+    # Transfer some tokens to frozen_account
+    algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=creator.addr,
+            receiver=frozen_account.addr,
+            asset_id=asset_id,
+            amount=5_000,  # 50 whole tokens
+        )
+    )
+
+    # Now freeze the account
+    freeze_result = algorand.send.asset_freeze(
+        AssetFreezeParams(
+            sender=creator.addr,  # Must be the freeze address
+            asset_id=asset_id,
+            account=frozen_account.addr,
+            frozen=True,
+        )
+    )
+
+    print_info("")
+    print_info("Account frozen:")
+    print_info(f"  Transaction ID: {freeze_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {freeze_result.confirmation.confirmed_round}")
+
+    # Verify frozen status
+    frozen_account_info = algorand.asset.get_account_information(frozen_account.addr, asset_id)
+    print_info(f"  Frozen account balance: {frozen_account_info.balance}")
+    print_info(f"  Frozen status: {frozen_account_info.frozen}")
+
+    # Try to transfer from frozen account (should fail)
+    print_info("")
+    print_info("Attempting transfer from frozen account (should fail)...")
+    try:
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=frozen_account.addr,
+                receiver=receiver.addr,
+                asset_id=asset_id,
+                amount=1_000,
+            )
+        )
+        print_error("Transfer should have failed!")
+    except Exception:
+        print_info("  Transfer failed as expected: account is frozen")
+
+    print_success("Freeze operation completed successfully")
+
+    # Step 7: Unfreeze and demonstrate clawback
+    print_step(7, "Unfreeze and demonstrate clawback operation")
+    print_info("Unfreezing the account, then using clawback to reclaim assets")
+
+    # Unfreeze the account
+    unfreeze_result = algorand.send.asset_freeze(
+        AssetFreezeParams(
+            sender=creator.addr,
+            asset_id=asset_id,
+            account=frozen_account.addr,
+            frozen=False,
+        )
+    )
+
+    print_info("")
+    print_info("Account unfrozen:")
+    print_info(f"  Transaction ID: {unfreeze_result.tx_ids[0]}")
+
+    unfrozen_account_info = algorand.asset.get_account_information(frozen_account.addr, asset_id)
+    print_info(f"  Frozen status after unfreeze: {unfrozen_account_info.frozen}")
+
+    # Demonstrate clawback - reclaim assets from frozen_account
+    print_info("")
+    print_info("Clawback operation: reclaiming assets from frozen_account to creator")
+
+    clawback_result = algorand.send.asset_transfer(
+        AssetTransferParams(
+            sender=creator.addr,  # Clawback address sends the transaction
+            receiver=creator.addr,  # Assets go back to creator
+            asset_id=asset_id,
+            amount=2_500,  # Clawback 25 tokens
+            clawback_target=frozen_account.addr,  # Account to clawback from
+            note=b"Clawback operation",
+        )
+    )
+
+    print_info("")
+    print_info("Clawback completed:")
+    print_info(f"  Transaction ID: {clawback_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {clawback_result.confirmation.confirmed_round}")
+
+    # Check balances after clawback
+    creator_after_clawback = algorand.asset.get_account_information(creator.addr, asset_id)
+    frozen_after_clawback = algorand.asset.get_account_information(frozen_account.addr, asset_id)
+    print_info(f"  Creator balance after clawback: {creator_after_clawback.balance}")
+    print_info(f"  FrozenAccount balance after clawback: {frozen_after_clawback.balance}")
+
+    print_success("Clawback operation completed successfully")
+
+    # Step 8: Opt-out of the asset
+    print_step(8, "Opt-out with algorand.send.asset_opt_out()")
+    print_info("Receiver will opt-out of the asset, returning remaining balance to creator")
+
+    # First transfer all assets back to creator so receiver has zero balance
+    receiver_current_balance = algorand.asset.get_account_information(receiver.addr, asset_id)
+    if receiver_current_balance.balance > 0:
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=receiver.addr,
+                receiver=creator.addr,
+                asset_id=asset_id,
+                amount=receiver_current_balance.balance,
+            )
+        )
+        print_info(f"  Transferred {receiver_current_balance.balance} units back to creator")
+
+    # Now opt-out
+    opt_out_result = algorand.send.asset_opt_out(
+        AssetOptOutParams(
+            sender=receiver.addr,
+            asset_id=asset_id,
+            creator=creator.addr,
+        ),
+        ensure_zero_balance=True,
+    )
+
+    print_info("")
+    print_info("Receiver opted out:")
+    print_info(f"  Transaction ID: {opt_out_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {opt_out_result.confirmation.confirmed_round}")
+
+    # Verify opt-out (get_account_information will throw if not opted in)
+    try:
+        algorand.asset.get_account_information(receiver.addr, asset_id)
+        print_error("Receiver should not be opted in!")
+    except Exception:
+        print_info("  Receiver successfully opted out of asset")
+
+    print_success("Opt-out completed successfully")
+
+    # Step 9: Destroy the asset
+    print_step(9, "Destroy the asset with algorand.send.asset_destroy()")
+    print_info("All assets must be returned to creator before destruction")
+
+    # Return assets from frozen_account
+    frozen_current_balance = algorand.asset.get_account_information(frozen_account.addr, asset_id)
+    if frozen_current_balance.balance > 0:
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=frozen_account.addr,
+                receiver=creator.addr,
+                asset_id=asset_id,
+                amount=frozen_current_balance.balance,
+            )
+        )
+        print_info(f"  Transferred {frozen_current_balance.balance} units from frozen_account to creator")
+
+    # Opt-out frozen_account
+    algorand.send.asset_opt_out(
+        AssetOptOutParams(
+            sender=frozen_account.addr,
+            asset_id=asset_id,
+            creator=creator.addr,
+        ),
+        ensure_zero_balance=True,
+    )
+    print_info("  FrozenAccount opted out")
+
+    # Verify creator has all assets
+    creator_final_balance = algorand.asset.get_account_information(creator.addr, asset_id)
+    print_info(f"  Creator final balance: {creator_final_balance.balance} (should be {asset_info.total})")
+
+    # Destroy the asset
+    destroy_result = algorand.send.asset_destroy(
+        AssetDestroyParams(
+            sender=creator.addr,  # Must be the manager
+            asset_id=asset_id,
+        )
+    )
+
+    print_info("")
+    print_info("Asset destroyed:")
+    print_info(f"  Transaction ID: {destroy_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {destroy_result.confirmation.confirmed_round}")
+
+    # Verify destruction
+    try:
+        algorand.asset.get_by_id(asset_id)
+        print_error("Asset should not exist!")
+    except Exception:
+        print_info(f"  Asset {asset_id} no longer exists")
+
+    print_success("Asset destroyed successfully")
+
+    # Step 10: Summary of asset operations
+    print_step(10, "Summary - Asset Operations API")
+    print_info("Asset operations available through algorand.send:")
+    print_info("")
+    print_info("asset_create(params):")
+    print_info("  sender: str - Creator of the asset")
+    print_info("  total: int - Total units in smallest divisible unit")
+    print_info("  decimals: int - Decimal places (0-19)")
+    print_info("  asset_name: str - Asset name (max 32 bytes)")
+    print_info("  unit_name: str - Unit name/ticker (max 8 bytes)")
+    print_info("  url: str - URL for asset info (max 96 bytes)")
+    print_info("  metadata_hash: bytes - 32-byte metadata hash")
+    print_info("  default_frozen: bool - Default freeze status")
+    print_info("  manager: str - Can reconfigure/destroy asset")
+    print_info("  reserve: str - Holds uncirculated supply (informational)")
+    print_info("  freeze: str - Can freeze/unfreeze holdings")
+    print_info("  clawback: str - Can clawback from any account")
+    print_info("")
+    print_info("asset_config(params):")
+    print_info("  sender: str - Must be current manager")
+    print_info("  asset_id: int - Asset to reconfigure")
+    print_info("  manager, reserve, freeze, clawback: Addresses to update")
+    print_info("")
+    print_info("asset_opt_in(params):")
+    print_info("  sender: str - Account opting in")
+    print_info("  asset_id: int - Asset to opt into")
+    print_info("")
+    print_info("asset_transfer(params):")
+    print_info("  sender: str - Sender (or clawback address)")
+    print_info("  receiver: str - Recipient")
+    print_info("  asset_id: int - Asset to transfer")
+    print_info("  amount: int - Amount in smallest units")
+    print_info("  clawback_target: str - Account to clawback from")
+    print_info("  close_asset_to: str - Close holding to this address")
+    print_info("")
+    print_info("asset_freeze(params):")
+    print_info("  sender: str - Must be freeze address")
+    print_info("  asset_id: int - Asset ID")
+    print_info("  account: str - Account to freeze/unfreeze")
+    print_info("  frozen: bool - Freeze (True) or unfreeze (False)")
+    print_info("")
+    print_info("asset_opt_out(params):")
+    print_info("  sender: str - Account opting out")
+    print_info("  asset_id: int - Asset to opt out of")
+    print_info("  creator: str - Asset creator (receives remaining units)")
+    print_info("  ensure_zero_balance: bool - Safety check")
+    print_info("")
+    print_info("asset_destroy(params):")
+    print_info("  sender: str - Must be manager")
+    print_info("  asset_id: int - Asset to destroy")
+    print_info("  Note: All units must be in creator account")
+
+    print_success("Send Asset Operations example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- **Send Asset Operations**
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

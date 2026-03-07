@@ -1,0 +1,247 @@
+---
+title: "Constants Reference"
+description: "This example displays all the protocol constants available in the algokit_common package. These constants define limits, sizes, and separators used throughout Algorand."
+sidebar:
+  order: 4
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example displays all the protocol constants available in the algokit_common package. These constants define limits, sizes, and separators used throughout Algorand.
+
+## Prerequisites
+
+No LocalNet required - pure constants display
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/04_constants.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/04_constants.py)
+
+```python title="04_constants.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Constants Reference
+
+This example displays all the protocol constants available in the algokit_common package.
+These constants define limits, sizes, and separators used throughout Algorand.
+
+No LocalNet required - pure constants display
+"""
+
+from shared import (
+    format_bytes,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import (
+    # Address constants
+    ADDRESS_LENGTH,
+    BOOL_FALSE_BYTE,
+    BOOL_TRUE_BYTE,
+    CHECKSUM_BYTE_LENGTH,
+    EMPTY_SIGNATURE,
+    # Cryptographic constants
+    HASH_BYTES_LENGTH,
+    # Encoding constants
+    LENGTH_ENCODE_BYTE_SIZE,
+    MAX_ACCOUNT_REFERENCES,
+    MAX_APP_ARGS,
+    MAX_APP_REFERENCES,
+    MAX_ARGS_SIZE,
+    MAX_ASSET_DECIMALS,
+    # Asset configuration limits
+    MAX_ASSET_NAME_LENGTH,
+    MAX_ASSET_REFERENCES,
+    MAX_ASSET_UNIT_NAME_LENGTH,
+    MAX_ASSET_URL_LENGTH,
+    MAX_BOX_REFERENCES,
+    # Application program constants
+    MAX_EXTRA_PROGRAM_PAGES,
+    # Application state schema limits
+    MAX_GLOBAL_STATE_KEYS,
+    MAX_LOCAL_STATE_KEYS,
+    # Application reference limits
+    MAX_OVERALL_REFERENCES,
+    MAX_TRANSACTION_GROUP_SIZE,
+    PROGRAM_PAGE_SIZE,
+    PUBLIC_KEY_BYTE_LENGTH,
+    SIGNATURE_BYTE_LENGTH,
+    # Transaction-related constants
+    TRANSACTION_DOMAIN_SEPARATOR,
+    TRANSACTION_GROUP_DOMAIN_SEPARATOR,
+    TRANSACTION_ID_LENGTH,
+)
+
+
+def main() -> None:
+    print_header("Constants Reference Example")
+
+    # Step 1: Transaction-Related Constants
+    print_step(1, "Transaction-Related Constants")
+
+    print_info(f"TRANSACTION_DOMAIN_SEPARATOR: {TRANSACTION_DOMAIN_SEPARATOR!r}")
+    print_info("  Used as prefix when hashing transactions for signing")
+    print_info(f"TRANSACTION_GROUP_DOMAIN_SEPARATOR: {TRANSACTION_GROUP_DOMAIN_SEPARATOR!r}")
+    print_info("  Used as prefix when hashing transaction groups")
+    print_info(f"MAX_TRANSACTION_GROUP_SIZE: {MAX_TRANSACTION_GROUP_SIZE}")
+    print_info("  Maximum number of transactions in an atomic group")
+
+    # Step 2: Cryptographic Constants
+    print_step(2, "Cryptographic Constants")
+
+    print_info(f"HASH_BYTES_LENGTH: {HASH_BYTES_LENGTH} bytes")
+    print_info("  Length of SHA512/256 hash output")
+    print_info(f"PUBLIC_KEY_BYTE_LENGTH: {PUBLIC_KEY_BYTE_LENGTH} bytes")
+    print_info("  Length of Ed25519 public key")
+    print_info(f"SIGNATURE_BYTE_LENGTH: {SIGNATURE_BYTE_LENGTH} bytes")
+    print_info("  Length of Ed25519 signature")
+    print_info(f"EMPTY_SIGNATURE: {format_bytes(EMPTY_SIGNATURE)}")
+    print_info(f"  Pre-allocated empty signature ({len(EMPTY_SIGNATURE)} zero bytes)")
+
+    # Step 3: Address Constants
+    print_step(3, "Address Constants")
+
+    print_info(f"ADDRESS_LENGTH: {ADDRESS_LENGTH} characters")
+    print_info("  Length of base32-encoded Algorand address string")
+    print_info(f"CHECKSUM_BYTE_LENGTH: {CHECKSUM_BYTE_LENGTH} bytes")
+    print_info("  Length of address checksum (last 4 bytes of SHA512/256 hash)")
+    print_info(f"TRANSACTION_ID_LENGTH: {TRANSACTION_ID_LENGTH} characters")
+    print_info("  Length of base32-encoded transaction ID string")
+
+    # Step 4: Application Program Constants
+    print_step(4, "Application Program Constants")
+
+    print_info(f"MAX_EXTRA_PROGRAM_PAGES: {MAX_EXTRA_PROGRAM_PAGES}")
+    print_info("  Maximum additional pages beyond the base page")
+    print_info(f"PROGRAM_PAGE_SIZE: {PROGRAM_PAGE_SIZE} bytes")
+    print_info("  Size of each program page (approval + clear combined)")
+    total_pages = 1 + MAX_EXTRA_PROGRAM_PAGES
+    max_program_size = PROGRAM_PAGE_SIZE * total_pages
+    print_info(f"  Total max program size: {max_program_size} bytes ({total_pages} pages)")
+    print_info(f"MAX_APP_ARGS: {MAX_APP_ARGS}")
+    print_info("  Maximum number of application call arguments")
+    print_info(f"MAX_ARGS_SIZE: {MAX_ARGS_SIZE} bytes")
+    print_info("  Maximum total size of all application arguments combined")
+
+    # Step 5: Application Reference Limits
+    print_step(5, "Application Reference Limits")
+
+    print_info(f"MAX_OVERALL_REFERENCES: {MAX_OVERALL_REFERENCES}")
+    print_info("  Maximum total foreign references (accounts + apps + assets + boxes)")
+    print_info(f"MAX_ACCOUNT_REFERENCES: {MAX_ACCOUNT_REFERENCES}")
+    print_info("  Maximum foreign accounts in a single app call")
+    print_info(f"MAX_APP_REFERENCES: {MAX_APP_REFERENCES}")
+    print_info("  Maximum foreign applications in a single app call")
+    print_info(f"MAX_ASSET_REFERENCES: {MAX_ASSET_REFERENCES}")
+    print_info("  Maximum foreign assets in a single app call")
+    print_info(f"MAX_BOX_REFERENCES: {MAX_BOX_REFERENCES}")
+    print_info("  Maximum box references in a single app call")
+
+    # Step 6: Application State Schema Limits
+    print_step(6, "Application State Schema Limits")
+
+    print_info(f"MAX_GLOBAL_STATE_KEYS: {MAX_GLOBAL_STATE_KEYS}")
+    print_info("  Maximum key-value pairs in application global state")
+    print_info(f"MAX_LOCAL_STATE_KEYS: {MAX_LOCAL_STATE_KEYS}")
+    print_info("  Maximum key-value pairs in per-account local state")
+
+    # Step 7: Asset Configuration Limits
+    print_step(7, "Asset Configuration Limits")
+
+    print_info(f"MAX_ASSET_NAME_LENGTH: {MAX_ASSET_NAME_LENGTH} bytes")
+    print_info("  Maximum length of asset name")
+    print_info(f"MAX_ASSET_UNIT_NAME_LENGTH: {MAX_ASSET_UNIT_NAME_LENGTH} bytes")
+    print_info("  Maximum length of asset unit name (ticker symbol)")
+    print_info(f"MAX_ASSET_URL_LENGTH: {MAX_ASSET_URL_LENGTH} bytes")
+    print_info("  Maximum length of asset URL")
+    print_info(f"MAX_ASSET_DECIMALS: {MAX_ASSET_DECIMALS}")
+    print_info("  Maximum decimal places for asset divisibility")
+
+    # Step 8: Encoding Constants
+    print_step(8, "Encoding Constants")
+
+    print_info(f"LENGTH_ENCODE_BYTE_SIZE: {LENGTH_ENCODE_BYTE_SIZE} bytes")
+    print_info("  Size of length prefix in ABI encoding")
+    bool_true_hex = f"0x{BOOL_TRUE_BYTE:02X}"
+    print_info(f"BOOL_TRUE_BYTE: {bool_true_hex} ({BOOL_TRUE_BYTE})")
+    print_info("  Byte value representing boolean true in ABI encoding")
+    bool_false_hex = f"0x{BOOL_FALSE_BYTE:02X}"
+    print_info(f"BOOL_FALSE_BYTE: {bool_false_hex} ({BOOL_FALSE_BYTE})")
+    print_info("  Byte value representing boolean false in ABI encoding")
+
+    # Step 9: Quick Reference Summary
+    print_step(9, "Quick Reference Summary")
+
+    print_info("Transaction Limits:")
+    print_info(f"  - Max group size: {MAX_TRANSACTION_GROUP_SIZE} transactions")
+    print_info(f"  - Transaction ID: {TRANSACTION_ID_LENGTH} chars")
+
+    print_info("\nCryptographic Sizes:")
+    print_info(
+        f"  - Hash: {HASH_BYTES_LENGTH} bytes | "
+        f"Public Key: {PUBLIC_KEY_BYTE_LENGTH} bytes | "
+        f"Signature: {SIGNATURE_BYTE_LENGTH} bytes"
+    )
+
+    print_info("\nAddress Format:")
+    print_info(f"  - String: {ADDRESS_LENGTH} chars | Checksum: {CHECKSUM_BYTE_LENGTH} bytes")
+
+    print_info("\nApplication Limits:")
+    print_info(f"  - Program: {max_program_size} bytes max ({total_pages} pages x {PROGRAM_PAGE_SIZE})")
+    print_info(f"  - Args: {MAX_APP_ARGS} max, {MAX_ARGS_SIZE} bytes total")
+    refs_detail = (
+        f"{MAX_ACCOUNT_REFERENCES} accounts, "
+        f"{MAX_APP_REFERENCES} apps, "
+        f"{MAX_ASSET_REFERENCES} assets, "
+        f"{MAX_BOX_REFERENCES} boxes"
+    )
+    print_info(f"  - References: {MAX_OVERALL_REFERENCES} total ({refs_detail})")
+    print_info(f"  - State: {MAX_GLOBAL_STATE_KEYS} global keys, {MAX_LOCAL_STATE_KEYS} local keys")
+
+    print_info("\nAsset Limits:")
+    asset_limits = (
+        f"Name: {MAX_ASSET_NAME_LENGTH} bytes | "
+        f"Unit: {MAX_ASSET_UNIT_NAME_LENGTH} bytes | "
+        f"URL: {MAX_ASSET_URL_LENGTH} bytes | "
+        f"Decimals: {MAX_ASSET_DECIMALS} max"
+    )
+    print_info(f"  - {asset_limits}")
+
+    print_success("Constants Reference example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- **Constants Reference**
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

@@ -1,0 +1,286 @@
+---
+title: "Error Handling for Mnemonic Functions"
+description: "This example demonstrates how to properly handle errors when working with mnemonic functions, including invalid words, bad checksums, and wrong seed lengths."
+sidebar:
+  order: 5
+---
+
+[← Back to Mnemonic Utilities](/docs/algokit-utils/python/latest/examples/algo25/)
+
+## Description
+
+This example demonstrates how to properly handle errors when working with mnemonic functions, including invalid words, bad checksums, and wrong seed lengths.
+ Key concepts:
+- NOT_IN_WORDS_LIST_ERROR_MSG: Thrown when a mnemonic contains an invalid word
+- FAIL_TO_DECODE_MNEMONIC_ERROR_MSG: Thrown when checksum validation fails
+- InvalidSeedLengthError: Thrown when seed length is not 32 bytes
+
+## Prerequisites
+
+No LocalNet required - demonstrates error conditions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algo25/05_error_handling.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algo25/05_error_handling.py)
+
+```python title="05_error_handling.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Error Handling for Mnemonic Functions
+
+This example demonstrates how to properly handle errors when working with
+mnemonic functions, including invalid words, bad checksums, and wrong seed lengths.
+
+Key concepts:
+- NOT_IN_WORDS_LIST_ERROR_MSG: Thrown when a mnemonic contains an invalid word
+- FAIL_TO_DECODE_MNEMONIC_ERROR_MSG: Thrown when checksum validation fails
+- InvalidSeedLengthError: Thrown when seed length is not 32 bytes
+
+No LocalNet required - demonstrates error conditions
+"""
+
+import secrets
+
+from shared import print_error, print_header, print_info, print_step, print_success
+
+from algokit_algo25 import (
+    FAIL_TO_DECODE_MNEMONIC_ERROR_MSG,
+    NOT_IN_WORDS_LIST_ERROR_MSG,
+    InvalidMnemonicError,
+    InvalidSeedLengthError,
+    WordNotFoundError,
+    mnemonic_from_seed,
+    seed_from_mnemonic,
+)
+
+
+def main() -> None:
+    print_header("Error Handling for Mnemonic Functions")
+
+    # Step 1: Display the error constants
+    print_step(1, "Error Constants and Their Values")
+
+    print_info("The algokit_algo25 package exports two error message constants:")
+    print_info("")
+    print_info("  NOT_IN_WORDS_LIST_ERROR_MSG:")
+    print_info(f'    Value: "{NOT_IN_WORDS_LIST_ERROR_MSG}"')
+    print_info("    When: A word in the mnemonic is not in the BIP39 wordlist")
+    print_info("")
+    print_info("  FAIL_TO_DECODE_MNEMONIC_ERROR_MSG:")
+    print_info(f'    Value: "{FAIL_TO_DECODE_MNEMONIC_ERROR_MSG}"')
+    print_info("    When: Checksum validation fails or mnemonic structure is invalid")
+    print_info("")
+    print_info("Additionally, mnemonic_from_seed() throws InvalidSeedLengthError for wrong seed length.")
+
+    # Step 2: Demonstrate NOT_IN_WORDS_LIST_ERROR_MSG error
+    print_step(2, "Error: Invalid Word Not in Wordlist")
+
+    # Create a mnemonic with an invalid word (25 words total)
+    invalid_word_mnemonic = (
+        "invalidword abandon abandon abandon abandon abandon abandon abandon "
+        "abandon abandon abandon abandon abandon abandon abandon abandon "
+        "abandon abandon abandon abandon abandon abandon abandon abandon abandon"
+    )
+
+    print_info("Attempting to decode a mnemonic with an invalid word...")
+    print_info('  First word: "invalidword" (not in BIP39 wordlist)')
+    print_info("")
+
+    try:
+        seed_from_mnemonic(invalid_word_mnemonic)
+        print_error("Unexpectedly succeeded - this should have thrown an error!")
+    except WordNotFoundError as error:
+        error_message = str(error)
+
+        print_info(f'Caught WordNotFoundError: "{error_message}"')
+        print_info("")
+
+        # Demonstrate programmatic error checking
+        if NOT_IN_WORDS_LIST_ERROR_MSG in error_message:
+            print_success("Error message contains NOT_IN_WORDS_LIST_ERROR_MSG constant")
+            print_info("")
+            print_info("Programmatic handling pattern:")
+            print_info("  try:")
+            print_info("      seed_from_mnemonic(mnemonic)")
+            print_info("  except WordNotFoundError:")
+            print_info("      # Handle invalid word error")
+            print_info("      # e.g., prompt user to check their mnemonic spelling")
+
+    # Step 3: Demonstrate FAIL_TO_DECODE_MNEMONIC_ERROR_MSG error
+    print_step(3, "Error: Invalid Checksum")
+
+    # Create a mnemonic with valid words but invalid checksum
+    # Using all "abandon" words creates a valid structure but wrong checksum
+    invalid_checksum_mnemonic = (
+        "abandon abandon abandon abandon abandon abandon abandon abandon "
+        "abandon abandon abandon abandon abandon abandon abandon abandon "
+        "abandon abandon abandon abandon abandon abandon abandon abandon wrong"
+    )
+
+    print_info("Attempting to decode a mnemonic with valid words but invalid checksum...")
+    print_info('  All 24 data words: "abandon" (valid BIP39 word)')
+    print_info('  Checksum word: "wrong" (valid word, but incorrect checksum)')
+    print_info("")
+
+    try:
+        seed_from_mnemonic(invalid_checksum_mnemonic)
+        print_error("Unexpectedly succeeded - this should have thrown an error!")
+    except InvalidMnemonicError as error:
+        error_message = str(error)
+
+        print_info(f'Caught InvalidMnemonicError: "{error_message}"')
+        print_info("")
+
+        # Demonstrate programmatic error checking
+        if FAIL_TO_DECODE_MNEMONIC_ERROR_MSG in error_message:
+            print_success("Error message contains FAIL_TO_DECODE_MNEMONIC_ERROR_MSG constant")
+            print_info("")
+            print_info("Programmatic handling pattern:")
+            print_info("  try:")
+            print_info("      seed_from_mnemonic(mnemonic)")
+            print_info("  except InvalidMnemonicError:")
+            print_info("      # Handle checksum validation error")
+            print_info("      # e.g., prompt user to verify their mnemonic phrase")
+
+    # Step 4: Demonstrate InvalidSeedLengthError for wrong seed length
+    print_step(4, "Error: Wrong Seed Length")
+
+    # Create seeds with wrong lengths
+    short_seed = bytes(16)  # Too short (16 bytes instead of 32)
+    long_seed = bytes(64)  # Too long (64 bytes instead of 32)
+
+    print_info("mnemonic_from_seed() requires exactly 32 bytes.")
+    print_info("Attempting with incorrect seed lengths...")
+    print_info("")
+
+    # Test with short seed
+    print_info("Test 1: 16-byte seed (too short)")
+    try:
+        mnemonic_from_seed(short_seed)
+        print_error("Unexpectedly succeeded - this should have thrown an error!")
+    except InvalidSeedLengthError as error:
+        error_message = str(error)
+        print_info(f'  Caught InvalidSeedLengthError: "{error_message}"')
+        print_success("  Correctly threw InvalidSeedLengthError for wrong seed length")
+
+    print_info("")
+
+    # Test with long seed
+    print_info("Test 2: 64-byte seed (too long)")
+    try:
+        mnemonic_from_seed(long_seed)
+        print_error("Unexpectedly succeeded - this should have thrown an error!")
+    except InvalidSeedLengthError as error:
+        error_message = str(error)
+        print_info(f'  Caught InvalidSeedLengthError: "{error_message}"')
+        print_success("  Correctly threw InvalidSeedLengthError for wrong seed length")
+
+    print_info("")
+    print_info("Programmatic handling pattern:")
+    print_info("  try:")
+    print_info("      mnemonic_from_seed(seed)")
+    print_info("  except InvalidSeedLengthError:")
+    print_info("      # Handle wrong seed length error")
+    print_info("      # e.g., validate input data before calling mnemonic_from_seed()")
+
+    # Step 5: Comprehensive try/catch pattern
+    print_step(5, "Comprehensive Error Handling Pattern")
+
+    print_info("Here is a complete try/except pattern for mnemonic functions:")
+    print_info("")
+    print_info("  from algokit_algo25 import (")
+    print_info("      FAIL_TO_DECODE_MNEMONIC_ERROR_MSG,")
+    print_info("      NOT_IN_WORDS_LIST_ERROR_MSG,")
+    print_info("      InvalidMnemonicError,")
+    print_info("      InvalidSeedLengthError,")
+    print_info("      WordNotFoundError,")
+    print_info("      seed_from_mnemonic,")
+    print_info("  )")
+    print_info("")
+    print_info("  try:")
+    print_info("      seed = seed_from_mnemonic(user_input)")
+    print_info("      # Success - use the seed")
+    print_info("  except WordNotFoundError:")
+    print_info("      # One or more words are not in the BIP39 wordlist")
+    print_info("      # Action: Check spelling, ensure words are lowercase")
+    print_info("  except InvalidMnemonicError:")
+    print_info("      # Checksum validation failed or wrong word count")
+    print_info("      # Action: Verify the complete mnemonic phrase")
+    print_info("  except InvalidSeedLengthError:")
+    print_info("      # Wrong seed length (for mnemonic_from_seed)")
+    print_info("      # Action: Ensure seed is exactly 32 bytes")
+    print_info("  except Exception as e:")
+    print_info("      # Unexpected error")
+    print_info("      # Action: Log and report")
+
+    # Step 6: Demonstrate a successful operation for comparison
+    print_step(6, "Successful Operation for Comparison")
+
+    valid_seed = secrets.token_bytes(32)
+
+    print_info("Creating a valid mnemonic from a 32-byte seed...")
+
+    try:
+        valid_mnemonic = mnemonic_from_seed(valid_seed)
+        words = valid_mnemonic.split(" ")
+        print_success(f"Generated valid mnemonic with {len(words)} words")
+        print_info(f'  First 3 words: "{" ".join(words[:3])}..."')
+
+        # Round-trip to verify
+        recovered_seed = seed_from_mnemonic(valid_mnemonic)
+        print_success("Successfully recovered seed from mnemonic (no errors)")
+        print_info(f"  Recovered seed length: {len(recovered_seed)} bytes")
+    except Exception as error:
+        print_error(f"Unexpected error: {error}")
+
+    # Step 7: Summary
+    print_step(7, "Summary")
+
+    print_info("Error handling best practices for mnemonic functions:")
+    print_info("")
+    print_info("  1. Import error types and constants for programmatic checking:")
+    print_info("     from algokit_algo25 import (")
+    print_info("         FAIL_TO_DECODE_MNEMONIC_ERROR_MSG,")
+    print_info("         NOT_IN_WORDS_LIST_ERROR_MSG,")
+    print_info("         InvalidMnemonicError,")
+    print_info("         InvalidSeedLengthError,")
+    print_info("         WordNotFoundError,")
+    print_info("     )")
+    print_info("")
+    print_info("  2. Three exception types to handle:")
+    print_info("     - WordNotFoundError: Invalid word in mnemonic")
+    print_info("     - InvalidMnemonicError: Checksum validation failed")
+    print_info("     - InvalidSeedLengthError: Seed is not exactly 32 bytes")
+    print_info("")
+    print_info("  3. Always use try/except when processing user-provided mnemonics")
+    print_info("")
+    print_info("  4. Use isinstance() checks for specific exception handling")
+    print_info("")
+    print_info("  5. Check error message contents against constants if needed")
+
+    print_success("Error Handling example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Mnemonic Utilities
+
+- [Mnemonic from Seed](/docs/algokit-utils/python/latest/examples/algo25/01-mnemonic-from-seed/)
+- [Seed from Mnemonic](/docs/algokit-utils/python/latest/examples/algo25/02-seed-from-mnemonic/)
+- [Secret Key to Mnemonic](/docs/algokit-utils/python/latest/examples/algo25/03-secret-key-to-mnemonic/)
+- [Master Derivation Key Functions](/docs/algokit-utils/python/latest/examples/algo25/04-master-derivation-key/)
+- **Error Handling for Mnemonic Functions**

@@ -1,0 +1,592 @@
+---
+title: "Error Transformers"
+description: "This example demonstrates how to register custom error transformers to enhance error messages and debugging information for failed transactions:"
+sidebar:
+  order: 15
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to register custom error transformers to enhance error messages and debugging information for failed transactions:
+- What error transformers are and why they're useful
+- algorand.register_error_transformer() to add custom error transformers
+- Creating transformers that add source code context to logic errors
+- Creating transformers that provide user-friendly error messages
+- How transformers receive errors and can return enhanced errors
+- algorand.unregister_error_transformer() to remove transformers
+- Triggering intentional errors and showing enhanced output
+- How multiple transformers can be chained
+- The transformer function signature: (error: Exception) -&gt; Exception
+
+## Prerequisites
+
+LocalNet required for triggering transaction errors
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/15_error_transformers.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/15_error_transformers.py)
+
+```python title="15_error_transformers.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Error Transformers
+
+This example demonstrates how to register custom error transformers to enhance
+error messages and debugging information for failed transactions:
+- What error transformers are and why they're useful
+- algorand.register_error_transformer() to add custom error transformers
+- Creating transformers that add source code context to logic errors
+- Creating transformers that provide user-friendly error messages
+- How transformers receive errors and can return enhanced errors
+- algorand.unregister_error_transformer() to remove transformers
+- Triggering intentional errors and showing enhanced output
+- How multiple transformers can be chained
+- The transformer function signature: (error: Exception) -> Exception
+
+LocalNet required for triggering transaction errors
+"""
+
+from __future__ import annotations
+
+import re
+from collections.abc import Callable
+from datetime import datetime, timezone
+
+from shared import (
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_transact import OnApplicationComplete
+from algokit_utils import AlgoAmount, AlgorandClient
+from algokit_utils.transactions.types import (
+    AppCallParams,
+    AppCreateParams,
+    AppDeleteParams,
+    AssetCreateParams,
+    AssetTransferParams,
+    PaymentParams,
+)
+
+# ============================================================================
+# TEAL Programs for Demonstrating Errors (loaded from shared artifacts)
+# ============================================================================
+
+# A more complex app that conditionally rejects based on arguments
+CONDITIONAL_APPROVAL_PROGRAM = load_teal_source("approval-error-triggers.teal")
+
+CLEAR_STATE_PROGRAM = load_teal_source("clear-state-approve.teal")
+
+# ============================================================================
+# Custom Error Transformer Examples
+# ============================================================================
+
+# Type alias for error transformer function
+ErrorTransformer = Callable[[Exception], Exception]
+
+
+def source_code_context_transformer(error: Exception) -> Exception:
+    """
+    Example transformer that adds source code context to logic errors.
+    This is useful for debugging TEAL program failures.
+    """
+    error_message = str(error)
+
+    # Only transform errors that mention "logic eval error"
+    if "logic eval error" not in error_message:
+        return error
+
+    # Try to extract PC (program counter) from error message
+    pc_match = re.search(r"pc=(\d+)", error_message)
+    pc = int(pc_match.group(1)) if pc_match else None
+
+    # Create enhanced error with source context
+    enhanced_parts = [
+        error_message,
+        "",
+        "--- Source Context (added by source_code_context_transformer) ---",
+        f"  Program Counter (PC): {pc}" if pc is not None else "  Program Counter: unknown",
+        "  Tip: Use the source map from compilation to map PC to TEAL line number",
+        "  Tip: The PC indicates which TEAL instruction caused the failure",
+        "-----------------------------------------------------------",
+    ]
+    enhanced_message = "\n".join(enhanced_parts)
+
+    return Exception(enhanced_message)
+
+
+def user_friendly_transformer(error: Exception) -> Exception:
+    """
+    Example transformer that provides user-friendly error messages.
+    Maps technical error messages to human-readable explanations.
+    """
+    message = str(error)
+
+    # Map common error patterns to user-friendly messages
+    error_mappings: list[tuple[str, str]] = [
+        (
+            r"asset (\d+) missing from",
+            "The account has not opted in to the asset. Please opt in first before receiving this asset.",
+        ),
+        (
+            r"transaction already in ledger",
+            "This transaction has already been submitted. Wait for the previous transaction to confirm.",
+        ),
+        (
+            r"underflow on subtracting|overspend",
+            "Insufficient balance for this operation. "
+            "The account does not have enough funds to complete the transaction.",
+        ),
+        (
+            r"division by zero",
+            "A division by zero occurred in the smart contract. This is usually a logic error in the TEAL program.",
+        ),
+        (
+            r"assert failed",
+            "An assertion failed in the smart contract. A required condition was not met.",
+        ),
+        (
+            r"err opcode executed",
+            "The smart contract explicitly rejected this call using the err opcode. Check your transaction parameters.",
+        ),
+        (
+            r"would result negative",
+            "This operation would result in a negative balance, which is not allowed on Algorand.",
+        ),
+    ]
+
+    for pattern, friendly_message in error_mappings:
+        if re.search(pattern, message, re.IGNORECASE):
+            enhanced_parts = [
+                "User-Friendly Error:",
+                f"   {friendly_message}",
+                "",
+                "Technical Details:",
+                f"   {message}",
+            ]
+            enhanced_message = "\n".join(enhanced_parts)
+            return Exception(enhanced_message)
+
+    # Return original error if no mapping found
+    return error
+
+
+def transaction_context_transformer(error: Exception) -> Exception:
+    """
+    Example transformer that adds transaction context.
+    Shows how to add additional debugging information.
+    """
+    # Add timestamp and environment info to all errors
+    timestamp = datetime.now(tz=timezone.utc).isoformat()
+
+    enhanced_parts = [
+        str(error),
+        "",
+        "--- Debug Context (added by transaction_context_transformer) ---",
+        f"  Timestamp: {timestamp}",
+        "  Network: LocalNet",
+        "  SDK: algokit-utils-py",
+        "--------------------------------------------------------------",
+    ]
+    enhanced_message = "\n".join(enhanced_parts)
+
+    return Exception(enhanced_message)
+
+
+def create_error_counting_transformer() -> tuple[ErrorTransformer, Callable[[], int], Callable[[], None]]:
+    """
+    Example transformer that counts errors (demonstrates stateful transformers).
+    This could be useful for monitoring/alerting systems.
+
+    Returns:
+        A tuple of (transformer, get_count, reset) functions
+    """
+    error_count = [0]  # Use list for mutable closure
+
+    def transformer(error: Exception) -> Exception:
+        error_count[0] += 1
+        enhanced_message = f"[Error #{error_count[0]}] {error}"
+        return Exception(enhanced_message)
+
+    def get_count() -> int:
+        return error_count[0]
+
+    def reset() -> None:
+        error_count[0] = 0
+
+    return transformer, get_count, reset
+
+
+def main() -> None:
+    print_header("Error Transformers Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Explain what error transformers are
+    print_step(1, "What are error transformers?")
+    print_info("Error transformers are functions that process errors before they are thrown.")
+    print_info("They allow you to:")
+    print_info("  - Add source code context to TEAL logic errors")
+    print_info("  - Translate technical errors into user-friendly messages")
+    print_info("  - Add debugging information (timestamps, transaction IDs, etc.)")
+    print_info("  - Log errors for monitoring before re-throwing")
+    print_info("  - Chain multiple transformers for layered error handling")
+    print_info("")
+    print_info("Function signature: (error: Exception) -> Exception")
+    print_info("  - Receives the error that was caught")
+    print_info("  - Returns a (possibly transformed) error")
+    print_info("  - Should return the original error if it cannot/should not transform it")
+    print_success("Error transformers explained")
+
+    # Create and fund test account
+    test_account = algorand.account.random()
+    algorand.account.ensure_funded_from_environment(test_account.addr, AlgoAmount.from_algo(10))
+    print_info("")
+    print_info(f"Test account: {shorten_address(str(test_account.addr))}")
+
+    # Step 2: Demonstrate algorand.register_error_transformer()
+    print_step(2, "Register custom error transformers with algorand.register_error_transformer()")
+    print_info("Transformers registered on AlgorandClient apply to all new_group() composers")
+
+    algorand.register_error_transformer(user_friendly_transformer)
+    print_info("  Registered: user_friendly_transformer")
+
+    algorand.register_error_transformer(transaction_context_transformer)
+    print_info("  Registered: transaction_context_transformer")
+
+    print_success("Error transformers registered on AlgorandClient")
+
+    # Step 3: Create an app that will reject calls (for error demonstration)
+    print_step(3, "Create test application that can trigger errors")
+
+    create_result = algorand.send.app_create(
+        AppCreateParams(
+            sender=test_account.addr,
+            approval_program=CONDITIONAL_APPROVAL_PROGRAM,
+            clear_state_program=CLEAR_STATE_PROGRAM,
+            schema={
+                "global_ints": 0,
+                "global_byte_slices": 0,
+                "local_ints": 0,
+                "local_byte_slices": 0,
+            },
+        )
+    )
+
+    app_id = create_result.app_id
+    print_info(f"Created app ID: {app_id}")
+    print_success("Test application created")
+
+    # Step 4: Trigger an intentional error and show enhanced output
+    print_step(4, "Trigger intentional error to see transformed output")
+    print_info('Calling app with "reject_assert" argument to trigger assertion failure...')
+
+    try:
+        algorand.send.app_call(
+            AppCallParams(
+                sender=test_account.addr,
+                app_id=app_id,
+                args=[b"reject_assert"],
+            )
+        )
+    except Exception as e:
+        print_info("")
+        print_info("Caught transformed error:")
+        separator = "-" * 60
+        print_info(separator)
+        print(str(e))  # noqa: T201
+        print_info(separator)
+        print_info("")
+        print_info("Notice the user-friendly message and debug context added by transformers!")
+
+    print_success("Error transformation demonstrated")
+
+    # Step 5: Show how multiple transformers chain together
+    print_step(5, "Demonstrate transformer chaining")
+    print_info("When multiple transformers are registered, they run in sequence.")
+    print_info("Each transformer receives the output of the previous one.")
+
+    # Register the source code context transformer
+    algorand.register_error_transformer(source_code_context_transformer)
+    print_info("  Additionally registered: source_code_context_transformer")
+    print_info("")
+    print_info("Chain order: user_friendly -> transaction_context -> source_code_context")
+
+    print_info("")
+    print_info('Triggering "err opcode" error to see all transformers in action...')
+
+    try:
+        algorand.send.app_call(
+            AppCallParams(
+                sender=test_account.addr,
+                app_id=app_id,
+                args=[b"unknown_action"],
+            )
+        )
+    except Exception as e:
+        print_info("")
+        print_info("Caught error with all transformers applied:")
+        separator = "-" * 60
+        print_info(separator)
+        print(str(e))  # noqa: T201
+        print_info(separator)
+
+    print_success("Transformer chaining demonstrated")
+
+    # Step 6: Demonstrate unregister_error_transformer()
+    print_step(6, "Remove transformers with algorand.unregister_error_transformer()")
+    print_info("You can unregister transformers when they are no longer needed")
+
+    algorand.unregister_error_transformer(transaction_context_transformer)
+    print_info("  Unregistered: transaction_context_transformer")
+
+    algorand.unregister_error_transformer(source_code_context_transformer)
+    print_info("  Unregistered: source_code_context_transformer")
+
+    print_info("")
+    print_info("Triggering error with only user_friendly_transformer active...")
+
+    try:
+        algorand.send.app_call(
+            AppCallParams(
+                sender=test_account.addr,
+                app_id=app_id,
+                args=[b"reject_division"],
+            )
+        )
+    except Exception as e:
+        print_info("")
+        print_info("Caught error with only user-friendly transformer:")
+        separator = "-" * 60
+        print_info(separator)
+        print(str(e))  # noqa: T201
+        print_info(separator)
+        print_info("")
+        print_info("Notice: No debug context section (that transformer was unregistered)")
+
+    print_success("Transformer unregistration demonstrated")
+
+    # Step 7: Demonstrate composer-level error transformers
+    print_step(7, "Register error transformers on specific composers")
+    print_info("You can also register transformers on individual TransactionComposer instances")
+
+    # Unregister all from AlgorandClient
+    algorand.unregister_error_transformer(user_friendly_transformer)
+    print_info("Cleared all transformers from AlgorandClient")
+
+    # Create a stateful error counting transformer
+    counting_transformer, get_count, reset = create_error_counting_transformer()
+
+    # Create a composer with a registered transformer
+    composer = algorand.new_group()
+    composer.register_error_transformer(counting_transformer)
+    print_info("Registered counting_transformer on this composer only")
+
+    composer.add_app_call(
+        AppCallParams(
+            sender=test_account.addr,
+            app_id=app_id,
+            args=[b"reject_assert"],
+        )
+    )
+
+    try:
+        composer.send()
+    except Exception as e:
+        print_info("")
+        print_info(f"Error count after first failure: {get_count()}")
+        error_first_line = str(e).split("\n")[0]
+        print_info(f"Error message: {error_first_line}")
+
+    # Second composer with same transformer
+    composer2 = algorand.new_group()
+    composer2.register_error_transformer(counting_transformer)
+
+    composer2.add_app_call(
+        AppCallParams(
+            sender=test_account.addr,
+            app_id=app_id,
+            args=[b"reject_division"],
+        )
+    )
+
+    try:
+        composer2.send()
+    except Exception as e:
+        print_info("")
+        print_info(f"Error count after second failure: {get_count()}")
+        error_first_line = str(e).split("\n")[0]
+        print_info(f"Error message: {error_first_line}")
+
+    reset()
+    print_info("")
+    print_info(f"Error count after reset: {get_count()}")
+
+    print_success("Composer-level transformers demonstrated")
+
+    # Step 8: Show transformer for insufficient funds error
+    print_step(8, "Trigger insufficient funds error with transformer")
+
+    algorand.register_error_transformer(user_friendly_transformer)
+
+    # Create an account with minimal funds
+    poor_account = algorand.account.random()
+    # Just enough for min balance
+    algorand.account.ensure_funded_from_environment(poor_account.addr, AlgoAmount.from_algo(0.2))
+
+    print_info(f"Poor account: {shorten_address(str(poor_account.addr))}")
+    print_info("Attempting to send more ALGO than account has...")
+
+    try:
+        algorand.send.payment(
+            PaymentParams(
+                sender=poor_account.addr,
+                receiver=test_account.addr,
+                amount=AlgoAmount.from_algo(1000),  # Way more than account has
+            )
+        )
+    except Exception as e:
+        print_info("")
+        print_info("Caught transformed insufficient funds error:")
+        separator = "-" * 60
+        print_info(separator)
+        print(str(e))  # noqa: T201
+        print_info(separator)
+
+    print_success("Insufficient funds error transformation demonstrated")
+
+    # Step 9: Show transformer for asset opt-in error
+    print_step(9, "Trigger asset opt-in error with transformer")
+
+    # Create an asset
+    asset_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=test_account.addr,
+            total=1000,
+            decimals=0,
+            asset_name="ErrorTestAsset",
+            unit_name="ERR",
+        )
+    )
+
+    asset_id = asset_result.asset_id
+    print_info(f"Created test asset ID: {asset_id}")
+
+    # Try to transfer to an account that hasn't opted in
+    not_opted_in_account = algorand.account.random()
+    algorand.account.ensure_funded_from_environment(not_opted_in_account.addr, AlgoAmount.from_algo(1))
+
+    print_info(f"Not-opted-in account: {shorten_address(str(not_opted_in_account.addr))}")
+    print_info("Attempting to send asset to account without opt-in...")
+
+    try:
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=test_account.addr,
+                receiver=not_opted_in_account.addr,
+                asset_id=asset_id,
+                amount=10,
+            )
+        )
+    except Exception as e:
+        print_info("")
+        print_info("Caught transformed asset error:")
+        separator = "-" * 60
+        print_info(separator)
+        print(str(e))  # noqa: T201
+        print_info(separator)
+
+    print_success("Asset opt-in error transformation demonstrated")
+
+    # Step 10: Summary
+    print_step(10, "Summary - Error Transformers API")
+    print_info("Error transformers enhance error handling for transaction failures:")
+    print_info("")
+    print_info("Registration (AlgorandClient level):")
+    print_info("  algorand.register_error_transformer(transformer)")
+    print_info("    - Applies to ALL new_group() composers created from this client")
+    print_info("    - Multiple transformers are chained in registration order")
+    print_info("  algorand.unregister_error_transformer(transformer)")
+    print_info("    - Removes a specific transformer from the client")
+    print_info("")
+    print_info("Registration (Composer level):")
+    print_info("  composer.register_error_transformer(transformer)")
+    print_info("    - Applies only to this specific composer instance")
+    print_info("    - Useful for one-off error handling scenarios")
+    print_info("")
+    print_info("Transformer function signature:")
+    print_info("  (error: Exception) -> Exception")
+    print_info("    - Receives the error that was caught during simulate() or send()")
+    print_info("    - Must return an Exception object (transformed or original)")
+    print_info("    - Return the original error if transformation is not applicable")
+    print_info("")
+    print_info("Common use cases:")
+    print_info("  - Add TEAL source code context using compilation source maps")
+    print_info("  - Translate technical errors to user-friendly messages")
+    print_info("  - Add debugging context (timestamps, network, transaction IDs)")
+    print_info("  - Log errors for monitoring before re-throwing")
+    print_info("  - Implement custom error classification and handling")
+
+    # Clean up - unregister transformer first so cleanup isn't affected
+    algorand.unregister_error_transformer(user_friendly_transformer)
+    algorand.send.app_delete(
+        AppDeleteParams(
+            sender=test_account.addr,
+            app_id=app_id,
+            on_complete=OnApplicationComplete.DeleteApplication,
+            note=b"cleanup",
+        )
+    )
+
+    print_success("Error Transformers example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- **Error Transformers**

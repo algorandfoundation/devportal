@@ -1,5 +1,5 @@
 ---
-title: 'algokit_utils.protocols.signer'
+title: "algokit_utils.protocols.signer"
 ---
 
 <div class="api-ref">
@@ -7,5 +7,6 @@ title: 'algokit_utils.protocols.signer'
 # algokit_utils.protocols.signer
 
 Signer type aliases - re-exported for convenience.
+
 
 </div>

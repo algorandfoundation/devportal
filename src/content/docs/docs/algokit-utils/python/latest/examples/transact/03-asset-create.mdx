@@ -1,0 +1,266 @@
+---
+title: "Asset Create"
+description: "This example demonstrates how to create a new Algorand Standard Asset (ASA) using the transact package. It shows the low-level transaction construction pattern with:"
+sidebar:
+  order: 3
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to create a new Algorand Standard Asset (ASA) using the transact package. It shows the low-level transaction construction pattern with:
+- Transaction wrapper with AssetConfigTransactionFields for all configuration options
+- TransactionType.AssetConfig for the transaction type
+- Retrieving created asset ID from pending transaction info
+- Verifying asset parameters and creator holdings
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/03_asset_create.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/03_asset_create.py)
+
+```python title="03_asset_create.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Asset Create
+
+This example demonstrates how to create a new Algorand Standard Asset (ASA) using
+the transact package. It shows the low-level transaction construction pattern with:
+- Transaction wrapper with AssetConfigTransactionFields for all configuration options
+- TransactionType.AssetConfig for the transaction type
+- Retrieving created asset ID from pending transaction info
+- Verifying asset parameters and creator holdings
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_transact import AssetConfigTransactionFields, Transaction, TransactionType, assign_fee
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Asset Create Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get a funded account from KMD (creator)
+    print_step(2, "Get Funded Account from KMD (Asset Creator)")
+    creator = algorand.account.localnet_dispenser()
+    print_info(f"Creator address: {shorten_address(creator.addr)}")
+
+    # Step 3: Get suggested transaction parameters
+    print_step(3, "Get Suggested Transaction Parameters")
+    sp = algod.suggested_params()
+    print_info(f"First valid round: {sp.first_valid}")
+    print_info(f"Last valid round: {sp.last_valid}")
+    print_info(f"Min fee: {sp.min_fee} microALGO")
+
+    # Step 4: Define asset configuration with all fields
+    print_step(4, "Define Asset Configuration")
+
+    # Asset parameters
+    asset_total = 1_000_000_000_000  # 1 million units with 6 decimals
+    asset_decimals = 6
+    asset_name = "Example Token"
+    asset_unit_name = "EXMPL"
+    asset_url = "https://example.com/asset"
+    default_frozen = False
+
+    print_info(f"Asset name: {asset_name}")
+    print_info(f"Unit name: {asset_unit_name}")
+    display_total = asset_total / (10**asset_decimals)
+    print_info(f"Total supply: {asset_total} ({display_total:,.0f} {asset_unit_name})")
+    print_info(f"Decimals: {asset_decimals}")
+    print_info(f"Default frozen: {default_frozen}")
+    print_info(f"URL: {asset_url}")
+    print_info(f"Manager: {shorten_address(creator.addr)}")
+    print_info(f"Reserve: {shorten_address(creator.addr)}")
+    print_info(f"Freeze: {shorten_address(creator.addr)}")
+    print_info(f"Clawback: {shorten_address(creator.addr)}")
+
+    # Step 5: Create asset config transaction
+    print_step(5, "Create Asset Config Transaction")
+
+    # Asset configuration fields - asset_id=0 indicates asset creation
+    transaction_without_fee = Transaction(
+        transaction_type=TransactionType.AssetConfig,
+        sender=creator.addr,
+        first_valid=sp.first_valid,
+        last_valid=sp.last_valid,
+        genesis_hash=sp.genesis_hash,
+        genesis_id=sp.genesis_id,
+        asset_config=AssetConfigTransactionFields(
+            asset_id=0,  # 0 indicates asset creation
+            total=asset_total,
+            decimals=asset_decimals,
+            default_frozen=default_frozen,
+            asset_name=asset_name,
+            unit_name=asset_unit_name,
+            url=asset_url,
+            # Management addresses - all set to creator
+            manager=creator.addr,  # Can reconfigure asset
+            reserve=creator.addr,  # Holds non-minted units
+            freeze=creator.addr,  # Can freeze/unfreeze accounts
+            clawback=creator.addr,  # Can clawback assets
+        ),
+    )
+
+    print_info(f"Transaction type: {transaction_without_fee.transaction_type}")
+
+    # Step 6: Assign fee using suggested params
+    print_step(6, "Assign Transaction Fee")
+    transaction = assign_fee(
+        transaction_without_fee,
+        fee_per_byte=sp.fee,
+        min_fee=sp.min_fee,
+    )
+    print_info(f"Assigned fee: {transaction.fee} microALGO")
+
+    # Step 7: Sign the transaction
+    print_step(7, "Sign Transaction")
+    signed_txns = creator.signer([transaction], [0])
+    tx_id = transaction.tx_id()
+    print_info(f"Transaction ID: {tx_id}")
+    print_info("Transaction signed successfully")
+
+    # Step 8: Submit transaction and wait for confirmation
+    print_step(8, "Submit Transaction and Wait for Confirmation")
+    algod.send_raw_transaction(signed_txns[0])
+    print_info("Transaction submitted to network")
+
+    # Wait for confirmation using the utility function
+    pending_info = wait_for_confirmation(algod, tx_id)
+    confirmed_round = pending_info.confirmed_round
+    print_info(f"Transaction confirmed in round: {confirmed_round}")
+
+    # Step 9: Retrieve created asset ID from pending transaction info
+    print_step(9, "Retrieve Created Asset ID")
+    asset_id = pending_info.asset_id
+    if not asset_id:
+        raise ValueError("Asset ID not found in pending transaction response")
+    print_info(f"Created asset ID: {asset_id}")
+    print_success(f"Asset created with ID: {asset_id}")
+
+    # Step 10: Verify asset exists with correct parameters using algod.asset_by_id()
+    print_step(10, "Verify Asset Parameters")
+    asset_info = algod.asset_by_id(asset_id)
+    params = asset_info.params
+
+    print_info(f"Asset ID from API: {asset_info.id_}")
+    print_info(f"Creator: {params.creator}")
+    print_info(f"Total: {params.total}")
+    print_info(f"Decimals: {params.decimals}")
+    print_info(f"Name: {params.name}")
+    print_info(f"Unit Name: {params.unit_name}")
+    print_info(f"URL: {params.url}")
+    print_info(f"Default Frozen: {params.default_frozen}")
+    print_info(f"Manager: {params.manager}")
+    print_info(f"Reserve: {params.reserve}")
+    print_info(f"Freeze: {params.freeze}")
+    print_info(f"Clawback: {params.clawback}")
+
+    # Verify all parameters match
+    creator_address = creator.addr
+    if params.total != asset_total:
+        raise ValueError(f"Total mismatch: expected {asset_total}, got {params.total}")
+    if params.decimals != asset_decimals:
+        raise ValueError(f"Decimals mismatch: expected {asset_decimals}, got {params.decimals}")
+    if params.name != asset_name:
+        raise ValueError(f"Name mismatch: expected {asset_name}, got {params.name}")
+    if params.unit_name != asset_unit_name:
+        raise ValueError(f"Unit name mismatch: expected {asset_unit_name}, got {params.unit_name}")
+    if params.url != asset_url:
+        raise ValueError(f"URL mismatch: expected {asset_url}, got {params.url}")
+    if params.creator != creator_address:
+        raise ValueError(f"Creator mismatch: expected {creator_address}, got {params.creator}")
+    if params.manager != creator_address:
+        raise ValueError(f"Manager mismatch: expected {creator_address}, got {params.manager}")
+    if params.reserve != creator_address:
+        raise ValueError(f"Reserve mismatch: expected {creator_address}, got {params.reserve}")
+    if params.freeze != creator_address:
+        raise ValueError(f"Freeze mismatch: expected {creator_address}, got {params.freeze}")
+    if params.clawback != creator_address:
+        raise ValueError(f"Clawback mismatch: expected {creator_address}, got {params.clawback}")
+
+    print_success("All asset parameters verified correctly!")
+
+    # Step 11: Verify creator holds total supply
+    print_step(11, "Verify Creator Holds Total Supply")
+    account_asset_info = algod.account_asset_information(creator_address, asset_id)
+
+    asset_holding = account_asset_info.asset_holding
+    if not asset_holding:
+        raise ValueError("Creator does not have asset holding")
+
+    creator_balance = asset_holding.amount
+    display_balance = creator_balance / (10**asset_decimals)
+    print_info(f"Creator balance: {creator_balance} ({display_balance:,.0f} {asset_unit_name})")
+    print_info(f"Total supply: {asset_total}")
+
+    if creator_balance != asset_total:
+        raise ValueError(f"Creator balance {creator_balance} does not match total supply {asset_total}")
+
+    print_success(f"Creator holds entire supply: {creator_balance} units")
+    print_success("Asset create example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- **Asset Create**
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

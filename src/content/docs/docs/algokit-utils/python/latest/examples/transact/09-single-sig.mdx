@@ -1,0 +1,286 @@
+---
+title: "Single Signature"
+description: "This example demonstrates how to create an ed25519 keypair and sign transactions using the low-level transact package APIs."
+sidebar:
+  order: 9
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to create an ed25519 keypair and sign transactions using the low-level transact package APIs.
+ Key concepts:
+- Creating a keypair using nacl (ed25519 signature scheme)
+- Using generate_address_with_signers() to derive an Algorand address from the public key
+- Understanding the relationship between ed25519 public key and Algorand address
+- Signing transactions with a raw ed25519 signer function
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/09_single_sig.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/09_single_sig.py)
+
+```python title="09_single_sig.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Single Signature
+
+This example demonstrates how to create an ed25519 keypair and sign transactions
+using the low-level transact package APIs.
+
+Key concepts:
+- Creating a keypair using nacl (ed25519 signature scheme)
+- Using generate_address_with_signers() to derive an Algorand address from the public key
+- Understanding the relationship between ed25519 public key and Algorand address
+- Signing transactions with a raw ed25519 signer function
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import nacl.signing
+from shared import (
+    create_algod_client,
+    format_algo,
+    get_account_balance,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_transact import (
+    PaymentTransactionFields,
+    Transaction,
+    TransactionType,
+    assign_fee,
+    generate_address_with_signers,
+)
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Single Signature Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Create a keypair using nacl
+    print_step(2, "Create Keypair Using nacl")
+
+    # The keypair generation uses a cryptographically secure random number generator
+    signing_key = nacl.signing.SigningKey.generate()
+    verify_key = signing_key.verify_key
+
+    public_key_bytes = bytes(verify_key)
+    private_key_bytes = bytes(signing_key)
+
+    print_info(f"Public key (32 bytes): {public_key_bytes.hex()[:32]}...")
+    print_info(f"Secret key (32 bytes): {private_key_bytes.hex()[:32]}... (truncated for security)")
+    print_info("")
+    print_info("Note: In ed25519, the signing key seed is 32 bytes.")
+    print_info("      nacl derives the full 64-byte key internally when signing.")
+
+    # Step 3: Derive Algorand address using generate_address_with_signers
+    print_step(3, "Derive Algorand Address with generate_address_with_signers()")
+
+    # generate_address_with_signers() does the following internally:
+    # 1. Takes the 32-byte ed25519 public key
+    # 2. Computes a 4-byte checksum using SHA-512/256
+    # 3. Concatenates: public_key (32 bytes) + checksum (4 bytes) = 36 bytes
+    # 4. Base32 encodes the 36 bytes to get the 58-character Algorand address
+
+    def raw_ed25519_signer(bytes_to_sign: bytes) -> bytes:
+        """Sign bytes using the ed25519 private key."""
+        signed_message = signing_key.sign(bytes_to_sign)
+        return signed_message.signature
+
+    account = generate_address_with_signers(
+        ed25519_pubkey=public_key_bytes,
+        raw_ed25519_signer=raw_ed25519_signer,
+    )
+
+    print_info(f"Ed25519 public key (hex): {public_key_bytes.hex()}")
+    print_info(f"Algorand address (base32): {account.addr}")
+    print_info("")
+    print_info("The Algorand address is derived from the public key by:")
+    print_info("  1. Computing SHA-512/256 checksum of the public key")
+    print_info("  2. Appending last 4 bytes of checksum to public key")
+    print_info("  3. Base32 encoding the result (36 bytes -> 58 characters)")
+
+    # Step 4: Fund the account from dispenser
+    print_step(4, "Fund Account from Dispenser")
+    dispenser = algorand.account.localnet_dispenser()
+    funding_amount = 2_000_000  # 2 ALGO
+
+    suggested_params = algod.suggested_params()
+
+    fund_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=dispenser.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=account.addr,
+            amount=funding_amount,
+        ),
+    )
+
+    fund_tx = assign_fee(
+        fund_tx_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    signed_fund_tx = dispenser.signer([fund_tx], [0])
+    algod.send_raw_transaction(signed_fund_tx[0])
+    wait_for_confirmation(algod, fund_tx.tx_id())
+
+    balance = get_account_balance(algorand, account.addr)
+    print_info(f"Funded account with {format_algo(funding_amount)}")
+    print_info(f"Account balance: {format_algo(balance)}")
+
+    # Step 5: Create a payment transaction to demonstrate signing
+    print_step(5, "Create Payment Transaction")
+
+    payment_amount = 100_000  # 0.1 ALGO
+    # Use AlgorandClient helper for the receiver (this example focuses on sender signing)
+    receiver = algorand.account.random()
+
+    pay_params = algod.suggested_params()
+
+    payment_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=account.addr,
+        first_valid=pay_params.first_valid,
+        last_valid=pay_params.last_valid,
+        genesis_hash=pay_params.genesis_hash,
+        genesis_id=pay_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=receiver.addr,
+            amount=payment_amount,
+        ),
+    )
+
+    payment_tx = assign_fee(
+        payment_tx_without_fee,
+        fee_per_byte=pay_params.fee,
+        min_fee=pay_params.min_fee,
+    )
+
+    print_info(f"Payment amount: {format_algo(payment_amount)}")
+    print_info(f"Sender: {shorten_address(account.addr)}")
+    print_info(f"Receiver: {shorten_address(receiver.addr)}")
+    print_info(f"Transaction ID: {payment_tx.tx_id()}")
+
+    # Step 6: Sign the transaction (explaining the process)
+    print_step(6, "Sign Transaction with ed25519 Signature")
+
+    print_info("Signing process:")
+    print_info("  1. Transaction is encoded to msgpack bytes")
+    print_info('  2. Bytes are prefixed with "TX" (to prevent cross-protocol attacks)')
+    print_info("  3. The prefixed bytes are signed using ed25519 with the secret key")
+    print_info("  4. Signature (64 bytes) is attached to create a SignedTransaction")
+    print_info("")
+
+    # The signer function handles all of this internally
+    # account.signer([transaction], [indices]) signs the specified transactions
+    signed_txns = account.signer([payment_tx], [0])
+
+    print_info(f"Signed transaction size: {len(signed_txns[0])} bytes")
+    print_info("Transaction signed successfully!")
+
+    # Step 7: Submit and verify
+    print_step(7, "Submit Transaction")
+    algod.send_raw_transaction(signed_txns[0])
+    print_info("Transaction submitted to network")
+
+    pending_info = wait_for_confirmation(algod, payment_tx.tx_id())
+    print_info(f"Transaction confirmed in round: {pending_info.confirmed_round}")
+
+    # Step 8: Verify balances
+    print_step(8, "Verify Balances")
+
+    sender_balance_after = get_account_balance(algorand, account.addr)
+
+    try:
+        receiver_info = algorand.account.get_information(receiver.addr)
+        receiver_balance_after = receiver_info.amount.micro_algo
+    except Exception:
+        receiver_balance_after = 0
+
+    print_info(f"Sender balance after: {format_algo(sender_balance_after)}")
+    print_info(f"Receiver balance after: {format_algo(receiver_balance_after)}")
+
+    fee = payment_tx.fee if payment_tx.fee else 0
+    expected_sender_balance = funding_amount - payment_amount - fee
+    if sender_balance_after.micro_algo == expected_sender_balance:
+        print_success("Sender balance verified!")
+
+    if receiver_balance_after == payment_amount:
+        print_success("Receiver received the payment!")
+
+    # Summary
+    print_info("")
+    print_info("Summary - Single Signature Key Points:")
+    print_info("  - ed25519 is the signature algorithm used by Algorand")
+    print_info("  - Public key (32 bytes) -> Algorand address (58 chars base32)")
+    print_info("  - generate_address_with_signers() bridges raw crypto to Algorand")
+    print_info("  - The signer function signs transaction bytes with ed25519")
+    print_info("  - Each transaction requires a valid signature from the sender")
+
+    print_success("Single signature example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- **Single Signature**
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

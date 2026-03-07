@@ -1,0 +1,521 @@
+---
+title: "Transaction Composer (Atomic Transaction Groups)"
+description: "This example demonstrates how to build atomic transaction groups using the transaction composer:"
+sidebar:
+  order: 10
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to build atomic transaction groups using the transaction composer:
+- algorand.new_group() creates a new transaction composer
+- Adding multiple transactions using .add_payment(), .add_asset_opt_in(), etc.
+- Method chaining: algorand.new_group().add_payment(...).add_payment(...)
+- .simulate() to simulate the transaction group before sending
+- .send() to execute the atomic transaction group
+- Atomicity: all transactions succeed or fail together
+- Adding transactions with different signers
+- Group ID assigned to all transactions in the group
+
+## Prerequisites
+
+LocalNet required for sending transactions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/10_transaction_composer.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/10_transaction_composer.py)
+
+```python title="10_transaction_composer.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Transaction Composer (Atomic Transaction Groups)
+
+This example demonstrates how to build atomic transaction groups using
+the transaction composer:
+- algorand.new_group() creates a new transaction composer
+- Adding multiple transactions using .add_payment(), .add_asset_opt_in(), etc.
+- Method chaining: algorand.new_group().add_payment(...).add_payment(...)
+- .simulate() to simulate the transaction group before sending
+- .send() to execute the atomic transaction group
+- Atomicity: all transactions succeed or fail together
+- Adding transactions with different signers
+- Group ID assigned to all transactions in the group
+
+LocalNet required for sending transactions
+"""
+
+import base64
+
+from shared import (
+    format_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AlgorandClient
+from algokit_utils.transactions.types import (
+    AssetCreateParams,
+    AssetDestroyParams,
+    AssetOptInParams,
+    AssetOptOutParams,
+    AssetTransferParams,
+    PaymentParams,
+)
+
+
+def main() -> None:
+    print_header("Transaction Composer Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create and fund test accounts
+    print_step(1, "Create and fund test accounts")
+    print_info("Creating multiple accounts to demonstrate atomic transactions with different signers")
+
+    alice = algorand.account.random()
+    bob = algorand.account.random()
+    charlie = algorand.account.random()
+
+    print_info("")
+    print_info("Created accounts:")
+    print_info(f"  Alice: {shorten_address(str(alice.addr))}")
+    print_info(f"  Bob: {shorten_address(str(bob.addr))}")
+    print_info(f"  Charlie: {shorten_address(str(charlie.addr))}")
+
+    # Fund accounts
+    algorand.account.ensure_funded_from_environment(alice.addr, AlgoAmount.from_algo(20))
+    algorand.account.ensure_funded_from_environment(bob.addr, AlgoAmount.from_algo(10))
+    algorand.account.ensure_funded_from_environment(charlie.addr, AlgoAmount.from_algo(5))
+
+    print_success("Created and funded test accounts")
+
+    # Step 2: Demonstrate algorand.new_group() to create a new transaction composer
+    print_step(2, "Demonstrate algorand.new_group() to create a new transaction composer")
+    print_info("algorand.new_group() returns a TransactionComposer for building atomic groups")
+    print_info("")
+    print_info("The TransactionComposer provides:")
+    print_info("  - .add_payment() - Add payment transactions")
+    print_info("  - .add_asset_create() - Add asset creation transactions")
+    print_info("  - .add_asset_opt_in() - Add asset opt-in transactions")
+    print_info("  - .add_asset_transfer() - Add asset transfer transactions")
+    print_info("  - .add_app_call() - Add application call transactions")
+    print_info("  - .simulate() - Simulate the group before sending")
+    print_info("  - .send() - Execute the atomic transaction group")
+
+    composer = algorand.new_group()
+    print_info("")
+    print_info("Created new transaction composer")
+    print_info(f"  Initial transaction count: {composer.count()}")
+
+    print_success("Transaction composer created")
+
+    # Step 3: Add multiple transactions to the group
+    print_step(3, "Add multiple transactions using .add_payment(), etc.")
+    print_info("Each add method returns the composer for chaining")
+
+    # Add first payment
+    composer.add_payment(
+        PaymentParams(
+            sender=alice.addr,
+            receiver=bob.addr,
+            amount=AlgoAmount.from_algo(1),
+            note=b"Payment 1: Alice to Bob",
+        )
+    )
+    print_info("")
+    print_info("Added payment: Alice -> Bob (1 ALGO)")
+    print_info(f"  Transaction count: {composer.count()}")
+
+    # Add second payment
+    composer.add_payment(
+        PaymentParams(
+            sender=alice.addr,
+            receiver=charlie.addr,
+            amount=AlgoAmount.from_algo(0.5),
+            note=b"Payment 2: Alice to Charlie",
+        )
+    )
+    print_info("Added payment: Alice -> Charlie (0.5 ALGO)")
+    print_info(f"  Transaction count: {composer.count()}")
+
+    print_success("Added multiple transactions to the group")
+
+    # Step 4: Demonstrate method chaining
+    print_step(4, "Demonstrate chaining: algorand.new_group().add_payment(...).add_payment(...)")
+    print_info("Methods can be chained for fluent, readable code")
+
+    chained_composer = (
+        algorand.new_group()
+        .add_payment(
+            PaymentParams(
+                sender=alice.addr,
+                receiver=bob.addr,
+                amount=AlgoAmount.from_algo(0.25),
+                note=b"Chained payment 1",
+            )
+        )
+        .add_payment(
+            PaymentParams(
+                sender=alice.addr,
+                receiver=charlie.addr,
+                amount=AlgoAmount.from_algo(0.25),
+                note=b"Chained payment 2",
+            )
+        )
+        .add_payment(
+            PaymentParams(
+                sender=alice.addr,
+                receiver=bob.addr,
+                amount=AlgoAmount.from_algo(0.25),
+                note=b"Chained payment 3",
+            )
+        )
+    )
+
+    print_info("")
+    print_info("Chained 3 payments in a single fluent expression")
+    print_info(f"  Transaction count: {chained_composer.count()}")
+
+    print_success("Demonstrated method chaining")
+
+    # Step 5: Demonstrate .simulate() to simulate before sending
+    print_step(5, "Demonstrate .simulate() to simulate the transaction group before sending")
+    print_info("Simulation allows you to preview results and check for failures without sending")
+
+    simulate_result = chained_composer.simulate(skip_signatures=True)
+
+    print_info("")
+    print_info("Simulation results:")
+    print_info(f"  Transactions simulated: {len(simulate_result.transactions)}")
+    print_info("  Transaction IDs:")
+    for i, tx_id in enumerate(simulate_result.tx_ids):
+        print_info(f"    [{i}]: {tx_id}")
+    print_info(f"  Group ID: {simulate_result.group_id}")
+
+    # Check simulation response for failures
+    simulate_response = simulate_result.simulate_response
+    group_result = simulate_response.txn_groups[0]
+
+    print_info("")
+    print_info("Simulation response:")
+    would_succeed = group_result.failure_message is None
+    print_info(f"  Would succeed: {would_succeed}")
+    if not would_succeed:
+        print_info(f"  Failure message: {group_result.failure_message or 'N/A'}")
+        failed_at = group_result.failed_at or []
+        print_info(f"  Failed at index: {', '.join(map(str, failed_at)) if failed_at else 'N/A'}")
+
+    # Show transaction results from simulation
+    print_info("")
+    print_info("Simulated transaction results:")
+    txn_results = group_result.txn_results or []
+    for i, txn_result in enumerate(txn_results):
+        confirmed_round = (
+            txn_result.txn_result.confirmed_round if txn_result.txn_result.confirmed_round else "N/A (simulated)"
+        )
+        print_info(f"  [{i}]: Confirmed round: {confirmed_round}")
+
+    print_success("Simulation completed successfully")
+
+    # Step 6: Demonstrate .send() to execute the atomic transaction group
+    print_step(6, "Demonstrate .send() to execute the atomic transaction group")
+    print_info("Calling .send() signs and submits all transactions atomically")
+
+    # Use the original composer (not the chained one which was already used for simulation)
+    send_result = composer.send()
+
+    print_info("")
+    print_info("Send results:")
+    print_info(f"  Transactions sent: {len(send_result.transactions)}")
+    print_info(f"  Group ID: {send_result.group_id}")
+    print_info("")
+    print_info("Transaction IDs and confirmations:")
+    for i, tx_id in enumerate(send_result.tx_ids):
+        confirmation = send_result.confirmations[i]
+        print_info(f"  [{i}]: {tx_id}")
+        print_info(f"       Confirmed in round: {confirmation.confirmed_round}")
+
+    print_success("Atomic transaction group executed")
+
+    # Step 7: Show that all transactions succeed or fail together (atomicity)
+    print_step(7, "Show that all transactions succeed or fail together (atomicity)")
+    print_info("Atomic groups ensure all-or-nothing execution")
+    print_info("")
+    print_info("Key atomicity properties:")
+    print_info("  - All transactions share the same group ID")
+    print_info("  - If any transaction fails, none are committed")
+    print_info("  - Transactions are executed in order within the group")
+    print_info("")
+
+    # Verify all transactions have the same group ID
+    transactions = send_result.transactions
+    first_group_id = transactions[0].group if transactions[0].group else None
+    first_group_b64 = base64.b64encode(first_group_id).decode() if first_group_id else ""
+    all_same_group = all(
+        txn.group and first_group_id and base64.b64encode(txn.group).decode() == first_group_b64 for txn in transactions
+    )
+
+    print_info(f"All transactions have same group ID: {all_same_group}")
+    print_info(f"Group ID (base64): {send_result.group_id}")
+
+    # Verify all confirmations are in the same round
+    first_round = send_result.confirmations[0].confirmed_round
+    all_same_round = all(conf.confirmed_round == first_round for conf in send_result.confirmations)
+
+    print_info(f"All transactions confirmed in same round: {all_same_round}")
+    print_info(f"Confirmed round: {first_round}")
+
+    print_success("Atomicity verified")
+
+    # Step 8: Demonstrate adding transactions with different signers
+    print_step(8, "Demonstrate adding transactions with different signers")
+    print_info("Atomic groups can include transactions from multiple signers")
+    print_info("Each transaction uses the signer registered for its sender")
+
+    # Create an asset first (Alice creates it with manager role for cleanup)
+    asset_create_result = algorand.send.asset_create(
+        AssetCreateParams(
+            sender=alice.addr,
+            total=1_000_000,
+            decimals=0,
+            asset_name="Multi-Signer Token",
+            unit_name="MST",
+            manager=alice.addr,  # Manager role needed to destroy the asset later
+        )
+    )
+    asset_id = asset_create_result.asset_id
+
+    print_info("")
+    print_info("Created asset for multi-signer demo:")
+    print_info(f"  Asset ID: {asset_id}")
+    print_info("  Asset name: Multi-Signer Token")
+
+    # Build a multi-signer atomic group:
+    # 1. Bob opts in to the asset (signed by Bob)
+    # 2. Alice transfers asset to Bob (signed by Alice)
+    # 3. Charlie pays Alice (signed by Charlie)
+    multi_signer_result = (
+        algorand.new_group()
+        .add_asset_opt_in(
+            AssetOptInParams(
+                sender=bob.addr,  # Signed by Bob
+                asset_id=asset_id,
+            )
+        )
+        .add_asset_transfer(
+            AssetTransferParams(
+                sender=alice.addr,  # Signed by Alice
+                receiver=bob.addr,
+                asset_id=asset_id,
+                amount=100,
+            )
+        )
+        .add_payment(
+            PaymentParams(
+                sender=charlie.addr,  # Signed by Charlie
+                receiver=alice.addr,
+                amount=AlgoAmount.from_algo(0.1),
+                note=b"Payment for asset",
+            )
+        )
+        .send()
+    )
+
+    print_info("")
+    print_info("Multi-signer atomic group executed:")
+    print_info(f"  Transactions: {len(multi_signer_result.transactions)}")
+    print_info(f"  Group ID: {multi_signer_result.group_id}")
+    print_info("")
+    print_info("Signer breakdown:")
+    txn0_sender = shorten_address(str(multi_signer_result.transactions[0].sender))
+    txn1_sender = shorten_address(str(multi_signer_result.transactions[1].sender))
+    txn2_sender = shorten_address(str(multi_signer_result.transactions[2].sender))
+    print_info(f"  [0] Asset Opt-In: Sender {txn0_sender} (Bob)")
+    print_info(f"  [1] Asset Transfer: Sender {txn1_sender} (Alice)")
+    print_info(f"  [2] Payment: Sender {txn2_sender} (Charlie)")
+
+    print_success("Multi-signer atomic group completed")
+
+    # Step 9: Show the group ID assigned to transactions
+    print_step(9, "Show the group ID assigned to transactions")
+    print_info("All transactions in a group share a unique group ID")
+    print_info("The group ID is a hash of all transactions in the group")
+
+    print_info("")
+    print_info("Group ID details:")
+    group_id_len = len(multi_signer_result.group_id) if multi_signer_result.group_id else 0
+    print_info(f"  Group ID (base64): {multi_signer_result.group_id}")
+    print_info(f"  Group ID length: {group_id_len} characters (base64)")
+
+    print_info("")
+    print_info("Transaction group membership:")
+    for i, txn in enumerate(multi_signer_result.transactions):
+        group_base64 = base64.b64encode(txn.group).decode() if txn.group else "N/A"
+        matches = group_base64 == multi_signer_result.group_id
+        print_info(f"  Transaction [{i}]:")
+        print_info(f"    Type: {txn.transaction_type}")
+        print_info(f"    Sender: {shorten_address(str(txn.sender))}")
+        print_info(f"    Group ID matches: {matches}")
+
+    print_success("Group ID demonstrated")
+
+    # Step 10: Display all transaction IDs and confirmations
+    print_step(10, "Display all transaction IDs and confirmations")
+    print_info("Complete summary of the multi-signer atomic group")
+
+    separator = "-" * 70
+    print_info("")
+    print_info(separator)
+    print_info("Transaction Group Summary")
+    print_info(separator)
+    print_info(f"Group ID: {multi_signer_result.group_id}")
+    print_info(f"Total Transactions: {len(multi_signer_result.transactions)}")
+    print_info(separator)
+
+    for i, txn in enumerate(multi_signer_result.transactions):
+        confirmation = multi_signer_result.confirmations[i]
+        tx_id = multi_signer_result.tx_ids[i]
+
+        print_info("")
+        print_info(f"Transaction [{i}]:")
+        print_info(f"  Transaction ID: {tx_id}")
+        print_info(f"  Type: {txn.transaction_type}")
+        print_info(f"  Sender: {shorten_address(str(txn.sender))}")
+        print_info(f"  Fee: {txn.fee} uALGO")
+        print_info(f"  First Valid: {txn.first_valid}")
+        print_info(f"  Last Valid: {txn.last_valid}")
+        print_info(f"  Confirmed Round: {confirmation.confirmed_round}")
+
+    print_info("")
+    print_info(separator)
+
+    # Verify final balances
+    alice_info = algorand.account.get_information(alice.addr)
+    bob_info = algorand.account.get_information(bob.addr)
+    charlie_info = algorand.account.get_information(charlie.addr)
+
+    print_info("")
+    print_info("Final account balances:")
+    print_info(f"  Alice: {format_algo(alice_info.amount)}")
+    print_info(f"  Bob: {format_algo(bob_info.amount)}")
+    print_info(f"  Charlie: {format_algo(charlie_info.amount)}")
+
+    # Check Bob's asset balance
+    bob_assets = bob_info.assets
+    bob_asset_holding = None
+    if bob_assets:
+        for asset in bob_assets:
+            if asset["asset-id"] == asset_id:
+                bob_asset_holding = asset
+                break
+    bob_asset_amount = bob_asset_holding["amount"] if bob_asset_holding else 0
+    print_info("")
+    print_info("Bob's asset holdings:")
+    print_info(f"  Asset ID {asset_id}: {bob_asset_amount} units")
+
+    print_success("Transaction Composer example completed!")
+
+    # Step 11: Summary of TransactionComposer API
+    print_step(11, "Summary - TransactionComposer API")
+    print_info("The TransactionComposer provides a fluent API for atomic transaction groups:")
+    print_info("")
+    print_info("Creating a composer:")
+    print_info("  composer = algorand.new_group()")
+    print_info("")
+    print_info("Adding transactions:")
+    print_info("  .add_payment(PaymentParams(sender=..., receiver=..., amount=...))")
+    print_info("  .add_asset_create(AssetCreateParams(sender=..., total=..., decimals=...))")
+    print_info("  .add_asset_opt_in(AssetOptInParams(sender=..., asset_id=...))")
+    print_info("  .add_asset_transfer(AssetTransferParams(sender=..., receiver=..., asset_id=..., amount=...))")
+    print_info("  .add_asset_opt_out(AssetOptOutParams(sender=..., asset_id=..., creator=...))")
+    print_info("  .add_asset_config(AssetConfigParams(sender=..., asset_id=...))")
+    print_info("  .add_asset_freeze(AssetFreezeParams(sender=..., asset_id=..., account=..., frozen=...))")
+    print_info("  .add_asset_destroy(AssetDestroyParams(sender=..., asset_id=...))")
+    print_info("  .add_app_create(AppCreateParams(sender=..., approval_program=..., clear_state_program=...))")
+    print_info(
+        "  .add_app_update(AppUpdateParams(sender=..., app_id=..., approval_program=..., clear_state_program=...))"
+    )
+    print_info("  .add_app_call(AppCallParams(sender=..., app_id=...))")
+    print_info("  .add_app_delete(AppDeleteParams(sender=..., app_id=...))")
+    print_info("  .add_transaction(txn, signer?) - Add a pre-built transaction")
+    print_info("")
+    print_info("Executing:")
+    print_info("  .simulate(skip_signatures=True) - Preview without signing")
+    print_info("  .send() - Sign and submit atomically")
+    print_info("")
+    print_info("Utility methods:")
+    print_info("  .count() - Get number of transactions in the group")
+    print_info("  .build() - Build transactions without sending")
+    print_info("  .build_transactions() - Get raw unsigned transactions")
+    print_info("")
+    print_info("Key concepts:")
+    print_info("  - All transactions in a group share a unique group ID")
+    print_info("  - Atomic execution: all succeed or all fail")
+    print_info("  - Multiple signers supported (each tx uses its sender's signer)")
+    print_info("  - Maximum 16 transactions per group")
+
+    # Clean up - Bob opts out (returns assets to Alice), then Alice destroys the asset
+    algorand.send.asset_opt_out(
+        AssetOptOutParams(
+            sender=bob.addr,
+            asset_id=asset_id,
+            creator=alice.addr,
+        ),
+        ensure_zero_balance=False,
+    )
+    algorand.send.asset_destroy(
+        AssetDestroyParams(
+            sender=alice.addr,
+            asset_id=asset_id,
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- **Transaction Composer (Atomic Transaction Groups)**
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

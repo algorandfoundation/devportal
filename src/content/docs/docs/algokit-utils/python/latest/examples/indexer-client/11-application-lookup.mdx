@@ -1,0 +1,538 @@
+---
+title: "Application Lookup"
+description: "This example demonstrates how to lookup and search for applications using the IndexerClient lookup_application_by_id() and search_for_applications() methods."
+sidebar:
+  order: 11
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup and search for applications using the IndexerClient lookup_application_by_id() and search_for_applications() methods.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/11_application_lookup.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/11_application_lookup.py)
+
+```python title="11_application_lookup.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Application Lookup
+
+This example demonstrates how to lookup and search for applications using
+the IndexerClient lookup_application_by_id() and search_for_applications() methods.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+import time
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    create_indexer_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_utils.transactions.types import AppCreateParams, AppDeleteParams
+
+
+def main() -> None:
+    print_header("Application Lookup Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        creator_account = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(creator_account)
+        creator_address = creator_account.addr
+        print_success(f"Using dispenser account: {shorten_address(creator_address)}")
+    except Exception as e:
+        print_error(f"Failed to get dispenser account: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Deploy test applications using AlgorandClient
+    # =========================================================================
+    print_step(2, "Deploying test applications for demonstration")
+
+    try:
+        # Simple approval program that stores a counter in global state
+        approval_source = """#pragma version 10
+// Simple smart contract for demonstration
+txn ApplicationID
+int 0
+==
+bnz handle_creation
+
+txn OnCompletion
+int NoOp
+==
+bnz handle_noop
+
+txn OnCompletion
+int DeleteApplication
+==
+bnz handle_delete
+
+int 0
+return
+
+handle_creation:
+  byte "counter"
+  int 0
+  app_global_put
+  byte "name"
+  byte "DemoApp"
+  app_global_put
+  int 1
+  return
+
+handle_noop:
+  byte "counter"
+  app_global_get
+  int 1
+  +
+  byte "counter"
+  swap
+  app_global_put
+  int 1
+  return
+
+handle_delete:
+  int 1
+  return
+"""
+
+        clear_source = """#pragma version 10
+int 1
+return
+"""
+
+        # Compile TEAL programs
+        print_info("Compiling TEAL programs...")
+        approval_result = algod.teal_compile(approval_source.encode())
+        approval_program = base64.b64decode(approval_result.result)
+
+        clear_result = algod.teal_compile(clear_source.encode())
+        clear_program = base64.b64decode(clear_result.result)
+
+        print_info(f"Approval program: {len(approval_program)} bytes")
+        print_info(f"Clear state program: {len(clear_program)} bytes")
+        print_info("")
+
+        # Create first application
+        print_info("Creating first test application: DemoApp1...")
+        txn_1 = algorand.create_transaction.app_create(
+            AppCreateParams(
+                sender=creator_address,
+                approval_program=approval_program,
+                clear_state_program=clear_program,
+                schema={
+                    "global_ints": 1,
+                    "global_byte_slices": 1,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            )
+        )
+        signed_txn_1 = creator_account.signer([txn_1], [0])
+        result_1 = algod.send_raw_transaction(signed_txn_1)
+        tx_id_1 = result_1.tx_id
+        pending_1 = wait_for_confirmation(algod, tx_id_1)
+        app_id_1 = pending_1.app_id
+        print_success(f"Created DemoApp1 with Application ID: {app_id_1}")
+
+        # Create second application with different schema
+        print_info("Creating second test application: DemoApp2...")
+        txn_2 = algorand.create_transaction.app_create(
+            AppCreateParams(
+                sender=creator_address,
+                approval_program=approval_program,
+                clear_state_program=clear_program,
+                schema={
+                    "global_ints": 2,
+                    "global_byte_slices": 2,
+                    "local_ints": 1,
+                    "local_byte_slices": 1,
+                },
+            )
+        )
+        signed_txn_2 = creator_account.signer([txn_2], [0])
+        result_2 = algod.send_raw_transaction(signed_txn_2)
+        tx_id_2 = result_2.tx_id
+        pending_2 = wait_for_confirmation(algod, tx_id_2)
+        app_id_2 = pending_2.app_id
+        print_success(f"Created DemoApp2 with Application ID: {app_id_2}")
+
+        # Small delay to allow indexer to catch up
+        print_info("Waiting for indexer to index applications...")
+        time.sleep(3)
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create test applications: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Lookup application by ID with lookup_application_by_id()
+    # =========================================================================
+    print_step(3, "Looking up application by ID with lookup_application_by_id()")
+
+    try:
+        # lookup_application_by_id() returns detailed information about a single application
+        app_result = indexer.lookup_application_by_id(app_id_1)
+
+        if app_result.application:
+            app = app_result.application
+            print_success(f"Found application with ID: {app.id_}")
+            print_info("")
+
+            # Display application params
+            print_info("Application params:")
+            print_info(f"  - id: {app.id_}")
+            if app.params.creator:
+                print_info(f"  - creator: {shorten_address(app.params.creator)}")
+            if app.params.approval_program:
+                print_info(f"  - approval_program: {len(app.params.approval_program)} bytes")
+            if app.params.clear_state_program:
+                print_info(f"  - clear_state_program: {len(app.params.clear_state_program)} bytes")
+            if app.params.extra_program_pages is not None:
+                print_info(f"  - extra_program_pages: {app.params.extra_program_pages}")
+            print_info("")
+
+            # Display state schema
+            print_info("State schema:")
+            if app.params.global_state_schema:
+                gss = app.params.global_state_schema
+                print_info(f"  - global_state_schema: {gss.num_uints} uints, {gss.num_byte_slices} byte slices")
+            if app.params.local_state_schema:
+                lss = app.params.local_state_schema
+                print_info(f"  - local_state_schema: {lss.num_uints} uints, {lss.num_byte_slices} byte slices")
+            print_info("")
+
+            # Display global state key-value pairs if present
+            if app.params.global_state and len(app.params.global_state) > 0:
+                print_info("Global state key-value pairs:")
+                for kv in app.params.global_state:
+                    # Decode the key from bytes to string
+                    key_bytes = base64.b64decode(kv.key) if isinstance(kv.key, str) else kv.key
+                    key_str = key_bytes.decode("utf-8")
+                    # Value type: 1 = bytes, 2 = uint
+                    if kv.value.type_ == 2:
+                        print_info(f'  - "{key_str}": {kv.value.uint} (uint)')
+                    else:
+                        kv_bytes = kv.value.bytes_
+                        value_bytes = base64.b64decode(kv_bytes) if isinstance(kv_bytes, str) else kv_bytes
+                        value_str = value_bytes.decode("utf-8") if value_bytes else "(empty)"
+                        print_info(f'  - "{key_str}": "{value_str}" (bytes)')
+            else:
+                print_info("Global state: (empty or not set)")
+            print_info("")
+
+            # Display additional metadata
+            if app.created_at_round is not None:
+                print_info(f"Created at round: {app.created_at_round}")
+            if app.deleted is not None:
+                print_info(f"Deleted: {app.deleted}")
+            if app.deleted_at_round is not None:
+                print_info(f"Deleted at round: {app.deleted_at_round}")
+        else:
+            print_info("Application not found in response")
+
+        print_info(f"Query performed at round: {app_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_application_by_id failed: {e}")
+
+    # =========================================================================
+    # Step 4: Lookup second application to compare
+    # =========================================================================
+    print_step(4, "Looking up second application to compare schemas")
+
+    try:
+        app_result_2 = indexer.lookup_application_by_id(app_id_2)
+
+        if app_result_2.application:
+            app = app_result_2.application
+            print_success(f"Found application with ID: {app.id_}")
+            print_info("")
+
+            print_info("State schema (different from first app):")
+            if app.params.global_state_schema:
+                gss = app.params.global_state_schema
+                print_info(f"  - global_state_schema: {gss.num_uints} uints, {gss.num_byte_slices} byte slices")
+            if app.params.local_state_schema:
+                lss = app.params.local_state_schema
+                print_info(f"  - local_state_schema: {lss.num_uints} uints, {lss.num_byte_slices} byte slices")
+    except Exception as e:
+        print_error(f"lookup_application_by_id failed: {e}")
+
+    # =========================================================================
+    # Step 5: Search for applications with search_for_applications()
+    # =========================================================================
+    print_step(5, "Searching for applications with search_for_applications()")
+
+    try:
+        # search_for_applications() returns a list of applications matching the criteria
+        search_result = indexer.search_for_applications()
+
+        print_success(f"Found {len(search_result.applications)} application(s)")
+        print_info("")
+
+        if search_result.applications:
+            print_info("Applications found:")
+            # Show first 5 applications to avoid too much output
+            apps_to_show = search_result.applications[:5]
+            for app in apps_to_show:
+                print_info(f"  Application ID: {app.id_}")
+                if app.params.creator:
+                    print_info(f"    - creator: {shorten_address(app.params.creator)}")
+                if app.deleted:
+                    print_info(f"    - deleted: {app.deleted}")
+                print_info("")
+            if len(search_result.applications) > 5:
+                print_info(f"  ... and {len(search_result.applications) - 5} more")
+
+        print_info(f"Query performed at round: {search_result.current_round}")
+    except Exception as e:
+        print_error(f"search_for_applications failed: {e}")
+
+    # =========================================================================
+    # Step 6: Filter applications by creator address
+    # =========================================================================
+    print_step(6, "Filtering applications by creator address")
+
+    try:
+        # Filter applications by creator
+        print_info(f"Searching for applications created by: {shorten_address(creator_address)}")
+        filtered_result = indexer.search_for_applications(creator=creator_address)
+
+        print_success(f"Found {len(filtered_result.applications)} application(s) by this creator")
+        print_info("")
+
+        if filtered_result.applications:
+            print_info("Applications by this creator:")
+            for app in filtered_result.applications:
+                print_info(f"  Application ID: {app.id_}")
+                if app.params.global_state_schema:
+                    gss = app.params.global_state_schema
+                    print_info(f"    - global_state_schema: {gss.num_uints} uints, {gss.num_byte_slices} byte slices")
+    except Exception as e:
+        print_error(f"search_for_applications by creator failed: {e}")
+
+    # =========================================================================
+    # Step 7: Delete an application and demonstrate include_all parameter
+    # =========================================================================
+    print_step(7, "Deleting an application to demonstrate include_all parameter")
+
+    try:
+        # Delete the second application
+        print_info(f"Deleting application {app_id_2}...")
+        delete_txn = algorand.create_transaction.app_delete(
+            AppDeleteParams(
+                sender=creator_address,
+                app_id=app_id_2,
+            )
+        )
+        signed_delete = creator_account.signer([delete_txn], [0])
+        delete_result = algod.send_raw_transaction(signed_delete)
+        delete_tx_id = delete_result.tx_id
+        wait_for_confirmation(algod, delete_tx_id)
+        print_success(f"Deleted application {app_id_2}")
+        print_info("")
+
+        # Wait for indexer to catch up
+        time.sleep(2)
+
+        # Search without include_all (should not include deleted apps)
+        print_info("Searching for applications by creator (without include_all)...")
+        without_deleted = indexer.search_for_applications(
+            creator=creator_address,
+            include_all=False,
+        )
+        print_info(f"Found {len(without_deleted.applications)} application(s) (excludes deleted)")
+
+        # Search with include_all to include deleted applications
+        print_info("Searching for applications by creator (with include_all: True)...")
+        with_deleted = indexer.search_for_applications(
+            creator=creator_address,
+            include_all=True,
+        )
+        print_info(f"Found {len(with_deleted.applications)} application(s) (includes deleted)")
+        print_info("")
+
+        # Show deleted application details
+        deleted_app = next((app for app in with_deleted.applications if app.id_ == app_id_2), None)
+        if deleted_app:
+            print_info(f"Deleted application (ID: {deleted_app.id_}):")
+            print_info(f"  - deleted: {deleted_app.deleted}")
+            if deleted_app.deleted_at_round is not None:
+                print_info(f"  - deleted_at_round: {deleted_app.deleted_at_round}")
+    except Exception as e:
+        print_error(f"Delete/include_all demo failed: {e}")
+
+    # =========================================================================
+    # Step 8: Handle case where application is not found
+    # =========================================================================
+    print_step(8, "Handling case where application is not found")
+
+    try:
+        # Try to lookup a non-existent application
+        non_existent_app_id = 999999999
+        print_info(f"Attempting to lookup non-existent application ID: {non_existent_app_id}")
+
+        result = indexer.lookup_application_by_id(non_existent_app_id)
+
+        # The response may have application as None for non-existent apps
+        if result.application:
+            print_info(f"Unexpectedly found application: {result.application.id_}")
+        else:
+            print_info("Application field is None in response (application not found)")
+    except Exception as e:
+        # Some indexers throw an error for non-existent applications
+        print_info(f"Application not found (caught error): {e}")
+
+    # =========================================================================
+    # Step 9: Demonstrate pagination with limit and next parameters
+    # =========================================================================
+    print_step(9, "Demonstrating pagination with limit and next parameters")
+
+    try:
+        # First page with limit
+        print_info("Fetching first page of applications (limit: 1)...")
+        page_1 = indexer.search_for_applications(limit=1)
+
+        print_info(f"Page 1: Retrieved {len(page_1.applications)} application(s)")
+        if page_1.applications:
+            print_info(f"  - Application ID: {page_1.applications[0].id_}")
+
+        # Check if there are more results
+        if page_1.next_token:
+            token_preview = page_1.next_token[:20]
+            print_info(f"  - Next token available: {token_preview}...")
+            print_info("")
+
+            # Fetch second page using next token
+            print_info("Fetching second page using next token...")
+            page_2 = indexer.search_for_applications(
+                limit=1,
+                next_=page_1.next_token,
+            )
+
+            print_info(f"Page 2: Retrieved {len(page_2.applications)} application(s)")
+            if page_2.applications:
+                print_info(f"  - Application ID: {page_2.applications[0].id_}")
+
+            if page_2.next_token:
+                print_info("  - More results available (next_token present)")
+            else:
+                print_info("  - No more results (no next_token)")
+        else:
+            print_info("  - No pagination needed (all results fit in one page)")
+    except Exception as e:
+        print_error(f"Pagination demo failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Deploying test applications using TEAL compilation")
+    print_info("  2. lookup_application_by_id(app_id) - Get detailed info about a single application")
+    print_info("  3. Display application params: id, creator, approval_program, clear_state_program")
+    print_info("  4. Display state schema: global_state_schema, local_state_schema")
+    print_info("  5. Display global state key-value pairs")
+    print_info("  6. search_for_applications() - Search for applications")
+    print_info("  7. Filtering by creator address")
+    print_info("  8. Using include_all to include deleted applications")
+    print_info("  9. Handling case where application is not found")
+    print_info("  10. Pagination with limit and next parameters")
+    print_info("")
+    print_info("Key lookup_application_by_id response fields:")
+    print_info("  - application: The Application object (may be None if not found)")
+    print_info("  - current_round: Round at which results were computed")
+    print_info("")
+    print_info("Key Application fields:")
+    print_info("  - id: Application identifier (int)")
+    print_info("  - deleted: Whether app is deleted (bool, optional)")
+    print_info("  - created_at_round: Round when created (int, optional)")
+    print_info("  - deleted_at_round: Round when deleted (int, optional)")
+    print_info("  - params: ApplicationParams object")
+    print_info("")
+    print_info("Key ApplicationParams fields:")
+    print_info("  - creator: Address that created the application")
+    print_info("  - approval_program: TEAL bytecode for approval logic (bytes)")
+    print_info("  - clear_state_program: TEAL bytecode for clear state logic (bytes)")
+    print_info("  - global_state_schema: {num_uint, num_byte_slice} for global storage")
+    print_info("  - local_state_schema: {num_uint, num_byte_slice} for per-user storage")
+    print_info("  - global_state: Array of TealKeyValue for current global state")
+    print_info("  - extra_program_pages: Extra program pages (int, optional)")
+    print_info("")
+    print_info("search_for_applications() filter parameters:")
+    print_info("  - application_id: Filter by specific app ID")
+    print_info("  - creator: Filter by creator address")
+    print_info("  - include_all: Include deleted applications (default: False)")
+    print_info("  - limit: Maximum results per page")
+    print_info("  - next: Pagination token from previous response")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- **Application Lookup**
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

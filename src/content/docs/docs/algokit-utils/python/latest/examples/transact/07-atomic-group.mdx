@@ -1,0 +1,307 @@
+---
+title: "Atomic Transaction Group"
+description: "This example demonstrates how to group multiple transactions atomically. All transactions in a group either succeed together or fail together. It shows:"
+sidebar:
+  order: 7
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to group multiple transactions atomically. All transactions in a group either succeed together or fail together. It shows:
+- Creating multiple payment transactions
+- Using group_transactions() to assign a group ID
+- Signing all transactions with the same signer
+- Submitting as a single atomic group
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/07_atomic_group.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/07_atomic_group.py)
+
+```python title="07_atomic_group.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Atomic Transaction Group
+
+This example demonstrates how to group multiple transactions atomically.
+All transactions in a group either succeed together or fail together.
+It shows:
+- Creating multiple payment transactions
+- Using group_transactions() to assign a group ID
+- Signing all transactions with the same signer
+- Submitting as a single atomic group
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+
+from shared import (
+    create_algod_client,
+    format_algo,
+    get_account_balance,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_transact import (
+    PaymentTransactionFields,
+    Transaction,
+    TransactionType,
+    assign_fee,
+    group_transactions,
+)
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Atomic Transaction Group Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get a funded account from KMD (sender for all transactions)
+    print_step(2, "Get Funded Account from KMD")
+    sender = algorand.account.localnet_dispenser()
+    sender_balance = get_account_balance(algorand, sender.addr)
+    print_info(f"Sender address: {shorten_address(sender.addr)}")
+    print_info(f"Sender balance: {format_algo(sender_balance)}")
+
+    # Step 3: Generate 3 receiver accounts
+    print_step(3, "Generate 3 Receiver Accounts")
+    receiver1 = algorand.account.random()
+    receiver2 = algorand.account.random()
+    receiver3 = algorand.account.random()
+
+    print_info(f"Receiver 1: {shorten_address(receiver1.addr)}")
+    print_info(f"Receiver 2: {shorten_address(receiver2.addr)}")
+    print_info(f"Receiver 3: {shorten_address(receiver3.addr)}")
+
+    # Step 4: Get suggested transaction parameters
+    print_step(4, "Get Suggested Transaction Parameters")
+    suggested_params = algod.suggested_params()
+    print_info(f"First valid round: {suggested_params.first_valid}")
+    print_info(f"Last valid round: {suggested_params.last_valid}")
+    print_info(f"Min fee: {suggested_params.min_fee} microALGO")
+
+    # Step 5: Create 3 payment transactions with different amounts
+    print_step(5, "Create 3 Payment Transactions")
+    amounts = [1_000_000, 2_000_000, 3_000_000]  # 1, 2, 3 ALGO
+
+    # Create base transactions
+    tx1_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=sender.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=receiver1.addr,
+            amount=amounts[0],
+        ),
+    )
+
+    tx2_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=sender.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=receiver2.addr,
+            amount=amounts[1],
+        ),
+    )
+
+    tx3_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=sender.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=receiver3.addr,
+            amount=amounts[2],
+        ),
+    )
+
+    print_info(f"Transaction 1: {format_algo(amounts[0])} to Receiver 1")
+    print_info(f"Transaction 2: {format_algo(amounts[1])} to Receiver 2")
+    print_info(f"Transaction 3: {format_algo(amounts[2])} to Receiver 3")
+
+    # Step 6: Assign fees to all transactions
+    print_step(6, "Assign Transaction Fees")
+    tx1_with_fee = assign_fee(
+        tx1_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+    tx2_with_fee = assign_fee(
+        tx2_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+    tx3_with_fee = assign_fee(
+        tx3_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    fee1 = tx1_with_fee.fee if tx1_with_fee.fee else 0
+    fee2 = tx2_with_fee.fee if tx2_with_fee.fee else 0
+    fee3 = tx3_with_fee.fee if tx3_with_fee.fee else 0
+    print_info(f"Fee per transaction: {fee1} microALGO")
+    print_info(f"Total fees: {fee1 + fee2 + fee3} microALGO")
+
+    # Step 7: Group the transactions using group_transactions()
+    print_step(7, "Group Transactions with group_transactions()")
+    transactions_with_fees = [tx1_with_fee, tx2_with_fee, tx3_with_fee]
+    grouped_transactions = group_transactions(transactions_with_fees)
+
+    # All transactions now have the same group ID
+    group_id = grouped_transactions[0].group
+    group_id_b64 = base64.b64encode(group_id).decode() if group_id else "undefined"
+    print_info("Group ID assigned to all transactions")
+    print_info(f"Group ID (base64): {group_id_b64}")
+    print_info("All 3 transactions now share the same group ID")
+
+    # Step 8: Sign all transactions with the same signer
+    print_step(8, "Sign All Transactions")
+
+    # Sign each transaction (all from same sender)
+    signed_tx1 = sender.signer([grouped_transactions[0]], [0])
+    signed_tx2 = sender.signer([grouped_transactions[1]], [0])
+    signed_tx3 = sender.signer([grouped_transactions[2]], [0])
+
+    print_info("All 3 transactions signed successfully")
+
+    # Get transaction IDs for confirmation tracking
+    tx_id1 = grouped_transactions[0].tx_id()
+    tx_id2 = grouped_transactions[1].tx_id()
+    tx_id3 = grouped_transactions[2].tx_id()
+
+    print_info(f"Transaction 1 ID: {tx_id1}")
+    print_info(f"Transaction 2 ID: {tx_id2}")
+    print_info(f"Transaction 3 ID: {tx_id3}")
+
+    # Step 9: Submit as a single group using concatenated bytes
+    print_step(9, "Submit Atomic Group")
+
+    # Concatenate all signed transaction bytes
+    concatenated_bytes = signed_tx1[0] + signed_tx2[0] + signed_tx3[0]
+
+    print_info(f"Submitting {len(grouped_transactions)} grouped transactions as a single atomic unit")
+
+    algod.send_raw_transaction(concatenated_bytes)
+    print_info("Atomic group submitted to network")
+
+    # Wait for confirmation of the first transaction (all will be confirmed together)
+    pending_info = wait_for_confirmation(algod, tx_id1)
+    print_info(f"Atomic group confirmed in round: {pending_info.confirmed_round}")
+
+    # Step 10: Verify all receivers received their amounts
+    print_step(10, "Verify All Receivers Received Amounts")
+
+    receiver1_balance = get_account_balance(algorand, receiver1.addr)
+    receiver2_balance = get_account_balance(algorand, receiver2.addr)
+    receiver3_balance = get_account_balance(algorand, receiver3.addr)
+
+    print_info(f"Receiver 1 balance: {format_algo(receiver1_balance)} (expected: {format_algo(amounts[0])})")
+    print_info(f"Receiver 2 balance: {format_algo(receiver2_balance)} (expected: {format_algo(amounts[1])})")
+    print_info(f"Receiver 3 balance: {format_algo(receiver3_balance)} (expected: {format_algo(amounts[2])})")
+
+    # Verify all balances match expected amounts
+    all_correct = (
+        receiver1_balance.micro_algo == amounts[0]
+        and receiver2_balance.micro_algo == amounts[1]
+        and receiver3_balance.micro_algo == amounts[2]
+    )
+
+    if all_correct:
+        print_success("All receivers received their expected amounts!")
+    else:
+        raise ValueError("One or more receivers did not receive the expected amount")
+
+    # Step 11: Demonstrate atomicity concept
+    print_step(11, "Atomicity Explanation")
+    print_info("Group transactions succeed or fail together:")
+    print_info("- If any transaction in the group fails validation, ALL fail")
+    print_info("- If all transactions pass validation, ALL succeed")
+    print_info("- This is crucial for atomic swaps, multi-party payments, etc.")
+    print_info("")
+    print_info("Example failure scenarios that would cause ALL transactions to fail:")
+    print_info("- Insufficient funds for any payment")
+    print_info("- Invalid signature on any transaction")
+    print_info("- Mismatched group IDs between transactions")
+
+    # Get final sender balance
+    sender_final_balance = get_account_balance(algorand, sender.addr)
+    total_sent = amounts[0] + amounts[1] + amounts[2]
+    total_fees = fee1 + fee2 + fee3
+
+    print_info("")
+    print_info(f"Total ALGO sent: {format_algo(total_sent)}")
+    print_info(f"Total fees paid: {format_algo(total_fees)}")
+    change = sender_balance.micro_algo - sender_final_balance.micro_algo
+    print_info(f"Sender balance change: {format_algo(change)}")
+
+    print_success("Atomic transaction group example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- **Atomic Transaction Group**
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

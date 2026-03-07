@@ -1,0 +1,402 @@
+---
+title: "MessagePack Encoding"
+description: "This example demonstrates encoding and decoding MessagePack data, which is used for Algorand transaction encoding."
+sidebar:
+  order: 8
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates encoding and decoding MessagePack data, which is used for Algorand transaction encoding.
+ Topics covered:
+- encode_msgpack() to serialize data to MessagePack format
+- decode_msgpack() to deserialize MessagePack bytes
+- Encoding simple objects with various types (strings, numbers, bytes)
+- Key handling in MessagePack
+- Uint8Array (bytes) encoding
+- Size comparison: MessagePack vs JSON
+
+## Prerequisites
+
+No LocalNet required - pure encoding utility functions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/08_msgpack.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/08_msgpack.py)
+
+```python title="08_msgpack.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: MessagePack Encoding
+
+This example demonstrates encoding and decoding MessagePack data,
+which is used for Algorand transaction encoding.
+
+Topics covered:
+- encode_msgpack() to serialize data to MessagePack format
+- decode_msgpack() to deserialize MessagePack bytes
+- Encoding simple objects with various types (strings, numbers, bytes)
+- Key handling in MessagePack
+- Uint8Array (bytes) encoding
+- Size comparison: MessagePack vs JSON
+
+No LocalNet required - pure encoding utility functions
+"""
+
+import json
+
+from shared import (
+    format_bytes,
+    format_hex,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_transact.codec.msgpack import decode_msgpack, encode_msgpack
+
+
+def main() -> None:
+    print_header("MessagePack Example")
+
+    # Step 1: Basic MessagePack Encoding
+    print_step(1, "Basic MessagePack Encoding")
+
+    print_info("MessagePack is a binary serialization format used by Algorand")
+    print_info("encode_msgpack() converts Python objects to compact binary bytes")
+    print_info("")
+
+    simple_object = {
+        "name": "Alice",
+        "balance": 1000,
+        "active": True,
+    }
+
+    encoded = encode_msgpack(simple_object)
+    print_info("Input object:")
+    print_info("  { 'name': 'Alice', 'balance': 1000, 'active': True }")
+    print_info("")
+    print_info(f"Encoded MessagePack ({len(encoded)} bytes):")
+    print_info(f"  {format_hex(encoded)}")
+    print_info(f"  Raw bytes: {format_bytes(encoded, 16)}")
+    print_success("Object encoded to MessagePack binary format")
+
+    # Step 2: MessagePack Decoding
+    print_step(2, "MessagePack Decoding")
+
+    print_info("decode_msgpack() decodes binary bytes back to data")
+    print_info("")
+
+    decoded = decode_msgpack(encoded)
+
+    print_info(f"Decoded type: {type(decoded).__name__}")
+    print_info(f"Decoded value: {decoded}")
+    print_info("")
+
+    # Access values directly (Python returns dict, not Map)
+    if isinstance(decoded, dict):
+        print_info("Accessing values from decoded dict:")
+        print_info(f"  name:    {decoded.get('name')}")
+        print_info(f"  balance: {decoded.get('balance')}")
+        print_info(f"  active:  {decoded.get('active')}")
+    print_info("")
+    print_success("decode_msgpack() returns dict for object data")
+
+    # Step 3: Encoding Various Types
+    print_step(3, "Encoding Various Types")
+
+    print_info("MessagePack supports various Python types:")
+    print_info("")
+
+    # Strings
+    string_data = {"message": "Hello, Algorand!"}
+    encoded_string = encode_msgpack(string_data)
+    print_info(f'String:  "Hello, Algorand!" -> {len(encoded_string)} bytes')
+
+    # Numbers
+    number_data = {"small": 42, "medium": 1000000, "large": 4294967295}
+    encoded_numbers = encode_msgpack(number_data)
+    print_info(f"Numbers: {{ small: 42, medium: 1000000, large: 4294967295 }} -> {len(encoded_numbers)} bytes")
+
+    # Boolean
+    bool_data = {"enabled": True, "disabled": False}
+    encoded_bool = encode_msgpack(bool_data)
+    print_info(f"Boolean: {{ enabled: True, disabled: False }} -> {len(encoded_bool)} bytes")
+
+    # Array
+    array_data = {"items": [1, 2, 3, "four", True]}
+    encoded_array = encode_msgpack(array_data)
+    print_info(f"Array:   {{ items: [1, 2, 3, 'four', True] }} -> {len(encoded_array)} bytes")
+
+    # None
+    none_data = {"value": None}
+    encoded_none = encode_msgpack(none_data)
+    print_info(f"None:    {{ value: None }} -> {len(encoded_none)} bytes")
+
+    # Nested object
+    nested_data = {
+        "level1": {
+            "level2": {
+                "value": "deep",
+            },
+        },
+    }
+    encoded_nested = encode_msgpack(nested_data)
+    print_info(f"Nested:  {{ level1: {{ level2: {{ value: 'deep' }} }} }} -> {len(encoded_nested)} bytes")
+
+    print_info("")
+    print_success("All common Python types encoded successfully")
+
+    # Step 4: Large Integer Encoding/Decoding
+    print_step(4, "Large Integer Encoding/Decoding")
+
+    print_info("MessagePack can encode large integers (uint64 values)")
+    print_info("This is essential for Algorand which uses large numeric values")
+    print_info("")
+
+    big_int_data = {
+        "normalNumber": 1000000,
+        "bigNumber": 9007199254740993,  # MAX_SAFE_INTEGER + 2
+        "maxUint64": 18446744073709551615,  # 2^64 - 1
+    }
+
+    print_info("Input with large integer values:")
+    print_info(f"  normalNumber: {big_int_data['normalNumber']}")
+    print_info(f"  bigNumber:    {big_int_data['bigNumber']} (> MAX_SAFE_INTEGER)")
+    print_info(f"  maxUint64:    {big_int_data['maxUint64']} (2^64 - 1)")
+    print_info("")
+
+    encoded_big_int = encode_msgpack(big_int_data)
+    print_info(f"Encoded to {len(encoded_big_int)} bytes:")
+    print_info(f"  {format_hex(encoded_big_int)}")
+    print_info("")
+
+    decoded_big_int = decode_msgpack(encoded_big_int)
+    if isinstance(decoded_big_int, dict):
+        print_info("Decoded values:")
+        normal_num = decoded_big_int.get("normalNumber")
+        big_num = decoded_big_int.get("bigNumber")
+        max_u64 = decoded_big_int.get("maxUint64")
+        print_info(f"  normalNumber: {normal_num} (type: {type(normal_num).__name__})")
+        print_info(f"  bigNumber:    {big_num} (type: {type(big_num).__name__})")
+        print_info(f"  maxUint64:    {max_u64} (type: {type(max_u64).__name__})")
+    print_info("")
+
+    # Verify preservation
+    if isinstance(decoded_big_int, dict) and decoded_big_int.get("maxUint64") == big_int_data["maxUint64"]:
+        print_success("Large integer values preserved through encode/decode cycle")
+
+    # Step 5: Bytes Encoding
+    print_step(5, "Bytes Encoding")
+
+    print_info("Algorand uses bytes for binary data (addresses, keys, etc.)")
+    print_info("MessagePack has native support for binary (bytes) type")
+    print_info("")
+
+    # Create sample byte arrays
+    sample_bytes = bytes([0x01, 0x02, 0x03, 0x04, 0x05])
+    address_bytes = bytes([0xAB] * 32)  # Simulated 32-byte public key
+
+    bytes_data = {
+        "shortBytes": sample_bytes,
+        "addressKey": address_bytes,
+    }
+
+    print_info("Input with bytes values:")
+    print_info(f"  shortBytes:  {format_hex(sample_bytes)} ({len(sample_bytes)} bytes)")
+    print_info(f"  addressKey:  {format_hex(address_bytes[:8])}... ({len(address_bytes)} bytes)")
+    print_info("")
+
+    encoded_bytes = encode_msgpack(bytes_data)
+    print_info(f"Encoded to {len(encoded_bytes)} bytes")
+    print_info("")
+
+    decoded_bytes = decode_msgpack(encoded_bytes)
+    if isinstance(decoded_bytes, dict):
+        decoded_short = decoded_bytes.get("shortBytes")
+        decoded_address = decoded_bytes.get("addressKey")
+
+        if isinstance(decoded_short, bytes) and isinstance(decoded_address, bytes):
+            print_info("Decoded values:")
+            print_info(f"  shortBytes:  {format_hex(decoded_short)} ({len(decoded_short)} bytes)")
+            print_info(f"  addressKey:  {format_hex(decoded_address[:8])}... ({len(decoded_address)} bytes)")
+            print_info("")
+
+            # Verify bytes match
+            if decoded_short == sample_bytes:
+                print_success("Bytes values preserved through encode/decode cycle")
+
+    # Step 6: MessagePack vs JSON Size Comparison
+    print_step(6, "MessagePack vs JSON Size Comparison")
+
+    print_info("MessagePack typically produces smaller output than JSON")
+    print_info("")
+
+    # Test data representative of Algorand transaction fields
+    transaction_like = {
+        "type": "pay",
+        "sender": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ",
+        "receiver": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBAR7CWY",
+        "amount": 1000000,
+        "fee": 1000,
+        "firstValid": 10000000,
+        "lastValid": 10001000,
+        "note": "Payment for services",
+    }
+
+    msgpack_size = len(encode_msgpack(transaction_like))
+    json_size = len(json.dumps(transaction_like))
+
+    space_saved = json_size - msgpack_size
+    pct_saved = (1 - msgpack_size / json_size) * 100
+
+    print_info("Transaction-like data:")
+    print_info(f"  MessagePack size: {msgpack_size} bytes")
+    print_info(f"  JSON size:        {json_size} bytes")
+    print_info(f"  Space saved:      {space_saved} bytes ({pct_saved:.1f}%)")
+    print_info("")
+
+    # Another comparison with numeric data
+    numeric_data = {
+        "values": [1, 10, 100, 1000, 10000, 100000, 1000000],
+        "metadata": {"count": 7, "sum": 1111111},
+    }
+
+    numeric_msgpack = len(encode_msgpack(numeric_data))
+    numeric_json = len(json.dumps(numeric_data))
+    numeric_saved = numeric_json - numeric_msgpack
+    numeric_pct = (1 - numeric_msgpack / numeric_json) * 100
+
+    print_info("Numeric-heavy data:")
+    print_info(f"  MessagePack size: {numeric_msgpack} bytes")
+    print_info(f"  JSON size:        {numeric_json} bytes")
+    print_info(f"  Space saved:      {numeric_saved} bytes ({numeric_pct:.1f}%)")
+    print_info("")
+
+    print_success("MessagePack provides significant space savings over JSON")
+
+    # Step 7: Working with Decoded Data
+    print_step(7, "Working with Decoded Data")
+
+    print_info("decode_msgpack() returns Python dict for object data.")
+    print_info("Access values directly using dictionary syntax.")
+    print_info("")
+
+    sample_data = {
+        "name": "TestTx",
+        "amount": 5000000,
+        "tags": ["transfer", "urgent"],
+    }
+
+    encoded_sample = encode_msgpack(sample_data)
+    decoded_map = decode_msgpack(encoded_sample)
+
+    if isinstance(decoded_map, dict):
+        print_info("Getting individual values:")
+        print_info(f"  name:   {decoded_map.get('name')}")
+        print_info(f"  amount: {decoded_map.get('amount')}")
+        tags = decoded_map.get("tags", [])
+        print_info(f"  tags:   {tags}")
+        print_info("")
+
+        print_info("Iterating over entries:")
+        for key, value in decoded_map.items():
+            value_str = value if not isinstance(value, bytes) else format_hex(value)
+            print_info(f"  {key}: {value_str}")
+    print_info("")
+
+    print_success("Dict provides flexible data access patterns")
+
+    # Step 8: Round-trip Verification
+    print_step(8, "Round-trip Verification")
+
+    print_info("Verifying encode/decode round-trip for various data types:")
+    print_info("")
+
+    test_cases = [
+        ("Empty dict", {}),
+        ("Simple string", {"value": "hello"}),
+        ("Integer", {"value": 42}),
+        ("Large integer", {"value": 18446744073709551615}),
+        ("Boolean", {"value": True}),
+        ("None", {"value": None}),
+        ("Bytes", {"value": b"\x01\x02\x03"}),
+        ("Array", {"value": [1, 2, 3]}),
+        ("Nested", {"outer": {"inner": "value"}}),
+    ]
+
+    all_passed = True
+    for name, original in test_cases:
+        encoded_case = encode_msgpack(original)
+        decoded_case = decode_msgpack(encoded_case)
+        matches = decoded_case == original
+        status = "PASS" if matches else "FAIL"
+        print_info(f"  [{status}] {name}")
+        if not matches:
+            all_passed = False
+            print_info(f"         Original: {original}")
+            print_info(f"         Decoded:  {decoded_case}")
+
+    print_info("")
+    if all_passed:
+        print_success("All round-trip verifications passed!")
+    else:
+        print_info("Some round-trips failed")
+
+    # Step 9: Summary
+    print_step(9, "Summary")
+
+    print_info("MessagePack encoding/decoding for Algorand:")
+    print_info("")
+    print_info("  encode_msgpack(data):")
+    print_info("    - Serializes Python objects to binary MessagePack")
+    print_info("    - Supports strings, numbers, bytes, arrays, dicts")
+    print_info("    - Handles large integers (uint64)")
+    print_info("")
+    print_info("  decode_msgpack(bytes):")
+    print_info("    - Deserializes MessagePack bytes to Python objects")
+    print_info("    - Returns dict for object data (not Map)")
+    print_info("    - Preserves bytes for binary data")
+    print_info("    - Preserves large integers")
+    print_info("")
+    print_info("  Use cases:")
+    print_info("    - Algorand transaction encoding")
+    print_info("    - Compact data serialization")
+    print_info("    - Efficient binary data storage")
+    print_info("")
+    print_success("MessagePack Example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/python/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- **MessagePack Encoding**
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)
