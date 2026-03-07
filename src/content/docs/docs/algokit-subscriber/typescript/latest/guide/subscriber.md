@@ -1,21 +1,25 @@
 ---
-title: '`AlgorandSubscriber`'
+title: AlgorandSubscriber
+description: A class that allows you to easily subscribe to the Algorand Blockchain and react to events of interest.
 ---
 
 `AlgorandSubscriber` is a class that allows you to easily subscribe to the Algorand Blockchain, define a series of events that you are interested in, and react to those events. It has a similar programming model to [EventEmitter](https://nodejs.org/docs/latest/api/events.html), but also supports async/await.
 
 ## Creating a subscriber
 
-To create an `AlgorandSubscriber` you can this cool-ass constructor:
+To create an `AlgorandSubscriber` you can use the constructor:
 
 ```typescript
-  /**
-   * Create a new `AlgorandSubscriber`.
-   * @param config The subscriber configuration
-   * @param algod An algod client
-   * @param indexer An (optional) indexer ; only needed if `subscription.syncBehaviour` is `catchup-with-indexer`
-   */
-  constructor(config: AlgorandSubscriberConfig, algod: Algodv2, indexer?: Indexer)
+import type { AlgodClient } from '@algorandfoundation/algokit-utils/algod-client'
+import type { IndexerClient } from '@algorandfoundation/algokit-utils/indexer-client'
+
+/**
+ * Create a new `AlgorandSubscriber`.
+ * @param config The subscriber configuration
+ * @param algod An algod client
+ * @param indexer An (optional) indexer client; only needed if `subscription.syncBehaviour` is `catchup-with-indexer`
+ */
+constructor(config: AlgorandSubscriberConfig, algod: AlgodClient, indexer?: IndexerClient)
 ```
 
 The key configuration is the `AlgorandSubscriberConfig` interface:
@@ -24,19 +28,19 @@ The key configuration is the `AlgorandSubscriberConfig` interface:
 /** Configuration for an `AlgorandSubscriber`. */
 export interface AlgorandSubscriberConfig extends CoreTransactionSubscriptionParams {
   /** The set of filters to subscribe to / emit events for, along with optional data mappers. */
-  filters: SubscriberConfigFilter<unknown>[];
+  filters: SubscriberConfigFilter<unknown>[]
   /** The frequency to poll for new blocks in seconds; defaults to 1s */
-  frequencyInSeconds?: number;
+  frequencyInSeconds?: number
   /** Whether to wait via algod `/status/wait-for-block-after` endpoint when at the tip of the chain; reduces latency of subscription */
-  waitForBlockWhenAtTip?: boolean;
+  waitForBlockWhenAtTip?: boolean
   /** Methods to retrieve and persist the current watermark so syncing is resilient and maintains
    * its position in the chain */
   watermarkPersistence: {
     /** Returns the current watermark that syncing has previously been processed to */
-    get: () => Promise<bigint>;
+    get: () => Promise<bigint>
     /** Persist the new watermark that has been processed */
-    set: (newWatermark: bigint) => Promise<void>;
-  };
+    set: (newWatermark: bigint) => Promise<void>
+  }
 }
 
 /** Common parameters to control a single subscription pull/poll for both `AlgorandSubscriber` and `getSubscribedTransactions`. */
@@ -62,9 +66,9 @@ export interface CoreTransactionSubscriptionParams {
    * ```
    *
    */
-  filters: NamedTransactionFilter[];
+  filters: NamedTransactionFilter[]
   /** Any ARC-28 event definitions to process from app call logs */
-  arc28Events?: Arc28EventGroup[];
+  arc28Events?: Arc28EventGroup[]
   /** The maximum number of rounds to sync from algod for each subscription pull/poll.
    *
    * Defaults to 500.
@@ -73,7 +77,7 @@ export interface CoreTransactionSubscriptionParams {
    * your staleness tolerance when using `skip-sync-newest` or `fail`, and
    * your catchup speed when using `sync-oldest`.
    **/
-  maxRoundsToSync?: number;
+  maxRoundsToSync?: number
   /**
    * The maximum number of rounds to sync from indexer when using `syncBehaviour: 'catchup-with-indexer'.
    *
@@ -84,7 +88,7 @@ export interface CoreTransactionSubscriptionParams {
    * Instead, this allows indexer catchup to be split into multiple polls, each with a transactionally consistent
    * boundary based on the number of rounds specified here.
    */
-  maxIndexerRoundsToSync?: number;
+  maxIndexerRoundsToSync?: number
   /** If the current tip of the configured Algorand blockchain is more than `maxRoundsToSync`
    * past `watermark` then how should that be handled:
    *  * `skip-sync-newest`: Discard old blocks/transactions and sync the newest; useful
@@ -102,12 +106,7 @@ export interface CoreTransactionSubscriptionParams {
    *    use algod from there.
    *  * `fail`: Throw an error.
    **/
-  syncBehaviour:
-    | 'skip-sync-newest'
-    | 'sync-oldest'
-    | 'sync-oldest-start-now'
-    | 'catchup-with-indexer'
-    | 'fail';
+  syncBehaviour: 'skip-sync-newest' | 'sync-oldest' | 'sync-oldest-start-now' | 'catchup-with-indexer' | 'fail'
 }
 ````
 
@@ -117,7 +116,7 @@ export interface CoreTransactionSubscriptionParams {
 
 `frequencyInSeconds` allows you to control the polling frequency and by association your latency tolerance for new events once you've caught up to the tip of the chain. Alternatively, you can set `waitForBlockWhenAtTip` to get the subscriber to ask algod to tell it when there is a new block ready to reduce latency when it's caught up to the tip of the chain.
 
-`arc28Events` are any [ARC-28 event definitions](/docs/algokit-subscriber/typescript/latest/guides/subscriptions/#arc-28-events).
+`arc28Events` are any [ARC-28 event definitions](/docs/algokit-subscriber/typescript/latest/guide/subscriptions/#arc28eventgroup).
 
 Filters defines the different subscription(s) you want to make, and is defined by the following interface:
 
@@ -130,19 +129,19 @@ export interface SubscriberConfigFilter<T> extends NamedTransactionFilter {
    *
    * Note: if you provide multiple filters with the same name then only the mapper of the first matching filter will be used
    */
-  mapper?: (transaction: SubscribedTransaction[]) => Promise<T[]>;
+  mapper?: (transaction: SubscribedTransaction[]) => Promise<T[]>
 }
 
 /** Specify a named filter to apply to find transactions of interest. */
 export interface NamedTransactionFilter {
   /** The name to give the filter. */
-  name: string;
+  name: string
   /** The filter itself. */
-  filter: TransactionFilter;
+  filter: TransactionFilter
 }
 ```
 
-The event name is a unique name that describes the event you are subscribing to. The [filter](/docs/algokit-subscriber/typescript/latest/guides/subscriptions/#transactionfilter) defines how to interpret transactions on the chain as being "collected" by that event and the mapper is an optional ability to map from the raw transaction to a more targeted type for your event subscribers to consume.
+The event name is a unique name that describes the event you are subscribing to. The [filter](/docs/algokit-subscriber/typescript/latest/guide/subscriptions/#transactionfilter) defines how to interpret transactions on the chain as being "collected" by that event and the mapper is an optional ability to map from the raw transaction to a more targeted type for your event subscribers to consume.
 
 ## Subscribing to events
 
@@ -206,7 +205,7 @@ You can do this via the `on`, `onBatch` and `onPoll` methods:
    * @param listener The listener function to invoke with the pre-poll metadata
    * @returns The subscriber so `on*` calls can be chained
    */
-  onBeforePoll(listener: TypedAsyncEventListener<TransactionSubscriptionResult>) {}
+  onBeforePoll(listener: TypedAsyncEventListener<BeforePollMetadata>) {}
 
   /**
    * Register an event handler to run after every subscription poll.
@@ -230,7 +229,7 @@ You can do this via the `on`, `onBatch` and `onPoll` methods:
 The `TypedAsyncEventListener` type is defined as:
 
 ```typescript
-type TypedAsyncEventListener<T> = (event: T, eventName: string | symbol) => Promise<void> | void;
+type TypedAsyncEventListener<T> = (event: T, eventName: string | symbol) => Promise<void> | void
 ```
 
 This allows you to use async or sync event listeners.
@@ -242,14 +241,14 @@ If you call `onBatch` it will be called first, with the full set of transactions
 The default type that will be received is a `SubscribedTransaction`, which can be imported like so:
 
 ```typescript
-import type { SubscribedTransaction } from '@algorandfoundation/algokit-subscriber/types';
+import type { SubscribedTransaction } from '@algorandfoundation/algokit-subscriber/types'
 ```
 
-See the [detail about this type](/docs/algokit-subscriber/typescript/latest/guides/subscriptions/#subscribedtransaction).
+See the [detail about this type](/docs/algokit-subscriber/typescript/latest/guide/subscriptions/#subscribedtransaction).
 
 Alternatively, if you defined a mapper against the filter then it will be applied before passing the objects through.
 
-If you call `onPoll` it will be called last (after all `on` and `onBatch` listeners) for each poll, with the full set of transactions for that poll and [metadata about the poll result](/docs/algokit-subscriber/typescript/latest/guides/subscriptions/#transactionsubscriptionresult). This allows you to process the entire poll batch in one transaction or have a hook to call after processing individual listeners (e.g. to commit a transaction).
+If you call `onPoll` it will be called last (after all `on` and `onBatch` listeners) for each poll, with the full set of transactions for that poll and [metadata about the poll result](/docs/algokit-subscriber/typescript/latest/guide/subscriptions/#transactionsubscriptionresult). This allows you to process the entire poll batch in one transaction or have a hook to call after processing individual listeners (e.g. to commit a transaction).
 
 If you want to run code before a poll starts (e.g. to log or start a transaction) you can do so with `onBeforePoll`.
 
@@ -284,13 +283,13 @@ start(inspect?: (pollResult: TransactionSubscriptionResult) => void, suppressLog
 If you use `start` then you can stop the polling by calling `stop`, which can be awaited to wait until everything is cleaned up. You may want to subscribe to Node.JS kill signals to exit cleanly:
 
 ```typescript
-['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(signal =>
+;['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((signal) =>
   process.on(signal, () => {
     // eslint-disable-next-line no-console
-    console.log(`Received ${signal}; stopping subscriber...`);
-    subscriber.stop(signal).then(() => console.log('Subscriber stopped'));
+    console.log(`Received ${signal}; stopping subscriber...`)
+    subscriber.stop(signal).then(() => console.log('Subscriber stopped'))
   }),
-);
+)
 ```
 
 ## Handling errors
@@ -333,7 +332,7 @@ To handle errors, you can register error handlers/listeners using the `onError` 
 The `ErrorListener` type is defined as:
 
 ```typescript
-type ErrorListener = (error: unknown) => Promise<void> | void;
+type ErrorListener = (error: unknown) => Promise<void> | void
 ```
 
 This allows you to use async or sync error listeners.
@@ -342,7 +341,3 @@ Multiple error listeners can be added, and each will be called one-by-one (and a
 
 When no error listeners have been registered, a default listener is used to re-throw any exception, so they can be caught by global uncaught exception handlers.
 Once an error listener has been registered, the default listener is removed and it's the responsibility of the registered error listener to perform any error handling.
-
-## Examples
-
-See the [main README](latest/README#examples).

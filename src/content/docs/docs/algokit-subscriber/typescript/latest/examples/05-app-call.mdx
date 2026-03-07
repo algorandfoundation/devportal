@@ -1,0 +1,228 @@
+---
+title: "App Call Subscription"
+description: "This example demonstrates application call subscription."
+sidebar:
+  order: 5
+---
+
+[← Back to Examples](/docs/algokit-subscriber/typescript/latest/examples/)
+
+## Description
+
+This example demonstrates application call subscription.
+- Subscribe to app creation with appCreate filter
+- Filter by methodSignature for specific ABI methods
+- Filter by appOnComplete for opt-in calls
+- Use appCallArgumentsMatch for custom argument inspection
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples/subscriber` directory:
+
+```bash
+cd examples/subscriber
+npx tsx 05-app-call.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-subscriber-ts/blob/main/examples/subscriber/05-app-call.ts)
+
+```typescript title="05-app-call.ts"
+/**
+ * Example: App Call Subscription
+ *
+ * This example demonstrates application call subscription.
+ * - Subscribe to app creation with appCreate filter
+ * - Filter by methodSignature for specific ABI methods
+ * - Filter by appOnComplete for opt-in calls
+ * - Use appCallArgumentsMatch for custom argument inspection
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
+import { algo, AlgorandClient, AppFactory } from '@algorandfoundation/algokit-utils'
+import { printHeader, printStep, printInfo, printSuccess, printError, shortenAddress, createFilterTester } from './shared/utils.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+async function main() {
+  printHeader('05 — App Call Subscription')
+
+  // Step 1: Connect to LocalNet
+  printStep(1, 'Connect to LocalNet')
+  const algorand = AlgorandClient.defaultLocalNet()
+  const status = await algorand.client.algod.status()
+  printInfo(`Current round: ${status.lastRound.toString()}`)
+  printSuccess('Connected to LocalNet')
+
+  // Step 2: Create and fund an account
+  printStep(2, 'Create and fund account')
+  const creator = await algorand.account.fromEnvironment('APP_CREATOR', algo(100))
+  const creatorAddr = creator.addr.toString()
+  printInfo(`Creator: ${shortenAddress(creatorAddr)}`)
+  printSuccess('Account created and funded')
+
+  // Step 3: Deploy TestingApp using AppFactory with embedded ARC-56 spec
+  printStep(3, 'Deploy TestingApp via AppFactory')
+  const appSpec = JSON.parse(
+    readFileSync(join(__dirname, 'shared/artifacts/testing-app.arc56.json'), 'utf-8'),
+  )
+  const factory = new AppFactory({
+    appSpec,
+    algorand,
+    defaultSender: creator.addr,
+  })
+  const { result: createResult, appClient } = await factory.send.bare.create({
+    sender: creator.addr,
+  })
+  const appId = createResult.appId
+  const createRound = createResult.confirmation.confirmedRound!
+  printInfo(`App ID: ${appId.toString()}`)
+  printInfo(`Create round: ${createRound.toString()}`)
+  printSuccess('TestingApp deployed')
+
+  // Step 4: Make ABI method calls (non-readonly methods produce on-chain transactions)
+  printStep(4, 'Make ABI method calls')
+
+  // set_global(uint64,uint64,string,byte[4])void — NoOp
+  const setGlobalResult = await appClient.send.call({
+    method: 'set_global',
+    args: [1n, 2n, 'test', new Uint8Array([0, 1, 2, 3])],
+    sender: creator.addr,
+  })
+  printInfo(`set_global txn: ${setGlobalResult.txIds.at(-1)}`)
+
+  // emitSwapped(uint64,uint64)void — NoOp (emits ARC-28 event)
+  const emitResult = await appClient.send.call({
+    method: 'emitSwapped',
+    args: [42n, 99n],
+    sender: creator.addr,
+  })
+  printInfo(`emitSwapped txn: ${emitResult.txIds.at(-1)}`)
+
+  // opt_in()void — OptIn on-complete
+  const optInResult = await appClient.send.optIn({
+    method: 'opt_in',
+    args: [],
+    sender: creator.addr,
+  })
+  printInfo(`opt_in txn: ${optInResult.txIds.at(-1)}`)
+  printSuccess('3 ABI method calls sent')
+
+  // Watermark: just before the app creation round
+  const watermarkBefore = createRound - 1n
+
+  const testFilter = createFilterTester(algorand.client.algod, watermarkBefore)
+
+  // Step 5: Subscribe with appCreate: true — matches app creation
+  printStep(5, 'Filter: appCreate = true')
+  const createTxns = await testFilter(
+    'app-create', { appCreate: true }, 1,
+    'appCreate filter matched 1 app creation transaction',
+    (txn) => {
+      const appTxn = txn.applicationTransaction
+      printInfo(`  Created app: ${txn.createdAppId} | onComplete: ${appTxn?.onCompletion} | txn: ${txn.id}`)
+    },
+  )
+
+  // Step 6: Subscribe with appId + methodSignature — matches specific ABI method calls
+  printStep(6, 'Filter: appId + methodSignature = set_global')
+  const methodTxns = await testFilter(
+    'set-global-method', {
+      appId: appId,
+      methodSignature: 'set_global(uint64,uint64,string,byte[4])void',
+    }, 1,
+    'methodSignature filter matched 1 set_global call',
+    (txn) => {
+      const appArgs = txn.applicationTransaction?.applicationArgs
+      const selectorHex = appArgs && appArgs.length > 0 ? Buffer.from(appArgs[0].slice(0, 4)).toString('hex') : 'N/A'
+      printInfo(
+        `  Method call: selector: 0x${selectorHex} | filters: [${txn.filtersMatched?.join(', ')}] | txn: ${txn.id}`,
+      )
+    },
+  )
+
+  // Step 7: Subscribe with appOnComplete filter — matches by on-complete type
+  printStep(7, 'Filter: appOnComplete = optin')
+  const optInTxns = await testFilter(
+    'optin-calls', { appOnComplete: 'optin' }, 1,
+    'appOnComplete filter matched 1 opt-in transaction',
+    (txn) => {
+      const appTxn = txn.applicationTransaction
+      printInfo(
+        `  OptIn call: app: ${appTxn?.applicationId} | onComplete: ${appTxn?.onCompletion} | filters: [${txn.filtersMatched?.join(', ')}] | txn: ${txn.id}`,
+      )
+    },
+  )
+
+  // Step 8: Demonstrate appCallArgumentsMatch predicate — custom arg inspection
+  // Match emitSwapped calls by checking the method selector in the first app arg
+  printStep(8, 'Filter: appCallArgumentsMatch predicate')
+  const emitSwappedSelector = 'd43cee5d' // method selector for emitSwapped(uint64,uint64)void
+  const argMatchTxns = await testFilter(
+    'arg-match', {
+      appId: appId,
+      appCallArgumentsMatch: (args?: readonly Uint8Array[]) => {
+        if (!args || args.length === 0) return false
+        const selectorHex = Buffer.from(args[0].slice(0, 4)).toString('hex')
+        return selectorHex === emitSwappedSelector
+      },
+    }, 1,
+    'appCallArgumentsMatch predicate matched 1 emitSwapped call',
+    (txn) => {
+      const appArgs = txn.applicationTransaction?.applicationArgs
+      if (appArgs && appArgs.length > 0) {
+        const selectorHex = Buffer.from(appArgs[0].slice(0, 4)).toString('hex')
+        printInfo(
+          `  Arg match: selector: 0x${selectorHex} | filters: [${txn.filtersMatched?.join(', ')}] | txn: ${txn.id}`,
+        )
+      }
+    },
+  )
+
+  // Step 9: Summary
+  printStep(9, 'Summary')
+  printInfo(`App ID: ${appId.toString()}`)
+  printInfo(`appCreate filter: ${createTxns.length} matched (creation)`)
+  printInfo(`methodSignature filter: ${methodTxns.length} matched (set_global)`)
+  printInfo(`appOnComplete filter: ${optInTxns.length} matched (opt-in)`)
+  printInfo(`appCallArgumentsMatch filter: ${argMatchTxns.length} matched (emitSwapped by selector)`)
+
+  printHeader('Example complete')
+}
+
+main().catch((err) => {
+  printError(err.message)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples
+
+- [Basic Poll Once](/docs/algokit-subscriber/typescript/latest/examples/01-basic-poll-once/)
+- [Continuous Subscriber](/docs/algokit-subscriber/typescript/latest/examples/02-continuous-subscriber/)
+- [Payment Filters](/docs/algokit-subscriber/typescript/latest/examples/03-payment-filters/)
+- [Asset Transfer Subscription](/docs/algokit-subscriber/typescript/latest/examples/04-asset-transfer/)
+- **App Call Subscription**
+- [Multiple Named Filters](/docs/algokit-subscriber/typescript/latest/examples/06-multiple-filters/)
+- [Balance Change Tracking](/docs/algokit-subscriber/typescript/latest/examples/07-balance-changes/)
+- [ARC-28 Event Subscription](/docs/algokit-subscriber/typescript/latest/examples/08-arc28-events/)
+- [Inner Transaction Subscription](/docs/algokit-subscriber/typescript/latest/examples/09-inner-transactions/)
+- [Batch Handling & Data Mappers](/docs/algokit-subscriber/typescript/latest/examples/10-batch-and-mappers/)
+- [Watermark Persistence](/docs/algokit-subscriber/typescript/latest/examples/11-watermark-persistence/)
+- [Sync Behaviours](/docs/algokit-subscriber/typescript/latest/examples/12-sync-behaviours/)
+- [Custom Filters](/docs/algokit-subscriber/typescript/latest/examples/13-custom-filters/)
+- [Stateless Subscriptions](/docs/algokit-subscriber/typescript/latest/examples/14-stateless-subscriptions/)
+- [Lifecycle Hooks & Error Handling](/docs/algokit-subscriber/typescript/latest/examples/15-lifecycle-hooks/)
