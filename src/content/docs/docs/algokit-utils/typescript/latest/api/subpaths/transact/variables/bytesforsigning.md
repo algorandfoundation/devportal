@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'bytesForSigning'
+title: "bytesForSigning"
 ---
 
 > `const` **bytesForSigning**: `object`
 
-Defined in: [packages/transact/src/signer.ts:121](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/signer.ts#L121)
+Defined in: [packages/transact/src/signer.ts:121](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/signer.ts#L121)
 
 ## Type Declaration
 

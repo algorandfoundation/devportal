@@ -2,14 +2,14 @@
 editUrl: false
 next: false
 prev: false
-title: 'getTestAccount'
+title: "getTestAccount"
 ---
 
 ## Call Signature
 
 > **getTestAccount**(`params`, `algod`, `kmd?`): `Promise`\<[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) & [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/)\>
 
-Defined in: [src/testing/account.ts:20](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/account.ts#L20)
+Defined in: [src/testing/account.ts:20](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/account.ts#L20)
 
 :::caution[Deprecated]
 Use `getTestAccount(params, algorandClient)` instead. The `algorandClient` object can be created using `AlgorandClient.fromClients({ algod, kmd })`.
@@ -50,7 +50,7 @@ The account, with private key loaded
 
 > **getTestAccount**(`params`, `algorand`): `Promise`\<[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) & `object`\>
 
-Defined in: [src/testing/account.ts:34](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/account.ts#L34)
+Defined in: [src/testing/account.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/account.ts#L34)
 
 Creates an ephemeral Algorand account for the purposes of testing.
 Returns a newly created random test account that is funded from the dispenser

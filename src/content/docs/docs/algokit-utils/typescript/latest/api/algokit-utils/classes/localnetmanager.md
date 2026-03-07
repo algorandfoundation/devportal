@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'LocalNetManager'
+title: "LocalNetManager"
 ---
 
-Defined in: [src/network-manager.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L19)
+Defined in: [src/network-manager.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L19)
 
 Manager for LocalNet-specific network operations.
 These methods only work on LocalNet and will throw an error if called on other networks.
@@ -16,7 +16,7 @@ These methods only work on LocalNet and will throw an error if called on other n
 
 > **new LocalNetManager**(`algod`, `networkManager`, `algorand`): `LocalNetManager`
 
-Defined in: [src/network-manager.ts:25](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L25)
+Defined in: [src/network-manager.ts:25](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L25)
 
 #### Parameters
 
@@ -44,7 +44,7 @@ The algod client to use for LocalNet operations
 
 > **blockWarp**(`targetRound`): `Promise`\<`void`\>
 
-Defined in: [src/network-manager.ts:62](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L62)
+Defined in: [src/network-manager.ts:62](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L62)
 
 Advances the blockchain by generating blocks until the target round is reached.
 
@@ -68,16 +68,16 @@ Error if not connected to LocalNet
 
 ```typescript
 // Advance LocalNet to round 100
-await algorand.network.localNet.blockWarp(100n);
+await algorand.network.localNet.blockWarp(100n)
 ```
 
----
+***
 
 ### timeWarp()
 
 > **timeWarp**(`targetTimestamp`): `Promise`\<`void`\>
 
-Defined in: [src/network-manager.ts:82](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L82)
+Defined in: [src/network-manager.ts:82](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L82)
 
 Advances the blockchain timestamp to a target Unix timestamp.
 
@@ -101,6 +101,6 @@ Error if not connected to LocalNet
 
 ```typescript
 // Advance LocalNet time by 1 hour
-const oneHourFromNow = BigInt(Math.floor(Date.now() / 1000)) + 3600n;
-await algorand.network.localNet.timeWarp(oneHourFromNow);
+const oneHourFromNow = BigInt(Math.floor(Date.now() / 1000)) + 3600n
+await algorand.network.localNet.timeWarp(oneHourFromNow)
 ```

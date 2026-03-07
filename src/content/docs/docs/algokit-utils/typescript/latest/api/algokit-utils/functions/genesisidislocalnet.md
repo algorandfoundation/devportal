@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'genesisIdIsLocalNet'
+title: "genesisIdIsLocalNet"
 ---
 
 > **genesisIdIsLocalNet**(`genesisId`): genesisId is "devnet-v1" \| "sandnet-v1" \| "dockernet-v1"
 
-Defined in: [src/network-client.ts:40](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L40)
+Defined in: [src/network-client.ts:40](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L40)
 
 Returns true if the given network genesisId is associated with a LocalNet network.
 

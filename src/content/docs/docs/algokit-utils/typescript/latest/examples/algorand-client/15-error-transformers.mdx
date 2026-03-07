@@ -1,0 +1,546 @@
+---
+title: "Error Transformers"
+description: "This example demonstrates how to register custom error transformers to enhance error messages and debugging information for failed transactions:"
+sidebar:
+  order: 15
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to register custom error transformers to enhance error messages and debugging information for failed transactions:
+- What error transformers are and why they're useful
+- algorand.registerErrorTransformer() to add custom error transformers
+- Creating transformers that add source code context to logic errors
+- Creating transformers that provide user-friendly error messages
+- How transformers receive errors and can return enhanced errors
+- algorand.unregisterErrorTransformer() to remove transformers
+- Triggering intentional errors and showing enhanced output
+- How multiple transformers can be chained
+- The transformer function signature: (error: Error) =&gt; Promise&lt;Error&gt;
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/15-error-transformers.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/15-error-transformers.ts)
+
+```typescript title="15-error-transformers.ts"
+/**
+ * Example: Error Transformers
+ *
+ * This example demonstrates how to register custom error transformers to enhance
+ * error messages and debugging information for failed transactions:
+ * - What error transformers are and why they're useful
+ * - algorand.registerErrorTransformer() to add custom error transformers
+ * - Creating transformers that add source code context to logic errors
+ * - Creating transformers that provide user-friendly error messages
+ * - How transformers receive errors and can return enhanced errors
+ * - algorand.unregisterErrorTransformer() to remove transformers
+ * - Triggering intentional errors and showing enhanced output
+ * - How multiple transformers can be chained
+ * - The transformer function signature: (error: Error) => Promise<Error>
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils'
+import type { ErrorTransformer } from '@algorandfoundation/algokit-utils/types/composer'
+import { loadTealSource, printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+
+// ============================================================================
+// TEAL Programs for Demonstrating Errors (loaded from shared artifacts)
+// ============================================================================
+
+// A simple app that always rejects with a specific error message
+const REJECTING_APPROVAL_PROGRAM = loadTealSource('approval-always-reject.teal')
+
+// A more complex app that conditionally rejects based on arguments
+const CONDITIONAL_APPROVAL_PROGRAM = loadTealSource('approval-error-triggers.teal')
+
+const CLEAR_STATE_PROGRAM = loadTealSource('clear-state-approve.teal')
+
+// ============================================================================
+// Custom Error Transformer Examples
+// ============================================================================
+
+/**
+ * Example transformer that adds source code context to logic errors.
+ * This is useful for debugging TEAL program failures.
+ */
+const sourceCodeContextTransformer: ErrorTransformer = async (error: Error): Promise<Error> => {
+  // Only transform errors that mention "logic eval error"
+  if (!error.message.includes('logic eval error')) {
+    return error
+  }
+
+  // Try to extract PC (program counter) from error message
+  const pcMatch = error.message.match(/pc=(\d+)/)
+  const pc = pcMatch ? parseInt(pcMatch[1], 10) : null
+
+  // Create enhanced error with source context
+  const enhancedMessage = [
+    error.message,
+    '',
+    '--- Source Context (added by sourceCodeContextTransformer) ---',
+    pc !== null ? `  Program Counter (PC): ${pc}` : '  Program Counter: unknown',
+    '  Tip: Use the source map from compilation to map PC to TEAL line number',
+    '  Tip: The PC indicates which TEAL instruction caused the failure',
+    '-----------------------------------------------------------',
+  ].join('\n')
+
+  const enhancedError = new Error(enhancedMessage)
+  enhancedError.stack = error.stack
+  return enhancedError
+}
+
+/**
+ * Example transformer that provides user-friendly error messages.
+ * Maps technical error messages to human-readable explanations.
+ */
+const userFriendlyTransformer: ErrorTransformer = async (error: Error): Promise<Error> => {
+  const message = error.message
+
+  // Map common error patterns to user-friendly messages
+  const errorMappings: { pattern: RegExp; friendlyMessage: string }[] = [
+    {
+      pattern: /asset (\d+) missing from/,
+      friendlyMessage: 'The account has not opted in to the asset. Please opt in first before receiving this asset.',
+    },
+    {
+      pattern: /transaction already in ledger/,
+      friendlyMessage: 'This transaction has already been submitted. Wait for the previous transaction to confirm.',
+    },
+    {
+      pattern: /underflow on subtracting|overspend/,
+      friendlyMessage:
+        'Insufficient balance for this operation. The account does not have enough funds to complete the transaction.',
+    },
+    {
+      pattern: /division by zero/i,
+      friendlyMessage:
+        'A division by zero occurred in the smart contract. This is usually a logic error in the TEAL program.',
+    },
+    {
+      pattern: /assert failed/i,
+      friendlyMessage: 'An assertion failed in the smart contract. A required condition was not met.',
+    },
+    {
+      pattern: /err opcode executed/i,
+      friendlyMessage:
+        'The smart contract explicitly rejected this call using the err opcode. Check your transaction parameters.',
+    },
+    {
+      pattern: /would result negative/,
+      friendlyMessage: 'This operation would result in a negative balance, which is not allowed on Algorand.',
+    },
+  ]
+
+  for (const { pattern, friendlyMessage } of errorMappings) {
+    if (pattern.test(message)) {
+      const enhancedMessage = [
+        '🚨 User-Friendly Error:',
+        `   ${friendlyMessage}`,
+        '',
+        '📋 Technical Details:',
+        `   ${message}`,
+      ].join('\n')
+
+      const enhancedError = new Error(enhancedMessage)
+      enhancedError.stack = error.stack
+      return enhancedError
+    }
+  }
+
+  // Return original error if no mapping found
+  return error
+}
+
+/**
+ * Example transformer that adds transaction context.
+ * Shows how to add additional debugging information.
+ */
+const transactionContextTransformer: ErrorTransformer = async (error: Error): Promise<Error> => {
+  // Add timestamp and environment info to all errors
+  const timestamp = new Date().toISOString()
+
+  const enhancedMessage = [
+    error.message,
+    '',
+    '--- Debug Context (added by transactionContextTransformer) ---',
+    `  Timestamp: ${timestamp}`,
+    '  Network: LocalNet',
+    '  SDK: algokit-utils-ts',
+    '--------------------------------------------------------------',
+  ].join('\n')
+
+  const enhancedError = new Error(enhancedMessage)
+  enhancedError.stack = error.stack
+  return enhancedError
+}
+
+/**
+ * Example transformer that counts errors (demonstrates stateful transformers).
+ * This could be useful for monitoring/alerting systems.
+ */
+function createErrorCountingTransformer(): {
+  transformer: ErrorTransformer
+  getCount: () => number
+  reset: () => void
+} {
+  let errorCount = 0
+
+  const transformer: ErrorTransformer = async (error: Error): Promise<Error> => {
+    errorCount++
+
+    const enhancedMessage = [`[Error #${errorCount}] ${error.message}`].join('\n')
+
+    const enhancedError = new Error(enhancedMessage)
+    enhancedError.stack = error.stack
+    return enhancedError
+  }
+
+  return {
+    transformer,
+    getCount: () => errorCount,
+    reset: () => {
+      errorCount = 0
+    },
+  }
+}
+
+async function main() {
+  printHeader('Error Transformers Example')
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet()
+
+  try {
+    await algorand.client.algod.status()
+    printSuccess('Connected to LocalNet')
+  } catch (error) {
+    printError(`Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
+    return
+  }
+
+  // Step 1: Explain what error transformers are
+  printStep(1, 'What are error transformers?')
+  printInfo('Error transformers are functions that process errors before they are thrown.')
+  printInfo('They allow you to:')
+  printInfo('  - Add source code context to TEAL logic errors')
+  printInfo('  - Translate technical errors into user-friendly messages')
+  printInfo('  - Add debugging information (timestamps, transaction IDs, etc.)')
+  printInfo('  - Log errors for monitoring before re-throwing')
+  printInfo('  - Chain multiple transformers for layered error handling')
+  printInfo('')
+  printInfo('Function signature: (error: Error) => Promise<Error>')
+  printInfo('  - Receives the error that was caught')
+  printInfo('  - Returns a (possibly transformed) error')
+  printInfo('  - Should return the original error if it cannot/should not transform it')
+  printSuccess('Error transformers explained')
+
+  // Create and fund test account
+  const testAccount = algorand.account.random()
+  await algorand.account.ensureFundedFromEnvironment(testAccount.addr, algo(10))
+  printInfo(`\nTest account: ${shortenAddress(testAccount.addr.toString())}`)
+
+  // Step 2: Demonstrate algorand.registerErrorTransformer()
+  printStep(2, 'Register custom error transformers with algorand.registerErrorTransformer()')
+  printInfo('Transformers registered on AlgorandClient apply to all newGroup() composers')
+
+  algorand.registerErrorTransformer(userFriendlyTransformer)
+  printInfo('  Registered: userFriendlyTransformer')
+
+  algorand.registerErrorTransformer(transactionContextTransformer)
+  printInfo('  Registered: transactionContextTransformer')
+
+  printSuccess('Error transformers registered on AlgorandClient')
+
+  // Step 3: Create an app that will reject calls (for error demonstration)
+  printStep(3, 'Create test application that can trigger errors')
+
+  const createResult = await algorand.send.appCreate({
+    sender: testAccount.addr,
+    approvalProgram: CONDITIONAL_APPROVAL_PROGRAM,
+    clearStateProgram: CLEAR_STATE_PROGRAM,
+    schema: {
+      globalInts: 0,
+      globalByteSlices: 0,
+      localInts: 0,
+      localByteSlices: 0,
+    },
+  })
+
+  const appId = createResult.appId
+  printInfo(`Created app ID: ${appId}`)
+  printSuccess('Test application created')
+
+  // Step 4: Trigger an intentional error and show enhanced output
+  printStep(4, 'Trigger intentional error to see transformed output')
+  printInfo('Calling app with "reject_assert" argument to trigger assertion failure...')
+
+  try {
+    await algorand.send.appCall({
+      sender: testAccount.addr,
+      appId: appId,
+      args: [new TextEncoder().encode('reject_assert')],
+    })
+  } catch (error) {
+    printInfo('\nCaught transformed error:')
+    printInfo('─'.repeat(60))
+    console.log((error as Error).message)
+    printInfo('─'.repeat(60))
+    printInfo('\nNotice the user-friendly message and debug context added by transformers!')
+  }
+
+  printSuccess('Error transformation demonstrated')
+
+  // Step 5: Show how multiple transformers chain together
+  printStep(5, 'Demonstrate transformer chaining')
+  printInfo('When multiple transformers are registered, they run in sequence.')
+  printInfo('Each transformer receives the output of the previous one.')
+
+  // Register the source code context transformer
+  algorand.registerErrorTransformer(sourceCodeContextTransformer)
+  printInfo('  Additionally registered: sourceCodeContextTransformer')
+  printInfo('')
+  printInfo('Chain order: userFriendly -> transactionContext -> sourceCodeContext')
+
+  printInfo('\nTriggering "err opcode" error to see all transformers in action...')
+
+  try {
+    await algorand.send.appCall({
+      sender: testAccount.addr,
+      appId: appId,
+      args: [new TextEncoder().encode('unknown_action')],
+    })
+  } catch (error) {
+    printInfo('\nCaught error with all transformers applied:')
+    printInfo('─'.repeat(60))
+    console.log((error as Error).message)
+    printInfo('─'.repeat(60))
+  }
+
+  printSuccess('Transformer chaining demonstrated')
+
+  // Step 6: Demonstrate unregisterErrorTransformer()
+  printStep(6, 'Remove transformers with algorand.unregisterErrorTransformer()')
+  printInfo('You can unregister transformers when they are no longer needed')
+
+  algorand.unregisterErrorTransformer(transactionContextTransformer)
+  printInfo('  Unregistered: transactionContextTransformer')
+
+  algorand.unregisterErrorTransformer(sourceCodeContextTransformer)
+  printInfo('  Unregistered: sourceCodeContextTransformer')
+
+  printInfo('\nTriggering error with only userFriendlyTransformer active...')
+
+  try {
+    await algorand.send.appCall({
+      sender: testAccount.addr,
+      appId: appId,
+      args: [new TextEncoder().encode('reject_division')],
+    })
+  } catch (error) {
+    printInfo('\nCaught error with only user-friendly transformer:')
+    printInfo('─'.repeat(60))
+    console.log((error as Error).message)
+    printInfo('─'.repeat(60))
+    printInfo('\nNotice: No debug context section (that transformer was unregistered)')
+  }
+
+  printSuccess('Transformer unregistration demonstrated')
+
+  // Step 7: Demonstrate composer-level error transformers
+  printStep(7, 'Register error transformers on specific composers')
+  printInfo('You can also register transformers on individual TransactionComposer instances')
+
+  // Unregister all from AlgorandClient
+  algorand.unregisterErrorTransformer(userFriendlyTransformer)
+  printInfo('Cleared all transformers from AlgorandClient')
+
+  // Create a stateful error counting transformer
+  const { transformer: countingTransformer, getCount, reset } = createErrorCountingTransformer()
+
+  // Create a composer with a registered transformer
+  const composer = algorand.newGroup()
+  composer.registerErrorTransformer(countingTransformer)
+  printInfo('Registered countingTransformer on this composer only')
+
+  composer.addAppCall({
+    sender: testAccount.addr,
+    appId: appId,
+    args: [new TextEncoder().encode('reject_assert')],
+  })
+
+  try {
+    await composer.send()
+  } catch (error) {
+    printInfo(`\nError count after first failure: ${getCount()}`)
+    printInfo(`Error message: ${(error as Error).message.split('\n')[0]}`)
+  }
+
+  // Second composer with same transformer
+  const composer2 = algorand.newGroup()
+  composer2.registerErrorTransformer(countingTransformer)
+
+  composer2.addAppCall({
+    sender: testAccount.addr,
+    appId: appId,
+    args: [new TextEncoder().encode('reject_division')],
+  })
+
+  try {
+    await composer2.send()
+  } catch (error) {
+    printInfo(`\nError count after second failure: ${getCount()}`)
+    printInfo(`Error message: ${(error as Error).message.split('\n')[0]}`)
+  }
+
+  reset()
+  printInfo(`\nError count after reset: ${getCount()}`)
+
+  printSuccess('Composer-level transformers demonstrated')
+
+  // Step 8: Show transformer for insufficient funds error
+  printStep(8, 'Trigger insufficient funds error with transformer')
+
+  algorand.registerErrorTransformer(userFriendlyTransformer)
+
+  // Create an account with minimal funds
+  const poorAccount = algorand.account.random()
+  await algorand.account.ensureFundedFromEnvironment(poorAccount.addr, algo(0.2)) // Just enough for min balance
+
+  printInfo(`Poor account: ${shortenAddress(poorAccount.addr.toString())}`)
+  printInfo('Attempting to send more ALGO than account has...')
+
+  try {
+    await algorand.send.payment({
+      sender: poorAccount.addr,
+      receiver: testAccount.addr,
+      amount: algo(1000), // Way more than account has
+    })
+  } catch (error) {
+    printInfo('\nCaught transformed insufficient funds error:')
+    printInfo('─'.repeat(60))
+    console.log((error as Error).message)
+    printInfo('─'.repeat(60))
+  }
+
+  printSuccess('Insufficient funds error transformation demonstrated')
+
+  // Step 9: Show transformer for asset opt-in error
+  printStep(9, 'Trigger asset opt-in error with transformer')
+
+  // Create an asset
+  const assetResult = await algorand.send.assetCreate({
+    sender: testAccount.addr,
+    total: 1000n,
+    decimals: 0,
+    assetName: 'ErrorTestAsset',
+    unitName: 'ERR',
+  })
+
+  const assetId = assetResult.assetId
+  printInfo(`Created test asset ID: ${assetId}`)
+
+  // Try to transfer to an account that hasn't opted in
+  const notOptedInAccount = algorand.account.random()
+  await algorand.account.ensureFundedFromEnvironment(notOptedInAccount.addr, algo(1))
+
+  printInfo(`Not-opted-in account: ${shortenAddress(notOptedInAccount.addr.toString())}`)
+  printInfo('Attempting to send asset to account without opt-in...')
+
+  try {
+    await algorand.send.assetTransfer({
+      sender: testAccount.addr,
+      receiver: notOptedInAccount.addr,
+      assetId: assetId,
+      amount: 10n,
+    })
+  } catch (error) {
+    printInfo('\nCaught transformed asset error:')
+    printInfo('─'.repeat(60))
+    console.log((error as Error).message)
+    printInfo('─'.repeat(60))
+  }
+
+  printSuccess('Asset opt-in error transformation demonstrated')
+
+  // Step 10: Summary
+  printStep(10, 'Summary - Error Transformers API')
+  printInfo('Error transformers enhance error handling for transaction failures:')
+  printInfo('')
+  printInfo('Registration (AlgorandClient level):')
+  printInfo('  algorand.registerErrorTransformer(transformer)')
+  printInfo('    - Applies to ALL newGroup() composers created from this client')
+  printInfo('    - Multiple transformers are chained in registration order')
+  printInfo('  algorand.unregisterErrorTransformer(transformer)')
+  printInfo('    - Removes a specific transformer from the client')
+  printInfo('')
+  printInfo('Registration (Composer level):')
+  printInfo('  composer.registerErrorTransformer(transformer)')
+  printInfo('    - Applies only to this specific composer instance')
+  printInfo('    - Useful for one-off error handling scenarios')
+  printInfo('')
+  printInfo('Transformer function signature:')
+  printInfo('  (error: Error) => Promise<Error>')
+  printInfo('    - Receives the error that was caught during simulate() or send()')
+  printInfo('    - Must return an Error object (transformed or original)')
+  printInfo('    - Return the original error if transformation is not applicable')
+  printInfo('    - Async: can perform lookups, format messages, etc.')
+  printInfo('')
+  printInfo('Common use cases:')
+  printInfo('  - Add TEAL source code context using compilation source maps')
+  printInfo('  - Translate technical errors to user-friendly messages')
+  printInfo('  - Add debugging context (timestamps, network, transaction IDs)')
+  printInfo('  - Log errors for monitoring before re-throwing')
+  printInfo('  - Implement custom error classification and handling')
+
+  // Clean up
+  await algorand.send.appDelete({ sender: testAccount.addr, appId: appId })
+
+  printSuccess('Error Transformers example completed!')
+}
+
+main().catch((error) => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- **Error Transformers**
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'ProgramDataSigner'
+title: "ProgramDataSigner"
 ---
 
 > **ProgramDataSigner** = (`data`, `lsig`) => `Promise`\<`Uint8Array`\>
 
-Defined in: [packages/transact/src/logicsig.ts:30](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L30)
+Defined in: [packages/transact/src/logicsig.ts:30](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L30)
 
 Function for signing program data for a logic signature
 

@@ -1,0 +1,277 @@
+---
+title: "Single Signature"
+description: "This example demonstrates how to create an ed25519 keypair and sign transactions using the low-level transact package APIs."
+sidebar:
+  order: 9
+---
+
+[← Back to Transactions](/docs/algokit-utils/typescript/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to create an ed25519 keypair and sign transactions using the low-level transact package APIs.
+ Key concepts:
+- Creating a keypair using tweetnacl (ed25519 signature scheme)
+- Using generateAddressWithSigners() to derive an Algorand address from the public key
+- Understanding the relationship between ed25519 public key and Algorand address
+- Signing transactions with a raw ed25519 signer function
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example transact/09-single-sig.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/transact/09-single-sig.ts)
+
+```typescript title="09-single-sig.ts"
+/**
+ * Example: Single Signature
+ *
+ * This example demonstrates how to create an ed25519 keypair and sign transactions
+ * using the low-level transact package APIs.
+ *
+ * Key concepts:
+ * - Creating a keypair using tweetnacl (ed25519 signature scheme)
+ * - Using generateAddressWithSigners() to derive an Algorand address from the public key
+ * - Understanding the relationship between ed25519 public key and Algorand address
+ * - Signing transactions with a raw ed25519 signer function
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import {
+  Transaction,
+  TransactionType,
+  assignFee,
+  generateAddressWithSigners,
+  type PaymentTransactionFields,
+} from '@algorandfoundation/algokit-utils/transact'
+import nacl from 'tweetnacl'
+import {
+  createAlgodClient,
+  formatAlgo,
+  getAccountBalance,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+  waitForConfirmation,
+} from '../shared/utils.js'
+
+/**
+ * Gets a funded account from LocalNet's KMD wallet
+ */
+async function getLocalNetFundedAccount(algorand: AlgorandClient) {
+  return await algorand.account.kmd.getLocalNetDispenserAccount()
+}
+
+async function main() {
+  printHeader('Single Signature Example')
+
+  // Step 1: Initialize clients
+  printStep(1, 'Initialize Algod Client')
+  const algod = createAlgodClient()
+  const algorand = AlgorandClient.defaultLocalNet()
+  printInfo('Connected to LocalNet Algod')
+
+  // Step 2: Create a keypair using tweetnacl
+  printStep(2, 'Create Keypair Using tweetnacl')
+
+  // The keypair generation uses a cryptographically secure random number generator
+  const keypair = nacl.sign.keyPair()
+
+  printInfo(`Public key (32 bytes): ${Buffer.from(keypair.publicKey).toString('hex').slice(0, 32)}...`)
+  printInfo(`Secret key (64 bytes): ${Buffer.from(keypair.secretKey).toString('hex').slice(0, 32)}... (truncated for security)`)
+  printInfo('')
+  printInfo('Note: The secret key in ed25519 is 64 bytes because it contains')
+  printInfo('      both the 32-byte private seed AND the 32-byte public key.')
+
+  // Step 3: Derive Algorand address using generateAddressWithSigners
+  printStep(3, 'Derive Algorand Address with generateAddressWithSigners()')
+
+  // generateAddressWithSigners() does the following internally:
+  // 1. Takes the 32-byte ed25519 public key
+  // 2. Computes a 4-byte checksum using SHA-512/256
+  // 3. Concatenates: public_key (32 bytes) + checksum (4 bytes) = 36 bytes
+  // 4. Base32 encodes the 36 bytes to get the 58-character Algorand address
+  const account = generateAddressWithSigners({
+    ed25519Pubkey: keypair.publicKey,
+    rawEd25519Signer: async (bytesToSign: Uint8Array) => {
+      return nacl.sign.detached(bytesToSign, keypair.secretKey)
+    },
+  })
+
+  printInfo(`Ed25519 public key (hex): ${Buffer.from(keypair.publicKey).toString('hex')}`)
+  printInfo(`Algorand address (base32): ${account.addr.toString()}`)
+  printInfo('')
+  printInfo('The Algorand address is derived from the public key by:')
+  printInfo('  1. Computing SHA-512/256 checksum of the public key')
+  printInfo('  2. Appending last 4 bytes of checksum to public key')
+  printInfo('  3. Base32 encoding the result (36 bytes -> 58 characters)')
+
+  // Step 4: Fund the account from dispenser
+  printStep(4, 'Fund Account from Dispenser')
+  const dispenser = await getLocalNetFundedAccount(algorand)
+  const fundingAmount = 2_000_000n // 2 ALGO
+
+  const suggestedParams = await algod.suggestedParams()
+
+  const fundTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: dispenser.addr,
+    firstValid: suggestedParams.firstValid,
+    lastValid: suggestedParams.lastValid,
+    genesisHash: suggestedParams.genesisHash,
+    genesisId: suggestedParams.genesisId,
+    payment: {
+      receiver: account.addr,
+      amount: fundingAmount,
+    },
+  })
+
+  const fundTxWithFee = assignFee(fundTx, {
+    feePerByte: suggestedParams.fee,
+    minFee: suggestedParams.minFee,
+  })
+
+  const signedFundTx = await dispenser.signer([fundTxWithFee], [0])
+  await algod.sendRawTransaction(signedFundTx)
+  await waitForConfirmation(algod, fundTxWithFee.txId())
+
+  const balance = await getAccountBalance(algorand, account.addr.toString())
+  printInfo(`Funded account with ${formatAlgo(fundingAmount)}`)
+  printInfo(`Account balance: ${formatAlgo(balance.microAlgo)}`)
+
+  // Step 5: Create a payment transaction to demonstrate signing
+  printStep(5, 'Create Payment Transaction')
+
+  const paymentAmount = 100_000n // 0.1 ALGO
+  // Use AlgorandClient helper for the receiver (this example focuses on sender signing)
+  const receiver = algorand.account.random()
+
+  const payParams = await algod.suggestedParams()
+
+  const paymentFields: PaymentTransactionFields = {
+    receiver: receiver.addr,
+    amount: paymentAmount,
+  }
+
+  const paymentTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: account.addr,
+    firstValid: payParams.firstValid,
+    lastValid: payParams.lastValid,
+    genesisHash: payParams.genesisHash,
+    genesisId: payParams.genesisId,
+    payment: paymentFields,
+  })
+
+  const paymentTxWithFee = assignFee(paymentTx, {
+    feePerByte: payParams.fee,
+    minFee: payParams.minFee,
+  })
+
+  printInfo(`Payment amount: ${formatAlgo(paymentAmount)}`)
+  printInfo(`Sender: ${shortenAddress(account.addr.toString())}`)
+  printInfo(`Receiver: ${shortenAddress(receiver.addr.toString())}`)
+  printInfo(`Transaction ID: ${paymentTxWithFee.txId()}`)
+
+  // Step 6: Sign the transaction (explaining the process)
+  printStep(6, 'Sign Transaction with ed25519 Signature')
+
+  printInfo('Signing process:')
+  printInfo('  1. Transaction is encoded to msgpack bytes')
+  printInfo('  2. Bytes are prefixed with "TX" (to prevent cross-protocol attacks)')
+  printInfo('  3. The prefixed bytes are signed using ed25519 with the secret key')
+  printInfo('  4. Signature (64 bytes) is attached to create a SignedTransaction')
+  printInfo('')
+
+  // The signer function handles all of this internally
+  // account.signer([transaction], [indices]) signs the specified transactions
+  const signedTxns = await account.signer([paymentTxWithFee], [0])
+
+  printInfo(`Signed transaction size: ${signedTxns[0].length} bytes`)
+  printInfo('Transaction signed successfully!')
+
+  // Step 7: Submit and verify
+  printStep(7, 'Submit Transaction')
+  await algod.sendRawTransaction(signedTxns)
+  printInfo('Transaction submitted to network')
+
+  const pendingInfo = await waitForConfirmation(algod, paymentTxWithFee.txId())
+  printInfo(`Transaction confirmed in round: ${pendingInfo.confirmedRound}`)
+
+  // Step 8: Verify balances
+  printStep(8, 'Verify Balances')
+
+  const senderBalanceAfter = await getAccountBalance(algorand, account.addr.toString())
+  let receiverBalanceAfter: bigint
+  try {
+    const info = await getAccountBalance(algorand, receiver.addr.toString())
+    receiverBalanceAfter = info.microAlgo
+  } catch {
+    receiverBalanceAfter = 0n
+  }
+
+  printInfo(`Sender balance after: ${formatAlgo(senderBalanceAfter.microAlgo)}`)
+  printInfo(`Receiver balance after: ${formatAlgo(receiverBalanceAfter)}`)
+
+  const expectedSenderBalance = fundingAmount - paymentAmount - (paymentTxWithFee.fee ?? 0n)
+  if (senderBalanceAfter.microAlgo === expectedSenderBalance) {
+    printSuccess('Sender balance verified!')
+  }
+
+  if (receiverBalanceAfter === paymentAmount) {
+    printSuccess('Receiver received the payment!')
+  }
+
+  // Summary
+  printInfo('')
+  printInfo('Summary - Single Signature Key Points:')
+  printInfo('  - ed25519 is the signature algorithm used by Algorand')
+  printInfo('  - Public key (32 bytes) -> Algorand address (58 chars base32)')
+  printInfo('  - generateAddressWithSigners() bridges raw crypto to Algorand')
+  printInfo('  - The signer function signs transaction bytes with ed25519')
+  printInfo('  - Each transaction requires a valid signature from the sender')
+
+  printSuccess('Single signature example completed!')
+}
+
+main().catch((error) => {
+  console.error('Error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/typescript/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/typescript/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/typescript/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/typescript/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/typescript/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/typescript/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/typescript/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/typescript/latest/examples/transact/08-atomic-swap/)
+- **Single Signature**
+- [Multisig](/docs/algokit-utils/typescript/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/typescript/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/typescript/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/typescript/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/typescript/latest/examples/transact/14-app-call/)

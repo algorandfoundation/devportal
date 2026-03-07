@@ -1,0 +1,251 @@
+---
+title: "Account Lookup"
+description: "This example demonstrates how to lookup account information using the IndexerClient lookupAccountById() and searchForAccounts() methods."
+sidebar:
+  order: 2
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup account information using the IndexerClient lookupAccountById() and searchForAccounts() methods.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/02-account-lookup.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/02-account-lookup.ts)
+
+```typescript title="02-account-lookup.ts"
+/**
+ * Example: Account Lookup
+ *
+ * This example demonstrates how to lookup account information using
+ * the IndexerClient lookupAccountById() and searchForAccounts() methods.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  createAlgorandClient,
+  createIndexerClient,
+  formatMicroAlgo,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js'
+
+async function main() {
+  printHeader('Account Lookup Example')
+
+  // Create clients
+  const indexer = createIndexerClient()
+  const algorand = createAlgorandClient()
+
+  // =========================================================================
+  // Step 1: Get a test account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting test account from LocalNet dispenser')
+
+  let testAccountAddress: string
+
+  try {
+    const dispenser = await algorand.account.dispenserFromEnvironment()
+    testAccountAddress = dispenser.addr.toString()
+    printSuccess(`Using dispenser account: ${shortenAddress(testAccountAddress)}`)
+  } catch (error) {
+    printError(`Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+    printInfo('Make sure LocalNet is running: algokit localnet start')
+    return
+  }
+
+  // =========================================================================
+  // Step 2: Lookup account by ID
+  // =========================================================================
+  printStep(2, 'Looking up account with lookupAccountById()')
+
+  try {
+    // lookupAccountById() returns detailed account information
+    const result = await indexer.lookupAccountById(testAccountAddress)
+    const account = result.account
+
+    printSuccess('Account found!')
+    printInfo('')
+    printInfo('Account details:')
+    printInfo(`  - address: ${account.address}`)
+    printInfo(`  - amount: ${formatMicroAlgo(account.amount)}`)
+    printInfo(`  - amountWithoutPendingRewards: ${formatMicroAlgo(account.amountWithoutPendingRewards)}`)
+    printInfo(`  - minBalance: ${formatMicroAlgo(account.minBalance)}`)
+    printInfo(`  - status: ${account.status}`)
+    printInfo(`  - round: ${account.round}`)
+    printInfo('')
+    printInfo('Additional account info:')
+    printInfo(`  - pendingRewards: ${formatMicroAlgo(account.pendingRewards)}`)
+    printInfo(`  - rewards: ${formatMicroAlgo(account.rewards)}`)
+    printInfo(`  - totalAppsOptedIn: ${account.totalAppsOptedIn}`)
+    printInfo(`  - totalAssetsOptedIn: ${account.totalAssetsOptedIn}`)
+    printInfo(`  - totalCreatedApps: ${account.totalCreatedApps}`)
+    printInfo(`  - totalCreatedAssets: ${account.totalCreatedAssets}`)
+    printInfo('')
+    printInfo(`Query performed at round: ${result.currentRound}`)
+  } catch (error) {
+    printError(`Account lookup failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 3: Handle account not found
+  // =========================================================================
+  printStep(3, 'Handling account not found scenario')
+
+  // Generate a random address that likely does not exist on LocalNet
+  const randomAccount = algorand.account.random()
+  const nonExistentAddress = randomAccount.addr.toString()
+
+  printInfo(`Attempting to lookup non-existent account: ${shortenAddress(nonExistentAddress)}`)
+
+  try {
+    await indexer.lookupAccountById(nonExistentAddress)
+    printInfo('Account was unexpectedly found')
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+
+    // Check if the error indicates account not found
+    if (errorMessage.includes('no accounts found') || errorMessage.includes('404') || errorMessage.includes('not found')) {
+      printSuccess('Correctly received "account not found" error')
+      printInfo(`  Error: ${errorMessage}`)
+    } else {
+      printError(`Unexpected error: ${errorMessage}`)
+    }
+  }
+
+  // =========================================================================
+  // Step 4: Search for accounts with filters
+  // =========================================================================
+  printStep(4, 'Searching for accounts with searchForAccounts()')
+
+  try {
+    // searchForAccounts() allows searching with various filters
+    // Here we search for accounts with balance greater than 1 ALGO (1,000,000 µALGO)
+    const searchResult = await indexer.searchForAccounts({
+      currencyGreaterThan: 1_000_000n, // More than 1 ALGO
+      limit: 5,
+    })
+
+    printSuccess(`Found ${searchResult.accounts.length} account(s) with balance > 1 ALGO`)
+    printInfo('')
+
+    if (searchResult.accounts.length > 0) {
+      printInfo('Accounts found:')
+      for (const account of searchResult.accounts) {
+        printInfo(`  - ${shortenAddress(account.address)}: ${formatMicroAlgo(account.amount)} (status: ${account.status})`)
+      }
+    }
+
+    printInfo('')
+    printInfo(`Query performed at round: ${searchResult.currentRound}`)
+
+    // Check if there are more results available
+    if (searchResult.nextToken) {
+      printInfo(`More results available (use nextToken: ${searchResult.nextToken})`)
+    }
+  } catch (error) {
+    printError(`Account search failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 5: Search with additional filters
+  // =========================================================================
+  printStep(5, 'Searching with additional filter options')
+
+  try {
+    // Search for accounts that are online (participating in consensus)
+    // Note: On LocalNet, most accounts are typically offline
+    const onlineResult = await indexer.searchForAccounts({
+      onlineOnly: true,
+      limit: 3,
+    })
+
+    printInfo('Searching for online (participating) accounts...')
+    printInfo(`Found ${onlineResult.accounts.length} online account(s)`)
+
+    if (onlineResult.accounts.length > 0) {
+      for (const account of onlineResult.accounts) {
+        printInfo(`  - ${shortenAddress(account.address)}: ${formatMicroAlgo(account.amount)}`)
+      }
+    } else {
+      printInfo('  No online accounts found (this is normal for LocalNet)')
+    }
+  } catch (error) {
+    printError(`Online account search failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+  printInfo('This example demonstrated:')
+  printInfo('  1. lookupAccountById(address) - Get detailed account information')
+  printInfo('  2. Handling "account not found" errors gracefully')
+  printInfo('  3. searchForAccounts() - Search accounts with filters')
+  printInfo('')
+  printInfo('Key lookupAccountById() response fields:')
+  printInfo('  - address: The account public key')
+  printInfo('  - amount: Total MicroAlgos in the account')
+  printInfo('  - amountWithoutPendingRewards: Balance excluding pending rewards')
+  printInfo('  - minBalance: Minimum balance required (based on assets/apps)')
+  printInfo('  - status: Online, Offline, or NotParticipating')
+  printInfo('  - round: The round for which this information is relevant')
+  printInfo('')
+  printInfo('Key searchForAccounts() filter parameters:')
+  printInfo('  - currencyGreaterThan: Filter by minimum balance')
+  printInfo('  - currencyLessThan: Filter by maximum balance')
+  printInfo('  - onlineOnly: Only return participating accounts')
+  printInfo('  - limit: Maximum number of results to return')
+  printInfo('  - assetId: Filter by accounts holding a specific asset')
+  printInfo('  - applicationId: Filter by accounts opted into an app')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- **Account Lookup**
+- [Account Assets](/docs/algokit-utils/typescript/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/typescript/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)

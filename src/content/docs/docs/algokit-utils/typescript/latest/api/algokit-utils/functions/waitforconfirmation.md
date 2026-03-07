@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'waitForConfirmation'
+title: "waitForConfirmation"
 ---
 
 > **waitForConfirmation**(`transactionId`, `maxRoundsToWait`, `algod`): `Promise`\<[`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)\>
 
-Defined in: [src/transaction/transaction.ts:133](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L133)
+Defined in: [src/transaction/transaction.ts:133](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L133)
 
 Wait until the transaction is confirmed or rejected, or until `timeout`
 number of rounds have passed.

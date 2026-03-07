@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'getGlobalABIStorageMaps'
+title: "getGlobalABIStorageMaps"
 ---
 
 > **getGlobalABIStorageMaps**(`contract`): `Record`\<`string`, [`ABIStorageMap`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistoragemap/)\>
 
-Defined in: [packages/abi/src/arc56-contract.ts:507](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L507)
+Defined in: [packages/abi/src/arc56-contract.ts:507](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L507)
 
 Get all global storage maps with parsed ABI types
 

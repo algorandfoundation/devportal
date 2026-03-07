@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'getStructValueFromTupleValue'
+title: "getStructValueFromTupleValue"
 ---
 
 > **getStructValueFromTupleValue**(`structType`, `tupleValue`): `ABIStructValue`
 
-Defined in: [packages/abi/src/utils.ts:43](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/utils.ts#L43)
+Defined in: [packages/abi/src/utils.ts:43](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/utils.ts#L43)
 
 Converts a tuple value (array) to a struct value (object with named fields).
 

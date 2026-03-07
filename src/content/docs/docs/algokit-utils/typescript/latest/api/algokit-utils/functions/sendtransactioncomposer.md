@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'sendTransactionComposer'
+title: "sendTransactionComposer"
 ---
 
 > **sendTransactionComposer**(`atcSend`): `Promise`\<[`SendTransactionComposerResults`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/sendtransactioncomposerresults/)\>
 
-Defined in: [src/transaction/transaction.ts:114](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L114)
+Defined in: [src/transaction/transaction.ts:114](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L114)
 
 :::caution[Deprecated]
 Use `composer.send()` directly

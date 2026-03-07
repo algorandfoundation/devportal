@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AppDeployer'
+title: "AppDeployer"
 ---
 
-Defined in: [src/app-deployer.ts:113](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L113)
+Defined in: [src/app-deployer.ts:113](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L113)
 
 Allows management of deployment and deployment metadata of applications.
 
@@ -15,7 +15,7 @@ Allows management of deployment and deployment metadata of applications.
 
 > **new AppDeployer**(`appManager`, `transactionSender`, `indexer?`): `AppDeployer`
 
-Defined in: [src/app-deployer.ts:129](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L129)
+Defined in: [src/app-deployer.ts:129](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L129)
 
 Creates an `AppManager`
 
@@ -46,7 +46,7 @@ An optional indexer instance; supply if you want to indexer to look up app metad
 #### Example
 
 ```ts
-const deployer = new AppDeployer(appManager, transactionSender, indexer);
+const deployer = new AppDeployer(appManager, transactionSender, indexer)
 ```
 
 ## Methods
@@ -55,7 +55,7 @@ const deployer = new AppDeployer(appManager, transactionSender, indexer);
 
 > **deploy**(`deployment`): `Promise`\<[`AppDeployResult`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/appdeployresult/)\>
 
-Defined in: [src/app-deployer.ts:173](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L173)
+Defined in: [src/app-deployer.ts:173](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L173)
 
 Idempotently deploy (create if not exists, update if changed) an app against the given name for the given creator account, including deploy-time TEAL template placeholder substitutions (if specified).
 
@@ -107,7 +107,7 @@ Optional cached value of the existing apps for the given creator; use this to av
 
 `boolean`
 
-Whether or not to ignore the app metadata cache and force a lookup, default: use the cache \*
+Whether or not to ignore the app metadata cache and force a lookup, default: use the cache *
 
 ###### maxRoundsToWaitForConfirmation?
 
@@ -127,9 +127,9 @@ The deployment metadata
 
 What action to perform if a schema break (storage schema or extra pages change) is detected:
 
-- `fail` - Fail the deployment (throw an error, **default**)
-- `replace` - Delete the old app and create a new one
-- `append` - Deploy a new app and leave the old one as is
+* `fail` - Fail the deployment (throw an error, **default**)
+* `replace` - Delete the old app and create a new one
+* `append` - Deploy a new app and leave the old one as is
 
 ###### onUpdate?
 
@@ -137,10 +137,10 @@ What action to perform if a schema break (storage schema or extra pages change) 
 
 What action to perform if a TEAL code update is detected:
 
-- `fail` - Fail the deployment (throw an error, **default**)
-- `update` - Update the app with the new TEAL code
-- `replace` - Delete the old app and create a new one
-- `append` - Deploy a new app and leave the old one as is
+* `fail` - Fail the deployment (throw an error, **default**)
+* `update` - Update the app with the new TEAL code
+* `replace` - Delete the old app and create a new one
+* `append` - Deploy a new app and leave the old one as is
 
 ###### populateAppCallResources?
 
@@ -178,28 +178,28 @@ const deployResult = await deployer.deploy({
       globalByteSlices: 0,
       globalInts: 0,
       localByteSlices: 0,
-      localInts: 0,
-    },
+      localInts: 0
+    }
   },
   updateParams: {
-    sender: 'SENDER_ADDRESS',
+    sender: 'SENDER_ADDRESS'
   },
   deleteParams: {
-    sender: 'SENDER_ADDRESS',
+    sender: 'SENDER_ADDRESS'
   },
   metadata: { name: 'my_app', version: '2.0', updatable: false, deletable: false },
   onSchemaBreak: 'append',
-  onUpdate: 'append',
-});
+  onUpdate: 'append'
+ })
 ```
 
----
+***
 
 ### getCreatorAppsByName()
 
 > **getCreatorAppsByName**(`creator`, `ignoreCache?`): `Promise`\<[`AppLookup`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/applookup/)\>
 
-Defined in: [src/app-deployer.ts:496](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-deployer.ts#L496)
+Defined in: [src/app-deployer.ts:496](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-deployer.ts#L496)
 
 Returns a lookup of name => app metadata (id, address, ...metadata) for all apps created by the given account that have
 an [ARC-2](https://github.com/algorandfoundation/ARCs/blob/main/ARCs/arc-0002.md) `AppDeployNote` as the transaction
@@ -232,5 +232,4 @@ A name-based lookup of the app metadata
 #### Example
 
 ```ts
-const result = await deployer.getCreatorAppsByName(creator);
-```
+const result = await deployer.getCreatorAppsByName(creator)

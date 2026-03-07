@@ -1,0 +1,382 @@
+---
+title: "Sync Round Management"
+description: "This example demonstrates how to manage the sync round using:"
+sidebar:
+  order: 19
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to manage the sync round using:
+- syncRound() - Get the minimum sync round the ledger will cache
+- setSyncRound(round) - Set the minimum sync round
+- unsetSyncRound() - Unset/reset the sync round
+ What is the sync round? The sync round is a configuration that controls the minimum round the node will keep data for. When set, the node will:
+- Only keep block data from this round onwards
+- Allow old block data to be deleted/pruned
+- Reduce storage requirements for archival data
+ This is useful for:
+- Nodes that only need recent data (not full archival history)
+- Indexers that only need data from a specific point forward
+- Applications that don't need ancient historical data
+ Key concepts:
+- syncRound() returns GetSyncRoundResponse with &#123; round: bigint &#125;
+- setSyncRound(round) sets the minimum round to keep
+- unsetSyncRound() removes the sync round restriction
+- Historical data below the sync round may be unavailable
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+- Note: On some nodes, these endpoints may require admin privileges or return errors if the feature is not supported.
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/19-sync-round.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/19-sync-round.ts)
+
+```typescript title="19-sync-round.ts"
+/**
+ * Example: Sync Round Management
+ *
+ * This example demonstrates how to manage the sync round using:
+ * - syncRound() - Get the minimum sync round the ledger will cache
+ * - setSyncRound(round) - Set the minimum sync round
+ * - unsetSyncRound() - Unset/reset the sync round
+ *
+ * What is the sync round?
+ * The sync round is a configuration that controls the minimum round the node
+ * will keep data for. When set, the node will:
+ * - Only keep block data from this round onwards
+ * - Allow old block data to be deleted/pruned
+ * - Reduce storage requirements for archival data
+ *
+ * This is useful for:
+ * - Nodes that only need recent data (not full archival history)
+ * - Indexers that only need data from a specific point forward
+ * - Applications that don't need ancient historical data
+ *
+ * Key concepts:
+ * - syncRound() returns GetSyncRoundResponse with { round: bigint }
+ * - setSyncRound(round) sets the minimum round to keep
+ * - unsetSyncRound() removes the sync round restriction
+ * - Historical data below the sync round may be unavailable
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ *
+ * Note: On some nodes, these endpoints may require admin privileges
+ * or return errors if the feature is not supported.
+ */
+
+import type { GetSyncRoundResponse } from '@algorandfoundation/algokit-utils/algod-client'
+import {
+  createAlgodClient,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js'
+
+async function main() {
+  printHeader('Sync Round Management Example')
+
+  // Create algod client
+  const algod = createAlgodClient()
+
+  // =========================================================================
+  // Step 1: Get the current node status to understand the blockchain state
+  // =========================================================================
+  printStep(1, 'Getting current node status')
+
+  const status = await algod.status()
+  const currentRound = status.lastRound
+  printSuccess(`Connected to node`)
+  printInfo(`  Current round: ${currentRound}`)
+  printInfo(`  Catchup time: ${status.catchupTime} ns`)
+  printInfo('')
+
+  // =========================================================================
+  // Step 2: Get the current sync round (if any)
+  // =========================================================================
+  printStep(2, 'Getting current sync round')
+
+  printInfo('Calling syncRound() to get the minimum sync round...')
+
+  try {
+    const syncRoundResponse = await algod.syncRound()
+    displaySyncRoundResponse(syncRoundResponse)
+
+    printInfo(`The node will keep data from round ${syncRoundResponse.round} onwards`)
+    printInfo('Data below this round may be pruned or unavailable')
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+
+    // Check for various error scenarios
+    if (errorMessage.includes('404') || errorMessage.includes('not found') || errorMessage.includes('Not Found')) {
+      printInfo('Sync round is not set - node will keep all historical data')
+      printInfo('This is the default behavior for archival nodes')
+    } else if (errorMessage.includes('501') || errorMessage.includes('not implemented')) {
+      printError('Sync round endpoints are not supported on this node')
+      printInfo('These endpoints may require specific node configuration')
+    } else if (errorMessage.includes('403') || errorMessage.includes('forbidden') || errorMessage.includes('Forbidden')) {
+      printError('Access denied - admin privileges may be required')
+      printInfo('Some nodes restrict sync round management to admin tokens')
+    } else {
+      // Display error but continue with the example
+      printError(`Error getting sync round: ${errorMessage}`)
+    }
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Step 3: Set a sync round
+  // =========================================================================
+  printStep(3, 'Setting a sync round')
+
+  // We'll set the sync round to a recent round to demonstrate the API
+  // In practice, you'd set this to the oldest round you need data for
+  const targetSyncRound = currentRound - 10n > 0n ? currentRound - 10n : 1n
+  printInfo(`Attempting to set sync round to ${targetSyncRound}...`)
+  printInfo('This tells the node to keep data from this round onwards')
+
+  try {
+    await algod.setSyncRound(targetSyncRound)
+    printSuccess(`Sync round set to ${targetSyncRound}`)
+
+    // Verify the sync round was set
+    try {
+      const verifyResponse = await algod.syncRound()
+      printInfo(`Verified: sync round is now ${verifyResponse.round}`)
+    } catch {
+      printInfo('Could not verify - syncRound() may not be available')
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+
+    if (errorMessage.includes('404') || errorMessage.includes('not found')) {
+      printError('setSyncRound endpoint not found')
+      printInfo('This endpoint may not be available on this node configuration')
+    } else if (errorMessage.includes('501') || errorMessage.includes('not implemented')) {
+      printError('setSyncRound is not implemented on this node')
+      printInfo('Sync round management may require specific node features to be enabled')
+    } else if (errorMessage.includes('403') || errorMessage.includes('forbidden')) {
+      printError('Access denied when setting sync round')
+      printInfo('Admin token may be required to modify sync round')
+    } else if (errorMessage.includes('400') || errorMessage.includes('bad request')) {
+      printError('Invalid sync round value')
+      printInfo('The sync round must be a valid round number')
+    } else {
+      printError(`Failed to set sync round: ${errorMessage}`)
+    }
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Step 4: Explain the impact of sync round on data availability
+  // =========================================================================
+  printStep(4, 'Understanding sync round impact on data availability')
+
+  printInfo('When a sync round is set:')
+  printInfo('')
+  printInfo('1. Block Data Access:')
+  printInfo('   - Blocks at or after the sync round: Available')
+  printInfo('   - Blocks before the sync round: May be unavailable (pruned)')
+  printInfo('')
+  printInfo('2. Account Information:')
+  printInfo('   - Current state: Always available')
+  printInfo('   - Historical state at old rounds: May be unavailable')
+  printInfo('')
+  printInfo('3. Transaction History:')
+  printInfo('   - Transactions in recent blocks: Available')
+  printInfo('   - Transactions in pruned blocks: Not available')
+  printInfo('')
+  printInfo('4. State Proofs & Deltas:')
+  printInfo('   - Only available for rounds at or after sync round')
+  printInfo('')
+
+  // Demonstrate that recent data is accessible
+  printInfo('Verifying recent block data is accessible...')
+  try {
+    const block = await algod.block(currentRound)
+    printSuccess(`Block ${currentRound} is accessible (timestamp: ${block.block.header.timestamp})`)
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    printError(`Could not access block ${currentRound}: ${errorMessage}`)
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Step 5: Demonstrate unsetSyncRound
+  // =========================================================================
+  printStep(5, 'Unsetting the sync round')
+
+  printInfo('Calling unsetSyncRound() to remove the sync round restriction...')
+  printInfo('After unsetting, the node will keep all data (archival mode)')
+
+  try {
+    await algod.unsetSyncRound()
+    printSuccess('Sync round has been unset')
+
+    // Verify it was unset
+    try {
+      const checkResponse = await algod.syncRound()
+      // If this succeeds, a sync round is still set
+      printInfo(`Note: syncRound still returns ${checkResponse.round}`)
+      printInfo('On some nodes, unset may set a default value rather than fully removing it')
+    } catch (checkError) {
+      const checkMessage = checkError instanceof Error ? checkError.message : String(checkError)
+      if (checkMessage.includes('404') || checkMessage.includes('not found')) {
+        printSuccess('Confirmed: sync round is now unset (404 response)')
+        printInfo('Node is in archival mode - keeping all historical data')
+      } else {
+        printInfo(`Sync round status unclear: ${checkMessage}`)
+      }
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+
+    if (errorMessage.includes('404') || errorMessage.includes('not found')) {
+      printInfo('unsetSyncRound returned 404 - sync round may already be unset')
+    } else if (errorMessage.includes('501') || errorMessage.includes('not implemented')) {
+      printError('unsetSyncRound is not implemented on this node')
+    } else if (errorMessage.includes('403') || errorMessage.includes('forbidden')) {
+      printError('Access denied when unsetting sync round')
+      printInfo('Admin privileges may be required')
+    } else {
+      printError(`Failed to unset sync round: ${errorMessage}`)
+    }
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Step 6: Best practices for sync round management
+  // =========================================================================
+  printStep(6, 'Best practices and use cases')
+
+  printInfo('When to use sync round:')
+  printInfo('')
+  printInfo('1. Non-Archival Nodes:')
+  printInfo('   - Set sync round to reduce storage requirements')
+  printInfo('   - Only keep data needed for current operations')
+  printInfo('')
+  printInfo('2. Indexer Deployment:')
+  printInfo('   - Set sync round to the indexer\'s starting point')
+  printInfo('   - Prevents the node from being queried for data it doesn\'t need')
+  printInfo('')
+  printInfo('3. Fresh Sync from Snapshot:')
+  printInfo('   - After restoring from a snapshot, set sync round to snapshot round')
+  printInfo('   - Tells the node not to try fetching older data')
+  printInfo('')
+  printInfo('When NOT to use sync round:')
+  printInfo('')
+  printInfo('1. Archival Nodes:')
+  printInfo('   - Don\'t set sync round if you need full history')
+  printInfo('   - Archival nodes should keep all data')
+  printInfo('')
+  printInfo('2. Block Explorers:')
+  printInfo('   - Need historical data for user queries')
+  printInfo('   - Should maintain full history')
+  printInfo('')
+  printInfo('3. Audit/Compliance:')
+  printInfo('   - Regulatory requirements may mandate full history')
+  printInfo('')
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+
+  printInfo('Sync Round Management - Key Points:')
+  printInfo('')
+  printInfo('1. What It Does:')
+  printInfo('   - Controls the minimum round the node keeps data for')
+  printInfo('   - Allows pruning of old block data')
+  printInfo('   - Reduces storage requirements for non-archival nodes')
+  printInfo('')
+  printInfo('2. API Methods:')
+  printInfo('   syncRound(): Promise<GetSyncRoundResponse>')
+  printInfo('     - Returns { round: bigint } with the minimum sync round')
+  printInfo('     - Returns 404 if no sync round is set (archival mode)')
+  printInfo('')
+  printInfo('   setSyncRound(round: number | bigint): Promise<void>')
+  printInfo('     - Sets the minimum sync round')
+  printInfo('     - Data below this round may be pruned')
+  printInfo('')
+  printInfo('   unsetSyncRound(): Promise<void>')
+  printInfo('     - Removes the sync round restriction')
+  printInfo('     - Returns node to archival mode')
+  printInfo('')
+  printInfo('3. GetSyncRoundResponse:')
+  printInfo('   {')
+  printInfo('     round: bigint  // Minimum sync round')
+  printInfo('   }')
+  printInfo('')
+  printInfo('4. Data Availability Impact:')
+  printInfo('   - Blocks before sync round: May be unavailable')
+  printInfo('   - Account history at old rounds: May be unavailable')
+  printInfo('   - Current state: Always available')
+  printInfo('   - Recent transactions: Available')
+  printInfo('')
+  printInfo('5. Error Scenarios:')
+  printInfo('   - 404: Sync round not set (archival mode)')
+  printInfo('   - 403: Admin privileges required')
+  printInfo('   - 501: Feature not implemented on this node')
+  printInfo('')
+  printInfo('6. Best Practices:')
+  printInfo('   - Only set sync round if you don\'t need full history')
+  printInfo('   - Consider storage vs. data availability tradeoffs')
+  printInfo('   - Archival nodes should not set a sync round')
+  printInfo('   - Document your sync round configuration')
+}
+
+/**
+ * Display the sync round response information
+ */
+function displaySyncRoundResponse(response: GetSyncRoundResponse): void {
+  printInfo('  GetSyncRoundResponse:')
+  printInfo(`    round: ${response.round}`)
+  printInfo('')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/typescript/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/typescript/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/typescript/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/typescript/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/typescript/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/typescript/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/typescript/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/typescript/latest/examples/algod-client/18-devmode-timestamp/)
+- **Sync Round Management**

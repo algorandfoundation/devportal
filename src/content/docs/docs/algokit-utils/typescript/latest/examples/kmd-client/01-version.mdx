@@ -1,0 +1,118 @@
+---
+title: "KMD Version Information"
+description: "This example demonstrates how to retrieve version information from the KMD (Key Management Daemon) server using the version() method."
+sidebar:
+  order: 1
+---
+
+[← Back to KMD Client](/docs/algokit-utils/typescript/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to retrieve version information from the KMD (Key Management Daemon) server using the version() method.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example kmd_client/01-version.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/kmd_client/01-version.ts)
+
+```typescript title="01-version.ts"
+/**
+ * Example: KMD Version Information
+ *
+ * This example demonstrates how to retrieve version information from the KMD
+ * (Key Management Daemon) server using the version() method.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { createKmdClient, printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+async function main() {
+  printHeader('KMD Version Information Example')
+
+  // Create a KMD client connected to LocalNet
+  const kmd = createKmdClient()
+
+  // =========================================================================
+  // Step 1: Get Version Information
+  // =========================================================================
+  printStep(1, 'Getting KMD version information with version()')
+
+  try {
+    const versionInfo = await kmd.version()
+
+    printSuccess('Version information retrieved successfully!')
+    printInfo('')
+    printInfo('Supported API versions:')
+
+    if (versionInfo.versions.length === 0) {
+      printInfo('  (No versions reported)')
+    } else {
+      versionInfo.versions.forEach((version) => {
+        printInfo(`  - ${version}`)
+      })
+    }
+
+    // =========================================================================
+    // Summary
+    // =========================================================================
+    printHeader('Summary')
+    printInfo('This example demonstrated:')
+    printInfo('  1. version() - Retrieves KMD server version information')
+    printInfo('')
+    printInfo('Key fields in VersionsResponse:')
+    printInfo('  - versions: Array of supported API version strings')
+    printInfo('')
+    printInfo('The KMD (Key Management Daemon) is responsible for:')
+    printInfo('  - Managing wallets and their keys')
+    printInfo('  - Signing transactions securely')
+    printInfo('  - Storing keys in encrypted wallet files')
+  } catch (error) {
+    printError(`Failed to get version information: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+    printInfo('Troubleshooting:')
+    printInfo('  - Ensure LocalNet is running: algokit localnet start')
+    printInfo('  - Check that KMD is accessible on port 4002')
+    printInfo('  - Verify the KMD token is correct')
+    process.exit(1)
+  }
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- **KMD Version Information**
+- [Wallet Creation and Listing](/docs/algokit-utils/typescript/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/typescript/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/typescript/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/typescript/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/13-multisig-program-signing/)

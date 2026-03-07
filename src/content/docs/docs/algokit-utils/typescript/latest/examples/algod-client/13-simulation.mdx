@@ -1,0 +1,502 @@
+---
+title: "Transaction Simulation"
+description: "This example demonstrates how to simulate transactions before submitting them to the Algorand network. Simulation allows you to:"
+sidebar:
+  order: 13
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to simulate transactions before submitting them to the Algorand network. Simulation allows you to:
+- Preview transaction outcomes without committing to the blockchain
+- Estimate transaction fees
+- Detect potential errors before spending fees
+- Debug smart contract execution
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/13-simulation.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/13-simulation.ts)
+
+```typescript title="13-simulation.ts"
+/**
+ * Example: Transaction Simulation
+ *
+ * This example demonstrates how to simulate transactions before submitting them
+ * to the Algorand network. Simulation allows you to:
+ * - Preview transaction outcomes without committing to the blockchain
+ * - Estimate transaction fees
+ * - Detect potential errors before spending fees
+ * - Debug smart contract execution
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { algo } from '@algorandfoundation/algokit-utils'
+import type {
+  SimulateRequest,
+} from '@algorandfoundation/algokit-utils/algod-client'
+import {
+  createAlgodClient,
+  createAlgorandClient,
+  formatMicroAlgo,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js'
+
+async function main() {
+  printHeader('Transaction Simulation Example')
+
+  // Create clients
+  const algod = createAlgodClient()
+  const algorand = createAlgorandClient()
+
+  // =========================================================================
+  // Step 1: Set up accounts for simulation
+  // =========================================================================
+  printStep(1, 'Setting up accounts for simulation')
+
+  // Get a funded account from LocalNet (the dispenser)
+  const sender = await algorand.account.dispenserFromEnvironment()
+  printInfo(`Sender address: ${shortenAddress(sender.addr.toString())}`)
+
+  // Get sender balance
+  const senderInfo = await algod.accountInformation(sender.addr.toString())
+  printInfo(`Sender balance: ${formatMicroAlgo(senderInfo.amount)}`)
+
+  // Create a new random account as receiver
+  const receiver = algorand.account.random()
+  printInfo(`Receiver address: ${shortenAddress(receiver.addr.toString())}`)
+  printInfo('Receiver is a new unfunded account')
+  printInfo('')
+
+  // =========================================================================
+  // Step 2: Create a payment transaction for simulation
+  // =========================================================================
+  printStep(2, 'Creating a payment transaction for simulation')
+
+  const paymentAmount = algo(1) // 1 ALGO
+  printInfo(`Payment amount: ${paymentAmount.algo} ALGO`)
+
+  // Build the transaction using AlgorandClient.createTransaction
+  const paymentTxn = await algorand.createTransaction.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: paymentAmount,
+  })
+
+  // Get the transaction ID
+  const txId = paymentTxn.txId()
+  printInfo(`Transaction ID: ${txId}`)
+
+  // Sign the transaction
+  const signedTxn = await sender.signer([paymentTxn], [0])
+  printSuccess('Transaction signed successfully!')
+  printInfo('')
+
+  // =========================================================================
+  // Step 3: Simulate using simulateRawTransactions()
+  // =========================================================================
+  printStep(3, 'Simulating with simulateRawTransactions(signedTxns)')
+
+  printInfo('simulateRawTransactions() is a convenience method that:')
+  printInfo('  - Accepts encoded signed transactions (Uint8Array or Uint8Array[])')
+  printInfo('  - Decodes and wraps them in a SimulateRequest')
+  printInfo('  - Returns SimulateResponse with detailed results')
+  printInfo('')
+
+  const simResult = await algod.simulateRawTransactions(signedTxn)
+
+  printSuccess('Simulation completed!')
+  printInfo('')
+
+  // =========================================================================
+  // Step 4: Display simulation results
+  // =========================================================================
+  printStep(4, 'Displaying simulation results')
+
+  printInfo('SimulateResponse structure:')
+  printInfo(`  version: ${simResult.version}`)
+  printInfo(`  lastRound: ${simResult.lastRound.toLocaleString('en-US')}`)
+  printInfo(`  txnGroups: ${simResult.txnGroups.length} group(s)`)
+  printInfo('')
+
+  // Check if the transaction would succeed
+  const txnGroup = simResult.txnGroups[0]
+  const wouldSucceed = !txnGroup.failureMessage
+
+  printInfo('Transaction Group Result:')
+  printInfo(`  Would succeed: ${wouldSucceed ? 'Yes' : 'No'}`)
+  if (txnGroup.failureMessage) {
+    printInfo(`  Failure message: ${txnGroup.failureMessage}`)
+    if (txnGroup.failedAt) {
+      printInfo(`  Failed at: [${txnGroup.failedAt.join(', ')}]`)
+    }
+  }
+  printInfo('')
+
+  // Display budget information (for app calls)
+  if (txnGroup.appBudgetAdded !== undefined || txnGroup.appBudgetConsumed !== undefined) {
+    printInfo('App Budget:')
+    printInfo(`  Budget added: ${txnGroup.appBudgetAdded ?? 'N/A'}`)
+    printInfo(`  Budget consumed: ${txnGroup.appBudgetConsumed ?? 'N/A'}`)
+    printInfo('')
+  }
+
+  // =========================================================================
+  // Step 5: Display individual transaction results and fixedSigner
+  // =========================================================================
+  printStep(5, 'Displaying individual transaction results')
+
+  for (let i = 0; i < txnGroup.txnResults.length; i++) {
+    const txnResult = txnGroup.txnResults[i]
+    printInfo(`Transaction ${i + 1}:`)
+
+    // The txnResult contains a PendingTransactionResponse
+    const pendingResponse = txnResult.txnResult
+    printInfo(`  Transaction type: ${pendingResponse.txn.txn.type}`)
+
+    // Display fixedSigner if present (indicates missing/wrong signature)
+    if (txnResult.fixedSigner) {
+      printInfo(`  Fixed signer: ${shortenAddress(txnResult.fixedSigner.toString())}`)
+      printInfo('  ^ This indicates the correct signer when simulation used allowEmptySignatures or fixSigners')
+    } else {
+      printInfo('  Fixed signer: None (signature was correct)')
+    }
+
+    // Display budget consumed (for app calls)
+    if (txnResult.appBudgetConsumed !== undefined) {
+      printInfo(`  App budget consumed: ${txnResult.appBudgetConsumed}`)
+    }
+
+    if (txnResult.logicSigBudgetConsumed !== undefined) {
+      printInfo(`  LogicSig budget consumed: ${txnResult.logicSigBudgetConsumed}`)
+    }
+    printInfo('')
+  }
+
+  // =========================================================================
+  // Step 6: Show transaction group details
+  // =========================================================================
+  printStep(6, 'Show transaction group details from simulation')
+
+  printInfo('Each SimulateTransactionResult contains txnResult (PendingTransactionResponse)')
+  printInfo('which includes the transaction details as if it were confirmed.')
+  printInfo('')
+
+  const txnDetails = txnGroup.txnResults[0].txnResult
+  printInfo('Simulated Transaction Details:')
+  printInfo(`  Type: ${txnDetails.txn.txn.type}`)
+  printInfo(`  Sender: ${shortenAddress(txnDetails.txn.txn.sender.toString())}`)
+  printInfo(`  Fee: ${formatMicroAlgo(txnDetails.txn.txn.fee ?? 0n)}`)
+  printInfo(`  First valid: ${txnDetails.txn.txn.firstValid.toLocaleString('en-US')}`)
+  printInfo(`  Last valid: ${txnDetails.txn.txn.lastValid.toLocaleString('en-US')}`)
+
+  if (txnDetails.txn.txn.payment) {
+    printInfo('')
+    printInfo('  Payment fields:')
+    printInfo(`    Receiver: ${shortenAddress(txnDetails.txn.txn.payment.receiver.toString())}`)
+    printInfo(`    Amount: ${formatMicroAlgo(txnDetails.txn.txn.payment.amount)}`)
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Step 7: Demonstrate simulation with extra budget options
+  // =========================================================================
+  printStep(7, 'Demonstrating simulation with extra budget options')
+
+  printInfo('simulateTransactions() accepts a SimulateRequest with various options:')
+  printInfo('  - allowEmptySignatures: Simulate unsigned transactions')
+  printInfo('  - allowMoreLogging: Lift limits on log opcode usage')
+  printInfo('  - allowUnnamedResources: Access resources not in txn references')
+  printInfo('  - extraOpcodeBudget: Add extra opcode budget for app calls')
+  printInfo('  - fixSigners: Auto-fix incorrect signers in simulation')
+  printInfo('')
+
+  // Demonstrate with allowEmptySignatures (useful for fee estimation without signing)
+  printInfo('Simulating an UNSIGNED transaction with allowEmptySignatures=true:')
+  printInfo('')
+
+  // Create an unsigned transaction
+  const unsignedTxn = await algorand.createTransaction.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.5),
+  })
+
+  // Import SignedTransaction type to create unsigned wrapper
+  const { decodeSignedTransaction, encodeSignedTransaction } = await import('@algorandfoundation/algokit-transact')
+
+  // Create a "signed" transaction with no actual signature for simulation
+  // We encode the transaction without a signature - using the signer but only getting the transaction portion
+  const unsignedForSim: SimulateRequest = {
+    txnGroups: [{
+      txns: [{
+        txn: unsignedTxn,
+        // No sig field - transaction is unsigned
+      }]
+    }],
+    allowEmptySignatures: true,  // Key option: allow unsigned transactions
+    fixSigners: true,            // Fix any signer issues during simulation
+  }
+
+  const unsignedSimResult = await algod.simulateTransactions(unsignedForSim)
+
+  printInfo('Unsigned transaction simulation result:')
+  printInfo(`  Would succeed: ${!unsignedSimResult.txnGroups[0].failureMessage ? 'Yes' : 'No'}`)
+
+  // Check if fixedSigner shows the required signer
+  const fixedSignerResult = unsignedSimResult.txnGroups[0].txnResults[0]
+  if (fixedSignerResult.fixedSigner) {
+    printInfo(`  Required signer: ${shortenAddress(fixedSignerResult.fixedSigner.toString())}`)
+  }
+  printInfo('')
+
+  // Demonstrate with extraOpcodeBudget
+  printInfo('extraOpcodeBudget is useful for complex app calls that need more compute:')
+  printInfo('')
+
+  const extraBudgetRequest: SimulateRequest = {
+    txnGroups: [{
+      txns: [{
+        txn: unsignedTxn,
+      }]
+    }],
+    allowEmptySignatures: true,
+    extraOpcodeBudget: 10000, // Add 10,000 extra opcodes
+  }
+
+  const extraBudgetResult = await algod.simulateTransactions(extraBudgetRequest)
+  printInfo('Simulation with extra budget:')
+  printInfo(`  Would succeed: ${!extraBudgetResult.txnGroups[0].failureMessage ? 'Yes' : 'No'}`)
+  printInfo(`  (extraOpcodeBudget is mainly useful for app calls, not simple payments)`)
+  printInfo('')
+
+  // =========================================================================
+  // Step 8: Show how simulation can estimate fees and detect errors
+  // =========================================================================
+  printStep(8, 'Using simulation to estimate fees and detect errors')
+
+  printInfo('Simulation helps with fee estimation by:')
+  printInfo('  1. Determining minimum fee for transaction to succeed')
+  printInfo('  2. Checking if your fee is sufficient before sending')
+  printInfo('  3. Avoiding wasted fees on transactions that would fail')
+  printInfo('')
+
+  // Get current suggested params to show fee structure
+  const params = await algod.suggestedParams()
+  printInfo('Current fee structure:')
+  printInfo(`  Min fee: ${formatMicroAlgo(params.minFee)}`)
+  printInfo(`  Suggested fee: ${formatMicroAlgo(params.fee)}`)
+  printInfo('')
+
+  printInfo('Simulation can detect errors BEFORE spending fees:')
+  printInfo('')
+
+  // Error detection example - insufficient balance
+  printInfo('Example: Detecting an overspend error')
+
+  // Create a transaction that would overspend
+  const poorAccount = algorand.account.random()
+  const overspendTxn = await algorand.createTransaction.payment({
+    sender: poorAccount.addr,
+    receiver: receiver.addr,
+    amount: algo(1000000), // 1 million ALGO - way more than account has
+  })
+
+  const overspendRequest: SimulateRequest = {
+    txnGroups: [{
+      txns: [{
+        txn: overspendTxn,
+      }]
+    }],
+    allowEmptySignatures: true,
+  }
+
+  const overspendResult = await algod.simulateTransactions(overspendRequest)
+  const overspendGroup = overspendResult.txnGroups[0]
+
+  printInfo('  Overspend simulation result:')
+  printInfo(`    Would succeed: ${!overspendGroup.failureMessage ? 'Yes' : 'No'}`)
+  if (overspendGroup.failureMessage) {
+    printInfo(`    Failure: ${overspendGroup.failureMessage}`)
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Step 9: Simulate a failing transaction and display the failure reason
+  // =========================================================================
+  printStep(9, 'Simulating a failing transaction')
+
+  printInfo('Demonstrating various failure scenarios:')
+  printInfo('')
+
+  // Failure scenario 1: Insufficient funds (already shown above)
+  printInfo('1. Insufficient funds:')
+  printInfo(`   Error: ${overspendGroup.failureMessage}`)
+  printInfo('')
+
+  // Failure scenario 2: Invalid receiver address - let's try sending to the sender (self-send is OK, but we can show transaction with close-remainder issue)
+  printInfo('2. Sending to zero balance account and closing:')
+  printInfo('   Simulating a close-out transaction to demonstrate simulation details')
+
+  // Create a transaction that closes out to a specific address
+  const closeOutTxn = await algorand.createTransaction.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0),
+    closeRemainderTo: receiver.addr, // Close account to receiver
+  })
+
+  const closeOutRequest: SimulateRequest = {
+    txnGroups: [{
+      txns: [{
+        txn: closeOutTxn,
+      }]
+    }],
+    allowEmptySignatures: true,
+  }
+
+  const closeOutResult = await algod.simulateTransactions(closeOutRequest)
+  const closeOutGroup = closeOutResult.txnGroups[0]
+
+  printInfo(`   Would succeed: ${!closeOutGroup.failureMessage ? 'Yes' : 'No'}`)
+  if (closeOutGroup.failureMessage) {
+    printInfo(`   Failure: ${closeOutGroup.failureMessage}`)
+  } else {
+    printInfo('   This would succeed (sender can close to receiver)')
+  }
+  printInfo('')
+
+  // Failure scenario 3: Insufficient fee (below minimum)
+  printInfo('3. Transaction with fee below minimum:')
+  printInfo('   Note: Very low fees are rejected before simulation even runs')
+
+  // Create a transaction with a fee set to 0 (below min fee of 1000)
+  const lowFeeTxn = await algorand.createTransaction.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.1),
+    staticFee: algo(0), // 0 fee - below minimum
+  })
+
+  const lowFeeRequest: SimulateRequest = {
+    txnGroups: [{
+      txns: [{
+        txn: lowFeeTxn,
+      }]
+    }],
+    allowEmptySignatures: true,
+  }
+
+  try {
+    const lowFeeResult = await algod.simulateTransactions(lowFeeRequest)
+    const lowFeeGroup = lowFeeResult.txnGroups[0]
+    printInfo(`   Would succeed: ${!lowFeeGroup.failureMessage ? 'Yes' : 'No'}`)
+    if (lowFeeGroup.failureMessage) {
+      printInfo(`   Failure: ${lowFeeGroup.failureMessage}`)
+    }
+  } catch (error) {
+    // Fee too low errors are caught at the API level, not in simulation results
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    if (errorMessage.includes('less than the minimum')) {
+      printInfo(`   Rejected before simulation: Fee too low`)
+      printInfo('   Algod validates minimum fees before running simulation')
+    } else {
+      printInfo(`   Error: ${errorMessage}`)
+    }
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+
+  printInfo('This example demonstrated:')
+  printInfo('')
+  printInfo('1. simulateRawTransactions(signedTxns):')
+  printInfo('   - Convenience method for simulating encoded signed transactions')
+  printInfo('   - Accepts Uint8Array or Uint8Array[] (signed transaction bytes)')
+  printInfo('   - Returns SimulateResponse with detailed results')
+  printInfo('')
+  printInfo('2. SimulateResponse structure:')
+  printInfo('   - version: API version number')
+  printInfo('   - lastRound: Round at which simulation was performed')
+  printInfo('   - txnGroups: Array of SimulateTransactionGroupResult')
+  printInfo('')
+  printInfo('3. SimulateTransactionGroupResult:')
+  printInfo('   - txnResults: Array of individual transaction results')
+  printInfo('   - failureMessage?: Error message if group would fail')
+  printInfo('   - failedAt?: Index path to failing transaction')
+  printInfo('   - appBudgetAdded/Consumed: App call budget tracking')
+  printInfo('')
+  printInfo('4. SimulateTransactionResult:')
+  printInfo('   - txnResult: PendingTransactionResponse with full details')
+  printInfo('   - fixedSigner?: Address that should have signed')
+  printInfo('   - appBudgetConsumed: Budget used by this transaction')
+  printInfo('   - logicSigBudgetConsumed: Budget used by logic signature')
+  printInfo('')
+  printInfo('5. SimulateRequest options:')
+  printInfo('   - allowEmptySignatures: Simulate without signatures')
+  printInfo('   - allowMoreLogging: Lift log opcode limits')
+  printInfo('   - allowUnnamedResources: Access unref\'d resources')
+  printInfo('   - extraOpcodeBudget: Add extra compute budget')
+  printInfo('   - fixSigners: Auto-fix incorrect signers')
+  printInfo('')
+  printInfo('6. Use cases for simulation:')
+  printInfo('   - Fee estimation without signing')
+  printInfo('   - Error detection before spending fees')
+  printInfo('   - Debugging smart contract execution')
+  printInfo('   - Validating transaction groups')
+  printInfo('   - Testing complex app interactions')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/typescript/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/typescript/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/typescript/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/typescript/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/typescript/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/typescript/latest/examples/algod-client/12-teal-compile/)
+- **Transaction Simulation**
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/typescript/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/typescript/latest/examples/algod-client/19-sync-round/)

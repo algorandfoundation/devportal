@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AlgorandClientTransactionSender'
+title: "AlgorandClientTransactionSender"
 ---
 
-Defined in: [src/algorand-client-transaction-sender.ts:38](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L38)
+Defined in: [src/algorand-client-transaction-sender.ts:38](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L38)
 
 Orchestrates sending transactions for `AlgorandClient`.
 
@@ -15,7 +15,7 @@ Orchestrates sending transactions for `AlgorandClient`.
 
 > **new AlgorandClientTransactionSender**(`newGroup`, `assetManager`, `appManager`): `AlgorandClientTransactionSender`
 
-Defined in: [src/algorand-client-transaction-sender.ts:53](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L53)
+Defined in: [src/algorand-client-transaction-sender.ts:53](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L53)
 
 Creates a new `AlgorandClientSender`
 
@@ -46,11 +46,7 @@ An `AppManager` instance
 #### Example
 
 ```typescript
-const transactionSender = new AlgorandClientTransactionSender(
-  () => new TransactionComposer(),
-  assetManager,
-  appManager,
-);
+const transactionSender = new AlgorandClientTransactionSender(() => new TransactionComposer(), assetManager, appManager)
 ```
 
 ## Properties
@@ -59,7 +55,7 @@ const transactionSender = new AlgorandClientTransactionSender(
 
 > **appCall**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:735](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L735)
+Defined in: [src/algorand-client-transaction-sender.ts:735](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L735)
 
 Call a smart contract.
 
@@ -82,7 +78,7 @@ The result of the app call transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.appCall({ sender: 'CREATORADDRESS' });
+await algorand.send.appCall({ sender: 'CREATORADDRESS' })
 ```
 
 ```typescript
@@ -115,13 +111,13 @@ await algorand.send.appCall({
 })
 ```
 
----
+***
 
 ### appCallMethodCall()
 
 > **appCallMethodCall**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:983](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L983)
+Defined in: [src/algorand-client-transaction-sender.ts:983](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L983)
 
 Call a smart contract via an ABI method.
 
@@ -148,12 +144,8 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-});
-await algorand.send.appCallMethodCall({
-  sender: 'CREATORADDRESS',
-  method: method,
-  args: ['arg1_value'],
-});
+})
+await algorand.send.appCallMethodCall({ sender: 'CREATORADDRESS', method: method, args: ["arg1_value"] })
 ```
 
 ```typescript
@@ -193,13 +185,13 @@ await algorand.send.appCallMethodCall({
 })
 ```
 
----
+***
 
 ### appCreate()
 
 > **appCreate**: (`params`) => `Promise`\<\{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:592](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L592)
+Defined in: [src/algorand-client-transaction-sender.ts:592](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L592)
 
 Create a smart contract.
 
@@ -222,12 +214,8 @@ The result of the app create transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-const result = await algorand.send.appCreate({
-  sender: 'CREATORADDRESS',
-  approvalProgram: 'TEALCODE',
-  clearStateProgram: 'TEALCODE',
-});
-const createdAppId = result.appId;
+const result = await algorand.send.appCreate({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE' })
+const createdAppId = result.appId
 ```
 
 ```typescript
@@ -269,13 +257,13 @@ await algorand.send.appCreate({
 })
 ```
 
----
+***
 
 ### appCreateMethodCall()
 
 > **appCreateMethodCall**: (`params`) => `Promise`\<\{ `appAddress`: [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/); `appId`: `bigint`; `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:804](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L804)
+Defined in: [src/algorand-client-transaction-sender.ts:804](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L804)
 
 Create a smart contract via an ABI method.
 
@@ -302,15 +290,9 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-});
-const result = await algorand.send.appCreateMethodCall({
-  sender: 'CREATORADDRESS',
-  approvalProgram: 'TEALCODE',
-  clearStateProgram: 'TEALCODE',
-  method: method,
-  args: ['arg1_value'],
-});
-const createdAppId = result.appId;
+})
+const result = await algorand.send.appCreateMethodCall({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE', method: method, args: ["arg1_value"] })
+const createdAppId = result.appId
 ```
 
 ```typescript
@@ -359,13 +341,13 @@ await algorand.send.appCreateMethodCall({
 })
 ```
 
----
+***
 
 ### appDelete()
 
 > **appDelete**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:688](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L688)
+Defined in: [src/algorand-client-transaction-sender.ts:688](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L688)
 
 Delete a smart contract.
 
@@ -388,7 +370,7 @@ The result of the app delete transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.appDelete({ sender: 'CREATORADDRESS' });
+await algorand.send.appDelete({ sender: 'CREATORADDRESS' })
 ```
 
 ```typescript
@@ -421,13 +403,13 @@ await algorand.send.appDelete({
 })
 ```
 
----
+***
 
 ### appDeleteMethodCall()
 
 > **appDeleteMethodCall**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:924](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L924)
+Defined in: [src/algorand-client-transaction-sender.ts:924](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L924)
 
 Delete a smart contract via an ABI method.
 
@@ -454,12 +436,8 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-});
-await algorand.send.appDeleteMethodCall({
-  sender: 'CREATORADDRESS',
-  method: method,
-  args: ['arg1_value'],
-});
+})
+await algorand.send.appDeleteMethodCall({ sender: 'CREATORADDRESS', method: method, args: ["arg1_value"] })
 ```
 
 ```typescript
@@ -499,13 +477,13 @@ await algorand.send.appDeleteMethodCall({
 })
 ```
 
----
+***
 
 ### appUpdate()
 
 > **appUpdate**: (`params`) => `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:641](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L641)
+Defined in: [src/algorand-client-transaction-sender.ts:641](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L641)
 
 Update a smart contract.
 
@@ -528,11 +506,7 @@ The result of the app update transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.appUpdate({
-  sender: 'CREATORADDRESS',
-  approvalProgram: 'TEALCODE',
-  clearStateProgram: 'TEALCODE',
-});
+await algorand.send.appUpdate({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE' })
 ```
 
 ```typescript
@@ -567,13 +541,13 @@ await algorand.send.appUpdate({
 })
 ```
 
----
+***
 
 ### appUpdateMethodCall()
 
 > **appUpdateMethodCall**: (`params`) => `Promise`\<\{ `compiledApproval?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `compiledClear?`: [`CompiledTeal`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/compiledteal/); `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:865](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L865)
+Defined in: [src/algorand-client-transaction-sender.ts:865](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L865)
 
 Update a smart contract via an ABI method.
 
@@ -600,14 +574,8 @@ const method = new ABIMethod({
   name: 'method',
   args: [{ name: 'arg1', type: 'string' }],
   returns: { type: 'string' },
-});
-await algorand.send.appUpdateMethodCall({
-  sender: 'CREATORADDRESS',
-  approvalProgram: 'TEALCODE',
-  clearStateProgram: 'TEALCODE',
-  method: method,
-  args: ['arg1_value'],
-});
+})
+await algorand.send.appUpdateMethodCall({ sender: 'CREATORADDRESS', approvalProgram: 'TEALCODE', clearStateProgram: 'TEALCODE', method: method, args: ["arg1_value"] })
 ```
 
 ```typescript
@@ -649,13 +617,13 @@ await algorand.send.appUpdateMethodCall({
 })
 ```
 
----
+***
 
 ### assetConfig()
 
 > **assetConfig**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:300](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L300)
+Defined in: [src/algorand-client-transaction-sender.ts:300](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L300)
 
 Configure an existing Algorand Standard Asset.
 
@@ -680,11 +648,7 @@ The result of the asset config transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetConfig({
-  sender: 'MANAGERADDRESS',
-  assetId: 123456n,
-  manager: 'MANAGERADDRESS',
-});
+await algorand.send.assetConfig({ sender: "MANAGERADDRESS", assetId: 123456n, manager: "MANAGERADDRESS" })
 ```
 
 ```typescript
@@ -711,16 +675,16 @@ await algorand.send.assetConfig({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
----
+***
 
 ### assetDestroy()
 
 > **assetDestroy**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:380](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L380)
+Defined in: [src/algorand-client-transaction-sender.ts:380](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L380)
 
 Destroys an Algorand Standard Asset.
 
@@ -745,7 +709,7 @@ The result of the asset destroy transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetDestroy({ sender: 'MANAGERADDRESS', assetId: 123456n });
+await algorand.send.assetDestroy({ sender: "MANAGERADDRESS", assetId: 123456n })
 ```
 
 ```typescript
@@ -768,16 +732,16 @@ await algorand.send.assetDestroy({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
----
+***
 
 ### assetFreeze()
 
 > **assetFreeze**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:339](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L339)
+Defined in: [src/algorand-client-transaction-sender.ts:339](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L339)
 
 Freeze or unfreeze an Algorand Standard Asset for an account.
 
@@ -798,12 +762,7 @@ The result of the asset freeze transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetFreeze({
-  sender: 'MANAGERADDRESS',
-  assetId: 123456n,
-  account: 'ACCOUNTADDRESS',
-  frozen: true,
-});
+await algorand.send.assetFreeze({ sender: "MANAGERADDRESS", assetId: 123456n, account: "ACCOUNTADDRESS", frozen: true })
 ```
 
 ```typescript
@@ -828,16 +787,16 @@ await algorand.send.assetFreeze({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
----
+***
 
 ### assetOptIn()
 
 > **assetOptIn**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:460](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L460)
+Defined in: [src/algorand-client-transaction-sender.ts:460](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L460)
 
 Opt an account into an Algorand Standard Asset.
 
@@ -858,7 +817,7 @@ The result of the asset opt-in transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetOptIn({ sender: 'SENDERADDRESS', assetId: 123456n });
+await algorand.send.assetOptIn({ sender: "SENDERADDRESS", assetId: 123456n })
 ```
 
 ```typescript
@@ -881,16 +840,16 @@ await algorand.send.assetOptIn({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
----
+***
 
 ### assetTransfer()
 
 > **assetTransfer**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:422](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L422)
+Defined in: [src/algorand-client-transaction-sender.ts:422](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L422)
 
 Transfer an Algorand Standard Asset.
 
@@ -911,12 +870,7 @@ The result of the asset transfer transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetTransfer({
-  sender: 'HOLDERADDRESS',
-  assetId: 123456n,
-  amount: 1n,
-  receiver: 'RECEIVERADDRESS',
-});
+await algorand.send.assetTransfer({ sender: "HOLDERADDRESS", assetId: 123456n, amount: 1n, receiver: "RECEIVERADDRESS" })
 ```
 
 ```typescript
@@ -947,13 +901,13 @@ await algorand.send.assetTransfer({
 })
 ```
 
----
+***
 
 ### offlineKeyRegistration()
 
 > **offlineKeyRegistration**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:1062](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L1062)
+Defined in: [src/algorand-client-transaction-sender.ts:1062](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L1062)
 
 Register an offline key.
 
@@ -976,7 +930,7 @@ The result of the offline key registration transaction and the transaction that 
 ```typescript
 const result = await algorand.send.offlineKeyRegistration({
   sender: 'SENDERADDRESS',
-});
+})
 ```
 
 ```typescript
@@ -994,16 +948,16 @@ const result = await algorand.send.offlineKeyRegistration({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-});
+})
 ```
 
----
+***
 
 ### onlineKeyRegistration()
 
 > **onlineKeyRegistration**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:1029](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L1029)
+Defined in: [src/algorand-client-transaction-sender.ts:1029](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L1029)
 
 Register an online key.
 
@@ -1026,21 +980,21 @@ The result of the online key registration transaction and the transaction that w
 ```typescript
 const result = await algorand.send.onlineKeyRegistration({
   sender: 'SENDERADDRESS',
-  voteKey: Uint8Array.from(Buffer.from('voteKeyBase64', 'base64')),
-  selectionKey: Uint8Array.from(Buffer.from('selectionKeyBase64', 'base64')),
-  stateProofKey: Uint8Array.from(Buffer.from('stateProofKeyBase64', 'base64')),
+  voteKey: Uint8Array.from(Buffer.from("voteKeyBase64", 'base64')),
+  selectionKey: Uint8Array.from(Buffer.from("selectionKeyBase64", 'base64')),
+  stateProofKey: Uint8Array.from(Buffer.from("stateProofKeyBase64", 'base64')),
   voteFirst: 1n,
   voteLast: 1000n,
   voteKeyDilution: 1n,
-});
+})
 ```
 
 ```typescript
 const result = await algorand.send.onlineKeyRegistration({
   sender: 'SENDERADDRESS',
-  voteKey: Uint8Array.from(Buffer.from('voteKeyBase64', 'base64')),
-  selectionKey: Uint8Array.from(Buffer.from('selectionKeyBase64', 'base64')),
-  stateProofKey: Uint8Array.from(Buffer.from('stateProofKeyBase64', 'base64')),
+  voteKey: Uint8Array.from(Buffer.from("voteKeyBase64", 'base64')),
+  selectionKey: Uint8Array.from(Buffer.from("selectionKeyBase64", 'base64')),
+  stateProofKey: Uint8Array.from(Buffer.from("stateProofKeyBase64", 'base64')),
   voteFirst: 1n,
   voteLast: 1000n,
   voteKeyDilution: 1n,
@@ -1056,16 +1010,16 @@ const result = await algorand.send.onlineKeyRegistration({
   // Max fee doesn't make sense with extraFee AND staticFee
   //  already specified, but here for completeness
   maxFee: (3000).microAlgo(),
-});
+})
 ```
 
----
+***
 
 ### payment()
 
 > **payment**: (`params`) => `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:201](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L201)
+Defined in: [src/algorand-client-transaction-sender.ts:201](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L201)
 
 Send a payment transaction to transfer Algo between accounts.
 
@@ -1114,7 +1068,7 @@ const result = await algorand.send.payment({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
 #### See
@@ -1127,7 +1081,7 @@ const result = await algorand.send.payment({
 
 > **assetCreate**(`params`): `Promise`\<\{ `assetId`: `bigint`; `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:251](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L251)
+Defined in: [src/algorand-client-transaction-sender.ts:251](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L251)
 
 Create a new Algorand Standard Asset.
 
@@ -1185,24 +1139,24 @@ await algorand.send.assetCreate({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
 #### See
 
 [Full working example](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.spec.ts)
 
----
+***
 
 ### assetOptOut()
 
 > **assetOptOut**(`params`): `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/algorand-client-transaction-sender.ts:507](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L507)
+Defined in: [src/algorand-client-transaction-sender.ts:507](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L507)
 
 Opt an account out of an Algorand Standard Asset.
 
-_Note:_ If the account has a balance of the asset,
+*Note:* If the account has a balance of the asset,
 it will not be able to opt-out unless `ensureZeroBalance`
 is set to `false` (but then the account will lose the assets).
 
@@ -1223,20 +1177,11 @@ The result of the asset opt-out transaction and the transaction that was sent
 #### Examples
 
 ```typescript
-await algorand.send.assetOptOut({
-  sender: 'SENDERADDRESS',
-  assetId: 123456n,
-  ensureZeroBalance: true,
-});
+await algorand.send.assetOptOut({ sender: "SENDERADDRESS", assetId: 123456n, ensureZeroBalance: true })
 ```
 
 ```typescript
-await algorand.send.assetOptOut({
-  sender: 'SENDERADDRESS',
-  creator: 'CREATORADDRESS',
-  assetId: 123456n,
-  ensureZeroBalance: true,
-});
+await algorand.send.assetOptOut({ sender: "SENDERADDRESS", creator: "CREATORADDRESS", assetId: 123456n, ensureZeroBalance: true })
 ```
 
 ```typescript
@@ -1261,16 +1206,16 @@ await algorand.send.assetOptOut({
   signer: transactionSigner,
   maxRoundsToWaitForConfirmation: 5,
   suppressLog: true,
-});
+})
 ```
 
----
+***
 
 ### newGroup()
 
 > **newGroup**(): [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)
 
-Defined in: [src/algorand-client-transaction-sender.ts:66](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L66)
+Defined in: [src/algorand-client-transaction-sender.ts:66](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client-transaction-sender.ts#L66)
 
 Start a new `TransactionComposer` transaction group
 
@@ -1284,5 +1229,5 @@ A new instance of `TransactionComposer`.
 
 ```ts
 const composer = AlgorandClient.mainNet().send.newGroup();
-const result = await composer.addTransaction(payment).send();
+const result = await composer.addTransaction(payment).send()
 ```

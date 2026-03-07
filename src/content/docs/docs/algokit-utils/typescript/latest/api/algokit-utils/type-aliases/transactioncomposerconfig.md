@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'TransactionComposerConfig'
+title: "TransactionComposerConfig"
 ---
 
 > **TransactionComposerConfig** = `object`
 
-Defined in: [src/composer.ts:169](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L169)
+Defined in: [src/composer.ts:169](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L169)
 
 ## Properties
 
@@ -15,12 +15,12 @@ Defined in: [src/composer.ts:169](https://github.com/larkiny/algokit-utils-ts/bl
 
 > **coverAppCallInnerTransactionFees**: `boolean`
 
-Defined in: [src/composer.ts:170](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L170)
+Defined in: [src/composer.ts:170](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L170)
 
----
+***
 
 ### populateAppCallResources
 
 > **populateAppCallResources**: `boolean`
 
-Defined in: [src/composer.ts:171](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L171)
+Defined in: [src/composer.ts:171](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L171)

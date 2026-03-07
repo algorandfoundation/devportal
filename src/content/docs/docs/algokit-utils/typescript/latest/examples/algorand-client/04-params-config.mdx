@@ -1,0 +1,351 @@
+---
+title: "Suggested Params Configuration"
+description: "This example demonstrates how to configure suggested transaction parameters:"
+sidebar:
+  order: 4
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to configure suggested transaction parameters:
+- setDefaultValidityWindow() to set the number of rounds a transaction is valid
+- setSuggestedParamsCache() to enable/disable caching
+- setSuggestedParamsCacheTimeout() to set cache duration in milliseconds
+- getSuggestedParams() to manually fetch suggested params
+- Performance benefits of caching when sending multiple transactions
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/04-params-config.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/04-params-config.ts)
+
+```typescript title="04-params-config.ts"
+/**
+ * Example: Suggested Params Configuration
+ *
+ * This example demonstrates how to configure suggested transaction parameters:
+ * - setDefaultValidityWindow() to set the number of rounds a transaction is valid
+ * - setSuggestedParamsCache() to enable/disable caching
+ * - setSuggestedParamsCacheTimeout() to set cache duration in milliseconds
+ * - getSuggestedParams() to manually fetch suggested params
+ * - Performance benefits of caching when sending multiple transactions
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils'
+import { printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+
+async function main() {
+  printHeader('Suggested Params Configuration Example')
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet()
+
+  try {
+    await algorand.client.algod.status()
+    printSuccess('Connected to LocalNet')
+  } catch (error) {
+    printError(`Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
+    return
+  }
+
+  // Step 1: Understanding suggested params
+  printStep(1, 'Understanding suggested params')
+  printInfo('Suggested params contain network information needed for transactions:')
+  printInfo('  - firstValid: The first round the transaction is valid')
+  printInfo('  - lastValid: The last round the transaction is valid (set during tx building)')
+  printInfo('  - genesisHash: The hash of the genesis block')
+  printInfo('  - genesisId: The network identifier (e.g., "localnet-v1")')
+  printInfo('  - fee: The minimum transaction fee')
+  printInfo('  - minFee: The minimum fee per byte')
+
+  const params = await algorand.getSuggestedParams()
+  printInfo(`\nCurrent suggested params from LocalNet:`)
+  printInfo(`  firstValid: ${params.firstValid}`)
+  printInfo(`  genesisId: ${params.genesisId}`)
+  printInfo(`  fee: ${params.fee} microALGO`)
+  printInfo(`  minFee: ${params.minFee} microALGO`)
+
+  printSuccess('Retrieved suggested params from LocalNet')
+
+  // Step 2: Default validity window behavior
+  printStep(2, 'Understand default validity window behavior')
+  printInfo('The validity window determines: lastValid = firstValid + validityWindow')
+  printInfo('Default is 10 rounds, but LocalNet uses 1000 rounds for convenience')
+  printInfo('This is set during transaction building, not in suggested params')
+
+  // Create accounts for demonstrating transactions
+  const dispenser = await algorand.account.dispenserFromEnvironment()
+  const sender = algorand.account.random()
+  const receiver = algorand.account.random()
+
+  // Fund the sender
+  await algorand.send.payment({
+    sender: dispenser.addr,
+    receiver: sender.addr,
+    amount: algo(10),
+  })
+
+  printInfo(`\nSender: ${shortenAddress(sender.addr.toString())}`)
+  printInfo(`Receiver: ${shortenAddress(receiver.addr.toString())}`)
+
+  // Send a transaction and inspect its validity window
+  const txResult = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.1),
+    note: 'Transaction 1',
+  })
+
+  // Access the transaction directly from the result
+  const tx = txResult.transactions[0]
+  printInfo(`\nTransaction built with LocalNet default:`)
+  printInfo(`  firstValid: ${tx.firstValid}`)
+  printInfo(`  lastValid: ${tx.lastValid}`)
+  printInfo(`  Validity window: ${Number(tx.lastValid - tx.firstValid)} rounds (LocalNet default)`)
+
+  printSuccess('Demonstrated default validity window')
+
+  // Step 3: Set custom validity window
+  printStep(3, 'Demonstrate setDefaultValidityWindow()')
+  printInfo('Use setDefaultValidityWindow() to override the default validity window')
+  printInfo('This affects all transactions built by this client')
+
+  // Create a new client with custom validity window
+  const algorandCustom = AlgorandClient.defaultLocalNet().setDefaultValidityWindow(50)
+  algorandCustom.setSignerFromAccount(sender)
+
+  const txResultCustom = await algorandCustom.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.1),
+    note: 'Transaction with custom validity',
+  })
+
+  // Access the transaction directly from the result
+  const txCustom = txResultCustom.transactions[0]
+  printInfo(`\nTransaction built with setDefaultValidityWindow(50):`)
+  printInfo(`  firstValid: ${txCustom.firstValid}`)
+  printInfo(`  lastValid: ${txCustom.lastValid}`)
+  printInfo(`  Validity window: ${Number(txCustom.lastValid - txCustom.firstValid)} rounds`)
+
+  printSuccess('Demonstrated custom validity window')
+
+  // Step 4: When to use different validity windows
+  printStep(4, 'When to use longer vs shorter validity windows')
+  printInfo('')
+  printInfo('Shorter validity windows (5-10 rounds):')
+  printInfo('  - High-frequency trading applications')
+  printInfo('  - When you want quick transaction expiration')
+  printInfo('  - Reduces risk of delayed/stale transactions being confirmed')
+  printInfo('')
+  printInfo('Longer validity windows (100-1000 rounds):')
+  printInfo('  - Batch operations with many transactions')
+  printInfo('  - When network congestion is expected')
+  printInfo('  - When user confirmation takes time')
+  printInfo('  - Offline signing scenarios')
+
+  printSuccess('Explained validity window use cases')
+
+  // Step 5: Suggested params caching basics
+  printStep(5, 'Demonstrate getSuggestedParams() caching')
+  printInfo('getSuggestedParams() caches results to avoid repeated network calls')
+  printInfo('Default cache timeout is 3 seconds (3000ms)')
+
+  // Create a fresh client to demonstrate caching
+  const algorandCache = AlgorandClient.defaultLocalNet()
+
+  // Demonstrate that the cache is working
+  printInfo('\nFetching params twice in quick succession...')
+  const startTime1 = Date.now()
+  await algorandCache.getSuggestedParams()
+  const duration1 = Date.now() - startTime1
+
+  const startTime2 = Date.now()
+  await algorandCache.getSuggestedParams()
+  const duration2 = Date.now() - startTime2
+
+  printInfo(`  First call: ~${duration1}ms (includes network fetch)`)
+  printInfo(`  Second call: ~${duration2}ms (from cache)`)
+
+  printSuccess('Demonstrated params caching')
+
+  // Step 6: Configure cache timeout
+  printStep(6, 'Demonstrate setSuggestedParamsCacheTimeout()')
+  printInfo('Use setSuggestedParamsCacheTimeout() to set how long params are cached')
+  printInfo('Value is in milliseconds')
+
+  // Create a client with longer cache timeout
+  const algorandLongCache = AlgorandClient.defaultLocalNet().setSuggestedParamsCacheTimeout(60_000)
+  printInfo('\nWith setSuggestedParamsCacheTimeout(60_000): 60 second cache')
+  printInfo('Good for: High-throughput apps sending many transactions quickly')
+
+  // Create a client with shorter cache timeout
+  const algorandShortCache = AlgorandClient.defaultLocalNet().setSuggestedParamsCacheTimeout(500)
+  printInfo('With setSuggestedParamsCacheTimeout(500): 0.5 second cache')
+  printInfo('Good for: Apps that need the most current round information')
+
+  // Fetch to demonstrate they work
+  await algorandLongCache.getSuggestedParams()
+  await algorandShortCache.getSuggestedParams()
+
+  printSuccess('Demonstrated cache timeout configuration')
+
+  // Step 7: Manual cache control with setSuggestedParamsCache()
+  printStep(7, 'Demonstrate setSuggestedParamsCache()')
+  printInfo('Use setSuggestedParamsCache() to manually set cached params')
+  printInfo('Useful when you already have params from another source')
+
+  // Get params and set them in a new client
+  const cachedParams = await algorand.getSuggestedParams()
+  const algorandCached = AlgorandClient.defaultLocalNet()
+
+  // Set cache with explicit expiry
+  const cacheExpiry = new Date(Date.now() + 30_000) // 30 seconds from now
+  algorandCached.setSuggestedParamsCache(cachedParams, cacheExpiry)
+
+  printInfo(`\nSet cached params with expiry: ${cacheExpiry.toISOString()}`)
+  printInfo('Now getSuggestedParams() will return cached value without network call')
+
+  // Verify the cache is being used
+  const startCached = Date.now()
+  const fromCache = await algorandCached.getSuggestedParams()
+  const durationCached = Date.now() - startCached
+
+  printInfo(`Retrieved from cache in ~${durationCached}ms`)
+  printInfo(`Cached firstValid: ${fromCache.firstValid}`)
+
+  printSuccess('Demonstrated manual cache setting')
+
+  // Step 8: Performance benefit with multiple transactions
+  printStep(8, 'Show performance benefit of caching with multiple transactions')
+  printInfo('When sending many transactions, caching reduces network calls')
+  printInfo('Each transaction needs suggested params to set validity window')
+
+  // Send 5 transactions with unique notes and measure time
+  const numTransactions = 5
+  printInfo(`\nSending ${numTransactions} transactions with caching enabled (default)...`)
+
+  const startWithCache = Date.now()
+  for (let i = 0; i < numTransactions; i++) {
+    await algorand.send.payment({
+      sender: sender.addr,
+      receiver: receiver.addr,
+      amount: algo(0.01),
+      note: `Performance test transaction ${i + 1} at ${Date.now()}`,
+    })
+  }
+  const durationWithCache = Date.now() - startWithCache
+
+  printInfo(`  Total time: ${durationWithCache}ms`)
+  printInfo(`  Average per transaction: ${(durationWithCache / numTransactions).toFixed(0)}ms`)
+  printInfo('  Note: Params are fetched once and cached for subsequent transactions')
+
+  printSuccess('Demonstrated caching performance benefit')
+
+  // Step 9: Method chaining
+  printStep(9, 'Method chaining - Configure params fluently')
+  printInfo('All configuration methods return the AlgorandClient for chaining')
+
+  const configuredClient = AlgorandClient.defaultLocalNet()
+    .setDefaultValidityWindow(25)
+    .setSuggestedParamsCacheTimeout(10_000)
+    .setSignerFromAccount(sender)
+
+  printInfo(`\nConfigured client with:`)
+  printInfo(`  .setDefaultValidityWindow(25)`)
+  printInfo(`  .setSuggestedParamsCacheTimeout(10_000)`)
+  printInfo(`  .setSignerFromAccount(sender)`)
+
+  // Send a transaction to verify the configuration
+  const chainedTxResult = await configuredClient.send.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.01),
+    note: 'Chained config test',
+  })
+
+  // Access the transaction directly from the result
+  const chainedTx = chainedTxResult.transactions[0]
+  printInfo(`\nResulting transaction validity window: ${Number(chainedTx.lastValid - chainedTx.firstValid)} rounds`)
+
+  printSuccess('Demonstrated method chaining')
+
+  // Step 10: Summary
+  printStep(10, 'Summary')
+  printInfo('Suggested params configuration methods:')
+  printInfo('')
+  printInfo('getSuggestedParams():')
+  printInfo('  - Returns cached params or fetches from network')
+  printInfo('  - Automatically manages cache expiry')
+  printInfo('  - Use for manual param inspection or custom transactions')
+  printInfo('')
+  printInfo('setDefaultValidityWindow(rounds):')
+  printInfo('  - Sets how many rounds a transaction stays valid')
+  printInfo('  - Default is 10 rounds (1000 for LocalNet)')
+  printInfo('  - Affects lastValid = firstValid + validityWindow')
+  printInfo('')
+  printInfo('setSuggestedParamsCacheTimeout(milliseconds):')
+  printInfo('  - Sets how long params are cached before refresh')
+  printInfo('  - Default is 3000ms (3 seconds)')
+  printInfo('  - Longer = fewer network calls, possibly stale data')
+  printInfo('  - Shorter = more network calls, fresher data')
+  printInfo('')
+  printInfo('setSuggestedParamsCache(params, until?):')
+  printInfo('  - Manually sets cached params')
+  printInfo('  - Optional expiry date (defaults to timeout)')
+  printInfo('  - Useful when you have params from another source')
+  printInfo('')
+  printInfo('Best practices:')
+  printInfo('  - Use default settings for most applications')
+  printInfo('  - Increase cache timeout for high-throughput apps')
+  printInfo('  - Use shorter validity windows for time-sensitive transactions')
+  printInfo('  - Use longer validity windows for batch operations')
+
+  printSuccess('Suggested Params Configuration example completed!')
+}
+
+main().catch((error) => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- **Suggested Params Configuration**
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'Addressable'
+title: "Addressable"
 ---
 
-Defined in: [packages/common/src/address.ts:133](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/common/src/address.ts#L133)
+Defined in: [packages/common/src/address.ts:133](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/common/src/address.ts#L133)
 
 ## Extended by
 
@@ -20,4 +20,4 @@ Defined in: [packages/common/src/address.ts:133](https://github.com/larkiny/algo
 
 > **addr**: `Readonly`\<[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)\>
 
-Defined in: [packages/common/src/address.ts:134](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/common/src/address.ts#L134)
+Defined in: [packages/common/src/address.ts:134](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/common/src/address.ts#L134)

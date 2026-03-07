@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'lookupAccountCreatedApplicationByAddress'
+title: "lookupAccountCreatedApplicationByAddress"
 ---
 
-> **lookupAccountCreatedApplicationByAddress**(`indexer`, `address`, `getAll`, `paginationLimit?`): `Promise`\<[`Application`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/application/)[]\>
+> **lookupAccountCreatedApplicationByAddress**(`indexer`, `address`, `getAll?`, `paginationLimit?`): `Promise`\<[`Application`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/application/)[]\>
 
-Defined in: [src/indexer-client/indexer-lookup.ts:23](https://github.com/larkiny/algokit-utils-ts/blob/main/src/indexer-client/indexer-lookup.ts#L23)
+Defined in: [src/indexer-client/indexer-lookup.ts:23](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-client/indexer-lookup.ts#L23)
 
 Looks up applications that were created by the given address; will automatically paginate through all data.
 
@@ -25,7 +25,7 @@ The address of the creator to look up
 
 `string` | [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-### getAll
+### getAll?
 
 `boolean` = `true`
 

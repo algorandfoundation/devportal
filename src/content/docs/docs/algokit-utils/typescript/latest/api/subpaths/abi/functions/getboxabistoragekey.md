@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'getBoxABIStorageKey'
+title: "getBoxABIStorageKey"
 ---
 
 > **getBoxABIStorageKey**(`contract`, `keyName`): [`ABIStorageKey`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistoragekey/)
 
-Defined in: [packages/abi/src/arc56-contract.ts:410](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L410)
+Defined in: [packages/abi/src/arc56-contract.ts:410](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L410)
 
 Get a specific box storage key with parsed ABI types
 

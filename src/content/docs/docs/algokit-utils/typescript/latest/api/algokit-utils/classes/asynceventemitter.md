@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AsyncEventEmitter'
+title: "AsyncEventEmitter"
 ---
 
-Defined in: [src/async-event-emitter.ts:5](https://github.com/larkiny/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L5)
+Defined in: [src/async-event-emitter.ts:5](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L5)
 
 ## Constructors
 
@@ -23,7 +23,7 @@ Defined in: [src/async-event-emitter.ts:5](https://github.com/larkiny/algokit-ut
 
 > **off**: (`eventName`, `listener`) => `AsyncEventEmitter`
 
-Defined in: [src/async-event-emitter.ts:55](https://github.com/larkiny/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L55)
+Defined in: [src/async-event-emitter.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L55)
 
 #### Parameters
 
@@ -45,13 +45,13 @@ Defined in: [src/async-event-emitter.ts:55](https://github.com/larkiny/algokit-u
 
 > **emitAsync**\<`K`\>(`eventName`, `event`): `Promise`\<`void`\>
 
-Defined in: [src/async-event-emitter.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L9)
+Defined in: [src/async-event-emitter.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L9)
 
 #### Type Parameters
 
 ##### K
 
-`K` _extends_ `string` \| `symbol`
+`K` *extends* `string` \| `symbol`
 
 #### Parameters
 
@@ -61,25 +61,25 @@ Defined in: [src/async-event-emitter.ts:9](https://github.com/larkiny/algokit-ut
 
 ##### event
 
-`K` _extends_ [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\<`K`\>\] : `unknown`
+`K` *extends* [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`
 
 #### Returns
 
 `Promise`\<`void`\>
 
----
+***
 
 ### on()
 
 > **on**\<`K`\>(`eventName`, `listener`): `AsyncEventEmitter`
 
-Defined in: [src/async-event-emitter.ts:15](https://github.com/larkiny/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L15)
+Defined in: [src/async-event-emitter.ts:15](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L15)
 
 #### Type Parameters
 
 ##### K
 
-`K` _extends_ `string` \| `symbol`
+`K` *extends* `string` \| `symbol`
 
 #### Parameters
 
@@ -89,25 +89,25 @@ Defined in: [src/async-event-emitter.ts:15](https://github.com/larkiny/algokit-u
 
 ##### listener
 
-`AsyncEventListener`\<`K` _extends_ [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\<`K`\>\] : `unknown`\>
+`AsyncEventListener`\<`K` *extends* [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`\>
 
 #### Returns
 
 `AsyncEventEmitter`
 
----
+***
 
 ### once()
 
 > **once**\<`K`\>(`eventName`, `listener`): `AsyncEventEmitter`
 
-Defined in: [src/async-event-emitter.ts:24](https://github.com/larkiny/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L24)
+Defined in: [src/async-event-emitter.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L24)
 
 #### Type Parameters
 
 ##### K
 
-`K` _extends_ `string` \| `symbol`
+`K` *extends* `string` \| `symbol`
 
 #### Parameters
 
@@ -117,19 +117,19 @@ Defined in: [src/async-event-emitter.ts:24](https://github.com/larkiny/algokit-u
 
 ##### listener
 
-`AsyncEventListener`\<`K` _extends_ [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\<`K`\>\] : `unknown`\>
+`AsyncEventListener`\<`K` *extends* [`EventType`](/docs/algokit-utils/typescript/latest/api/algokit-utils/enumerations/eventtype/) ? [`EventDataMap`](/docs/algokit-utils/typescript/latest/api/algokit-utils/type-aliases/eventdatamap/)\[`K`\] : `unknown`\>
 
 #### Returns
 
 `AsyncEventEmitter`
 
----
+***
 
 ### removeListener()
 
 > **removeListener**(`eventName`, `listener`): `AsyncEventEmitter`
 
-Defined in: [src/async-event-emitter.ts:39](https://github.com/larkiny/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L39)
+Defined in: [src/async-event-emitter.ts:39](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/async-event-emitter.ts#L39)
 
 #### Parameters
 

@@ -2,11 +2,11 @@
 editUrl: false
 next: false
 prev: false
-title: 'SuggestedParams'
+title: "SuggestedParams"
 ---
 
 > **SuggestedParams** = `Expand`\<`Omit`\<[`TransactionParametersResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/transactionparametersresponse/), `"lastRound"`\> & `object`\>
 
-Defined in: [packages/algod_client/src/models/suggested-params.ts:5](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/suggested-params.ts#L5)
+Defined in: [packages/algod\_client/src/models/suggested-params.ts:5](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/suggested-params.ts#L5)
 
 Contains parameters relevant to the creation of a new transaction in a specific network at a specific time.

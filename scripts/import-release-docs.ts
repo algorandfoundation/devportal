@@ -37,6 +37,21 @@ import type { VersionConfig } from '../imports/types.js';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
+/** Optional --repo <owner/repo> filter to import a single library. */
+const REPO_FILTER = (() => {
+  const idx = process.argv.indexOf('--repo');
+  if (idx !== -1) {
+    const value = process.argv[idx + 1];
+    if (!value || value.startsWith('--')) {
+      console.error('Missing value for --repo option. Usage: --repo <owner/repo>');
+      process.exit(1);
+    }
+    return value;
+  }
+  const flag = process.argv.find(a => a.startsWith('--repo='));
+  return flag ? flag.split('=')[1] : null;
+})();
+
 // ---------------------------------------------------------------------------
 // Auth
 // ---------------------------------------------------------------------------
@@ -80,21 +95,23 @@ interface DownloadTask {
 /** Derive download tasks from LIBRARY_CONFIGS — no separate registry needed. */
 function buildTasks(): DownloadTask[] {
   return LIBRARY_CONFIGS.flatMap(lib =>
-    lib.variants.filter(isArtifactVariant).flatMap(variant =>
-      variant.versions.map(version => {
-        const lang = variant.language.toLowerCase();
-        const prefix = `docs/${lib.metadata.slug}/${lang}/${version.slug}`;
-        return {
-          librarySlug: lib.metadata.slug,
-          variant,
-          version,
-          releaseTag: version.slug === 'latest' ? 'docs-latest' : version.slug,
-          destDir: join(CONTENT_DOCS_DIR, prefix),
-          prefix,
-          postImportTransforms: variant.postImportTransforms,
-        };
-      })
-    )
+    lib.variants.filter(isArtifactVariant)
+      .filter(variant => !REPO_FILTER || `${variant.owner}/${variant.repo}` === REPO_FILTER)
+      .flatMap(variant =>
+        variant.versions.map(version => {
+          const lang = variant.language.toLowerCase();
+          const prefix = `docs/${lib.metadata.slug}/${lang}/${version.slug}`;
+          return {
+            librarySlug: lib.metadata.slug,
+            variant,
+            version,
+            releaseTag: version.slug === 'latest' ? 'docs-latest' : version.slug,
+            destDir: join(CONTENT_DOCS_DIR, prefix),
+            prefix,
+            postImportTransforms: variant.postImportTransforms,
+          };
+        })
+      )
   );
 }
 
@@ -449,7 +466,7 @@ async function main(): Promise<void> {
     return;
   }
 
-  console.log(`Found ${tasks.length} artifact variant(s) to download.\n`);
+  console.log(`Found ${tasks.length} artifact variant(s) to download.${REPO_FILTER ? ` (filtered by --repo ${REPO_FILTER})` : ''}\n`);
 
   const failures: Array<{ label: string; error: string }> = [];
 

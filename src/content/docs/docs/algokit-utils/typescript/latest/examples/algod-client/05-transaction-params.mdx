@@ -1,0 +1,300 @@
+---
+title: "Transaction Parameters"
+description: "This example demonstrates how to get suggested transaction parameters using suggestedParams() and transactionParams() methods. These parameters are essential for constructing valid transactions on the Algorand network."
+sidebar:
+  order: 5
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to get suggested transaction parameters using suggestedParams() and transactionParams() methods. These parameters are essential for constructing valid transactions on the Algorand network.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/05-transaction-params.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/05-transaction-params.ts)
+
+```typescript title="05-transaction-params.ts"
+/**
+ * Example: Transaction Parameters
+ *
+ * This example demonstrates how to get suggested transaction parameters using
+ * suggestedParams() and transactionParams() methods. These parameters are essential
+ * for constructing valid transactions on the Algorand network.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  createAlgodClient,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js'
+
+/**
+ * Format a Uint8Array as base64 string
+ */
+function formatAsBase64(bytes: Uint8Array): string {
+  return Buffer.from(bytes).toString('base64')
+}
+
+/**
+ * Format a bigint fee as microAlgos and Algos
+ */
+function formatFee(microAlgos: bigint): string {
+  const algoValue = Number(microAlgos) / 1_000_000
+  return `${microAlgos.toLocaleString('en-US')} µALGO (${algoValue.toFixed(6)} ALGO)`
+}
+
+async function main() {
+  printHeader('Transaction Parameters Example')
+
+  // Create an Algod client connected to LocalNet
+  const algod = createAlgodClient()
+
+  // =========================================================================
+  // Step 1: Get Suggested Parameters using suggestedParams()
+  // =========================================================================
+  printStep(1, 'Getting suggested transaction parameters with suggestedParams()')
+
+  try {
+    const suggestedParams = await algod.suggestedParams()
+
+    printSuccess('Suggested parameters retrieved successfully!')
+    printInfo('')
+
+    // =========================================================================
+    // Step 2: Display Core Parameters
+    // =========================================================================
+    printStep(2, 'Displaying suggested transaction parameters')
+
+    printInfo('Core Transaction Parameters:')
+    printInfo(`  fee:              ${formatFee(suggestedParams.fee)}`)
+    printInfo(`  minFee:           ${formatFee(suggestedParams.minFee)}`)
+    printInfo(`  flatFee:          ${suggestedParams.flatFee}`)
+    printInfo('')
+
+    // =========================================================================
+    // Step 3: Display Validity Window Parameters
+    // =========================================================================
+    printStep(3, 'Displaying validity window parameters (firstRound, lastRound)')
+
+    printInfo('Validity Window:')
+    printInfo(`  firstValid:       ${suggestedParams.firstValid.toLocaleString('en-US')}`)
+    printInfo(`  lastValid:        ${suggestedParams.lastValid.toLocaleString('en-US')}`)
+    printInfo('')
+
+    const validityWindow = suggestedParams.lastValid - suggestedParams.firstValid
+    printInfo(`  Validity Window:  ${validityWindow.toLocaleString('en-US')} rounds`)
+    printInfo('The default validity window is 1000 rounds (~1 hour on MainNet)')
+    printInfo('A transaction is only valid between firstValid and lastValid rounds')
+    printInfo('')
+
+    // =========================================================================
+    // Step 4: Display Network Identification Parameters
+    // =========================================================================
+    printStep(4, 'Displaying network identification parameters')
+
+    printInfo('Network Identification:')
+    printInfo(`  genesisId:        ${suggestedParams.genesisId}`)
+    printInfo(`  genesisHash:      ${formatAsBase64(suggestedParams.genesisHash)}`)
+    printInfo(`  consensusVersion: ${suggestedParams.consensusVersion}`)
+    printInfo('')
+
+    printInfo('genesisId and genesisHash uniquely identify the network')
+    printInfo('Transactions are rejected if sent to the wrong network')
+    printInfo('')
+
+    // =========================================================================
+    // Step 5: Explain Each Parameter's Purpose
+    // =========================================================================
+    printStep(5, 'Explaining each parameter\'s purpose')
+
+    printInfo('Parameter Purposes:')
+    printInfo('')
+    printInfo('  fee:')
+    printInfo('    The suggested fee per byte for the transaction.')
+    printInfo('    During network congestion, this value may increase.')
+    printInfo('')
+    printInfo('  minFee:')
+    printInfo('    The minimum fee required regardless of transaction size.')
+    printInfo('    Currently 1000 µALGO (0.001 ALGO) on all Algorand networks.')
+    printInfo('')
+    printInfo('  flatFee:')
+    printInfo('    When false, fee is calculated as: fee * transactionSize')
+    printInfo('    When true, fee is used directly as the total fee.')
+    printInfo('')
+    printInfo('  firstValid:')
+    printInfo('    The first round this transaction is valid for.')
+    printInfo('    Usually set to the current round (lastRound from the node).')
+    printInfo('')
+    printInfo('  lastValid:')
+    printInfo('    The last round this transaction is valid for.')
+    printInfo('    Transaction will fail if not confirmed by this round.')
+    printInfo('')
+    printInfo('  genesisId:')
+    printInfo('    A human-readable network identifier (e.g., "mainnet-v1.0").')
+    printInfo('    Prevents replaying transactions across networks.')
+    printInfo('')
+    printInfo('  genesisHash:')
+    printInfo('    The SHA256 hash of the genesis block, uniquely identifying the network.')
+    printInfo('    Cryptographically ensures transaction is for the correct chain.')
+    printInfo('')
+    printInfo('  consensusVersion:')
+    printInfo('    The consensus protocol version at the current round.')
+    printInfo('    Indicates which features and rules are active.')
+    printInfo('')
+
+    // =========================================================================
+    // Step 6: Demonstrate transactionParams() (alias for suggestedParams)
+    // =========================================================================
+    printStep(6, 'Demonstrating transactionParams() - alias for suggestedParams()')
+
+    const txnParams = await algod.transactionParams()
+    printSuccess('transactionParams() also works and returns the same type!')
+    printInfo(`  firstValid:       ${txnParams.firstValid.toLocaleString('en-US')}`)
+    printInfo(`  lastValid:        ${txnParams.lastValid.toLocaleString('en-US')}`)
+    printInfo('transactionParams() is an alias for suggestedParams() for convenience')
+    printInfo('')
+
+    // =========================================================================
+    // Step 7: Demonstrate Customizing Parameters
+    // =========================================================================
+    printStep(7, 'Demonstrating how to customize transaction parameters')
+
+    printInfo('Customizing Parameters:')
+    printInfo('')
+
+    // Example 1: Setting a specific flat fee
+    const customParams1 = { ...suggestedParams }
+    customParams1.flatFee = true
+    customParams1.fee = 2000n // Set a fixed 2000 µALGO fee
+
+    printInfo('  Example 1: Setting a flat fee')
+    printInfo(`    Original fee:   ${formatFee(suggestedParams.fee)}`)
+    printInfo(`    Original flatFee: ${suggestedParams.flatFee}`)
+    printInfo(`    Custom fee:     ${formatFee(customParams1.fee)}`)
+    printInfo(`    Custom flatFee: ${customParams1.flatFee}`)
+    printInfo('Set flatFee=true to use a fixed fee instead of per-byte')
+    printInfo('')
+
+    // Example 2: Extending the validity window
+    const customParams2 = { ...suggestedParams }
+    const extendedWindow = 2000n // 2000 rounds instead of default 1000
+    customParams2.lastValid = customParams2.firstValid + extendedWindow
+
+    printInfo('  Example 2: Extending the validity window')
+    printInfo(`    Original lastValid:  ${suggestedParams.lastValid.toLocaleString('en-US')}`)
+    printInfo(`    Extended lastValid:  ${customParams2.lastValid.toLocaleString('en-US')}`)
+    printInfo(`    Original window:     ${(suggestedParams.lastValid - suggestedParams.firstValid).toLocaleString('en-US')} rounds`)
+    printInfo(`    Extended window:     ${extendedWindow.toLocaleString('en-US')} rounds`)
+    printInfo('Extend validity window for offline signing or delayed submission')
+    printInfo('')
+
+    // Example 3: Shortening the validity window
+    const customParams3 = { ...suggestedParams }
+    const shortWindow = 100n // Only 100 rounds validity
+    customParams3.lastValid = customParams3.firstValid + shortWindow
+
+    printInfo('  Example 3: Shortening the validity window')
+    printInfo(`    Original lastValid:  ${suggestedParams.lastValid.toLocaleString('en-US')}`)
+    printInfo(`    Shortened lastValid: ${customParams3.lastValid.toLocaleString('en-US')}`)
+    printInfo(`    Shortened window:    ${shortWindow.toLocaleString('en-US')} rounds`)
+    printInfo('Shorter windows provide better replay protection')
+    printInfo('')
+
+    // Example 4: Setting a specific firstValid for delayed execution
+    const customParams4 = { ...suggestedParams }
+    const futureRound = suggestedParams.firstValid + 10n // Valid starting 10 rounds from now
+    customParams4.firstValid = futureRound
+    customParams4.lastValid = futureRound + 1000n
+
+    printInfo('  Example 4: Delayed execution (future firstValid)')
+    printInfo(`    Original firstValid: ${suggestedParams.firstValid.toLocaleString('en-US')}`)
+    printInfo(`    Delayed firstValid:  ${customParams4.firstValid.toLocaleString('en-US')}`)
+    printInfo(`    Delayed lastValid:   ${customParams4.lastValid.toLocaleString('en-US')}`)
+    printInfo('Set future firstValid to prevent immediate execution')
+
+  } catch (error) {
+    printError(`Failed to get transaction parameters: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('Make sure LocalNet is running with `algokit localnet start`')
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+  printInfo('This example demonstrated:')
+  printInfo('  1. suggestedParams() - Get parameters for building transactions')
+  printInfo('  2. Parameter fields: fee, minFee, flatFee, firstValid, lastValid')
+  printInfo('  3. Network identification: genesisId, genesisHash, consensusVersion')
+  printInfo('  4. How firstValid and lastValid define the validity window')
+  printInfo('  5. transactionParams() - Alias for suggestedParams()')
+  printInfo('  6. Customizing parameters: fees and validity windows')
+  printInfo('')
+  printInfo('Key SuggestedParams fields:')
+  printInfo('  - fee: Suggested fee per byte (bigint)')
+  printInfo('  - minFee: Minimum transaction fee (bigint)')
+  printInfo('  - flatFee: Whether fee is flat or per-byte (boolean)')
+  printInfo('  - firstValid: First valid round (bigint)')
+  printInfo('  - lastValid: Last valid round (bigint)')
+  printInfo('  - genesisId: Network identifier string')
+  printInfo('  - genesisHash: Genesis block hash (Uint8Array)')
+  printInfo('  - consensusVersion: Protocol version string')
+  printInfo('')
+  printInfo('Use cases:')
+  printInfo('  - Building transactions with correct fees')
+  printInfo('  - Setting appropriate validity windows')
+  printInfo('  - Ensuring network compatibility')
+  printInfo('  - Offline transaction signing with extended windows')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/typescript/latest/examples/algod-client/04-account-info/)
+- **Transaction Parameters**
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/typescript/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/typescript/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/typescript/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/typescript/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/typescript/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/typescript/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/typescript/latest/examples/algod-client/19-sync-round/)

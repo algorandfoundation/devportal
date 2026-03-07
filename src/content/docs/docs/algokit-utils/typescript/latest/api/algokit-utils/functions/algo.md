@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'algo'
+title: "algo"
 ---
 
 > **algo**(`algos`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/amount.ts:176](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L176)
+Defined in: [src/amount.ts:176](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L176)
 
 Returns an amount of Algo using AlgoAmount
 

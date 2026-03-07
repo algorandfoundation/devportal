@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'generateAddressWithSigners'
+title: "generateAddressWithSigners"
 ---
 
 > **generateAddressWithSigners**(`args`): `object`
 
-Defined in: [packages/transact/src/signer.ts:48](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/signer.ts#L48)
+Defined in: [packages/transact/src/signer.ts:48](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/signer.ts#L48)
 
 Generate type-safe domain-separated signer callbacks given an ed25519 pubkey and a signing callback
 

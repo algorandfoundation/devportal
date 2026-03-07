@@ -1,0 +1,523 @@
+---
+title: "Primitive Codecs"
+description: "This example demonstrates how to use primitive codec types for encoding/decoding basic values in wire format (JSON or MessagePack)."
+sidebar:
+  order: 9
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to use primitive codec types for encoding/decoding basic values in wire format (JSON or MessagePack).
+ Topics covered:
+- Codec interface: encode(), decode(), defaultValue() methods
+- numberCodec for encoding/decoding numbers
+- bigIntCodec for encoding/decoding BigInt values
+- booleanCodec for encoding/decoding boolean values
+- stringCodec for encoding/decoding UTF-8 strings
+- bytesCodec for encoding/decoding raw bytes
+- bytesBase64Codec for base64 encoding
+- addressCodec for encoding/decoding Algorand addresses
+- Round-trip verification: decode(encode(value)) equals original
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/09-primitive-codecs.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/09-primitive-codecs.ts)
+
+```typescript title="09-primitive-codecs.ts"
+/**
+ * Example: Primitive Codecs
+ *
+ * This example demonstrates how to use primitive codec types for encoding/decoding
+ * basic values in wire format (JSON or MessagePack).
+ *
+ * Topics covered:
+ * - Codec interface: encode(), decode(), defaultValue() methods
+ * - numberCodec for encoding/decoding numbers
+ * - bigIntCodec for encoding/decoding BigInt values
+ * - booleanCodec for encoding/decoding boolean values
+ * - stringCodec for encoding/decoding UTF-8 strings
+ * - bytesCodec for encoding/decoding raw bytes
+ * - bytesBase64Codec for base64 encoding
+ * - addressCodec for encoding/decoding Algorand addresses
+ * - Round-trip verification: decode(encode(value)) equals original
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import type { EncodingFormat } from '@algorandfoundation/algokit-utils/common'
+import {
+  Address,
+  addressCodec,
+  arrayEqual,
+  bigIntCodec,
+  booleanCodec,
+  bytesBase64Codec,
+  bytesCodec,
+  numberCodec,
+  stringCodec,
+} from '@algorandfoundation/algokit-utils/common'
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+// ============================================================================
+// Main Example
+// ============================================================================
+
+printHeader('Primitive Codecs Example')
+
+// ============================================================================
+// Step 1: The Codec Interface
+// ============================================================================
+printStep(1, 'The Codec Interface')
+
+printInfo('Codecs provide bidirectional transformation between app types and wire formats.')
+printInfo('Each codec has these core methods:')
+printInfo('')
+printInfo('  encode(value, format)  - Transform app value to wire format')
+printInfo('  decode(value, format)  - Transform wire value to app value')
+printInfo('  defaultValue()         - Get the default value for this type')
+printInfo('')
+printInfo('Format can be "json" or "msgpack" - some codecs behave differently per format.')
+printInfo('')
+
+// Show default values for each codec
+printInfo('Default values for each primitive codec:')
+printInfo(`  numberCodec.defaultValue()   = ${numberCodec.defaultValue()}`)
+printInfo(`  bigIntCodec.defaultValue()   = ${bigIntCodec.defaultValue()}n`)
+printInfo(`  booleanCodec.defaultValue()  = ${booleanCodec.defaultValue()}`)
+printInfo(`  stringCodec.defaultValue()   = "${stringCodec.defaultValue()}" (empty string)`)
+printInfo(`  bytesCodec.defaultValue()    = Uint8Array(${bytesCodec.defaultValue().length}) (empty)`)
+printInfo(`  addressCodec.defaultValue()  = ${addressCodec.defaultValue().toString().slice(0, 10)}... (zero address)`)
+printInfo('')
+printSuccess('Codec interface provides consistent encode/decode methods')
+
+// ============================================================================
+// Step 2: numberCodec - Encoding/Decoding Numbers
+// ============================================================================
+printStep(2, 'numberCodec - Encoding/Decoding Numbers')
+
+printInfo('numberCodec handles JavaScript number values.')
+printInfo('Numbers pass through unchanged in both JSON and msgpack formats.')
+printInfo('')
+
+const testNumbers = [0, 42, -100, 3.14159, Number.MAX_SAFE_INTEGER]
+
+for (const num of testNumbers) {
+  const encodedJson = numberCodec.encode(num, 'json')
+  const encodedMsgpack = numberCodec.encode(num, 'msgpack')
+  const decodedJson = numberCodec.decode(encodedJson, 'json')
+  const decodedMsgpack = numberCodec.decode(encodedMsgpack, 'msgpack')
+
+  printInfo(`  ${num}:`)
+  printInfo(`    JSON:    encode=${encodedJson}, decode=${decodedJson}, matches=${num === decodedJson}`)
+  printInfo(`    msgpack: encode=${encodedMsgpack}, decode=${decodedMsgpack}, matches=${num === decodedMsgpack}`)
+}
+printInfo('')
+
+// Round-trip verification
+const roundTripNum = 12345
+const rtEncoded = numberCodec.encode(roundTripNum, 'json')
+const rtDecoded = numberCodec.decode(rtEncoded, 'json')
+if (rtDecoded === roundTripNum) {
+  printSuccess(`Round-trip: decode(encode(${roundTripNum})) === ${rtDecoded}`)
+}
+
+// ============================================================================
+// Step 3: bigIntCodec - Encoding/Decoding BigInt Values
+// ============================================================================
+printStep(3, 'bigIntCodec - Encoding/Decoding BigInt Values')
+
+printInfo('bigIntCodec handles JavaScript BigInt values (uint64 on Algorand).')
+printInfo('Essential for values exceeding Number.MAX_SAFE_INTEGER (9007199254740991).')
+printInfo('')
+
+const testBigInts: bigint[] = [0n, 100n, 9007199254740993n, 18446744073709551615n] // 0, 100, MAX_SAFE+2, max uint64
+
+for (const big of testBigInts) {
+  const encodedJson = bigIntCodec.encode(big, 'json')
+  const encodedMsgpack = bigIntCodec.encode(big, 'msgpack')
+  const decodedJson = bigIntCodec.decode(encodedJson, 'json')
+  const decodedMsgpack = bigIntCodec.decode(encodedMsgpack, 'msgpack')
+
+  printInfo(`  ${big}n:`)
+  printInfo(`    JSON:    encode=${encodedJson}${typeof encodedJson === 'bigint' ? 'n' : ''}, decode=${decodedJson}n, matches=${big === decodedJson}`)
+  printInfo(`    msgpack: encode=${encodedMsgpack}${typeof encodedMsgpack === 'bigint' ? 'n' : ''}, decode=${decodedMsgpack}n, matches=${big === decodedMsgpack}`)
+}
+printInfo('')
+
+// Round-trip verification with large value
+const roundTripBig = 18446744073709551615n // max uint64
+const rtBigEncoded = bigIntCodec.encode(roundTripBig, 'msgpack')
+const rtBigDecoded = bigIntCodec.decode(rtBigEncoded, 'msgpack')
+if (rtBigDecoded === roundTripBig) {
+  printSuccess(`Round-trip: decode(encode(${roundTripBig}n)) === ${rtBigDecoded}n`)
+}
+
+// ============================================================================
+// Step 4: booleanCodec - Encoding/Decoding Boolean Values
+// ============================================================================
+printStep(4, 'booleanCodec - Encoding/Decoding Boolean Values')
+
+printInfo('booleanCodec handles true/false values.')
+printInfo('Default value is false.')
+printInfo('')
+
+const testBools = [true, false]
+
+for (const bool of testBools) {
+  const encodedJson = booleanCodec.encode(bool, 'json')
+  const encodedMsgpack = booleanCodec.encode(bool, 'msgpack')
+  const decodedJson = booleanCodec.decode(encodedJson, 'json')
+  const decodedMsgpack = booleanCodec.decode(encodedMsgpack, 'msgpack')
+
+  printInfo(`  ${bool}:`)
+  printInfo(`    JSON:    encode=${encodedJson}, decode=${decodedJson}, matches=${bool === decodedJson}`)
+  printInfo(`    msgpack: encode=${encodedMsgpack}, decode=${decodedMsgpack}, matches=${bool === decodedMsgpack}`)
+}
+printInfo('')
+
+// Round-trip verification
+const roundTripBool = true
+const rtBoolEncoded = booleanCodec.encode(roundTripBool, 'json')
+const rtBoolDecoded = booleanCodec.decode(rtBoolEncoded, 'json')
+if (rtBoolDecoded === roundTripBool) {
+  printSuccess(`Round-trip: decode(encode(${roundTripBool})) === ${rtBoolDecoded}`)
+}
+
+// ============================================================================
+// Step 5: stringCodec - Encoding/Decoding UTF-8 Strings
+// ============================================================================
+printStep(5, 'stringCodec - Encoding/Decoding UTF-8 Strings')
+
+printInfo('stringCodec handles UTF-8 string values.')
+printInfo('In msgpack, strings may be received as Uint8Array (normalized on decode).')
+printInfo('')
+
+const testStrings = ['', 'Hello', 'Hello, Algorand!', 'Unicode: \u00e9\u00e8\u00ea']
+
+for (const str of testStrings) {
+  const encodedJson = stringCodec.encode(str, 'json')
+  const encodedMsgpack = stringCodec.encode(str, 'msgpack')
+  const decodedJson = stringCodec.decode(encodedJson, 'json')
+  const decodedMsgpack = stringCodec.decode(encodedMsgpack, 'msgpack')
+
+  const displayStr = str === '' ? '(empty)' : `"${str}"`
+  printInfo(`  ${displayStr}:`)
+  printInfo(`    JSON:    encode="${encodedJson}", decode="${decodedJson}", matches=${str === decodedJson}`)
+  printInfo(`    msgpack: encode="${encodedMsgpack}", decode="${decodedMsgpack}", matches=${str === decodedMsgpack}`)
+}
+printInfo('')
+
+// Round-trip verification
+const roundTripStr = 'Algorand SDK'
+const rtStrEncoded = stringCodec.encode(roundTripStr, 'json')
+const rtStrDecoded = stringCodec.decode(rtStrEncoded, 'json')
+if (rtStrDecoded === roundTripStr) {
+  printSuccess(`Round-trip: decode(encode("${roundTripStr}")) === "${rtStrDecoded}"`)
+}
+
+// ============================================================================
+// Step 6: bytesCodec - Encoding/Decoding Raw Bytes
+// ============================================================================
+printStep(6, 'bytesCodec - Encoding/Decoding Raw Bytes')
+
+printInfo('bytesCodec handles Uint8Array values (raw binary data).')
+printInfo('JSON format: encodes to base64 string')
+printInfo('msgpack format: encodes as raw bytes')
+printInfo('')
+
+const testBytes = [
+  new Uint8Array([]),
+  new Uint8Array([0x01, 0x02, 0x03]),
+  new Uint8Array([0xde, 0xad, 0xbe, 0xef]),
+  new Uint8Array(32).fill(0xab), // 32-byte key simulation
+]
+
+for (const bytes of testBytes) {
+  const encodedJson = bytesCodec.encode(bytes, 'json')
+  const encodedMsgpack = bytesCodec.encode(bytes, 'msgpack')
+  const decodedJson = bytesCodec.decode(encodedJson, 'json')
+  const decodedMsgpack = bytesCodec.decode(encodedMsgpack, 'msgpack')
+
+  const displayBytes = bytes.length === 0 ? '(empty)' : formatHex(bytes.slice(0, 8)) + (bytes.length > 8 ? '...' : '')
+  printInfo(`  ${displayBytes} (${bytes.length} bytes):`)
+  printInfo(`    JSON:    encode="${encodedJson}" (base64)`)
+  printInfo(`             decode=${formatHex(decodedJson.slice(0, 8))}${decodedJson.length > 8 ? '...' : ''}, matches=${arrayEqual(bytes, decodedJson)}`)
+  printInfo(`    msgpack: encode=${formatHex((encodedMsgpack as Uint8Array).slice(0, 8))}${(encodedMsgpack as Uint8Array).length > 8 ? '...' : ''}`)
+  printInfo(`             decode=${formatHex(decodedMsgpack.slice(0, 8))}${decodedMsgpack.length > 8 ? '...' : ''}, matches=${arrayEqual(bytes, decodedMsgpack)}`)
+}
+printInfo('')
+
+// Round-trip verification
+const roundTripBytes = new Uint8Array([0x01, 0x02, 0x03, 0x04, 0x05])
+const rtBytesEncodedJson = bytesCodec.encode(roundTripBytes, 'json')
+const rtBytesDecodedJson = bytesCodec.decode(rtBytesEncodedJson, 'json')
+if (arrayEqual(rtBytesDecodedJson, roundTripBytes)) {
+  printSuccess(`Round-trip (JSON): decode(encode(${formatHex(roundTripBytes)})) matches original`)
+}
+
+const rtBytesEncodedMsgpack = bytesCodec.encode(roundTripBytes, 'msgpack')
+const rtBytesDecodedMsgpack = bytesCodec.decode(rtBytesEncodedMsgpack, 'msgpack')
+if (arrayEqual(rtBytesDecodedMsgpack, roundTripBytes)) {
+  printSuccess(`Round-trip (msgpack): decode(encode(${formatHex(roundTripBytes)})) matches original`)
+}
+
+// ============================================================================
+// Step 7: bytesBase64Codec - Base64 Encoding for Bytes
+// ============================================================================
+printStep(7, 'bytesBase64Codec - Base64 Encoding for Bytes')
+
+printInfo('bytesBase64Codec always encodes to base64 (both JSON and msgpack).')
+printInfo('Used for fields that are always base64 in wire format.')
+printInfo('')
+
+const testBase64Bytes = [
+  new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f]), // "Hello" in ASCII
+  new Uint8Array([0xff, 0xfe, 0xfd]),
+]
+
+for (const bytes of testBase64Bytes) {
+  const encodedJson = bytesBase64Codec.encode(bytes, 'json')
+  const encodedMsgpack = bytesBase64Codec.encode(bytes, 'msgpack')
+  const decodedJson = bytesBase64Codec.decode(encodedJson, 'json')
+  const decodedMsgpack = bytesBase64Codec.decode(encodedMsgpack, 'msgpack')
+
+  printInfo(`  ${formatHex(bytes)}:`)
+  printInfo(`    JSON:    encode="${encodedJson}" (base64)`)
+  printInfo(`             decode=${formatHex(decodedJson)}, matches=${arrayEqual(bytes, decodedJson)}`)
+  printInfo(`    msgpack: encode="${encodedMsgpack}" (base64)`)
+  printInfo(`             decode=${formatHex(decodedMsgpack)}, matches=${arrayEqual(bytes, decodedMsgpack)}`)
+}
+printInfo('')
+
+// Round-trip verification
+const rtB64Bytes = new Uint8Array([0x01, 0x02, 0x03])
+const rtB64Encoded = bytesBase64Codec.encode(rtB64Bytes, 'json')
+const rtB64Decoded = bytesBase64Codec.decode(rtB64Encoded, 'json')
+if (arrayEqual(rtB64Decoded, rtB64Bytes)) {
+  printSuccess(`Round-trip: decode(encode(${formatHex(rtB64Bytes)})) via base64 "${rtB64Encoded}" matches original`)
+}
+
+// ============================================================================
+// Step 8: addressCodec - Encoding/Decoding Algorand Addresses
+// ============================================================================
+printStep(8, 'addressCodec - Encoding/Decoding Algorand Addresses')
+
+printInfo('addressCodec handles Algorand Address objects.')
+printInfo('JSON format: encodes to 58-character base32 string')
+printInfo('msgpack format: encodes to 32-byte public key')
+printInfo('')
+
+// Create test addresses
+const zeroAddr = Address.zeroAddress()
+const testAddrBytes = new Uint8Array(32)
+for (let i = 0; i < 32; i++) testAddrBytes[i] = i
+const testAddr = new Address(testAddrBytes)
+
+const testAddresses = [zeroAddr, testAddr]
+
+for (const addr of testAddresses) {
+  const encodedJson = addressCodec.encode(addr, 'json')
+  const encodedMsgpack = addressCodec.encode(addr, 'msgpack')
+  const decodedJson = addressCodec.decode(encodedJson, 'json')
+  const decodedMsgpack = addressCodec.decode(encodedMsgpack, 'msgpack')
+
+  const displayAddr = `${addr.toString().slice(0, 12)  }...`
+  printInfo(`  ${displayAddr}:`)
+  printInfo(`    JSON:    encode="${(encodedJson as string).slice(0, 12)}..." (base32 string)`)
+  printInfo(`             decode=${decodedJson.toString().slice(0, 12)}..., matches=${addr.equals(decodedJson)}`)
+  printInfo(`    msgpack: encode=${formatHex((encodedMsgpack as Uint8Array).slice(0, 8))}... (32-byte pubkey)`)
+  printInfo(`             decode=${decodedMsgpack.toString().slice(0, 12)}..., matches=${addr.equals(decodedMsgpack)}`)
+}
+printInfo('')
+
+// Round-trip verification
+const roundTripAddr = testAddr
+const rtAddrEncodedJson = addressCodec.encode(roundTripAddr, 'json')
+const rtAddrDecodedJson = addressCodec.decode(rtAddrEncodedJson, 'json')
+if (rtAddrDecodedJson.equals(roundTripAddr)) {
+  printSuccess(`Round-trip (JSON): decode(encode(${roundTripAddr.toString().slice(0, 12)}...)) matches original`)
+}
+
+const rtAddrEncodedMsgpack = addressCodec.encode(roundTripAddr, 'msgpack')
+const rtAddrDecodedMsgpack = addressCodec.decode(rtAddrEncodedMsgpack, 'msgpack')
+if (rtAddrDecodedMsgpack.equals(roundTripAddr)) {
+  printSuccess(`Round-trip (msgpack): decode(encode(${roundTripAddr.toString().slice(0, 12)}...)) matches original`)
+}
+
+// ============================================================================
+// Step 9: Format Differences Summary
+// ============================================================================
+printStep(9, 'Format Differences Summary')
+
+printInfo('Codec behavior differs by format (json vs msgpack):')
+printInfo('')
+printInfo('  Codec              | JSON Encoding         | msgpack Encoding')
+printInfo('  -------------------|----------------------|-------------------')
+printInfo('  numberCodec        | number               | number')
+printInfo('  bigIntCodec        | bigint               | bigint')
+printInfo('  booleanCodec       | boolean              | boolean')
+printInfo('  stringCodec        | string               | string (or Uint8Array)')
+printInfo('  bytesCodec         | base64 string        | Uint8Array')
+printInfo('  bytesBase64Codec   | base64 string        | base64 string')
+printInfo('  addressCodec       | 58-char base32 string| 32-byte Uint8Array')
+printInfo('')
+printSuccess('Codecs handle format-specific transformations automatically')
+
+// ============================================================================
+// Step 10: Round-Trip Verification Summary
+// ============================================================================
+printStep(10, 'Round-Trip Verification Summary')
+
+printInfo('All primitive codecs support perfect round-trip encoding:')
+printInfo('')
+
+// Aggregate all round-trip results
+const roundTrips: Array<{ name: string; value: string; format: EncodingFormat; success: boolean }> = []
+
+// Number
+const numVal = 42
+roundTrips.push({
+  name: 'numberCodec',
+  value: String(numVal),
+  format: 'json',
+  success: numberCodec.decode(numberCodec.encode(numVal, 'json'), 'json') === numVal,
+})
+
+// BigInt
+const bigVal = 9007199254740993n
+roundTrips.push({
+  name: 'bigIntCodec',
+  value: `${bigVal}n`,
+  format: 'msgpack',
+  success: bigIntCodec.decode(bigIntCodec.encode(bigVal, 'msgpack'), 'msgpack') === bigVal,
+})
+
+// Boolean
+const boolVal = true
+roundTrips.push({
+  name: 'booleanCodec',
+  value: String(boolVal),
+  format: 'json',
+  success: booleanCodec.decode(booleanCodec.encode(boolVal, 'json'), 'json') === boolVal,
+})
+
+// String
+const strVal = 'Algorand'
+roundTrips.push({
+  name: 'stringCodec',
+  value: `"${strVal}"`,
+  format: 'json',
+  success: stringCodec.decode(stringCodec.encode(strVal, 'json'), 'json') === strVal,
+})
+
+// Bytes
+const bytesVal = new Uint8Array([1, 2, 3, 4, 5])
+roundTrips.push({
+  name: 'bytesCodec',
+  value: formatHex(bytesVal),
+  format: 'json',
+  success: arrayEqual(bytesCodec.decode(bytesCodec.encode(bytesVal, 'json'), 'json'), bytesVal),
+})
+roundTrips.push({
+  name: 'bytesCodec',
+  value: formatHex(bytesVal),
+  format: 'msgpack',
+  success: arrayEqual(bytesCodec.decode(bytesCodec.encode(bytesVal, 'msgpack'), 'msgpack'), bytesVal),
+})
+
+// BytesBase64
+const b64Val = new Uint8Array([0xff, 0xfe, 0xfd])
+roundTrips.push({
+  name: 'bytesBase64Codec',
+  value: formatHex(b64Val),
+  format: 'json',
+  success: arrayEqual(bytesBase64Codec.decode(bytesBase64Codec.encode(b64Val, 'json'), 'json'), b64Val),
+})
+
+// Address
+const addrVal = testAddr
+roundTrips.push({
+  name: 'addressCodec',
+  value: `${addrVal.toString().slice(0, 12)  }...`,
+  format: 'json',
+  success: addressCodec.decode(addressCodec.encode(addrVal, 'json'), 'json').equals(addrVal),
+})
+roundTrips.push({
+  name: 'addressCodec',
+  value: `${addrVal.toString().slice(0, 12)  }...`,
+  format: 'msgpack',
+  success: addressCodec.decode(addressCodec.encode(addrVal, 'msgpack'), 'msgpack').equals(addrVal),
+})
+
+for (const rt of roundTrips) {
+  const status = rt.success ? 'PASS' : 'FAIL'
+  printInfo(`  [${status}] ${rt.name} (${rt.format}): ${rt.value}`)
+}
+
+const allPassed = roundTrips.every((rt) => rt.success)
+if (allPassed) {
+  printInfo('')
+  printSuccess('All round-trip verifications passed!')
+}
+
+// ============================================================================
+// Summary
+// ============================================================================
+printStep(11, 'Summary')
+
+printInfo('Primitive codecs for Algorand wire format encoding:')
+printInfo('')
+printInfo('  Codec Interface:')
+printInfo('    - encode(value, format) - Transform to wire format')
+printInfo('    - decode(value, format) - Transform from wire format')
+printInfo('    - defaultValue() - Get type default (0, false, "", etc.)')
+printInfo('')
+printInfo('  Available Primitive Codecs:')
+printInfo('    - numberCodec     - JavaScript numbers')
+printInfo('    - bigIntCodec     - BigInt for uint64 values')
+printInfo('    - booleanCodec    - true/false values')
+printInfo('    - stringCodec     - UTF-8 strings')
+printInfo('    - bytesCodec      - Raw binary data (Uint8Array)')
+printInfo('    - bytesBase64Codec - Always base64 encoded bytes')
+printInfo('    - addressCodec    - Algorand Address objects')
+printInfo('')
+printInfo('  Format Support:')
+printInfo('    - "json" - JSON wire format (strings for bytes/addresses)')
+printInfo('    - "msgpack" - MessagePack format (binary for bytes/addresses)')
+printInfo('')
+printSuccess('Primitive Codecs Example completed!')
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- **Primitive Codecs**
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)

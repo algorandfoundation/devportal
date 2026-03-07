@@ -1,0 +1,506 @@
+---
+title: "App Manager"
+description: "This example demonstrates the AppManager functionality for querying application information, state, box storage, and TEAL compilation:"
+sidebar:
+  order: 12
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates the AppManager functionality for querying application information, state, box storage, and TEAL compilation:
+- algorand.app.getById() to fetch application information
+- algorand.app.getGlobalState() to read global state
+- algorand.app.getLocalState() to read account's local state
+- algorand.app.getBoxNames() to list all box names for an app
+- algorand.app.getBoxValue() to read a specific box value
+- algorand.app.getBoxValues() to read multiple box values
+- algorand.app.getBoxValuesFromABIType() to decode typed box values
+- algorand.app.compileTeal() to compile TEAL source code
+- algorand.app.compileTealTemplate() to compile TEAL with template variables
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/12-app-manager.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/12-app-manager.ts)
+
+```typescript title="12-app-manager.ts"
+/**
+ * Example: App Manager
+ *
+ * This example demonstrates the AppManager functionality for querying
+ * application information, state, box storage, and TEAL compilation:
+ * - algorand.app.getById() to fetch application information
+ * - algorand.app.getGlobalState() to read global state
+ * - algorand.app.getLocalState() to read account's local state
+ * - algorand.app.getBoxNames() to list all box names for an app
+ * - algorand.app.getBoxValue() to read a specific box value
+ * - algorand.app.getBoxValues() to read multiple box values
+ * - algorand.app.getBoxValuesFromABIType() to decode typed box values
+ * - algorand.app.compileTeal() to compile TEAL source code
+ * - algorand.app.compileTealTemplate() to compile TEAL with template variables
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { ABIType } from '@algorandfoundation/algokit-utils/abi'
+import { OnApplicationComplete } from '@algorandfoundation/algokit-utils/transact'
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils'
+import { loadTealSource, printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+
+// ============================================================================
+// TEAL Programs - loaded from shared artifacts
+// ============================================================================
+
+// A stateful app that supports global state, local state, and box storage
+const APPROVAL_PROGRAM = loadTealSource('approval-box-storage.teal')
+
+// Clear state program (must always approve)
+const CLEAR_STATE_PROGRAM = loadTealSource('clear-state-approve.teal')
+
+// A TEAL template with replaceable parameters
+const TEAL_TEMPLATE = loadTealSource('teal-template-basic.teal')
+
+// A TEAL template with AlgoKit deploy-time control parameters
+const ALGOKIT_TEMPLATE = loadTealSource('teal-template-deploy-control.teal')
+
+async function main() {
+  printHeader('App Manager Example')
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet()
+
+  try {
+    await algorand.client.algod.status()
+    printSuccess('Connected to LocalNet')
+  } catch (error) {
+    printError(`Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
+    return
+  }
+
+  // Step 1: Create and fund test accounts
+  printStep(1, 'Create and fund test accounts')
+  printInfo('Creating accounts for app manager demonstrations')
+
+  const creator = algorand.account.random()
+  const user = algorand.account.random()
+
+  printInfo(`\nCreated accounts:`)
+  printInfo(`  Creator: ${shortenAddress(creator.addr.toString())}`)
+  printInfo(`  User: ${shortenAddress(user.addr.toString())}`)
+
+  // Fund accounts
+  await algorand.account.ensureFundedFromEnvironment(creator.addr, algo(20))
+  await algorand.account.ensureFundedFromEnvironment(user.addr, algo(10))
+
+  printSuccess('Created and funded test accounts')
+
+  // Step 2: Deploy a test application with state and boxes
+  printStep(2, 'Deploy a test application with state and boxes')
+  printInfo('Creating an app with global state, local state schema, and box storage')
+
+  const createResult = await algorand.send.appCreate({
+    sender: creator.addr,
+    approvalProgram: APPROVAL_PROGRAM,
+    clearStateProgram: CLEAR_STATE_PROGRAM,
+    schema: {
+      globalInts: 1, // counter
+      globalByteSlices: 2, // message, creator
+      localInts: 2, // user_score, opted_in_round
+      localByteSlices: 0,
+    },
+  })
+
+  const appId = createResult.appId
+  const appAddress = createResult.appAddress
+
+  printInfo(`\nApplication created:`)
+  printInfo(`  App ID: ${appId}`)
+  printInfo(`  App Address: ${shortenAddress(appAddress.toString())}`)
+  printInfo(`  Transaction ID: ${createResult.txIds[0]}`)
+
+  printSuccess('Test application deployed')
+
+  // Step 3: Demonstrate algorand.app.getById()
+  printStep(3, 'Demonstrate algorand.app.getById() to fetch application information')
+  printInfo('Fetching complete application information by ID')
+
+  const appInfo = await algorand.app.getById(appId)
+
+  printInfo(`\nApplication information:`)
+  printInfo(`  App ID: ${appInfo.appId}`)
+  printInfo(`  App Address: ${shortenAddress(appInfo.appAddress.toString())}`)
+  printInfo(`  Creator: ${shortenAddress(appInfo.creator.toString())}`)
+  printInfo(`  Global State Schema:`)
+  printInfo(`    globalInts: ${appInfo.globalInts}`)
+  printInfo(`    globalByteSlices: ${appInfo.globalByteSlices}`)
+  printInfo(`  Local State Schema:`)
+  printInfo(`    localInts: ${appInfo.localInts}`)
+  printInfo(`    localByteSlices: ${appInfo.localByteSlices}`)
+  printInfo(`  Extra Program Pages: ${appInfo.extraProgramPages ?? 0}`)
+  printInfo(`  Approval Program: ${appInfo.approvalProgram.length} bytes`)
+  printInfo(`  Clear State Program: ${appInfo.clearStateProgram.length} bytes`)
+
+  printSuccess('Application information retrieved')
+
+  // Step 4: Demonstrate algorand.app.getGlobalState()
+  printStep(4, 'Demonstrate algorand.app.getGlobalState() to read global state')
+  printInfo('Reading all global state key-value pairs')
+
+  const globalState = await algorand.app.getGlobalState(appId)
+
+  printInfo(`\nGlobal state entries:`)
+  for (const [key, stateValue] of Object.entries(globalState)) {
+    if ('valueRaw' in stateValue) {
+      // Byte slice value
+      printInfo(`  "${key}": "${stateValue.value}" (bytes)`)
+    } else {
+      // Integer value
+      printInfo(`  "${key}": ${stateValue.value} (uint64)`)
+    }
+  }
+
+  // Increment counter a few times
+  printInfo(`\nIncrementing counter...`)
+  for (let i = 0; i < 3; i++) {
+    await algorand.send.appCall({
+      sender: creator.addr,
+      appId: appId,
+      args: [new TextEncoder().encode('increment')],
+      note: `increment-${i}`, // Unique note to differentiate transactions
+    })
+  }
+
+  const updatedGlobalState = await algorand.app.getGlobalState(appId)
+  printInfo(`  Counter after 3 increments: ${updatedGlobalState['counter']?.value ?? 0}`)
+
+  printSuccess('Global state read successfully')
+
+  // Step 5: Demonstrate algorand.app.getLocalState()
+  printStep(5, 'Demonstrate algorand.app.getLocalState() to read local state')
+  printInfo('User must opt in first to have local state')
+
+  // Opt user into the app
+  await algorand.send.appCall({
+    sender: user.addr,
+    appId: appId,
+    onComplete: OnApplicationComplete.OptIn,
+  })
+  printInfo('User opted in to the application')
+
+  const localState = await algorand.app.getLocalState(appId, user.addr)
+
+  printInfo(`\nUser's local state:`)
+  for (const [key, stateValue] of Object.entries(localState)) {
+    if ('valueRaw' in stateValue) {
+      printInfo(`  "${key}": "${stateValue.value}" (bytes)`)
+    } else {
+      printInfo(`  "${key}": ${stateValue.value} (uint64)`)
+    }
+  }
+
+  printInfo(`\nLocal state was initialized on opt-in with:`)
+  printInfo(`  user_score: ${localState['user_score']?.value ?? 0} (initial value)`)
+  printInfo(`  opted_in_round: ${localState['opted_in_round']?.value ?? 0} (round when opted in)`)
+
+  printSuccess('Local state read successfully')
+
+  // Step 6: Create boxes and demonstrate box operations
+  printStep(6, 'Demonstrate box storage operations')
+  printInfo('Creating boxes to store application data')
+
+  // Fund the app account for box storage (boxes require MBR)
+  await algorand.send.payment({
+    sender: creator.addr,
+    receiver: appAddress,
+    amount: algo(1), // Fund for box storage MBR
+  })
+
+  // Create multiple boxes with different content
+  const boxData = [
+    { name: 'user_data', value: 'Alice:100:premium' },
+    { name: 'config', value: '{"version":1,"enabled":true}' },
+    { name: 'scores', value: 'high:9999,low:1' },
+  ]
+
+  for (const box of boxData) {
+    await algorand.send.appCall({
+      sender: creator.addr,
+      appId: appId,
+      args: [
+        new TextEncoder().encode('set_box'),
+        new TextEncoder().encode(box.name),
+        new TextEncoder().encode(box.value),
+      ],
+      boxReferences: [{ appId: 0n, name: new TextEncoder().encode(box.name) }],
+    })
+    printInfo(`  Created box "${box.name}" with ${box.value.length} bytes`)
+  }
+
+  printSuccess('Boxes created')
+
+  // Step 7: Demonstrate algorand.app.getBoxNames()
+  printStep(7, 'Demonstrate algorand.app.getBoxNames() to list all boxes')
+  printInfo('Retrieving all box names for the application')
+
+  const boxNames = await algorand.app.getBoxNames(appId)
+
+  printInfo(`\nApplication has ${boxNames.length} boxes:`)
+  for (const boxName of boxNames) {
+    printInfo(`  Name: "${boxName.name}"`)
+    printInfo(`    Raw bytes: ${boxName.nameRaw.length} bytes`)
+    printInfo(`    Base64: ${boxName.nameBase64}`)
+  }
+
+  printSuccess('Box names retrieved')
+
+  // Step 8: Demonstrate algorand.app.getBoxValue()
+  printStep(8, 'Demonstrate algorand.app.getBoxValue() to read a single box')
+  printInfo('Reading the value of a specific box by name')
+
+  const boxValue = await algorand.app.getBoxValue(appId, 'user_data')
+
+  printInfo(`\nBox "user_data" value:`)
+  printInfo(`  Raw bytes: ${boxValue.length} bytes`)
+  printInfo(`  As string: "${new TextDecoder().decode(boxValue)}"`)
+
+  // Read another box
+  const configValue = await algorand.app.getBoxValue(appId, 'config')
+  printInfo(`\nBox "config" value:`)
+  printInfo(`  As string: "${new TextDecoder().decode(configValue)}"`)
+
+  printSuccess('Box value retrieved')
+
+  // Step 9: Demonstrate algorand.app.getBoxValues()
+  printStep(9, 'Demonstrate algorand.app.getBoxValues() to read multiple boxes at once')
+  printInfo('Reading multiple box values in a single call')
+
+  const allBoxValues = await algorand.app.getBoxValues(appId, ['user_data', 'config', 'scores'])
+
+  printInfo(`\nRetrieved ${allBoxValues.length} box values:`)
+  const boxNamesArray = ['user_data', 'config', 'scores']
+  for (let i = 0; i < allBoxValues.length; i++) {
+    printInfo(`  "${boxNamesArray[i]}": "${new TextDecoder().decode(allBoxValues[i])}"`)
+  }
+
+  printSuccess('Multiple box values retrieved')
+
+  // Step 10: Demonstrate algorand.app.getBoxValuesFromABIType()
+  printStep(10, 'Demonstrate algorand.app.getBoxValuesFromABIType() for typed box decoding')
+  printInfo('Creating boxes with ABI-encoded values and decoding them')
+
+  // Create a box with ABI-encoded uint64 value
+  const abiType = ABIType.from('uint64')
+  const encodedValue = abiType.encode(BigInt(42))
+
+  await algorand.send.appCall({
+    sender: creator.addr,
+    appId: appId,
+    args: [
+      new TextEncoder().encode('set_box'),
+      new TextEncoder().encode('abi_number'),
+      encodedValue,
+    ],
+    boxReferences: [{ appId: 0n, name: new TextEncoder().encode('abi_number') }],
+  })
+  printInfo('Created box "abi_number" with ABI-encoded uint64 value')
+
+  // Read and decode the ABI value
+  const decodedValues = await algorand.app.getBoxValuesFromABIType({
+    appId: appId,
+    boxNames: ['abi_number'],
+    type: abiType,
+  })
+
+  printInfo(`\nDecoded ABI values:`)
+  printInfo(`  "abi_number" (uint64): ${decodedValues[0]}`)
+
+  // Create boxes with ABI-encoded string values
+  const stringType = ABIType.from('string')
+  const encodedString = stringType.encode('Hello, ABI!')
+
+  await algorand.send.appCall({
+    sender: creator.addr,
+    appId: appId,
+    args: [
+      new TextEncoder().encode('set_box'),
+      new TextEncoder().encode('abi_string'),
+      encodedString,
+    ],
+    boxReferences: [{ appId: 0n, name: new TextEncoder().encode('abi_string') }],
+  })
+
+  const decodedStrings = await algorand.app.getBoxValuesFromABIType({
+    appId: appId,
+    boxNames: ['abi_string'],
+    type: stringType,
+  })
+
+  printInfo(`  "abi_string" (string): "${decodedStrings[0]}"`)
+
+  printSuccess('ABI-typed box values decoded')
+
+  // Step 11: Demonstrate algorand.app.compileTeal()
+  printStep(11, 'Demonstrate algorand.app.compileTeal() to compile TEAL source')
+  printInfo('Compiling TEAL code and examining the result')
+
+  const simpleTeal = loadTealSource('simple-approve.teal')
+
+  const compiled = await algorand.app.compileTeal(simpleTeal)
+
+  printInfo(`\nCompilation result:`)
+  printInfo(`  Original TEAL: ${compiled.teal.split('\n').length} lines`)
+  printInfo(`  Compiled (base64): ${compiled.compiled.slice(0, 30)}...`)
+  printInfo(`  Compiled hash: ${compiled.compiledHash}`)
+  printInfo(`  Compiled bytes: ${compiled.compiledBase64ToBytes.length} bytes`)
+  printInfo(`  Source map available: ${compiled.sourceMap !== undefined}`)
+
+  // Compile the approval program
+  const approvalCompiled = await algorand.app.compileTeal(APPROVAL_PROGRAM)
+  printInfo(`\nApproval program compilation:`)
+  printInfo(`  Original: ${APPROVAL_PROGRAM.split('\n').length} lines`)
+  printInfo(`  Compiled: ${approvalCompiled.compiledBase64ToBytes.length} bytes`)
+
+  printSuccess('TEAL compilation successful')
+
+  // Step 12: Demonstrate algorand.app.compileTealTemplate()
+  printStep(12, 'Demonstrate algorand.app.compileTealTemplate() with template variables')
+  printInfo('Compiling TEAL templates with parameter substitution')
+
+  // Compile template with custom parameters
+  const compiledTemplate = await algorand.app.compileTealTemplate(TEAL_TEMPLATE, {
+    TMPL_INT_VALUE: 42,
+    TMPL_BYTES_VALUE: 'hello',
+  })
+
+  printInfo(`\nTemplate compilation with custom parameters:`)
+  printInfo(`  TMPL_INT_VALUE: 42`)
+  printInfo(`  TMPL_BYTES_VALUE: "hello"`)
+  printInfo(`  Compiled bytes: ${compiledTemplate.compiledBase64ToBytes.length} bytes`)
+
+  // Compile AlgoKit template with deploy-time control parameters
+  const compiledUpdatable = await algorand.app.compileTealTemplate(
+    ALGOKIT_TEMPLATE,
+    undefined,
+    { updatable: true, deletable: false },
+  )
+
+  printInfo(`\nAlgoKit template with deploy-time controls:`)
+  printInfo(`  updatable: true`)
+  printInfo(`  deletable: false`)
+  printInfo(`  Compiled bytes: ${compiledUpdatable.compiledBase64ToBytes.length} bytes`)
+
+  // Compile with different control values
+  const compiledImmutable = await algorand.app.compileTealTemplate(
+    ALGOKIT_TEMPLATE,
+    undefined,
+    { updatable: false, deletable: false },
+  )
+
+  printInfo(`\nImmutable version (updatable: false, deletable: false):`)
+  printInfo(`  Compiled bytes: ${compiledImmutable.compiledBase64ToBytes.length} bytes`)
+  printInfo(`  Note: Different control values produce different bytecode`)
+
+  printSuccess('TEAL template compilation successful')
+
+  // Step 13: Summary
+  printStep(13, 'Summary - App Manager API')
+  printInfo('The AppManager provides comprehensive application query and compile capabilities:')
+  printInfo('')
+  printInfo('algorand.app.getById(appId):')
+  printInfo('  - Fetches complete application information')
+  printInfo('  - Returns: AppInformation with id, address, creator, programs, schemas')
+  printInfo('')
+  printInfo('algorand.app.getGlobalState(appId):')
+  printInfo('  - Reads all global state key-value pairs')
+  printInfo('  - Returns: AppState object keyed by UTF-8 strings')
+  printInfo('  - Values include both raw bytes and decoded forms')
+  printInfo('')
+  printInfo('algorand.app.getLocalState(appId, address):')
+  printInfo('  - Reads an account\'s local state for an app')
+  printInfo('  - Account must be opted in to the application')
+  printInfo('  - Returns: AppState object with local key-value pairs')
+  printInfo('')
+  printInfo('algorand.app.getBoxNames(appId):')
+  printInfo('  - Lists all box names for an application')
+  printInfo('  - Returns: BoxName[] with name, nameRaw, nameBase64')
+  printInfo('')
+  printInfo('algorand.app.getBoxValue(appId, boxName):')
+  printInfo('  - Reads a single box value by name')
+  printInfo('  - Returns: Uint8Array of raw box contents')
+  printInfo('')
+  printInfo('algorand.app.getBoxValues(appId, boxNames):')
+  printInfo('  - Reads multiple box values in one call')
+  printInfo('  - Returns: Uint8Array[] in same order as input names')
+  printInfo('')
+  printInfo('algorand.app.getBoxValuesFromABIType({ appId, boxNames, type }):')
+  printInfo('  - Reads and decodes box values using ABI types')
+  printInfo('  - Supports all ABI types: uint64, string, address, arrays, tuples')
+  printInfo('  - Returns: ABIValue[] decoded according to specified type')
+  printInfo('')
+  printInfo('algorand.app.compileTeal(tealCode):')
+  printInfo('  - Compiles TEAL source code')
+  printInfo('  - Returns: CompiledTeal with compiled bytes, hash, source map')
+  printInfo('  - Results are cached to avoid recompilation')
+  printInfo('')
+  printInfo('algorand.app.compileTealTemplate(template, params?, deployMetadata?):')
+  printInfo('  - Compiles TEAL with template parameter substitution')
+  printInfo('  - Supports custom TMPL_* parameters')
+  printInfo('  - Supports AlgoKit deploy-time controls (TMPL_UPDATABLE, TMPL_DELETABLE)')
+
+  // Clean up - close out user and delete app
+  await algorand.send.appCall({
+    sender: user.addr,
+    appId: appId,
+    onComplete: OnApplicationComplete.CloseOut,
+  })
+  await algorand.send.appDelete({
+    sender: creator.addr,
+    appId: appId,
+  })
+
+  printSuccess('App Manager example completed!')
+}
+
+main().catch((error) => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- **App Manager**
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

@@ -1,0 +1,496 @@
+---
+title: "Create Transaction (Unsigned Transactions)"
+description: "This example demonstrates how to create unsigned transactions without immediately sending them, which is useful for:"
+sidebar:
+  order: 9
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to create unsigned transactions without immediately sending them, which is useful for:
+- Transaction inspection and debugging
+- Multi-party signing workflows
+- Custom signing flows (hardware wallets, HSMs, etc.)
+- Modifying transaction fields before signing
+- Building transaction groups for atomic transactions
+ Key concepts:
+- algorand.createTransaction.payment() creates unsigned payment transactions
+- algorand.createTransaction.assetCreate() creates unsigned asset creation
+- algorand.createTransaction.assetTransfer() creates unsigned asset transfers
+- algorand.createTransaction.appCall() creates unsigned app calls
+- Transaction objects have properties like txId(), fee, firstValid, lastValid
+- Manual signing with account.signer() function
+- Sending signed transactions via algorand.client.algod.sendRawTransaction()
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/09-create-transaction.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/09-create-transaction.ts)
+
+```typescript title="09-create-transaction.ts"
+/**
+ * Example: Create Transaction (Unsigned Transactions)
+ *
+ * This example demonstrates how to create unsigned transactions without immediately
+ * sending them, which is useful for:
+ * - Transaction inspection and debugging
+ * - Multi-party signing workflows
+ * - Custom signing flows (hardware wallets, HSMs, etc.)
+ * - Modifying transaction fields before signing
+ * - Building transaction groups for atomic transactions
+ *
+ * Key concepts:
+ * - algorand.createTransaction.payment() creates unsigned payment transactions
+ * - algorand.createTransaction.assetCreate() creates unsigned asset creation
+ * - algorand.createTransaction.assetTransfer() creates unsigned asset transfers
+ * - algorand.createTransaction.appCall() creates unsigned app calls
+ * - Transaction objects have properties like txId(), fee, firstValid, lastValid
+ * - Manual signing with account.signer() function
+ * - Sending signed transactions via algorand.client.algod.sendRawTransaction()
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils'
+import { formatAlgo, loadTealSource, printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+
+// Simple approval and clear state programs for demonstration
+const APPROVAL_PROGRAM = loadTealSource('simple-approve.teal')
+const CLEAR_STATE_PROGRAM = loadTealSource('clear-state-approve.teal')
+
+/**
+ * Helper function to wait for transaction confirmation
+ * Returns the full PendingTransactionResponse with proper typing
+ */
+async function waitForTransactionConfirmation(
+  algorand: AlgorandClient,
+  txId: string,
+  maxRounds: number = 5,
+) {
+  const status = await algorand.client.algod.status()
+  let currentRound = status.lastRound
+  const endRound = currentRound + BigInt(maxRounds)
+
+  while (currentRound < endRound) {
+    const pendingInfo = await algorand.client.algod.pendingTransactionInformation(txId)
+
+    if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
+      return pendingInfo
+    }
+
+    if (pendingInfo.poolError && pendingInfo.poolError.length > 0) {
+      throw new Error(`Transaction rejected: ${pendingInfo.poolError}`)
+    }
+
+    await algorand.client.algod.statusAfterBlock(currentRound)
+    currentRound++
+  }
+
+  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`)
+}
+
+async function main() {
+  printHeader('Create Transaction Example')
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet()
+
+  try {
+    await algorand.client.algod.status()
+    printSuccess('Connected to LocalNet')
+  } catch (error) {
+    printError(`Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
+    return
+  }
+
+  // Step 1: Create and fund test accounts
+  printStep(1, 'Create and fund test accounts')
+  printInfo('Creating accounts for transaction creation demonstrations')
+
+  const sender = algorand.account.random()
+  const receiver = algorand.account.random()
+
+  printInfo(`\nCreated accounts:`)
+  printInfo(`  Sender: ${shortenAddress(sender.addr.toString())}`)
+  printInfo(`  Receiver: ${shortenAddress(receiver.addr.toString())}`)
+
+  // Fund the sender account
+  await algorand.account.ensureFundedFromEnvironment(sender.addr, algo(10))
+  printSuccess('Created and funded test accounts')
+
+  // Step 2: Create unsigned payment transaction
+  printStep(2, 'Create unsigned payment with algorand.createTransaction.payment()')
+  printInfo('Creating a payment transaction WITHOUT immediately sending it')
+  printInfo('This allows inspection, modification, and custom signing flows')
+
+  const paymentTxn = await algorand.createTransaction.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(1),
+    note: 'Unsigned payment transaction',
+  })
+
+  printInfo(`\nUnsigned Payment Transaction created:`)
+  printInfo(`  Transaction ID: ${paymentTxn.txId()}`)
+  printInfo(`  Type: ${paymentTxn.type}`)
+  printInfo(`  Sender: ${shortenAddress(paymentTxn.sender.toString())}`)
+  printInfo(`  Receiver: ${shortenAddress(paymentTxn.payment?.receiver.toString() ?? 'N/A')}`)
+  printInfo(`  Amount: ${formatAlgo(paymentTxn.payment?.amount ?? 0n)}`)
+  printInfo(`  Fee: ${paymentTxn.fee ?? 0n} µALGO`)
+  printInfo(`  First Valid: ${paymentTxn.firstValid}`)
+  printInfo(`  Last Valid: ${paymentTxn.lastValid}`)
+  printInfo(`  Genesis ID: ${paymentTxn.genesisId}`)
+
+  printSuccess('Unsigned payment transaction created')
+
+  // Step 3: Examine Transaction object properties
+  printStep(3, 'Examine Transaction object properties and methods')
+  printInfo('The Transaction object provides several useful properties and methods')
+
+  printInfo(`\nTransaction properties:`)
+  printInfo(`  txId(): string - Unique transaction identifier`)
+  printInfo(`    Example: ${paymentTxn.txId()}`)
+  printInfo(``)
+  printInfo(`  type: TransactionType - Transaction type (pay, axfer, appl, etc.)`)
+  printInfo(`    Example: ${paymentTxn.type}`)
+  printInfo(``)
+  printInfo(`  sender: Address - The sender's address`)
+  printInfo(`    Example: ${shortenAddress(paymentTxn.sender.toString())}`)
+  printInfo(``)
+  printInfo(`  fee: bigint - Transaction fee in microALGO`)
+  printInfo(`    Example: ${paymentTxn.fee ?? 0n} µALGO`)
+  printInfo(``)
+  printInfo(`  firstValid/lastValid: bigint - Validity window (rounds)`)
+  printInfo(`    Example: ${paymentTxn.firstValid} to ${paymentTxn.lastValid}`)
+  printInfo(``)
+  printInfo(`  note: Uint8Array - Optional note field`)
+  printInfo(`    Example: ${paymentTxn.note ? new TextDecoder().decode(paymentTxn.note) : 'N/A'}`)
+  printInfo(``)
+  printInfo(`  genesisHash/genesisId: Network identification`)
+  printInfo(`    Genesis ID: ${paymentTxn.genesisId}`)
+
+  printSuccess('Transaction properties examined')
+
+  // Step 4: Create unsigned asset creation transaction
+  printStep(4, 'Create unsigned asset creation with algorand.createTransaction.assetCreate()')
+  printInfo('Creating an asset creation transaction without sending it')
+
+  const assetCreateTxn = await algorand.createTransaction.assetCreate({
+    sender: sender.addr,
+    total: 1_000_000n,
+    decimals: 2,
+    assetName: 'Example Token',
+    unitName: 'EXT',
+    url: 'https://example.com',
+    manager: sender.addr,
+    reserve: sender.addr,
+    freeze: sender.addr,
+    clawback: sender.addr,
+  })
+
+  printInfo(`\nUnsigned Asset Create Transaction:`)
+  printInfo(`  Transaction ID: ${assetCreateTxn.txId()}`)
+  printInfo(`  Type: ${assetCreateTxn.type}`)
+  printInfo(`  Total supply: ${assetCreateTxn.assetConfig?.total ?? 0n} units`)
+  printInfo(`  Decimals: ${assetCreateTxn.assetConfig?.decimals ?? 0}`)
+  printInfo(`  Asset name: ${assetCreateTxn.assetConfig?.assetName ?? 'N/A'}`)
+  printInfo(`  Unit name: ${assetCreateTxn.assetConfig?.unitName ?? 'N/A'}`)
+  printInfo(`  Fee: ${assetCreateTxn.fee ?? 0n} µALGO`)
+
+  printSuccess('Unsigned asset creation transaction created')
+
+  // Step 5: Manually sign a transaction
+  printStep(5, 'Manually sign a transaction with account.signer()')
+  printInfo('Signing the payment transaction using the sender\'s signer function')
+  printInfo('')
+  printInfo('The signer function signature:')
+  printInfo('  signer(txnGroup: Transaction[], indexesToSign: number[]): Promise<Uint8Array[]>')
+  printInfo('')
+  printInfo('Parameters:')
+  printInfo('  txnGroup: Array of transactions (can be a single transaction)')
+  printInfo('  indexesToSign: Indices of transactions to sign in the group')
+
+  // Sign the transaction
+  const signedTxns = await sender.signer([paymentTxn], [0])
+
+  printInfo(`\nTransaction signed:`)
+  printInfo(`  Number of signed transactions: ${signedTxns.length}`)
+  printInfo(`  Signed transaction size: ${signedTxns[0].length} bytes`)
+  printInfo(`  Transaction ID (unchanged): ${paymentTxn.txId()}`)
+
+  printSuccess('Transaction signed manually')
+
+  // Step 6: Send a manually signed transaction
+  printStep(6, 'Send a manually signed transaction')
+  printInfo('Sending the signed transaction using algorand.client.algod.sendRawTransaction()')
+
+  const submitResult = await algorand.client.algod.sendRawTransaction(signedTxns)
+  printInfo(`\nTransaction submitted:`)
+  printInfo(`  Transaction ID: ${submitResult.txId}`)
+
+  // Wait for confirmation
+  const confirmation = await waitForTransactionConfirmation(algorand, paymentTxn.txId())
+  printInfo(`  Confirmed in round: ${confirmation.confirmedRound}`)
+
+  // Verify the transfer
+  const receiverInfo = await algorand.account.getInformation(receiver.addr)
+  printInfo(`  Receiver balance: ${formatAlgo(receiverInfo.balance)}`)
+
+  printSuccess('Manually signed transaction sent and confirmed')
+
+  // Step 7: Create and send unsigned asset creation (with signing)
+  printStep(7, 'Create, sign, and send asset creation transaction')
+  printInfo('Demonstrating the full workflow: create -> sign -> send')
+
+  // Sign the asset creation transaction
+  const signedAssetCreate = await sender.signer([assetCreateTxn], [0])
+
+  // Send it
+  await algorand.client.algod.sendRawTransaction(signedAssetCreate)
+  const assetConfirmation = await waitForTransactionConfirmation(algorand, assetCreateTxn.txId())
+
+  // Get the asset ID from the confirmation (assetId is populated for asset create transactions)
+  const assetId = assetConfirmation.assetId!
+
+  printInfo(`\nAsset created:`)
+  printInfo(`  Asset ID: ${assetId}`)
+  printInfo(`  Transaction ID: ${assetCreateTxn.txId()}`)
+  printInfo(`  Confirmed in round: ${assetConfirmation.confirmedRound}`)
+
+  printSuccess('Asset creation completed via manual signing')
+
+  // Step 8: Create unsigned asset transfer transaction
+  printStep(8, 'Create unsigned asset transfer with algorand.createTransaction.assetTransfer()')
+  printInfo('Creating an asset opt-in transaction (transfer to self with amount 0)')
+
+  // First, opt-in the receiver to the asset
+  const optInTxn = await algorand.createTransaction.assetOptIn({
+    sender: receiver.addr,
+    assetId: assetId,
+  })
+
+  printInfo(`\nUnsigned Asset Opt-In Transaction:`)
+  printInfo(`  Transaction ID: ${optInTxn.txId()}`)
+  printInfo(`  Type: ${optInTxn.type}`)
+  printInfo(`  Asset ID: ${optInTxn.assetTransfer?.assetId ?? 'N/A'}`)
+  printInfo(`  Sender: ${shortenAddress(optInTxn.sender.toString())}`)
+  printInfo(`  Receiver: ${shortenAddress(optInTxn.assetTransfer?.receiver.toString() ?? 'N/A')}`)
+  printInfo(`  Amount: ${optInTxn.assetTransfer?.amount ?? 0n} (0 for opt-in)`)
+
+  // Fund receiver and sign/send opt-in
+  await algorand.account.ensureFundedFromEnvironment(receiver.addr, algo(1))
+  const signedOptIn = await receiver.signer([optInTxn], [0])
+  await algorand.client.algod.sendRawTransaction(signedOptIn)
+  await waitForTransactionConfirmation(algorand, optInTxn.txId())
+
+  printInfo(`\nOpt-in completed`)
+
+  // Now create an asset transfer
+  const assetTransferTxn = await algorand.createTransaction.assetTransfer({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    assetId: assetId,
+    amount: 100n,
+    note: 'Asset transfer via unsigned transaction',
+  })
+
+  printInfo(`\nUnsigned Asset Transfer Transaction:`)
+  printInfo(`  Transaction ID: ${assetTransferTxn.txId()}`)
+  printInfo(`  Asset ID: ${assetTransferTxn.assetTransfer?.assetId ?? 'N/A'}`)
+  printInfo(`  Amount: ${assetTransferTxn.assetTransfer?.amount ?? 0n} units`)
+
+  // Sign and send
+  const signedAssetTransfer = await sender.signer([assetTransferTxn], [0])
+  await algorand.client.algod.sendRawTransaction(signedAssetTransfer)
+  await waitForTransactionConfirmation(algorand, assetTransferTxn.txId())
+
+  printInfo(`  Transfer completed successfully`)
+
+  printSuccess('Unsigned asset transfer demonstrated')
+
+  // Step 9: Create unsigned app call transaction
+  printStep(9, 'Create unsigned app call with algorand.createTransaction.appCall()')
+  printInfo('First, create an app to call')
+
+  // Create the app first (using send for simplicity)
+  const appCreateResult = await algorand.send.appCreate({
+    sender: sender.addr,
+    approvalProgram: APPROVAL_PROGRAM,
+    clearStateProgram: CLEAR_STATE_PROGRAM,
+  })
+
+  const appId = appCreateResult.appId
+  printInfo(`\nApp created with ID: ${appId}`)
+
+  // Now create an unsigned app call
+  const appCallTxn = await algorand.createTransaction.appCall({
+    sender: sender.addr,
+    appId: appId,
+    args: [new TextEncoder().encode('hello'), new TextEncoder().encode('world')],
+    note: 'Unsigned app call',
+  })
+
+  printInfo(`\nUnsigned App Call Transaction:`)
+  printInfo(`  Transaction ID: ${appCallTxn.txId()}`)
+  printInfo(`  Type: ${appCallTxn.type}`)
+  printInfo(`  App ID: ${appCallTxn.appCall?.appId ?? 'N/A'}`)
+  printInfo(`  On Complete: ${appCallTxn.appCall?.onComplete ?? 0} (NoOp)`)
+  printInfo(`  Args count: ${appCallTxn.appCall?.args?.length ?? 0}`)
+  printInfo(`  Fee: ${appCallTxn.fee ?? 0n} µALGO`)
+
+  // Sign and send
+  const signedAppCall = await sender.signer([appCallTxn], [0])
+  await algorand.client.algod.sendRawTransaction(signedAppCall)
+  await waitForTransactionConfirmation(algorand, appCallTxn.txId())
+
+  printInfo(`  App call completed successfully`)
+
+  printSuccess('Unsigned app call demonstrated')
+
+  // Step 10: Demonstrate modifying transaction fields before signing
+  printStep(10, 'Demonstrate transaction inspection before signing')
+  printInfo('You can inspect transaction fields before deciding to sign')
+  printInfo('')
+  printInfo('Use cases for unsigned transactions:')
+  printInfo('')
+  printInfo('1. Transaction Inspection:')
+  printInfo('   - Verify sender, receiver, and amount before signing')
+  printInfo('   - Check validity window (firstValid to lastValid)')
+  printInfo('   - Ensure correct fees')
+  printInfo('')
+  printInfo('2. Multi-Party Signing:')
+  printInfo('   - Create transaction on one device')
+  printInfo('   - Send unsigned txn to another party for signing')
+  printInfo('   - Useful for multi-sig wallets')
+  printInfo('')
+  printInfo('3. Custom Signing Flows:')
+  printInfo('   - Hardware wallet integration')
+  printInfo('   - HSM (Hardware Security Module) signing')
+  printInfo('   - Air-gapped signing workflows')
+  printInfo('')
+  printInfo('4. Transaction Groups (Atomic Transactions):')
+  printInfo('   - Create multiple unsigned transactions')
+  printInfo('   - Group them together for atomic execution')
+  printInfo('   - Sign all transactions in the group')
+  printInfo('')
+  printInfo('5. Simulation and Testing:')
+  printInfo('   - Create transactions to simulate their effects')
+  printInfo('   - Test transaction validity before signing')
+
+  // Example: inspect before signing
+  const inspectTxn = await algorand.createTransaction.payment({
+    sender: sender.addr,
+    receiver: receiver.addr,
+    amount: algo(0.5),
+  })
+
+  printInfo(`\nExample - Inspecting before signing:`)
+  printInfo(`  Will send: ${formatAlgo(inspectTxn.payment?.amount ?? 0n)}`)
+  printInfo(`  To: ${shortenAddress(inspectTxn.payment?.receiver.toString() ?? 'N/A')}`)
+  printInfo(`  Fee: ${inspectTxn.fee ?? 0n} µALGO`)
+  printInfo(`  Valid until round: ${inspectTxn.lastValid}`)
+
+  // Decide to sign based on inspection
+  const shouldSign = (inspectTxn.payment?.amount ?? 0n) <= algo(1).microAlgo
+  if (shouldSign) {
+    printInfo(`  Decision: Amount is acceptable, proceeding with signing`)
+    const signed = await sender.signer([inspectTxn], [0])
+    await algorand.client.algod.sendRawTransaction(signed)
+    await waitForTransactionConfirmation(algorand, inspectTxn.txId())
+    printInfo(`  Transaction confirmed`)
+  }
+
+  printSuccess('Transaction inspection demonstrated')
+
+  // Step 11: Summary
+  printStep(11, 'Summary - Create Transaction API')
+  printInfo('Transaction creation methods available through algorand.createTransaction:')
+  printInfo('')
+  printInfo('Payment:')
+  printInfo('  createTransaction.payment({ sender, receiver, amount, ... })')
+  printInfo('  Returns: Promise<Transaction>')
+  printInfo('')
+  printInfo('Asset Operations:')
+  printInfo('  createTransaction.assetCreate({ sender, total, decimals, ... })')
+  printInfo('  createTransaction.assetConfig({ sender, assetId, ... })')
+  printInfo('  createTransaction.assetTransfer({ sender, receiver, assetId, amount })')
+  printInfo('  createTransaction.assetOptIn({ sender, assetId })')
+  printInfo('  createTransaction.assetOptOut({ sender, assetId, creator })')
+  printInfo('  createTransaction.assetFreeze({ sender, assetId, freezeTarget, frozen })')
+  printInfo('  createTransaction.assetDestroy({ sender, assetId })')
+  printInfo('')
+  printInfo('Application Operations:')
+  printInfo('  createTransaction.appCreate({ sender, approvalProgram, clearStateProgram })')
+  printInfo('  createTransaction.appUpdate({ sender, appId, approvalProgram, clearStateProgram })')
+  printInfo('  createTransaction.appCall({ sender, appId, args, onComplete })')
+  printInfo('  createTransaction.appDelete({ sender, appId })')
+  printInfo('')
+  printInfo('Transaction Object Properties:')
+  printInfo('  txId(): string - Get the transaction ID')
+  printInfo('  type: TransactionType - Transaction type')
+  printInfo('  sender: Address - Sender address')
+  printInfo('  fee: bigint - Fee in microALGO')
+  printInfo('  firstValid/lastValid: bigint - Validity window')
+  printInfo('  note: Uint8Array - Note field')
+  printInfo('  genesisId/genesisHash: Network identification')
+  printInfo('')
+  printInfo('Manual Signing:')
+  printInfo('  const signedTxns = await account.signer([transaction], [0])')
+  printInfo('  Returns: Promise<Uint8Array[]> (encoded signed transactions)')
+  printInfo('')
+  printInfo('Sending Signed Transactions:')
+  printInfo('  await algorand.client.algod.sendRawTransaction(signedTxns)')
+  printInfo('  Returns: { txId: string }')
+
+  // Clean up
+  await algorand.send.appDelete({
+    sender: sender.addr,
+    appId: appId,
+  })
+
+  printSuccess('Create Transaction example completed!')
+}
+
+main().catch((error) => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/08-send-app-ops/)
+- **Create Transaction (Unsigned Transactions)**
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'argTypeIsAbiType'
+title: "argTypeIsAbiType"
 ---
 
 > **argTypeIsAbiType**(`type`): `type is ABIType`
 
-Defined in: [packages/abi/src/abi-method.ts:285](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L285)
+Defined in: [packages/abi/src/abi-method.ts:285](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L285)
 
 ## Parameters
 

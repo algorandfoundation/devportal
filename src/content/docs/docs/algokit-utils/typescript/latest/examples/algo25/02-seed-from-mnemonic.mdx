@@ -1,0 +1,195 @@
+---
+title: "Seed from Mnemonic"
+description: "This example demonstrates how to use seedFromMnemonic() to convert a 25-word Algorand mnemonic back to its original 32-byte seed. This is the reverse operation of mnemonicFromSeed()."
+sidebar:
+  order: 2
+---
+
+[← Back to Mnemonic Utilities](/docs/algokit-utils/typescript/latest/examples/algo25/)
+
+## Description
+
+This example demonstrates how to use seedFromMnemonic() to convert a 25-word Algorand mnemonic back to its original 32-byte seed. This is the reverse operation of mnemonicFromSeed().
+ Key concepts:
+- seedFromMnemonic() reverses the mnemonic encoding process
+- The checksum word is verified to ensure mnemonic integrity
+- Round-trip conversion: seed -&gt; mnemonic -&gt; seed produces identical bytes
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algo25/02-seed-from-mnemonic.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algo25/02-seed-from-mnemonic.ts)
+
+```typescript title="02-seed-from-mnemonic.ts"
+/**
+ * Example: Seed from Mnemonic
+ *
+ * This example demonstrates how to use seedFromMnemonic() to convert a 25-word
+ * Algorand mnemonic back to its original 32-byte seed. This is the reverse
+ * operation of mnemonicFromSeed().
+ *
+ * Key concepts:
+ * - seedFromMnemonic() reverses the mnemonic encoding process
+ * - The checksum word is verified to ensure mnemonic integrity
+ * - Round-trip conversion: seed -> mnemonic -> seed produces identical bytes
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { mnemonicFromSeed, seedFromMnemonic } from '@algorandfoundation/algokit-utils/algo25'
+import { formatHex, printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+/**
+ * Compare two Uint8Arrays for equality
+ */
+function arrayEqual(a: Uint8Array, b: Uint8Array): boolean {
+  if (a.length !== b.length) return false
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) return false
+  }
+  return true
+}
+
+function main() {
+  printHeader('Seed from Mnemonic Example')
+
+  // Step 1: Generate a random 32-byte seed
+  printStep(1, 'Generate a Random 32-byte Seed')
+
+  const originalSeed = new Uint8Array(32)
+  crypto.getRandomValues(originalSeed)
+
+  printInfo(`Original seed length: ${originalSeed.length} bytes (256 bits)`)
+  printInfo(`Original seed hex: ${formatHex(originalSeed)}`)
+
+  // Step 2: Convert seed to mnemonic
+  printStep(2, 'Convert Seed to 25-Word Mnemonic')
+
+  const mnemonic = mnemonicFromSeed(originalSeed)
+  const words = mnemonic.split(' ')
+
+  printInfo(`Mnemonic has ${words.length} words`)
+  printInfo('Mnemonic words:')
+  // Display words in rows of 5 for readability
+  for (let i = 0; i < words.length; i += 5) {
+    const row = words.slice(i, i + 5)
+    const numbered = row.map((w, j) => `${(i + j + 1).toString().padStart(2, ' ')}. ${w.padEnd(10)}`).join(' ')
+    printInfo(`  ${numbered}`)
+  }
+
+  // Step 3: Recover seed from mnemonic
+  printStep(3, 'Recover Seed from Mnemonic using seedFromMnemonic()')
+
+  const recoveredSeed = seedFromMnemonic(mnemonic)
+
+  printInfo(`Recovered seed length: ${recoveredSeed.length} bytes`)
+  printInfo(`Recovered seed hex: ${formatHex(recoveredSeed)}`)
+
+  // Step 4: Compare original and recovered seeds
+  printStep(4, 'Compare Original and Recovered Seeds')
+
+  printInfo('Original seed:')
+  printInfo(`  ${formatHex(originalSeed)}`)
+  printInfo('Recovered seed:')
+  printInfo(`  ${formatHex(recoveredSeed)}`)
+
+  const seedsMatch = arrayEqual(originalSeed, recoveredSeed)
+  printInfo(`Seeds are identical: ${seedsMatch ? 'Yes' : 'No'}`)
+
+  if (seedsMatch) {
+    printSuccess('Round-trip verification passed: seedFromMnemonic(mnemonicFromSeed(seed)) === seed')
+  } else {
+    printError('Round-trip verification failed!')
+    return
+  }
+
+  // Step 5: Byte-by-byte comparison
+  printStep(5, 'Byte-by-Byte Verification')
+
+  printInfo('Comparing first 8 bytes:')
+  for (let i = 0; i < 8; i++) {
+    const origByte = originalSeed[i].toString(16).padStart(2, '0')
+    const recByte = recoveredSeed[i].toString(16).padStart(2, '0')
+    const match = originalSeed[i] === recoveredSeed[i] ? '✓' : '✗'
+    printInfo(`  Byte ${i}: original=0x${origByte}, recovered=0x${recByte} ${match}`)
+  }
+  printInfo('  ... (all 32 bytes verified)')
+
+  // Step 6: Explain how seedFromMnemonic works
+  printStep(6, 'How seedFromMnemonic() Works')
+
+  printInfo('The recovery process:')
+  printInfo('  1. Split the mnemonic into 25 words')
+  printInfo('  2. Separate the first 24 words (data) from the 25th word (checksum)')
+  printInfo('  3. Look up each data word in the BIP39 wordlist to get its 11-bit index')
+  printInfo('  4. Combine the 24 × 11 = 264 bits back into bytes')
+  printInfo('  5. Remove the last byte (8 padding bits) to get the 32-byte seed')
+  printInfo('  6. Recompute the checksum from the recovered seed')
+  printInfo('  7. Verify the computed checksum matches the 25th word')
+  printInfo('  8. Return the 32-byte seed if checksum is valid')
+
+  // Step 7: Demonstrate checksum validation
+  printStep(7, 'Checksum Validation Protects Against Errors')
+
+  printInfo(`Checksum word (25th word): "${words[24]}"`)
+  printInfo('The checksum is computed from SHA-512/256 hash of the seed.')
+  printInfo('If any word is changed, the checksum will not match.')
+
+  // Create an invalid mnemonic by changing one word
+  const tamperedWords = [...words]
+  tamperedWords[0] = tamperedWords[0] === 'abandon' ? 'about' : 'abandon'
+  const tamperedMnemonic = tamperedWords.join(' ')
+
+  printInfo('')
+  printInfo('Attempting to decode a tampered mnemonic...')
+  printInfo(`  Changed word 1 from "${words[0]}" to "${tamperedWords[0]}"`)
+
+  try {
+    seedFromMnemonic(tamperedMnemonic)
+    printError('Unexpectedly succeeded with tampered mnemonic!')
+  } catch (error) {
+    printSuccess(`Checksum validation caught the error: "${(error as Error).message}"`)
+  }
+
+  // Step 8: Summary
+  printStep(8, 'Summary')
+
+  printInfo('seedFromMnemonic() converts a 25-word mnemonic back to a 32-byte seed:')
+  printInfo('  - Input: Space-separated string of 25 words')
+  printInfo('  - Output: 32-byte Uint8Array (the original seed)')
+  printInfo('  - Validates the checksum to ensure integrity')
+  printInfo('  - Throws an error if:')
+  printInfo('    - Any word is not in the BIP39 wordlist')
+  printInfo('    - The checksum word does not match')
+  printInfo('  - Enables round-trip: seed → mnemonic → seed')
+  printInfo('  - Use case: Recover a seed from a backed-up mnemonic phrase')
+
+  printSuccess('Seed from Mnemonic example completed successfully!')
+}
+
+main()
+
+```
+
+---
+
+### Other examples in Mnemonic Utilities
+
+- [Mnemonic from Seed](/docs/algokit-utils/typescript/latest/examples/algo25/01-mnemonic-from-seed/)
+- **Seed from Mnemonic**
+- [Secret Key to Mnemonic](/docs/algokit-utils/typescript/latest/examples/algo25/03-secret-key-to-mnemonic/)
+- [Master Derivation Key Functions](/docs/algokit-utils/typescript/latest/examples/algo25/04-master-derivation-key/)
+- [Error Handling for Mnemonic Functions](/docs/algokit-utils/typescript/latest/examples/algo25/05-error-handling/)

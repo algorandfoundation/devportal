@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AlgorandFixtureConfig'
+title: "AlgorandFixtureConfig"
 ---
 
-Defined in: [src/testing/types.ts:55](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L55)
+Defined in: [src/testing/types.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L55)
 
 Configuration for creating an Algorand testing fixture.
 
@@ -19,7 +19,7 @@ Configuration for creating an Algorand testing fixture.
 
 > `optional` **accountGetter**: (`algorand`) => `Promise`\<[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) & `object`\>
 
-Defined in: [src/testing/types.ts:65](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L65)
+Defined in: [src/testing/types.ts:65](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L65)
 
 Optional override for how to get an account; this allows you to retrieve accounts from a known or cached list of accounts.
 
@@ -33,23 +33,23 @@ Optional override for how to get an account; this allows you to retrieve account
 
 `Promise`\<[`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/) & `object`\>
 
----
+***
 
 ### algod?
 
 > `optional` **algod**: [`AlgodClient`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/classes/algodclient/)
 
-Defined in: [src/testing/types.ts:57](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L57)
+Defined in: [src/testing/types.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L57)
 
 An optional algod client, if not specified then it will create one against `algodConfig` (if present) then environment variables defined network (if present) or default LocalNet.
 
----
+***
 
 ### algodConfig?
 
 > `optional` **algodConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoclientconfig/)
 
-Defined in: [src/network-client.ts:14](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L14)
+Defined in: [src/network-client.ts:14](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L14)
 
 Algod client configuration
 
@@ -57,23 +57,23 @@ Algod client configuration
 
 [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/).[`algodConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/#algodconfig)
 
----
+***
 
 ### indexer?
 
 > `optional` **indexer**: [`IndexerClient`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/classes/indexerclient/)
 
-Defined in: [src/testing/types.ts:59](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L59)
+Defined in: [src/testing/types.ts:59](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L59)
 
 An optional indexer client, if not specified then it will create one against `indexerConfig` (if present) then environment variables defined network (if present) or default LocalNet.
 
----
+***
 
 ### indexerConfig?
 
 > `optional` **indexerConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoclientconfig/)
 
-Defined in: [src/network-client.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L16)
+Defined in: [src/network-client.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L16)
 
 Indexer client configuration
 
@@ -81,23 +81,23 @@ Indexer client configuration
 
 [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/).[`indexerConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/#indexerconfig)
 
----
+***
 
 ### kmd?
 
 > `optional` **kmd**: [`KmdClient`](/docs/algokit-utils/typescript/latest/api/subpaths/kmd-client/classes/kmdclient/)
 
-Defined in: [src/testing/types.ts:61](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L61)
+Defined in: [src/testing/types.ts:61](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L61)
 
 An optional kmd client, if not specified then it will create one against `kmdConfig` (if present) then environment variables defined network (if present) or default LocalNet.
 
----
+***
 
 ### kmdConfig?
 
 > `optional` **kmdConfig**: [`AlgoClientConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoclientconfig/)
 
-Defined in: [src/network-client.ts:18](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-client.ts#L18)
+Defined in: [src/network-client.ts:18](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-client.ts#L18)
 
 Kmd configuration
 
@@ -105,12 +105,12 @@ Kmd configuration
 
 [`AlgoConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/).[`kmdConfig`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/algoconfig/#kmdconfig)
 
----
+***
 
 ### testAccountFunding?
 
 > `optional` **testAccountFunding**: [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/testing/types.ts:63](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/types.ts#L63)
+Defined in: [src/testing/types.ts:63](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/types.ts#L63)
 
 The amount of funds to allocate to the default testing account, if not specified then it will get 10 ALGO.

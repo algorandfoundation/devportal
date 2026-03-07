@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'getGlobalABIStorageKey'
+title: "getGlobalABIStorageKey"
 ---
 
 > **getGlobalABIStorageKey**(`contract`, `keyName`): [`ABIStorageKey`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistoragekey/)
 
-Defined in: [packages/abi/src/arc56-contract.ts:380](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L380)
+Defined in: [packages/abi/src/arc56-contract.ts:380](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L380)
 
 Get a specific global storage key with parsed ABI types
 

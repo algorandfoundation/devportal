@@ -1,0 +1,353 @@
+---
+title: "JSON BigInt"
+description: "This example demonstrates parsing and stringifying JSON with BigInt support for handling large numbers safely without precision loss."
+sidebar:
+  order: 7
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates parsing and stringifying JSON with BigInt support for handling large numbers safely without precision loss.
+ Topics covered:
+- parseJson() for parsing JSON strings with large numbers
+- Numbers &gt; Number.MAX_SAFE_INTEGER are parsed as BigInt
+- Numbers &lt;= Number.MAX_SAFE_INTEGER are parsed as regular numbers
+- stringifyJson() for serializing objects containing BigInt values
+- Round-trip preservation: stringifyJson(parseJson(str))
+- Comparison with native JSON.parse() showing precision loss
+- Algorand-relevant examples with microAlgo amounts
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/07-json-bigint.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/07-json-bigint.ts)
+
+```typescript title="07-json-bigint.ts"
+/**
+ * Example: JSON BigInt
+ *
+ * This example demonstrates parsing and stringifying JSON with BigInt support
+ * for handling large numbers safely without precision loss.
+ *
+ * Topics covered:
+ * - parseJson() for parsing JSON strings with large numbers
+ * - Numbers > Number.MAX_SAFE_INTEGER are parsed as BigInt
+ * - Numbers <= Number.MAX_SAFE_INTEGER are parsed as regular numbers
+ * - stringifyJson() for serializing objects containing BigInt values
+ * - Round-trip preservation: stringifyJson(parseJson(str))
+ * - Comparison with native JSON.parse() showing precision loss
+ * - Algorand-relevant examples with microAlgo amounts
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { parseJson, stringifyJson } from '@algorandfoundation/algokit-utils/common'
+import { printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+// ============================================================================
+// Main Example
+// ============================================================================
+
+printHeader('JSON BigInt Example')
+
+// ============================================================================
+// Step 1: Understanding the Problem - Native JSON.parse Precision Loss
+// ============================================================================
+printStep(1, 'The Problem: Native JSON.parse Precision Loss')
+
+printInfo('JavaScript numbers have limited precision:')
+printInfo(`  Number.MAX_SAFE_INTEGER = ${Number.MAX_SAFE_INTEGER}`)
+printInfo(`                         = 2^53 - 1 = 9,007,199,254,740,991`)
+printInfo('')
+
+// Demonstrate precision loss with native JSON.parse
+const largeNumberJson = '{"amount": 9007199254740993}'
+const parsedWithNative = JSON.parse(largeNumberJson)
+const parsedWithBigInt = parseJson(largeNumberJson)
+
+printInfo('Parsing JSON with a large number (9007199254740993):')
+printInfo(`  Original JSON:          ${largeNumberJson}`)
+printInfo(`  Native JSON.parse:      ${parsedWithNative.amount}`)
+printInfo(`  parseJson (BigInt):     ${parsedWithBigInt.amount}`)
+printInfo('')
+
+// Show the precision loss
+const originalValue = 9007199254740993n
+const nativeValue = parsedWithNative.amount as number
+const bigIntValue = parsedWithBigInt.amount as bigint
+
+if (BigInt(nativeValue) !== originalValue) {
+  printError(`Native JSON.parse LOST PRECISION: ${nativeValue} !== ${originalValue}`)
+} else {
+  printInfo('Native JSON.parse preserved precision (unexpected)')
+}
+
+if (bigIntValue === originalValue) {
+  printSuccess(`parseJson preserved precision: ${bigIntValue} === ${originalValue}`)
+} else {
+  printInfo('parseJson did not preserve precision (unexpected)')
+}
+
+// ============================================================================
+// Step 2: parseJson() - Safe Numbers as Regular Numbers
+// ============================================================================
+printStep(2, 'parseJson() - Safe Numbers as Regular Numbers')
+
+printInfo('Numbers <= MAX_SAFE_INTEGER are parsed as regular numbers:')
+printInfo('')
+
+const safeJson = '{"small": 42, "medium": 1000000, "maxSafe": 9007199254740991}'
+const safeParsed = parseJson(safeJson)
+
+printInfo(`  JSON: ${safeJson}`)
+printInfo('')
+printInfo('  Parsed values:')
+printInfo(`    small:   ${safeParsed.small} (type: ${typeof safeParsed.small})`)
+printInfo(`    medium:  ${safeParsed.medium} (type: ${typeof safeParsed.medium})`)
+printInfo(`    maxSafe: ${safeParsed.maxSafe} (type: ${typeof safeParsed.maxSafe})`)
+printInfo('')
+
+// Verify they are regular numbers
+const allNumbers = [safeParsed.small, safeParsed.medium, safeParsed.maxSafe].every(
+  (v: unknown) => typeof v === 'number',
+)
+if (allNumbers) {
+  printSuccess('All values <= MAX_SAFE_INTEGER are regular numbers')
+}
+
+// ============================================================================
+// Step 3: parseJson() - Large Numbers as BigInt
+// ============================================================================
+printStep(3, 'parseJson() - Large Numbers as BigInt')
+
+printInfo('Numbers > MAX_SAFE_INTEGER are parsed as BigInt:')
+printInfo('')
+
+const bigJson = '{"justOver": 9007199254740992, "large": 18446744073709551615, "huge": 99999999999999999999}'
+const bigParsed = parseJson(bigJson)
+
+printInfo(`  JSON: ${bigJson}`)
+printInfo('')
+printInfo('  Parsed values:')
+printInfo(`    justOver: ${bigParsed.justOver} (type: ${typeof bigParsed.justOver})`)
+printInfo(`    large:    ${bigParsed.large} (type: ${typeof bigParsed.large})`)
+printInfo(`    huge:     ${bigParsed.huge} (type: ${typeof bigParsed.huge})`)
+printInfo('')
+
+// Verify they are BigInts
+const allBigInts = [bigParsed.justOver, bigParsed.large, bigParsed.huge].every((v: unknown) => typeof v === 'bigint')
+if (allBigInts) {
+  printSuccess('All values > MAX_SAFE_INTEGER are BigInt')
+}
+
+// ============================================================================
+// Step 4: stringifyJson() - Serializing BigInt Values
+// ============================================================================
+printStep(4, 'stringifyJson() - Serializing BigInt Values')
+
+printInfo('Native JSON.stringify cannot handle BigInt:')
+printInfo('')
+
+const objWithBigInt = {
+  name: 'Large Amount',
+  value: 18446744073709551615n,
+}
+
+try {
+  JSON.stringify(objWithBigInt)
+  printInfo('  Native JSON.stringify succeeded (unexpected)')
+} catch (e) {
+  printError(`  Native JSON.stringify throws: ${(e as Error).message}`)
+}
+
+printInfo('')
+printInfo('stringifyJson handles BigInt correctly:')
+const stringified = stringifyJson(objWithBigInt)
+printInfo(`  Input:  { name: 'Large Amount', value: 18446744073709551615n }`)
+printInfo(`  Output: ${stringified}`)
+printSuccess('stringifyJson serializes BigInt values without error')
+
+// ============================================================================
+// Step 5: Round-trip Preservation
+// ============================================================================
+printStep(5, 'Round-trip Preservation')
+
+printInfo('Round-trip: stringifyJson(parseJson(str)) preserves large numbers')
+printInfo('')
+
+const originalJson = '{"id":1,"balance":12345678901234567890,"active":true}'
+printInfo(`  Original:    ${originalJson}`)
+
+const parsed = parseJson(originalJson)
+printInfo(`  Parsed:      balance = ${parsed.balance} (${typeof parsed.balance})`)
+
+const roundTripped = stringifyJson(parsed)
+printInfo(`  Round-trip:  ${roundTripped}`)
+
+// Compare (note: order might differ)
+const reparsed = parseJson(roundTripped)
+if (reparsed.balance === parsed.balance && reparsed.id === parsed.id && reparsed.active === parsed.active) {
+  printSuccess('Round-trip preserves all values including large numbers')
+}
+
+// ============================================================================
+// Step 6: Algorand-Relevant Examples - MicroAlgo Amounts
+// ============================================================================
+printStep(6, 'Algorand-Relevant Examples - MicroAlgo Amounts')
+
+printInfo('Algorand uses microAlgos (1 Algo = 1,000,000 microAlgos)')
+printInfo('Large Algo balances can exceed MAX_SAFE_INTEGER in microAlgos')
+printInfo('')
+
+// Example: 10 billion Algos in microAlgos = 10^16 microAlgos
+// MAX_SAFE_INTEGER ~= 9 * 10^15, so amounts over ~9 million Algos need BigInt
+
+printInfo('Example amounts:')
+const algoAmounts = {
+  smallWallet: 1000000000, // 1,000 Algos
+  mediumWallet: 100000000000000, // 100M Algos
+  largeWallet: 10000000000000000, // 10B Algos (exceeds MAX_SAFE_INTEGER)
+}
+
+const algoJson = stringifyJson(algoAmounts)
+printInfo(`  JSON: ${algoJson}`)
+printInfo('')
+
+const algoParsed = parseJson(algoJson)
+printInfo('  Parsed amounts:')
+printInfo(`    smallWallet:  ${algoParsed.smallWallet} microAlgos (${typeof algoParsed.smallWallet})`)
+printInfo(`                  = ${Number(algoParsed.smallWallet) / 1_000_000} Algos`)
+printInfo(`    mediumWallet: ${algoParsed.mediumWallet} microAlgos (${typeof algoParsed.mediumWallet})`)
+printInfo(`                  = ${Number(algoParsed.mediumWallet) / 1_000_000} Algos`)
+printInfo(`    largeWallet:  ${algoParsed.largeWallet} microAlgos (${typeof algoParsed.largeWallet})`)
+printInfo(`                  = ${Number(algoParsed.largeWallet) / 1_000_000} Algos`)
+printInfo('')
+
+// Demonstrate calculation with BigInt
+printInfo('Safe arithmetic with BigInt:')
+const largeBalance = algoParsed.largeWallet as bigint
+const transferAmount = 5000000000000000n // 5B Algos
+const remaining = largeBalance - transferAmount
+printInfo(`  Balance:   ${largeBalance} microAlgos`)
+printInfo(`  Transfer:  ${transferAmount} microAlgos`)
+printInfo(`  Remaining: ${remaining} microAlgos`)
+printSuccess('BigInt enables safe arithmetic with large Algorand amounts')
+
+// ============================================================================
+// Step 7: Comparing Native vs BigInt JSON Parsing
+// ============================================================================
+printStep(7, 'Side-by-Side Comparison')
+
+printInfo('Comparing native JSON.parse vs parseJson:')
+printInfo('')
+
+const testCases = [
+  { label: 'Safe integer', json: '{"value": 123456789}' },
+  { label: 'MAX_SAFE_INTEGER', json: '{"value": 9007199254740991}' },
+  { label: 'MAX_SAFE + 1', json: '{"value": 9007199254740992}' },
+  { label: 'MAX_SAFE + 2', json: '{"value": 9007199254740993}' },
+  { label: 'uint64 max', json: '{"value": 18446744073709551615}' },
+]
+
+printInfo('  Value                  | Native JSON.parse        | parseJson (BigInt)')
+printInfo('  -----------------------|--------------------------|--------------------')
+
+for (const { label, json } of testCases) {
+  const native = JSON.parse(json).value
+  const bigint = parseJson(json).value
+  const nativeStr = String(native).padEnd(24)
+  const bigintStr = String(bigint).padEnd(20)
+  printInfo(`  ${label.padEnd(20)} | ${nativeStr} | ${bigintStr}`)
+}
+
+printInfo('')
+printSuccess('parseJson preserves precision for all values')
+
+// ============================================================================
+// Step 8: Pretty Printing with stringifyJson
+// ============================================================================
+printStep(8, 'Pretty Printing with stringifyJson')
+
+printInfo('stringifyJson supports optional spacing for readability:')
+printInfo('')
+
+const complexObj = {
+  transaction: {
+    type: 'pay',
+    sender: 'ALGORAND...',
+    receiver: 'RECEIVER...',
+    amount: 18446744073709551615n,
+    fee: 1000n,
+  },
+  timestamp: 1704067200,
+}
+
+printInfo('Compact output (default):')
+printInfo(`  ${stringifyJson(complexObj)}`)
+printInfo('')
+
+printInfo('Pretty output (2 spaces):')
+const prettyJson = stringifyJson(complexObj, undefined, 2)
+for (const line of prettyJson.split('\n')) {
+  printInfo(`  ${line}`)
+}
+
+printSuccess('stringifyJson supports formatting options')
+
+// ============================================================================
+// Summary
+// ============================================================================
+printStep(9, 'Summary')
+
+printInfo('parseJson() and stringifyJson() provide safe JSON handling:')
+printInfo('')
+printInfo('  parseJson(str):')
+printInfo('    - Parses JSON strings with large number support')
+printInfo('    - Numbers > MAX_SAFE_INTEGER become BigInt')
+printInfo('    - Numbers <= MAX_SAFE_INTEGER remain regular numbers')
+printInfo('')
+printInfo('  stringifyJson(value, replacer?, space?):')
+printInfo('    - Serializes objects containing BigInt values')
+printInfo('    - Native JSON.stringify throws on BigInt')
+printInfo('    - Supports replacer function and spacing')
+printInfo('')
+printInfo('  Use cases:')
+printInfo('    - Algorand API responses with large amounts')
+printInfo('    - Transaction data with microAlgo values')
+printInfo('    - Any JSON with numbers > 9,007,199,254,740,991')
+printInfo('')
+printSuccess('JSON BigInt Example completed!')
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- **JSON BigInt**
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)

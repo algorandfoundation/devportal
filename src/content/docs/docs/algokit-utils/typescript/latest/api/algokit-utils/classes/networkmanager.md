@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'NetworkManager'
+title: "NetworkManager"
 ---
 
-Defined in: [src/network-manager.ts:101](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L101)
+Defined in: [src/network-manager.ts:101](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L101)
 
 Manager for network-related operations.
 Provides utilities for querying blockchain state and waiting for specific conditions.
@@ -16,7 +16,7 @@ Provides utilities for querying blockchain state and waiting for specific condit
 
 > **new NetworkManager**(`algod`, `algorand`): `NetworkManager`
 
-Defined in: [src/network-manager.ts:111](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L111)
+Defined in: [src/network-manager.ts:111](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L111)
 
 Create a new NetworkManager instance.
 
@@ -46,7 +46,7 @@ The AlgorandClient instance (for LocalNet operations)
 
 > **get** **localNet**(): [`LocalNetManager`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/localnetmanager/)
 
-Defined in: [src/network-manager.ts:244](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L244)
+Defined in: [src/network-manager.ts:244](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L244)
 
 Get LocalNet-specific network utilities.
 These methods only work when connected to a LocalNet network and will throw
@@ -56,10 +56,10 @@ an error if called on other networks.
 
 ```typescript
 // Block warp on LocalNet
-await algorand.network.localNet.blockWarp(100n);
+await algorand.network.localNet.blockWarp(100n)
 
 // Time warp on LocalNet
-await algorand.network.localNet.timeWarp(BigInt(Date.now() / 1000) + 3600n);
+await algorand.network.localNet.timeWarp(BigInt(Date.now() / 1000) + 3600n)
 ```
 
 ##### Returns
@@ -74,7 +74,7 @@ The LocalNetManager instance
 
 > **getLastRound**(): `Promise`\<`bigint`\>
 
-Defined in: [src/network-manager.ts:125](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L125)
+Defined in: [src/network-manager.ts:125](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L125)
 
 Get the last committed round number.
 
@@ -87,17 +87,17 @@ The last round number
 #### Example
 
 ```typescript
-const lastRound = await algorand.network.getLastRound();
-console.log(`Current round: ${lastRound}`);
+const lastRound = await algorand.network.getLastRound()
+console.log(`Current round: ${lastRound}`)
 ```
 
----
+***
 
 ### getLatestTimestamp()
 
 > **getLatestTimestamp**(): `Promise`\<`bigint`\>
 
-Defined in: [src/network-manager.ts:144](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L144)
+Defined in: [src/network-manager.ts:144](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L144)
 
 Get the Unix timestamp of the latest block.
 
@@ -114,17 +114,17 @@ The UNIX timestamp of the last round
 #### Example
 
 ```typescript
-const timestamp = await algorand.network.getLatestTimestamp();
-console.log(`Latest block time: ${new Date(Number(timestamp) * 1000)}`);
+const timestamp = await algorand.network.getLatestTimestamp()
+console.log(`Latest block time: ${new Date(Number(timestamp) * 1000)}`)
 ```
 
----
+***
 
 ### waitUntilRound()
 
 > **waitUntilRound**(`targetRound`): `Promise`\<`void`\>
 
-Defined in: [src/network-manager.ts:164](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L164)
+Defined in: [src/network-manager.ts:164](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L164)
 
 Wait until a specific round is reached.
 
@@ -148,19 +148,19 @@ Error if timeout is reached before the target round
 
 ```typescript
 // Wait for round 1000
-await algorand.network.waitUntilRound(1000n);
+await algorand.network.waitUntilRound(1000n)
 
 // Wait with a 30 second timeout
-await algorand.network.waitUntilRound(1000n, 30000);
+await algorand.network.waitUntilRound(1000n, 30000)
 ```
 
----
+***
 
 ### waitUntilTimestamp()
 
 > **waitUntilTimestamp**(`targetTimestamp`, `options?`): `Promise`\<`void`\>
 
-Defined in: [src/network-manager.ts:188](https://github.com/larkiny/algokit-utils-ts/blob/main/src/network-manager.ts#L188)
+Defined in: [src/network-manager.ts:188](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/network-manager.ts#L188)
 
 Wait until a specific Unix timestamp is reached on the blockchain.
 
@@ -186,12 +186,9 @@ Optional parameters for waiting
 
 ```typescript
 // Wait until a specific time
-const futureTime = BigInt(Math.floor(Date.now() / 1000)) + 60n; // 1 minute from now
-await algorand.network.waitUntilTimestamp(futureTime);
+const futureTime = BigInt(Math.floor(Date.now() / 1000)) + 60n // 1 minute from now
+await algorand.network.waitUntilTimestamp(futureTime)
 
 // Wait with custom timing parameters
-await algorand.network.waitUntilTimestamp(futureTime, {
-  blockTimeSeconds: 3.0,
-  pollingIntervalMs: 500,
-});
+await algorand.network.waitUntilTimestamp(futureTime, { blockTimeSeconds: 3.0, pollingIntervalMs: 500 })
 ```

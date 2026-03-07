@@ -1,0 +1,396 @@
+---
+title: "Atomic Swap"
+description: "This example demonstrates how to perform an atomic swap of ALGO for ASA between two parties. In an atomic swap:"
+sidebar:
+  order: 8
+---
+
+[← Back to Transactions](/docs/algokit-utils/typescript/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to perform an atomic swap of ALGO for ASA between two parties. In an atomic swap:
+- Party A sends ASA to Party B
+- Party B sends ALGO to Party A
+- Each party signs ONLY their own transaction
+- Signatures are combined and submitted together
+- Both transfers succeed or both fail (atomicity)
+ Key difference from regular atomic groups: different parties sign different transactions.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example transact/08-atomic-swap.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/transact/08-atomic-swap.ts)
+
+```typescript title="08-atomic-swap.ts"
+/**
+ * Example: Atomic Swap
+ *
+ * This example demonstrates how to perform an atomic swap of ALGO for ASA between two parties.
+ * In an atomic swap:
+ * - Party A sends ASA to Party B
+ * - Party B sends ALGO to Party A
+ * - Each party signs ONLY their own transaction
+ * - Signatures are combined and submitted together
+ * - Both transfers succeed or both fail (atomicity)
+ *
+ * Key difference from regular atomic groups: different parties sign different transactions.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import type { PendingTransactionResponse } from '@algorandfoundation/algokit-utils/algod-client'
+import {
+  Transaction,
+  TransactionType,
+  assignFee,
+  groupTransactions,
+  type AssetConfigTransactionFields,
+  type AssetTransferTransactionFields,
+  type PaymentTransactionFields,
+} from '@algorandfoundation/algokit-utils/transact'
+import {
+  createAlgodClient,
+  formatAlgo,
+  getAccountBalance,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+  waitForConfirmation,
+} from '../shared/utils.js'
+
+/**
+ * Gets a funded account from LocalNet's KMD wallet
+ */
+async function getLocalNetFundedAccount(algorand: AlgorandClient) {
+  return await algorand.account.kmd.getLocalNetDispenserAccount()
+}
+
+async function main() {
+  printHeader('Atomic Swap Example (ALGO <-> ASA)')
+
+  // Step 1: Initialize clients
+  printStep(1, 'Initialize Algod Client')
+  const algod = createAlgodClient()
+  const algorand = AlgorandClient.defaultLocalNet()
+  printInfo('Connected to LocalNet Algod')
+
+  // Step 2: Get Party A from KMD (asset owner)
+  printStep(2, 'Setup Party A (Asset Owner)')
+  const partyA = await getLocalNetFundedAccount(algorand)
+  const partyABalanceBefore = await getAccountBalance(algorand, partyA.addr.toString())
+  printInfo(`Party A address: ${shortenAddress(partyA.addr.toString())}`)
+  printInfo(`Party A ALGO balance: ${formatAlgo(partyABalanceBefore.microAlgo)}`)
+
+  // Step 3: Generate and fund Party B using AlgorandClient helper
+  printStep(3, 'Setup Party B (ALGO holder)')
+  const partyB = algorand.account.random()
+
+  // Fund Party B with ALGO for the swap + fees
+  const suggestedParams = await algod.suggestedParams()
+  const partyBFundingAmount = 10_000_000n // 10 ALGO (will use 5 ALGO for swap)
+
+  const fundBTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: partyA.addr,
+    firstValid: suggestedParams.firstValid,
+    lastValid: suggestedParams.lastValid,
+    genesisHash: suggestedParams.genesisHash,
+    genesisId: suggestedParams.genesisId,
+    payment: {
+      receiver: partyB.addr,
+      amount: partyBFundingAmount,
+    },
+  })
+
+  const fundBTxWithFee = assignFee(fundBTx, {
+    feePerByte: suggestedParams.fee,
+    minFee: suggestedParams.minFee,
+  })
+
+  const signedFundBTx = await partyA.signer([fundBTxWithFee], [0])
+  await algod.sendRawTransaction(signedFundBTx)
+  await waitForConfirmation(algod, fundBTxWithFee.txId())
+
+  const partyBBalanceBefore = await getAccountBalance(algorand, partyB.addr.toString())
+  printInfo(`Party B address: ${shortenAddress(partyB.addr.toString())}`)
+  printInfo(`Party B ALGO balance: ${formatAlgo(partyBBalanceBefore.microAlgo)}`)
+
+  // Step 4: Party A creates an asset
+  printStep(4, 'Party A Creates Asset')
+
+  const assetTotal = 1_000_000n // 1,000,000 units (no decimals for simplicity)
+  const assetDecimals = 0
+  const assetName = 'Swap Token'
+  const assetUnitName = 'SWAP'
+
+  const createParams = await algod.suggestedParams()
+
+  const assetConfigFields: AssetConfigTransactionFields = {
+    assetId: 0n,
+    total: assetTotal,
+    decimals: assetDecimals,
+    defaultFrozen: false,
+    assetName: assetName,
+    unitName: assetUnitName,
+    url: 'https://example.com/swap-token',
+    manager: partyA.addr,
+    reserve: partyA.addr,
+    freeze: partyA.addr,
+    clawback: partyA.addr,
+  }
+
+  const createAssetTx = new Transaction({
+    type: TransactionType.AssetConfig,
+    sender: partyA.addr,
+    firstValid: createParams.firstValid,
+    lastValid: createParams.lastValid,
+    genesisHash: createParams.genesisHash,
+    genesisId: createParams.genesisId,
+    assetConfig: assetConfigFields,
+  })
+
+  const createAssetTxWithFee = assignFee(createAssetTx, {
+    feePerByte: createParams.fee,
+    minFee: createParams.minFee,
+  })
+
+  const signedCreateTx = await partyA.signer([createAssetTxWithFee], [0])
+  await algod.sendRawTransaction(signedCreateTx)
+  const createPendingInfo = (await waitForConfirmation(algod, createAssetTxWithFee.txId())) as PendingTransactionResponse
+
+  const assetId = createPendingInfo.assetId
+  if (!assetId) {
+    throw new Error('Asset ID not found')
+  }
+
+  printInfo(`Created asset: ${assetName} (${assetUnitName})`)
+  printInfo(`Asset ID: ${assetId}`)
+  printInfo(`Party A holds: ${assetTotal} ${assetUnitName}`)
+
+  // Step 5: Party B opts into the asset
+  printStep(5, 'Party B Opts Into Asset')
+
+  const optInParams = await algod.suggestedParams()
+
+  const optInFields: AssetTransferTransactionFields = {
+    assetId: assetId,
+    receiver: partyB.addr,
+    amount: 0n,
+  }
+
+  const optInTx = new Transaction({
+    type: TransactionType.AssetTransfer,
+    sender: partyB.addr,
+    firstValid: optInParams.firstValid,
+    lastValid: optInParams.lastValid,
+    genesisHash: optInParams.genesisHash,
+    genesisId: optInParams.genesisId,
+    assetTransfer: optInFields,
+  })
+
+  const optInTxWithFee = assignFee(optInTx, {
+    feePerByte: optInParams.fee,
+    minFee: optInParams.minFee,
+  })
+
+  const signedOptInTx = await partyB.signer([optInTxWithFee], [0])
+  await algod.sendRawTransaction(signedOptInTx)
+  await waitForConfirmation(algod, optInTxWithFee.txId())
+
+  printInfo(`Party B opted into asset ID: ${assetId}`)
+  printSuccess('Opt-in successful!')
+
+  // Step 6: Build the atomic swap transactions
+  printStep(6, 'Build Atomic Swap Transactions')
+
+  const swapAssetAmount = 100n // Party A sends 100 SWAP to Party B
+  const swapAlgoAmount = 5_000_000n // Party B sends 5 ALGO to Party A
+
+  printInfo(`Swap terms:`)
+  printInfo(`  - Party A sends: ${swapAssetAmount} ${assetUnitName} -> Party B`)
+  printInfo(`  - Party B sends: ${formatAlgo(swapAlgoAmount)} -> Party A`)
+
+  const swapParams = await algod.suggestedParams()
+
+  // Transaction 1: Party A sends ASA to Party B
+  const asaSendFields: AssetTransferTransactionFields = {
+    assetId: assetId,
+    receiver: partyB.addr,
+    amount: swapAssetAmount,
+  }
+
+  const asaSendTx = new Transaction({
+    type: TransactionType.AssetTransfer,
+    sender: partyA.addr,
+    firstValid: swapParams.firstValid,
+    lastValid: swapParams.lastValid,
+    genesisHash: swapParams.genesisHash,
+    genesisId: swapParams.genesisId,
+    assetTransfer: asaSendFields,
+  })
+
+  const asaSendTxWithFee = assignFee(asaSendTx, {
+    feePerByte: swapParams.fee,
+    minFee: swapParams.minFee,
+  })
+
+  // Transaction 2: Party B sends ALGO to Party A
+  const algoSendFields: PaymentTransactionFields = {
+    receiver: partyA.addr,
+    amount: swapAlgoAmount,
+  }
+
+  const algoSendTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: partyB.addr,
+    firstValid: swapParams.firstValid,
+    lastValid: swapParams.lastValid,
+    genesisHash: swapParams.genesisHash,
+    genesisId: swapParams.genesisId,
+    payment: algoSendFields,
+  })
+
+  const algoSendTxWithFee = assignFee(algoSendTx, {
+    feePerByte: swapParams.fee,
+    minFee: swapParams.minFee,
+  })
+
+  printInfo('Transaction 1: Party A sends ASA to Party B')
+  printInfo('Transaction 2: Party B sends ALGO to Party A')
+
+  // Step 7: Group the transactions using groupTransactions()
+  printStep(7, 'Group Transactions with groupTransactions()')
+
+  const groupedTransactions = groupTransactions([asaSendTxWithFee, algoSendTxWithFee])
+
+  const groupId = groupedTransactions[0].group
+  printInfo(`Group ID assigned to both transactions`)
+  printInfo(`Group ID (base64): ${groupId ? Buffer.from(groupId).toString('base64') : 'undefined'}`)
+  printSuccess('Transactions grouped successfully!')
+
+  // Step 8: Each party signs ONLY their transaction
+  printStep(8, 'Each Party Signs Their Own Transaction')
+
+  printInfo('Party A signs transaction 0 (ASA transfer)')
+  const signedAsaTx = await partyA.signer([groupedTransactions[0]], [0])
+
+  printInfo('Party B signs transaction 1 (ALGO payment)')
+  const signedAlgoTx = await partyB.signer([groupedTransactions[1]], [0])
+
+  printSuccess('Both parties signed their respective transactions!')
+  printInfo('Note: Party A cannot see/modify Party B\'s transaction and vice versa')
+  printInfo('The atomic group ensures both execute or neither does')
+
+  // Step 9: Combine signatures and submit
+  printStep(9, 'Combine Signatures and Submit Atomic Swap')
+
+  // Concatenate signed transactions in group order
+  const combinedSignedTxns = new Uint8Array([...signedAsaTx[0], ...signedAlgoTx[0]])
+
+  printInfo('Submitting atomic swap to network...')
+  await algod.sendRawTransaction(combinedSignedTxns)
+
+  const swapTxId = groupedTransactions[0].txId()
+  const pendingInfo = await waitForConfirmation(algod, swapTxId)
+  printInfo(`Atomic swap confirmed in round: ${pendingInfo.confirmedRound}`)
+  printSuccess('Atomic swap executed successfully!')
+
+  // Step 10: Verify the swap results
+  printStep(10, 'Verify Swap Results')
+
+  // Get Party A's balances after swap
+  const partyABalanceAfter = await getAccountBalance(algorand, partyA.addr.toString())
+  const partyAAssetInfo = await algod.accountAssetInformation(partyA.addr.toString(), assetId)
+  const partyAAssetBalance = partyAAssetInfo.assetHolding?.amount ?? 0n
+
+  // Get Party B's balances after swap
+  const partyBBalanceAfter = await getAccountBalance(algorand, partyB.addr.toString())
+  const partyBAssetInfo = await algod.accountAssetInformation(partyB.addr.toString(), assetId)
+  const partyBAssetBalance = partyBAssetInfo.assetHolding?.amount ?? 0n
+
+  printInfo('Party A (after swap):')
+  printInfo(`  - ALGO: ${formatAlgo(partyABalanceAfter.microAlgo)}`)
+  printInfo(`  - ${assetUnitName}: ${partyAAssetBalance} (sent ${swapAssetAmount}, remaining: ${assetTotal - swapAssetAmount})`)
+
+  printInfo('Party B (after swap):')
+  printInfo(`  - ALGO: ${formatAlgo(partyBBalanceAfter.microAlgo)}`)
+  printInfo(`  - ${assetUnitName}: ${partyBAssetBalance} (received ${swapAssetAmount})`)
+
+  // Verify Party A received ALGO
+  // Party A's balance should have increased by swapAlgoAmount minus fees paid for various transactions
+  // We check that they received roughly the ALGO from the swap
+  printInfo('')
+  printInfo('Verification:')
+
+  // Verify Party B received ASA
+  if (partyBAssetBalance !== swapAssetAmount) {
+    throw new Error(`Party B ASA balance mismatch: expected ${swapAssetAmount}, got ${partyBAssetBalance}`)
+  }
+  printSuccess(`Party B received ${swapAssetAmount} ${assetUnitName}`)
+
+  // Verify Party A's ASA balance decreased
+  const expectedPartyAAsaBalance = assetTotal - swapAssetAmount
+  if (partyAAssetBalance !== expectedPartyAAsaBalance) {
+    throw new Error(`Party A ASA balance mismatch: expected ${expectedPartyAAsaBalance}, got ${partyAAssetBalance}`)
+  }
+  printSuccess(`Party A ASA balance correctly reduced to ${partyAAssetBalance} ${assetUnitName}`)
+
+  // Verify Party B's ALGO balance decreased (sent 5 ALGO + fee)
+  const partyBAlgoDecrease = partyBBalanceBefore.microAlgo - partyBBalanceAfter.microAlgo
+  if (partyBAlgoDecrease < swapAlgoAmount) {
+    throw new Error(`Party B should have sent at least ${swapAlgoAmount} microALGO`)
+  }
+  printSuccess(`Party B sent ${formatAlgo(swapAlgoAmount)} (plus ${formatAlgo(partyBAlgoDecrease - swapAlgoAmount)} in fees)`)
+
+  printInfo('')
+  printInfo('Atomic Swap Summary:')
+  printInfo(`  - Party A gave: ${swapAssetAmount} ${assetUnitName}`)
+  printInfo(`  - Party A received: ${formatAlgo(swapAlgoAmount)}`)
+  printInfo(`  - Party B gave: ${formatAlgo(swapAlgoAmount)}`)
+  printInfo(`  - Party B received: ${swapAssetAmount} ${assetUnitName}`)
+
+  printSuccess('Atomic swap example completed successfully!')
+}
+
+main().catch((error) => {
+  console.error('Error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/typescript/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/typescript/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/typescript/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/typescript/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/typescript/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/typescript/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/typescript/latest/examples/transact/07-atomic-group/)
+- **Atomic Swap**
+- [Single Signature](/docs/algokit-utils/typescript/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/typescript/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/typescript/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/typescript/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/typescript/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/typescript/latest/examples/transact/14-app-call/)

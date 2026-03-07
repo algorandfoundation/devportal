@@ -1,0 +1,406 @@
+---
+title: "Sourcemap"
+description: "This example demonstrates how to use ProgramSourceMap for mapping TEAL program counters (PC) to source locations for debugging purposes."
+sidebar:
+  order: 12
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates how to use ProgramSourceMap for mapping TEAL program counters (PC) to source locations for debugging purposes.
+ Topics covered:
+- ProgramSourceMap class construction from sourcemap data
+- Sourcemap format: version, sources, names, mappings
+- getPcs() to get all program counter values
+- getLocationForPc() to get source location for a specific PC
+- SourceLocation properties: line, column, sourceIndex, nameIndex
+- getPcsOnSourceLine() to find PCs for a source line
+- How sourcemaps enable TEAL debugging by mapping PC to source
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/12-sourcemap.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/12-sourcemap.ts)
+
+```typescript title="12-sourcemap.ts"
+/**
+ * Example: Sourcemap
+ *
+ * This example demonstrates how to use ProgramSourceMap for mapping TEAL
+ * program counters (PC) to source locations for debugging purposes.
+ *
+ * Topics covered:
+ * - ProgramSourceMap class construction from sourcemap data
+ * - Sourcemap format: version, sources, names, mappings
+ * - getPcs() to get all program counter values
+ * - getLocationForPc() to get source location for a specific PC
+ * - SourceLocation properties: line, column, sourceIndex, nameIndex
+ * - getPcsOnSourceLine() to find PCs for a source line
+ * - How sourcemaps enable TEAL debugging by mapping PC to source
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import type { PcLineLocation } from '@algorandfoundation/algokit-utils/common'
+import { ProgramSourceMap } from '@algorandfoundation/algokit-utils/common'
+import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+// ============================================================================
+// Main Example
+// ============================================================================
+
+printHeader('Sourcemap Example')
+
+// ============================================================================
+// Step 1: Introduction to Sourcemaps
+// ============================================================================
+printStep(1, 'Introduction to Sourcemaps')
+
+printInfo('Sourcemaps enable debugging by mapping compiled code to source code.')
+printInfo('')
+printInfo('In Algorand development:')
+printInfo('  - TEAL programs are compiled from higher-level languages (PyTeal, Reach, etc.)')
+printInfo('  - Program counter (PC) values identify positions in the compiled TEAL')
+printInfo('  - Sourcemaps map each PC back to the original source file location')
+printInfo('  - When errors occur, you can trace back to your original source code')
+printInfo('')
+printInfo('The ProgramSourceMap class parses standard source map v3 format.')
+printSuccess('Sourcemaps bridge the gap between compiled TEAL and source code')
+
+// ============================================================================
+// Step 2: Sourcemap Format
+// ============================================================================
+printStep(2, 'Sourcemap Format')
+
+printInfo('A sourcemap follows the standard v3 format with these fields:')
+printInfo('')
+printInfo('  version:  number    - Sourcemap version (must be 3)')
+printInfo('  sources:  string[]  - List of source file names/paths')
+printInfo('  names:    string[]  - List of symbol names referenced in mappings')
+printInfo('  mappings: string    - VLQ-encoded mapping data (semicolon-separated)')
+printInfo('')
+printInfo('The mappings string uses Base64 VLQ encoding:')
+printInfo('  - Each semicolon (;) represents one TEAL instruction (one PC value)')
+printInfo('  - Within each segment, values are delta-encoded from the previous')
+printInfo('  - Segments encode: [generated_col, source_index, source_line, source_col, name_index?]')
+printInfo('')
+printSuccess('Standard v3 sourcemap format enables interoperability with tools')
+
+// ============================================================================
+// Step 3: Creating a Mock Sourcemap
+// ============================================================================
+printStep(3, 'Creating a Mock Sourcemap')
+
+printInfo('Let us create a mock sourcemap representing a simple TEAL program.')
+printInfo('')
+printInfo('Imagine this PyTeal source (pysource.py):')
+printInfo('  Line 1: from pyteal import *')
+printInfo('  Line 2: ')
+printInfo('  Line 3: def approval():')
+printInfo('  Line 4:     return Approve()')
+printInfo('  Line 5: ')
+printInfo('  Line 6: print(compileTeal(approval()))')
+printInfo('')
+printInfo('Compiled to TEAL:')
+printInfo('  PC 0: #pragma version 10')
+printInfo('  PC 1: int 1')
+printInfo('  PC 2: return')
+printInfo('')
+
+// Create a mock sourcemap that maps:
+// PC 0 -> Line 1 (version pragma from import)
+// PC 1 -> Line 4, column 11 (the Approve() call, with name index 0)
+// PC 2 -> Line 4, column 4 (the return statement, with name index 1)
+// Note: VLQ encoding - each semicolon separates PC values
+// Format: [gen_col, source_idx, source_line, source_col, name_idx?]
+// Values are delta-encoded from previous
+
+const mockSourcemap = {
+  version: 3,
+  sources: ['pysource.py'],
+  names: ['Approve', 'return'],
+  // Mappings explanation (VLQ-encoded, delta from previous):
+  // PC 0: AAAA = [0, 0, 0, 0] -> source 0, line 0, col 0 (no name)
+  // PC 1: AAGKA = [0, 0, 3, 5, 0] -> source 0, line 3, col 5, name 0 ("Approve")
+  // PC 2: AAAAC = [0, 0, 0, 0, 1] -> same source/line/col, name delta +1 -> name 1 ("return")
+  mappings: 'AAAA;AAGKA;AAAAC',
+}
+
+printInfo(`version:  ${mockSourcemap.version}`)
+printInfo(`sources:  ${JSON.stringify(mockSourcemap.sources)}`)
+printInfo(`names:    ${JSON.stringify(mockSourcemap.names)}`)
+printInfo(`mappings: "${mockSourcemap.mappings}"`)
+printInfo('')
+printSuccess('Mock sourcemap created representing a simple PyTeal program')
+
+// ============================================================================
+// Step 4: Constructing ProgramSourceMap
+// ============================================================================
+printStep(4, 'Constructing ProgramSourceMap')
+
+const sourceMap = new ProgramSourceMap(mockSourcemap)
+
+printInfo('ProgramSourceMap constructor takes an object with:')
+printInfo('  { version, sources, names, mappings }')
+printInfo('')
+printInfo('After construction, the sourcemap properties are accessible:')
+printInfo(`  sourceMap.version:  ${sourceMap.version}`)
+printInfo(`  sourceMap.sources:  ${JSON.stringify(sourceMap.sources)}`)
+printInfo(`  sourceMap.names:    ${JSON.stringify(sourceMap.names)}`)
+printInfo(`  sourceMap.mappings: "${sourceMap.mappings}"`)
+printInfo('')
+printInfo('The constructor parses the VLQ-encoded mappings and builds internal indexes.')
+printSuccess('ProgramSourceMap constructed and mappings parsed')
+
+// ============================================================================
+// Step 5: getPcs() - Get All Program Counter Values
+// ============================================================================
+printStep(5, 'getPcs() - Get All Program Counter Values')
+
+const allPcs = sourceMap.getPcs()
+
+printInfo('getPcs() returns an array of all PC values that have mappings.')
+printInfo('')
+printInfo(`All PCs with mappings: [${allPcs.join(', ')}]`)
+printInfo(`Total PC count: ${allPcs.length}`)
+printInfo('')
+printInfo('Not all PCs may have mappings - some TEAL opcodes may not')
+printInfo('correspond to any source location (e.g., compiler-generated code).')
+printSuccess('getPcs() retrieves all program counters with source mappings')
+
+// ============================================================================
+// Step 6: getLocationForPc() - Get Source Location for a PC
+// ============================================================================
+printStep(6, 'getLocationForPc() - Get Source Location for a PC')
+
+printInfo('getLocationForPc(pc) returns the source location for a given PC.')
+printInfo('')
+
+printInfo('SourceLocation Interface')
+printInfo('  interface SourceLocation {')
+printInfo('    line: number        // Line number in source file (0-indexed)')
+printInfo('    column: number      // Column number in source line (0-indexed)')
+printInfo('    sourceIndex: number // Index into sources array')
+printInfo('    nameIndex?: number  // Optional index into names array')
+printInfo('  }')
+printInfo('')
+
+// Get location for each PC
+for (const pc of allPcs) {
+  const location = sourceMap.getLocationForPc(pc)
+  if (location) {
+    const sourceName = sourceMap.sources[location.sourceIndex]
+    const nameInfo = location.nameIndex !== undefined ? `, name: "${sourceMap.names[location.nameIndex]}"` : ''
+    printInfo(`PC ${pc} -> ${sourceName}:${location.line + 1}:${location.column + 1}${nameInfo}`)
+    printInfo(`         (line: ${location.line}, column: ${location.column}, sourceIndex: ${location.sourceIndex}${location.nameIndex !== undefined ? `, nameIndex: ${location.nameIndex}` : ''})`)
+  }
+}
+printInfo('')
+
+// Try a PC that doesn't exist
+const nonExistentPc = 999
+const noLocation = sourceMap.getLocationForPc(nonExistentPc)
+printInfo(`PC ${nonExistentPc} (non-existent) -> ${noLocation ?? 'undefined'}`)
+printInfo('')
+printSuccess('getLocationForPc() maps PC values to source locations')
+
+// ============================================================================
+// Step 7: getPcsOnSourceLine() - Find PCs for a Source Line
+// ============================================================================
+printStep(7, 'getPcsOnSourceLine() - Find PCs for a Source Line')
+
+printInfo('getPcsOnSourceLine(sourceIndex, line) returns all PCs for a source line.')
+printInfo('This is useful for setting breakpoints at a specific source line.')
+printInfo('')
+
+printInfo('PcLineLocation Interface')
+printInfo('  interface PcLineLocation {')
+printInfo('    pc: number         // Program counter value')
+printInfo('    column: number     // Column in the source line')
+printInfo('    nameIndex?: number // Optional index into names array')
+printInfo('  }')
+printInfo('')
+
+// Check each line in our source
+const sourceIndex = 0
+const linesToCheck = [0, 1, 2, 3, 4, 5]
+
+for (const line of linesToCheck) {
+  const pcsOnLine = sourceMap.getPcsOnSourceLine(sourceIndex, line)
+  if (pcsOnLine.length > 0) {
+    const pcDetails = pcsOnLine.map((loc: PcLineLocation) => {
+      const nameInfo = loc.nameIndex !== undefined ? ` (${sourceMap.names[loc.nameIndex]})` : ''
+      return `PC ${loc.pc} at col ${loc.column}${nameInfo}`
+    })
+    printInfo(`Line ${line + 1}: ${pcDetails.join(', ')}`)
+  } else {
+    printInfo(`Line ${line + 1}: (no PCs mapped)`)
+  }
+}
+printInfo('')
+printSuccess('getPcsOnSourceLine() enables breakpoint setting and line-based debugging')
+
+// ============================================================================
+// Step 8: Practical Debugging Example
+// ============================================================================
+printStep(8, 'Practical Debugging Example')
+
+printInfo('When a TEAL program fails, the error includes the PC where it failed.')
+printInfo('Sourcemaps let you trace back to your original source code.')
+printInfo('')
+
+// Simulate a runtime error scenario
+const failedPc = 1
+const errorLocation = sourceMap.getLocationForPc(failedPc)
+
+printInfo('Simulated Runtime Error')
+printInfo(`Error: Logic eval error at PC ${failedPc}: int 1 expected bytes`)
+printInfo('')
+
+if (errorLocation) {
+  const sourceFile = sourceMap.sources[errorLocation.sourceIndex]
+  const line = errorLocation.line + 1 // Convert to 1-indexed for display
+  const column = errorLocation.column + 1
+  const symbolName = errorLocation.nameIndex !== undefined ? sourceMap.names[errorLocation.nameIndex] : undefined
+
+  printInfo('Mapped to Source')
+  printInfo(`File:   ${sourceFile}`)
+  printInfo(`Line:   ${line}`)
+  printInfo(`Column: ${column}`)
+  if (symbolName) {
+    printInfo(`Symbol: ${symbolName}`)
+  }
+  printInfo('')
+  printInfo('This allows you to immediately find the source code location')
+  printInfo('that caused the error, rather than debugging raw TEAL opcodes.')
+}
+printSuccess('Sourcemaps enable efficient debugging of compiled TEAL programs')
+
+// ============================================================================
+// Step 9: Sourcemap with Multiple Sources
+// ============================================================================
+printStep(9, 'Sourcemap with Multiple Sources')
+
+printInfo('Sourcemaps can reference multiple source files.')
+printInfo('This is common when TEAL is generated from multiple modules.')
+printInfo('')
+
+// Create a multi-source sourcemap
+const multiSourceMap = new ProgramSourceMap({
+  version: 3,
+  sources: ['main.py', 'utils.py', 'constants.py'],
+  names: ['approval', 'helper', 'CONST'],
+  // Mappings that reference different sources:
+  // PC 0 -> source 0 (main.py)
+  // PC 1 -> source 1 (utils.py)
+  // PC 2 -> source 2 (constants.py)
+  // PC 3 -> source 0 (main.py again)
+  mappings: 'AAAA;ACAA;ACAA;AFAA',
+})
+
+printInfo(`sources: ${JSON.stringify(multiSourceMap.sources)}`)
+printInfo('')
+
+const multiPcs = multiSourceMap.getPcs()
+for (const pc of multiPcs) {
+  const location = multiSourceMap.getLocationForPc(pc)
+  if (location) {
+    const sourceName = multiSourceMap.sources[location.sourceIndex]
+    printInfo(`PC ${pc} -> ${sourceName}`)
+  }
+}
+printInfo('')
+printInfo('Multiple source support allows tracing code back to the correct')
+printInfo('module in multi-file projects.')
+printSuccess('Sourcemaps support multi-file projects with source index tracking')
+
+// ============================================================================
+// Step 10: Version Validation
+// ============================================================================
+printStep(10, 'Version Validation')
+
+printInfo('ProgramSourceMap only supports version 3 sourcemaps.')
+printInfo('')
+
+try {
+  new ProgramSourceMap({
+    version: 2, // Invalid version
+    sources: ['test.py'],
+    names: [],
+    mappings: 'AAAA',
+  })
+  printInfo('ERROR: Version 2 should have been rejected')
+} catch (error) {
+  if (error instanceof Error) {
+    printInfo(`Creating version 2 sourcemap throws: "${error.message}"`)
+  }
+}
+printInfo('')
+printSuccess('Version validation ensures sourcemap compatibility')
+
+// ============================================================================
+// Step 11: Summary - Debugging Workflow with Sourcemaps
+// ============================================================================
+printStep(11, 'Summary - Debugging Workflow with Sourcemaps')
+
+printInfo('Typical debugging workflow with sourcemaps:')
+printInfo('')
+printInfo('  1. Compile your high-level code (PyTeal, etc.) to TEAL')
+printInfo('  2. The compiler generates a sourcemap alongside the TEAL')
+printInfo('  3. Load the sourcemap: new ProgramSourceMap(sourcemapData)')
+printInfo('  4. When an error occurs, get the PC from the error message')
+printInfo('  5. Map PC to source: sourceMap.getLocationForPc(pc)')
+printInfo('  6. Navigate to the source location to fix the issue')
+printInfo('')
+printInfo('For setting breakpoints:')
+printInfo('  1. Identify the source file and line')
+printInfo('  2. Get PCs: sourceMap.getPcsOnSourceLine(sourceIndex, line)')
+printInfo('  3. Set breakpoints at the returned PC values')
+printInfo('')
+
+printInfo('Key Methods')
+printInfo('  getPcs()                          - All PCs with mappings')
+printInfo('  getLocationForPc(pc)              - Source location for PC')
+printInfo('  getPcsOnSourceLine(srcIdx, line)  - PCs on a source line')
+printInfo('')
+
+printInfo('Key Types')
+printInfo('  SourceLocation   - { line, column, sourceIndex, nameIndex? }')
+printInfo('  PcLineLocation   - { pc, column, nameIndex? }')
+printInfo('')
+
+printSuccess('ProgramSourceMap enables effective TEAL debugging!')
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- [Address Basics](/docs/algokit-utils/typescript/latest/examples/common/01-address-basics/)
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- **Sourcemap**

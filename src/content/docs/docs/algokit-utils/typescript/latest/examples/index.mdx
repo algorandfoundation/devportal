@@ -1,0 +1,128 @@
+---
+title: Code Examples
+description: "117 runnable TypeScript examples demonstrating AlgoKit Utils features"
+sidebar:
+  order: 0
+---
+
+Browse **117** runnable TypeScript examples organized by feature area. Each example is self-contained and demonstrates specific functionality of the AlgoKit Utils library.
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/algorandfoundation/algokit-utils-ts.git
+cd algokit-utils-ts
+
+# Install dependencies and build the package
+npm ci
+npm run build
+
+# Install examples dependencies
+cd examples
+npm ci
+
+# Run any example
+npm run example algorand_client/01-client-instantiation.ts
+```
+
+## Prerequisites
+
+- Node.js >= 20.0
+- [AlgoKit CLI](https://github.com/algorandfoundation/algokit-cli) installed
+- LocalNet running for network examples (`algokit localnet start`)
+
+*Some examples marked "No LocalNet required" work with pure utility functions.*
+
+## Categories
+
+<div class="card-grid">
+<a href="abi/" class="card">
+  <h3>ABI Encoding</h3>
+  <p>ABI type parsing, encoding, and decoding following the ARC-4 specification.</p>
+  <span class="count">15 examples</span>
+</a>
+<a href="algo25/" class="card">
+  <h3>Mnemonic Utilities</h3>
+  <p>Mnemonic and seed conversion utilities following the Algorand 25-word mnemonic standard.</p>
+  <span class="count">5 examples</span>
+</a>
+<a href="algod-client/" class="card">
+  <h3>Algod Client</h3>
+  <p>Algorand node operations and queries using the AlgodClient.</p>
+  <span class="count">19 examples</span>
+</a>
+<a href="algorand-client/" class="card">
+  <h3>Algorand Client</h3>
+  <p>High-level AlgorandClient API for simplified blockchain interactions.</p>
+  <span class="count">16 examples</span>
+</a>
+<a href="common/" class="card">
+  <h3>Common Utilities</h3>
+  <p>Utility functions and helpers.</p>
+  <span class="count">12 examples</span>
+</a>
+<a href="indexer-client/" class="card">
+  <h3>Indexer Client</h3>
+  <p>Blockchain data queries using the IndexerClient.</p>
+  <span class="count">16 examples</span>
+</a>
+<a href="kmd-client/" class="card">
+  <h3>KMD Client</h3>
+  <p>Key Management Daemon operations for wallet and key management.</p>
+  <span class="count">13 examples</span>
+</a>
+<a href="testing/" class="card">
+  <h3>Testing</h3>
+  <p>Testing utilities for mock server setup and Vitest integration.</p>
+  <span class="count">7 examples</span>
+</a>
+<a href="transact/" class="card">
+  <h3>Transactions</h3>
+  <p>Low-level transaction construction and signing.</p>
+  <span class="count">14 examples</span>
+</a>
+</div>
+
+<style>
+{`
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.card {
+  display: block;
+  padding: 1.25rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  border-color: var(--sl-color-accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: var(--sl-color-white);
+}
+.card p {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  color: var(--sl-color-gray-2);
+}
+.card .count {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-accent-high);
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+`}
+</style>

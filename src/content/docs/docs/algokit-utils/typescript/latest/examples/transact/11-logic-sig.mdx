@@ -1,0 +1,417 @@
+---
+title: "Logic Signature"
+description: "This example demonstrates how to use a logic signature (lsig) to authorize transactions."
+sidebar:
+  order: 11
+---
+
+[← Back to Transactions](/docs/algokit-utils/typescript/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to use a logic signature (lsig) to authorize transactions.
+ Key concepts:
+- Compiling a TEAL program using algod.tealCompile()
+- Creating a LogicSig from compiled program bytes
+- Understanding the logic signature address (derived from program hash)
+- Funding and using a logic signature as a standalone account
+- Creating a delegated logic signature where an account delegates signing to a program
+ Logic signatures allow transactions to be authorized by a program instead of (or in addition to) a cryptographic signature. This enables smart contracts that can hold and send funds based purely on program logic.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example transact/11-logic-sig.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/transact/11-logic-sig.ts)
+
+```typescript title="11-logic-sig.ts"
+/**
+ * Example: Logic Signature
+ *
+ * This example demonstrates how to use a logic signature (lsig) to authorize transactions.
+ *
+ * Key concepts:
+ * - Compiling a TEAL program using algod.tealCompile()
+ * - Creating a LogicSig from compiled program bytes
+ * - Understanding the logic signature address (derived from program hash)
+ * - Funding and using a logic signature as a standalone account
+ * - Creating a delegated logic signature where an account delegates signing to a program
+ *
+ * Logic signatures allow transactions to be authorized by a program instead of (or in addition to)
+ * a cryptographic signature. This enables smart contracts that can hold and send funds based
+ * purely on program logic.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { AlgorandClient } from '@algorandfoundation/algokit-utils'
+import {
+  assignFee,
+  LogicSig,
+  LogicSigAccount,
+  Transaction,
+  TransactionType,
+  type PaymentTransactionFields,
+} from '@algorandfoundation/algokit-utils/transact'
+import {
+  createAlgodClient,
+  formatAlgo,
+  getAccountBalance,
+  loadTealSource,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+  waitForConfirmation,
+} from '../shared/utils.js'
+
+/**
+ * Gets a funded account from LocalNet's KMD wallet
+ */
+async function getLocalNetFundedAccount(algorand: AlgorandClient) {
+  return await algorand.account.kmd.getLocalNetDispenserAccount()
+}
+
+async function main() {
+  printHeader('Logic Signature Example')
+
+  // Step 1: Initialize clients
+  printStep(1, 'Initialize Algod Client')
+  const algod = createAlgodClient()
+  const algorand = AlgorandClient.defaultLocalNet()
+  printInfo('Connected to LocalNet Algod')
+
+  // Step 2: Compile a simple TEAL program using algod.tealCompile()
+  printStep(2, 'Compile TEAL Program')
+
+  // Load the "always approve" TEAL program from shared artifacts
+  // In real-world use cases, you would have logic that validates:
+  // - Who the receiver is
+  // - Maximum amount that can be sent
+  // - Time-based restrictions
+  // - etc.
+  const tealSource = loadTealSource('always-approve.teal')
+
+  printInfo('TEAL source code:')
+  printInfo('  #pragma version 10')
+  printInfo('  int 1')
+  printInfo('  return')
+  printInfo('')
+  printInfo('This program always returns 1 (true), meaning it approves all transactions.')
+  printInfo('WARNING: Real logic sigs should have proper validation logic!')
+  printInfo('')
+
+  // Compile the TEAL program using algod
+  const compileResult = await algod.tealCompile(tealSource)
+  const programBytes = new Uint8Array(Buffer.from(compileResult.result, 'base64'))
+
+  printInfo(`Compiled program size: ${programBytes.length} bytes`)
+  printInfo(`Program hash (base32): ${compileResult.hash}`)
+
+  // Step 3: Create LogicSig from the compiled program bytes
+  printStep(3, 'Create LogicSig from Program Bytes')
+
+  // The LogicSig wraps the compiled program
+  // Optionally, you can pass arguments to the program
+  const logicSig = new LogicSig(programBytes)
+
+  printInfo('LogicSig created from compiled program bytes')
+  printInfo('')
+  printInfo('How LogicSig address is derived:')
+  printInfo('  1. Prefix "Program" is concatenated with program bytes')
+  printInfo('  2. SHA512/256 hash is computed')
+  printInfo('  3. Hash becomes the 32-byte public key equivalent')
+  printInfo('  4. Address is derived same as for ed25519 keys')
+
+  // Step 4: Show the logic signature address
+  printStep(4, 'Show Logic Signature Address')
+
+  const lsigAddress = logicSig.addr
+  printInfo(`Logic signature address: ${lsigAddress.toString()}`)
+  printInfo('')
+  printInfo('This address is deterministically derived from the program.')
+  printInfo('Anyone with the same program can compute this address.')
+  printInfo('Funds sent to this address can only be spent by providing the program.')
+
+  // Step 5: Fund the logic signature address
+  printStep(5, 'Fund the Logic Signature Address')
+
+  const dispenser = await getLocalNetFundedAccount(algorand)
+  const fundingAmount = 5_000_000n // 5 ALGO
+
+  const suggestedParams = await algod.suggestedParams()
+
+  const fundTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: dispenser.addr,
+    firstValid: suggestedParams.firstValid,
+    lastValid: suggestedParams.lastValid,
+    genesisHash: suggestedParams.genesisHash,
+    genesisId: suggestedParams.genesisId,
+    payment: {
+      receiver: lsigAddress,
+      amount: fundingAmount,
+    },
+  })
+
+  const fundTxWithFee = assignFee(fundTx, {
+    feePerByte: suggestedParams.fee,
+    minFee: suggestedParams.minFee,
+  })
+
+  const signedFundTx = await dispenser.signer([fundTxWithFee], [0])
+  await algod.sendRawTransaction(signedFundTx)
+  await waitForConfirmation(algod, fundTxWithFee.txId())
+
+  const lsigBalance = await getAccountBalance(algorand, lsigAddress.toString())
+  printInfo(`Funded logic signature with ${formatAlgo(fundingAmount)}`)
+  printInfo(`Logic signature balance: ${formatAlgo(lsigBalance.microAlgo)}`)
+
+  // Step 6: Create LogicSigAccount and use its signer to authorize a payment
+  printStep(6, 'Create LogicSigAccount and Send Payment')
+
+  // LogicSigAccount wraps the LogicSig and provides a signer function
+  // For a non-delegated lsig, the sender is the lsig address itself
+  const lsigAccount = new LogicSigAccount(programBytes)
+
+  const receiver = algorand.account.random()
+  const paymentAmount = 1_000_000n // 1 ALGO
+
+  const payParams = await algod.suggestedParams()
+
+  const paymentFields: PaymentTransactionFields = {
+    receiver: receiver.addr,
+    amount: paymentAmount,
+  }
+
+  const paymentTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: lsigAddress, // The logic signature is the sender
+    firstValid: payParams.firstValid,
+    lastValid: payParams.lastValid,
+    genesisHash: payParams.genesisHash,
+    genesisId: payParams.genesisId,
+    payment: paymentFields,
+  })
+
+  const paymentTxWithFee = assignFee(paymentTx, {
+    feePerByte: payParams.fee,
+    minFee: payParams.minFee,
+  })
+
+  printInfo(`Payment amount: ${formatAlgo(paymentAmount)}`)
+  printInfo(`Sender (lsig): ${shortenAddress(lsigAddress.toString())}`)
+  printInfo(`Receiver: ${shortenAddress(receiver.addr.toString())}`)
+  printInfo('')
+  printInfo('How logic signature authorization works:')
+  printInfo('  1. Transaction is created with lsig address as sender')
+  printInfo('  2. Instead of a signature, the program bytes are attached')
+  printInfo('  3. Network executes the program to validate the transaction')
+  printInfo('  4. If program returns non-zero, transaction is authorized')
+
+  // Step 7: Submit transaction authorized by the logic signature
+  printStep(7, 'Submit Logic Signature Transaction')
+
+  // The LogicSigAccount.signer attaches the program instead of a signature
+  const signedTxns = await lsigAccount.signer([paymentTxWithFee], [0])
+
+  printInfo(`Signed transaction size: ${signedTxns[0].length} bytes`)
+  printInfo('(Contains program bytes instead of ed25519 signature)')
+
+  await algod.sendRawTransaction(signedTxns)
+  printInfo('Transaction submitted to network...')
+
+  const pendingInfo = await waitForConfirmation(algod, paymentTxWithFee.txId())
+  printInfo(`Transaction confirmed in round: ${pendingInfo.confirmedRound}`)
+
+  // Verify balances
+  const lsigBalanceAfter = await getAccountBalance(algorand, lsigAddress.toString())
+  let receiverBalance: bigint
+  try {
+    const info = await getAccountBalance(algorand, receiver.addr.toString())
+    receiverBalance = info.microAlgo
+  } catch {
+    receiverBalance = 0n
+  }
+
+  printInfo(`Logic signature balance after: ${formatAlgo(lsigBalanceAfter.microAlgo)}`)
+  printInfo(`Receiver balance: ${formatAlgo(receiverBalance)}`)
+
+  if (receiverBalance === paymentAmount) {
+    printSuccess('Receiver received the payment from logic signature!')
+  }
+
+  // Step 8: Demonstrate delegated logic signature
+  printStep(8, 'Demonstrate Delegated Logic Signature')
+
+  printInfo('A delegated logic signature allows an account to delegate')
+  printInfo('transaction authorization to a program. The account signs')
+  printInfo('the program once, and then transactions from that account')
+  printInfo('can be authorized by the program without further signatures.')
+  printInfo('')
+
+  // Create an account that will delegate to the lsig using AlgorandClient helper
+  const delegator = algorand.account.random()
+
+  // Fund the delegator account
+  const fundDelegatorParams = await algod.suggestedParams()
+  const fundDelegatorTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: dispenser.addr,
+    firstValid: fundDelegatorParams.firstValid,
+    lastValid: fundDelegatorParams.lastValid,
+    genesisHash: fundDelegatorParams.genesisHash,
+    genesisId: fundDelegatorParams.genesisId,
+    payment: {
+      receiver: delegator.addr,
+      amount: 3_000_000n, // 3 ALGO
+    },
+  })
+
+  const fundDelegatorTxWithFee = assignFee(fundDelegatorTx, {
+    feePerByte: fundDelegatorParams.fee,
+    minFee: fundDelegatorParams.minFee,
+  })
+
+  const signedFundDelegatorTx = await dispenser.signer([fundDelegatorTxWithFee], [0])
+  await algod.sendRawTransaction(signedFundDelegatorTx)
+  await waitForConfirmation(algod, fundDelegatorTxWithFee.txId())
+
+  const delegatorBalance = await getAccountBalance(algorand, delegator.addr.toString())
+  printInfo(`Delegator account: ${shortenAddress(delegator.addr.toString())}`)
+  printInfo(`Delegator balance: ${formatAlgo(delegatorBalance.microAlgo)}`)
+  printInfo('')
+
+  // Create a delegated logic signature
+  // The delegator signs the program, allowing it to authorize transactions on their behalf
+  printInfo('Creating delegated logic signature...')
+  printInfo('The delegator signs the program bytes to create a delegation.')
+  printInfo('')
+
+  // Create a LogicSigAccount with the delegator's address
+  const delegatedLsig = new LogicSigAccount(programBytes, null, delegator.addr)
+
+  // Sign the lsig for delegation using the delegator's lsigSigner
+  await delegatedLsig.signForDelegation(delegator)
+
+  printInfo('Delegator has signed the program for delegation.')
+  printInfo(`Delegated lsig will authorize transactions FROM: ${shortenAddress(delegator.addr.toString())}`)
+  printInfo('')
+  printInfo('How delegation works:')
+  printInfo('  1. Delegator signs: Hash("Program" || program_bytes) with their key')
+  printInfo('  2. This signature is stored in the LogicSigAccount')
+  printInfo('  3. Transactions include: program + delegator signature')
+  printInfo('  4. Network verifies signature matches delegator public key')
+  printInfo('  5. Then executes program to authorize the transaction')
+
+  // Create a payment from the delegator, authorized by the delegated lsig
+  const delegatedReceiver = algorand.account.random()
+  const delegatedPaymentAmount = 500_000n // 0.5 ALGO
+
+  const delegatedPayParams = await algod.suggestedParams()
+
+  const delegatedPaymentTx = new Transaction({
+    type: TransactionType.Payment,
+    sender: delegator.addr, // Sender is the delegator's address, NOT the lsig address
+    firstValid: delegatedPayParams.firstValid,
+    lastValid: delegatedPayParams.lastValid,
+    genesisHash: delegatedPayParams.genesisHash,
+    genesisId: delegatedPayParams.genesisId,
+    payment: {
+      receiver: delegatedReceiver.addr,
+      amount: delegatedPaymentAmount,
+    },
+  })
+
+  const delegatedPaymentTxWithFee = assignFee(delegatedPaymentTx, {
+    feePerByte: delegatedPayParams.fee,
+    minFee: delegatedPayParams.minFee,
+  })
+
+  printInfo(`Delegated payment amount: ${formatAlgo(delegatedPaymentAmount)}`)
+  printInfo(`Sender (delegator account): ${shortenAddress(delegator.addr.toString())}`)
+  printInfo(`Receiver: ${shortenAddress(delegatedReceiver.addr.toString())}`)
+
+  // Sign with the delegated lsig - this uses the program + stored delegation signature
+  const delegatedSignedTxns = await delegatedLsig.signer([delegatedPaymentTxWithFee], [0])
+
+  await algod.sendRawTransaction(delegatedSignedTxns)
+  printInfo('Delegated transaction submitted to network...')
+
+  const delegatedPendingInfo = await waitForConfirmation(algod, delegatedPaymentTxWithFee.txId())
+  printInfo(`Transaction confirmed in round: ${delegatedPendingInfo.confirmedRound}`)
+
+  // Verify balances
+  const delegatorBalanceAfter = await getAccountBalance(algorand, delegator.addr.toString())
+  let delegatedReceiverBalance: bigint
+  try {
+    const info = await getAccountBalance(algorand, delegatedReceiver.addr.toString())
+    delegatedReceiverBalance = info.microAlgo
+  } catch {
+    delegatedReceiverBalance = 0n
+  }
+
+  printInfo(`Delegator balance after: ${formatAlgo(delegatorBalanceAfter.microAlgo)}`)
+  printInfo(`Receiver balance: ${formatAlgo(delegatedReceiverBalance)}`)
+
+  if (delegatedReceiverBalance === delegatedPaymentAmount) {
+    printSuccess('Delegated logic signature successfully authorized the transaction!')
+  }
+
+  // Summary
+  printInfo('')
+  printInfo('Summary - Logic Signature Key Points:')
+  printInfo('  - LogicSig wraps a compiled TEAL program')
+  printInfo('  - The lsig address is derived from the program hash')
+  printInfo('  - Non-delegated: lsig acts as its own account')
+  printInfo('  - Delegated: an account signs the program to delegate auth')
+  printInfo('  - Program is executed to validate each transaction')
+  printInfo('  - Real programs should have strict validation logic!')
+  printInfo('')
+  printInfo('Common use cases for logic signatures:')
+  printInfo('  - Escrow accounts with release conditions')
+  printInfo('  - Hash time-locked contracts (HTLC)')
+  printInfo('  - Recurring payment authorizations')
+  printInfo('  - Multi-condition authorization logic')
+
+  printSuccess('Logic signature example completed!')
+}
+
+main().catch((error) => {
+  console.error('Error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/typescript/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/typescript/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/typescript/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/typescript/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/typescript/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/typescript/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/typescript/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/typescript/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/typescript/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/typescript/latest/examples/transact/10-multisig/)
+- **Logic Signature**
+- [Fee Calculation](/docs/algokit-utils/typescript/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/typescript/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/typescript/latest/examples/transact/14-app-call/)

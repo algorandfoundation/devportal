@@ -1,0 +1,358 @@
+---
+title: "Application Boxes"
+description: "This example demonstrates how to query application boxes using the AlgodClient methods: applicationBoxes() and applicationBoxByName()"
+sidebar:
+  order: 11
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to query application boxes using the AlgodClient methods: applicationBoxes() and applicationBoxByName()
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/11-application-boxes.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/11-application-boxes.ts)
+
+```typescript title="11-application-boxes.ts"
+/**
+ * Example: Application Boxes
+ *
+ * This example demonstrates how to query application boxes using
+ * the AlgodClient methods: applicationBoxes() and applicationBoxByName()
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { getApplicationAddress } from '@algorandfoundation/algokit-utils'
+import {
+  createAlgodClient,
+  createAlgorandClient,
+  getFundedAccount,
+  loadTealSource,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js'
+
+async function main() {
+  printHeader('Application Boxes Example')
+
+  // Create an Algod client connected to LocalNet
+  const algod = createAlgodClient()
+
+  // Create an AlgorandClient for application deployment
+  const algorand = createAlgorandClient()
+
+  // =========================================================================
+  // Step 1: Get a Funded Account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet')
+
+  let creator: Awaited<ReturnType<typeof getFundedAccount>>
+  try {
+    creator = await getFundedAccount(algorand)
+    printSuccess(`Got funded account: ${shortenAddress(creator.addr.toString())}`)
+  } catch (error) {
+    printError(`Failed to get funded account: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('Make sure LocalNet is running with `algokit localnet start`')
+    printInfo('If issues persist, try `algokit localnet reset`')
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Step 2: Deploy an Application that Uses Box Storage
+  // =========================================================================
+  printStep(2, 'Deploying an application that uses box storage')
+
+  // Load approval program from shared artifacts that supports box operations:
+  // - On create: does nothing (just succeeds)
+  // - On call with arg "create_box": creates a box with name from arg[1] and value from arg[2]
+  // - On call with arg "delete_box": deletes a box with name from arg[1]
+  // Box operations require the box to be referenced in the transaction
+  const approvalSource = loadTealSource('approval-box-ops.teal')
+
+  // Load clear state program from shared artifacts
+  const clearSource = loadTealSource('clear-state-approve.teal')
+
+  try {
+    printInfo('Compiling TEAL programs...')
+    const approvalCompiled = await algod.tealCompile(approvalSource)
+    const clearCompiled = await algod.tealCompile(clearSource)
+    printSuccess(`Approval program hash: ${approvalCompiled.hash}`)
+
+    printInfo('Deploying application...')
+    const result = await algorand.send.appCreate({
+      sender: creator.addr,
+      approvalProgram: Buffer.from(approvalCompiled.result, 'base64'),
+      clearStateProgram: Buffer.from(clearCompiled.result, 'base64'),
+      schema: {
+        globalInts: 0,
+        globalByteSlices: 0,
+        localInts: 0,
+        localByteSlices: 0,
+      },
+    })
+
+    const appId = result.appId
+    printSuccess(`Application deployed with ID: ${appId}`)
+    printInfo('')
+
+    // =========================================================================
+    // Step 3: Handle Case Where Application Has No Boxes
+    // =========================================================================
+    printStep(3, 'Querying boxes when application has no boxes')
+
+    const emptyBoxes = await algod.applicationBoxes(appId)
+    printInfo('Boxes response for new application:')
+    printInfo(`  Total boxes: ${emptyBoxes.boxes.length}`)
+
+    if (emptyBoxes.boxes.length === 0) {
+      printSuccess('Correctly shows 0 boxes for new application')
+      printInfo('Applications start with no boxes - boxes are created via app calls')
+    }
+    printInfo('')
+
+    // =========================================================================
+    // Step 4: Create Several Boxes with Different Names and Values
+    // =========================================================================
+    printStep(4, 'Creating several boxes with different names and values')
+
+    // Box names and values to create
+    const boxData = [
+      { name: 'user_count', value: 'counter:42' },
+      { name: 'settings', value: '{"theme":"dark","lang":"en"}' },
+      { name: 'metadata', value: 'v1.0.0-production' },
+    ]
+
+    // Need to fund the app account for box storage MBR
+    printInfo('Funding application account for box storage MBR...')
+    const { algo } = await import('@algorandfoundation/algokit-utils')
+    const appAddress = getApplicationAddress(appId)
+    await algorand.send.payment({
+      sender: creator.addr,
+      receiver: appAddress.toString(),
+      amount: algo(1), // 1 ALGO should cover several boxes
+    })
+    printSuccess(`Funded app account: ${shortenAddress(appAddress.toString())}`)
+
+    for (const box of boxData) {
+      printInfo(`Creating box "${box.name}" with value "${box.value}"...`)
+
+      const boxNameBytes = new TextEncoder().encode(box.name)
+      const boxValueBytes = new TextEncoder().encode(box.value)
+
+      await algorand.send.appCall({
+        sender: creator.addr,
+        appId: appId,
+        args: [new TextEncoder().encode('create_box'), boxNameBytes, boxValueBytes],
+        boxReferences: [{ appId: appId, name: boxNameBytes }],
+      })
+
+      printSuccess(`Created box "${box.name}"`)
+    }
+    printInfo('')
+
+    // =========================================================================
+    // Step 5: Demonstrate applicationBoxes() to List All Boxes
+    // =========================================================================
+    printStep(5, 'Listing all boxes with applicationBoxes(appId)')
+
+    const boxesResponse = await algod.applicationBoxes(appId)
+
+    printInfo('BoxesResponse structure:')
+    printInfo(`  boxes: BoxDescriptor[] (length: ${boxesResponse.boxes.length})`)
+    printInfo('')
+
+    printInfo('All boxes for this application:')
+    for (let i = 0; i < boxesResponse.boxes.length; i++) {
+      const boxDescriptor = boxesResponse.boxes[i]
+      // The name is a Uint8Array - decode it for display
+      const nameStr = new TextDecoder().decode(boxDescriptor.name)
+      const nameHex = Buffer.from(boxDescriptor.name).toString('hex')
+      printInfo(`  [${i}] Name: "${nameStr}"`)
+      printInfo(`       Raw (hex): 0x${nameHex}`)
+      printInfo(`       Raw (bytes): ${boxDescriptor.name.length} bytes`)
+    }
+    printInfo('')
+
+    printInfo('applicationBoxes() returns BoxDescriptor[] with just the names')
+    printInfo('To get the actual values, use applicationBoxByName()')
+    printInfo('')
+
+    // =========================================================================
+    // Step 6: Demonstrate applicationBoxByName() to Get Specific Box
+    // =========================================================================
+    printStep(6, 'Getting specific box values with applicationBoxByName()')
+
+    for (const box of boxData) {
+      const boxNameBytes = new TextEncoder().encode(box.name)
+      const boxResult = await algod.applicationBoxByName(appId, boxNameBytes)
+
+      printInfo(`Box "${box.name}":`)
+      printInfo(`  Round:  ${boxResult.round}`)
+      printInfo(`  Name:   "${new TextDecoder().decode(boxResult.name)}"`)
+      printInfo(`  Value:  "${new TextDecoder().decode(boxResult.value)}"`)
+      printInfo(`  Size:   ${boxResult.value.length} bytes`)
+      printInfo('')
+    }
+
+    // =========================================================================
+    // Step 7: Show Box Structure and Decoding
+    // =========================================================================
+    printStep(7, 'Understanding Box structure and decoding')
+
+    const exampleBox = await algod.applicationBoxByName(appId, new TextEncoder().encode('settings'))
+
+    printInfo('Box type structure:')
+    printInfo('  {')
+    printInfo(`    round: bigint = ${exampleBox.round}`)
+    printInfo(`    name: Uint8Array = ${exampleBox.name.length} bytes`)
+    printInfo(`    value: Uint8Array = ${exampleBox.value.length} bytes`)
+    printInfo('  }')
+    printInfo('')
+
+    printInfo('Different decoding methods:')
+    printInfo(`  As UTF-8 string: "${new TextDecoder().decode(exampleBox.value)}"`)
+    printInfo(`  As hex:          0x${Buffer.from(exampleBox.value).toString('hex')}`)
+    printInfo(`  As base64:       ${Buffer.from(exampleBox.value).toString('base64')}`)
+    printInfo('')
+
+    // Parse JSON if it looks like JSON
+    const valueStr = new TextDecoder().decode(exampleBox.value)
+    if (valueStr.startsWith('{')) {
+      try {
+        const parsed = JSON.parse(valueStr)
+        printInfo('  As parsed JSON:')
+        for (const [key, val] of Object.entries(parsed)) {
+          printInfo(`    ${key}: ${JSON.stringify(val)}`)
+        }
+      } catch {
+        // Not valid JSON
+      }
+    }
+    printInfo('')
+
+    printInfo('Box values are raw bytes - the encoding/format is application-defined')
+    printInfo('')
+
+    // =========================================================================
+    // Step 8: Handle Box Not Found Error
+    // =========================================================================
+    printStep(8, 'Handling non-existent box')
+
+    try {
+      const nonExistentBox = new TextEncoder().encode('does_not_exist')
+      printInfo('Querying non-existent box "does_not_exist"...')
+      await algod.applicationBoxByName(appId, nonExistentBox)
+      printError('Expected an error but none was thrown')
+    } catch (error) {
+      printSuccess('Correctly caught error for non-existent box')
+      if (error instanceof Error) {
+        printInfo(`  Error message: ${error.message}`)
+      }
+      printInfo('Always handle the case where a box may not exist')
+    }
+    printInfo('')
+
+    // =========================================================================
+    // Step 9: Box Costs and MBR
+    // =========================================================================
+    printStep(9, 'Understanding box storage costs')
+
+    printInfo('Box storage requires minimum balance (MBR) in the app account:')
+    printInfo('  - Base cost per box: 2,500 microAlgo (0.0025 ALGO)')
+    printInfo('  - Cost per byte: 400 microAlgo per byte')
+    printInfo('  - Formula: 2500 + (400 * (box_name_length + box_value_length))')
+    printInfo('')
+
+    // Calculate MBR for our boxes
+    printInfo('MBR for boxes we created:')
+    for (const box of boxData) {
+      const nameLen = new TextEncoder().encode(box.name).length
+      const valueLen = new TextEncoder().encode(box.value).length
+      const mbr = 2500 + 400 * (nameLen + valueLen)
+      printInfo(`  "${box.name}": ${mbr.toLocaleString('en-US')} µALGO (name: ${nameLen}B, value: ${valueLen}B)`)
+    }
+    printInfo('')
+  } catch (error) {
+    printError(`Failed to complete example: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('If LocalNet errors occur, try `algokit localnet reset`')
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+  printInfo('This example demonstrated:')
+  printInfo('  1. Deploying an application that uses box storage')
+  printInfo('  2. Creating boxes via app calls with boxReferences')
+  printInfo('  3. applicationBoxes(appId) - List all box names for an app')
+  printInfo('  4. applicationBoxByName(appId, boxName) - Get specific box value')
+  printInfo('  5. Handling the case where application has no boxes')
+  printInfo('  6. Error handling for non-existent boxes')
+  printInfo('  7. Understanding box storage costs (MBR)')
+  printInfo('')
+  printInfo('Key types and methods:')
+  printInfo('  - applicationBoxes(appId, { max? }) -> BoxesResponse { boxes: BoxDescriptor[] }')
+  printInfo('  - applicationBoxByName(appId, boxName: Uint8Array) -> Box { round, name, value }')
+  printInfo('  - BoxDescriptor: { name: Uint8Array }')
+  printInfo('  - Box: { round: bigint, name: Uint8Array, value: Uint8Array }')
+  printInfo('')
+  printInfo('Box storage notes:')
+  printInfo('  - Boxes must be referenced in transaction boxReferences to be accessed')
+  printInfo('  - Box names can be any bytes (not just UTF-8 strings)')
+  printInfo('  - Box values are raw bytes - format is application-defined')
+  printInfo('  - App account must have sufficient MBR for box storage')
+  printInfo('  - Max box name: 64 bytes, max box value: 32,768 bytes')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/typescript/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/typescript/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/typescript/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/typescript/latest/examples/algod-client/10-application-info/)
+- **Application Boxes**
+- [TEAL Compile and Disassemble](/docs/algokit-utils/typescript/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/typescript/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/typescript/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/typescript/latest/examples/algod-client/19-sync-round/)

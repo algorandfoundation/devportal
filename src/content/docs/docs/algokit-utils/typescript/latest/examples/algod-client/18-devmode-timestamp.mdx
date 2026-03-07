@@ -1,0 +1,405 @@
+---
+title: "DevMode Timestamp Offset"
+description: "This example demonstrates how to manage block timestamp offset in DevMode using:"
+sidebar:
+  order: 18
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to manage block timestamp offset in DevMode using:
+- blockTimeStampOffset() - Get the current timestamp offset
+- setBlockTimeStampOffset(offset) - Set a new timestamp offset
+ In DevMode, you can control the timestamp of blocks by setting an offset. This is useful for testing time-dependent smart contracts without waiting for real time to pass.
+ Key concepts:
+- Timestamp offset is in seconds
+- Setting offset to 0 resets to using the real clock
+- New blocks will have timestamps = realTime + offset
+- These endpoints only work on DevMode nodes (LocalNet in dev mode)
+
+## Prerequisites
+
+- LocalNet running in dev mode (via `algokit localnet start`)
+- Note: These endpoints return HTTP 404 if not running on a DevMode node.
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/18-devmode-timestamp.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/18-devmode-timestamp.ts)
+
+```typescript title="18-devmode-timestamp.ts"
+/**
+ * Example: DevMode Timestamp Offset
+ *
+ * This example demonstrates how to manage block timestamp offset in DevMode using:
+ * - blockTimeStampOffset() - Get the current timestamp offset
+ * - setBlockTimeStampOffset(offset) - Set a new timestamp offset
+ *
+ * In DevMode, you can control the timestamp of blocks by setting an offset.
+ * This is useful for testing time-dependent smart contracts without waiting
+ * for real time to pass.
+ *
+ * Key concepts:
+ * - Timestamp offset is in seconds
+ * - Setting offset to 0 resets to using the real clock
+ * - New blocks will have timestamps = realTime + offset
+ * - These endpoints only work on DevMode nodes (LocalNet in dev mode)
+ *
+ * Prerequisites:
+ * - LocalNet running in dev mode (via `algokit localnet start`)
+ *
+ * Note: These endpoints return HTTP 404 if not running on a DevMode node.
+ */
+
+import { microAlgo } from '@algorandfoundation/algokit-utils'
+import type { GetBlockTimeStampOffsetResponse } from '@algorandfoundation/algokit-utils/algod-client'
+import {
+  createAlgodClient,
+  createAlgorandClient,
+  getFundedAccount,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js'
+
+async function main() {
+  printHeader('DevMode Timestamp Offset Example')
+
+  // Create clients
+  const algod = createAlgodClient()
+  const algorand = createAlgorandClient()
+
+  // Check if we're running on DevMode
+  printStep(1, 'Checking if running on DevMode')
+
+  // On DevMode, blockTimeStampOffset() returns 404 when offset was never set.
+  // We detect DevMode by checking the error message - "block timestamp offset was never set"
+  // means DevMode is active but no offset is set (default behavior).
+  // A different 404 error means the node is not running DevMode.
+  let isDevMode = false
+  let offsetNeverSet = false
+
+  try {
+    await algod.blockTimeStampOffset()
+    isDevMode = true
+    printSuccess('Running on DevMode - timestamp offset endpoints are available')
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+
+    // Check if this is the "never set" message - this means DevMode IS running
+    if (errorMessage.includes('block timestamp offset was never set')) {
+      isDevMode = true
+      offsetNeverSet = true
+      printSuccess('Running on DevMode - timestamp offset was never set (using real clock)')
+      printInfo('The blockTimeStampOffset() endpoint returns 404 when offset was never set.')
+      printInfo('Setting an offset to 0 will initialize it.')
+    } else if (errorMessage.includes('404') || errorMessage.includes('not found') || errorMessage.includes('Not Found')) {
+      printError('Not running on DevMode - timestamp offset endpoints are not available')
+      printInfo('These endpoints only work on LocalNet in dev mode.')
+      printInfo('Start LocalNet with: algokit localnet start')
+      printInfo('')
+      printHeader('Summary')
+      printInfo('DevMode Timestamp Offset endpoints require a DevMode node.')
+      printInfo('On non-DevMode nodes, these endpoints return HTTP 404.')
+      return
+    } else {
+      throw error
+    }
+  }
+  printInfo('')
+
+  if (!isDevMode) {
+    return
+  }
+
+  // If offset was never set, initialize it by setting to 0
+  if (offsetNeverSet) {
+    printInfo('Initializing timestamp offset by setting it to 0...')
+    await algod.setBlockTimeStampOffset(0)
+    printSuccess('Timestamp offset initialized to 0')
+    printInfo('')
+  }
+
+  // =========================================================================
+  // Step 2: Get the current timestamp offset
+  // =========================================================================
+  printStep(2, 'Getting current timestamp offset')
+
+  const initialOffset = await algod.blockTimeStampOffset()
+  displayTimestampOffset(initialOffset)
+
+  // =========================================================================
+  // Step 3: Get a baseline block timestamp
+  // =========================================================================
+  printStep(3, 'Getting baseline block timestamp')
+
+  // Get the current time for comparison
+  const realTimeNow = Math.floor(Date.now() / 1000)
+  printInfo(`Real time (system clock): ${realTimeNow}`)
+  printInfo(`Real time (formatted): ${new Date(realTimeNow * 1000).toISOString()}`)
+  printInfo('')
+
+  // Trigger a new block to see the current block timestamp
+  // We use a self-payment (send to self) to trigger a block without minimum balance issues
+  const sender = await getFundedAccount(algorand)
+
+  printInfo('Submitting a transaction to trigger a new block...')
+  const result1 = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: sender.addr, // Self-payment to trigger block
+    amount: microAlgo(0),
+    note: new TextEncoder().encode('baseline-block'),
+  })
+
+  // Get the block to see its timestamp
+  const block1 = await algod.block(result1.confirmation.confirmedRound!)
+  const baselineTimestamp = block1.block.header.timestamp
+  printSuccess(`Block ${result1.confirmation.confirmedRound} created`)
+  printInfo(`Block timestamp: ${baselineTimestamp}`)
+  printInfo(`Block timestamp (formatted): ${new Date(Number(baselineTimestamp) * 1000).toISOString()}`)
+  printInfo('')
+
+  // =========================================================================
+  // Step 4: Set a timestamp offset
+  // =========================================================================
+  printStep(4, 'Setting a timestamp offset')
+
+  // Set offset to 1 hour (3600 seconds) in the future
+  const oneHourInSeconds = 3600
+  printInfo(`Setting timestamp offset to ${oneHourInSeconds} seconds (1 hour in the future)...`)
+
+  try {
+    await algod.setBlockTimeStampOffset(oneHourInSeconds)
+    printSuccess(`Timestamp offset set to ${oneHourInSeconds} seconds`)
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    printError(`Failed to set timestamp offset: ${errorMessage}`)
+    return
+  }
+  printInfo('')
+
+  // Verify the offset was set
+  const newOffset = await algod.blockTimeStampOffset()
+  printInfo('Verifying the offset was set:')
+  displayTimestampOffset(newOffset)
+
+  // =========================================================================
+  // Step 5: See how timestamp offset affects block timestamps
+  // =========================================================================
+  printStep(5, 'Observing the effect on block timestamps')
+
+  printInfo('Submitting another transaction to trigger a new block with the offset applied...')
+  const result2 = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: sender.addr, // Self-payment to trigger block
+    amount: microAlgo(0),
+    note: new TextEncoder().encode('offset-block-1h'),
+  })
+
+  // Get the new block's timestamp
+  const block2 = await algod.block(result2.confirmation.confirmedRound!)
+  const offsetTimestamp = block2.block.header.timestamp
+  printSuccess(`Block ${result2.confirmation.confirmedRound} created`)
+  printInfo('')
+
+  // Compare timestamps
+  printInfo('Comparing block timestamps:')
+  printInfo(`  Baseline block (round ${result1.confirmation.confirmedRound}):`)
+  printInfo(`    Timestamp: ${baselineTimestamp}`)
+  printInfo(`    Formatted: ${new Date(Number(baselineTimestamp) * 1000).toISOString()}`)
+  printInfo('')
+  printInfo(`  Offset block (round ${result2.confirmation.confirmedRound}):`)
+  printInfo(`    Timestamp: ${offsetTimestamp}`)
+  printInfo(`    Formatted: ${new Date(Number(offsetTimestamp) * 1000).toISOString()}`)
+  printInfo('')
+
+  // Calculate actual difference
+  const timeDiff = Number(offsetTimestamp - baselineTimestamp)
+  printInfo(`Time difference between blocks: ${timeDiff} seconds`)
+  printInfo(`Expected offset: ${oneHourInSeconds} seconds`)
+  printInfo('')
+
+  // Note: The actual difference may not exactly match the offset due to real time passing
+  // between the two transactions, but it should be close to the offset value
+  if (timeDiff >= oneHourInSeconds - 10 && timeDiff <= oneHourInSeconds + 60) {
+    printSuccess('Block timestamp reflects the offset (within expected margin)')
+  } else {
+    printInfo('Note: Actual time difference may vary due to real time elapsed between transactions')
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Step 6: Test with different offset values
+  // =========================================================================
+  printStep(6, 'Testing different offset values')
+
+  // Try setting a larger offset (1 day = 86400 seconds)
+  const oneDayInSeconds = 86400
+  printInfo(`Setting timestamp offset to ${oneDayInSeconds} seconds (1 day in the future)...`)
+  await algod.setBlockTimeStampOffset(oneDayInSeconds)
+
+  const dayOffset = await algod.blockTimeStampOffset()
+  printSuccess(`Timestamp offset set to ${dayOffset.offset} seconds`)
+  printInfo('')
+
+  // Trigger another block
+  printInfo('Creating a block with 1-day offset...')
+  const result3 = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: sender.addr, // Self-payment to trigger block
+    amount: microAlgo(0),
+    note: new TextEncoder().encode('offset-block-1d'),
+  })
+
+  const block3 = await algod.block(result3.confirmation.confirmedRound!)
+  const futureDayTimestamp = block3.block.header.timestamp
+  printInfo(`  Block ${result3.confirmation.confirmedRound} timestamp: ${new Date(Number(futureDayTimestamp) * 1000).toISOString()}`)
+  printInfo('')
+
+  // =========================================================================
+  // Step 7: Reset the offset to 0
+  // =========================================================================
+  printStep(7, 'Resetting the timestamp offset to 0')
+
+  printInfo('Setting timestamp offset back to 0 (real clock)...')
+  await algod.setBlockTimeStampOffset(0)
+
+  const resetOffset = await algod.blockTimeStampOffset()
+  printSuccess('Timestamp offset reset to 0')
+  displayTimestampOffset(resetOffset)
+
+  // Verify by creating another block
+  printInfo('Creating a block with real clock timestamp...')
+  const result4 = await algorand.send.payment({
+    sender: sender.addr,
+    receiver: sender.addr, // Self-payment to trigger block
+    amount: microAlgo(0),
+    note: new TextEncoder().encode('reset-block'),
+  })
+
+  const block4 = await algod.block(result4.confirmation.confirmedRound!)
+  const realTimestamp = block4.block.header.timestamp
+  const currentRealTime = Math.floor(Date.now() / 1000)
+  printInfo(`  Block ${result4.confirmation.confirmedRound} timestamp: ${new Date(Number(realTimestamp) * 1000).toISOString()}`)
+  printInfo(`  Current real time: ${new Date(currentRealTime * 1000).toISOString()}`)
+
+  const diffFromReal = Math.abs(Number(realTimestamp) - currentRealTime)
+  if (diffFromReal < 60) {
+    printSuccess('Block timestamp is back to real time (within 60 seconds)')
+  } else {
+    printInfo(`Block timestamp differs from real time by ${diffFromReal} seconds`)
+  }
+  printInfo('')
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+
+  printInfo('DevMode Timestamp Offset - Key Points:')
+  printInfo('')
+  printInfo('1. What It Does:')
+  printInfo('   - Allows you to control block timestamps in DevMode')
+  printInfo('   - Useful for testing time-dependent smart contracts')
+  printInfo('   - New blocks will have timestamps = realTime + offset')
+  printInfo('')
+  printInfo('2. API Methods:')
+  printInfo('   blockTimeStampOffset(): Promise<GetBlockTimeStampOffsetResponse>')
+  printInfo('     - Returns { offset: number } with current offset in seconds')
+  printInfo('')
+  printInfo('   setBlockTimeStampOffset(offset: number): Promise<void>')
+  printInfo('     - Sets the timestamp offset in seconds')
+  printInfo('     - offset = 0 resets to using real clock')
+  printInfo('')
+  printInfo('3. GetBlockTimeStampOffsetResponse:')
+  printInfo('   {')
+  printInfo('     offset: number  // Timestamp offset in seconds')
+  printInfo('   }')
+  printInfo('')
+  printInfo('4. Use Cases:')
+  printInfo('   - Testing time-locked smart contracts')
+  printInfo('   - Simulating future block timestamps')
+  printInfo('   - Testing vesting schedules')
+  printInfo('   - Testing auction end times')
+  printInfo('   - Any time-dependent logic verification')
+  printInfo('')
+  printInfo('5. Important Notes:')
+  printInfo('   - Only works on DevMode nodes (LocalNet in dev mode)')
+  printInfo('   - Returns HTTP 404 on non-DevMode nodes')
+  printInfo('   - Offset is in seconds (not milliseconds)')
+  printInfo('   - Always reset offset to 0 after testing')
+  printInfo('   - The offset affects ALL new blocks until changed')
+  printInfo('')
+  printInfo('6. Best Practices:')
+  printInfo('   - Always check if DevMode is available before using')
+  printInfo('   - Reset offset to 0 in cleanup/finally blocks')
+  printInfo('   - Document time-sensitive test assumptions')
+  printInfo('   - Use try/finally to ensure cleanup happens')
+}
+
+/**
+ * Display the timestamp offset information
+ */
+function displayTimestampOffset(response: GetBlockTimeStampOffsetResponse): void {
+  printInfo('  GetBlockTimeStampOffsetResponse:')
+  printInfo(`    offset: ${response.offset} seconds`)
+
+  if (response.offset === 0) {
+    printInfo('    (Using real clock - no offset applied)')
+  } else if (response.offset > 0) {
+    const hours = Math.floor(response.offset / 3600)
+    const minutes = Math.floor((response.offset % 3600) / 60)
+    const seconds = response.offset % 60
+    printInfo(`    (${hours}h ${minutes}m ${seconds}s in the future)`)
+  } else {
+    const absOffset = Math.abs(response.offset)
+    const hours = Math.floor(absOffset / 3600)
+    const minutes = Math.floor((absOffset % 3600) / 60)
+    const seconds = absOffset % 60
+    printInfo(`    (${hours}h ${minutes}m ${seconds}s in the past)`)
+  }
+  printInfo('')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/typescript/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/typescript/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/typescript/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/typescript/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/typescript/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/typescript/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/typescript/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- **DevMode Timestamp Offset**
+- [Sync Round Management](/docs/algokit-utils/typescript/latest/examples/algod-client/19-sync-round/)

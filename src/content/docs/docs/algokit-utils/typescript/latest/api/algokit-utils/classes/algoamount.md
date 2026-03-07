@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AlgoAmount'
+title: "AlgoAmount"
 ---
 
-Defined in: [src/amount.ts:2](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L2)
+Defined in: [src/amount.ts:2](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L2)
 
 Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbers
 
@@ -15,7 +15,7 @@ Wrapper class to ensure safe, explicit conversion between µAlgo, Algo and numbe
 
 > **new AlgoAmount**(`amount`): `AlgoAmount`
 
-Defined in: [src/amount.ts:35](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L35)
+Defined in: [src/amount.ts:35](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L35)
 
 Create a new `AlgoAmount` instance.
 
@@ -47,7 +47,7 @@ const amount = new AlgoAmount({ algo: 5 });
 
 > **get** **algo**(): `number`
 
-Defined in: [src/amount.ts:21](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L21)
+Defined in: [src/amount.ts:21](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L21)
 
 Return the amount as a number in Algo
 
@@ -55,7 +55,7 @@ Return the amount as a number in Algo
 
 `number`
 
----
+***
 
 ### algos
 
@@ -63,7 +63,7 @@ Return the amount as a number in Algo
 
 > **get** **algos**(): `number`
 
-Defined in: [src/amount.ts:16](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L16)
+Defined in: [src/amount.ts:16](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L16)
 
 Return the amount as a number in Algo
 
@@ -71,7 +71,7 @@ Return the amount as a number in Algo
 
 `number`
 
----
+***
 
 ### microAlgo
 
@@ -79,7 +79,7 @@ Return the amount as a number in Algo
 
 > **get** **microAlgo**(): `bigint`
 
-Defined in: [src/amount.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L11)
+Defined in: [src/amount.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L11)
 
 Return the amount as a number in µAlgo
 
@@ -87,7 +87,7 @@ Return the amount as a number in µAlgo
 
 `bigint`
 
----
+***
 
 ### microAlgos
 
@@ -95,7 +95,7 @@ Return the amount as a number in µAlgo
 
 > **get** **microAlgos**(): `bigint`
 
-Defined in: [src/amount.ts:6](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L6)
+Defined in: [src/amount.ts:6](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L6)
 
 Return the amount as a number in µAlgo
 
@@ -109,19 +109,19 @@ Return the amount as a number in µAlgo
 
 > **toString**(): `string`
 
-Defined in: [src/amount.ts:48](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L48)
+Defined in: [src/amount.ts:48](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L48)
 
 #### Returns
 
 `string`
 
----
+***
 
 ### valueOf()
 
 > **valueOf**(): `number`
 
-Defined in: [src/amount.ts:56](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L56)
+Defined in: [src/amount.ts:56](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L56)
 
 valueOf allows you to use `AlgoAmount` in comparison operations such as `<` and `>=` etc.,
 but it's not recommended to use this to convert to a number, it's much safer to explicitly call
@@ -131,13 +131,13 @@ the algos or microAlgos properties
 
 `number`
 
----
+***
 
 ### Algo()
 
 > `static` **Algo**(`amount`): `AlgoAmount`
 
-Defined in: [src/amount.ts:66](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L66)
+Defined in: [src/amount.ts:66](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L66)
 
 Create a `AlgoAmount` object representing the given number of Algo
 
@@ -151,13 +151,13 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 `AlgoAmount`
 
----
+***
 
 ### Algos()
 
 > `static` **Algos**(`amount`): `AlgoAmount`
 
-Defined in: [src/amount.ts:61](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L61)
+Defined in: [src/amount.ts:61](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L61)
 
 Create a `AlgoAmount` object representing the given number of Algo
 
@@ -171,13 +171,13 @@ Create a `AlgoAmount` object representing the given number of Algo
 
 `AlgoAmount`
 
----
+***
 
 ### MicroAlgo()
 
 > `static` **MicroAlgo**(`amount`): `AlgoAmount`
 
-Defined in: [src/amount.ts:76](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L76)
+Defined in: [src/amount.ts:76](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L76)
 
 Create a `AlgoAmount` object representing the given number of µAlgo
 
@@ -191,13 +191,13 @@ Create a `AlgoAmount` object representing the given number of µAlgo
 
 `AlgoAmount`
 
----
+***
 
 ### MicroAlgos()
 
 > `static` **MicroAlgos**(`amount`): `AlgoAmount`
 
-Defined in: [src/amount.ts:71](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L71)
+Defined in: [src/amount.ts:71](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L71)
 
 Create a `AlgoAmount` object representing the given number of µAlgo
 
