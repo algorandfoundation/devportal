@@ -1,12 +1,10 @@
 ---
 import config from 'virtual:starlight/user-config';
 
-import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
 import Search from 'virtual:starlight/components/Search';
 import SiteTitle from './SiteTitle.astro';
-import SocialIcons from './SocialIcons.astro';
 import ThemeSelect from './ThemeSelect.astro';
-import HeaderMenu from './HeaderMenu.astro';
+import HeaderLibraryPicker from './HeaderLibraryPicker.astro';
 import AIChatTrigger from './AIChatTrigger.tsx';
 import { getLibraryFromPath } from '../config/libraries';
 
@@ -29,36 +27,25 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
       <div class='sl-flex ml-auto! gap-2 items-center'>
         {shouldRenderSearch && <Search {...Astro.props} />}
-        <AIChatTrigger client:idle />
       </div>
-      <div class='sl-flex right-group gap-x-7! ml-7!'>
-        <div class='sl-flex social-icons text-algo-lavender-400 dark:text-algo-teal-700'>
-          <SocialIcons
-            {...Astro.props}
-            singleDisplayedSocial='github'
-            size='20px'
-          />
-        </div>
+      <div class='sl-flex right-group gap-x-3! ml-3!'>
+        <AIChatTrigger client:idle />
+        <HeaderLibraryPicker currentPath={currentPath} />
         <ThemeSelect classList='text-algo-lavender-200 dark:text-algo-teal-300 p-0! m-0!' />
-        <LanguageSelect {...Astro.props} />
       </div>
     </div>
   ) : activeLibrary ? (
     <div class='header library-header'>
-      <div class='library-title-area sl-flex'>
-        <HeaderMenu currentPath={currentPath} />
+      <div class='title-wrapper'>
         <SiteTitle />
       </div>
       <div class='sl-flex print:hidden items-center gap-2'>
         {shouldRenderSearch && <Search {...Astro.props} />}
-        <AIChatTrigger client:idle />
       </div>
       <div class='sl-hidden md:sl-flex print:hidden right-group'>
-        <div class='sl-flex social-icons'>
-          <SocialIcons {...Astro.props} />
-        </div>
+        <AIChatTrigger client:idle />
+        <HeaderLibraryPicker currentPath={currentPath} />
         <ThemeSelect />
-        <LanguageSelect {...Astro.props} />
       </div>
     </div>
   ) : (
@@ -68,14 +55,11 @@ const activeLibrary = getLibraryFromPath(currentPath);
       </div>
       <div class='sl-flex gap-2 items-center'>
         {shouldRenderSearch && <Search {...Astro.props} />}
-        <AIChatTrigger client:idle />
       </div>
       <div class='sl-hidden md:sl-flex print:hidden right-group'>
-        <div class='sl-flex social-icons'>
-          <SocialIcons {...Astro.props} />
-        </div>
+        <AIChatTrigger client:idle />
+        <HeaderLibraryPicker currentPath={currentPath} />
         <ThemeSelect />
-        <LanguageSelect {...Astro.props} />
       </div>
     </div>
   )
@@ -98,26 +82,13 @@ const activeLibrary = getLibraryFromPath(currentPath);
     min-width: 0;
   }
 
-  .social-icons::after {
-    content: '';
-    height: 2rem;
-    border-inline-end: 1px solid var(--sl-color-gray-5);
-  }
-
-  .right-group,
-  .social-icons {
-    gap: 1rem;
+  .right-group {
+    gap: 0.5rem;
     align-items: center;
   }
 
   .library-header {
     display: flex;
-  }
-
-  .library-title-area {
-    align-items: center;
-    gap: 0.5rem;
-    min-width: 0;
   }
 
   @media (min-width: 50rem) {
@@ -143,7 +114,7 @@ const activeLibrary = getLibraryFromPath(currentPath);
       );
       display: grid;
       grid-template-columns:
-        /* 1 (site title): runs up until the main content column’s left edge or the width of the title, whichever is the largest  */
+        /* 1 (site title): runs up until the main content column's left edge or the width of the title, whichever is the largest  */
         minmax(
           calc(
             var(--__sidebar-width) +
