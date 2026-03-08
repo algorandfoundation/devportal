@@ -25,10 +25,9 @@ const activeLibrary = getLibraryFromPath(currentPath);
       <div class='grid w-full! max-w-[94px]! md:max-w-[113px]! h-[30px] md:h-[36px] mr-4! mb-[10px]!'>
         <SiteTitle />
       </div>
-      <div class='sl-flex ml-auto! gap-2 items-center'>
-        {shouldRenderSearch && <Search {...Astro.props} />}
-      </div>
+      <div class='sl-flex ml-auto! gap-2 items-center'></div>
       <div class='sl-flex right-group gap-x-3! ml-3!'>
+        {shouldRenderSearch && <Search {...Astro.props} />}
         <AIChatTrigger client:idle />
         <HeaderLibraryPicker currentPath={currentPath} />
         <ThemeSelect classList='text-algo-lavender-200 dark:text-algo-teal-300 p-0! m-0!' />
@@ -39,10 +38,9 @@ const activeLibrary = getLibraryFromPath(currentPath);
       <div class='title-wrapper'>
         <SiteTitle />
       </div>
-      <div class='sl-flex print:hidden items-center gap-2'>
-        {shouldRenderSearch && <Search {...Astro.props} />}
-      </div>
+      <div class='sl-flex print:hidden items-center gap-2'></div>
       <div class='sl-hidden md:sl-flex print:hidden right-group'>
+        {shouldRenderSearch && <Search {...Astro.props} />}
         <AIChatTrigger client:idle />
         <HeaderLibraryPicker currentPath={currentPath} />
         <ThemeSelect />
@@ -53,10 +51,9 @@ const activeLibrary = getLibraryFromPath(currentPath);
       <div class='title-wrapper'>
         <SiteTitle />
       </div>
-      <div class='sl-flex gap-2 items-center'>
-        {shouldRenderSearch && <Search {...Astro.props} />}
-      </div>
+      <div class='sl-flex gap-2 items-center'></div>
       <div class='sl-hidden md:sl-flex print:hidden right-group'>
+        {shouldRenderSearch && <Search {...Astro.props} />}
         <AIChatTrigger client:idle />
         <HeaderLibraryPicker currentPath={currentPath} />
         <ThemeSelect />

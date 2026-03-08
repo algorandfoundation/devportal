@@ -8,7 +8,6 @@ import {
   type LibraryConfig,
 } from '../config/libraries';
 import { langIcons } from '../config/lang-icons';
-import LinkChip from './LinkChip.astro';
 
 interface Props {
   currentPath: string;
@@ -22,6 +21,9 @@ for (const lib of libraries) {
   if (!categories[lib.category]) categories[lib.category] = [];
   categories[lib.category].push(lib);
 }
+
+// Detect which library (if any) the user is currently viewing
+const activeLib = libraries.find(lib => currentPath.startsWith(`/docs/${lib.slug}/`));
 ---
 
 <header-library-picker class='header-lib-picker'>
@@ -31,7 +33,11 @@ for (const lib of libraries) {
     aria-controls='header-lib-picker-panel'
     aria-haspopup='true'
   >
-    <span class='hlp-label'>Libraries</span>
+    {activeLib?.logo ? (
+      <span class='hlp-btn-logo' set:html={activeLib.logo} />
+    ) : (
+      <span class='hlp-label'>Libraries</span>
+    )}
     <svg
       class='hlp-chevron'
       width='10'
@@ -60,8 +66,11 @@ for (const lib of libraries) {
             const defaultVersion = lib.versions[0]?.slug ?? 'latest';
             return (
               <li class:list={['hlp-item', { active: isActive }]}>
-                <span class='hlp-dot' style={`--dot-color: ${lib.color}`} />
-                <span class='hlp-item-label'>{lib.label}</span>
+                {lib.logo ? (
+                  <span class='hlp-item-logo' set:html={lib.logo} />
+                ) : (
+                  <span class='hlp-item-label'>{lib.label}</span>
+                )}
                 {lib.languages.length > 0 && (
                   <span class='hlp-variants'>
                     {lib.languages.map(lang => {
@@ -69,12 +78,14 @@ for (const lib of libraries) {
                       if (!icon) return null;
                       const variantHref = buildLibraryUrl(lib, lang, defaultVersion);
                       return (
-                        <LinkChip
+                        <a
                           href={variantHref}
-                          label={lang}
-                          icon={icon.svg}
-                          accentColor={icon.color}
-                        />
+                          class='hlp-lang-icon'
+                          title={lang}
+                          style={`color: ${icon.color}`}
+                        >
+                          <Fragment set:html={icon.svg} />
+                        </a>
                       );
                     })}
                   </span>
@@ -148,7 +159,8 @@ for (const lib of libraries) {
     display: flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.35rem 0.6rem;
+    height: 2.5rem;
+    padding: 0 0.6rem;
     background: none;
     border: 1px solid var(--sl-color-gray-5);
     border-radius: 0.5rem;
@@ -173,6 +185,19 @@ for (const lib of libraries) {
     background-color: var(--sl-color-gray-6);
     border-color: var(--sl-color-gray-4);
     color: var(--sl-color-white);
+  }
+
+  .hlp-btn-logo {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+    color: var(--sl-color-white);
+  }
+
+  .hlp-btn-logo :global(svg) {
+    height: 1rem;
+    width: auto;
+    display: block;
   }
 
   .hlp-chevron {
@@ -230,11 +255,20 @@ for (const lib of libraries) {
     background-color: var(--sl-color-gray-5);
   }
 
-  .hlp-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--dot-color);
+  .hlp-item-logo {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--sl-color-white);
+    line-height: 0;
+  }
+
+  .hlp-item-logo :global(svg) {
+    height: 1.2rem;
+    width: auto;
+    display: block;
     flex-shrink: 0;
   }
 
@@ -254,5 +288,23 @@ for (const lib of libraries) {
     justify-content: flex-end;
     gap: 0.3rem;
     margin-inline-start: auto;
+  }
+
+  .hlp-lang-icon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+  }
+
+  .hlp-lang-icon:hover {
+    opacity: 1;
+  }
+
+  .hlp-lang-icon :global(svg) {
+    width: 16px;
+    height: 16px;
   }
 </style>

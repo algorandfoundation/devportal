@@ -17,7 +17,6 @@ import {
   getVersionBySlug,
   type LibraryConfig,
 } from '../config/libraries';
-import { langIcons } from '../config/lang-icons';
 import { buildLibrarySidebarLabel } from '../../imports/sidebar';
 
 interface Props {
@@ -75,19 +74,6 @@ if (!hasCurrentEntry(sidebarEntries)) {
 <div class='library-docs-sidebar'>
   <!-- Library identity + version selector on one row -->
   <div class='sidebar-header'>
-    {library.logo && (
-      <a href={`/docs/${library.slug}/`} class='lib-logo-link'>
-        <span class='lib-logo' set:html={library.logo} role='img' aria-label={library.label} />
-        {langIcons[currentLanguage] && (
-          <span
-            class='lib-lang-icon'
-            set:html={langIcons[currentLanguage].svg}
-            style={`color: ${langIcons[currentLanguage].color}`}
-            aria-label={currentLanguage}
-          />
-        )}
-      </a>
-    )}
     <library-selector class='selector' data-type='version'>
       <button
         class='selector-btn'
@@ -261,46 +247,9 @@ if (!hasCurrentEntry(sidebarEntries)) {
     padding: 0.25rem 0 0.5rem;
   }
 
-  .lib-logo-link {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    line-height: 0;
-    color: var(--sl-color-white);
-    text-decoration: none;
-  }
-
-  .lib-logo {
-    display: flex;
-    align-items: center;
-    line-height: 0;
-    color: var(--sl-color-white);
-  }
-
-  .lib-logo :global(svg) {
-    height: 1.5rem;
-    width: auto;
-    display: block;
-    flex-shrink: 0;
-  }
-
-  .lib-lang-icon {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .lib-lang-icon :global(svg) {
-    height: 1.5rem;
-    width: auto;
-  }
-
   .selector {
     position: relative;
-    flex: 0 0 auto;
+    flex: 1;
     min-width: 0;
   }
 
