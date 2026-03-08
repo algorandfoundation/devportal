@@ -80,8 +80,8 @@ export default defineConfig({
             if (slug.startsWith('algokit/unit-testing/')) return true;
 
 
-            // Algorand TypeScript API docs — TypeDoc cross-refs
-            if (/^docs\/algorand-typescript\/.*\/api\//.test(slug)) return true;
+            // All imported library docs under src/content/docs/docs/
+            if (slug.startsWith('docs/')) return true;
 
 
             // ARC standards — cross-references between ARC spec pages
