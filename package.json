@@ -34,7 +34,7 @@
     "@astrojs/markdown-remark": "^6.3.10",
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.7.0",
-    "@astrojs/starlight": "^0.37.6",
+    "@astrojs/starlight": "^0.37.7",
     "@astrojs/starlight-tailwind": "^4.0.2",
     "@astrojs/tailwind": "^6.0.2",
     "@catppuccin/palette": "^1.7.1",
