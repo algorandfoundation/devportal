@@ -1,0 +1,534 @@
+---
+title: "Create Transaction (Unsigned Transactions)"
+description: "This example demonstrates how to create unsigned transactions without immediately sending them, which is useful for:"
+sidebar:
+  order: 9
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to create unsigned transactions without immediately sending them, which is useful for:
+- Transaction inspection and debugging
+- Multi-party signing workflows
+- Custom signing flows (hardware wallets, HSMs, etc.)
+- Modifying transaction fields before signing
+- Building transaction groups for atomic transactions
+ Key concepts:
+- algorand.create_transaction.payment() creates unsigned payment transactions
+- algorand.create_transaction.asset_create() creates unsigned asset creation
+- algorand.create_transaction.asset_transfer() creates unsigned asset transfers
+- algorand.create_transaction.app_call() creates unsigned app calls
+- Transaction objects have properties like tx_id(), fee, first_valid, last_valid
+- Manual signing with account.signer() function
+- Sending signed transactions via algorand.client.algod.send_raw_transaction()
+
+## Prerequisites
+
+LocalNet required for suggested params and account funding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/09_create_transaction.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/09_create_transaction.py)
+
+```python title="09_create_transaction.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Create Transaction (Unsigned Transactions)
+
+This example demonstrates how to create unsigned transactions without immediately
+sending them, which is useful for:
+- Transaction inspection and debugging
+- Multi-party signing workflows
+- Custom signing flows (hardware wallets, HSMs, etc.)
+- Modifying transaction fields before signing
+- Building transaction groups for atomic transactions
+
+Key concepts:
+- algorand.create_transaction.payment() creates unsigned payment transactions
+- algorand.create_transaction.asset_create() creates unsigned asset creation
+- algorand.create_transaction.asset_transfer() creates unsigned asset transfers
+- algorand.create_transaction.app_call() creates unsigned app calls
+- Transaction objects have properties like tx_id(), fee, first_valid, last_valid
+- Manual signing with account.signer() function
+- Sending signed transactions via algorand.client.algod.send_raw_transaction()
+
+LocalNet required for suggested params and account funding
+"""
+
+from shared import (
+    format_algo,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_algod_client import AlgodClient
+from algokit_algod_client.models import PendingTransactionResponse
+from algokit_utils import AlgoAmount, AlgorandClient
+from algokit_utils.transactions.types import (
+    AppCallParams,
+    AppCreateParams,
+    AppDeleteParams,
+    AssetCreateParams,
+    AssetOptInParams,
+    AssetTransferParams,
+    PaymentParams,
+)
+
+# Simple approval and clear state programs for demonstration
+APPROVAL_PROGRAM = load_teal_source("simple-approve.teal")
+CLEAR_STATE_PROGRAM = load_teal_source("clear-state-approve.teal")
+
+
+def wait_for_confirmation(algod: AlgodClient, tx_id: str, max_rounds: int = 5) -> PendingTransactionResponse:
+    """Wait for a transaction to be confirmed using the model-based algod client."""
+    status = algod.status()
+    current_round = status.last_round
+    end_round = current_round + max_rounds
+
+    while current_round < end_round:
+        pending_info = algod.pending_transaction_information(tx_id)
+        if pending_info.confirmed_round and pending_info.confirmed_round > 0:
+            return pending_info
+        if pending_info.pool_error:
+            raise Exception(f"Transaction rejected: {pending_info.pool_error}")
+        algod.status_after_block(current_round)
+        current_round += 1
+
+    raise Exception(f"Transaction {tx_id} not confirmed after {max_rounds} rounds")
+
+
+def main() -> None:
+    print_header("Create Transaction Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create and fund test accounts
+    print_step(1, "Create and fund test accounts")
+    print_info("Creating accounts for transaction creation demonstrations")
+
+    sender = algorand.account.random()
+    receiver = algorand.account.random()
+
+    print_info("")
+    print_info("Created accounts:")
+    print_info(f"  Sender: {shorten_address(str(sender.addr))}")
+    print_info(f"  Receiver: {shorten_address(str(receiver.addr))}")
+
+    # Fund the sender account
+    algorand.account.ensure_funded_from_environment(sender.addr, AlgoAmount.from_algo(10))
+    print_success("Created and funded test accounts")
+
+    # Step 2: Create unsigned payment transaction
+    print_step(2, "Create unsigned payment with algorand.create_transaction.payment()")
+    print_info("Creating a payment transaction WITHOUT immediately sending it")
+    print_info("This allows inspection, modification, and custom signing flows")
+
+    payment_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(1),
+            note=b"Unsigned payment transaction",
+        )
+    )
+
+    print_info("")
+    print_info("Unsigned Payment Transaction created:")
+    print_info(f"  Transaction ID: {payment_txn.tx_id()}")
+    print_info(f"  Type: {payment_txn.transaction_type}")
+    print_info(f"  Sender: {shorten_address(str(payment_txn.sender))}")
+    print_info(f"  Receiver: {shorten_address(str(payment_txn.payment.receiver))}")
+    print_info(f"  Amount: {format_algo(AlgoAmount.from_micro_algo(payment_txn.payment.amount))}")
+    print_info(f"  Fee: {payment_txn.fee} uALGO")
+    print_info(f"  First Valid: {payment_txn.first_valid}")
+    print_info(f"  Last Valid: {payment_txn.last_valid}")
+    print_info(f"  Genesis ID: {payment_txn.genesis_id}")
+
+    print_success("Unsigned payment transaction created")
+
+    # Step 3: Examine Transaction object properties
+    print_step(3, "Examine Transaction object properties and methods")
+    print_info("The Transaction object provides several useful properties and methods")
+
+    print_info("")
+    print_info("Transaction properties:")
+    print_info("  tx_id(): str - Unique transaction identifier")
+    print_info(f"    Example: {payment_txn.tx_id()}")
+    print_info("")
+    print_info("  transaction_type: TransactionType - Transaction type (Payment, AssetTransfer, etc.)")
+    print_info(f"    Example: {payment_txn.transaction_type}")
+    print_info("")
+    print_info("  sender: str - The sender's address")
+    print_info(f"    Example: {shorten_address(str(payment_txn.sender))}")
+    print_info("")
+    print_info("  fee: int - Transaction fee in microALGO")
+    print_info(f"    Example: {payment_txn.fee} uALGO")
+    print_info("")
+    print_info("  first_valid/last_valid: int - Validity window (rounds)")
+    print_info(f"    Example: {payment_txn.first_valid} to {payment_txn.last_valid}")
+    print_info("")
+    print_info("  note: bytes - Optional note field")
+    note_text = payment_txn.note.decode("utf-8") if payment_txn.note else "N/A"
+    print_info(f"    Example: {note_text}")
+    print_info("")
+    print_info("  genesis_hash/genesis_id: Network identification")
+    print_info(f"    Genesis ID: {payment_txn.genesis_id}")
+
+    print_success("Transaction properties examined")
+
+    # Step 4: Create unsigned asset creation transaction
+    print_step(4, "Create unsigned asset creation with algorand.create_transaction.asset_create()")
+    print_info("Creating an asset creation transaction without sending it")
+
+    asset_create_txn = algorand.create_transaction.asset_create(
+        AssetCreateParams(
+            sender=sender.addr,
+            total=1_000_000,
+            decimals=2,
+            asset_name="Example Token",
+            unit_name="EXT",
+            url="https://example.com",
+            manager=sender.addr,
+            reserve=sender.addr,
+            freeze=sender.addr,
+            clawback=sender.addr,
+        )
+    )
+
+    print_info("")
+    print_info("Unsigned Asset Create Transaction:")
+    print_info(f"  Transaction ID: {asset_create_txn.tx_id()}")
+    print_info(f"  Type: {asset_create_txn.transaction_type}")
+    print_info(f"  Total supply: {asset_create_txn.asset_config.total} units")
+    print_info(f"  Decimals: {asset_create_txn.asset_config.decimals}")
+    print_info(f"  Asset name: {asset_create_txn.asset_config.asset_name}")
+    print_info(f"  Unit name: {asset_create_txn.asset_config.unit_name}")
+    print_info(f"  Fee: {asset_create_txn.fee} uALGO")
+
+    print_success("Unsigned asset creation transaction created")
+
+    # Step 5: Manually sign a transaction
+    print_step(5, "Manually sign a transaction with account.signer()")
+    print_info("Signing the payment transaction using the sender's signer function")
+    print_info("")
+    print_info("The signer function signature:")
+    print_info("  signer(txn_group: list[Transaction], indexes_to_sign: list[int]) -> list[bytes]")
+    print_info("")
+    print_info("Parameters:")
+    print_info("  txn_group: List of transactions (can be a single transaction)")
+    print_info("  indexes_to_sign: Indices of transactions to sign in the group")
+
+    # Sign the transaction
+    signed_txns = sender.signer([payment_txn], [0])
+
+    print_info("")
+    print_info("Transaction signed:")
+    print_info(f"  Number of signed transactions: {len(signed_txns)}")
+    print_info(f"  Signed transaction size: {len(signed_txns[0])} bytes")
+    print_info(f"  Transaction ID (unchanged): {payment_txn.tx_id()}")
+
+    print_success("Transaction signed manually")
+
+    # Step 6: Send a manually signed transaction
+    print_step(6, "Send a manually signed transaction")
+    print_info("Sending the signed transaction using algorand.client.algod.send_raw_transaction()")
+
+    submit_result = algorand.client.algod.send_raw_transaction(signed_txns)
+    print_info("")
+    print_info("Transaction submitted:")
+    print_info(f"  Transaction ID: {submit_result.tx_id}")
+
+    # Wait for confirmation
+    algod = algorand.client.algod
+    confirmation = wait_for_confirmation(algod, payment_txn.tx_id())
+    print_info(f"  Confirmed in round: {confirmation.confirmed_round}")
+
+    # Verify the transfer
+    receiver_info = algorand.account.get_information(receiver.addr)
+    print_info(f"  Receiver balance: {format_algo(receiver_info.amount)}")
+
+    print_success("Manually signed transaction sent and confirmed")
+
+    # Step 7: Create and send unsigned asset creation (with signing)
+    print_step(7, "Create, sign, and send asset creation transaction")
+    print_info("Demonstrating the full workflow: create -> sign -> send")
+
+    # Sign the asset creation transaction
+    signed_asset_create = sender.signer([asset_create_txn], [0])
+
+    # Send it
+    algorand.client.algod.send_raw_transaction(signed_asset_create)
+    asset_confirmation = wait_for_confirmation(algod, asset_create_txn.tx_id())
+
+    # Get the asset ID from the confirmation
+    asset_id = asset_confirmation.asset_id
+
+    print_info("")
+    print_info("Asset created:")
+    print_info(f"  Asset ID: {asset_id}")
+    print_info(f"  Transaction ID: {asset_create_txn.tx_id()}")
+    print_info(f"  Confirmed in round: {asset_confirmation.confirmed_round}")
+
+    print_success("Asset creation completed via manual signing")
+
+    # Step 8: Create unsigned asset transfer transaction
+    print_step(8, "Create unsigned asset transfer with algorand.create_transaction.asset_transfer()")
+    print_info("Creating an asset opt-in transaction (transfer to self with amount 0)")
+
+    # First, opt-in the receiver to the asset
+    opt_in_txn = algorand.create_transaction.asset_opt_in(
+        AssetOptInParams(
+            sender=receiver.addr,
+            asset_id=asset_id,
+        )
+    )
+
+    print_info("")
+    print_info("Unsigned Asset Opt-In Transaction:")
+    print_info(f"  Transaction ID: {opt_in_txn.tx_id()}")
+    print_info(f"  Type: {opt_in_txn.transaction_type}")
+    print_info(f"  Asset ID: {opt_in_txn.asset_transfer.asset_id}")
+    print_info(f"  Sender: {shorten_address(str(opt_in_txn.sender))}")
+    print_info(f"  Receiver: {shorten_address(str(opt_in_txn.asset_transfer.receiver))}")
+    print_info(f"  Amount: {opt_in_txn.asset_transfer.amount} (0 for opt-in)")
+
+    # Fund receiver and sign/send opt-in
+    algorand.account.ensure_funded_from_environment(receiver.addr, AlgoAmount.from_algo(1))
+    signed_opt_in = receiver.signer([opt_in_txn], [0])
+    algorand.client.algod.send_raw_transaction(signed_opt_in)
+    wait_for_confirmation(algod, opt_in_txn.tx_id())
+
+    print_info("")
+    print_info("Opt-in completed")
+
+    # Now create an asset transfer
+    asset_transfer_txn = algorand.create_transaction.asset_transfer(
+        AssetTransferParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            asset_id=asset_id,
+            amount=100,
+            note=b"Asset transfer via unsigned transaction",
+        )
+    )
+
+    print_info("")
+    print_info("Unsigned Asset Transfer Transaction:")
+    print_info(f"  Transaction ID: {asset_transfer_txn.tx_id()}")
+    print_info(f"  Asset ID: {asset_transfer_txn.asset_transfer.asset_id}")
+    print_info(f"  Amount: {asset_transfer_txn.asset_transfer.amount} units")
+
+    # Sign and send
+    signed_asset_transfer = sender.signer([asset_transfer_txn], [0])
+    algorand.client.algod.send_raw_transaction(signed_asset_transfer)
+    wait_for_confirmation(algod, asset_transfer_txn.tx_id())
+
+    print_info("  Transfer completed successfully")
+
+    print_success("Unsigned asset transfer demonstrated")
+
+    # Step 9: Create unsigned app call transaction
+    print_step(9, "Create unsigned app call with algorand.create_transaction.app_call()")
+    print_info("First, create an app to call")
+
+    # Create the app first (using send for simplicity)
+    app_create_result = algorand.send.app_create(
+        AppCreateParams(
+            sender=sender.addr,
+            approval_program=APPROVAL_PROGRAM,
+            clear_state_program=CLEAR_STATE_PROGRAM,
+        )
+    )
+
+    app_id = app_create_result.app_id
+    print_info(f"  App created with ID: {app_id}")
+
+    # Now create an unsigned app call
+    app_call_txn = algorand.create_transaction.app_call(
+        AppCallParams(
+            sender=sender.addr,
+            app_id=app_id,
+            args=[b"hello", b"world"],
+            note=b"Unsigned app call",
+        )
+    )
+
+    print_info("")
+    print_info("Unsigned App Call Transaction:")
+    print_info(f"  Transaction ID: {app_call_txn.tx_id()}")
+    print_info(f"  Type: {app_call_txn.transaction_type}")
+    print_info(f"  App ID: {app_call_txn.application_call.app_id}")
+    print_info(f"  On Complete: {app_call_txn.application_call.on_complete} (NoOp)")
+    args_count = len(app_call_txn.application_call.args) if app_call_txn.application_call.args else 0
+    print_info(f"  Args count: {args_count}")
+    print_info(f"  Fee: {app_call_txn.fee} uALGO")
+
+    # Sign and send
+    signed_app_call = sender.signer([app_call_txn], [0])
+    algorand.client.algod.send_raw_transaction(signed_app_call)
+    wait_for_confirmation(algod, app_call_txn.tx_id())
+
+    print_info("  App call completed successfully")
+
+    print_success("Unsigned app call demonstrated")
+
+    # Step 10: Demonstrate modifying transaction fields before signing
+    print_step(10, "Demonstrate transaction inspection before signing")
+    print_info("You can inspect transaction fields before deciding to sign")
+    print_info("")
+    print_info("Use cases for unsigned transactions:")
+    print_info("")
+    print_info("1. Transaction Inspection:")
+    print_info("   - Verify sender, receiver, and amount before signing")
+    print_info("   - Check validity window (first_valid to last_valid)")
+    print_info("   - Ensure correct fees")
+    print_info("")
+    print_info("2. Multi-Party Signing:")
+    print_info("   - Create transaction on one device")
+    print_info("   - Send unsigned txn to another party for signing")
+    print_info("   - Useful for multi-sig wallets")
+    print_info("")
+    print_info("3. Custom Signing Flows:")
+    print_info("   - Hardware wallet integration")
+    print_info("   - HSM (Hardware Security Module) signing")
+    print_info("   - Air-gapped signing workflows")
+    print_info("")
+    print_info("4. Transaction Groups (Atomic Transactions):")
+    print_info("   - Create multiple unsigned transactions")
+    print_info("   - Group them together for atomic execution")
+    print_info("   - Sign all transactions in the group")
+    print_info("")
+    print_info("5. Simulation and Testing:")
+    print_info("   - Create transactions to simulate their effects")
+    print_info("   - Test transaction validity before signing")
+
+    # Example: inspect before signing
+    inspect_txn = algorand.create_transaction.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0.5),
+        )
+    )
+
+    print_info("")
+    print_info("Example - Inspecting before signing:")
+    print_info(f"  Will send: {format_algo(AlgoAmount.from_micro_algo(inspect_txn.payment.amount))}")
+    print_info(f"  To: {shorten_address(str(inspect_txn.payment.receiver))}")
+    print_info(f"  Fee: {inspect_txn.fee} uALGO")
+    print_info(f"  Valid until round: {inspect_txn.last_valid}")
+
+    # Decide to sign based on inspection
+    one_algo_micro = AlgoAmount.from_algo(1).micro_algo
+    should_sign = inspect_txn.payment.amount <= one_algo_micro
+    if should_sign:
+        print_info("  Decision: Amount is acceptable, proceeding with signing")
+        signed = sender.signer([inspect_txn], [0])
+        algorand.client.algod.send_raw_transaction(signed)
+        wait_for_confirmation(algod, inspect_txn.tx_id())
+        print_info("  Transaction confirmed")
+
+    print_success("Transaction inspection demonstrated")
+
+    # Step 11: Summary
+    print_step(11, "Summary - Create Transaction API")
+    print_info("Transaction creation methods available through algorand.create_transaction:")
+    print_info("")
+    print_info("Payment:")
+    print_info("  create_transaction.payment(PaymentParams(sender, receiver, amount, ...))")
+    print_info("  Returns: Transaction (with .payment sub-fields)")
+    print_info("")
+    print_info("Asset Operations:")
+    print_info("  create_transaction.asset_create(AssetCreateParams(sender, total, decimals, ...))")
+    print_info("  create_transaction.asset_config(AssetConfigParams(sender, asset_id, ...))")
+    print_info("  create_transaction.asset_transfer(AssetTransferParams(sender, receiver, asset_id, amount))")
+    print_info("  create_transaction.asset_opt_in(AssetOptInParams(sender, asset_id))")
+    print_info("  create_transaction.asset_opt_out(AssetOptOutParams(sender, asset_id, creator))")
+    print_info("  create_transaction.asset_freeze(AssetFreezeParams(sender, asset_id, account, frozen))")
+    print_info("  create_transaction.asset_destroy(AssetDestroyParams(sender, asset_id))")
+    print_info("")
+    print_info("Application Operations:")
+    print_info("  create_transaction.app_create(AppCreateParams(sender, approval_program, clear_state_program))")
+    print_info(
+        "  create_transaction.app_update(AppUpdateParams(sender, app_id, approval_program, clear_state_program))"
+    )
+    print_info("  create_transaction.app_call(AppCallParams(sender, app_id, args, on_complete))")
+    print_info("  create_transaction.app_delete(AppDeleteParams(sender, app_id))")
+    print_info("")
+    print_info("Transaction Object Properties:")
+    print_info("  tx_id(): str - Get the transaction ID")
+    print_info("  transaction_type: TransactionType - Transaction type")
+    print_info("  sender: str - Sender address")
+    print_info("  fee: int - Fee in microALGO")
+    print_info("  first_valid/last_valid: int - Validity window")
+    print_info("  note: bytes - Note field")
+    print_info("  genesis_id/genesis_hash: Network identification")
+    print_info("")
+    print_info("Manual Signing:")
+    print_info("  signed_txns = account.signer([transaction], [0])")
+    print_info("  Returns: list[bytes] (encoded signed transactions)")
+    print_info("")
+    print_info("Sending Signed Transactions:")
+    print_info("  algorand.client.algod.send_raw_transaction(signed_txns)")
+    print_info("  Returns: { txId: str }")
+
+    # Clean up
+    algorand.send.app_delete(
+        AppDeleteParams(
+            sender=sender.addr,
+            app_id=app_id,
+        )
+    )
+
+    print_success("Create Transaction example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- **Create Transaction (Unsigned Transactions)**
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

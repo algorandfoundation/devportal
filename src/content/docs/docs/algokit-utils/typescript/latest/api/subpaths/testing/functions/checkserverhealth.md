@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'checkServerHealth'
+title: "checkServerHealth"
 ---
 
-> **checkServerHealth**(`url`, `timeout`): `Promise`\<`boolean`\>
+> **checkServerHealth**(`url`, `timeout?`): `Promise`\<`boolean`\>
 
-Defined in: [packages/testing/src/mockServer.ts:45](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/testing/src/mockServer.ts#L45)
+Defined in: [packages/testing/src/mockServer.ts:45](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/testing/src/mockServer.ts#L45)
 
 Check if a server is reachable by performing a health check.
 
@@ -19,7 +19,7 @@ Check if a server is reachable by performing a health check.
 
 The base URL of the server to check
 
-### timeout
+### timeout?
 
 `number` = `5000`
 

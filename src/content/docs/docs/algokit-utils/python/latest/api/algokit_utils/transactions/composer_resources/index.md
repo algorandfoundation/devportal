@@ -1,5 +1,5 @@
 ---
-title: 'algokit_utils.transactions.composer_resources'
+title: "algokit_utils.transactions.composer_resources"
 ---
 
 <div class="api-ref">
@@ -8,50 +8,51 @@ title: 'algokit_utils.transactions.composer_resources'
 
 ## Classes
 
-| [`GroupResourceType`](#algokit_utils.transactions.composer_resources.GroupResourceType)             | Describes different group resources |
-| --------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| [`GroupResourceToPopulate`](#algokit_utils.transactions.composer_resources.GroupResourceToPopulate) |                                     |
+| [`GroupResourceType`](#algokit_utils.transactions.composer_resources.GroupResourceType)             | Describes different group resources   |
+|-----------------------------------------------------------------------------------------------------|---------------------------------------|
+| [`GroupResourceToPopulate`](#algokit_utils.transactions.composer_resources.GroupResourceToPopulate) |                                       |
 
 ## Functions
 
-| [`populate_transaction_resources`](#algokit_utils.transactions.composer_resources.populate_transaction_resources)(...) | Populate transaction-level resources for app call transactions |
-| ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| [`populate_group_resources`](#algokit_utils.transactions.composer_resources.populate_group_resources)(→ None)          | Populate group-level resources for app call transactions       |
+| [`populate_transaction_resources`](#algokit_utils.transactions.composer_resources.populate_transaction_resources)(...)   | Populate transaction-level resources for app call transactions   |
+|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|
+| [`populate_group_resources`](#algokit_utils.transactions.composer_resources.populate_group_resources)(→ None)            | Populate group-level resources for app call transactions         |
 
 ## Module Contents
 
-### algokit_utils.transactions.composer_resources.populate_transaction_resources(transaction: Transaction, resources_accessed: SimulateUnnamedResourcesAccessed, group_index: int) → Transaction
+### populate_transaction_resources(transaction: Transaction, resources_accessed: SimulateUnnamedResourcesAccessed, group_index: int) → Transaction
 
 Populate transaction-level resources for app call transactions
 
-### _class_ GroupResourceType(\*args, \*\*kwds)
+### *class* GroupResourceType(\*args, \*\*kwds)
 
 Bases: `enum.Enum`
 
 Describes different group resources
 
-#### Account _= 'Account'_
+#### Account *= 'Account'*
 
-#### App _= 'App'_
+#### App *= 'App'*
 
-#### Asset _= 'Asset'_
+#### Asset *= 'Asset'*
 
-#### Box _= 'Box'_
+#### Box *= 'Box'*
 
-#### ExtraBoxRef _= 'ExtraBoxRef'_
+#### ExtraBoxRef *= 'ExtraBoxRef'*
 
-#### AssetHolding _= 'AssetHolding'_
+#### AssetHolding *= 'AssetHolding'*
 
-#### AppLocal _= 'AppLocal'_
+#### AppLocal *= 'AppLocal'*
 
-### _class_ GroupResourceToPopulate
+### *class* GroupResourceToPopulate
 
-#### type _: [GroupResourceType](#algokit_utils.transactions.composer_resources.GroupResourceType)_
+#### type *: [GroupResourceType](#algokit_utils.transactions.composer_resources.GroupResourceType)*
 
-#### data _: Any_
+#### data *: Any*
 
-### algokit_utils.transactions.composer_resources.populate_group_resources(transactions: list[Transaction], group_resources: SimulateUnnamedResourcesAccessed) → None
+### populate_group_resources(transactions: list[Transaction], group_resources: SimulateUnnamedResourcesAccessed) → None
 
 Populate group-level resources for app call transactions
+
 
 </div>

@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'ErrorTransformer'
+title: "ErrorTransformer"
 ---
 
 > **ErrorTransformer** = (`error`) => `Promise`\<`Error`\>
 
-Defined in: [src/composer.ts:155](https://github.com/larkiny/algokit-utils-ts/blob/main/src/composer.ts#L155)
+Defined in: [src/composer.ts:155](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/composer.ts#L155)
 
 A function that transforms an error into a new error.
 

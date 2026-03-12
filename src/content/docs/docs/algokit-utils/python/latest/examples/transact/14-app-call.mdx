@@ -1,0 +1,440 @@
+---
+title: "Application Call"
+description: "This example demonstrates how to deploy and interact with a smart contract on Algorand using the transact package:"
+sidebar:
+  order: 14
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to deploy and interact with a smart contract on Algorand using the transact package:
+- Compile simple approval and clear TEAL programs using algod.teal_compile()
+- Create an app with TransactionType.AppCall and OnApplicationComplete.NoOp
+- Use Transaction with application_call=AppCallTransactionFields(...)
+including approval_program, clear_state_program, global_state_schema, and local_state_schema
+- Retrieve the created app ID from pending transaction info
+- Call the app with application arguments
+- Demonstrate OnApplicationComplete.OptIn for local state
+- Delete the app at the end
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/14_app_call.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/14_app_call.py)
+
+```python title="14_app_call.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Application Call
+
+This example demonstrates how to deploy and interact with a smart contract
+on Algorand using the transact package:
+- Compile simple approval and clear TEAL programs using algod.teal_compile()
+- Create an app with TransactionType.AppCall and OnApplicationComplete.NoOp
+- Use Transaction with application_call=AppCallTransactionFields(...)
+  including approval_program, clear_state_program, global_state_schema,
+  and local_state_schema
+- Retrieve the created app ID from pending transaction info
+- Call the app with application arguments
+- Demonstrate OnApplicationComplete.OptIn for local state
+- Delete the app at the end
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+
+from shared import (
+    create_algod_client,
+    format_algo,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_transact import (
+    AppCallTransactionFields,
+    OnApplicationComplete,
+    PaymentTransactionFields,
+    StateSchema,
+    Transaction,
+    TransactionType,
+    assign_fee,
+)
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Application Call Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get funded account
+    print_step(2, "Get Funded Account")
+    creator = algorand.account.localnet_dispenser()
+    print_info(f"Creator address: {shorten_address(creator.addr)}")
+
+    # Step 3: Compile approval and clear TEAL programs
+    print_step(3, "Compile TEAL Programs")
+
+    # Load approval and clear state programs from shared artifacts
+    # The approval program handles app creation, calls, opt-in, and deletion
+    # with global and local state counters
+    approval_source = load_teal_source("approval-counter.teal")
+
+    # Simple clear state program that always approves
+    clear_source = load_teal_source("clear-state-approve.teal")
+
+    print_info("Compiling approval program...")
+    approval_result = algod.teal_compile(approval_source)
+    approval_program = base64.b64decode(approval_result.result)
+    print_info(f"Approval program size: {len(approval_program)} bytes")
+    print_info(f"Approval program hash: {approval_result.hash_}")
+
+    print_info("")
+    print_info("Compiling clear state program...")
+    clear_result = algod.teal_compile(clear_source)
+    clear_state_program = base64.b64decode(clear_result.result)
+    print_info(f"Clear state program size: {len(clear_state_program)} bytes")
+    print_info(f"Clear state program hash: {clear_result.hash_}")
+
+    # Step 4: Create app with TransactionType.AppCall and OnApplicationComplete.NoOp
+    print_step(4, "Create Application")
+
+    suggested_params = algod.suggested_params()
+
+    # Define state schemas
+    global_state_schema = StateSchema(
+        num_uints=1,  # For the counter
+        num_byte_slices=0,  # No byte slices in global state
+    )
+
+    local_state_schema = StateSchema(
+        num_uints=1,  # For user counter
+        num_byte_slices=0,  # No byte slices in local state
+    )
+
+    print_info("App configuration:")
+    global_uints = global_state_schema.num_uints
+    global_bytes = global_state_schema.num_byte_slices
+    print_info(f"  Global state: {global_uints} uints, {global_bytes} byte slices")
+    local_uints = local_state_schema.num_uints
+    local_bytes = local_state_schema.num_byte_slices
+    print_info(f"  Local state: {local_uints} uints, {local_bytes} byte slices")
+    print_info("")
+
+    create_app_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AppCall,
+        sender=creator.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        application_call=AppCallTransactionFields(
+            app_id=0,  # 0 means app creation
+            on_complete=OnApplicationComplete.NoOp,
+            approval_program=approval_program,
+            clear_state_program=clear_state_program,
+            global_state_schema=global_state_schema,
+            local_state_schema=local_state_schema,
+        ),
+    )
+
+    create_app_tx = assign_fee(
+        create_app_tx_without_fee,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    print_info("Creating app transaction...")
+    print_info(f"  Transaction type: {create_app_tx.transaction_type}")
+    print_info("  OnComplete: NoOp (for creation)")
+    print_info(f"  Fee: {create_app_tx.fee} microALGO")
+
+    signed_create_tx = creator.signer([create_app_tx], [0])
+    algod.send_raw_transaction(signed_create_tx[0])
+
+    # Step 5: Retrieve created app ID from pending transaction info
+    print_step(5, "Retrieve Created App ID")
+
+    create_pending_info = wait_for_confirmation(algod, create_app_tx.tx_id())
+    app_id = create_pending_info.app_id
+
+    print_info(f"Transaction confirmed in round: {create_pending_info.confirmed_round}")
+    print_info(f"Created app ID: {app_id}")
+    print_success("Application created successfully!")
+
+    # Step 6: Call the app with application arguments
+    print_step(6, "Call the App with Arguments")
+
+    call_params = algod.suggested_params()
+
+    # First call with an argument
+    arg1 = b"Hello, Algorand!"
+    call_app_tx_without_fee_1 = Transaction(
+        transaction_type=TransactionType.AppCall,
+        sender=creator.addr,
+        first_valid=call_params.first_valid,
+        last_valid=call_params.last_valid,
+        genesis_hash=call_params.genesis_hash,
+        genesis_id=call_params.genesis_id,
+        application_call=AppCallTransactionFields(
+            app_id=app_id,
+            on_complete=OnApplicationComplete.NoOp,
+            args=[arg1],
+        ),
+    )
+
+    call_app_tx_1 = assign_fee(
+        call_app_tx_without_fee_1,
+        fee_per_byte=call_params.fee,
+        min_fee=call_params.min_fee,
+    )
+
+    print_info(f'Calling app {app_id} with argument: "Hello, Algorand!"')
+
+    signed_call_tx_1 = creator.signer([call_app_tx_1], [0])
+    algod.send_raw_transaction(signed_call_tx_1[0])
+
+    call_pending_info_1 = wait_for_confirmation(algod, call_app_tx_1.tx_id())
+    print_info(f"Transaction confirmed in round: {call_pending_info_1.confirmed_round}")
+
+    # Check logs (the app logs the first argument)
+    logs = call_pending_info_1.logs or []
+    if logs and len(logs) > 0:
+        log_bytes = logs[0]
+        log_message = log_bytes.decode("utf-8")
+        print_info(f'App logged: "{log_message}"')
+
+    # Second call to increment counter
+    call_params_2 = algod.suggested_params()
+    arg2 = b"Second call!"
+
+    call_app_tx_without_fee_2 = Transaction(
+        transaction_type=TransactionType.AppCall,
+        sender=creator.addr,
+        first_valid=call_params_2.first_valid,
+        last_valid=call_params_2.last_valid,
+        genesis_hash=call_params_2.genesis_hash,
+        genesis_id=call_params_2.genesis_id,
+        application_call=AppCallTransactionFields(
+            app_id=app_id,
+            on_complete=OnApplicationComplete.NoOp,
+            args=[arg2],
+        ),
+    )
+
+    call_app_tx_2 = assign_fee(
+        call_app_tx_without_fee_2,
+        fee_per_byte=call_params_2.fee,
+        min_fee=call_params_2.min_fee,
+    )
+
+    print_info('Calling app again with argument: "Second call!"')
+
+    signed_call_tx_2 = creator.signer([call_app_tx_2], [0])
+    algod.send_raw_transaction(signed_call_tx_2[0])
+
+    call_pending_info_2 = wait_for_confirmation(algod, call_app_tx_2.tx_id())
+    print_info(f"Transaction confirmed in round: {call_pending_info_2.confirmed_round}")
+
+    logs_2 = call_pending_info_2.logs or []
+    if logs_2 and len(logs_2) > 0:
+        log_bytes = logs_2[0]
+        log_message = log_bytes.decode("utf-8")
+        print_info(f'App logged: "{log_message}"')
+
+    print_success("App calls completed successfully!")
+
+    # Step 7: Demonstrate OnApplicationComplete.OptIn for local state
+    print_step(7, "Demonstrate OptIn for Local State")
+
+    # Create a new account that will opt into the app
+    opt_in_user = algorand.account.random()
+    print_info(f"OptIn user address: {shorten_address(opt_in_user.addr)}")
+
+    # Fund the new account
+    fund_params = algod.suggested_params()
+    fund_tx_without_fee = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=creator.addr,
+        first_valid=fund_params.first_valid,
+        last_valid=fund_params.last_valid,
+        genesis_hash=fund_params.genesis_hash,
+        genesis_id=fund_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=opt_in_user.addr,
+            amount=1_000_000,  # 1 ALGO
+        ),
+    )
+
+    fund_tx = assign_fee(
+        fund_tx_without_fee,
+        fee_per_byte=fund_params.fee,
+        min_fee=fund_params.min_fee,
+    )
+
+    signed_fund_tx = creator.signer([fund_tx], [0])
+    algod.send_raw_transaction(signed_fund_tx[0])
+    wait_for_confirmation(algod, fund_tx.tx_id())
+    print_info(f"Funded OptIn user with {format_algo(1_000_000)}")
+
+    # OptIn to the app
+    opt_in_params = algod.suggested_params()
+
+    opt_in_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AppCall,
+        sender=opt_in_user.addr,
+        first_valid=opt_in_params.first_valid,
+        last_valid=opt_in_params.last_valid,
+        genesis_hash=opt_in_params.genesis_hash,
+        genesis_id=opt_in_params.genesis_id,
+        application_call=AppCallTransactionFields(
+            app_id=app_id,
+            on_complete=OnApplicationComplete.OptIn,
+        ),
+    )
+
+    opt_in_tx = assign_fee(
+        opt_in_tx_without_fee,
+        fee_per_byte=opt_in_params.fee,
+        min_fee=opt_in_params.min_fee,
+    )
+
+    print_info(f"User opting into app {app_id}...")
+    print_info("  OnComplete: OptIn")
+
+    signed_opt_in_tx = opt_in_user.signer([opt_in_tx], [0])
+    algod.send_raw_transaction(signed_opt_in_tx[0])
+
+    opt_in_pending_info = wait_for_confirmation(algod, opt_in_tx.tx_id())
+    print_info(f"Transaction confirmed in round: {opt_in_pending_info.confirmed_round}")
+    print_success("User successfully opted into the app!")
+
+    print_info("")
+    print_info("OptIn explanation:")
+    print_info("  - OptIn allocates local storage for the user in this app")
+    print_info("  - The app can now read/write user-specific state")
+    print_info("  - The user pays for the minimum balance increase")
+    print_info("  - Our app initializes user_counter to 0 on OptIn")
+
+    # Step 8: Delete the app
+    print_step(8, "Delete the Application")
+
+    delete_params = algod.suggested_params()
+
+    delete_tx_without_fee = Transaction(
+        transaction_type=TransactionType.AppCall,
+        sender=creator.addr,
+        first_valid=delete_params.first_valid,
+        last_valid=delete_params.last_valid,
+        genesis_hash=delete_params.genesis_hash,
+        genesis_id=delete_params.genesis_id,
+        application_call=AppCallTransactionFields(
+            app_id=app_id,
+            on_complete=OnApplicationComplete.DeleteApplication,
+        ),
+    )
+
+    delete_tx = assign_fee(
+        delete_tx_without_fee,
+        fee_per_byte=delete_params.fee,
+        min_fee=delete_params.min_fee,
+    )
+
+    print_info(f"Deleting app {app_id}...")
+    print_info("  OnComplete: DeleteApplication")
+
+    signed_delete_tx = creator.signer([delete_tx], [0])
+    algod.send_raw_transaction(signed_delete_tx[0])
+
+    delete_pending_info = wait_for_confirmation(algod, delete_tx.tx_id())
+    print_info(f"Transaction confirmed in round: {delete_pending_info.confirmed_round}")
+    print_success("Application deleted successfully!")
+
+    # Summary
+    print_step(9, "Summary")
+    print_info("")
+    print_info("App lifecycle demonstrated:")
+    print_info("  1. Create - Deploy with approval_program, clear_state_program, and schemas")
+    print_info("  2. Call - Invoke app logic with OnComplete.NoOp")
+    print_info("  3. OptIn - User opts in to allocate local state")
+    print_info("  4. Delete - Remove app from the blockchain")
+    print_info("")
+    print_info("OnComplete values:")
+    print_info("  - NoOp: Standard app call or creation")
+    print_info("  - OptIn: Allocate local storage for the sender")
+    print_info("  - CloseOut: Deallocate local storage (graceful exit)")
+    print_info("  - ClearState: Deallocate local storage (forced, always succeeds)")
+    print_info("  - UpdateApplication: Update the programs")
+    print_info("  - DeleteApplication: Remove the app")
+    print_info("")
+    print_info("Key fields for app creation:")
+    print_info("  - app_id: 0 for creation, actual ID for existing apps")
+    print_info("  - approval_program: Logic for most operations")
+    print_info("  - clear_state_program: Logic for ClearState (cannot reject)")
+    print_info("  - global_state_schema: StateSchema(num_uints, num_byte_slices) for global storage")
+    print_info("  - local_state_schema: StateSchema(num_uints, num_byte_slices) for per-user storage")
+    print_info("")
+    print_info("Retrieving app ID after creation:")
+    print_info("  pending_info = wait_for_confirmation(algod, tx_id)")
+    print_info("  app_id = pending_info.app_id")
+
+    print_success("Application call example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- **Application Call**

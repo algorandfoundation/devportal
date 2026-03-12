@@ -1,0 +1,227 @@
+---
+title: "Wallet Creation and Listing"
+description: "This example demonstrates how to create, list, rename, and get info about wallets using the KMD (Key Management Daemon) client."
+sidebar:
+  order: 2
+---
+
+[← Back to KMD Client](/docs/algokit-utils/typescript/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to create, list, rename, and get info about wallets using the KMD (Key Management Daemon) client.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+- Covered operations:
+- createWallet() - Create a new wallet
+- listWallets() - List all available wallets
+- walletInfo() - Get detailed wallet information (requires wallet handle)
+- renameWallet() - Rename an existing wallet
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example kmd_client/02-wallet-management.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/kmd_client/02-wallet-management.ts)
+
+```typescript title="02-wallet-management.ts"
+/**
+ * Example: Wallet Creation and Listing
+ *
+ * This example demonstrates how to create, list, rename, and get info about wallets
+ * using the KMD (Key Management Daemon) client.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ *
+ * Covered operations:
+ * - createWallet() - Create a new wallet
+ * - listWallets() - List all available wallets
+ * - walletInfo() - Get detailed wallet information (requires wallet handle)
+ * - renameWallet() - Rename an existing wallet
+ */
+
+import { cleanupTestWallet, createKmdClient, printError, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+async function main() {
+  printHeader('KMD Wallet Management Example')
+
+  const kmd = createKmdClient()
+  const testWalletName = `test-wallet-${Date.now()}`
+  const testWalletPassword = 'test-password-123'
+  let walletId = ''
+  let walletHandleToken = ''
+
+  try {
+    // =========================================================================
+    // Step 1: Create a New Wallet
+    // =========================================================================
+    printStep(1, 'Creating a new wallet with createWallet()')
+
+    const createResult = await kmd.createWallet({
+      walletName: testWalletName,
+      walletPassword: testWalletPassword,
+      walletDriverName: 'sqlite',
+    })
+
+    walletId = createResult.wallet.id
+
+    printSuccess('Wallet created successfully!')
+    printInfo('')
+    printInfo('Wallet fields from CreateWalletResponse:')
+    printInfo(`  - id:           ${createResult.wallet.id}`)
+    printInfo(`  - name:         ${createResult.wallet.name}`)
+    printInfo(`  - driverName:   ${createResult.wallet.driverName}`)
+    printInfo(`  - supportedTxs: [${createResult.wallet.supportedTxs.join(', ')}]`)
+    printInfo(`  - mnemonicUx:   ${createResult.wallet.mnemonicUx}`)
+
+    // =========================================================================
+    // Step 2: List All Wallets
+    // =========================================================================
+    printStep(2, 'Listing all wallets with listWallets()')
+
+    const listResult = await kmd.listWallets()
+
+    printSuccess(`Found ${listResult.wallets.length} wallet(s)`)
+    printInfo('')
+    printInfo('Available wallets:')
+
+    listResult.wallets.forEach((wallet, index) => {
+      printInfo(`  ${index + 1}. id: ${wallet.id}`)
+      printInfo(`     name: ${wallet.name}`)
+    })
+
+    // =========================================================================
+    // Step 3: Get Wallet Info (requires wallet handle)
+    // =========================================================================
+    printStep(3, 'Getting wallet info with walletInfo() (requires handle)')
+
+    // First, we need to init a wallet handle to get detailed info
+    const initResult = await kmd.initWalletHandle({
+      walletId,
+      walletPassword: testWalletPassword,
+    })
+
+    walletHandleToken = initResult.walletHandleToken
+    printInfo(`Wallet handle token obtained: ${walletHandleToken.substring(0, 16)}...`)
+
+    const infoResult = await kmd.walletInfo({
+      walletHandleToken,
+    })
+
+    printSuccess('Wallet info retrieved successfully!')
+    printInfo('')
+    printInfo('WalletInfoResponse fields:')
+    printInfo(`  walletHandle.expiresSeconds: ${infoResult.walletHandle.expiresSeconds}`)
+    printInfo(`  walletHandle.wallet.id:      ${infoResult.walletHandle.wallet.id}`)
+    printInfo(`  walletHandle.wallet.name:    ${infoResult.walletHandle.wallet.name}`)
+
+    // =========================================================================
+    // Step 4: Rename the Wallet
+    // =========================================================================
+    printStep(4, 'Renaming the wallet with renameWallet()')
+
+    const newWalletName = `${testWalletName}-renamed`
+
+    const renameResult = await kmd.renameWallet({
+      walletId,
+      walletPassword: testWalletPassword,
+      walletName: newWalletName,
+    })
+
+    printSuccess('Wallet renamed successfully!')
+    printInfo('')
+    printInfo('RenameWalletResponse fields:')
+    printInfo(`  - id:   ${renameResult.wallet.id}`)
+    printInfo(`  - name: ${renameResult.wallet.name} (was: ${testWalletName})`)
+
+    // Verify the rename by checking wallet info again
+    const verifyInfo = await kmd.walletInfo({
+      walletHandleToken,
+    })
+
+    printInfo('')
+    printInfo(`Verified: wallet name is now "${verifyInfo.walletHandle.wallet.name}"`)
+
+    // =========================================================================
+    // Step 5: Clean Up (release wallet handle)
+    // =========================================================================
+    printStep(5, 'Cleaning up: releasing wallet handle')
+
+    await cleanupTestWallet(kmd, walletHandleToken)
+    walletHandleToken = '' // Mark as cleaned up
+
+    printSuccess('Wallet handle released')
+    printInfo('')
+    printInfo('Note: KMD does not support deleting wallets via API.')
+    printInfo('The test wallet will remain in KMD storage.')
+
+    // =========================================================================
+    // Summary
+    // =========================================================================
+    printHeader('Summary')
+    printInfo('This example demonstrated:')
+    printInfo('  1. createWallet() - Create a new wallet with name and password')
+    printInfo('  2. listWallets()  - List all available wallets')
+    printInfo('  3. walletInfo()   - Get detailed wallet info (requires handle)')
+    printInfo('  4. renameWallet() - Rename an existing wallet')
+    printInfo('')
+    printInfo('Key concepts:')
+    printInfo('  - Wallets are collections of keys managed by KMD')
+    printInfo('  - A wallet handle token is required for most operations')
+    printInfo('  - Wallet handles expire and should be released when done')
+    printInfo('  - The "sqlite" driver is the standard driver for wallet storage')
+  } catch (error) {
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+    printInfo('Troubleshooting:')
+    printInfo('  - Ensure LocalNet is running: algokit localnet start')
+    printInfo('  - If LocalNet issues occur: algokit localnet reset')
+    printInfo('  - Check that KMD is accessible on port 4002')
+
+    // Cleanup on error
+    if (walletHandleToken) {
+      try {
+        await cleanupTestWallet(kmd, walletHandleToken)
+      } catch {
+        // Ignore cleanup errors
+      }
+    }
+
+    process.exit(1)
+  }
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/typescript/latest/examples/kmd-client/01-version/)
+- **Wallet Creation and Listing**
+- [Wallet Session Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/typescript/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/typescript/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/typescript/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/13-multisig-program-signing/)

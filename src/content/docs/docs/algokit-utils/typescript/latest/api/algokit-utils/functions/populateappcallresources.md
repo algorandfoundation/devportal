@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'populateAppCallResources'
+title: "populateAppCallResources"
 ---
 
 > **populateAppCallResources**(`composer`): `Promise`\<[`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)\>
 
-Defined in: [src/transaction/transaction.ts:68](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L68)
+Defined in: [src/transaction/transaction.ts:68](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transaction/transaction.ts#L68)
 
 :::caution[Deprecated]
 Use `composer.build()` directly

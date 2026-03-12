@@ -1,0 +1,354 @@
+---
+title: "ABI Dynamic Array Type"
+description: "This example demonstrates how to encode and decode variable-length arrays using ABIArrayDynamicType:"
+sidebar:
+  order: 6
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode variable-length arrays using ABIArrayDynamicType:
+- uint64[]: Dynamic array of unsigned 64-bit integers
+- string[]: Dynamic array of strings (nested dynamic types)
+- address[]: Dynamic array of Algorand addresses
+ Key characteristics of dynamic arrays:
+- Variable length determined at runtime
+- 2-byte (uint16) length prefix indicating number of elements
+- For static element types: elements encoded consecutively after length
+- For dynamic element types: head/tail encoding pattern is used
+ Head/Tail encoding (for arrays containing dynamic elements):
+- Length prefix: 2 bytes indicating number of elements
+- Head section: Contains offsets (2 bytes each) pointing to where each element starts in tail
+- Tail section: Contains the actual encoded elements
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/06-dynamic-array.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/06-dynamic-array.ts)
+
+```typescript title="06-dynamic-array.ts"
+/**
+ * Example: ABI Dynamic Array Type
+ *
+ * This example demonstrates how to encode and decode variable-length arrays using ABIArrayDynamicType:
+ * - uint64[]: Dynamic array of unsigned 64-bit integers
+ * - string[]: Dynamic array of strings (nested dynamic types)
+ * - address[]: Dynamic array of Algorand addresses
+ *
+ * Key characteristics of dynamic arrays:
+ * - Variable length determined at runtime
+ * - 2-byte (uint16) length prefix indicating number of elements
+ * - For static element types: elements encoded consecutively after length
+ * - For dynamic element types: head/tail encoding pattern is used
+ *
+ * Head/Tail encoding (for arrays containing dynamic elements):
+ * - Length prefix: 2 bytes indicating number of elements
+ * - Head section: Contains offsets (2 bytes each) pointing to where each element starts in tail
+ * - Tail section: Contains the actual encoded elements
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { Address } from '@algorandfoundation/algokit-utils'
+import { ABIArrayDynamicType, ABIType, ABIUintType } from '@algorandfoundation/algokit-utils/abi'
+import { formatBytes, formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+function main() {
+  printHeader('ABI Dynamic Array Type Example')
+
+  // Step 1: ABIArrayDynamicType properties
+  printStep(1, 'ABIArrayDynamicType Properties')
+
+  const uint64ArrayType = ABIType.from('uint64[]') as ABIArrayDynamicType
+  const stringArrayType = ABIType.from('string[]') as ABIArrayDynamicType
+  const addressArrayType = ABIType.from('address[]') as ABIArrayDynamicType
+
+  printInfo('uint64[]:')
+  printInfo(`  toString(): ${uint64ArrayType.toString()}`)
+  printInfo(`  childType: ${uint64ArrayType.childType.toString()}`)
+  printInfo(`  isDynamic(): ${uint64ArrayType.isDynamic()}`)
+  printInfo(`  childType.isDynamic(): ${uint64ArrayType.childType.isDynamic()}`)
+
+  printInfo('\nstring[]:')
+  printInfo(`  toString(): ${stringArrayType.toString()}`)
+  printInfo(`  childType: ${stringArrayType.childType.toString()}`)
+  printInfo(`  isDynamic(): ${stringArrayType.isDynamic()}`)
+  printInfo(`  childType.isDynamic(): ${stringArrayType.childType.isDynamic()}`)
+
+  printInfo('\naddress[]:')
+  printInfo(`  toString(): ${addressArrayType.toString()}`)
+  printInfo(`  childType: ${addressArrayType.childType.toString()}`)
+  printInfo(`  isDynamic(): ${addressArrayType.isDynamic()}`)
+  printInfo(`  childType.isDynamic(): ${addressArrayType.childType.isDynamic()}`)
+
+  // Step 2: uint64[] encoding with static elements
+  printStep(2, 'uint64[] Encoding - Static Element Type')
+
+  const uint64Values = [1000n, 2000n, 3000n]
+  const uint64Encoded = uint64ArrayType.encode(uint64Values)
+  const uint64Decoded = uint64ArrayType.decode(uint64Encoded) as bigint[]
+
+  printInfo(`Input: [${uint64Values.join(', ')}]`)
+  printInfo(`Encoded: ${formatHex(uint64Encoded)}`)
+  printInfo(`Total bytes: ${uint64Encoded.length}`)
+
+  // Break down the encoding
+  const uint64LengthPrefix = uint64Encoded.slice(0, 2)
+  const uint64ElementData = uint64Encoded.slice(2)
+
+  printInfo('\nByte layout:')
+  printInfo(`  [0-1]  Length prefix: ${formatHex(uint64LengthPrefix)} = ${(uint64LengthPrefix[0] << 8) | uint64LengthPrefix[1]} elements`)
+  printInfo(`  [2-25] Element data: ${formatHex(uint64ElementData)}`)
+
+  // Show individual elements
+  printInfo('\nElement breakdown (8 bytes each):')
+  for (let i = 0; i < uint64Values.length; i++) {
+    const start = 2 + i * 8
+    const elementBytes = uint64Encoded.slice(start, start + 8)
+    printInfo(`  [${start}-${start + 7}] Element ${i}: ${formatHex(elementBytes)} = ${uint64Values[i]}`)
+  }
+
+  printInfo(`\nDecoded: [${uint64Decoded.join(', ')}]`)
+  printInfo(`Round-trip verified: ${uint64Decoded.every((v, i) => v === uint64Values[i])}`)
+
+  // Step 3: Demonstrate 2-byte length prefix
+  printStep(3, 'Length Prefix - 2 Bytes (uint16 Big-Endian)')
+
+  printInfo('The length prefix encodes the NUMBER of elements (not byte size)')
+  printInfo('Format: uint16 big-endian (high byte first)')
+
+  // Show different array lengths
+  const testLengths = [0, 1, 3, 256, 1000]
+
+  for (const len of testLengths) {
+    const testArray = Array.from({ length: len }, (_, i) => BigInt(i))
+    const encoded = uint64ArrayType.encode(testArray)
+    const prefix = encoded.slice(0, 2)
+    const decodedLength = (prefix[0] << 8) | prefix[1]
+    printInfo(`  ${len} elements: prefix = ${formatHex(prefix)} = (${prefix[0]} << 8) | ${prefix[1]} = ${decodedLength}`)
+  }
+
+  // Step 4: string[] encoding - demonstrates head/tail encoding
+  printStep(4, 'string[] Encoding - Head/Tail Pattern')
+
+  const stringValues = ['Hello', 'World', 'ABI']
+  const stringEncoded = stringArrayType.encode(stringValues)
+  const stringDecoded = stringArrayType.decode(stringEncoded) as string[]
+
+  printInfo(`Input: [${stringValues.map((s) => `"${s}"`).join(', ')}]`)
+  printInfo(`Encoded: ${formatHex(stringEncoded)}`)
+  printInfo(`Total bytes: ${stringEncoded.length}`)
+
+  // Break down the encoding
+  const stringLengthPrefix = stringEncoded.slice(0, 2)
+  const numElements = (stringLengthPrefix[0] << 8) | stringLengthPrefix[1]
+
+  printInfo('\nByte layout with head/tail encoding:')
+  printInfo(`  [0-1] Length prefix: ${formatHex(stringLengthPrefix)} = ${numElements} elements`)
+
+  // Head section: contains offsets for each element
+  // Each offset is 2 bytes, offsets are relative to start of array data (after length prefix)
+  printInfo('\n  HEAD SECTION (offsets to each element):')
+  const headStart = 2
+  const headSize = numElements * 2 // 2 bytes per offset
+
+  for (let i = 0; i < numElements; i++) {
+    const offsetPos = headStart + i * 2
+    const offsetBytes = stringEncoded.slice(offsetPos, offsetPos + 2)
+    const offset = (offsetBytes[0] << 8) | offsetBytes[1]
+    printInfo(`    [${offsetPos}-${offsetPos + 1}] Offset ${i}: ${formatHex(offsetBytes)} = ${offset} (points to byte ${headStart + offset})`)
+  }
+
+  // Tail section: contains actual string data
+  printInfo('\n  TAIL SECTION (actual string data):')
+  const tailStart = headStart + headSize
+
+  let currentPos = tailStart
+  for (let i = 0; i < numElements; i++) {
+    // Read string length prefix (2 bytes)
+    const strLenBytes = stringEncoded.slice(currentPos, currentPos + 2)
+    const strLen = (strLenBytes[0] << 8) | strLenBytes[1]
+
+    // Read string content
+    const strContent = stringEncoded.slice(currentPos + 2, currentPos + 2 + strLen)
+    const strEnd = currentPos + 2 + strLen - 1
+
+    printInfo(`    [${currentPos}-${strEnd}] String ${i}: "${stringValues[i]}"`)
+    printInfo(`      Length prefix: ${formatHex(strLenBytes)} = ${strLen} bytes`)
+    printInfo(`      Content: ${formatHex(strContent)}`)
+
+    currentPos += 2 + strLen
+  }
+
+  printInfo(`\nDecoded: [${stringDecoded.map((s) => `"${s}"`).join(', ')}]`)
+  printInfo(`Round-trip verified: ${stringDecoded.every((v, i) => v === stringValues[i])}`)
+
+  // Step 5: Compare encoding of arrays with different lengths
+  printStep(5, 'Dynamic Sizing - Arrays of Different Lengths')
+
+  const arrayLengths = [0, 1, 3, 5]
+
+  printInfo('uint64[] arrays of different lengths:')
+  for (const len of arrayLengths) {
+    const arr = Array.from({ length: len }, (_, i) => BigInt(i + 1))
+    const encoded = uint64ArrayType.encode(arr)
+    const expectedBytes = 2 + len * 8 // 2 byte prefix + 8 bytes per element
+    printInfo(`  ${len} elements: ${encoded.length} bytes (expected: 2 + ${len}*8 = ${expectedBytes})`)
+  }
+
+  printInfo('\nstring[] arrays of different lengths:')
+  const strArrays = [
+    [],
+    ['A'],
+    ['Hello', 'World'],
+    ['One', 'Two', 'Three'],
+  ]
+
+  for (const arr of strArrays) {
+    const encoded = stringArrayType.encode(arr)
+    // For string[], bytes = 2 (array length) + 2*n (offsets) + sum of (2 + strlen) for each string
+    const offsetsSize = arr.length * 2
+    const stringsSize = arr.reduce((sum, s) => sum + 2 + new TextEncoder().encode(s).length, 0)
+    const expectedBytes = 2 + offsetsSize + stringsSize
+    printInfo(`  ${arr.length} strings ${JSON.stringify(arr)}: ${encoded.length} bytes (expected: ${expectedBytes})`)
+  }
+
+  // Step 6: address[] encoding - static element type
+  printStep(6, 'address[] Encoding - Static Element Type')
+
+  // Create sample addresses
+  const pubKey1 = new Uint8Array(32).fill(0x11)
+  const pubKey2 = new Uint8Array(32).fill(0x22)
+  const addr1 = new Address(pubKey1).toString()
+  const addr2 = new Address(pubKey2).toString()
+
+  const addressValues = [addr1, addr2]
+  const addressEncoded = addressArrayType.encode(addressValues)
+  const addressDecoded = addressArrayType.decode(addressEncoded) as string[]
+
+  printInfo(`Input: ${addressValues.length} addresses`)
+  printInfo(`  [0]: ${addr1}`)
+  printInfo(`  [1]: ${addr2}`)
+  printInfo(`Encoded: ${formatBytes(addressEncoded, 16)}`)
+  printInfo(`Total bytes: ${addressEncoded.length}`)
+
+  // Break down encoding
+  const addrLengthPrefix = addressEncoded.slice(0, 2)
+  printInfo('\nByte layout:')
+  printInfo(`  [0-1]   Length prefix: ${formatHex(addrLengthPrefix)} = ${(addrLengthPrefix[0] << 8) | addrLengthPrefix[1]} elements`)
+  printInfo(`  [2-33]  Address 0: 32 bytes`)
+  printInfo(`  [34-65] Address 1: 32 bytes`)
+  printInfo(`  Expected: 2 + 2*32 = ${2 + 2 * 32} bytes`)
+
+  printInfo('\nDecoded:')
+  printInfo(`  [0]: ${addressDecoded[0]}`)
+  printInfo(`  [1]: ${addressDecoded[1]}`)
+  printInfo(`Round-trip verified: ${addressDecoded.every((v, i) => v === addressValues[i])}`)
+
+  // Step 7: Creating ABIArrayDynamicType programmatically
+  printStep(7, 'Creating ABIArrayDynamicType Programmatically')
+
+  const customArrayType = new ABIArrayDynamicType(new ABIUintType(32))
+
+  printInfo('Created with: new ABIArrayDynamicType(new ABIUintType(32))')
+  printInfo(`  toString(): ${customArrayType.toString()}`)
+  printInfo(`  childType: ${customArrayType.childType.toString()}`)
+  printInfo(`  isDynamic(): ${customArrayType.isDynamic()}`)
+
+  const customValues = [100, 200, 300, 400]
+  const customEncoded = customArrayType.encode(customValues)
+  const customDecoded = customArrayType.decode(customEncoded) as bigint[]
+
+  printInfo(`\nEncode [${customValues.join(', ')}]:`)
+  printInfo(`  Encoded: ${formatHex(customEncoded)}`)
+  printInfo(`  Total bytes: ${customEncoded.length} (2 prefix + 4*4 elements)`)
+  printInfo(`  Decoded: [${customDecoded.join(', ')}]`)
+  printInfo(`  Round-trip verified: ${customDecoded.every((v, i) => BigInt(v) === BigInt(customValues[i]))}`)
+
+  // Step 8: Empty arrays
+  printStep(8, 'Empty Dynamic Arrays')
+
+  const emptyUint64 = uint64ArrayType.encode([])
+  const emptyString = stringArrayType.encode([])
+  const emptyAddress = addressArrayType.encode([])
+
+  printInfo('Empty arrays encode to just the length prefix (0):')
+  printInfo(`  uint64[]:  ${formatHex(emptyUint64)} (${emptyUint64.length} bytes)`)
+  printInfo(`  string[]:  ${formatHex(emptyString)} (${emptyString.length} bytes)`)
+  printInfo(`  address[]: ${formatHex(emptyAddress)} (${emptyAddress.length} bytes)`)
+
+  // Verify decoding
+  const decodedEmptyUint64 = uint64ArrayType.decode(emptyUint64) as bigint[]
+  const decodedEmptyString = stringArrayType.decode(emptyString) as string[]
+
+  printInfo(`\nDecoding empty arrays:`)
+  printInfo(`  uint64[]: length = ${decodedEmptyUint64.length}`)
+  printInfo(`  string[]: length = ${decodedEmptyString.length}`)
+
+  // Step 9: Summary
+  printStep(9, 'Summary')
+
+  printInfo('ABIArrayDynamicType key properties:')
+  printInfo('  - childType: The type of each element')
+  printInfo('  - isDynamic(): Always returns true')
+  printInfo('  - No "length" property (unlike ABIArrayStaticType)')
+
+  printInfo('\nDynamic array encoding format:')
+  printInfo('  - 2-byte length prefix (number of elements, big-endian)')
+  printInfo('  - For static child types: elements encoded consecutively')
+  printInfo('  - For dynamic child types: head/tail encoding')
+
+  printInfo('\nHead/Tail encoding (for dynamic elements like string[]):')
+  printInfo('  - Head: array of 2-byte offsets (one per element)')
+  printInfo('  - Tail: actual encoded elements')
+  printInfo('  - Offsets are relative to start of data (after length prefix)')
+
+  printInfo('\nEncoded size:')
+  printInfo('  - Static elements: 2 + (elementSize * numElements)')
+  printInfo('  - Dynamic elements: 2 + (2 * numElements) + sum(elementSizes)')
+
+  printInfo('\nCreating dynamic array types:')
+  printInfo('  - ABIType.from("uint64[]") - parse from string')
+  printInfo('  - new ABIArrayDynamicType(childType) - programmatic')
+
+  printSuccess('ABI Dynamic Array Type example completed successfully!')
+}
+
+main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/typescript/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/typescript/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/typescript/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/typescript/latest/examples/abi/05-static-array/)
+- **ABI Dynamic Array Type**
+- [ABI Tuple Type](/docs/algokit-utils/typescript/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/typescript/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/typescript/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/typescript/latest/examples/abi/15-arc56-storage/)

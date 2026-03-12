@@ -1,0 +1,351 @@
+---
+title: "Light Block Header Proof"
+description: "This example demonstrates how to get light block header proofs using:"
+sidebar:
+  order: 16
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to get light block header proofs using:
+- light_block_header_proof(round) - Get the proof for a block header
+ Light block header proofs are part of Algorand's State Proof system, which allows light clients and other blockchains to verify Algorand's blockchain state without needing to sync all blocks or trust intermediaries.
+ Key concepts:
+- State proofs are generated at regular intervals (every 256 rounds on MainNet)
+- Light block header proofs verify that a block header is part of the state proof interval
+- The proof uses a vector commitment tree (similar to Merkle tree) structure
+- Only blocks within a state proof interval have available light block header proofs
+ Prerequisites:
+ Note: On LocalNet in dev mode, state proofs may not be generated, so this example demonstrates the API call and handles the expected errors gracefully.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/16_lightblock_proof.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/16_lightblock_proof.py)
+
+```python title="16_lightblock_proof.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Light Block Header Proof
+
+This example demonstrates how to get light block header proofs using:
+- light_block_header_proof(round) - Get the proof for a block header
+
+Light block header proofs are part of Algorand's State Proof system, which allows
+light clients and other blockchains to verify Algorand's blockchain state without
+needing to sync all blocks or trust intermediaries.
+
+Key concepts:
+- State proofs are generated at regular intervals (every 256 rounds on MainNet)
+- Light block header proofs verify that a block header is part of the state proof interval
+- The proof uses a vector commitment tree (similar to Merkle tree) structure
+- Only blocks within a state proof interval have available light block header proofs
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Note: On LocalNet in dev mode, state proofs may not be generated, so this example
+demonstrates the API call and handles the expected errors gracefully.
+"""
+
+import base64
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_algod_client.models import LightBlockHeaderProof
+
+
+def display_light_block_header_proof(proof: LightBlockHeaderProof, block_round: int) -> None:
+    """Display details from a LightBlockHeaderProof."""
+    print_info("  LightBlockHeaderProof fields:")
+    print_info(f"    Round: {block_round:,}")
+    print_info("")
+
+    print_info(f"    index: {proof.index}")
+    print_info("           Position of the block header in the vector commitment tree")
+    print_info("           (i.e., which leaf in the tree corresponds to this block)")
+    print_info("")
+
+    max_headers = 2**proof.treedepth if proof.treedepth > 0 else 1
+    print_info(f"    treedepth: {proof.treedepth}")
+    print_info(f"               Number of edges from leaf to root (tree can hold {max_headers} headers)")
+    print_info("")
+
+    if proof.proof and len(proof.proof) > 0:
+        hex_str = proof.proof.hex()[:64]
+        print_info(f"    proof: {hex_str}...")
+        print_info(f"           ({len(proof.proof)} bytes total - Merkle path data)")
+    else:
+        print_info("    proof: (empty)")
+        print_info("           (Single header in commitment, no sibling hashes needed)")
+    print_info("")
+
+    # Calculate the state proof interval this block belongs to
+    state_proof_interval = 256  # Default interval
+    interval_number = block_round // state_proof_interval
+    interval_start = interval_number * state_proof_interval + 1
+    interval_end = (interval_number + 1) * state_proof_interval
+    print_info(f"    State Proof Interval: {interval_number:,}")
+    print_info(f"    Interval Range: rounds {interval_start:,} to {interval_end:,}")
+    print_info("")
+
+
+def main() -> None:
+    print_header("Light Block Header Proof Example")
+
+    # Create clients
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Understand Light Block Header Proofs and State Proofs
+    # =========================================================================
+    print_step(1, "Understanding light block header proofs and state proofs")
+
+    print_info("Light block header proofs are part of Algorand's State Proof system.")
+    print_info("")
+    print_info("What are State Proofs?")
+    print_info("  - Cryptographic proofs that attest to the state of the Algorand blockchain")
+    print_info("  - Generated at regular intervals (StateProofInterval, typically 256 rounds)")
+    print_info("  - Allow light clients to verify blockchain state without syncing all blocks")
+    print_info("  - Enable secure cross-chain bridges and interoperability")
+    print_info("")
+    print_info("What are Light Block Header Proofs?")
+    print_info("  - Prove that a specific block header is included in a state proof interval")
+    print_info("  - Use a vector commitment tree (Merkle-like structure)")
+    print_info("  - The proof contains: index, treedepth, and the proof data")
+    print_info("  - Combined with the block header, allows verification against the state proof")
+    print_info("")
+
+    # =========================================================================
+    # Step 2: Get current round information
+    # =========================================================================
+    print_step(2, "Getting current round information")
+
+    status = algod.status()
+    last_round = status.last_round
+    print_info(f"Current round: {last_round:,}")
+    print_info("")
+
+    # =========================================================================
+    # Step 3: Understand state proof intervals
+    # =========================================================================
+    print_step(3, "Understanding state proof intervals")
+
+    print_info("State proofs are generated at regular intervals:")
+    print_info("  - MainNet/TestNet: Every 256 rounds (StateProofInterval)")
+    print_info("  - Light block header proofs are only available for rounds within a state proof interval")
+    print_info("  - The interval typically covers rounds [N*256 + 1, (N+1)*256] for some N")
+    print_info("")
+    print_info("Relationship between blocks and state proofs:")
+    print_info("  - Each state proof covers a range of block headers")
+    print_info("  - Light block header proofs verify membership in this range")
+    print_info("  - The proof index indicates position within the state proof's vector commitment")
+    print_info("")
+
+    # Try to get consensus parameters to show state proof interval
+    try:
+        version = algod.version()
+        print_info(f"Genesis ID: {version.genesis_id}")
+        print_info(f"Genesis Hash: {base64.b64encode(version.genesis_hash_b64).decode()}")
+        print_info("")
+    except Exception:
+        # Ignore version errors
+        pass
+
+    # =========================================================================
+    # Step 4: Try to get light block header proof for current round
+    # =========================================================================
+    print_step(4, "Attempting to get light block header proof for current round")
+
+    print_info(f"Trying light_block_header_proof({last_round})...")
+    print_info("")
+
+    try:
+        proof = algod.light_block_header_proof(last_round)
+        print_success("Successfully retrieved light block header proof!")
+        print_info("")
+        display_light_block_header_proof(proof, last_round)
+    except Exception as e:
+        error_message = str(e)
+
+        # Handle expected cases where proof is not available
+        if "state proof" in error_message or "not found" in error_message or "404" in error_message:
+            print_info("Light block header proof is not available for this round.")
+            print_info("This is expected behavior - proofs are only available for specific rounds.")
+            print_info("")
+            print_info("Possible reasons:")
+            print_info("  1. The round is not part of a completed state proof interval")
+            print_info("  2. State proofs are not enabled on this network (LocalNet dev mode)")
+            print_info("  3. The block is too recent (state proof not yet generated)")
+            print_info("  4. The block is too old (state proof data may be pruned)")
+        elif "501" in error_message or "not supported" in error_message or "Not Implemented" in error_message:
+            print_info("Light block header proofs are not supported on this node.")
+            print_info("This feature requires a node with state proof support enabled.")
+        else:
+            print_error(f"Error: {error_message}")
+        print_info("")
+
+    # =========================================================================
+    # Step 5: Try multiple rounds to find available proofs
+    # =========================================================================
+    print_step(5, "Scanning rounds for available light block header proofs")
+
+    print_info("Checking several rounds to see if any have available proofs...")
+    print_info("")
+
+    # Try a range of rounds
+    rounds_to_try = [
+        1,  # Very early round
+        256,  # First state proof interval boundary
+        512,  # Second interval boundary
+        last_round - 256 if last_round > 256 else 1,  # One interval ago
+        last_round - 100 if last_round > 100 else 1,  # Recent rounds
+        last_round,  # Current round
+    ]
+    # Filter to valid rounds
+    rounds_to_try = [r for r in rounds_to_try if r > 0]
+
+    found_proof = False
+    for block_round in rounds_to_try:
+        try:
+            proof = algod.light_block_header_proof(block_round)
+            print_success(f"Found proof for round {block_round:,}!")
+            display_light_block_header_proof(proof, block_round)
+            found_proof = True
+            break
+        except Exception:
+            print_info(f"Round {block_round:,}: No proof available")
+
+    if not found_proof:
+        print_info("")
+        print_info("No light block header proofs found for any tested round.")
+        print_info("This is expected on LocalNet in dev mode where state proofs are not generated.")
+    print_info("")
+
+    # =========================================================================
+    # Step 6: Demonstrate error handling for invalid rounds
+    # =========================================================================
+    print_step(6, "Demonstrating error handling for invalid rounds")
+
+    print_info("Testing error handling for various invalid round scenarios:")
+    print_info("")
+
+    # Try a future round
+    future_round = last_round + 10000
+    print_info(f"  Future round ({future_round:,}):")
+    try:
+        algod.light_block_header_proof(future_round)
+        print_info("    Unexpectedly succeeded")
+    except Exception as e:
+        error_message = str(e)
+        print_info(f"    Error (expected): {error_message[:80]}...")
+    print_info("")
+
+    # Try round 0 (invalid)
+    print_info("  Round 0 (invalid):")
+    try:
+        algod.light_block_header_proof(0)
+        print_info("    Unexpectedly succeeded")
+    except Exception as e:
+        error_message = str(e)
+        print_info(f"    Error (expected): {error_message[:80]}...")
+    print_info("")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+
+    print_info("Light Block Header Proof - Key Points:")
+    print_info("")
+    print_info("1. Part of Algorand's State Proof System:")
+    print_info("   - Enables trustless verification of Algorand's blockchain state")
+    print_info("   - Critical for cross-chain bridges and light clients")
+    print_info("   - Uses post-quantum secure cryptographic techniques (Falcon signatures)")
+    print_info("")
+    print_info("2. State Proof Intervals:")
+    print_info("   - Proofs are generated every StateProofInterval rounds (256 on MainNet)")
+    print_info("   - Each interval commits to a range of block headers")
+    print_info("   - Light block header proofs verify membership in this commitment")
+    print_info("")
+    print_info("3. Availability:")
+    print_info("   - Only available for rounds within completed state proof intervals")
+    print_info("   - Not available on LocalNet dev mode (state proofs not generated)")
+    print_info("   - May not be available for very old rounds (data pruning)")
+    print_info("")
+    print_info("LightBlockHeaderProof Type Structure:")
+    print_info("  index: int         - Position of the block header in the vector commitment")
+    print_info("  treedepth: int     - Depth of the vector commitment tree")
+    print_info("  proof: bytes       - The encoded proof data (Merkle path)")
+    print_info("")
+    print_info("API Method:")
+    print_info("  light_block_header_proof(round_: int) -> LightBlockHeaderProof")
+    print_info("")
+    print_info("Use Cases:")
+    print_info("  1. Cross-Chain Bridges:")
+    print_info("     - Verify Algorand transactions on other blockchains")
+    print_info("     - Provide cryptographic proof of block inclusion")
+    print_info("  2. Light Clients:")
+    print_info("     - Verify blockchain state without full node sync")
+    print_info("     - Reduce bandwidth and storage requirements")
+    print_info("  3. Auditing:")
+    print_info("     - Prove block existence at a specific round")
+    print_info("     - Third-party verification without trust assumptions")
+    print_info("")
+    print_info("Verification Process:")
+    print_info("  1. Get the light block header proof for the target round")
+    print_info("  2. Get the block header for that round")
+    print_info("  3. Verify the proof against the state proof's vector commitment root")
+    print_info("  4. Verify the state proof signature (signed by supermajority of stake)")
+    print_info("  5. If all checks pass, the block header is cryptographically verified")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- **Light Block Header Proof**
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

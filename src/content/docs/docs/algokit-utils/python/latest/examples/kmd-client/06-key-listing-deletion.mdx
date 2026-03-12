@@ -1,0 +1,262 @@
+---
+title: "Key Listing and Deletion"
+description: "This example demonstrates how to list all keys in a wallet and delete specific keys using the KMD list_keys() and delete_key() methods."
+sidebar:
+  order: 6
+---
+
+[← Back to KMD Client](/docs/algokit-utils/python/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to list all keys in a wallet and delete specific keys using the KMD list_keys() and delete_key() methods.
+ Prerequisites:
+ Covered operations:
+- list_keys()  - List all keys (addresses) in a wallet
+- delete_key() - Delete a specific key from the wallet
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python kmd_client/06_key_listing_deletion.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/kmd_client/06_key_listing_deletion.py)
+
+```python title="06_key_listing_deletion.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Key Listing and Deletion
+
+This example demonstrates how to list all keys in a wallet and delete
+specific keys using the KMD list_keys() and delete_key() methods.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Covered operations:
+- list_keys()  - List all keys (addresses) in a wallet
+- delete_key() - Delete a specific key from the wallet
+"""
+
+import sys
+
+from shared import (
+    cleanup_test_wallet,
+    create_kmd_client,
+    create_test_wallet,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_kmd_client.models import DeleteKeyRequest, GenerateKeyRequest, ListKeysRequest
+
+
+def main() -> None:
+    print_header("KMD Key Listing and Deletion Example")
+
+    kmd = create_kmd_client()
+    wallet_password = "test-password"
+    wallet_handle_token = ""
+
+    try:
+        # =========================================================================
+        # Step 1: Create a Test Wallet
+        # =========================================================================
+        print_step(1, "Creating a test wallet")
+
+        test_wallet = create_test_wallet(kmd, wallet_password)
+        wallet_handle_token = test_wallet["wallet_handle_token"]
+
+        print_success(f"Test wallet created: {test_wallet['wallet_name']}")
+        print_info(f"Wallet ID: {test_wallet['wallet_id']}")
+
+        # =========================================================================
+        # Step 2: Generate Several Keys
+        # =========================================================================
+        print_step(2, "Generating several keys in the wallet")
+
+        generated_addresses: list[str] = []
+
+        print_info("Generating 5 keys...")
+        print_info("")
+
+        for i in range(5):
+            address = kmd.generate_key(GenerateKeyRequest(wallet_handle_token=wallet_handle_token)).address
+            generated_addresses.append(address)
+            print_info(f"  Key {i + 1}: {address}")
+
+        print_success(f"Generated {len(generated_addresses)} keys")
+
+        # =========================================================================
+        # Step 3: List All Keys with list_keys()
+        # =========================================================================
+        print_step(3, "Listing all keys with list_keys()")
+
+        list_result = kmd.list_keys_in_wallet(ListKeysRequest(wallet_handle_token=wallet_handle_token)).addresses
+
+        print_success(f"Found {len(list_result)} keys in wallet")
+        print_info("")
+        print_info("list_keys() response:")
+        print_info("  Returns a list of address strings")
+        print_info("")
+        print_info("All keys in the wallet:")
+
+        for index, address in enumerate(list_result):
+            print_info(f"  {index + 1}. {address}")
+
+        # =========================================================================
+        # Step 4: Delete One Key with delete_key()
+        # =========================================================================
+        print_step(4, "Deleting the first key with delete_key()")
+
+        key_to_delete = generated_addresses[0]
+        print_info(f"Key to delete: {key_to_delete}")
+        print_info("")
+
+        kmd.delete_key(
+            DeleteKeyRequest(
+                wallet_handle_token=wallet_handle_token, wallet_password=wallet_password, address=key_to_delete
+            )
+        )
+
+        print_success("Key deleted successfully!")
+        print_info("")
+        print_info("delete_key() parameters:")
+        print_info("  wallet_handle_token: The handle token from init_wallet_handle()")
+        print_info("  wallet_password:     The wallet password (required for security)")
+        print_info("  address:             The public address of the key to delete")
+        print_info("")
+        print_info("Note: delete_key() returns None on success (no response body).")
+
+        # =========================================================================
+        # Step 5: Verify Deletion by Listing Keys Again
+        # =========================================================================
+        print_step(5, "Verifying deletion by listing keys again")
+
+        list_after_delete = kmd.list_keys_in_wallet(ListKeysRequest(wallet_handle_token=wallet_handle_token)).addresses
+
+        print_info(f"Keys before deletion: {len(list_result)}")
+        print_info(f"Keys after deletion:  {len(list_after_delete)}")
+        print_info("")
+
+        deleted_key_present = key_to_delete in list_after_delete
+
+        if not deleted_key_present:
+            print_success(f"Confirmed: Key {key_to_delete[:8]}... is no longer in the wallet")
+        else:
+            print_error("Key still present in wallet after deletion!")
+
+        print_info("")
+        print_info("Remaining keys:")
+        for index, address in enumerate(list_after_delete):
+            print_info(f"  {index + 1}. {address}")
+
+        # =========================================================================
+        # Step 6: Handle Deleting a Non-Existent Key
+        # =========================================================================
+        print_step(6, "Handling deletion of a non-existent key")
+
+        print_info("Attempting to delete the already-deleted key again...")
+        print_info("")
+
+        # Note: KMD does NOT throw an error when deleting a non-existent key.
+        # The operation silently succeeds even if the key doesn't exist.
+        kmd.delete_key(
+            DeleteKeyRequest(
+                wallet_handle_token=wallet_handle_token, wallet_password=wallet_password, address=key_to_delete
+            )
+        )
+
+        print_success("delete_key() completed (no error thrown)")
+        print_info("")
+        print_info("Important: KMD does NOT throw an error when deleting a non-existent key!")
+        print_info("The operation silently succeeds even if:")
+        print_info("  - The key does not exist in the wallet")
+        print_info("  - The address was never part of this wallet")
+        print_info("  - The key was already deleted")
+        print_info("")
+        print_info("This means you should always verify key existence before deletion")
+        print_info("if you need to confirm the key was actually removed.")
+
+        # =========================================================================
+        # Cleanup
+        # =========================================================================
+        print_step(7, "Cleaning up test wallet")
+
+        cleanup_test_wallet(kmd, wallet_handle_token)
+        wallet_handle_token = ""  # Mark as cleaned up
+
+        print_success("Test wallet handle released")
+
+        # =========================================================================
+        # Summary
+        # =========================================================================
+        print_header("Summary")
+        print_info("This example demonstrated key listing and deletion in KMD:")
+        print_info("")
+        print_info("  1. list_keys() - List all keys (addresses) in a wallet")
+        print_info("     Takes: wallet_handle_token")
+        print_info("     Returns: list of address strings")
+        print_info("")
+        print_info("  2. delete_key() - Delete a specific key from the wallet")
+        print_info("     Takes: wallet_handle_token, wallet_password, address")
+        print_info("     Returns: None (no response body)")
+        print_info("     Requires wallet password for security")
+        print_info("")
+        print_info("Important notes:")
+        print_info("  - Deleted keys cannot be recovered unless you have a backup")
+        print_info("  - Generated keys can be re-derived from the master derivation key")
+        print_info("  - Imported keys are permanently lost if deleted without backup")
+        print_info("  - Deleting a non-existent key does NOT throw an error (silent success)")
+        print_info("")
+        print_info("Note: The test wallet remains in KMD (wallets cannot be deleted via API).")
+    except Exception as e:
+        print_error(f"Error: {e}")
+        print_info("")
+        print_info("Troubleshooting:")
+        print_info("  - Ensure LocalNet is running: algokit localnet start")
+        print_info("  - If LocalNet issues occur: algokit localnet reset")
+        print_info("  - Check that KMD is accessible on port 4002")
+
+        # Cleanup on error
+        if wallet_handle_token:
+            cleanup_test_wallet(kmd, wallet_handle_token)
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/python/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/python/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/python/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/python/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/python/latest/examples/kmd-client/05-key-import-export/)
+- **Key Listing and Deletion**
+- [Master Key Export](/docs/algokit-utils/python/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/python/latest/examples/kmd-client/08-multisig-setup/)
+- [Multisig Account Management](/docs/algokit-utils/python/latest/examples/kmd-client/09-multisig-management/)
+- [Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/python/latest/examples/kmd-client/13-multisig-program-signing/)

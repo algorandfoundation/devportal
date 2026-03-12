@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'encodeSignedTransaction'
+title: "encodeSignedTransaction"
 ---
 
 > **encodeSignedTransaction**(`signedTransaction`): `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:115](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L115)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:115](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L115)
 
 Encode signed transactions to MsgPack for sending on the network.
 

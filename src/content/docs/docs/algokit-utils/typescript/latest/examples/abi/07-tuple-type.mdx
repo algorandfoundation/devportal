@@ -1,0 +1,354 @@
+---
+title: "ABI Tuple Type"
+description: "This example demonstrates how to encode and decode tuples using ABITupleType:"
+sidebar:
+  order: 7
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode tuples using ABITupleType:
+- Tuples with mixed static types: (uint64,bool,address)
+- Tuples with dynamic types: (uint64,string,bool)
+- Nested tuples: ((uint64,bool),string)
+ Key characteristics of tuple encoding:
+- Static-only tuples: all elements encoded consecutively, fixed size
+- Tuples with dynamic elements: head/tail encoding pattern
+- Head: static values inline + offsets for dynamic values
+- Tail: actual data for dynamic elements
+- Nested tuples: inner tuples are encoded first, then treated as their component
+ ARC-4 specification: Tuples are sequences of types enclosed in parentheses.
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/07-tuple-type.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/07-tuple-type.ts)
+
+```typescript title="07-tuple-type.ts"
+/**
+ * Example: ABI Tuple Type
+ *
+ * This example demonstrates how to encode and decode tuples using ABITupleType:
+ * - Tuples with mixed static types: (uint64,bool,address)
+ * - Tuples with dynamic types: (uint64,string,bool)
+ * - Nested tuples: ((uint64,bool),string)
+ *
+ * Key characteristics of tuple encoding:
+ * - Static-only tuples: all elements encoded consecutively, fixed size
+ * - Tuples with dynamic elements: head/tail encoding pattern
+ *   - Head: static values inline + offsets for dynamic values
+ *   - Tail: actual data for dynamic elements
+ * - Nested tuples: inner tuples are encoded first, then treated as their component
+ *
+ * ARC-4 specification: Tuples are sequences of types enclosed in parentheses.
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { Address } from '@algorandfoundation/algokit-utils'
+import { ABIBoolType, ABIStringType, ABITupleType, ABIType, ABIUintType } from '@algorandfoundation/algokit-utils/abi'
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+function main() {
+  printHeader('ABI Tuple Type Example')
+
+  // Step 1: ABITupleType properties
+  printStep(1, 'ABITupleType Properties')
+
+  const staticTupleType = ABIType.from('(uint64,bool,address)') as ABITupleType
+  const dynamicTupleType = ABIType.from('(uint64,string,bool)') as ABITupleType
+  const nestedTupleType = ABIType.from('((uint64,bool),string)') as ABITupleType
+
+  printInfo('(uint64,bool,address) - all static types:')
+  printInfo(`  toString(): ${staticTupleType.toString()}`)
+  printInfo(`  childTypes.length: ${staticTupleType.childTypes.length}`)
+  staticTupleType.childTypes.forEach((child, i) => {
+    printInfo(`    [${i}]: ${child.toString()} (isDynamic: ${child.isDynamic()})`)
+  })
+  printInfo(`  isDynamic(): ${staticTupleType.isDynamic()}`)
+  printInfo(`  byteLen(): ${staticTupleType.byteLen()}`)
+
+  printInfo('\n(uint64,string,bool) - contains dynamic type:')
+  printInfo(`  toString(): ${dynamicTupleType.toString()}`)
+  printInfo(`  childTypes.length: ${dynamicTupleType.childTypes.length}`)
+  dynamicTupleType.childTypes.forEach((child, i) => {
+    printInfo(`    [${i}]: ${child.toString()} (isDynamic: ${child.isDynamic()})`)
+  })
+  printInfo(`  isDynamic(): ${dynamicTupleType.isDynamic()} (because string is dynamic)`)
+
+  printInfo('\n((uint64,bool),string) - nested tuple with dynamic:')
+  printInfo(`  toString(): ${nestedTupleType.toString()}`)
+  printInfo(`  childTypes.length: ${nestedTupleType.childTypes.length}`)
+  nestedTupleType.childTypes.forEach((child, i) => {
+    printInfo(`    [${i}]: ${child.toString()} (isDynamic: ${child.isDynamic()})`)
+  })
+  printInfo(`  isDynamic(): ${nestedTupleType.isDynamic()}`)
+
+  // Step 2: Static tuple encoding - (uint64,bool,address)
+  printStep(2, 'Static Tuple Encoding - (uint64,bool,address)')
+
+  // Create a sample address
+  const pubKey = new Uint8Array(32).fill(0xab)
+  const sampleAddress = new Address(pubKey).toString()
+
+  const staticValue: [bigint, boolean, string] = [1000n, true, sampleAddress]
+  const staticEncoded = staticTupleType.encode(staticValue)
+  const staticDecoded = staticTupleType.decode(staticEncoded) as [bigint, boolean, string]
+
+  printInfo(`Input: [${staticValue[0]}, ${staticValue[1]}, ${staticValue[2].substring(0, 10)}...]`)
+  printInfo(`Encoded: ${formatHex(staticEncoded)}`)
+  printInfo(`Total bytes: ${staticEncoded.length}`)
+
+  // Break down the encoding
+  printInfo('\nByte layout (all static, no head/tail separation):')
+  printInfo(`  [0-7]   uint64: ${formatHex(staticEncoded.slice(0, 8))} = ${staticValue[0]}`)
+  printInfo(`  [8]     bool:   ${formatHex(staticEncoded.slice(8, 9))} = ${staticValue[1]} (0x80=true, 0x00=false)`)
+  printInfo(`  [9-40]  address: ${formatHex(staticEncoded.slice(9, 41))}`)
+  printInfo(`  Expected size: 8 + 1 + 32 = 41 bytes`)
+
+  printInfo(`\nDecoded: [${staticDecoded[0]}, ${staticDecoded[1]}, ${staticDecoded[2].substring(0, 10)}...]`)
+  printInfo(`Round-trip verified: ${staticDecoded[0] === staticValue[0] && staticDecoded[1] === staticValue[1] && staticDecoded[2] === staticValue[2]}`)
+
+  // Step 3: Dynamic tuple encoding - (uint64,string,bool)
+  printStep(3, 'Dynamic Tuple Encoding - (uint64,string,bool)')
+
+  const dynamicValue: [bigint, string, boolean] = [42n, 'Hello ABI', false]
+  const dynamicEncoded = dynamicTupleType.encode(dynamicValue)
+  const dynamicDecoded = dynamicTupleType.decode(dynamicEncoded) as [bigint, string, boolean]
+
+  printInfo(`Input: [${dynamicValue[0]}, "${dynamicValue[1]}", ${dynamicValue[2]}]`)
+  printInfo(`Encoded: ${formatHex(dynamicEncoded)}`)
+  printInfo(`Total bytes: ${dynamicEncoded.length}`)
+
+  printInfo('\nHead/Tail encoding pattern:')
+  printInfo('HEAD SECTION (static values + offset for dynamic):')
+
+  // uint64 is static - 8 bytes
+  printInfo(`  [0-7]   uint64 (static): ${formatHex(dynamicEncoded.slice(0, 8))} = ${dynamicValue[0]}`)
+
+  // string is dynamic - 2-byte offset pointing to tail
+  const stringOffset = (dynamicEncoded[8] << 8) | dynamicEncoded[9]
+  printInfo(`  [8-9]   string offset:   ${formatHex(dynamicEncoded.slice(8, 10))} = ${stringOffset} (points to tail)`)
+
+  // bool is static - 1 byte
+  printInfo(`  [10]    bool (static):   ${formatHex(dynamicEncoded.slice(10, 11))} = ${dynamicValue[2]}`)
+
+  printInfo('\nTAIL SECTION (dynamic value data):')
+
+  // String data starts at the offset
+  const stringLenBytes = dynamicEncoded.slice(stringOffset, stringOffset + 2)
+  const stringLen = (stringLenBytes[0] << 8) | stringLenBytes[1]
+  const stringContentBytes = dynamicEncoded.slice(stringOffset + 2, stringOffset + 2 + stringLen)
+
+  printInfo(`  [${stringOffset}-${stringOffset + 1}]   string length: ${formatHex(stringLenBytes)} = ${stringLen} bytes`)
+  printInfo(`  [${stringOffset + 2}-${stringOffset + 1 + stringLen}]  string content: ${formatHex(stringContentBytes)} = "${dynamicValue[1]}"`)
+
+  printInfo(`\nDecoded: [${dynamicDecoded[0]}, "${dynamicDecoded[1]}", ${dynamicDecoded[2]}]`)
+  printInfo(`Round-trip verified: ${dynamicDecoded[0] === dynamicValue[0] && dynamicDecoded[1] === dynamicValue[1] && dynamicDecoded[2] === dynamicValue[2]}`)
+
+  // Step 4: Nested tuple encoding - ((uint64,bool),string)
+  printStep(4, 'Nested Tuple Encoding - ((uint64,bool),string)')
+
+  const nestedValue: [[bigint, boolean], string] = [[999n, true], 'Nested!']
+  const nestedEncoded = nestedTupleType.encode(nestedValue)
+  const nestedDecoded = nestedTupleType.decode(nestedEncoded) as [[bigint, boolean], string]
+
+  printInfo(`Input: [[${nestedValue[0][0]}, ${nestedValue[0][1]}], "${nestedValue[1]}"]`)
+  printInfo(`Encoded: ${formatHex(nestedEncoded)}`)
+  printInfo(`Total bytes: ${nestedEncoded.length}`)
+
+  printInfo('\nNested tuple encoding:')
+  printInfo('  Inner tuple (uint64,bool) is static - encoded inline in head')
+  printInfo('  String is dynamic - offset in head, data in tail')
+
+  printInfo('\nHEAD SECTION:')
+  // Inner tuple is static: 8 bytes (uint64) + 1 byte (bool) = 9 bytes
+  printInfo(`  [0-7]   inner.uint64:  ${formatHex(nestedEncoded.slice(0, 8))} = ${nestedValue[0][0]}`)
+  printInfo(`  [8]     inner.bool:    ${formatHex(nestedEncoded.slice(8, 9))} = ${nestedValue[0][1]}`)
+
+  // String offset
+  const nestedStringOffset = (nestedEncoded[9] << 8) | nestedEncoded[10]
+  printInfo(`  [9-10]  string offset: ${formatHex(nestedEncoded.slice(9, 11))} = ${nestedStringOffset}`)
+
+  printInfo('\nTAIL SECTION:')
+  const nestedStrLenBytes = nestedEncoded.slice(nestedStringOffset, nestedStringOffset + 2)
+  const nestedStrLen = (nestedStrLenBytes[0] << 8) | nestedStrLenBytes[1]
+  const nestedStrContent = nestedEncoded.slice(nestedStringOffset + 2, nestedStringOffset + 2 + nestedStrLen)
+
+  printInfo(`  [${nestedStringOffset}-${nestedStringOffset + 1}]   string length:  ${formatHex(nestedStrLenBytes)} = ${nestedStrLen} bytes`)
+  printInfo(`  [${nestedStringOffset + 2}-${nestedStringOffset + 1 + nestedStrLen}]  string content: ${formatHex(nestedStrContent)} = "${nestedValue[1]}"`)
+
+  printInfo(`\nDecoded: [[${nestedDecoded[0][0]}, ${nestedDecoded[0][1]}], "${nestedDecoded[1]}"]`)
+  printInfo(`Round-trip verified: ${nestedDecoded[0][0] === nestedValue[0][0] && nestedDecoded[0][1] === nestedValue[0][1] && nestedDecoded[1] === nestedValue[1]}`)
+
+  // Step 5: Accessing tuple elements after decoding
+  printStep(5, 'Accessing Tuple Elements After Decoding')
+
+  printInfo('Decoded values are returned as arrays, access by index:')
+
+  const mixedTuple = ABIType.from('(uint64,bool,string,address)') as ABITupleType
+  const mixedValue: [bigint, boolean, string, string] = [123n, false, 'test', sampleAddress]
+  const mixedEncoded = mixedTuple.encode(mixedValue)
+  const mixedDecoded = mixedTuple.decode(mixedEncoded) as [bigint, boolean, string, string]
+
+  printInfo(`\nDecoded tuple (uint64,bool,string,address):`)
+  printInfo(`  element[0] (uint64):  ${mixedDecoded[0]} (type: ${typeof mixedDecoded[0]})`)
+  printInfo(`  element[1] (bool):    ${mixedDecoded[1]} (type: ${typeof mixedDecoded[1]})`)
+  printInfo(`  element[2] (string):  "${mixedDecoded[2]}" (type: ${typeof mixedDecoded[2]})`)
+  printInfo(`  element[3] (address): ${mixedDecoded[3].substring(0, 10)}... (type: ${typeof mixedDecoded[3]})`)
+
+  // Nested tuple element access
+  printInfo('\nAccessing nested tuple elements:')
+  printInfo(`  nestedDecoded[0]:       inner tuple as array`)
+  printInfo(`  nestedDecoded[0][0]:    ${nestedDecoded[0][0]} (inner uint64)`)
+  printInfo(`  nestedDecoded[0][1]:    ${nestedDecoded[0][1]} (inner bool)`)
+  printInfo(`  nestedDecoded[1]:       "${nestedDecoded[1]}" (outer string)`)
+
+  // Step 6: Byte layout comparison - static vs dynamic tuples
+  printStep(6, 'Byte Layout Comparison')
+
+  printInfo('STATIC TUPLE (uint64,bool,address):')
+  printInfo(`  Layout: [uint64:8 bytes][bool:1 byte][address:32 bytes]`)
+  printInfo(`  Total: ${staticTupleType.byteLen()} bytes (fixed size)`)
+  printInfo(`  No head/tail separation - all data inline`)
+
+  printInfo('\nDYNAMIC TUPLE (uint64,string,bool):')
+  printInfo('  Layout: HEAD + TAIL')
+  printInfo('  HEAD: [uint64:8][string_offset:2][bool:1] = 11 bytes')
+  printInfo('  TAIL: [string_len:2][string_data:N]')
+  printInfo('  Total: 11 + 2 + string_length bytes')
+  printInfo(`  Example with "Hello ABI" (9 bytes): ${dynamicEncoded.length} bytes`)
+
+  // Show how different string lengths affect total size
+  printInfo('\nSize varies with dynamic content:')
+  const testStrings = ['', 'Hi', 'Hello World', 'A longer string for testing']
+
+  for (const str of testStrings) {
+    const testVal: [bigint, string, boolean] = [1n, str, true]
+    const testEncoded = dynamicTupleType.encode(testVal)
+    const expectedSize = 11 + 2 + new TextEncoder().encode(str).length
+    printInfo(`  "${str}" (${str.length} chars): ${testEncoded.length} bytes (expected: ${expectedSize})`)
+  }
+
+  // Step 7: Creating ABITupleType programmatically
+  printStep(7, 'Creating ABITupleType Programmatically')
+
+  const customTupleType = new ABITupleType([new ABIUintType(32), new ABIBoolType(), new ABIStringType()])
+
+  printInfo('Created with: new ABITupleType([new ABIUintType(32), new ABIBoolType(), new ABIStringType()])')
+  printInfo(`  toString(): ${customTupleType.toString()}`)
+  printInfo(`  childTypes.length: ${customTupleType.childTypes.length}`)
+  printInfo(`  isDynamic(): ${customTupleType.isDynamic()}`)
+
+  const customValue: [number, boolean, string] = [500, true, 'Custom']
+  const customEncoded = customTupleType.encode(customValue)
+  const customDecoded = customTupleType.decode(customEncoded) as [bigint, boolean, string]
+
+  printInfo(`\nEncode [${customValue[0]}, ${customValue[1]}, "${customValue[2]}"]:`)
+  printInfo(`  Encoded: ${formatHex(customEncoded)}`)
+  printInfo(`  Total bytes: ${customEncoded.length}`)
+  printInfo(`  Decoded: [${customDecoded[0]}, ${customDecoded[1]}, "${customDecoded[2]}"]`)
+
+  // Step 8: Multiple dynamic elements in a tuple
+  printStep(8, 'Multiple Dynamic Elements')
+
+  const multiDynamicType = ABIType.from('(string,uint64,string)') as ABITupleType
+  const multiDynamicValue: [string, bigint, string] = ['First', 42n, 'Second']
+  const multiDynamicEncoded = multiDynamicType.encode(multiDynamicValue)
+  const multiDynamicDecoded = multiDynamicType.decode(multiDynamicEncoded) as [string, bigint, string]
+
+  printInfo(`Input: ["${multiDynamicValue[0]}", ${multiDynamicValue[1]}, "${multiDynamicValue[2]}"]`)
+  printInfo(`Encoded: ${formatHex(multiDynamicEncoded)}`)
+  printInfo(`Total bytes: ${multiDynamicEncoded.length}`)
+
+  printInfo('\nHead/Tail layout with multiple dynamic elements:')
+  printInfo('HEAD: [string1_offset:2][uint64:8][string2_offset:2] = 12 bytes')
+
+  const str1Offset = (multiDynamicEncoded[0] << 8) | multiDynamicEncoded[1]
+  const str2Offset = (multiDynamicEncoded[10] << 8) | multiDynamicEncoded[11]
+
+  printInfo(`  [0-1]   string1 offset: ${formatHex(multiDynamicEncoded.slice(0, 2))} = ${str1Offset}`)
+  printInfo(`  [2-9]   uint64:         ${formatHex(multiDynamicEncoded.slice(2, 10))} = ${multiDynamicValue[1]}`)
+  printInfo(`  [10-11] string2 offset: ${formatHex(multiDynamicEncoded.slice(10, 12))} = ${str2Offset}`)
+
+  printInfo('\nTAIL: [string1_data][string2_data]')
+  printInfo(`  String 1 at offset ${str1Offset}: "${multiDynamicValue[0]}"`)
+  printInfo(`  String 2 at offset ${str2Offset}: "${multiDynamicValue[2]}"`)
+
+  printInfo(`\nDecoded: ["${multiDynamicDecoded[0]}", ${multiDynamicDecoded[1]}, "${multiDynamicDecoded[2]}"]`)
+  printInfo(`Round-trip verified: ${multiDynamicDecoded[0] === multiDynamicValue[0] && multiDynamicDecoded[1] === multiDynamicValue[1] && multiDynamicDecoded[2] === multiDynamicValue[2]}`)
+
+  // Step 9: Summary
+  printStep(9, 'Summary')
+
+  printInfo('ABITupleType key properties:')
+  printInfo('  - childTypes: array of types for each element')
+  printInfo('  - isDynamic(): true if ANY child is dynamic')
+  printInfo('  - byteLen(): only valid for static tuples')
+
+  printInfo('\nTuple encoding patterns:')
+  printInfo('  Static tuples (all elements static):')
+  printInfo('    - Elements encoded consecutively')
+  printInfo('    - Fixed total size = sum of element sizes')
+  printInfo('    - No offsets needed')
+
+  printInfo('\n  Dynamic tuples (at least one dynamic element):')
+  printInfo('    - HEAD: static values inline + 2-byte offsets for dynamic')
+  printInfo('    - TAIL: actual data for dynamic elements')
+  printInfo('    - Offsets are relative to start of tuple encoding')
+
+  printInfo('\nNested tuples:')
+  printInfo('  - Inner tuples encoded as single units')
+  printInfo('  - Static inner tuples: inline in head')
+  printInfo('  - Dynamic inner tuples: offset in head, data in tail')
+
+  printInfo('\nDecoded values:')
+  printInfo('  - Returned as arrays (tuples)')
+  printInfo('  - Access elements by index: decoded[0], decoded[1], etc.')
+  printInfo('  - Nested tuples: decoded[0][0] for inner elements')
+
+  printInfo('\nCreating tuple types:')
+  printInfo('  - ABIType.from("(uint64,bool)") - parse from string')
+  printInfo('  - new ABITupleType([child1, child2, ...]) - programmatic')
+
+  printSuccess('ABI Tuple Type example completed successfully!')
+}
+
+main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/typescript/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/typescript/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/typescript/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/typescript/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/typescript/latest/examples/abi/06-dynamic-array/)
+- **ABI Tuple Type**
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/typescript/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/typescript/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/typescript/latest/examples/abi/15-arc56-storage/)

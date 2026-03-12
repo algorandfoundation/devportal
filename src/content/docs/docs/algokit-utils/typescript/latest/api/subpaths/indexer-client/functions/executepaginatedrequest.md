@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'executePaginatedRequest'
+title: "executePaginatedRequest"
 ---
 
 > **executePaginatedRequest**\<`TResult`, `TRequest`\>(`extractItems`, `buildRequest`): `Promise`\<`TResult`[]\>
 
-Defined in: [src/indexer-client/indexer-lookup.ts:120](https://github.com/larkiny/algokit-utils-ts/blob/main/src/indexer-client/indexer-lookup.ts#L120)
+Defined in: [src/indexer-client/indexer-lookup.ts:120](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-client/indexer-lookup.ts#L120)
 
 ## Type Parameters
 
@@ -17,7 +17,7 @@ Defined in: [src/indexer-client/indexer-lookup.ts:120](https://github.com/larkin
 
 ### TRequest
 
-`TRequest` _extends_ `Promise`\<`any`\>
+`TRequest` *extends* `Promise`\<`any`\>
 
 ## Parameters
 

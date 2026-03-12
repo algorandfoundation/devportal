@@ -1,5 +1,5 @@
 ---
-title: 'algokit_utils.models.application'
+title: "algokit_utils.models.application"
 ---
 
 <div class="api-ref">
@@ -9,7 +9,7 @@ title: 'algokit_utils.models.application'
 ## Classes
 
 | [`AppState`](#algokit_utils.models.application.AppState)                         |                                     |
-| -------------------------------------------------------------------------------- | ----------------------------------- |
+|----------------------------------------------------------------------------------|-------------------------------------|
 | [`AppInformation`](#algokit_utils.models.application.AppInformation)             |                                     |
 | [`CompiledTeal`](#algokit_utils.models.application.CompiledTeal)                 | The compiled teal code              |
 | [`AppCompilationResult`](#algokit_utils.models.application.AppCompilationResult) | The compiled teal code              |
@@ -17,118 +17,119 @@ title: 'algokit_utils.models.application'
 
 ## Module Contents
 
-### _class_ AppState
+### *class* AppState
 
-#### key*raw *: bytes\_
+#### key_raw *: bytes*
 
 The key of the state as raw bytes
 
-#### key*base64 *: str\_
+#### key_base64 *: str*
 
 The key of the state
 
-#### value*raw *: bytes | None\_
+#### value_raw *: bytes | None*
 
 The value of the state as raw bytes
 
-#### value*base64 *: str | None\_
+#### value_base64 *: str | None*
 
 The value of the state as base64 encoded string
 
-#### value _: str | int_
+#### value *: str | int*
 
 The value of the state as a string or integer
 
-### _class_ AppInformation
+### *class* AppInformation
 
-#### app*id *: int\_
+#### app_id *: int*
 
 The ID of the application
 
-#### app*address *: str\_
+#### app_address *: str*
 
 The address of the application
 
-#### approval*program *: bytes\_
+#### approval_program *: bytes*
 
 The approval program
 
-#### clear*state_program *: bytes\_
+#### clear_state_program *: bytes*
 
 The clear state program
 
-#### creator _: str_
+#### creator *: str*
 
 The creator of the application
 
-#### global*state *: dict[str, [AppState](#algokit_utils.models.application.AppState)]\_
+#### global_state *: dict[str, [AppState](#algokit_utils.models.application.AppState)]*
 
 The global state of the application
 
-#### local*ints *: int\_
+#### local_ints *: int*
 
 The number of local ints
 
-#### local*byte_slices *: int\_
+#### local_byte_slices *: int*
 
 The number of local byte slices
 
-#### global*ints *: int\_
+#### global_ints *: int*
 
 The number of global ints
 
-#### global*byte_slices *: int\_
+#### global_byte_slices *: int*
 
 The number of global byte slices
 
-#### extra*program_pages *: int | None\_
+#### extra_program_pages *: int | None*
 
 The number of extra program pages
 
-### _class_ CompiledTeal
+### *class* CompiledTeal
 
 The compiled teal code
 
-#### teal _: str_
+#### teal *: str*
 
 The teal code
 
-#### compiled _: str_
+#### compiled *: str*
 
 The compiled teal code
 
-#### compiled*hash *: str\_
+#### compiled_hash *: str*
 
 The compiled hash
 
-#### compiled*base64_to_bytes *: bytes\_
+#### compiled_base64_to_bytes *: bytes*
 
 The compiled base64 to bytes
 
-#### source*map *: ProgramSourceMap | None\_
+#### source_map *: ProgramSourceMap | None*
 
-### _class_ AppCompilationResult
+### *class* AppCompilationResult
 
 The compiled teal code
 
-#### compiled*approval *: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)\_
+#### compiled_approval *: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)*
 
 The compiled approval program
 
-#### compiled*clear *: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)\_
+#### compiled_clear *: [CompiledTeal](#algokit_utils.models.application.CompiledTeal)*
 
 The compiled clear state program
 
-### _class_ AppSourceMaps
+### *class* AppSourceMaps
 
 The source maps for the application
 
-#### approval*source_map *: ProgramSourceMap | None\_ _= None_
+#### approval_source_map *: ProgramSourceMap | None* *= None*
 
 The source map for the approval program
 
-#### clear*source_map *: ProgramSourceMap | None\_ _= None_
+#### clear_source_map *: ProgramSourceMap | None* *= None*
 
 The source map for the clear state program
+
 
 </div>

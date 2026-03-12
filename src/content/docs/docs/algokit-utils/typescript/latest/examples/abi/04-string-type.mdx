@@ -1,0 +1,205 @@
+---
+title: "ABI String Type"
+description: "This example demonstrates how to encode and decode dynamic strings using ABIStringType:"
+sidebar:
+  order: 4
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode dynamic strings using ABIStringType:
+- ABIStringType encodes strings with a 2-byte length prefix followed by UTF-8 content
+- Shows encoding of empty strings, ASCII text, and Unicode characters
+- Demonstrates that strings are dynamic types (variable length)
+- Displays byte breakdown: length prefix vs content bytes
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/04-string-type.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/04-string-type.ts)
+
+```typescript title="04-string-type.ts"
+/**
+ * Example: ABI String Type
+ *
+ * This example demonstrates how to encode and decode dynamic strings using ABIStringType:
+ * - ABIStringType encodes strings with a 2-byte length prefix followed by UTF-8 content
+ * - Shows encoding of empty strings, ASCII text, and Unicode characters
+ * - Demonstrates that strings are dynamic types (variable length)
+ * - Displays byte breakdown: length prefix vs content bytes
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { ABIStringType } from '@algorandfoundation/algokit-utils/abi'
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+function main() {
+  printHeader('ABI String Type Example')
+
+  // Step 1: ABIStringType basics
+  printStep(1, 'ABIStringType - Basic Properties')
+
+  const stringType = new ABIStringType()
+
+  printInfo(`type: ${stringType.toString()}`)
+  printInfo(`isDynamic: ${stringType.isDynamic()}`)
+  printInfo('Note: Strings are dynamic types - their encoded length varies with content')
+
+  // Step 2: Encoding an empty string
+  printStep(2, 'Encoding Empty String')
+
+  const emptyString = ''
+  const emptyEncoded = stringType.encode(emptyString)
+  const emptyDecoded = stringType.decode(emptyEncoded)
+
+  printInfo(`string value: "" (empty)`)
+  printInfo(`  encoded: ${formatHex(emptyEncoded)}`)
+  printInfo(`  total bytes: ${emptyEncoded.length}`)
+  printInfo(`  length prefix (2 bytes): ${formatHex(emptyEncoded.slice(0, 2))} = ${(emptyEncoded[0] << 8) | emptyEncoded[1]}`)
+  printInfo(`  content bytes: ${emptyEncoded.length - 2}`)
+  printInfo(`  decoded: "${emptyDecoded}"`)
+  printInfo(`  round-trip verified: ${emptyDecoded === emptyString}`)
+
+  // Step 3: Encoding a short ASCII string
+  printStep(3, 'Encoding Short ASCII String')
+
+  const helloString = 'Hello'
+  const helloEncoded = stringType.encode(helloString)
+  const helloDecoded = stringType.decode(helloEncoded)
+
+  printInfo(`string value: "${helloString}"`)
+  printInfo(`  encoded: ${formatHex(helloEncoded)}`)
+  printInfo(`  total bytes: ${helloEncoded.length}`)
+  printInfo(`  length prefix (2 bytes): ${formatHex(helloEncoded.slice(0, 2))} = ${(helloEncoded[0] << 8) | helloEncoded[1]}`)
+  printInfo(`  content bytes: ${helloEncoded.length - 2}`)
+
+  // Show individual character encoding
+  printInfo('\n  Byte breakdown:')
+  printInfo(`    [0-1] Length prefix: ${formatHex(helloEncoded.slice(0, 2))} (${helloString.length})`)
+  for (let i = 0; i < helloString.length; i++) {
+    const charByte = helloEncoded[i + 2]
+    printInfo(`    [${i + 2}]   '${helloString[i]}' -> 0x${charByte.toString(16).padStart(2, '0')} (${charByte})`)
+  }
+
+  printInfo(`\n  decoded: "${helloDecoded}"`)
+  printInfo(`  round-trip verified: ${helloDecoded === helloString}`)
+
+  // Step 4: Encoding a longer ASCII string
+  printStep(4, 'Encoding Longer ASCII String')
+
+  const loremString = 'The quick brown fox jumps over the lazy dog.'
+  const loremEncoded = stringType.encode(loremString)
+  const loremDecoded = stringType.decode(loremEncoded)
+
+  printInfo(`string value: "${loremString}"`)
+  printInfo(`  encoded: ${formatHex(loremEncoded)}`)
+  printInfo(`  total bytes: ${loremEncoded.length}`)
+  printInfo(`  length prefix (2 bytes): ${formatHex(loremEncoded.slice(0, 2))} = ${(loremEncoded[0] << 8) | loremEncoded[1]}`)
+  printInfo(`  content bytes: ${loremEncoded.length - 2}`)
+  printInfo(`  decoded: "${loremDecoded}"`)
+  printInfo(`  round-trip verified: ${loremDecoded === loremString}`)
+
+  // Step 5: Encoding Unicode characters
+  printStep(5, 'Encoding Unicode Characters')
+
+  const unicodeString = 'Hello, 世界! 🌍'
+  const unicodeEncoded = stringType.encode(unicodeString)
+  const unicodeDecoded = stringType.decode(unicodeEncoded)
+
+  printInfo(`string value: "${unicodeString}"`)
+  printInfo(`  encoded: ${formatHex(unicodeEncoded)}`)
+  printInfo(`  total bytes: ${unicodeEncoded.length}`)
+  printInfo(`  length prefix (2 bytes): ${formatHex(unicodeEncoded.slice(0, 2))} = ${(unicodeEncoded[0] << 8) | unicodeEncoded[1]}`)
+  printInfo(`  content bytes: ${unicodeEncoded.length - 2}`)
+  printInfo(`  JS string length: ${unicodeString.length} (characters)`)
+  printInfo(`  UTF-8 byte length: ${unicodeEncoded.length - 2} (bytes)`)
+  printInfo('  Note: Unicode characters may use multiple bytes in UTF-8 encoding')
+  printInfo(`  decoded: "${unicodeDecoded}"`)
+  printInfo(`  round-trip verified: ${unicodeDecoded === unicodeString}`)
+
+  // Step 6: Encoding emoji-only string
+  printStep(6, 'Encoding Emoji String')
+
+  const emojiString = '🚀🎉💻'
+  const emojiEncoded = stringType.encode(emojiString)
+  const emojiDecoded = stringType.decode(emojiEncoded)
+
+  printInfo(`string value: "${emojiString}"`)
+  printInfo(`  encoded: ${formatHex(emojiEncoded)}`)
+  printInfo(`  total bytes: ${emojiEncoded.length}`)
+  printInfo(`  length prefix (2 bytes): ${formatHex(emojiEncoded.slice(0, 2))} = ${(emojiEncoded[0] << 8) | emojiEncoded[1]}`)
+  printInfo(`  content bytes: ${emojiEncoded.length - 2}`)
+  printInfo(`  JS string length: ${emojiString.length} (UTF-16 code units, emojis use 2 each)`)
+  printInfo(`  UTF-8 byte length: ${emojiEncoded.length - 2} (bytes, emojis use 4 bytes each)`)
+  printInfo(`  decoded: "${emojiDecoded}"`)
+  printInfo(`  round-trip verified: ${emojiDecoded === emojiString}`)
+
+  // Step 7: Maximum length demonstration
+  printStep(7, 'String Length Limits')
+
+  printInfo('String encoding uses a 2-byte (uint16) length prefix:')
+  printInfo('  Maximum string length: 65535 bytes (2^16 - 1)')
+  printInfo('  Length prefix is big-endian encoded')
+
+  // Demonstrate a string that would have a length > 255 (requiring both bytes)
+  const longString = 'A'.repeat(300)
+  const longEncoded = stringType.encode(longString)
+
+  printInfo(`\nExample with 300-character string:`)
+  printInfo(`  length prefix: ${formatHex(longEncoded.slice(0, 2))}`)
+  printInfo(`  high byte: 0x${longEncoded[0].toString(16).padStart(2, '0')} = ${longEncoded[0]}`)
+  printInfo(`  low byte:  0x${longEncoded[1].toString(16).padStart(2, '0')} = ${longEncoded[1]}`)
+  printInfo(`  decoded length: (${longEncoded[0]} << 8) | ${longEncoded[1]} = ${(longEncoded[0] << 8) | longEncoded[1]}`)
+
+  // Step 8: Summary
+  printStep(8, 'Summary - Dynamic Type Behavior')
+
+  printInfo('Key points about ABIStringType:')
+  printInfo('  - Strings are dynamic types (isDynamic() returns true)')
+  printInfo('  - Encoding format: 2-byte length prefix + UTF-8 content')
+  printInfo('  - Length prefix is big-endian (most significant byte first)')
+  printInfo('  - UTF-8 encoding means characters may use 1-4 bytes')
+  printInfo('  - Maximum string length: 65535 bytes')
+
+  printSuccess('ABI String Type example completed successfully!')
+}
+
+main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/typescript/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/typescript/latest/examples/abi/03-address-type/)
+- **ABI String Type**
+- [ABI Static Array Type](/docs/algokit-utils/typescript/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/typescript/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/typescript/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/typescript/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/typescript/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/typescript/latest/examples/abi/15-arc56-storage/)

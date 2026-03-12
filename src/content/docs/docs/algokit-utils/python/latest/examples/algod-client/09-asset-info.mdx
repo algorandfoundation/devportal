@@ -1,0 +1,317 @@
+---
+title: "Asset Information"
+description: "This example demonstrates how to retrieve asset information using the AlgodClient method: asset_by_id()"
+sidebar:
+  order: 9
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve asset information using the AlgodClient method: asset_by_id()
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/09_asset_info.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/09_asset_info.py)
+
+```python title="09_asset_info.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Asset Information
+
+This example demonstrates how to retrieve asset information using
+the AlgodClient method: asset_by_id()
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    get_funded_account,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AssetCreateParams
+
+
+def main() -> None:
+    print_header("Asset Information Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # Create an AlgorandClient for asset creation
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a Funded Account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        creator = get_funded_account(algorand)
+        print_success(f"Got funded account: {shorten_address(str(creator.addr))}")
+    except Exception as e:
+        print_error(f"Failed to get funded account: {e}")
+        print_info("Make sure LocalNet is running with `algokit localnet start`")
+        print_info("If issues persist, try `algokit localnet reset`")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 2: Create a Test Asset using AlgorandClient
+    # =========================================================================
+    print_step(2, "Creating a test asset using AlgorandClient")
+
+    asset_total = 1_000_000_000_000  # 1 million units with 6 decimals
+    asset_decimals = 6
+    asset_name = "Test Asset"
+    asset_unit_name = "TEST"
+    asset_url = "https://example.com/test-asset"
+    metadata_hash = bytes([0xAB] * 32)  # 32-byte metadata hash
+
+    try:
+        print_info(f"Creating asset: {asset_name} ({asset_unit_name})")
+        print_info(f"Total supply: {asset_total:,} base units")
+        print_info(f"Decimals: {asset_decimals}")
+
+        result = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=str(creator.addr),
+                total=asset_total,
+                decimals=asset_decimals,
+                asset_name=asset_name,
+                unit_name=asset_unit_name,
+                url=asset_url,
+                metadata_hash=metadata_hash,
+                default_frozen=False,
+                manager=str(creator.addr),
+                reserve=str(creator.addr),
+                freeze=str(creator.addr),
+                clawback=str(creator.addr),
+            )
+        )
+
+        asset_id = result.asset_id
+        print_success(f"Asset created with ID: {asset_id}")
+        print_info("")
+
+        # =========================================================================
+        # Step 3: Get Asset Information using asset_by_id()
+        # =========================================================================
+        print_step(3, "Getting asset information with asset_by_id()")
+
+        asset = algod.asset_by_id(asset_id)
+
+        print_success("Asset information retrieved successfully!")
+        print_info("")
+
+        # =========================================================================
+        # Step 4: Display Asset Params
+        # =========================================================================
+        print_step(4, "Displaying asset parameters")
+
+        print_info("Asset Identification:")
+        print_info(f"  Asset ID: {asset.id_}")
+        print_info("")
+
+        print_info("Asset Parameters:")
+        print_info(f"  Creator:    {asset.params.creator}")
+        print_info(f"              {shorten_address(asset.params.creator)} (shortened)")
+        print_info(f"  Total:      {asset.params.total:,} base units")
+
+        # Calculate human-readable total
+        decimals = asset.params.decimals
+        human_readable_total = asset.params.total / (10**decimals) if decimals > 0 else asset.params.total
+        unit_name_display = asset.params.unit_name or "units"
+        print_info(f"              {human_readable_total:,.{decimals}f} {unit_name_display}")
+        print_info(f"  Decimals:   {decimals}")
+        print_info(f"  Unit Name:  {asset.params.unit_name or '(not set)'}")
+        print_info(f"  Asset Name: {asset.params.name or '(not set)'}")
+        print_info(f"  URL:        {asset.params.url or '(not set)'}")
+
+        # Display metadata hash if present
+        if asset.params.metadata_hash:
+            hash_hex = asset.params.metadata_hash.hex()
+            print_info(f"  Metadata Hash: {hash_hex[:16]}...{hash_hex[-16:]} ({len(asset.params.metadata_hash)} bytes)")
+        else:
+            print_info("  Metadata Hash: (not set)")
+
+        print_info(f"  Default Frozen: {asset.params.default_frozen or False}")
+        print_info("")
+
+        # =========================================================================
+        # Step 5: Display Asset Addresses (Manager, Reserve, Freeze, Clawback)
+        # =========================================================================
+        print_step(5, "Displaying asset management addresses")
+
+        print_info("Asset Management Addresses:")
+        print_info(f"  Manager:  {asset.params.manager or '(immutable - not set)'}")
+        if asset.params.manager:
+            print_info(f"            {shorten_address(asset.params.manager)} (shortened)")
+            print_info("Manager can modify manager, reserve, freeze, and clawback addresses")
+
+        print_info(f"  Reserve:  {asset.params.reserve or '(not set)'}")
+        if asset.params.reserve:
+            print_info(f"            {shorten_address(asset.params.reserve)} (shortened)")
+            print_info("Reserve holds non-minted/non-circulating units")
+
+        print_info(f"  Freeze:   {asset.params.freeze or '(not set - freezing disabled)'}")
+        if asset.params.freeze:
+            print_info(f"            {shorten_address(asset.params.freeze)} (shortened)")
+            print_info("Freeze address can freeze/unfreeze asset holdings")
+
+        print_info(f"  Clawback: {asset.params.clawback or '(not set - clawback disabled)'}")
+        if asset.params.clawback:
+            print_info(f"            {shorten_address(asset.params.clawback)} (shortened)")
+            print_info("Clawback address can revoke assets from any account")
+        print_info("")
+
+        # =========================================================================
+        # Step 6: Note about Round Information
+        # =========================================================================
+        print_step(6, "Note about data validity")
+
+        print_info("The asset_by_id() method returns the current asset state.")
+        print_info("Unlike some other endpoints, it does not include a round field.")
+        print_info("To get the current round, use status() or other round-aware methods.")
+
+        # Get current round for reference
+        status = algod.status()
+        print_info(f"  Current network round: {status.last_round:,}")
+        print_info("")
+
+        # =========================================================================
+        # Step 7: Handle Asset Not Found
+        # =========================================================================
+        print_step(7, "Demonstrating error handling for non-existent asset")
+
+        non_existent_asset_id = 999999999
+        try:
+            print_info(f"Querying non-existent asset ID: {non_existent_asset_id}")
+            algod.asset_by_id(non_existent_asset_id)
+            print_error("Expected an error but none was thrown")
+        except Exception as e:
+            print_success("Correctly caught error for non-existent asset")
+            print_info(f"  Error message: {e}")
+            print_info("Always handle the case where an asset may not exist or has been destroyed")
+        print_info("")
+
+        # =========================================================================
+        # Step 8: Create Asset with Minimal Parameters (for comparison)
+        # =========================================================================
+        print_step(8, "Creating a minimal asset (no optional addresses)")
+
+        minimal_result = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=str(creator.addr),
+                total=1000,
+                decimals=0,
+                asset_name="Minimal Asset",
+                unit_name="MIN",
+                # Note: No manager, reserve, freeze, or clawback addresses set
+            )
+        )
+
+        minimal_asset = algod.asset_by_id(minimal_result.asset_id)
+
+        print_info("Minimal Asset Configuration:")
+        print_info(f"  Asset ID: {minimal_asset.id_}")
+        print_info(f"  Creator:  {shorten_address(minimal_asset.params.creator)}")
+        print_info(f"  Total:    {minimal_asset.params.total}")
+        print_info(f"  Manager:  {minimal_asset.params.manager or '(not set - asset is immutable)'}")
+        print_info(f"  Reserve:  {minimal_asset.params.reserve or '(not set)'}")
+        print_info(f"  Freeze:   {minimal_asset.params.freeze or '(not set - freezing disabled)'}")
+        print_info(f"  Clawback: {minimal_asset.params.clawback or '(not set - clawback disabled)'}")
+        print_info("Without a manager address, asset parameters cannot be changed")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create or query asset: {e}")
+        print_info("If LocalNet errors occur, try `algokit localnet reset`")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Creating a test asset using AlgorandClient.send.asset_create()")
+    print_info("  2. asset_by_id(asset_id) - Get complete asset information")
+    print_info("  3. Asset params: creator, total, decimals, unit_name, name, url, metadata_hash")
+    print_info("  4. Asset addresses: manager, reserve, freeze, clawback")
+    print_info("  5. Error handling for non-existent assets")
+    print_info("  6. Minimal asset creation (without optional addresses)")
+    print_info("")
+    print_info("Key Asset fields:")
+    print_info("  - id_: Unique asset identifier (int)")
+    print_info("  - params.creator: Address that created the asset")
+    print_info("  - params.total: Total supply in base units (int)")
+    print_info("  - params.decimals: Number of decimal places (0-19)")
+    print_info("  - params.unit_name: Short name for asset unit (e.g., 'ALGO')")
+    print_info("  - params.name: Full asset name")
+    print_info("  - params.url: URL with more information")
+    print_info("  - params.metadata_hash: 32-byte commitment to metadata")
+    print_info("  - params.default_frozen: Whether new holdings are frozen by default")
+    print_info("")
+    print_info("Management addresses (optional):")
+    print_info("  - manager: Can reconfigure or destroy the asset")
+    print_info("  - reserve: Holds non-circulating units")
+    print_info("  - freeze: Can freeze/unfreeze holdings")
+    print_info("  - clawback: Can revoke assets from any account")
+    print_info("")
+    print_info("Use cases:")
+    print_info("  - Verify asset parameters before opt-in")
+    print_info("  - Check management addresses for trust evaluation")
+    print_info("  - Display asset information in wallets/explorers")
+    print_info("  - Validate asset metadata for compliance")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- **Asset Information**
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

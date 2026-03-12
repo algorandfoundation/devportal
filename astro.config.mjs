@@ -13,11 +13,9 @@ import starlightAutoSidebar from 'starlight-auto-sidebar';
 import starlightOpenAPI, { createOpenAPISidebarGroup } from 'starlight-openapi';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import { buildAllLibrarySidebarEntries, readSidebarJson } from './imports/sidebar.js';
+import { buildAllLibrarySidebarEntries } from './imports/sidebar.js';
 import { LIBRARY_CONFIGS } from './imports/configs/index.js';
 
-const algokitUtilsTsSidebar = readSidebarJson('algokit-utils', 'typescript', 'latest') ?? [];
-const algokitUtilsPySidebar = readSidebarJson('algokit-utils', 'python', 'latest') ?? [];
 
 const algodAPIDocsSidebarGroup = createOpenAPISidebarGroup();
 const indexerAPIDocsSidebarGroup = createOpenAPISidebarGroup();
@@ -82,8 +80,8 @@ export default defineConfig({
             if (slug.startsWith('algokit/unit-testing/')) return true;
 
 
-            // Algorand TypeScript API docs — TypeDoc cross-refs
-            if (/^docs\/algorand-typescript\/.*\/api\//.test(slug)) return true;
+            // All imported library docs under src/content/docs/docs/
+            if (slug.startsWith('docs/')) return true;
 
 
             // ARC standards — cross-references between ARC spec pages
@@ -420,14 +418,6 @@ export default defineConfig({
               collapsed: true,
               items: [
                 { slug: 'algokit/utils/algokit-clients' },
-                {
-                  label: 'TypeScript',
-                  items: algokitUtilsTsSidebar,
-                },
-                {
-                  label: 'Python',
-                  items: algokitUtilsPySidebar,
-                },
               ],
             },
             {

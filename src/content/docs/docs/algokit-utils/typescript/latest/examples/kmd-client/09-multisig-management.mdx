@@ -1,0 +1,397 @@
+---
+title: "Multisig Account Management"
+description: "This example demonstrates how to manage multisig accounts using KMD:"
+sidebar:
+  order: 9
+---
+
+[← Back to KMD Client](/docs/algokit-utils/typescript/latest/examples/kmd-client/)
+
+## Description
+
+This example demonstrates how to manage multisig accounts using KMD:
+- listMultisig() - List all multisig accounts in a wallet
+- exportMultisig() - Get the multisig preimage information
+- deleteMultisig() - Remove a multisig account from the wallet
+ Key concepts:
+- Multisig accounts can be listed to see all multisigs in a wallet
+- The multisig preimage contains the original parameters: publicKeys, threshold, version
+- Deleting a multisig only removes it from the wallet, not from the blockchain
+- Funds in a deleted multisig address remain on the blockchain
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+- Covered operations:
+- generateKey() - Generate keys to use as multisig participants
+- importMultisig() - Create a multisig account from public keys
+- listMultisig() - List all multisig accounts in the wallet
+- exportMultisig() - Export the multisig preimage (configuration)
+- deleteMultisig() - Delete a multisig account from the wallet
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example kmd_client/09-multisig-management.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/kmd_client/09-multisig-management.ts)
+
+```typescript title="09-multisig-management.ts"
+/**
+ * Example: Multisig Account Management
+ *
+ * This example demonstrates how to manage multisig accounts using KMD:
+ * - listMultisig() - List all multisig accounts in a wallet
+ * - exportMultisig() - Get the multisig preimage information
+ * - deleteMultisig() - Remove a multisig account from the wallet
+ *
+ * Key concepts:
+ * - Multisig accounts can be listed to see all multisigs in a wallet
+ * - The multisig preimage contains the original parameters: publicKeys, threshold, version
+ * - Deleting a multisig only removes it from the wallet, not from the blockchain
+ * - Funds in a deleted multisig address remain on the blockchain
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ *
+ * Covered operations:
+ * - generateKey() - Generate keys to use as multisig participants
+ * - importMultisig() - Create a multisig account from public keys
+ * - listMultisig() - List all multisig accounts in the wallet
+ * - exportMultisig() - Export the multisig preimage (configuration)
+ * - deleteMultisig() - Delete a multisig account from the wallet
+ */
+
+import { decodeAddress } from '@algorandfoundation/algokit-utils'
+import {
+  cleanupTestWallet,
+  createKmdClient,
+  createTestWallet,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js'
+
+/**
+ * Format a byte array for display, showing first and last few bytes
+ */
+function formatBytesForDisplay(bytes: Uint8Array, showFirst = 4, showLast = 4): string {
+  const hex = Buffer.from(bytes).toString('hex')
+  if (bytes.length <= showFirst + showLast) {
+    return hex
+  }
+  const firstBytes = hex.slice(0, showFirst * 2)
+  const lastBytes = hex.slice(-(showLast * 2))
+  return `${firstBytes}...${lastBytes}`
+}
+
+async function main() {
+  printHeader('KMD Multisig Account Management Example')
+
+  const kmd = createKmdClient()
+  let walletHandleToken = ''
+  const walletPassword = 'test-password'
+
+  try {
+    // =========================================================================
+    // Step 1: Create a Test Wallet
+    // =========================================================================
+    printStep(1, 'Creating a test wallet')
+
+    const testWallet = await createTestWallet(kmd, walletPassword)
+    walletHandleToken = testWallet.walletHandleToken
+
+    printSuccess(`Test wallet created: ${testWallet.walletName}`)
+    printInfo(`Wallet ID: ${testWallet.walletId}`)
+
+    // =========================================================================
+    // Step 2: Generate 3 Keys for Multisig Participants
+    // =========================================================================
+    printStep(2, 'Generating 3 keys to use as multisig participants')
+
+    const participantAddresses: string[] = []
+    const numParticipants = 3
+
+    for (let i = 1; i <= numParticipants; i++) {
+      const result = await kmd.generateKey({ walletHandleToken })
+      participantAddresses.push(result.address.toString())
+      printInfo(`Participant ${i}: ${result.address}`)
+    }
+
+    printSuccess(`Generated ${numParticipants} participant keys`)
+
+    // =========================================================================
+    // Step 3: Create a 2-of-3 Multisig Account
+    // =========================================================================
+    printStep(3, 'Creating a 2-of-3 multisig account')
+
+    const publicKeys: Uint8Array[] = participantAddresses.map((addr) => {
+      const decoded = decodeAddress(addr)
+      return decoded.publicKey
+    })
+
+    const threshold = 2
+    const multisigVersion = 1
+
+    const multisigResult = await kmd.importMultisig({
+      walletHandleToken,
+      publicKeys,
+      threshold,
+      multisigVersion,
+    })
+
+    const multisigAddress = multisigResult.address.toString()
+
+    printSuccess('Multisig account created!')
+    printInfo(`Multisig address: ${multisigAddress}`)
+    printInfo(`Configuration: ${threshold}-of-${numParticipants}`)
+
+    // =========================================================================
+    // Step 4: List All Multisig Accounts with listMultisig()
+    // =========================================================================
+    printStep(4, 'Listing all multisig accounts with listMultisig()')
+
+    const listResult = await kmd.listMultisig({ walletHandleToken })
+
+    printSuccess(`Found ${listResult.addresses.length} multisig address(es) in wallet`)
+    printInfo('')
+    printInfo('ListMultisigResponse fields:')
+    printInfo(`  addresses: Array of ${listResult.addresses.length} Address(es)`)
+    printInfo('')
+    printInfo('Multisig addresses in wallet:')
+    listResult.addresses.forEach((addr, i) => {
+      printInfo(`  ${i + 1}. ${addr}`)
+    })
+
+    printInfo('')
+    printInfo('Note: listMultisig() returns all multisig addresses currently')
+    printInfo('imported in the wallet. Each address represents a unique multisig')
+    printInfo('configuration (different participants, threshold, or version).')
+
+    // =========================================================================
+    // Step 5: Export Multisig Preimage with exportMultisig()
+    // =========================================================================
+    printStep(5, 'Exporting multisig preimage with exportMultisig()')
+
+    const exportResult = await kmd.exportMultisig({
+      walletHandleToken,
+      address: multisigResult.address,
+    })
+
+    printSuccess('Multisig preimage exported successfully!')
+    printInfo('')
+    printInfo('ExportMultisigResponse fields:')
+    printInfo(`  multisigVersion: ${exportResult.multisigVersion}`)
+    printInfo(`  threshold:       ${exportResult.threshold}`)
+    printInfo(`  publicKeys:      Array of ${exportResult.publicKeys.length} Uint8Array(s)`)
+    printInfo('')
+    printInfo('Exported multisig configuration:')
+    printInfo(`  Version:   ${exportResult.multisigVersion}`)
+    printInfo(`  Threshold: ${exportResult.threshold} (minimum signatures required)`)
+    printInfo(`  Public Keys:`)
+    exportResult.publicKeys.forEach((pk, i) => {
+      printInfo(`    ${i + 1}. ${formatBytesForDisplay(pk)} (${pk.length} bytes)`)
+    })
+
+    printInfo('')
+    printInfo('What is the multisig preimage?')
+    printInfo('-'.repeat(40))
+    printInfo('The preimage contains the original parameters used to create')
+    printInfo('the multisig address:')
+    printInfo('  - multisigVersion: The format version (always 1)')
+    printInfo('  - threshold: Minimum signatures required')
+    printInfo('  - publicKeys: The ordered list of participant public keys')
+    printInfo('')
+    printInfo('This information is needed to:')
+    printInfo('  - Reconstruct the multisig address')
+    printInfo('  - Import the multisig into another wallet')
+    printInfo('  - Verify the configuration of an existing multisig')
+
+    // =========================================================================
+    // Step 6: Verify Exported Info Matches Original
+    // =========================================================================
+    printStep(6, 'Verifying exported info matches original parameters')
+
+    const versionMatches = exportResult.multisigVersion === multisigVersion
+    const thresholdMatches = exportResult.threshold === threshold
+    const keyCountMatches = exportResult.publicKeys.length === publicKeys.length
+
+    // Check if all public keys match
+    let allKeysMatch = keyCountMatches
+    if (keyCountMatches) {
+      for (let i = 0; i < publicKeys.length; i++) {
+        const originalKey = publicKeys[i]
+        const exportedKey = exportResult.publicKeys[i]
+        if (originalKey.length !== exportedKey.length) {
+          allKeysMatch = false
+          break
+        }
+        for (let j = 0; j < originalKey.length; j++) {
+          if (originalKey[j] !== exportedKey[j]) {
+            allKeysMatch = false
+            break
+          }
+        }
+      }
+    }
+
+    printInfo('Verification results:')
+    printInfo(`  Version matches:   ${versionMatches ? 'Yes' : 'No'} (expected: ${multisigVersion}, got: ${exportResult.multisigVersion})`)
+    printInfo(`  Threshold matches: ${thresholdMatches ? 'Yes' : 'No'} (expected: ${threshold}, got: ${exportResult.threshold})`)
+    printInfo(
+      `  Key count matches: ${keyCountMatches ? 'Yes' : 'No'} (expected: ${publicKeys.length}, got: ${exportResult.publicKeys.length})`,
+    )
+    printInfo(`  All keys match:    ${allKeysMatch ? 'Yes' : 'No'}`)
+
+    if (versionMatches && thresholdMatches && allKeysMatch) {
+      printSuccess('All exported information matches the original parameters!')
+    }
+
+    // =========================================================================
+    // Step 7: Delete the Multisig Account with deleteMultisig()
+    // =========================================================================
+    printStep(7, 'Deleting the multisig account with deleteMultisig()')
+
+    printInfo(`Deleting multisig: ${multisigAddress}`)
+
+    await kmd.deleteMultisig({
+      walletHandleToken,
+      address: multisigResult.address,
+      walletPassword,
+    })
+
+    printSuccess('Multisig account deleted from wallet!')
+    printInfo('')
+    printInfo('deleteMultisig() parameters:')
+    printInfo('  - walletHandleToken: Session token for the wallet')
+    printInfo('  - address:           The multisig address to delete')
+    printInfo('  - walletPassword:    Wallet password (required for security)')
+    printInfo('')
+    printInfo('Important notes about deleteMultisig():')
+    printInfo('  - Only removes the multisig from the local KMD wallet')
+    printInfo('  - Does NOT affect the blockchain account')
+    printInfo('  - Any funds at the multisig address remain accessible')
+    printInfo('  - To spend funds, re-import the multisig with the same parameters')
+
+    // =========================================================================
+    // Step 8: Verify Deletion by Listing Multisig Accounts Again
+    // =========================================================================
+    printStep(8, 'Verifying deletion by listing multisig accounts')
+
+    const listAfterDelete = await kmd.listMultisig({ walletHandleToken })
+
+    printInfo('Multisig accounts after deletion:')
+    if (listAfterDelete.addresses.length === 0) {
+      printSuccess('No multisig accounts remaining in wallet')
+    } else {
+      printInfo(`Found ${listAfterDelete.addresses.length} multisig address(es):`)
+      listAfterDelete.addresses.forEach((addr, i) => {
+        printInfo(`  ${i + 1}. ${addr}`)
+      })
+    }
+
+    // Check if the deleted address is still present
+    const deletedAddressStillPresent = listAfterDelete.addresses.some((addr) => addr.toString() === multisigAddress)
+
+    if (deletedAddressStillPresent) {
+      printError('The deleted multisig address is still present (unexpected)')
+    } else {
+      printSuccess(`Confirmed: ${multisigAddress.slice(0, 8)}... is no longer in the wallet`)
+    }
+
+    // =========================================================================
+    // Cleanup
+    // =========================================================================
+    printStep(9, 'Cleaning up test wallet')
+
+    await cleanupTestWallet(kmd, walletHandleToken)
+    walletHandleToken = '' // Mark as cleaned up
+
+    printSuccess('Test wallet handle released')
+
+    // =========================================================================
+    // Summary
+    // =========================================================================
+    printHeader('Summary')
+    printInfo('This example demonstrated multisig account management in KMD:')
+    printInfo('')
+    printInfo('  listMultisig()')
+    printInfo('    Parameters:')
+    printInfo('      - walletHandleToken: Session token for the wallet')
+    printInfo('    Returns:')
+    printInfo('      - addresses:         Array of multisig Address objects')
+    printInfo('')
+    printInfo('  exportMultisig()')
+    printInfo('    Parameters:')
+    printInfo('      - walletHandleToken: Session token for the wallet')
+    printInfo('      - address:           The multisig address to export')
+    printInfo('    Returns:')
+    printInfo('      - multisigVersion:   Multisig format version (1)')
+    printInfo('      - threshold:         Minimum signatures required')
+    printInfo('      - publicKeys:        Array of participant public keys')
+    printInfo('')
+    printInfo('  deleteMultisig()')
+    printInfo('    Parameters:')
+    printInfo('      - walletHandleToken: Session token for the wallet')
+    printInfo('      - address:           The multisig address to delete')
+    printInfo('      - walletPassword:    Wallet password (required)')
+    printInfo('    Returns:')
+    printInfo('      - (void)')
+    printInfo('')
+    printInfo('Key takeaways:')
+    printInfo('  - listMultisig() shows all multisig accounts in the wallet')
+    printInfo('  - exportMultisig() retrieves the original configuration (preimage)')
+    printInfo('  - deleteMultisig() removes from wallet only, not blockchain')
+    printInfo('  - Wallet password is required for deleteMultisig() for security')
+    printInfo('  - Deleted multisigs can be re-imported with the same parameters')
+    printInfo('')
+    printInfo('Note: The test wallet remains in KMD (wallets cannot be deleted via API).')
+  } catch (error) {
+    printError(`Error: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+    printInfo('Troubleshooting:')
+    printInfo('  - Ensure LocalNet is running: algokit localnet start')
+    printInfo('  - If LocalNet issues occur: algokit localnet reset')
+    printInfo('  - Check that KMD is accessible on port 4002')
+
+    // Cleanup on error
+    if (walletHandleToken) {
+      await cleanupTestWallet(kmd, walletHandleToken)
+    }
+
+    process.exit(1)
+  }
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in KMD Client
+
+- [KMD Version Information](/docs/algokit-utils/typescript/latest/examples/kmd-client/01-version/)
+- [Wallet Creation and Listing](/docs/algokit-utils/typescript/latest/examples/kmd-client/02-wallet-management/)
+- [Wallet Session Management](/docs/algokit-utils/typescript/latest/examples/kmd-client/03-wallet-sessions/)
+- [Key Generation](/docs/algokit-utils/typescript/latest/examples/kmd-client/04-key-generation/)
+- [Key Import and Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/05-key-import-export/)
+- [Key Listing and Deletion](/docs/algokit-utils/typescript/latest/examples/kmd-client/06-key-listing-deletion/)
+- [Master Key Export](/docs/algokit-utils/typescript/latest/examples/kmd-client/07-master-key-export/)
+- [Multisig Account Setup](/docs/algokit-utils/typescript/latest/examples/kmd-client/08-multisig-setup/)
+- **Multisig Account Management**
+- [Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/10-transaction-signing/)
+- [Multisig Transaction Signing with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/11-multisig-signing/)
+- [Program Signing (Delegated Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/12-program-signing/)
+- [Multisig Program Signing (Delegated Multisig Logic Signatures) with KMD](/docs/algokit-utils/typescript/latest/examples/kmd-client/13-multisig-program-signing/)

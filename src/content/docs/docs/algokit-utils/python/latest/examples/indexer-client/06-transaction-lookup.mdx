@@ -1,0 +1,421 @@
+---
+title: "Transaction Lookup"
+description: "This example demonstrates how to lookup a single transaction by ID using the IndexerClient lookup_transaction_by_id() method."
+sidebar:
+  order: 6
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup a single transaction by ID using the IndexerClient lookup_transaction_by_id() method.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/06_transaction_lookup.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/06_transaction_lookup.py)
+
+```python title="06_transaction_lookup.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Transaction Lookup
+
+This example demonstrates how to lookup a single transaction by ID using
+the IndexerClient lookup_transaction_by_id() method.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+import time
+from datetime import datetime, timezone
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    format_micro_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AssetCreateParams, AssetOptInParams, AssetTransferParams, PaymentParams
+
+
+def main() -> None:
+    print_header("Transaction Lookup Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting a funded account from LocalNet")
+
+    try:
+        sender = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(sender)
+        sender_address = sender.addr
+        print_success(f"Using dispenser account: {shorten_address(sender_address)}")
+    except Exception as e:
+        print_error(f"Failed to get dispenser account: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Create a test transaction and capture its txId
+    # =========================================================================
+    print_step(2, "Creating a test transaction and capturing its txId")
+
+    try:
+        # Create a random receiver account
+        receiver = algorand.account.random()
+        receiver_address = receiver.addr
+        algorand.set_signer_from_account(receiver)
+        print_info(f"Created receiver account: {shorten_address(receiver_address)}")
+
+        # Send a payment transaction
+        print_info("Sending payment transaction...")
+        payment_result = algorand.send.payment(
+            PaymentParams(
+                sender=sender_address,
+                receiver=receiver_address,
+                amount=AlgoAmount.from_algo(5),
+            )
+        )
+        payment_tx_id = payment_result.tx_ids[0]
+        print_success(f"Payment transaction sent: {shorten_address(payment_tx_id, 8, 6)}")
+        print_info(f"  Full txId: {payment_tx_id}")
+
+        # Create an asset for asset transfer demonstration
+        print_info("Creating a test asset...")
+        asset_create_result = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=sender_address,
+                total=1_000_000,
+                decimals=6,
+                asset_name="LookupToken",
+                unit_name="LOOK",
+            )
+        )
+        asset_id = asset_create_result.asset_id
+        print_success(f"Created asset: LookupToken (ID: {asset_id})")
+
+        # Opt-in receiver to the asset
+        print_info("Opting receiver into asset...")
+        algorand.send.asset_opt_in(
+            AssetOptInParams(
+                sender=receiver_address,
+                asset_id=asset_id,
+            )
+        )
+        print_success("Receiver opted into asset")
+
+        # Send an asset transfer transaction
+        print_info("Sending asset transfer transaction...")
+        asset_transfer_result = algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=sender_address,
+                receiver=receiver_address,
+                asset_id=asset_id,
+                amount=50_000,
+            )
+        )
+        asset_transfer_tx_id = asset_transfer_result.tx_ids[0]
+        print_success(f"Asset transfer transaction sent: {shorten_address(asset_transfer_tx_id, 8, 6)}")
+        print_info(f"  Full txId: {asset_transfer_tx_id}")
+
+        # Wait for indexer to catch up
+        print_info("Waiting for indexer to index transactions...")
+        time.sleep(3)
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create test transactions: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Lookup payment transaction by ID
+    # =========================================================================
+    print_step(3, "Looking up payment transaction by ID")
+
+    try:
+        txn_result = indexer.lookup_transaction_by_id(payment_tx_id)
+        tx = txn_result.transaction
+
+        print_success("Transaction found!")
+        print_info("")
+        print_info("Common transaction fields:")
+        print_info(f"  - id: {tx.id_}")
+        print_info(f"  - tx_type: {tx.tx_type}")
+        print_info(f"  - sender: {shorten_address(tx.sender)}")
+        print_info(f"  - fee: {format_micro_algo(tx.fee)}")
+        print_info(f"  - first_valid: {tx.first_valid}")
+        print_info(f"  - last_valid: {tx.last_valid}")
+        print_info("")
+
+        print_info("Confirmation info:")
+        if tx.confirmed_round is not None:
+            print_info(f"  - confirmed_round: {tx.confirmed_round}")
+        if tx.round_time is not None:
+            date = datetime.fromtimestamp(tx.round_time, tz=timezone.utc)
+            print_info(f"  - round_time: {date.isoformat()} (Unix: {tx.round_time})")
+        if tx.intra_round_offset is not None:
+            print_info(f"  - intra_round_offset: {tx.intra_round_offset}")
+        print_info("")
+
+        # Display payment-specific fields
+        if tx.payment_transaction:
+            print_info("Payment transaction details:")
+            print_info(f"  - receiver: {shorten_address(tx.payment_transaction.receiver)}")
+            print_info(f"  - amount: {format_micro_algo(tx.payment_transaction.amount)}")
+            if tx.payment_transaction.close_remainder_to:
+                print_info(f"  - close_remainder_to: {shorten_address(tx.payment_transaction.close_remainder_to)}")
+            if tx.payment_transaction.close_amount is not None:
+                print_info(f"  - close_amount: {format_micro_algo(tx.payment_transaction.close_amount)}")
+
+        print_info("")
+        print_info(f"Query performed at round: {txn_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_transaction_by_id failed: {e}")
+
+    # =========================================================================
+    # Step 4: Lookup asset transfer transaction by ID
+    # =========================================================================
+    print_step(4, "Looking up asset transfer transaction by ID")
+
+    try:
+        txn_result = indexer.lookup_transaction_by_id(asset_transfer_tx_id)
+        tx = txn_result.transaction
+
+        print_success("Transaction found!")
+        print_info("")
+        print_info("Common transaction fields:")
+        print_info(f"  - id: {tx.id_}")
+        print_info(f"  - tx_type: {tx.tx_type}")
+        print_info(f"  - sender: {shorten_address(tx.sender)}")
+        print_info(f"  - fee: {format_micro_algo(tx.fee)}")
+        print_info(f"  - first_valid: {tx.first_valid}")
+        print_info(f"  - last_valid: {tx.last_valid}")
+        print_info("")
+
+        print_info("Confirmation info:")
+        if tx.confirmed_round is not None:
+            print_info(f"  - confirmed_round: {tx.confirmed_round}")
+        if tx.round_time is not None:
+            date = datetime.fromtimestamp(tx.round_time, tz=timezone.utc)
+            print_info(f"  - round_time: {date.isoformat()} (Unix: {tx.round_time})")
+        if tx.intra_round_offset is not None:
+            print_info(f"  - intra_round_offset: {tx.intra_round_offset}")
+        print_info("")
+
+        # Display asset transfer-specific fields
+        if tx.asset_transfer_transaction:
+            print_info("Asset transfer transaction details:")
+            print_info(f"  - asset_id: {tx.asset_transfer_transaction.asset_id}")
+            print_info(f"  - amount: {tx.asset_transfer_transaction.amount}")
+            print_info(f"  - receiver: {shorten_address(tx.asset_transfer_transaction.receiver)}")
+            if tx.asset_transfer_transaction.sender:
+                print_info(f"  - sender (clawback): {shorten_address(tx.asset_transfer_transaction.sender)}")
+            if tx.asset_transfer_transaction.close_to:
+                print_info(f"  - close_to: {shorten_address(tx.asset_transfer_transaction.close_to)}")
+            if tx.asset_transfer_transaction.close_amount is not None:
+                print_info(f"  - close_amount: {tx.asset_transfer_transaction.close_amount}")
+
+        print_info("")
+        print_info(f"Query performed at round: {txn_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_transaction_by_id failed: {e}")
+
+    # =========================================================================
+    # Step 5: Handle transaction not found case
+    # =========================================================================
+    print_step(5, "Handling transaction not found case")
+
+    try:
+        # Use a fake transaction ID that doesn't exist (valid base32 format, 52 chars)
+        fake_tx_id = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        print_info(f"Attempting to lookup non-existent transaction: {shorten_address(fake_tx_id, 8, 6)}")
+
+        indexer.lookup_transaction_by_id(fake_tx_id)
+
+        # If we get here, the transaction was somehow found (shouldn't happen)
+        print_info("Transaction was unexpectedly found")
+    except Exception as e:
+        error_message = str(e)
+        if "not found" in error_message.lower() or "no transactions" in error_message.lower():
+            print_success("Transaction not found - error handled correctly")
+            print_info(f"  Error message: {error_message}")
+        else:
+            print_error(f"Unexpected error: {error_message}")
+
+    # =========================================================================
+    # Step 6: Display additional transaction fields (if available)
+    # =========================================================================
+    print_step(6, "Displaying additional transaction fields")
+
+    try:
+        txn_result = indexer.lookup_transaction_by_id(payment_tx_id)
+        tx = txn_result.transaction
+
+        print_info("Additional fields (if present):")
+
+        if tx.genesis_id:
+            print_info(f"  - genesis_id: {tx.genesis_id}")
+
+        if tx.genesis_hash:
+            if isinstance(tx.genesis_hash, bytes):
+                hash_b64 = base64.b64encode(tx.genesis_hash).decode()
+            else:
+                hash_b64 = tx.genesis_hash
+            hash_preview = hash_b64[:20] if len(hash_b64) > 20 else hash_b64
+            print_info(f"  - genesis_hash: {hash_preview}...")
+
+        if tx.group:
+            group_b64 = base64.b64encode(tx.group).decode() if isinstance(tx.group, bytes) else tx.group
+            print_info(f"  - group: {group_b64}")
+
+        if tx.note:
+            try:
+                note_bytes = tx.note if isinstance(tx.note, bytes) else base64.b64decode(tx.note)
+                note_text = note_bytes.decode("utf-8") if note_bytes else "(empty)"
+            except Exception:
+                note_text = "(binary data)"
+            print_info(f"  - note: {note_text}")
+
+        if tx.lease:
+            lease_b64 = base64.b64encode(tx.lease).decode() if isinstance(tx.lease, bytes) else tx.lease
+            print_info(f"  - lease: {lease_b64}")
+
+        if tx.rekey_to:
+            print_info(f"  - rekey_to: {tx.rekey_to}")
+
+        if tx.sender_rewards is not None:
+            print_info(f"  - sender_rewards: {format_micro_algo(tx.sender_rewards)}")
+
+        if tx.receiver_rewards is not None:
+            print_info(f"  - receiver_rewards: {format_micro_algo(tx.receiver_rewards)}")
+
+        if tx.close_rewards is not None:
+            print_info(f"  - close_rewards: {format_micro_algo(tx.close_rewards)}")
+
+        if tx.closing_amount is not None:
+            print_info(f"  - closing_amount: {format_micro_algo(tx.closing_amount)}")
+
+        if tx.auth_addr:
+            print_info(f"  - auth_addr: {tx.auth_addr}")
+
+        if tx.signature:
+            print_info("  - signature: (present)")
+            if hasattr(tx.signature, "sig") and tx.signature.sig:
+                print_info("    - type: single signature")
+            if hasattr(tx.signature, "multisig") and tx.signature.multisig:
+                print_info("    - type: multisig")
+            if hasattr(tx.signature, "logicsig") and tx.signature.logicsig:
+                print_info("    - type: logic signature")
+
+        # Check for created assets or applications
+        if tx.created_asset_id is not None:
+            print_info(f"  - created_asset_id: {tx.created_asset_id}")
+        if tx.created_app_id is not None:
+            print_info(f"  - created_app_id: {tx.created_app_id}")
+
+        # Inner transactions (for app calls)
+        if tx.inner_txns and len(tx.inner_txns) > 0:
+            print_info(f"  - inner_txns: {len(tx.inner_txns)} inner transaction(s)")
+
+        # Logs (for app calls)
+        if tx.logs and len(tx.logs) > 0:
+            print_info(f"  - logs: {len(tx.logs)} log entry(ies)")
+
+        # State deltas (for app calls)
+        if tx.global_state_delta:
+            print_info("  - global_state_delta: (present)")
+        if tx.local_state_delta and len(tx.local_state_delta) > 0:
+            print_info(f"  - local_state_delta: {len(tx.local_state_delta)} account(s) affected")
+    except Exception as e:
+        print_error(f"Failed to display additional fields: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. lookup_transaction_by_id(txId) - Get full transaction details by ID")
+    print_info("  2. Displaying common transaction fields: id, tx_type, sender, fee, first_valid, last_valid")
+    print_info("  3. Displaying confirmation info: confirmed_round, round_time, intra_round_offset")
+    print_info("  4. Displaying payment-specific fields: receiver, amount, close_remainder_to")
+    print_info("  5. Displaying asset transfer-specific fields: asset_id, amount, receiver")
+    print_info("  6. Handling transaction not found errors")
+    print_info("  7. Displaying additional fields: genesis_id, note, signature, etc.")
+    print_info("")
+    print_info("TransactionResponse structure:")
+    print_info("  - transaction: The full Transaction object")
+    print_info("  - current_round: Round at which the results were computed")
+    print_info("")
+    print_info("Key Transaction fields:")
+    print_info("  - id: Transaction ID (string)")
+    print_info("  - tx_type: Transaction type (pay, keyreg, acfg, axfer, afrz, appl, stpf, hb)")
+    print_info("  - sender: Sender address (string)")
+    print_info("  - fee: Transaction fee in microAlgos (int)")
+    print_info("  - first_valid: First valid round (int)")
+    print_info("  - last_valid: Last valid round (int)")
+    print_info("  - confirmed_round: Round when confirmed (int, optional)")
+    print_info("  - round_time: Unix timestamp when confirmed (int, optional)")
+    print_info("  - intra_round_offset: Position within the round (int, optional)")
+    print_info("")
+    print_info("Type-specific fields:")
+    print_info("  - payment_transaction: { receiver, amount, close_remainder_to, close_amount }")
+    print_info("  - asset_transfer_transaction: { asset_id, amount, receiver, sender, close_to, close_amount }")
+    print_info("  - asset_config_transaction: { asset_id, params }")
+    print_info("  - application_transaction: { application_id, on_complete, accounts, etc. }")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- **Transaction Lookup**
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

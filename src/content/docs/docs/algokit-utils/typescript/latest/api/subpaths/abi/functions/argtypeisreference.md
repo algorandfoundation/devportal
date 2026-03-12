@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'argTypeIsReference'
+title: "argTypeIsReference"
 ---
 
 > **argTypeIsReference**(`type`): `type is ABIReferenceType`
 
-Defined in: [packages/abi/src/abi-method.ts:278](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L278)
+Defined in: [packages/abi/src/abi-method.ts:278](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L278)
 
 ## Parameters
 

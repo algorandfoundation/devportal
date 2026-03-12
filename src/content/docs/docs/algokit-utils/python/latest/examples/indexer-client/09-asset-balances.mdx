@@ -1,0 +1,408 @@
+---
+title: "Asset Balances"
+description: "This example demonstrates how to lookup all holders of an asset using the IndexerClient lookup_asset_balances() method."
+sidebar:
+  order: 9
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup all holders of an asset using the IndexerClient lookup_asset_balances() method.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/09_asset_balances.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/09_asset_balances.py)
+
+```python title="09_asset_balances.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Asset Balances
+
+This example demonstrates how to lookup all holders of an asset using
+the IndexerClient lookup_asset_balances() method.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import time
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    create_random_account,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AssetCreateParams, AssetOptInParams, AssetTransferParams
+
+
+def main() -> None:
+    print_header("Asset Balances Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a funded account and create additional accounts
+    # =========================================================================
+    print_step(1, "Setting up accounts for demonstration")
+
+    try:
+        # Get the dispenser account as the creator
+        dispenser = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(dispenser)
+        creator_address = dispenser.addr
+        print_success(f"Creator account (dispenser): {shorten_address(creator_address)}")
+
+        # Create additional accounts to hold the asset
+        holder_1 = create_random_account(algorand)
+        holder_1_address = holder_1.addr
+        print_success(f"Holder 1: {shorten_address(holder_1_address)}")
+
+        holder_2 = create_random_account(algorand)
+        holder_2_address = holder_2.addr
+        print_success(f"Holder 2: {shorten_address(holder_2_address)}")
+
+        holder_3 = create_random_account(algorand)
+        holder_3_address = holder_3.addr
+        print_success(f"Holder 3: {shorten_address(holder_3_address)}")
+    except Exception as e:
+        print_error(f"Failed to set up accounts: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Create a test asset
+    # =========================================================================
+    print_step(2, "Creating a test asset")
+
+    try:
+        print_info("Creating test asset: BalanceToken (BAL)...")
+        result = algorand.send.asset_create(
+            AssetCreateParams(
+                sender=creator_address,
+                total=10_000_000,  # 10,000 units with 3 decimals
+                decimals=3,
+                asset_name="BalanceToken",
+                unit_name="BAL",
+                url="https://example.com/balancetoken",
+                default_frozen=False,
+            )
+        )
+        asset_id = result.asset_id
+        print_success(f"Created BalanceToken with Asset ID: {asset_id}")
+    except Exception as e:
+        print_error(f"Failed to create test asset: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Distribute asset to multiple accounts
+    # =========================================================================
+    print_step(3, "Distributing asset to multiple accounts")
+
+    try:
+        # Holder 1: Opt-in and receive 1000 BAL
+        print_info("Opting in Holder 1 and sending 1000 BAL...")
+        algorand.send.asset_opt_in(
+            AssetOptInParams(
+                sender=holder_1_address,
+                asset_id=asset_id,
+            )
+        )
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=creator_address,
+                receiver=holder_1_address,
+                asset_id=asset_id,
+                amount=1_000_000,  # 1000 BAL (with 3 decimals)
+            )
+        )
+        print_success("Holder 1 received 1000 BAL")
+
+        # Holder 2: Opt-in and receive 500 BAL
+        print_info("Opting in Holder 2 and sending 500 BAL...")
+        algorand.send.asset_opt_in(
+            AssetOptInParams(
+                sender=holder_2_address,
+                asset_id=asset_id,
+            )
+        )
+        algorand.send.asset_transfer(
+            AssetTransferParams(
+                sender=creator_address,
+                receiver=holder_2_address,
+                asset_id=asset_id,
+                amount=500_000,  # 500 BAL (with 3 decimals)
+            )
+        )
+        print_success("Holder 2 received 500 BAL")
+
+        # Holder 3: Opt-in only (0 balance but still a holder)
+        print_info("Opting in Holder 3 (no transfer, will have 0 balance)...")
+        algorand.send.asset_opt_in(
+            AssetOptInParams(
+                sender=holder_3_address,
+                asset_id=asset_id,
+            )
+        )
+        print_success("Holder 3 opted in with 0 balance")
+
+        print_info("")
+        print_info("Distribution summary:")
+        print_info("  - Creator: ~8500 BAL (remainder)")
+        print_info("  - Holder 1: 1000 BAL")
+        print_info("  - Holder 2: 500 BAL")
+        print_info("  - Holder 3: 0 BAL (opted-in only)")
+    except Exception as e:
+        print_error(f"Failed to distribute asset: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # Wait for indexer to sync after distribution
+    print_info("Waiting for indexer to sync...")
+    time.sleep(3)
+
+    # =========================================================================
+    # Step 4: Basic lookup_asset_balances() - Get all holders
+    # =========================================================================
+    print_step(4, "Looking up all asset holders with lookup_asset_balances()")
+
+    try:
+        # lookup_asset_balances() returns all accounts that hold (or have opted into) an asset
+        balances_result = indexer.lookup_asset_balances(asset_id)
+
+        print_success(f"Found {len(balances_result.balances or [])} holder(s) for Asset ID {asset_id}")
+        print_info("")
+
+        if balances_result.balances:
+            print_info("Asset balances:")
+            for balance in balances_result.balances or []:
+                print_info(f"  Address: {shorten_address(balance.address)}")
+                print_info(f"    - amount: {balance.amount:,}")
+                print_info(f"    - is_frozen: {balance.is_frozen}")
+                if balance.opted_in_at_round is not None:
+                    print_info(f"    - opted_in_at_round: {balance.opted_in_at_round}")
+                print_info("")
+
+        print_info(f"Query performed at round: {balances_result.current_round}")
+    except Exception as e:
+        print_error(f"lookup_asset_balances failed: {e}")
+
+    # =========================================================================
+    # Step 5: Filter by currency_greater_than
+    # =========================================================================
+    print_step(5, "Filtering holders by currency_greater_than")
+
+    try:
+        # Filter to only show accounts with more than 500 BAL (500,000 base units)
+        print_info("Querying holders with amount > 500,000 base units (> 500 BAL)...")
+        high_balance_result = indexer.lookup_asset_balances(
+            asset_id,
+            currency_greater_than=500_000,
+        )
+
+        print_success(f"Found {len(high_balance_result.balances or [])} holder(s) with balance > 500 BAL")
+        for balance in high_balance_result.balances or []:
+            print_info(f"  {shorten_address(balance.address)}: {balance.amount:,} base units")
+    except Exception as e:
+        print_error(f"currency_greater_than query failed: {e}")
+
+    # =========================================================================
+    # Step 6: Filter by currency_less_than
+    # =========================================================================
+    print_step(6, "Filtering holders by currency_less_than")
+
+    try:
+        # Filter to only show accounts with less than 1,000,000 base units (< 1000 BAL)
+        print_info("Querying holders with amount < 1,000,000 base units (< 1000 BAL)...")
+        low_balance_result = indexer.lookup_asset_balances(
+            asset_id,
+            currency_less_than=1_000_000,
+        )
+
+        print_success(f"Found {len(low_balance_result.balances or [])} holder(s) with balance < 1000 BAL")
+        for balance in low_balance_result.balances or []:
+            print_info(f"  {shorten_address(balance.address)}: {balance.amount:,} base units")
+    except Exception as e:
+        print_error(f"currency_less_than query failed: {e}")
+
+    # =========================================================================
+    # Step 7: Combine currency_greater_than and currency_less_than (range filter)
+    # =========================================================================
+    print_step(7, "Filtering holders by balance range (combining currency filters)")
+
+    try:
+        # Filter to show accounts with balance between 100 BAL and 2000 BAL
+        print_info("Querying holders with 100,000 < amount < 2,000,000 base units (100-2000 BAL)...")
+        range_result = indexer.lookup_asset_balances(
+            asset_id,
+            currency_greater_than=100_000,
+            currency_less_than=2_000_000,
+        )
+
+        print_success(f"Found {len(range_result.balances or [])} holder(s) with balance between 100 and 2000 BAL")
+        for balance in range_result.balances or []:
+            print_info(f"  {shorten_address(balance.address)}: {balance.amount:,} base units")
+    except Exception as e:
+        print_error(f"Range filter query failed: {e}")
+
+    # =========================================================================
+    # Step 8: Using include_all to include 0 balance accounts
+    # =========================================================================
+    print_step(8, "Using include_all to include accounts with 0 balance")
+
+    try:
+        # By default, lookup_asset_balances may exclude accounts with 0 balance
+        # Use include_all=True to include opted-in accounts with no holdings
+        print_info("Querying with include_all=True to include all opted-in accounts...")
+        all_holders_result = indexer.lookup_asset_balances(
+            asset_id,
+            include_all=True,
+        )
+
+        print_success(f"Found {len(all_holders_result.balances or [])} holder(s) (including 0 balance)")
+        print_info("")
+
+        zero_balance_count = len([b for b in (all_holders_result.balances or []) if b.amount == 0])
+        non_zero_count = len([b for b in (all_holders_result.balances or []) if b.amount > 0])
+
+        print_info(f"  - Accounts with balance > 0: {non_zero_count}")
+        print_info(f"  - Accounts with balance = 0: {zero_balance_count}")
+        print_info("")
+
+        print_info("All holders:")
+        for balance in all_holders_result.balances or []:
+            balance_str = "0 (opted-in only)" if balance.amount == 0 else f"{balance.amount:,}"
+            print_info(f"  {shorten_address(balance.address)}: {balance_str}")
+    except Exception as e:
+        print_error(f"include_all query failed: {e}")
+
+    # =========================================================================
+    # Step 9: Demonstrate pagination
+    # =========================================================================
+    print_step(9, "Demonstrating pagination for assets with many holders")
+
+    try:
+        # First query: get only 2 holders
+        print_info("Querying with limit=2...")
+        page_1 = indexer.lookup_asset_balances(
+            asset_id,
+            limit=2,
+            include_all=True,
+        )
+
+        print_info(f"Page 1: Retrieved {len(page_1.balances or [])} holder(s)")
+        for balance in page_1.balances or []:
+            print_info(f"  - {shorten_address(balance.address)}: {balance.amount:,}")
+
+        # Check if there are more results
+        if page_1.next_token:
+            token_preview = str(page_1.next_token)[:20]
+            print_info(f"  Next token available: {token_preview}...")
+            print_info("")
+
+            # Second query: use the next token to get more results
+            print_info("Querying next page with next parameter...")
+            page_2 = indexer.lookup_asset_balances(
+                asset_id,
+                limit=2,
+                include_all=True,
+                next_=page_1.next_token,
+            )
+
+            print_info(f"Page 2: Retrieved {len(page_2.balances or [])} holder(s)")
+            for balance in page_2.balances or []:
+                print_info(f"  - {shorten_address(balance.address)}: {balance.amount:,}")
+
+            if page_2.next_token:
+                print_info("  More results available (next_token present)")
+            else:
+                print_info("  No more results (no next_token)")
+        else:
+            print_info("  No pagination needed (all results fit in one page)")
+    except Exception as e:
+        print_error(f"Pagination demo failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Creating a test asset and distributing to multiple accounts")
+    print_info("  2. lookup_asset_balances(asset_id) - Get all holders of an asset")
+    print_info("  3. Balance fields: address, amount, is_frozen, opted_in_at_round")
+    print_info("  4. Filtering with currency_greater_than (minimum balance)")
+    print_info("  5. Filtering with currency_less_than (maximum balance)")
+    print_info("  6. Combining currency filters for range queries")
+    print_info("  7. Using include_all=True to include accounts with 0 balance")
+    print_info("  8. Pagination using limit and next parameters")
+    print_info("")
+    print_info("Key MiniAssetHolding fields (from lookup_asset_balances):")
+    print_info("  - address: The account address holding the asset (str)")
+    print_info("  - amount: Number of base units held (int)")
+    print_info("  - is_frozen: Whether the holding is frozen (bool)")
+    print_info("  - opted_in_at_round: Round when account opted into asset (optional int)")
+    print_info("")
+    print_info("Filter parameters:")
+    print_info("  - currency_greater_than: Only return balances > this value (int)")
+    print_info("  - currency_less_than: Only return balances < this value (int)")
+    print_info("  - include_all: Include accounts with 0 balance (bool)")
+    print_info("")
+    print_info("Pagination parameters:")
+    print_info("  - limit: Maximum number of results per page")
+    print_info("  - next: Token from previous response to get next page")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- **Asset Balances**
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

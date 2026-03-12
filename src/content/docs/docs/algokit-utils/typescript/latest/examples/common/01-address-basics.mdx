@@ -1,0 +1,220 @@
+---
+title: "Address Basics"
+description: "This example demonstrates basic address operations using the Address class:"
+sidebar:
+  order: 1
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/typescript/latest/examples/common/)
+
+## Description
+
+This example demonstrates basic address operations using the Address class:
+- Parsing addresses from base32 strings with Address.fromString()
+- Creating the zero address with Address.zeroAddress()
+- Encoding addresses back to base32 strings with Address.toString()
+- Comparing addresses for equality with Address.equals()
+- Computing the 4-byte checksum with Address.checksum()
+- Validating addresses with isValidAddress()
+- Accessing the 32-byte public key property
+- Using address constants: ALGORAND_ADDRESS_LENGTH, ALGORAND_ZERO_ADDRESS_STRING
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example common/01-address-basics.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/common/01-address-basics.ts)
+
+```typescript title="01-address-basics.ts"
+/**
+ * Example: Address Basics
+ *
+ * This example demonstrates basic address operations using the Address class:
+ * - Parsing addresses from base32 strings with Address.fromString()
+ * - Creating the zero address with Address.zeroAddress()
+ * - Encoding addresses back to base32 strings with Address.toString()
+ * - Comparing addresses for equality with Address.equals()
+ * - Computing the 4-byte checksum with Address.checksum()
+ * - Validating addresses with isValidAddress()
+ * - Accessing the 32-byte public key property
+ * - Using address constants: ALGORAND_ADDRESS_LENGTH, ALGORAND_ZERO_ADDRESS_STRING
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import {
+  Address,
+  ALGORAND_ADDRESS_LENGTH,
+  ALGORAND_ZERO_ADDRESS_STRING,
+  isValidAddress,
+} from '@algorandfoundation/algokit-utils/common'
+import { formatBytes, formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+function main() {
+  printHeader('Address Basics Example')
+
+  // Step 1: Address constants
+  printStep(1, 'Address Constants')
+
+  printInfo(`ALGORAND_ADDRESS_LENGTH: ${ALGORAND_ADDRESS_LENGTH} characters`)
+  printInfo(`ALGORAND_ZERO_ADDRESS_STRING: ${ALGORAND_ZERO_ADDRESS_STRING}`)
+
+  // Step 2: Parse an address from base32 string using Address.fromString()
+  printStep(2, 'Parse Address from Base32 String')
+
+  // Valid address created from bytes [0, 1, 2, ... 31]
+  const sampleAddressString = 'AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE'
+  printInfo(`Input address string: ${sampleAddressString}`)
+  printInfo(`String length: ${sampleAddressString.length} characters`)
+
+  const parsedAddress = Address.fromString(sampleAddressString)
+  printInfo(`Successfully parsed address using Address.fromString()`)
+
+  // Step 3: Access the public key property (32-byte Uint8Array)
+  printStep(3, 'Public Key Property')
+
+  printInfo(`Public key length: ${parsedAddress.publicKey.length} bytes`)
+  printInfo(`Public key: ${formatBytes(parsedAddress.publicKey, 8)}`)
+  printInfo(`Public key (hex): ${formatHex(parsedAddress.publicKey)}`)
+
+  // Step 4: Encode back to base32 string using Address.toString()
+  printStep(4, 'Encode Address to Base32 String')
+
+  const encodedString = parsedAddress.toString()
+  printInfo(`Encoded address: ${encodedString}`)
+  printInfo(`Round-trip matches: ${encodedString === sampleAddressString}`)
+
+  // Step 5: Create the zero address using Address.zeroAddress()
+  printStep(5, 'Create Zero Address')
+
+  const zeroAddress = Address.zeroAddress()
+  printInfo(`Zero address string: ${zeroAddress.toString()}`)
+  printInfo(`Matches constant: ${zeroAddress.toString() === ALGORAND_ZERO_ADDRESS_STRING}`)
+  printInfo(`Public key: ${formatBytes(zeroAddress.publicKey, 8)}`)
+
+  // Verify all bytes are zero
+  const allZeros = zeroAddress.publicKey.every((byte: number) => byte === 0)
+  printInfo(`All public key bytes are zero: ${allZeros}`)
+
+  // Step 6: Compare addresses using Address.equals()
+  printStep(6, 'Address Equality')
+
+  // Compare two addresses created from the same string
+  const address1 = Address.fromString(sampleAddressString)
+  const address2 = Address.fromString(sampleAddressString)
+  printInfo(`address1.equals(address2): ${address1.equals(address2)}`)
+
+  // Compare with zero address
+  printInfo(`parsedAddress.equals(zeroAddress): ${parsedAddress.equals(zeroAddress)}`)
+
+  // Two different zero addresses should be equal
+  const zeroAddress2 = Address.zeroAddress()
+  printInfo(`zeroAddress.equals(zeroAddress2): ${zeroAddress.equals(zeroAddress2)}`)
+
+  // Step 7: Compute checksum using Address.checksum()
+  printStep(7, 'Compute Checksum')
+
+  const checksum = parsedAddress.checksum()
+  printInfo(`Checksum length: ${checksum.length} bytes`)
+  printInfo(`Checksum: ${formatBytes(checksum, 4)}`)
+  printInfo(`Checksum (hex): ${formatHex(checksum)}`)
+
+  // Zero address checksum
+  const zeroChecksum = zeroAddress.checksum()
+  printInfo(`Zero address checksum: ${formatHex(zeroChecksum)}`)
+
+  // Step 8: Validate addresses using isValidAddress()
+  printStep(8, 'Address Validation')
+
+  printInfo('Testing isValidAddress() with various inputs:')
+
+  // Valid address
+  printInfo(`  Valid address: isValidAddress('${sampleAddressString.substring(0, 20)}...') = ${isValidAddress(sampleAddressString)}`)
+
+  // Zero address
+  printInfo(`  Zero address: isValidAddress(ALGORAND_ZERO_ADDRESS_STRING) = ${isValidAddress(ALGORAND_ZERO_ADDRESS_STRING)}`)
+
+  // Invalid - wrong length
+  const wrongLength = 'ABC123'
+  printInfo(`  Wrong length: isValidAddress('${wrongLength}') = ${isValidAddress(wrongLength)}`)
+
+  // Invalid - bad characters
+  const badChars = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFK0'
+  printInfo(`  Bad characters (has '0'): isValidAddress('...Y5HFK0') = ${isValidAddress(badChars)}`)
+
+  // Invalid - bad checksum (modified last character)
+  const badChecksum = 'AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQA'
+  printInfo(`  Bad checksum: isValidAddress('...PJQA') = ${isValidAddress(badChecksum)}`)
+
+  // Step 9: Create address from raw public key bytes
+  printStep(9, 'Create Address from Public Key Bytes')
+
+  // Create a 32-byte public key
+  const rawPublicKey = new Uint8Array(32)
+  for (let i = 0; i < 32; i++) {
+    rawPublicKey[i] = i
+  }
+
+  printInfo(`Raw public key: ${formatBytes(rawPublicKey, 8)}`)
+
+  const addressFromBytes = new Address(rawPublicKey)
+  printInfo(`Address from bytes: ${addressFromBytes.toString()}`)
+  printInfo(`Public key matches: ${addressFromBytes.publicKey.every((b: number, i: number) => b === rawPublicKey[i])}`)
+
+  // Verify it's valid
+  printInfo(`isValidAddress(addressFromBytes.toString()): ${isValidAddress(addressFromBytes.toString())}`)
+
+  // Step 10: Summary
+  printStep(10, 'Summary')
+
+  printInfo('Address class methods:')
+  printInfo('  - Address.fromString(str) - Parse base32 address string')
+  printInfo('  - Address.zeroAddress() - Create the zero address')
+  printInfo('  - new Address(publicKey) - Create from 32-byte public key')
+  printInfo('  - address.toString() - Encode to base32 string (58 chars)')
+  printInfo('  - address.equals(other) - Compare two addresses')
+  printInfo('  - address.checksum() - Get 4-byte checksum')
+  printInfo('  - address.publicKey - Get 32-byte public key (Uint8Array)')
+
+  printInfo('\nUtility functions:')
+  printInfo('  - isValidAddress(str) - Check if string is valid address')
+
+  printInfo('\nConstants:')
+  printInfo(`  - ALGORAND_ADDRESS_LENGTH = ${ALGORAND_ADDRESS_LENGTH}`)
+  printInfo(`  - ALGORAND_ZERO_ADDRESS_STRING = ${ALGORAND_ZERO_ADDRESS_STRING.substring(0, 20)}...`)
+
+  printSuccess('Address Basics example completed successfully!')
+}
+
+main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- **Address Basics**
+- [Address Encoding](/docs/algokit-utils/typescript/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/typescript/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/typescript/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/typescript/latest/examples/common/05-crypto-hash/)
+- [Logger Type](/docs/algokit-utils/typescript/latest/examples/common/06-logger/)
+- [JSON BigInt](/docs/algokit-utils/typescript/latest/examples/common/07-json-bigint/)
+- [MessagePack](/docs/algokit-utils/typescript/latest/examples/common/08-msgpack/)
+- [Primitive Codecs](/docs/algokit-utils/typescript/latest/examples/common/09-primitive-codecs/)
+- [Composite Codecs](/docs/algokit-utils/typescript/latest/examples/common/10-composite-codecs/)
+- [Model Codecs](/docs/algokit-utils/typescript/latest/examples/common/11-model-codecs/)
+- [Sourcemap](/docs/algokit-utils/typescript/latest/examples/common/12-sourcemap/)

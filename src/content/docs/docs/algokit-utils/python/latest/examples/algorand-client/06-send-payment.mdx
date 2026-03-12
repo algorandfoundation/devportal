@@ -1,0 +1,446 @@
+---
+title: "Send Payment"
+description: "This example demonstrates how to send ALGO payment transactions:"
+sidebar:
+  order: 6
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to send ALGO payment transactions:
+- algorand.send.payment() with basic parameters (sender, receiver, amount)
+- Using AlgoAmount for the amount parameter
+- Payment with note field
+- Payment with close_remainder_to to close account and send remaining balance
+- Understanding the SendSingleTransactionResult return value
+- Displaying transaction ID and confirmed round
+- Verifying balances before and after payment
+
+## Prerequisites
+
+LocalNet required for sending transactions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/06_send_payment.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/06_send_payment.py)
+
+```python title="06_send_payment.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Send Payment
+
+This example demonstrates how to send ALGO payment transactions:
+- algorand.send.payment() with basic parameters (sender, receiver, amount)
+- Using AlgoAmount for the amount parameter
+- Payment with note field
+- Payment with close_remainder_to to close account and send remaining balance
+- Understanding the SendSingleTransactionResult return value
+- Displaying transaction ID and confirmed round
+- Verifying balances before and after payment
+
+LocalNet required for sending transactions
+"""
+
+import json
+from datetime import datetime, timezone
+
+from shared import (
+    format_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, AlgorandClient, PaymentParams
+
+
+def main() -> None:
+    print_header("Send Payment Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Create and fund test accounts
+    print_step(1, "Create and fund test accounts using account manager")
+    print_info("Creating test accounts and funding them from the LocalNet dispenser")
+
+    sender = algorand.account.random()
+    receiver = algorand.account.random()
+    close_to_account = algorand.account.random()
+
+    print_info("")
+    print_info("Created accounts:")
+    print_info(f"  Sender: {shorten_address(str(sender.addr))}")
+    print_info(f"  Receiver: {shorten_address(str(receiver.addr))}")
+    print_info(f"  CloseToAccount: {shorten_address(str(close_to_account.addr))}")
+
+    # Fund the sender account using ensure_funded_from_environment
+    fund_result = algorand.account.ensure_funded_from_environment(
+        sender.addr,
+        AlgoAmount.from_algo(20),
+    )
+    if fund_result:
+        print_info(f"  Funded sender with: {format_algo(fund_result.amount_funded)}")
+
+    # Also fund close_to_account so it exists on the network
+    algorand.account.ensure_funded_from_environment(
+        close_to_account.addr,
+        AlgoAmount.from_algo(1),
+    )
+
+    # Get initial balances
+    sender_initial_info = algorand.account.get_information(sender.addr)
+    receiver_initial_info = algorand.account.get_information(receiver.addr)
+
+    print_info("")
+    print_info("Initial balances:")
+    print_info(f"  Sender: {format_algo(sender_initial_info.amount)}")
+    print_info(f"  Receiver: {format_algo(receiver_initial_info.amount)}")
+
+    print_success("Created and funded test accounts")
+
+    # Step 2: Basic payment with algorand.send.payment()
+    print_step(2, "Basic payment with algorand.send.payment()")
+    print_info("Sending a simple ALGO payment with sender, receiver, and amount")
+
+    basic_payment_result = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(5),  # Using AlgoAmount helper
+        )
+    )
+
+    print_info("")
+    print_info("Basic payment sent:")
+    print_info(f"  From: {shorten_address(str(sender.addr))}")
+    print_info(f"  To: {shorten_address(str(receiver.addr))}")
+    print_info("  Amount: 5 ALGO")
+
+    # Examine the SendSingleTransactionResult return value
+    print_info("")
+    print_info("SendSingleTransactionResult properties:")
+    print_info(f"  tx_ids[0]: {basic_payment_result.tx_ids[0]}")
+    print_info(f"  confirmation.confirmed_round: {basic_payment_result.confirmation.confirmed_round}")
+    print_info(f"  transaction.tx_id(): {basic_payment_result.transaction.tx_id()}")
+    group_id = basic_payment_result.group_id or "undefined (single transaction)"
+    print_info(f"  group_id: {group_id}")
+    print_info(f"  transactions length: {len(basic_payment_result.transactions)}")
+    print_info(f"  confirmations length: {len(basic_payment_result.confirmations)}")
+
+    print_success("Basic payment completed")
+
+    # Step 3: Using AlgoAmount for the amount parameter
+    print_step(3, "Using AlgoAmount for the amount parameter")
+    print_info("AlgoAmount provides type-safe handling of ALGO and microALGO values")
+
+    # Different ways to specify amounts
+    amount1 = AlgoAmount.from_algo(1)  # 1 ALGO using helper function
+    amount2 = AlgoAmount.from_micro_algo(500_000)  # 0.5 ALGO in microALGO
+
+    print_info("")
+    print_info("Different amount specifications:")
+    print_info(f"  AlgoAmount.from_algo(1) = {format_algo(amount1)} ({amount1.micro_algo} uALGO)")
+    print_info(f"  AlgoAmount.from_micro_algo(500_000) = {format_algo(amount2)} ({amount2.micro_algo} uALGO)")
+
+    # Send payment with microAlgo amount
+    micro_algo_payment_result = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_micro_algo(250_000),  # 0.25 ALGO
+        )
+    )
+
+    print_info("")
+    print_info("Payment with microAlgo amount:")
+    print_info(f"  Amount: {format_algo(AlgoAmount.from_micro_algo(250_000))} (250,000 uALGO)")
+    print_info(f"  Transaction ID: {micro_algo_payment_result.tx_ids[0]}")
+
+    print_success("Demonstrated AlgoAmount usage")
+
+    # Step 4: Payment with note field
+    print_step(4, "Payment with note field")
+    print_info("Adding arbitrary data to a payment using the note field")
+    print_info("Notes can be strings, byte arrays, or structured data (JSON)")
+
+    # String note
+    string_note_result = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0.1),
+            note=b"Payment for services rendered",
+        )
+    )
+
+    print_info("")
+    print_info("Payment with string note:")
+    print_info('  Note: "Payment for services rendered"')
+    print_info(f"  Transaction ID: {string_note_result.tx_ids[0]}")
+
+    # JSON note (useful for structured data)
+    json_note = json.dumps(
+        {
+            "type": "invoice",
+            "id": "12345",
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+    )
+
+    json_note_result = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0.1),
+            note=json_note.encode(),
+        )
+    )
+
+    print_info("")
+    print_info("Payment with JSON note:")
+    print_info(f"  Note: {json_note}")
+    print_info(f"  Transaction ID: {json_note_result.tx_ids[0]}")
+
+    # Byte array note
+    byte_note = b"Binary data note"
+
+    byte_note_result = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0.1),
+            note=byte_note,
+        )
+    )
+
+    print_info("")
+    print_info("Payment with byte array note:")
+    print_info(f'  Note: bytes({len(byte_note)}) - "Binary data note"')
+    print_info(f"  Transaction ID: {byte_note_result.tx_ids[0]}")
+
+    print_success("Demonstrated payment with notes")
+
+    # Step 5: Verify balances before and after payment
+    print_step(5, "Verify balances before and after payment using get_information()")
+    print_info("Using algorand.account.get_information() to check account balances")
+
+    # Get current balances
+    sender_before_info = algorand.account.get_information(sender.addr)
+    receiver_before_info = algorand.account.get_information(receiver.addr)
+
+    print_info("")
+    print_info("Balances before payment:")
+    print_info(f"  Sender: {format_algo(sender_before_info.amount)}")
+    print_info(f"  Receiver: {format_algo(receiver_before_info.amount)}")
+
+    # Send a precise amount
+    precise_amount = AlgoAmount.from_algo(2)
+    algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=precise_amount,
+        )
+    )
+
+    # Get balances after payment
+    sender_after_info = algorand.account.get_information(sender.addr)
+    receiver_after_info = algorand.account.get_information(receiver.addr)
+
+    print_info("")
+    print_info(f"Balances after sending {format_algo(precise_amount)}:")
+    print_info(f"  Sender: {format_algo(sender_after_info.amount)}")
+    print_info(f"  Receiver: {format_algo(receiver_after_info.amount)}")
+
+    # Calculate the difference (includes transaction fee)
+    sender_diff = sender_before_info.amount.micro_algo - sender_after_info.amount.micro_algo
+    receiver_diff = receiver_after_info.amount.micro_algo - receiver_before_info.amount.micro_algo
+
+    print_info("")
+    print_info("Balance changes:")
+    print_info(f"  Sender lost: {format_algo(sender_diff)} (amount + fee)")
+    print_info(f"  Receiver gained: {format_algo(receiver_diff)}")
+    print_info(f"  Transaction fee: {format_algo(sender_diff - receiver_diff)}")
+
+    print_success("Verified balance changes")
+
+    # Step 6: Demonstrate close_remainder_to to close account
+    print_step(6, "Demonstrate close_remainder_to to close account and send remaining balance")
+    print_info("close_remainder_to closes the sender account and sends ALL remaining balance")
+    print_info("WARNING: This permanently closes the account - use with caution!")
+
+    # Create a new account specifically for closing
+    account_to_close = algorand.account.random()
+    algorand.account.ensure_funded_from_environment(account_to_close.addr, AlgoAmount.from_algo(5))
+
+    account_to_close_initial_info = algorand.account.get_information(account_to_close.addr)
+    close_to_initial_info = algorand.account.get_information(close_to_account.addr)
+
+    print_info("")
+    print_info(f"Account to close: {shorten_address(str(account_to_close.addr))}")
+    print_info(f"  Initial balance: {format_algo(account_to_close_initial_info.amount)}")
+    print_info(f"Close remainder to: {shorten_address(str(close_to_account.addr))}")
+    print_info(f"  Initial balance: {format_algo(close_to_initial_info.amount)}")
+
+    # Send a payment with close_remainder_to
+    # This will:
+    # 1. Send the specified amount to receiver
+    # 2. Send ALL remaining balance to close_remainder_to address
+    # 3. Close the sender account
+    close_result = algorand.send.payment(
+        PaymentParams(
+            sender=account_to_close.addr,
+            receiver=receiver.addr,  # Receiver gets the explicit amount
+            amount=AlgoAmount.from_algo(1),  # Explicit amount to receiver
+            close_remainder_to=close_to_account.addr,  # Remainder goes here, account closes
+        )
+    )
+
+    print_info("")
+    print_info("Close account transaction:")
+    print_info(f"  Transaction ID: {close_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {close_result.confirmation.confirmed_round}")
+    print_info(f"  Explicit amount to receiver: {format_algo(AlgoAmount.from_algo(1))}")
+
+    # Verify the close operation
+    account_to_close_final_info = algorand.account.get_information(account_to_close.addr)
+    receiver_final_info = algorand.account.get_information(receiver.addr)
+    close_to_final_info = algorand.account.get_information(close_to_account.addr)
+
+    receiver_gained = receiver_final_info.amount.micro_algo - receiver_before_info.amount.micro_algo
+    close_to_gained = close_to_final_info.amount.micro_algo - close_to_initial_info.amount.micro_algo
+
+    print_info("")
+    print_info("After closing:")
+    print_info(f"  Closed account balance: {format_algo(account_to_close_final_info.amount)} (should be 0)")
+    print_info(f"  Receiver gained: {format_algo(receiver_gained)}")
+    print_info(f"  CloseToAccount balance: {format_algo(close_to_final_info.amount)}")
+    print_info(f"  CloseToAccount gained: {format_algo(close_to_gained)}")
+
+    print_success("Demonstrated close_remainder_to")
+
+    # Step 7: Waiting for confirmation
+    print_step(7, "Understanding transaction confirmation")
+    print_info("algorand.send.payment() automatically waits for confirmation")
+    print_info("The result includes confirmation details from the network")
+
+    confirmation_result = algorand.send.payment(
+        PaymentParams(
+            sender=sender.addr,
+            receiver=receiver.addr,
+            amount=AlgoAmount.from_algo(0.5),
+        )
+    )
+
+    print_info("")
+    print_info("Transaction confirmation details:")
+    print_info(f"  Transaction ID: {confirmation_result.tx_ids[0]}")
+    print_info(f"  Confirmed round: {confirmation_result.confirmation.confirmed_round}")
+    pool_error = confirmation_result.confirmation.pool_error or "none"
+    print_info(f"  Pool error: {pool_error}")
+
+    # Access the Transaction object
+    txn = confirmation_result.transaction
+    print_info("")
+    print_info("Transaction object details:")
+    print_info(f"  tx_id(): {txn.tx_id()}")
+    print_info(f"  transaction_type: {txn.transaction_type}")
+    print_info(f"  first_valid: {txn.first_valid}")
+    print_info(f"  last_valid: {txn.last_valid}")
+    print_info(f"  fee: {txn.fee} uALGO")
+
+    print_success("Demonstrated transaction confirmation")
+
+    # Step 8: Summary of SendSingleTransactionResult
+    print_step(8, "Summary - SendSingleTransactionResult properties")
+    print_info("When you call algorand.send.payment(), you get a SendSingleTransactionResult:")
+    print_info("")
+    print_info("Primary transaction properties:")
+    print_info("  tx_ids[0]: str - The transaction ID for single transactions")
+    print_info("  transaction: Transaction - The Transaction object")
+    print_info("  confirmation: PendingTransactionResponse - Confirmation details")
+    print_info("")
+    print_info("Group properties (also present for single transactions):")
+    print_info("  group_id: str | None - The group ID if part of a group")
+    print_info("  tx_ids: list[str] - List of transaction IDs")
+    print_info("  transactions: list[Transaction] - List of Transaction objects")
+    print_info("  confirmations: list[PendingTransactionResponse] - List of confirmations")
+    print_info("")
+    print_info("Useful confirmation properties:")
+    print_info("  confirmation.confirmed_round - The round the transaction was confirmed")
+    print_info("  confirmation.pool_error - Any error message from the pool")
+    print_info("  confirmation.closing_amount - Amount sent to close_remainder_to (if used)")
+    print_info("")
+    print_info("Payment parameters:")
+    print_info("  sender: str - Who is sending the payment")
+    print_info("  receiver: str - Who receives the payment")
+    print_info("  amount: AlgoAmount - How much to send")
+    print_info("  note: str | bytes - Optional note data")
+    print_info("  close_remainder_to: str - Close account and send remainder here")
+
+    # Final balance summary
+    print_step(9, "Final balance summary")
+
+    final_sender_info = algorand.account.get_information(sender.addr)
+    final_receiver_info = algorand.account.get_information(receiver.addr)
+
+    print_info("")
+    print_info("Final balances:")
+    print_info(
+        f"  Sender: {format_algo(final_sender_info.amount)} (started with {format_algo(sender_initial_info.amount)})"
+    )
+    print_info(
+        f"  Receiver: {format_algo(final_receiver_info.amount)} "
+        f"(started with {format_algo(receiver_initial_info.amount)})"
+    )
+
+    print_success("Send Payment example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- **Send Payment**
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/python/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

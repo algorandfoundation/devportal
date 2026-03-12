@@ -1,0 +1,479 @@
+---
+title: "Application Logs Lookup"
+description: "This example demonstrates how to lookup application logs using the IndexerClient lookup_application_logs_by_id() method."
+sidebar:
+  order: 12
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup application logs using the IndexerClient lookup_application_logs_by_id() method.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/12_application_logs.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/12_application_logs.py)
+
+```python title="12_application_logs.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Application Logs Lookup
+
+This example demonstrates how to lookup application logs using
+the IndexerClient lookup_application_logs_by_id() method.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+import time
+
+from shared import (
+    create_algod_client,
+    create_algorand_client,
+    create_indexer_client,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+    wait_for_confirmation,
+)
+
+from algokit_utils import AlgoAmount, PaymentParams
+from algokit_utils.transactions.types import AppCallParams, AppCreateParams
+
+
+def decode_log_entry(log_bytes: bytes) -> str:
+    """
+    Decode log bytes to string if possible, otherwise show hex.
+    """
+    try:
+        # Try to decode as UTF-8 string
+        decoded = log_bytes.decode("utf-8")
+        # Check if it's printable ASCII/UTF-8
+        if all(0x20 <= ord(c) <= 0x7E or c in "\t\n\r" for c in decoded):
+            return f'"{decoded}"'
+    except (UnicodeDecodeError, AttributeError):
+        pass
+
+    # Display as hex for binary data
+    hex_str = log_bytes.hex()
+    return f"0x{hex_str} ({len(log_bytes)} bytes)"
+
+
+def main() -> None:
+    print_header("Application Logs Lookup Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get funded accounts from LocalNet
+    # =========================================================================
+    print_step(1, "Getting funded accounts from LocalNet")
+
+    try:
+        creator_account = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(creator_account)
+        creator_address = creator_account.addr
+        print_success(f"Using dispenser account as creator: {shorten_address(creator_address)}")
+
+        # Create a separate caller account for sender filtering demo
+        caller_account = algorand.account.kmd.get_or_create_wallet_account("caller-account")
+        algorand.set_signer_from_account(caller_account)
+        caller_address = caller_account.addr
+        print_success(f"Using caller account: {shorten_address(caller_address)}")
+
+        # Fund the caller account
+        algorand.send.payment(
+            PaymentParams(
+                sender=creator_address,
+                receiver=caller_address,
+                amount=AlgoAmount.from_algo(1),
+            )
+        )
+        print_info("Funded caller account with 1 ALGO")
+    except Exception as e:
+        print_error(f"Failed to get accounts: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Deploy an application that emits logs
+    # =========================================================================
+    print_step(2, "Deploying an application that emits logs")
+
+    try:
+        # Load TEAL programs from shared artifacts
+        approval_source = load_teal_source("approval-logging.teal")
+        clear_source = load_teal_source("clear-state-logging.teal")
+
+        # Compile TEAL programs
+        print_info("Compiling TEAL programs...")
+        approval_result = algod.teal_compile(approval_source.encode())
+        approval_program = base64.b64decode(approval_result.result)
+
+        clear_result = algod.teal_compile(clear_source.encode())
+        clear_state_program = base64.b64decode(clear_result.result)
+
+        print_info(f"Approval program: {len(approval_program)} bytes")
+        print_info(f"Clear state program: {len(clear_state_program)} bytes")
+        print_info("")
+
+        # Create application
+        print_info("Creating application...")
+        create_txn = algorand.create_transaction.app_create(
+            AppCreateParams(
+                sender=creator_address,
+                approval_program=approval_program,
+                clear_state_program=clear_state_program,
+                schema={
+                    "global_ints": 0,
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            )
+        )
+
+        signed_create_txn = creator_account.signer([create_txn], [0])
+        result = algod.send_raw_transaction(signed_create_txn)
+        tx_id = result.tx_id
+        pending_info = wait_for_confirmation(algod, tx_id)
+        app_id = pending_info.app_id
+        print_success(f"Created application with ID: {app_id}")
+        print_info(f"Creation transaction ID: {tx_id}")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to create application: {e}")
+        print_info("")
+        print_info("If LocalNet errors occur, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 3: Call the application multiple times to generate logs
+    # =========================================================================
+    print_step(3, "Calling the application multiple times to generate logs")
+
+    call_tx_ids: list[str] = []
+    first_call_round: int = 0
+    last_call_round: int = 0
+
+    try:
+        # Make several calls from the creator account using the high-level send API
+        for i in range(3):
+            call_result = algorand.send.app_call(
+                AppCallParams(
+                    sender=creator_address,
+                    app_id=app_id,
+                    note=f"log call {i + 1}".encode(),
+                )
+            )
+
+            call_tx_id = call_result.tx_ids[0]
+            call_tx_ids.append(call_tx_id)
+
+            confirmed_round = call_result.confirmation.confirmed_round
+            if first_call_round == 0:
+                first_call_round = confirmed_round
+            last_call_round = confirmed_round
+
+            tx_id_preview = call_tx_id[:12]
+            print_info(f"Call {i + 1}: txId={tx_id_preview}..., round={confirmed_round}")
+
+        # Make a call from the caller account (different sender)
+        caller_call_result = algorand.send.app_call(
+            AppCallParams(
+                sender=caller_address,
+                app_id=app_id,
+                note=b"log call from caller",
+            )
+        )
+
+        caller_tx_id = caller_call_result.tx_ids[0]
+        call_tx_ids.append(caller_tx_id)
+        last_call_round = caller_call_result.confirmation.confirmed_round
+
+        tx_id_preview = caller_tx_id[:12]
+        print_info(f"Call 4 (from caller): txId={tx_id_preview}..., round={last_call_round}")
+        print_success("Made 4 application calls (3 from creator, 1 from caller)")
+        print_info("")
+    except Exception as e:
+        print_error(f"Failed to call application: {e}")
+        return
+
+    # =========================================================================
+    # Step 4: Lookup application logs with lookup_application_logs_by_id()
+    # =========================================================================
+    print_step(4, "Looking up application logs with lookup_application_logs_by_id()")
+
+    # Wait for indexer to catch up with algod
+    print_info("Waiting for indexer to sync...")
+    time.sleep(3)
+
+    try:
+        # lookup_application_logs_by_id() returns all logs for an application
+        logs_result = indexer.lookup_application_logs_by_id(app_id)
+
+        print_success(f"Retrieved logs for application {logs_result.application_id}")
+        print_info(f"Query performed at round: {logs_result.current_round}")
+        print_info("")
+
+        if logs_result.log_data and len(logs_result.log_data) > 0:
+            print_info(f"Found {len(logs_result.log_data)} transaction(s) with logs:")
+            print_info("")
+
+            for log_entry in logs_result.log_data:
+                print_info(f"Transaction: {log_entry.tx_id}")
+                print_info(f"  Logs ({len(log_entry.logs)} entries):")
+                for i, log in enumerate(log_entry.logs):
+                    # Handle both bytes and base64-encoded strings
+                    log_bytes = base64.b64decode(log) if isinstance(log, str) else log
+                    decoded = decode_log_entry(log_bytes)
+                    print_info(f"    [{i}] {decoded}")
+                print_info("")
+        else:
+            print_info("No logs found for this application")
+
+        if logs_result.next_token:
+            token_preview = logs_result.next_token[:20]
+            print_info(f"More results available (nextToken: {token_preview}...)")
+    except Exception as e:
+        print_error(f"lookup_application_logs_by_id failed: {e}")
+
+    # =========================================================================
+    # Step 5: Filter logs by txId to get logs from a specific transaction
+    # =========================================================================
+    print_step(5, "Filtering logs by txId")
+
+    try:
+        specific_tx_id = call_tx_ids[0]
+        tx_id_preview = specific_tx_id[:20]
+        print_info(f"Filtering logs for specific transaction: {tx_id_preview}...")
+
+        filtered_result = indexer.lookup_application_logs_by_id(
+            app_id,
+            txid=specific_tx_id,
+        )
+
+        if filtered_result.log_data and len(filtered_result.log_data) > 0:
+            print_success(f"Found {len(filtered_result.log_data)} log entry for transaction")
+            for log_entry in filtered_result.log_data:
+                print_info(f"Transaction: {log_entry.tx_id}")
+                print_info(f"  Logs ({len(log_entry.logs)} entries):")
+                for i, log in enumerate(log_entry.logs):
+                    log_bytes = base64.b64decode(log) if isinstance(log, str) else log
+                    decoded = decode_log_entry(log_bytes)
+                    print_info(f"    [{i}] {decoded}")
+        else:
+            print_info("No logs found for this transaction")
+    except Exception as e:
+        print_error(f"txId filtering failed: {e}")
+
+    # =========================================================================
+    # Step 6: Filter logs by min_round and max_round
+    # =========================================================================
+    print_step(6, "Filtering logs by min_round and max_round")
+
+    try:
+        print_info(f"Filtering logs between rounds {first_call_round} and {last_call_round}")
+
+        # Filter by min_round
+        print_info("")
+        print_info(f"Logs with min_round={first_call_round}:")
+        min_round_result = indexer.lookup_application_logs_by_id(
+            app_id,
+            min_round=first_call_round,
+        )
+        if min_round_result.log_data:
+            print_info(f"  Found {len(min_round_result.log_data)} transaction(s) with logs")
+
+        # Filter by max_round
+        print_info("")
+        print_info(f"Logs with max_round={first_call_round}:")
+        max_round_result = indexer.lookup_application_logs_by_id(
+            app_id,
+            max_round=first_call_round,
+        )
+        if max_round_result.log_data:
+            print_info(f"  Found {len(max_round_result.log_data)} transaction(s) with logs")
+
+        # Filter by range (min_round and max_round combined)
+        print_info("")
+        print_info(f"Logs with min_round={first_call_round} and max_round={last_call_round}:")
+        range_result = indexer.lookup_application_logs_by_id(
+            app_id,
+            min_round=first_call_round,
+            max_round=last_call_round,
+        )
+        if range_result.log_data:
+            print_info(f"  Found {len(range_result.log_data)} transaction(s) with logs")
+            for log_entry in range_result.log_data:
+                tx_preview = log_entry.tx_id[:20]
+                print_info(f"    - {tx_preview}... ({len(log_entry.logs)} log entries)")
+    except Exception as e:
+        print_error(f"Round filtering failed: {e}")
+
+    # =========================================================================
+    # Step 7: Filter logs by sender_address
+    # =========================================================================
+    print_step(7, "Filtering logs by sender_address")
+
+    try:
+        # Filter logs by creator address
+        print_info(f"Filtering logs by sender: {shorten_address(creator_address)}")
+        creator_logs_result = indexer.lookup_application_logs_by_id(
+            app_id,
+            sender_address=creator_address,
+        )
+        if creator_logs_result.log_data:
+            print_success(f"Found {len(creator_logs_result.log_data)} transaction(s) from creator")
+
+        # Filter logs by caller address
+        print_info("")
+        print_info(f"Filtering logs by sender: {shorten_address(caller_address)}")
+        caller_logs_result = indexer.lookup_application_logs_by_id(
+            app_id,
+            sender_address=caller_address,
+        )
+        if caller_logs_result.log_data:
+            print_success(f"Found {len(caller_logs_result.log_data)} transaction(s) from caller")
+            for log_entry in caller_logs_result.log_data:
+                tx_preview = log_entry.tx_id[:20]
+                print_info(f"  Transaction: {tx_preview}...")
+                for i, log in enumerate(log_entry.logs):
+                    log_bytes = base64.b64decode(log) if isinstance(log, str) else log
+                    decoded = decode_log_entry(log_bytes)
+                    print_info(f"    [{i}] {decoded}")
+    except Exception as e:
+        print_error(f"sender_address filtering failed: {e}")
+
+    # =========================================================================
+    # Step 8: Demonstrate pagination for applications with many log entries
+    # =========================================================================
+    print_step(8, "Demonstrating pagination with limit and next parameters")
+
+    try:
+        # First page with limit of 2
+        print_info("Fetching first page of logs (limit: 2)...")
+        page1 = indexer.lookup_application_logs_by_id(app_id, limit=2)
+
+        if page1.log_data:
+            print_info(f"Page 1: Retrieved {len(page1.log_data)} transaction(s) with logs")
+            for log_entry in page1.log_data:
+                tx_preview = log_entry.tx_id[:20]
+                print_info(f"  - {tx_preview}...")
+
+        # Check if there are more results
+        if page1.next_token:
+            token_preview = page1.next_token[:20]
+            print_info(f"  Next token available: {token_preview}...")
+            print_info("")
+
+            # Fetch second page using next token
+            print_info("Fetching second page using next token...")
+            page2 = indexer.lookup_application_logs_by_id(
+                app_id,
+                limit=2,
+                next_=page1.next_token,
+            )
+
+            if page2.log_data:
+                print_info(f"Page 2: Retrieved {len(page2.log_data)} transaction(s) with logs")
+                for log_entry in page2.log_data:
+                    tx_preview = log_entry.tx_id[:20]
+                    print_info(f"  - {tx_preview}...")
+
+            if page2.next_token:
+                print_info("  More results available (nextToken present)")
+            else:
+                print_info("  No more results (no nextToken)")
+        else:
+            print_info("  No pagination needed (all results fit in one page)")
+    except Exception as e:
+        print_error(f"Pagination demo failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Deploying an application that emits logs using the `log` opcode")
+    print_info("  2. Calling the application to generate log entries")
+    print_info("  3. lookup_application_logs_by_id(app_id) - Get all logs for an application")
+    print_info("  4. Displaying log entry fields: tx_id and logs (decoded from bytes)")
+    print_info("  5. Filtering by txid to get logs from a specific transaction")
+    print_info("  6. Filtering by min_round and max_round for round range queries")
+    print_info("  7. Filtering by sender_address to get logs from a specific caller")
+    print_info("  8. Pagination with limit and next parameters")
+    print_info("")
+    print_info("Key lookup_application_logs_by_id response fields:")
+    print_info("  - application_id: The application identifier (int)")
+    print_info("  - current_round: Round at which results were computed (int)")
+    print_info("  - log_data: Array of ApplicationLogData objects")
+    print_info("  - next_token: Pagination token for next page (optional)")
+    print_info("")
+    print_info("Key ApplicationLogData fields:")
+    print_info("  - tx_id: Transaction ID that generated the logs")
+    print_info("  - logs: Array of bytes, each containing a log entry")
+    print_info("")
+    print_info("Filter parameters:")
+    print_info("  - txid: Filter by specific transaction ID")
+    print_info("  - min_round: Only include logs from this round onwards")
+    print_info("  - max_round: Only include logs up to this round")
+    print_info("  - sender_address: Filter by the address that called the application")
+    print_info("  - limit: Maximum results per page")
+    print_info("  - next: Pagination token from previous response")
+    print_info("")
+    print_info("Note: The `log` opcode in TEAL emits log entries that are stored")
+    print_info("in the transaction result and indexed by the indexer.")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- **Application Logs Lookup**
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

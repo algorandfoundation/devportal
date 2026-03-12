@@ -1,0 +1,404 @@
+---
+title: "Asset Lookup"
+description: "This example demonstrates how to lookup and search for assets using the IndexerClient lookupAssetById() and searchForAssets() methods."
+sidebar:
+  order: 8
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup and search for assets using the IndexerClient lookupAssetById() and searchForAssets() methods.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/08-asset-lookup.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/08-asset-lookup.ts)
+
+```typescript title="08-asset-lookup.ts"
+/**
+ * Example: Asset Lookup
+ *
+ * This example demonstrates how to lookup and search for assets using
+ * the IndexerClient lookupAssetById() and searchForAssets() methods.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  createAlgorandClient,
+  createIndexerClient,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js'
+
+async function main() {
+  printHeader('Asset Lookup Example')
+
+  // Create clients
+  const indexer = createIndexerClient()
+  const algorand = createAlgorandClient()
+
+  // =========================================================================
+  // Step 1: Get a funded account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet')
+
+  let creatorAddress: string
+
+  try {
+    const dispenser = await algorand.account.dispenserFromEnvironment()
+    creatorAddress = dispenser.addr.toString()
+    printSuccess(`Using dispenser account: ${shortenAddress(creatorAddress)}`)
+  } catch (error) {
+    printError(`Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+    printInfo('Make sure LocalNet is running: algokit localnet start')
+    printInfo('If issues persist, try: algokit localnet reset')
+    return
+  }
+
+  // =========================================================================
+  // Step 2: Create test assets using AlgorandClient
+  // =========================================================================
+  printStep(2, 'Creating test assets for demonstration')
+
+  let assetId1: bigint
+  let assetId2: bigint
+
+  try {
+    // Create first test asset with full configuration
+    printInfo('Creating first test asset: AlphaToken (ALPHA)...')
+    const result1 = await algorand.send.assetCreate({
+      sender: creatorAddress,
+      total: 1_000_000_000_000n, // 1,000,000 units with 6 decimals
+      decimals: 6,
+      assetName: 'AlphaToken',
+      unitName: 'ALPHA',
+      url: 'https://example.com/alpha',
+      defaultFrozen: false,
+      manager: creatorAddress,
+      reserve: creatorAddress,
+      freeze: creatorAddress,
+      clawback: creatorAddress,
+    })
+    assetId1 = result1.assetId
+    printSuccess(`Created AlphaToken with Asset ID: ${assetId1}`)
+
+    // Create second test asset with different unit name
+    printInfo('Creating second test asset: BetaCoin (BETA)...')
+    const result2 = await algorand.send.assetCreate({
+      sender: creatorAddress,
+      total: 500_000_000n, // 500,000 units with 3 decimals
+      decimals: 3,
+      assetName: 'BetaCoin',
+      unitName: 'BETA',
+      url: 'https://example.com/beta',
+      defaultFrozen: false,
+    })
+    assetId2 = result2.assetId
+    printSuccess(`Created BetaCoin with Asset ID: ${assetId2}`)
+    printInfo('')
+  } catch (error) {
+    printError(`Failed to create test assets: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+    printInfo('If LocalNet errors occur, try: algokit localnet reset')
+    return
+  }
+
+  // =========================================================================
+  // Step 3: Lookup asset by ID with lookupAssetById()
+  // =========================================================================
+  printStep(3, 'Looking up asset by ID with lookupAssetById()')
+
+  try {
+    // lookupAssetById() returns detailed asset information
+    const assetResult = await indexer.lookupAssetById(assetId1)
+
+    printSuccess(`Found asset with ID: ${assetResult.asset.id}`)
+    printInfo('')
+
+    // Display asset params
+    const params = assetResult.asset.params
+    printInfo('Asset Parameters:')
+    printInfo(`  - index: ${assetResult.asset.id}`)
+    printInfo(`  - creator: ${shortenAddress(params.creator)}`)
+    printInfo(`  - total: ${params.total.toLocaleString('en-US')}`)
+    printInfo(`  - decimals: ${params.decimals}`)
+    printInfo(`  - name: ${params.name ?? '(not set)'}`)
+    printInfo(`  - unitName: ${params.unitName ?? '(not set)'}`)
+    printInfo(`  - url: ${params.url ?? '(not set)'}`)
+    printInfo(`  - metadataHash: ${params.metadataHash ? Buffer.from(params.metadataHash).toString('hex') : '(not set)'}`)
+    printInfo(`  - defaultFrozen: ${params.defaultFrozen ?? false}`)
+    printInfo('')
+
+    // Display manager addresses
+    printInfo('Manager Addresses:')
+    printInfo(`  - manager: ${params.manager ? shortenAddress(params.manager) : '(not set)'}`)
+    printInfo(`  - reserve: ${params.reserve ? shortenAddress(params.reserve) : '(not set)'}`)
+    printInfo(`  - freeze: ${params.freeze ? shortenAddress(params.freeze) : '(not set)'}`)
+    printInfo(`  - clawback: ${params.clawback ? shortenAddress(params.clawback) : '(not set)'}`)
+    printInfo('')
+
+    // Display creation/destruction info
+    if (assetResult.asset.createdAtRound !== undefined) {
+      printInfo(`Created at round: ${assetResult.asset.createdAtRound}`)
+    }
+    if (assetResult.asset.destroyedAtRound !== undefined) {
+      printInfo(`Destroyed at round: ${assetResult.asset.destroyedAtRound}`)
+    }
+    if (assetResult.asset.deleted !== undefined) {
+      printInfo(`Deleted: ${assetResult.asset.deleted}`)
+    }
+
+    printInfo(`Query performed at round: ${assetResult.currentRound}`)
+  } catch (error) {
+    printError(`lookupAssetById failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 4: Search for assets with searchForAssets()
+  // =========================================================================
+  printStep(4, 'Searching for assets with searchForAssets()')
+
+  try {
+    // searchForAssets() returns a list of assets matching the criteria
+    const searchResult = await indexer.searchForAssets({ limit: 10 })
+
+    printSuccess(`Found ${searchResult.assets.length} asset(s)`)
+    printInfo('')
+
+    if (searchResult.assets.length > 0) {
+      printInfo('Assets found:')
+      for (const asset of searchResult.assets.slice(0, 5)) {
+        printInfo(`  Asset ID: ${asset.id}`)
+        printInfo(`    - name: ${asset.params.name ?? '(not set)'}`)
+        printInfo(`    - unitName: ${asset.params.unitName ?? '(not set)'}`)
+        printInfo(`    - creator: ${shortenAddress(asset.params.creator)}`)
+        printInfo('')
+      }
+      if (searchResult.assets.length > 5) {
+        printInfo(`  ... and ${searchResult.assets.length - 5} more`)
+      }
+    }
+
+    printInfo(`Query performed at round: ${searchResult.currentRound}`)
+  } catch (error) {
+    printError(`searchForAssets failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 5: Filter by name
+  // =========================================================================
+  printStep(5, 'Filtering assets by name')
+
+  try {
+    // Search for assets with a specific name
+    printInfo('Searching for assets with name "Alpha"...')
+    const nameResult = await indexer.searchForAssets({ name: 'Alpha' })
+
+    printSuccess(`Found ${nameResult.assets.length} asset(s) matching name "Alpha"`)
+    if (nameResult.assets.length > 0) {
+      for (const asset of nameResult.assets) {
+        printInfo(`  - Asset ID ${asset.id}: ${asset.params.name} (${asset.params.unitName})`)
+      }
+    }
+  } catch (error) {
+    printError(`Filter by name failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 6: Filter by unit name
+  // =========================================================================
+  printStep(6, 'Filtering assets by unit name')
+
+  try {
+    // Search for assets with a specific unit name
+    printInfo('Searching for assets with unit "BETA"...')
+    const unitResult = await indexer.searchForAssets({ unit: 'BETA' })
+
+    printSuccess(`Found ${unitResult.assets.length} asset(s) matching unit "BETA"`)
+    if (unitResult.assets.length > 0) {
+      for (const asset of unitResult.assets) {
+        printInfo(`  - Asset ID ${asset.id}: ${asset.params.name} (${asset.params.unitName})`)
+      }
+    }
+  } catch (error) {
+    printError(`Filter by unit failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 7: Filter by creator
+  // =========================================================================
+  printStep(7, 'Filtering assets by creator')
+
+  try {
+    // Search for assets created by a specific account
+    printInfo(`Searching for assets created by ${shortenAddress(creatorAddress)}...`)
+    const creatorResult = await indexer.searchForAssets({ creator: creatorAddress })
+
+    printSuccess(`Found ${creatorResult.assets.length} asset(s) created by this account`)
+    if (creatorResult.assets.length > 0) {
+      for (const asset of creatorResult.assets) {
+        printInfo(`  - Asset ID ${asset.id}: ${asset.params.name ?? '(unnamed)'} (${asset.params.unitName ?? 'N/A'})`)
+      }
+    }
+  } catch (error) {
+    printError(`Filter by creator failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 8: Filter by asset ID for exact match
+  // =========================================================================
+  printStep(8, 'Filtering by assetId for exact match')
+
+  try {
+    // Use assetId parameter for exact matching
+    printInfo(`Searching for exact asset ID ${assetId2}...`)
+    const exactResult = await indexer.searchForAssets({ assetId: assetId2 })
+
+    if (exactResult.assets.length > 0) {
+      const asset = exactResult.assets[0]
+      printSuccess(`Found exact match for Asset ID ${assetId2}`)
+      printInfo(`  - name: ${asset.params.name ?? '(not set)'}`)
+      printInfo(`  - unitName: ${asset.params.unitName ?? '(not set)'}`)
+      printInfo(`  - total: ${asset.params.total.toLocaleString('en-US')}`)
+    } else {
+      printInfo(`No asset found with ID ${assetId2}`)
+    }
+  } catch (error) {
+    printError(`Exact match search failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 9: Handle asset not found
+  // =========================================================================
+  printStep(9, 'Handling asset not found')
+
+  try {
+    // Try to look up a non-existent asset ID
+    const nonExistentId = 999999999n
+    printInfo(`Looking up non-existent asset ID ${nonExistentId}...`)
+
+    await indexer.lookupAssetById(nonExistentId)
+    printInfo('Asset found (unexpected)')
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    if (message.includes('no asset found') || message.includes('not found') || message.includes('404')) {
+      printSuccess('Asset not found error handled correctly')
+      printInfo(`  Error message: ${message}`)
+    } else {
+      printError(`Unexpected error: ${message}`)
+    }
+  }
+
+  // =========================================================================
+  // Step 10: Include deleted assets with includeAll
+  // =========================================================================
+  printStep(10, 'Including deleted/destroyed assets with includeAll')
+
+  try {
+    // The includeAll parameter includes assets that have been deleted/destroyed
+    printInfo('Searching with includeAll=true to include deleted assets...')
+    const allAssetsResult = await indexer.searchForAssets({
+      creator: creatorAddress,
+      includeAll: true,
+    })
+
+    printSuccess(`Found ${allAssetsResult.assets.length} asset(s) (including any deleted)`)
+    for (const asset of allAssetsResult.assets) {
+      const status = asset.deleted ? ' [DELETED]' : ''
+      printInfo(`  - Asset ID ${asset.id}: ${asset.params.name ?? '(unnamed)'}${status}`)
+    }
+  } catch (error) {
+    printError(`Include all search failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+  printInfo('This example demonstrated:')
+  printInfo('  1. Creating test assets using AlgorandClient.send.assetCreate()')
+  printInfo('  2. lookupAssetById(assetId) - Get detailed asset information')
+  printInfo('  3. searchForAssets() - Search for assets with various filters')
+  printInfo('  4. Filtering by name, unit, and creator')
+  printInfo('  5. Filtering by assetId for exact match')
+  printInfo('  6. Handling asset not found errors')
+  printInfo('  7. Including deleted assets with includeAll parameter')
+  printInfo('')
+  printInfo('Key Asset fields:')
+  printInfo('  - id: Unique asset identifier (bigint)')
+  printInfo('  - deleted: Whether asset is deleted (optional boolean)')
+  printInfo('  - createdAtRound: Round when created (optional bigint)')
+  printInfo('  - destroyedAtRound: Round when destroyed (optional bigint)')
+  printInfo('')
+  printInfo('Key AssetParams fields:')
+  printInfo('  - creator: Address that created the asset')
+  printInfo('  - total: Total supply in base units (bigint)')
+  printInfo('  - decimals: Number of decimal places (0-19)')
+  printInfo('  - name: Full asset name (optional)')
+  printInfo('  - unitName: Short unit name like "ALGO" (optional)')
+  printInfo('  - url: URL for more info (optional)')
+  printInfo('  - metadataHash: 32-byte metadata hash (optional)')
+  printInfo('')
+  printInfo('Manager address fields:')
+  printInfo('  - manager: Can reconfigure or destroy the asset')
+  printInfo('  - reserve: Holds non-minted units')
+  printInfo('  - freeze: Can freeze/unfreeze holdings')
+  printInfo('  - clawback: Can revoke holdings')
+  printInfo('')
+  printInfo('Search filter parameters:')
+  printInfo('  - name: Filter by asset name (prefix match)')
+  printInfo('  - unit: Filter by unit name (prefix match)')
+  printInfo('  - creator: Filter by creator address')
+  printInfo('  - assetId: Filter by exact asset ID')
+  printInfo('  - includeAll: Include deleted/destroyed assets')
+  printInfo('  - limit/next: Pagination parameters')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/typescript/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/07-transaction-search/)
+- **Asset Lookup**
+- [Asset Balances](/docs/algokit-utils/typescript/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)

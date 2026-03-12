@@ -1,0 +1,478 @@
+---
+title: "Block Lookup"
+description: "This example demonstrates how to lookup block information using the IndexerClient lookup_block() method."
+sidebar:
+  order: 14
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup block information using the IndexerClient lookup_block() method.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/14_block_lookup.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/14_block_lookup.py)
+
+```python title="14_block_lookup.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Block Lookup
+
+This example demonstrates how to lookup block information using
+the IndexerClient lookup_block() method.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import time
+from datetime import datetime, timezone
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_utils import AlgoAmount, PaymentParams
+
+
+def format_bytes_hex(data: bytes) -> str:
+    """Format a bytes array as a hex string."""
+    return data.hex()
+
+
+def format_timestamp(timestamp: int) -> str:
+    """Format a Unix timestamp to a human-readable date."""
+    return datetime.fromtimestamp(timestamp, tz=timezone.utc).isoformat()
+
+
+def main() -> None:
+    print_header("Block Lookup Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get the current round from the indexer to find a recent block
+    # =========================================================================
+    print_step(1, "Getting a recent block round from the indexer")
+
+    try:
+        # Use health check to get the current round
+        health = indexer.health_check()
+        recent_round = health.round_
+        print_success(f"Current indexer round: {recent_round}")
+        print_info("")
+
+        # Use a block that's a few rounds back to ensure it's fully indexed
+        if recent_round > 5:
+            recent_round = recent_round - 3
+            print_info(f"Using block {recent_round} (a few rounds back for stability)")
+    except Exception as e:
+        print_error(f"Failed to get current round: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        print_info("If issues persist, try: algokit localnet reset")
+        return
+
+    # =========================================================================
+    # Step 2: Lookup block with lookup_block() to get full block details
+    # =========================================================================
+    print_step(2, "Looking up block with lookup_block(round_number)")
+
+    try:
+        block = indexer.lookup_block(recent_round)
+
+        print_success(f"Retrieved block {block.round_}")
+        print_info("")
+
+        # Display basic block fields
+        print_info("Basic Block Fields:")
+        print_info(f"  Round:              {block.round_}")
+        print_info(f"  Timestamp:          {block.timestamp} ({format_timestamp(block.timestamp)})")
+        print_info(f"  Genesis ID:         {block.genesis_id}")
+
+        # Handle genesis_hash which may be bytes or base64-encoded string
+        genesis_hash = block.genesis_hash
+        if isinstance(genesis_hash, str):
+            import base64
+
+            genesis_hash = base64.b64decode(genesis_hash)
+        print_info(f"  Genesis Hash:       {format_bytes_hex(genesis_hash)}")
+
+        # Handle previous_block_hash which may be bytes or base64-encoded string
+        previous_block_hash = block.previous_block_hash
+        if isinstance(previous_block_hash, str):
+            import base64
+
+            previous_block_hash = base64.b64decode(previous_block_hash)
+        print_info(f"  Previous Block Hash: {format_bytes_hex(previous_block_hash)}")
+        print_info("")
+
+        # Display optional proposer info (may not be present on all networks)
+        if hasattr(block, "proposer") and block.proposer:
+            print_info("Proposer Information:")
+            print_info(f"  Proposer:           {shorten_address(str(block.proposer))}")
+            if hasattr(block, "fees_collected") and block.fees_collected is not None:
+                print_info(f"  Fees Collected:     {block.fees_collected} µALGO")
+            if hasattr(block, "bonus") and block.bonus is not None:
+                print_info(f"  Bonus:              {block.bonus} µALGO")
+            if hasattr(block, "proposer_payout") and block.proposer_payout is not None:
+                print_info(f"  Proposer Payout:    {block.proposer_payout} µALGO")
+            print_info("")
+
+        # Display transaction counter
+        if hasattr(block, "txn_counter") and block.txn_counter is not None:
+            print_info(f"Transaction Counter: {block.txn_counter} (total txns committed in ledger up to this block)")
+            print_info("")
+    except Exception as e:
+        print_error(f"lookup_block failed: {e}")
+
+    # =========================================================================
+    # Step 3: Display block header info - seed, txnCommitments, participationUpdates
+    # =========================================================================
+    print_step(3, "Displaying block header information")
+
+    try:
+        block = indexer.lookup_block(recent_round)
+
+        import base64
+
+        print_info("Seed and Transaction Commitments:")
+        seed = block.seed
+        if isinstance(seed, str):
+            seed = base64.b64decode(seed)
+        print_info(f"  Seed (Sortition):     {format_bytes_hex(seed)}")
+
+        transactions_root = block.transactions_root
+        if isinstance(transactions_root, str):
+            transactions_root = base64.b64decode(transactions_root)
+        print_info(f"  Transactions Root:    {format_bytes_hex(transactions_root)}")
+
+        if hasattr(block, "transactions_root_sha256") and block.transactions_root_sha256:
+            txn_root_sha256 = block.transactions_root_sha256
+            if isinstance(txn_root_sha256, str):
+                txn_root_sha256 = base64.b64decode(txn_root_sha256)
+            print_info(f"  Txn Root SHA256:      {format_bytes_hex(txn_root_sha256)}")
+        print_info("")
+
+        # Display participation updates
+        print_info("Participation Updates:")
+        updates = block.participation_updates
+        if hasattr(updates, "absent_participation_accounts") and updates.absent_participation_accounts:
+            absent_count = len(updates.absent_participation_accounts)
+            print_info(f"  Absent Accounts:      {absent_count} account(s)")
+            for account in updates.absent_participation_accounts[:3]:
+                print_info(f"    - {shorten_address(str(account))}")
+            if absent_count > 3:
+                print_info(f"    ... and {absent_count - 3} more")
+        else:
+            print_info("  Absent Accounts:      None")
+        if hasattr(updates, "expired_participation_accounts") and updates.expired_participation_accounts:
+            expired_count = len(updates.expired_participation_accounts)
+            print_info(f"  Expired Accounts:     {expired_count} account(s)")
+            for account in updates.expired_participation_accounts[:3]:
+                print_info(f"    - {shorten_address(str(account))}")
+            if expired_count > 3:
+                print_info(f"    ... and {expired_count - 3} more")
+        else:
+            print_info("  Expired Accounts:     None")
+        print_info("")
+
+        # Display rewards info
+        print_info("Block Rewards:")
+        print_info(f"  Fee Sink:             {shorten_address(str(block.rewards.fee_sink))}")
+        print_info(f"  Rewards Pool:         {shorten_address(str(block.rewards.rewards_pool))}")
+        print_info(f"  Rewards Level:        {block.rewards.rewards_level}")
+        print_info(f"  Rewards Rate:         {block.rewards.rewards_rate}")
+        print_info(f"  Rewards Residue:      {block.rewards.rewards_residue}")
+        print_info(f"  Rewards Calc Round:   {block.rewards.rewards_calculation_round}")
+        print_info("")
+
+        # Display upgrade state
+        print_info("Upgrade State:")
+        print_info(f"  Current Protocol:     {block.upgrade_state.current_protocol}")
+        if hasattr(block.upgrade_state, "next_protocol") and block.upgrade_state.next_protocol:
+            print_info(f"  Next Protocol:        {block.upgrade_state.next_protocol}")
+            if hasattr(block.upgrade_state, "next_protocol_vote_before"):
+                print_info(f"  Next Protocol Vote:   {block.upgrade_state.next_protocol_vote_before}")
+            if hasattr(block.upgrade_state, "next_protocol_switch_on"):
+                print_info(f"  Next Protocol Switch: {block.upgrade_state.next_protocol_switch_on}")
+            if hasattr(block.upgrade_state, "next_protocol_approvals"):
+                print_info(f"  Next Protocol Approvals: {block.upgrade_state.next_protocol_approvals}")
+        else:
+            print_info("  Next Protocol:        None (no upgrade pending)")
+
+        # Display upgrade vote if present
+        if hasattr(block, "upgrade_vote") and block.upgrade_vote:
+            print_info("")
+            print_info("Upgrade Vote:")
+            if hasattr(block.upgrade_vote, "upgrade_propose") and block.upgrade_vote.upgrade_propose:
+                print_info(f"  Proposed Protocol:    {block.upgrade_vote.upgrade_propose}")
+            if hasattr(block.upgrade_vote, "upgrade_delay") and block.upgrade_vote.upgrade_delay is not None:
+                print_info(f"  Upgrade Delay:        {block.upgrade_vote.upgrade_delay}")
+            upgrade_approve = getattr(block.upgrade_vote, "upgrade_approve", False)
+            print_info(f"  Upgrade Approve:      {upgrade_approve}")
+        print_info("")
+
+        # Display state proof tracking if present
+        if hasattr(block, "state_proof_tracking") and block.state_proof_tracking:
+            print_info("State Proof Tracking:")
+            for tracking in block.state_proof_tracking:
+                print_info(f"  Type: {tracking.type_}")
+                if hasattr(tracking, "next_round") and tracking.next_round is not None:
+                    print_info(f"    Next Round:       {tracking.next_round}")
+                if hasattr(tracking, "online_total_weight") and tracking.online_total_weight is not None:
+                    print_info(f"    Online Weight:    {tracking.online_total_weight}")
+                if hasattr(tracking, "voters_commitment") and tracking.voters_commitment:
+                    voters = tracking.voters_commitment
+                    if isinstance(voters, str):
+                        voters = base64.b64decode(voters)
+                    print_info(f"    Voters Commitment: {format_bytes_hex(voters)}")
+            print_info("")
+    except Exception as e:
+        print_error(f"Failed to display block header: {e}")
+
+    # =========================================================================
+    # Step 4: Show transactions included in the block if any
+    # =========================================================================
+    print_step(4, "Showing transactions included in the block")
+
+    try:
+        block = indexer.lookup_block(recent_round)
+
+        print_info(f"Block {block.round_} contains {len(block.transactions or [])} transaction(s)")
+        print_info("")
+
+        if len(block.transactions or []) > 0:
+            print_info("Transactions in this block:")
+            # Show up to 5 transactions for brevity
+            txns_to_show = (block.transactions or [])[:5]
+            for i, txn in enumerate(txns_to_show):
+                print_info(f"  [{i}] ID: {txn.id_}")
+                print_info(f"      Type: {txn.tx_type}")
+                print_info(f"      Sender: {shorten_address(str(txn.sender))}")
+                print_info(f"      Fee: {txn.fee} µALGO")
+                if hasattr(txn, "payment_transaction") and txn.payment_transaction:
+                    pt = txn.payment_transaction
+                    print_info(f"      Receiver: {shorten_address(str(pt.receiver))}")
+                    print_info(f"      Amount: {pt.amount} µALGO")
+                if hasattr(txn, "asset_transfer_transaction") and txn.asset_transfer_transaction:
+                    att = txn.asset_transfer_transaction
+                    print_info(f"      Asset ID: {att.asset_id}")
+                    print_info(f"      Receiver: {shorten_address(str(att.receiver))}")
+                    print_info(f"      Amount: {att.amount}")
+                print_info("")
+            if len(block.transactions or []) > 5:
+                print_info(f"  ... and {len(block.transactions or []) - 5} more transaction(s)")
+                print_info("")
+        else:
+            print_info("This block has no transactions (empty block).")
+            print_info("Empty blocks are common on LocalNet when there is no activity.")
+            print_info("")
+    except Exception as e:
+        print_error(f"Failed to show transactions: {e}")
+
+    # =========================================================================
+    # Step 5: Create some transactions to have blocks with transactions
+    # =========================================================================
+    print_step(5, "Creating transactions to demonstrate blocks with transactions")
+
+    block_with_txns: int | None = None
+
+    try:
+        # Get a funded account
+        dispenser = algorand.account.localnet_dispenser()
+        algorand.set_signer_from_account(dispenser)
+        dispenser_address = dispenser.addr
+        print_info(f"Using dispenser: {shorten_address(dispenser_address)}")
+
+        # Create a few transactions
+        print_info("Creating 3 payment transactions...")
+        receiver = algorand.account.random()
+
+        for i in range(3):
+            algorand.send.payment(
+                PaymentParams(
+                    sender=dispenser_address,
+                    receiver=receiver.addr,
+                    amount=AlgoAmount.from_micro_algo(100000),
+                    note=f"Block lookup example payment {i + 1}".encode(),
+                )
+            )
+
+        print_success("Created 3 transactions")
+
+        # Wait a moment for indexer to catch up
+        print_info("Waiting for indexer to index the transactions...")
+        time.sleep(2)
+
+        # Get the current round which should contain our transactions
+        health = indexer.health_check()
+        block_with_txns = health.round_
+        print_info(f"Current round after transactions: {block_with_txns}")
+        print_info("")
+
+        # Look up a recent block that might contain our transactions
+        # Check a few recent blocks to find one with transactions
+        for r in range(block_with_txns, max(block_with_txns - 5, 0), -1):
+            block = indexer.lookup_block(r)
+            if len(block.transactions or []) > 0:
+                block_with_txns = r
+                print_success(f"Found block {r} with {len(block.transactions or [])} transaction(s)")
+                print_info("")
+
+                # Show the transactions
+                print_info("Transactions in this block:")
+                for i, txn in enumerate((block.transactions or [])[:3]):
+                    txn_id = txn.id_ if txn.id_ else "unknown"
+                    print_info(f"  [{i}] {txn_id[:20]}... ({txn.tx_type})")
+                if len(block.transactions or []) > 3:
+                    print_info(f"  ... and {len(block.transactions or []) - 3} more")
+                break
+    except Exception as e:
+        print_error(f"Failed to create transactions: {e}")
+        print_info("This step requires LocalNet - continuing with other demonstrations...")
+        print_info("")
+
+    # =========================================================================
+    # Step 6: Demonstrate header_only parameter to get only block header
+    # =========================================================================
+    print_step(6, "Demonstrating header_only parameter")
+
+    try:
+        round_to_lookup = block_with_txns if block_with_txns else recent_round
+
+        print_info(f"Looking up block {round_to_lookup} with header_only=False (default):")
+        full_block = indexer.lookup_block(round_to_lookup)
+        print_info(f"  Transactions included: {len(full_block.transactions or [])}")
+        print_info("")
+
+        print_info(f"Looking up block {round_to_lookup} with header_only=True:")
+        header_only = indexer.lookup_block(round_to_lookup, header_only=True)
+        print_info(f"  Transactions included: {len(header_only.transactions or [])}")
+        print_info("")
+
+        if len(full_block.transactions or []) > 0 and len(header_only.transactions or []) == 0:
+            print_success("header_only=True correctly excludes transactions from the response")
+        elif len(full_block.transactions or []) == 0:
+            print_info("This block has no transactions, so header_only has no visible effect")
+            print_info("header_only=True is useful to reduce response size for blocks with many transactions")
+
+        print_info("")
+        print_info("header_only parameter:")
+        print_info("  - False (default): Returns full block including all transactions")
+        print_info("  - True: Returns only block header without transactions array")
+        print_info("  - Use header_only=True when you only need block metadata for better performance")
+    except Exception as e:
+        print_error(f"header_only demo failed: {e}")
+
+    # =========================================================================
+    # Step 7: Handle the case where block is not found
+    # =========================================================================
+    print_step(7, "Handling the case where block is not found")
+
+    try:
+        # Try to look up a block from the far future
+        future_round = 999999999999
+        print_info(f"Attempting to lookup block {future_round} (far future)...")
+
+        indexer.lookup_block(future_round)
+
+        # If we get here, the block was found (unexpected)
+        print_info("Block was found (unexpected)")
+    except Exception as e:
+        print_success("Correctly caught error for non-existent block")
+        print_info(f"Error message: {e}")
+        print_info("")
+        print_info("Always handle the case where a block may not exist yet.")
+        print_info("The indexer throws an error when the block round has not been reached.")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. Getting a recent block round from the indexer health check")
+    print_info("  2. lookup_block(round_number) - Get full block details")
+    print_info("  3. Block header info: seed, transaction commitments, participation updates")
+    print_info("  4. Displaying transactions included in a block")
+    print_info("  5. Creating transactions to populate blocks")
+    print_info("  6. header_only parameter - Get block header without transactions")
+    print_info("  7. Handling the case where block is not found")
+    print_info("")
+    print_info("Key Block fields:")
+    print_info("  - round: Block round number (int)")
+    print_info("  - timestamp: Unix timestamp in seconds")
+    print_info("  - genesis_id: Genesis block identifier string")
+    print_info("  - genesis_hash: 32-byte hash of genesis block (bytes)")
+    print_info("  - previous_block_hash: 32-byte hash of previous block (bytes)")
+    print_info("  - seed: 32-byte sortition seed (bytes)")
+    print_info("  - transactions_root: Merkle root of transactions (bytes)")
+    print_info("  - transactions: Array of Transaction objects")
+    print_info("  - participation_updates: Participation account updates")
+    print_info("  - rewards: Block rewards info (fee_sink, rewards_pool, etc.)")
+    print_info("  - upgrade_state: Protocol upgrade state")
+    print_info("")
+    print_info("Optional Block fields:")
+    print_info("  - proposer: Block proposer address (newer blocks)")
+    print_info("  - fees_collected: Total fees collected in block")
+    print_info("  - bonus: Bonus payout for block")
+    print_info("  - proposer_payout: Amount paid to proposer")
+    print_info("  - txn_counter: Cumulative transaction count")
+    print_info("  - state_proof_tracking: State proof tracking info")
+    print_info("  - upgrade_vote: Protocol upgrade vote")
+    print_info("")
+    print_info("lookup_block() parameters:")
+    print_info("  - round_number: Block round to lookup (required)")
+    print_info("  - header_only: If true, exclude transactions from response (optional)")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- **Block Lookup**
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'LedgerStateDeltaForTransactionGroup'
+title: "LedgerStateDeltaForTransactionGroup"
 ---
 
 > **LedgerStateDeltaForTransactionGroup** = `object`
 
-Defined in: [packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts:9](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts#L9)
+Defined in: [packages/algod\_client/src/models/ledger-state-delta-for-transaction-group.ts:9](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts#L9)
 
 Contains a ledger delta for a single transaction group
 
@@ -17,12 +17,12 @@ Contains a ledger delta for a single transaction group
 
 > **delta**: [`LedgerStateDelta`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/ledgerstatedelta/)
 
-Defined in: [packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts#L10)
+Defined in: [packages/algod\_client/src/models/ledger-state-delta-for-transaction-group.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts#L10)
 
----
+***
 
 ### ids
 
 > **ids**: `string`[]
 
-Defined in: [packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts:11](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts#L11)
+Defined in: [packages/algod\_client/src/models/ledger-state-delta-for-transaction-group.ts:11](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/algod_client/src/models/ledger-state-delta-for-transaction-group.ts#L11)

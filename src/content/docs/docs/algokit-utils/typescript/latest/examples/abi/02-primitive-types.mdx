@@ -1,0 +1,253 @@
+---
+title: "ABI Primitive Types"
+description: "This example demonstrates how to encode and decode primitive ABI types:"
+sidebar:
+  order: 2
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode primitive ABI types:
+- ABIUintType: Unsigned integers of various bit sizes (8, 16, 32, 64, 128, 256, 512)
+- ABIBoolType: Boolean values encoded as a single byte
+- ABIByteType: Single byte values
+ Shows encode() and decode() methods, hex format display, and round-trip verification.
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/02-primitive-types.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/02-primitive-types.ts)
+
+```typescript title="02-primitive-types.ts"
+/**
+ * Example: ABI Primitive Types
+ *
+ * This example demonstrates how to encode and decode primitive ABI types:
+ * - ABIUintType: Unsigned integers of various bit sizes (8, 16, 32, 64, 128, 256, 512)
+ * - ABIBoolType: Boolean values encoded as a single byte
+ * - ABIByteType: Single byte values
+ *
+ * Shows encode() and decode() methods, hex format display, and round-trip verification.
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import { ABIBoolType, ABIByteType, ABIUintType } from '@algorandfoundation/algokit-utils/abi'
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+function main() {
+  printHeader('ABI Primitive Types Example')
+
+  // Step 1: ABIUintType with various bit sizes
+  printStep(1, 'ABIUintType - Various Bit Sizes')
+
+  const uintSizes = [8, 16, 32, 64, 128, 256, 512]
+
+  for (const bitSize of uintSizes) {
+    const uintType = new ABIUintType(bitSize)
+    printInfo(`\n${uintType.toString()}:`)
+    printInfo(`  bitSize: ${uintType.bitSize}`)
+    printInfo(`  byteLen: ${uintType.byteLen()}`)
+    printInfo(`  isDynamic: ${uintType.isDynamic()}`)
+  }
+
+  // Step 2: Encoding and decoding small uint values
+  printStep(2, 'Encoding/Decoding Small Uint Values')
+
+  const uint8Type = new ABIUintType(8)
+  const uint8Value = 42
+  const uint8Encoded = uint8Type.encode(uint8Value)
+  const uint8Decoded = uint8Type.decode(uint8Encoded)
+
+  printInfo(`uint8 value: ${uint8Value}`)
+  printInfo(`  encoded: ${formatHex(uint8Encoded)}`)
+  printInfo(`  decoded: ${uint8Decoded}`)
+  printInfo(`  round-trip verified: ${Number(uint8Decoded) === uint8Value}`)
+
+  const uint16Type = new ABIUintType(16)
+  const uint16Value = 1000
+  const uint16Encoded = uint16Type.encode(uint16Value)
+  const uint16Decoded = uint16Type.decode(uint16Encoded)
+
+  printInfo(`uint16 value: ${uint16Value}`)
+  printInfo(`  encoded: ${formatHex(uint16Encoded)}`)
+  printInfo(`  decoded: ${uint16Decoded}`)
+  printInfo(`  round-trip verified: ${Number(uint16Decoded) === uint16Value}`)
+
+  const uint32Type = new ABIUintType(32)
+  const uint32Value = 1_000_000
+  const uint32Encoded = uint32Type.encode(uint32Value)
+  const uint32Decoded = uint32Type.decode(uint32Encoded)
+
+  printInfo(`uint32 value: ${uint32Value}`)
+  printInfo(`  encoded: ${formatHex(uint32Encoded)}`)
+  printInfo(`  decoded: ${uint32Decoded}`)
+  printInfo(`  round-trip verified: ${Number(uint32Decoded) === uint32Value}`)
+
+  const uint64Type = new ABIUintType(64)
+  const uint64Value = 9_007_199_254_740_991n // Max safe integer as BigInt
+  const uint64Encoded = uint64Type.encode(uint64Value)
+  const uint64Decoded = uint64Type.decode(uint64Encoded)
+
+  printInfo(`uint64 value: ${uint64Value}`)
+  printInfo(`  encoded: ${formatHex(uint64Encoded)}`)
+  printInfo(`  decoded: ${uint64Decoded}`)
+  printInfo(`  round-trip verified: ${uint64Decoded === uint64Value}`)
+
+  // Step 3: Encoding BigInt values for large uint types
+  printStep(3, 'Encoding BigInt Values for Large Uint Types')
+
+  const uint128Type = new ABIUintType(128)
+  const uint128Value = 340282366920938463463374607431768211455n // 2^128 - 1 (max uint128)
+  const uint128Encoded = uint128Type.encode(uint128Value)
+  const uint128Decoded = uint128Type.decode(uint128Encoded)
+
+  printInfo(`uint128 max value: ${uint128Value}`)
+  printInfo(`  encoded: ${formatHex(uint128Encoded)}`)
+  printInfo(`  decoded: ${uint128Decoded}`)
+  printInfo(`  round-trip verified: ${uint128Decoded === uint128Value}`)
+
+  const uint256Type = new ABIUintType(256)
+  // Example: a large 256-bit value
+  const uint256Value = 115792089237316195423570985008687907853269984665640564039457584007913129639935n // 2^256 - 1 (max uint256)
+  const uint256Encoded = uint256Type.encode(uint256Value)
+  const uint256Decoded = uint256Type.decode(uint256Encoded)
+
+  printInfo(`uint256 max value: ${uint256Value}`)
+  printInfo(`  encoded: ${formatHex(uint256Encoded)}`)
+  printInfo(`  decoded: ${uint256Decoded}`)
+  printInfo(`  round-trip verified: ${uint256Decoded === uint256Value}`)
+
+  const uint512Type = new ABIUintType(512)
+  // Example: a moderately large 512-bit value
+  const uint512Value =
+    13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084095n // 2^512 - 1 (max uint512)
+  const uint512Encoded = uint512Type.encode(uint512Value)
+  const uint512Decoded = uint512Type.decode(uint512Encoded)
+
+  printInfo(`uint512 max value: ${uint512Value}`)
+  printInfo(`  encoded: ${formatHex(uint512Encoded)}`)
+  printInfo(`  decoded: ${uint512Decoded}`)
+  printInfo(`  round-trip verified: ${uint512Decoded === uint512Value}`)
+
+  // Step 4: ABIBoolType encoding true/false
+  printStep(4, 'ABIBoolType - Encoding Boolean Values')
+
+  const boolType = new ABIBoolType()
+
+  printInfo(`bool type: ${boolType.toString()}`)
+  printInfo(`  byteLen: ${boolType.byteLen()}`)
+  printInfo(`  isDynamic: ${boolType.isDynamic()}`)
+
+  // Encode true
+  const trueEncoded = boolType.encode(true)
+  const trueDecoded = boolType.decode(trueEncoded)
+
+  printInfo(`\nbool value: true`)
+  printInfo(`  encoded: ${formatHex(trueEncoded)}`)
+  printInfo(`  decoded: ${trueDecoded}`)
+  printInfo(`  round-trip verified: ${trueDecoded === true}`)
+
+  // Encode false
+  const falseEncoded = boolType.encode(false)
+  const falseDecoded = boolType.decode(falseEncoded)
+
+  printInfo(`\nbool value: false`)
+  printInfo(`  encoded: ${formatHex(falseEncoded)}`)
+  printInfo(`  decoded: ${falseDecoded}`)
+  printInfo(`  round-trip verified: ${falseDecoded === false}`)
+
+  // Step 5: ABIByteType encoding single byte values
+  printStep(5, 'ABIByteType - Encoding Single Byte Values')
+
+  const byteType = new ABIByteType()
+
+  printInfo(`byte type: ${byteType.toString()}`)
+  printInfo(`  byteLen: ${byteType.byteLen()}`)
+  printInfo(`  isDynamic: ${byteType.isDynamic()}`)
+
+  // Encode minimum byte value (0)
+  const byte0Value = 0
+  const byte0Encoded = byteType.encode(byte0Value)
+  const byte0Decoded = byteType.decode(byte0Encoded)
+
+  printInfo(`\nbyte value: ${byte0Value} (0x00)`)
+  printInfo(`  encoded: ${formatHex(byte0Encoded)}`)
+  printInfo(`  decoded: ${byte0Decoded}`)
+  printInfo(`  round-trip verified: ${byte0Decoded === byte0Value}`)
+
+  // Encode a middle byte value (127)
+  const byte127Value = 127
+  const byte127Encoded = byteType.encode(byte127Value)
+  const byte127Decoded = byteType.decode(byte127Encoded)
+
+  printInfo(`\nbyte value: ${byte127Value} (0x7F)`)
+  printInfo(`  encoded: ${formatHex(byte127Encoded)}`)
+  printInfo(`  decoded: ${byte127Decoded}`)
+  printInfo(`  round-trip verified: ${byte127Decoded === byte127Value}`)
+
+  // Encode maximum byte value (255)
+  const byte255Value = 255
+  const byte255Encoded = byteType.encode(byte255Value)
+  const byte255Decoded = byteType.decode(byte255Encoded)
+
+  printInfo(`\nbyte value: ${byte255Value} (0xFF)`)
+  printInfo(`  encoded: ${formatHex(byte255Encoded)}`)
+  printInfo(`  decoded: ${byte255Decoded}`)
+  printInfo(`  round-trip verified: ${byte255Decoded === byte255Value}`)
+
+  // Step 6: Summary of encoded byte lengths
+  printStep(6, 'Summary - Encoded Byte Lengths')
+
+  printInfo('Primitive type byte lengths:')
+  printInfo(`  uint8:   ${new ABIUintType(8).byteLen()} byte`)
+  printInfo(`  uint16:  ${new ABIUintType(16).byteLen()} bytes`)
+  printInfo(`  uint32:  ${new ABIUintType(32).byteLen()} bytes`)
+  printInfo(`  uint64:  ${new ABIUintType(64).byteLen()} bytes`)
+  printInfo(`  uint128: ${new ABIUintType(128).byteLen()} bytes`)
+  printInfo(`  uint256: ${new ABIUintType(256).byteLen()} bytes`)
+  printInfo(`  uint512: ${new ABIUintType(512).byteLen()} bytes`)
+  printInfo(`  bool:    ${new ABIBoolType().byteLen()} byte`)
+  printInfo(`  byte:    ${new ABIByteType().byteLen()} byte`)
+
+  printSuccess('ABI Primitive Types example completed successfully!')
+}
+
+main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- **ABI Primitive Types**
+- [ABI Address Type](/docs/algokit-utils/typescript/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/typescript/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/typescript/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/typescript/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/typescript/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/typescript/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/typescript/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/typescript/latest/examples/abi/15-arc56-storage/)

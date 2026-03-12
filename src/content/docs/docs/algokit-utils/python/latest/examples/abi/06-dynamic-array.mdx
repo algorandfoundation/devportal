@@ -1,0 +1,375 @@
+---
+title: "ABI Dynamic Array Type"
+description: "This example demonstrates how to encode and decode variable-length arrays using DynamicArrayType:"
+sidebar:
+  order: 6
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode variable-length arrays using DynamicArrayType:
+- uint64[]: Dynamic array of unsigned 64-bit integers
+- string[]: Dynamic array of strings (nested dynamic types)
+- address[]: Dynamic array of Algorand addresses
+ Key characteristics of dynamic arrays:
+- Variable length determined at runtime
+- 2-byte (uint16) length prefix indicating number of elements
+- For static element types: elements encoded consecutively after length
+- For dynamic element types: head/tail encoding pattern is used
+ Head/Tail encoding (for arrays containing dynamic elements):
+- Length prefix: 2 bytes indicating number of elements
+- Head section: Contains offsets (2 bytes each) pointing to where each element starts in tail
+- Tail section: Contains the actual encoded elements
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/06_dynamic_array.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/06_dynamic_array.py)
+
+```python title="06_dynamic_array.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ABI Dynamic Array Type
+
+This example demonstrates how to encode and decode variable-length arrays using DynamicArrayType:
+- uint64[]: Dynamic array of unsigned 64-bit integers
+- string[]: Dynamic array of strings (nested dynamic types)
+- address[]: Dynamic array of Algorand addresses
+
+Key characteristics of dynamic arrays:
+- Variable length determined at runtime
+- 2-byte (uint16) length prefix indicating number of elements
+- For static element types: elements encoded consecutively after length
+- For dynamic element types: head/tail encoding pattern is used
+
+Head/Tail encoding (for arrays containing dynamic elements):
+- Length prefix: 2 bytes indicating number of elements
+- Head section: Contains offsets (2 bytes each) pointing to where each element starts in tail
+- Tail section: Contains the actual encoded elements
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_bytes, format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+from algokit_common import address_from_public_key
+
+
+def main() -> None:
+    print_header("ABI Dynamic Array Type Example")
+
+    # Step 1: DynamicArrayType properties
+    print_step(1, "DynamicArrayType Properties")
+
+    uint64_array_type = abi.ABIType.from_string("uint64[]")
+    string_array_type = abi.ABIType.from_string("string[]")
+    address_array_type = abi.ABIType.from_string("address[]")
+
+    print_info("uint64[]:")
+    print_info(f"  str(): {uint64_array_type}")
+    if isinstance(uint64_array_type, abi.DynamicArrayType):
+        print_info(f"  element: {uint64_array_type.element}")
+        print_info(f"  is_dynamic(): {uint64_array_type.is_dynamic()}")
+        print_info(f"  element.is_dynamic(): {uint64_array_type.element.is_dynamic()}")
+
+    print_info("\nstring[]:")
+    print_info(f"  str(): {string_array_type}")
+    if isinstance(string_array_type, abi.DynamicArrayType):
+        print_info(f"  element: {string_array_type.element}")
+        print_info(f"  is_dynamic(): {string_array_type.is_dynamic()}")
+        print_info(f"  element.is_dynamic(): {string_array_type.element.is_dynamic()}")
+
+    print_info("\naddress[]:")
+    print_info(f"  str(): {address_array_type}")
+    if isinstance(address_array_type, abi.DynamicArrayType):
+        print_info(f"  element: {address_array_type.element}")
+        print_info(f"  is_dynamic(): {address_array_type.is_dynamic()}")
+        print_info(f"  element.is_dynamic(): {address_array_type.element.is_dynamic()}")
+
+    # Step 2: uint64[] encoding with static elements
+    print_step(2, "uint64[] Encoding - Static Element Type")
+
+    uint64_values = [1000, 2000, 3000]
+
+    if isinstance(uint64_array_type, abi.DynamicArrayType):
+        uint64_encoded = uint64_array_type.encode(uint64_values)
+        uint64_decoded = list(uint64_array_type.decode(uint64_encoded))
+
+        print_info(f"Input: {uint64_values}")
+        print_info(f"Encoded: {format_hex(uint64_encoded)}")
+        print_info(f"Total bytes: {len(uint64_encoded)}")
+
+        # Break down the encoding
+        uint64_length_prefix = uint64_encoded[0:2]
+        uint64_element_data = uint64_encoded[2:]
+
+        print_info("\nByte layout:")
+        length_value = (uint64_length_prefix[0] << 8) | uint64_length_prefix[1]
+        print_info(f"  [0-1]  Length prefix: {format_hex(uint64_length_prefix)} = {length_value} elements")
+        print_info(f"  [2-25] Element data: {format_hex(uint64_element_data)}")
+
+        # Show individual elements
+        print_info("\nElement breakdown (8 bytes each):")
+        for i, val in enumerate(uint64_values):
+            start = 2 + i * 8
+            element_bytes = uint64_encoded[start : start + 8]
+            print_info(f"  [{start}-{start + 7}] Element {i}: {format_hex(element_bytes)} = {val}")
+
+        print_info(f"\nDecoded: {uint64_decoded}")
+        print_info(f"Round-trip verified: {uint64_decoded == uint64_values}")
+
+    # Step 3: Demonstrate 2-byte length prefix
+    print_step(3, "Length Prefix - 2 Bytes (uint16 Big-Endian)")
+
+    print_info("The length prefix encodes the NUMBER of elements (not byte size)")
+    print_info("Format: uint16 big-endian (high byte first)")
+
+    # Show different array lengths
+    test_lengths = [0, 1, 3, 256, 1000]
+
+    if isinstance(uint64_array_type, abi.DynamicArrayType):
+        for length in test_lengths:
+            test_array = list(range(length))
+            encoded = uint64_array_type.encode(test_array)
+            prefix = encoded[0:2]
+            decoded_length = (prefix[0] << 8) | prefix[1]
+            hex_prefix = format_hex(prefix)
+            formula = f"({prefix[0]} << 8) | {prefix[1]}"
+            print_info(f"  {length} elements: prefix = {hex_prefix} = {formula} = {decoded_length}")
+
+    # Step 4: string[] encoding - demonstrates head/tail encoding
+    print_step(4, "string[] Encoding - Head/Tail Pattern")
+
+    string_values = ["Hello", "World", "ABI"]
+
+    if isinstance(string_array_type, abi.DynamicArrayType):
+        string_encoded = string_array_type.encode(string_values)
+        string_decoded = list(string_array_type.decode(string_encoded))
+
+        print_info(f"Input: {string_values}")
+        print_info(f"Encoded: {format_hex(string_encoded)}")
+        print_info(f"Total bytes: {len(string_encoded)}")
+
+        # Break down the encoding
+        string_length_prefix = string_encoded[0:2]
+        num_elements = (string_length_prefix[0] << 8) | string_length_prefix[1]
+
+        print_info("\nByte layout with head/tail encoding:")
+        print_info(f"  [0-1] Length prefix: {format_hex(string_length_prefix)} = {num_elements} elements")
+
+        # Head section: contains offsets for each element
+        # Each offset is 2 bytes, offsets are relative to start of array data (after length prefix)
+        print_info("\n  HEAD SECTION (offsets to each element):")
+        head_start = 2
+        head_size = num_elements * 2  # 2 bytes per offset
+
+        for i in range(num_elements):
+            offset_pos = head_start + i * 2
+            offset_bytes = string_encoded[offset_pos : offset_pos + 2]
+            offset = (offset_bytes[0] << 8) | offset_bytes[1]
+            target_byte = head_start + offset
+            hex_offset = format_hex(offset_bytes)
+            pos_range = f"[{offset_pos}-{offset_pos + 1}]"
+            print_info(f"    {pos_range} Offset {i}: {hex_offset} = {offset} (points to byte {target_byte})")
+
+        # Tail section: contains actual string data
+        print_info("\n  TAIL SECTION (actual string data):")
+        tail_start = head_start + head_size
+
+        current_pos = tail_start
+        for i in range(num_elements):
+            # Read string length prefix (2 bytes)
+            str_len_bytes = string_encoded[current_pos : current_pos + 2]
+            str_len = (str_len_bytes[0] << 8) | str_len_bytes[1]
+
+            # Read string content
+            str_content = string_encoded[current_pos + 2 : current_pos + 2 + str_len]
+            str_end = current_pos + 2 + str_len - 1
+
+            print_info(f'    [{current_pos}-{str_end}] String {i}: "{string_values[i]}"')
+            print_info(f"      Length prefix: {format_hex(str_len_bytes)} = {str_len} bytes")
+            print_info(f"      Content: {format_hex(str_content)}")
+
+            current_pos += 2 + str_len
+
+        print_info(f"\nDecoded: {string_decoded}")
+        print_info(f"Round-trip verified: {string_decoded == string_values}")
+
+    # Step 5: Compare encoding of arrays with different lengths
+    print_step(5, "Dynamic Sizing - Arrays of Different Lengths")
+
+    array_lengths = [0, 1, 3, 5]
+
+    if isinstance(uint64_array_type, abi.DynamicArrayType):
+        print_info("uint64[] arrays of different lengths:")
+        for length in array_lengths:
+            arr = list(range(1, length + 1))
+            encoded = uint64_array_type.encode(arr)
+            expected_bytes = 2 + length * 8  # 2 byte prefix + 8 bytes per element
+            print_info(f"  {length} elements: {len(encoded)} bytes (expected: 2 + {length}*8 = {expected_bytes})")
+
+    if isinstance(string_array_type, abi.DynamicArrayType):
+        print_info("\nstring[] arrays of different lengths:")
+        str_arrays: list[list[str]] = [
+            [],
+            ["A"],
+            ["Hello", "World"],
+            ["One", "Two", "Three"],
+        ]
+
+        for arr in str_arrays:
+            encoded = string_array_type.encode(arr)
+            # For string[], bytes = 2 (array length) + 2*n (offsets) + sum of (2 + strlen) for each string
+            offsets_size = len(arr) * 2
+            strings_size = sum(2 + len(s.encode("utf-8")) for s in arr)
+            expected_bytes = 2 + offsets_size + strings_size
+            print_info(f"  {len(arr)} strings {arr}: {len(encoded)} bytes (expected: {expected_bytes})")
+
+    # Step 6: address[] encoding - static element type
+    print_step(6, "address[] Encoding - Static Element Type")
+
+    # Create sample addresses
+    pub_key1 = bytes([0x11] * 32)
+    pub_key2 = bytes([0x22] * 32)
+    addr1 = address_from_public_key(pub_key1)
+    addr2 = address_from_public_key(pub_key2)
+
+    address_values = [addr1, addr2]
+
+    if isinstance(address_array_type, abi.DynamicArrayType):
+        address_encoded = address_array_type.encode(address_values)
+        address_decoded = list(address_array_type.decode(address_encoded))
+
+        print_info(f"Input: {len(address_values)} addresses")
+        print_info(f"  [0]: {addr1}")
+        print_info(f"  [1]: {addr2}")
+        print_info(f"Encoded: {format_bytes(address_encoded, 16)}")
+        print_info(f"Total bytes: {len(address_encoded)}")
+
+        # Break down encoding
+        addr_length_prefix = address_encoded[0:2]
+        print_info("\nByte layout:")
+        addr_num_elements = (addr_length_prefix[0] << 8) | addr_length_prefix[1]
+        print_info(f"  [0-1]   Length prefix: {format_hex(addr_length_prefix)} = {addr_num_elements} elements")
+        print_info("  [2-33]  Address 0: 32 bytes")
+        print_info("  [34-65] Address 1: 32 bytes")
+        print_info(f"  Expected: 2 + 2*32 = {2 + 2 * 32} bytes")
+
+        print_info("\nDecoded:")
+        print_info(f"  [0]: {address_decoded[0]}")
+        print_info(f"  [1]: {address_decoded[1]}")
+        print_info(f"Round-trip verified: {address_decoded == address_values}")
+
+    # Step 7: Creating DynamicArrayType programmatically
+    print_step(7, "Creating DynamicArrayType Programmatically")
+
+    custom_array_type = abi.DynamicArrayType(abi.UintType(32))
+
+    print_info("Created with: DynamicArrayType(UintType(32))")
+    print_info(f"  str(): {custom_array_type}")
+    print_info(f"  element: {custom_array_type.element}")
+    print_info(f"  is_dynamic(): {custom_array_type.is_dynamic()}")
+
+    custom_values = [100, 200, 300, 400]
+    custom_encoded = custom_array_type.encode(custom_values)
+    custom_decoded = list(custom_array_type.decode(custom_encoded))
+
+    print_info(f"\nEncode {custom_values}:")
+    print_info(f"  Encoded: {format_hex(custom_encoded)}")
+    print_info(f"  Total bytes: {len(custom_encoded)} (2 prefix + 4*4 elements)")
+    print_info(f"  Decoded: {custom_decoded}")
+    print_info(f"  Round-trip verified: {custom_decoded == custom_values}")
+
+    # Step 8: Empty arrays
+    print_step(8, "Empty Dynamic Arrays")
+
+    if (
+        isinstance(uint64_array_type, abi.DynamicArrayType)
+        and isinstance(string_array_type, abi.DynamicArrayType)
+        and isinstance(address_array_type, abi.DynamicArrayType)
+    ):
+        empty_uint64 = uint64_array_type.encode([])
+        empty_string = string_array_type.encode([])
+        empty_address = address_array_type.encode([])
+
+        print_info("Empty arrays encode to just the length prefix (0):")
+        print_info(f"  uint64[]:  {format_hex(empty_uint64)} ({len(empty_uint64)} bytes)")
+        print_info(f"  string[]:  {format_hex(empty_string)} ({len(empty_string)} bytes)")
+        print_info(f"  address[]: {format_hex(empty_address)} ({len(empty_address)} bytes)")
+
+        # Verify decoding
+        decoded_empty_uint64 = list(uint64_array_type.decode(empty_uint64))
+        decoded_empty_string = list(string_array_type.decode(empty_string))
+
+        print_info("\nDecoding empty arrays:")
+        print_info(f"  uint64[]: length = {len(decoded_empty_uint64)}")
+        print_info(f"  string[]: length = {len(decoded_empty_string)}")
+
+    # Step 9: Summary
+    print_step(9, "Summary")
+
+    print_info("DynamicArrayType key properties:")
+    print_info("  - element: The type of each element")
+    print_info("  - is_dynamic(): Always returns True")
+    print_info('  - No "size" property (unlike StaticArrayType)')
+
+    print_info("\nDynamic array encoding format:")
+    print_info("  - 2-byte length prefix (number of elements, big-endian)")
+    print_info("  - For static element types: elements encoded consecutively")
+    print_info("  - For dynamic element types: head/tail encoding")
+
+    print_info("\nHead/Tail encoding (for dynamic elements like string[]):")
+    print_info("  - Head: array of 2-byte offsets (one per element)")
+    print_info("  - Tail: actual encoded elements")
+    print_info("  - Offsets are relative to start of data (after length prefix)")
+
+    print_info("\nEncoded size:")
+    print_info("  - Static elements: 2 + (elementSize * numElements)")
+    print_info("  - Dynamic elements: 2 + (2 * numElements) + sum(elementSizes)")
+
+    print_info("\nCreating dynamic array types:")
+    print_info('  - ABIType.from_string("uint64[]") - parse from string')
+    print_info("  - DynamicArrayType(element) - programmatic")
+
+    print_success("ABI Dynamic Array Type example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- **ABI Dynamic Array Type**
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

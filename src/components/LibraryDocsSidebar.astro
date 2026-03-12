@@ -50,6 +50,30 @@ const libraryGroup = starlightSidebar.find(
 );
 const sidebarEntries = libraryGroup?.entries ?? [];
 
+// If the current page isn't an exact sidebar entry (e.g. an individual example page like
+// /examples/abi/01-type-parsing/), find the closest parent entry by path prefix and mark
+// it as current so the enclosing <details> group stays open.
+const hasCurrentEntry = (entries: typeof sidebarEntries): boolean =>
+  entries.some(e =>
+    e.type === 'link' ? e.isCurrent : e.type === 'group' && hasCurrentEntry(e.entries),
+  );
+
+if (!hasCurrentEntry(sidebarEntries)) {
+  // Find the longest matching href prefix and mark that entry as current
+  let bestMatch: Extract<(typeof sidebarEntries)[number], { type: 'link' }> | null = null;
+  const findBestPrefix = (entries: typeof sidebarEntries) => {
+    for (const entry of entries) {
+      if (entry.type === 'link' && currentPath.startsWith(entry.href) && entry.href.length > (bestMatch?.href.length ?? 0)) {
+        bestMatch = entry;
+      } else if (entry.type === 'group') {
+        findBestPrefix(entry.entries);
+      }
+    }
+  };
+  findBestPrefix(sidebarEntries);
+  if (bestMatch) (bestMatch as { isCurrent: boolean }).isCurrent = true;
+}
+
 // Resolve the current language icon for the button display (only if language is selected)
 const currentIcon =
   languageSelected && currentLanguage ? langIcons[currentLanguage] : null;

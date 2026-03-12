@@ -1,0 +1,167 @@
+---
+title: "Mnemonic from Seed"
+description: "This example demonstrates how to use mnemonic_from_seed() to convert a 32-byte seed into a 25-word Algorand mnemonic. The mnemonic uses BIP39-style word encoding where each word represents 11 bits of data."
+sidebar:
+  order: 1
+---
+
+[← Back to Mnemonic Utilities](/docs/algokit-utils/python/latest/examples/algo25/)
+
+## Description
+
+This example demonstrates how to use mnemonic_from_seed() to convert a 32-byte seed into a 25-word Algorand mnemonic. The mnemonic uses BIP39-style word encoding where each word represents 11 bits of data.
+ Key concepts:
+- A 32-byte (256-bit) seed produces 24 data words (256 / 11 = ~23.3, rounded up)
+- A 25th checksum word is computed from the SHA-512/256 hash of the seed
+- The mnemonic is deterministic: same seed always produces same mnemonic
+
+## Prerequisites
+
+No LocalNet required - pure utility function
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algo25/01_mnemonic_from_seed.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algo25/01_mnemonic_from_seed.py)
+
+```python title="01_mnemonic_from_seed.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Mnemonic from Seed
+
+This example demonstrates how to use mnemonic_from_seed() to convert a 32-byte
+seed into a 25-word Algorand mnemonic. The mnemonic uses BIP39-style word
+encoding where each word represents 11 bits of data.
+
+Key concepts:
+- A 32-byte (256-bit) seed produces 24 data words (256 / 11 = ~23.3, rounded up)
+- A 25th checksum word is computed from the SHA-512/256 hash of the seed
+- The mnemonic is deterministic: same seed always produces same mnemonic
+
+No LocalNet required - pure utility function
+"""
+
+import secrets
+
+from shared import format_bytes, format_hex, print_header, print_info, print_step, print_success
+
+from algokit_algo25 import mnemonic_from_seed
+
+
+def main() -> None:
+    print_header("Mnemonic from Seed Example")
+
+    # Step 1: Generate a random 32-byte seed
+    print_step(1, "Generate a Random 32-byte Seed")
+
+    seed = secrets.token_bytes(32)
+
+    print_info(f"Seed length: {len(seed)} bytes (256 bits)")
+    print_info(f"Seed bytes: {format_bytes(seed, 16)}")
+    print_info(f"Seed hex: {format_hex(seed)}")
+
+    # Step 2: Convert seed to mnemonic
+    print_step(2, "Convert Seed to 25-Word Mnemonic")
+
+    mnemonic = mnemonic_from_seed(seed)
+    words = mnemonic.split(" ")
+
+    print_info(f"Total words: {len(words)}")
+    print_info("Data words: 24 (encoding 256 bits of seed data)")
+    print_info("Checksum word: 1 (derived from SHA-512/256 hash of seed)")
+
+    # Step 3: Display the 25 words
+    print_step(3, "Display the Mnemonic Words")
+
+    print_info("Mnemonic words:")
+    # Display words in rows of 5 for readability
+    for i in range(0, len(words), 5):
+        row = words[i : i + 5]
+        numbered = " ".join(f"{i + j + 1:2}. {w:<10}" for j, w in enumerate(row))
+        print_info(f"  {numbered}")
+
+    # Step 4: Explain the 11-bit encoding scheme
+    print_step(4, "Explain the 11-bit Encoding Scheme")
+
+    print_info("How seed bits map to mnemonic words:")
+    print_info("  - Seed: 32 bytes = 256 bits")
+    print_info("  - Each word encodes 11 bits (2^11 = 2048 possible words)")
+    print_info("  - 256 bits / 11 bits per word = 23.27 words")
+    print_info("  - This rounds up to 24 words (with 8 padding bits)")
+    print_info("  - 24 words x 11 bits = 264 bits total")
+    print_info("  - Extra 8 bits are zero-padded")
+    print_info("")
+    print_info("Checksum word calculation:")
+    print_info("  - Compute SHA-512/256 hash of the 32-byte seed")
+    print_info("  - Take the first 11 bits of the hash")
+    print_info("  - Map those 11 bits to a word from the wordlist")
+    print_info("  - This becomes the 25th (checksum) word")
+
+    # Step 5: Verify determinism
+    print_step(5, "Verify Determinism - Same Seed Produces Same Mnemonic")
+
+    mnemonic1 = mnemonic_from_seed(seed)
+    mnemonic2 = mnemonic_from_seed(seed)
+
+    print_info("First call result:")
+    print_info(f'  "{" ".join(mnemonic1.split(" ")[:5])}..."')
+    print_info("Second call result:")
+    print_info(f'  "{" ".join(mnemonic2.split(" ")[:5])}..."')
+
+    is_identical = mnemonic1 == mnemonic2
+    print_info(f"Mnemonics identical: {'Yes' if is_identical else 'No'}")
+
+    if is_identical:
+        print_success("Determinism verified: same seed always produces same mnemonic")
+
+    # Step 6: Show a second random seed for comparison
+    print_step(6, "Different Seed Produces Different Mnemonic")
+
+    seed2 = secrets.token_bytes(32)
+    mnemonic3 = mnemonic_from_seed(seed2)
+
+    print_info(f"Seed 1 (first 8 bytes): {format_hex(seed[:8])}...")
+    print_info(f"Seed 2 (first 8 bytes): {format_hex(seed2[:8])}...")
+    print_info("")
+    print_info(f"Mnemonic 1 (first 3 words): {' '.join(mnemonic1.split(' ')[:3])}...")
+    print_info(f"Mnemonic 2 (first 3 words): {' '.join(mnemonic3.split(' ')[:3])}...")
+
+    is_different = mnemonic1 != mnemonic3
+    print_info(f"Mnemonics different: {'Yes' if is_different else 'No'}")
+
+    # Summary
+    print_step(7, "Summary")
+
+    print_info("mnemonic_from_seed() converts a 32-byte seed to a 25-word mnemonic:")
+    print_info("  - Input: 32-byte bytes object (cryptographically random seed)")
+    print_info("  - Output: Space-separated string of 25 words")
+    print_info("  - Words 1-24: Encode the 256-bit seed (11 bits per word)")
+    print_info("  - Word 25: Checksum derived from SHA-512/256 hash")
+    print_info("  - Deterministic: reproducible from the same seed")
+    print_info("  - BIP39-compatible wordlist: 2048 English words")
+
+    print_success("Mnemonic from Seed example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Mnemonic Utilities
+
+- **Mnemonic from Seed**
+- [Seed from Mnemonic](/docs/algokit-utils/python/latest/examples/algo25/02-seed-from-mnemonic/)
+- [Secret Key to Mnemonic](/docs/algokit-utils/python/latest/examples/algo25/03-secret-key-to-mnemonic/)
+- [Master Derivation Key Functions](/docs/algokit-utils/python/latest/examples/algo25/04-master-derivation-key/)
+- [Error Handling for Mnemonic Functions](/docs/algokit-utils/python/latest/examples/algo25/05-error-handling/)

@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'lookupAssetHoldings'
+title: "lookupAssetHoldings"
 ---
 
 > **lookupAssetHoldings**(`indexer`, `assetId`, `options?`, `paginationLimit?`): `Promise`\<[`MiniAssetHolding`](/docs/algokit-utils/typescript/latest/api/subpaths/indexer-client/type-aliases/miniassetholding/)[]\>
 
-Defined in: [src/indexer-client/indexer-lookup.ts:54](https://github.com/larkiny/algokit-utils-ts/blob/main/src/indexer-client/indexer-lookup.ts#L54)
+Defined in: [src/indexer-client/indexer-lookup.ts:54](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/indexer-client/indexer-lookup.ts#L54)
 
 Looks up asset holdings for the given asset; will automatically paginate through all data.
 

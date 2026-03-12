@@ -1,5 +1,5 @@
 ---
-title: 'algokit_utils.models.transaction'
+title: "algokit_utils.models.transaction"
 ---
 
 <div class="api-ref">
@@ -8,67 +8,68 @@ title: 'algokit_utils.models.transaction'
 
 ## Attributes
 
-| [`Arc2TransactionNote`](#algokit_utils.models.transaction.Arc2TransactionNote) |     |
-| ------------------------------------------------------------------------------ | --- |
-| [`TransactionNoteData`](#algokit_utils.models.transaction.TransactionNoteData) |     |
-| [`TransactionNote`](#algokit_utils.models.transaction.TransactionNote)         |     |
+| [`Arc2TransactionNote`](#algokit_utils.models.transaction.Arc2TransactionNote)   |    |
+|----------------------------------------------------------------------------------|----|
+| [`TransactionNoteData`](#algokit_utils.models.transaction.TransactionNoteData)   |    |
+| [`TransactionNote`](#algokit_utils.models.transaction.TransactionNote)           |    |
 
 ## Classes
 
 | [`BaseArc2Note`](#algokit_utils.models.transaction.BaseArc2Note)                 | Base ARC-0002 transaction note structure       |
-| -------------------------------------------------------------------------------- | ---------------------------------------------- |
+|----------------------------------------------------------------------------------|------------------------------------------------|
 | [`StringFormatArc2Note`](#algokit_utils.models.transaction.StringFormatArc2Note) | ARC-0002 note for string-based formats (m/b/u) |
 | [`JsonFormatArc2Note`](#algokit_utils.models.transaction.JsonFormatArc2Note)     | ARC-0002 note for JSON format                  |
 | [`SendParams`](#algokit_utils.models.transaction.SendParams)                     | Parameters for sending a transaction           |
 
 ## Module Contents
 
-### _class_ BaseArc2Note
+### *class* BaseArc2Note
 
 Bases: `TypedDict`
 
 Base ARC-0002 transaction note structure
 
-#### dapp*name *: str\_
+#### dapp_name *: str*
 
-### _class_ StringFormatArc2Note
+### *class* StringFormatArc2Note
 
 Bases: [`BaseArc2Note`](#algokit_utils.models.transaction.BaseArc2Note)
 
 ARC-0002 note for string-based formats (m/b/u)
 
-#### format _: Literal['m', 'b', 'u']_
+#### format *: Literal['m', 'b', 'u']*
 
-#### data _: str_
+#### data *: str*
 
-### _class_ JsonFormatArc2Note
+### *class* JsonFormatArc2Note
 
 Bases: [`BaseArc2Note`](#algokit_utils.models.transaction.BaseArc2Note)
 
 ARC-0002 note for JSON format
 
-#### format _: Literal['j']_
+#### format *: Literal['j']*
 
-#### data _: str | dict[str, Any] | list[Any] | int | None_
+#### data *: str | dict[str, Any] | list[Any] | int | None*
 
-### algokit_utils.models.transaction.Arc2TransactionNote
+### Arc2TransactionNote
 
-### algokit_utils.models.transaction.TransactionNoteData
+### TransactionNoteData
 
-### algokit_utils.models.transaction.TransactionNote
+### TransactionNote
 
-### _class_ SendParams
+### *class* SendParams
 
 Bases: `TypedDict`
 
 Parameters for sending a transaction
 
-#### max*rounds_to_wait *: int\_
+#### max_rounds_to_wait *: int*
 
-#### suppress*log *: bool\_
+#### suppress_log *: bool*
 
-#### populate*app_call_resources *: bool\_
+#### populate_app_call_resources *: bool*
 
-#### cover*app_call_inner_transaction_fees *: bool\_
+#### cover_app_call_inner_transaction_fees *: bool*
+
 
 </div>

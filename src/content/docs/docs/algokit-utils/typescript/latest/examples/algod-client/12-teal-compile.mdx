@@ -1,0 +1,415 @@
+---
+title: "TEAL Compile and Disassemble"
+description: "This example demonstrates how to compile TEAL source code to bytecode and disassemble bytecode back to TEAL using the AlgodClient methods:"
+sidebar:
+  order: 12
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to compile TEAL source code to bytecode and disassemble bytecode back to TEAL using the AlgodClient methods:
+- tealCompile(source, options?) - Compile TEAL source to bytecode
+- tealDisassemble(bytecode) - Disassemble bytecode back to TEAL
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/12-teal-compile.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/12-teal-compile.ts)
+
+```typescript title="12-teal-compile.ts"
+/**
+ * Example: TEAL Compile and Disassemble
+ *
+ * This example demonstrates how to compile TEAL source code to bytecode and
+ * disassemble bytecode back to TEAL using the AlgodClient methods:
+ * - tealCompile(source, options?) - Compile TEAL source to bytecode
+ * - tealDisassemble(bytecode) - Disassemble bytecode back to TEAL
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  createAlgodClient,
+  loadTealSource,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+} from '../shared/utils.js'
+
+async function main() {
+  printHeader('TEAL Compile and Disassemble Example')
+
+  // Create an Algod client connected to LocalNet
+  const algod = createAlgodClient()
+
+  // =========================================================================
+  // Step 1: Compile a Simple Approval Program
+  // =========================================================================
+  printStep(1, 'Compiling a simple approval program')
+
+  // A minimal approval program that always succeeds
+  const simpleSource = loadTealSource('simple-approve.teal')
+
+  try {
+    const compiled = await algod.tealCompile(simpleSource)
+
+    printSuccess('Compilation successful!')
+    printInfo('')
+    printInfo('Compilation Result:')
+    printInfo(`  Hash:   ${compiled.hash}`)
+    printInfo(`          (base32 SHA512/256 of program bytes, Address-style)`)
+    printInfo(`  Result: ${compiled.result}`)
+    printInfo(`          (base64 encoded bytecode)`)
+    printInfo('')
+
+    // Decode bytecode to show the raw bytes
+    const bytecode = Buffer.from(compiled.result, 'base64')
+    printInfo('Bytecode Details:')
+    printInfo(`  Size:   ${bytecode.length} bytes`)
+    printInfo(`  Hex:    ${bytecode.toString('hex')}`)
+    printInfo('')
+    printInfo('The hash can be used as a Logic Signature address')
+    printInfo('The bytecode (result) is what gets stored on-chain')
+    printInfo('')
+  } catch (error) {
+    printError(`Compilation failed: ${error instanceof Error ? error.message : String(error)}`)
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Step 2: Compile a More Complex Program
+  // =========================================================================
+  printStep(2, 'Compiling a more complex approval program')
+
+  // A program that checks sender and approves specific transaction types
+  const complexSource = loadTealSource('complex-approve.teal')
+
+  try {
+    const compiled = await algod.tealCompile(complexSource)
+
+    printSuccess('Complex program compiled successfully!')
+    printInfo('')
+    printInfo('Compilation Result:')
+    printInfo(`  Hash:   ${compiled.hash}`)
+    printInfo(`  Result: ${compiled.result}`)
+    printInfo('')
+
+    const bytecode = Buffer.from(compiled.result, 'base64')
+    printInfo('Bytecode Details:')
+    printInfo(`  Size:   ${bytecode.length} bytes`)
+    printInfo(`  Hex:    ${bytecode.toString('hex')}`)
+    printInfo('')
+    printInfo('Complex programs compile to larger bytecode')
+    printInfo('')
+  } catch (error) {
+    printError(`Compilation failed: ${error instanceof Error ? error.message : String(error)}`)
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Step 3: Compile with Sourcemap Option
+  // =========================================================================
+  printStep(3, 'Compiling with sourcemap option')
+
+  // Program with multiple lines for meaningful sourcemap
+  const sourcemapSource = loadTealSource('counter-init.teal')
+
+  try {
+    const compiled = await algod.tealCompile(sourcemapSource, { sourcemap: true })
+
+    printSuccess('Compilation with sourcemap successful!')
+    printInfo('')
+    printInfo('Compilation Result:')
+    printInfo(`  Hash:   ${compiled.hash}`)
+    printInfo(`  Result: ${compiled.result}`)
+    printInfo('')
+
+    if (compiled.sourcemap) {
+      printInfo('Source Map:')
+      printInfo(`  Version:  ${compiled.sourcemap.version}`)
+      printInfo(`  Sources:  ${JSON.stringify(compiled.sourcemap.sources)}`)
+      printInfo(`  Names:    ${JSON.stringify(compiled.sourcemap.names)}`)
+      printInfo(`  Mappings: ${compiled.sourcemap.mappings}`)
+      printInfo('')
+      printInfo('Sourcemaps enable debugging by mapping bytecode to source lines')
+      printInfo('The mappings string uses VLQ (Variable Length Quantity) encoding')
+    } else {
+      printInfo('Sourcemap was not returned (may depend on node configuration)')
+    }
+    printInfo('')
+  } catch (error) {
+    printError(`Compilation failed: ${error instanceof Error ? error.message : String(error)}`)
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Step 4: Disassemble Bytecode Back to TEAL
+  // =========================================================================
+  printStep(4, 'Disassembling bytecode back to TEAL')
+
+  try {
+    // First compile, then disassemble to show round-trip
+    const compiled = await algod.tealCompile(simpleSource)
+    const bytecode = new Uint8Array(Buffer.from(compiled.result, 'base64'))
+
+    printInfo('Original Source:')
+    printInfo(`  ${simpleSource.split('\n').join('\n  ')}`)
+    printInfo('')
+
+    const disassembled = await algod.tealDisassemble(bytecode)
+
+    printSuccess('Disassembly successful!')
+    printInfo('')
+    printInfo('Disassembled Output:')
+    printInfo(`  ${disassembled.result.trim().split('\n').join('\n  ')}`)
+    printInfo('')
+    printInfo('Disassembled output may differ from original (comments removed, labels renamed)')
+    printInfo('')
+  } catch (error) {
+    printError(`Disassembly failed: ${error instanceof Error ? error.message : String(error)}`)
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Step 5: Compare Original Source with Disassembled Output
+  // =========================================================================
+  printStep(5, 'Comparing original source with disassembled output')
+
+  try {
+    // Use the complex source for a more interesting comparison
+    const compiled = await algod.tealCompile(complexSource)
+    const bytecode = new Uint8Array(Buffer.from(compiled.result, 'base64'))
+    const disassembled = await algod.tealDisassemble(bytecode)
+
+    printInfo('Original Source:')
+    const originalLines = complexSource.trim().split('\n')
+    originalLines.forEach((line, i) => printInfo(`  ${(i + 1).toString().padStart(2)}: ${line}`))
+    printInfo('')
+
+    printInfo('Disassembled Output:')
+    const disassembledLines = disassembled.result.trim().split('\n')
+    disassembledLines.forEach((line, i) => printInfo(`  ${(i + 1).toString().padStart(2)}: ${line}`))
+    printInfo('')
+
+    printInfo('Key Differences:')
+    printInfo('  - Comments are removed during compilation')
+    printInfo('  - Labels are converted to numeric addresses')
+    printInfo('  - The semantic meaning remains identical')
+    printInfo('')
+  } catch (error) {
+    printError(`Comparison failed: ${error instanceof Error ? error.message : String(error)}`)
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Step 6: Handle Compilation Errors
+  // =========================================================================
+  printStep(6, 'Handling compilation errors for invalid TEAL')
+
+  // Invalid TEAL source - unknown opcode
+  const invalidSource1 = `#pragma version 10
+invalid_opcode
+int 1`
+
+  try {
+    printInfo('Attempting to compile invalid TEAL (unknown opcode):')
+    printInfo(`  ${invalidSource1.split('\n').join('\n  ')}`)
+    printInfo('')
+    await algod.tealCompile(invalidSource1)
+    printError('Expected compilation to fail but it succeeded')
+  } catch (error) {
+    printSuccess('Correctly caught compilation error!')
+    if (error instanceof Error) {
+      printInfo(`  Error: ${error.message}`)
+    }
+    printInfo('')
+  }
+
+  // Invalid TEAL source - syntax error
+  const invalidSource2 = `#pragma version 10
+int`
+
+  try {
+    printInfo('Attempting to compile invalid TEAL (missing operand):')
+    printInfo(`  ${invalidSource2.split('\n').join('\n  ')}`)
+    printInfo('')
+    await algod.tealCompile(invalidSource2)
+    printError('Expected compilation to fail but it succeeded')
+  } catch (error) {
+    printSuccess('Correctly caught syntax error!')
+    if (error instanceof Error) {
+      printInfo(`  Error: ${error.message}`)
+    }
+    printInfo('')
+  }
+
+  // Invalid TEAL source - invalid version
+  const invalidSource3 = `#pragma version 999
+int 1`
+
+  try {
+    printInfo('Attempting to compile invalid TEAL (invalid version):')
+    printInfo(`  ${invalidSource3.split('\n').join('\n  ')}`)
+    printInfo('')
+    await algod.tealCompile(invalidSource3)
+    printError('Expected compilation to fail but it succeeded')
+  } catch (error) {
+    printSuccess('Correctly caught version error!')
+    if (error instanceof Error) {
+      printInfo(`  Error: ${error.message}`)
+    }
+    printInfo('')
+  }
+
+  printInfo('Always validate TEAL source before deployment')
+  printInfo('Compilation errors include line numbers and descriptions')
+  printInfo('')
+
+  // =========================================================================
+  // Step 7: Understanding Disassembly Behavior
+  // =========================================================================
+  printStep(7, 'Understanding disassembly behavior with various bytecode')
+
+  // The disassembler does best-effort interpretation of bytecode
+  // Even invalid patterns may produce some output
+
+  // Example 1: Bytecode with invalid version (version 0)
+  const invalidVersionBytecode = new Uint8Array([0x00, 0x00, 0x00])
+  printInfo('Disassembling bytecode with version 0:')
+  printInfo(`  Bytes: ${Buffer.from(invalidVersionBytecode).toString('hex')}`)
+  try {
+    const result = await algod.tealDisassemble(invalidVersionBytecode)
+    printInfo('  Result:')
+    printInfo(`    ${result.result.trim().split('\n').join('\n    ')}`)
+    printInfo('Version 0 is disassembled but is not a valid TEAL version')
+    printInfo('')
+  } catch (error) {
+    printError(`Disassembly failed: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+  }
+
+  // Example 2: Single byte (just version, no opcodes)
+  const minimalBytecode = new Uint8Array([0x0a]) // version 10
+  printInfo('Disassembling minimal bytecode (just version byte):')
+  printInfo(`  Bytes: ${Buffer.from(minimalBytecode).toString('hex')}`)
+  try {
+    const result = await algod.tealDisassemble(minimalBytecode)
+    printInfo('  Result:')
+    printInfo(`    ${result.result.trim().split('\n').join('\n    ')}`)
+    printInfo('Minimal valid bytecode: version byte only')
+    printInfo('')
+  } catch (error) {
+    printError(`Disassembly failed: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+  }
+
+  printInfo('The disassembler does best-effort interpretation')
+  printInfo('Always verify disassembled output matches expected behavior')
+  printInfo('')
+
+  // =========================================================================
+  // Step 8: Compile Different TEAL Versions
+  // =========================================================================
+  printStep(8, 'Compiling programs with different TEAL versions')
+
+  const versions = [6, 8, 10]
+
+  for (const version of versions) {
+    const source = `#pragma version ${version}
+int 1`
+
+    try {
+      const compiled = await algod.tealCompile(source)
+      const bytecode = Buffer.from(compiled.result, 'base64')
+
+      printInfo(`TEAL Version ${version}:`)
+      printInfo(`  Hash:     ${compiled.hash}`)
+      printInfo(`  Size:     ${bytecode.length} bytes`)
+      printInfo(`  Bytecode: ${bytecode.toString('hex')}`)
+      printInfo('')
+    } catch (error) {
+      printError(`Version ${version} failed: ${error instanceof Error ? error.message : String(error)}`)
+    }
+  }
+
+  printInfo('Different TEAL versions may produce different bytecode')
+  printInfo('Newer versions support more opcodes and features')
+  printInfo('')
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+  printInfo('This example demonstrated:')
+  printInfo('  1. tealCompile(source) - Compile TEAL source code to bytecode')
+  printInfo('  2. CompileResponse fields: hash (base32), result (base64 bytecode)')
+  printInfo('  3. tealCompile(source, { sourcemap: true }) - Get source map for debugging')
+  printInfo('  4. tealDisassemble(bytecode) - Convert bytecode back to TEAL')
+  printInfo('  5. Comparing original source with disassembled output')
+  printInfo('  6. Handling compilation errors for invalid TEAL')
+  printInfo('  7. Handling disassembly errors for invalid bytecode')
+  printInfo('  8. Compiling programs with different TEAL versions')
+  printInfo('')
+  printInfo('Key CompileResponse fields:')
+  printInfo('  - hash: base32 SHA512/256 of program bytes (Address-style)')
+  printInfo('  - result: base64 encoded bytecode')
+  printInfo('  - sourcemap?: { version, sources, names, mappings } (optional)')
+  printInfo('')
+  printInfo('Key DisassembleResponse fields:')
+  printInfo('  - result: Disassembled TEAL source code (string)')
+  printInfo('')
+  printInfo('Use cases:')
+  printInfo('  - Compile TEAL before deploying smart contracts')
+  printInfo('  - Get program hash for Logic Signature addresses')
+  printInfo('  - Debug bytecode by disassembling to readable TEAL')
+  printInfo('  - Validate TEAL syntax before deployment')
+  printInfo('  - Generate sourcemaps for debugging tools')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/typescript/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/typescript/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/typescript/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/typescript/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/typescript/latest/examples/algod-client/11-application-boxes/)
+- **TEAL Compile and Disassemble**
+- [Transaction Simulation](/docs/algokit-utils/typescript/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/typescript/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/typescript/latest/examples/algod-client/19-sync-round/)

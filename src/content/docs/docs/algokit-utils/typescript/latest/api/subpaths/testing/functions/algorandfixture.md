@@ -2,20 +2,20 @@
 editUrl: false
 next: false
 prev: false
-title: 'algorandFixture'
+title: "algorandFixture"
 ---
 
 ## Call Signature
 
 > **algorandFixture**(`fixtureConfig?`): [`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandfixture/)
 
-Defined in: [src/testing/fixtures/algorand-fixture.ts:60](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L60)
+Defined in: [src/testing/fixtures/algorand-fixture.ts:60](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L60)
 
 Creates a test fixture for automated testing against Algorand.
 By default it tests against an environment variable specified client
-if the standard environment variables are specified, otherwise against
-a default LocalNet instance, but you can pass in an algod, indexer
-and/or kmd (or their respective config) if you want to test against
+ if the standard environment variables are specified, otherwise against
+ a default LocalNet instance, but you can pass in an algod, indexer
+ and/or kmd (or their respective config) if you want to test against
 an explicitly defined network.
 
 ### Parameters
@@ -74,16 +74,16 @@ test('My test', async () => {
 
 > **algorandFixture**(`fixtureConfig`, `config`): [`AlgorandFixture`](/docs/algokit-utils/typescript/latest/api/subpaths/testing/interfaces/algorandfixture/)
 
-Defined in: [src/testing/fixtures/algorand-fixture.ts:75](https://github.com/larkiny/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L75)
+Defined in: [src/testing/fixtures/algorand-fixture.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/testing/fixtures/algorand-fixture.ts#L75)
 
 :::caution[Deprecated]
 Config can be passed in directly to fixture config now.
 
 Creates a test fixture for automated testing against Algorand.
 By default it tests against an environment variable specified client
-if the standard environment variables are specified, otherwise against
-a default LocalNet instance, but you can pass in an algod, indexer
-and/or kmd if you want to test against an explicitly defined network.
+ if the standard environment variables are specified, otherwise against
+ a default LocalNet instance, but you can pass in an algod, indexer
+ and/or kmd if you want to test against an explicitly defined network.
 :::
 
 ### Parameters

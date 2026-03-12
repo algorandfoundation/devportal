@@ -1,0 +1,372 @@
+---
+title: "Sync Round Management"
+description: "This example demonstrates how to manage the sync round using:"
+sidebar:
+  order: 19
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to manage the sync round using:
+- sync_round() - Get the minimum sync round the ledger will cache
+- set_sync_round(round) - Set the minimum sync round
+- unset_sync_round() - Unset/reset the sync round
+ What is the sync round? The sync round is a configuration that controls the minimum round the node will keep data for. When set, the node will:
+- Only keep block data from this round onwards
+- Allow old block data to be deleted/pruned
+- Reduce storage requirements for archival data
+ This is useful for:
+- Nodes that only need recent data (not full archival history)
+- Indexers that only need data from a specific point forward
+- Applications that don't need ancient historical data
+ Key concepts:
+- sync_round() returns GetSyncRoundResponse with round_ attribute
+- set_sync_round(round) sets the minimum round to keep
+- unset_sync_round() removes the sync round restriction
+- Historical data below the sync round may be unavailable
+ Prerequisites:
+ Note: On some nodes, these endpoints may require admin privileges or return errors if the feature is not supported.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/19_sync_round.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/19_sync_round.py)
+
+```python title="19_sync_round.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Sync Round Management
+
+This example demonstrates how to manage the sync round using:
+- sync_round() - Get the minimum sync round the ledger will cache
+- set_sync_round(round) - Set the minimum sync round
+- unset_sync_round() - Unset/reset the sync round
+
+What is the sync round?
+The sync round is a configuration that controls the minimum round the node
+will keep data for. When set, the node will:
+- Only keep block data from this round onwards
+- Allow old block data to be deleted/pruned
+- Reduce storage requirements for archival data
+
+This is useful for:
+- Nodes that only need recent data (not full archival history)
+- Indexers that only need data from a specific point forward
+- Applications that don't need ancient historical data
+
+Key concepts:
+- sync_round() returns GetSyncRoundResponse with round_ attribute
+- set_sync_round(round) sets the minimum round to keep
+- unset_sync_round() removes the sync round restriction
+- Historical data below the sync round may be unavailable
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+
+Note: On some nodes, these endpoints may require admin privileges
+or return errors if the feature is not supported.
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_algod_client.models import GetSyncRoundResponse
+
+
+def display_sync_round_response(response: GetSyncRoundResponse) -> None:
+    """Display the sync round response information."""
+    print_info("  GetSyncRoundResponse:")
+    print_info(f"    round: {response.round_}")
+    print_info("")
+
+
+def main() -> None:
+    print_header("Sync Round Management Example")
+
+    # Create algod client
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Get the current node status to understand the blockchain state
+    # =========================================================================
+    print_step(1, "Getting current node status")
+
+    status = algod.status()
+    current_round = status.last_round
+    catchup_time = status.catchup_time
+    print_success("Connected to node")
+    print_info(f"  Current round: {current_round}")
+    print_info(f"  Catchup time: {catchup_time} ns")
+    print_info("")
+
+    # =========================================================================
+    # Step 2: Get the current sync round (if any)
+    # =========================================================================
+    print_step(2, "Getting current sync round")
+
+    print_info("Calling sync_round() to get the minimum sync round...")
+
+    try:
+        sync_round_response = algod.sync_round()
+        display_sync_round_response(sync_round_response)
+
+        print_info(f"The node will keep data from round {sync_round_response.round_} onwards")
+        print_info("Data below this round may be pruned or unavailable")
+    except Exception as e:
+        error_message = str(e)
+
+        # Check for various error scenarios
+        if "404" in error_message or "not found" in error_message.lower() or "Not Found" in error_message:
+            print_info("Sync round is not set - node will keep all historical data")
+            print_info("This is the default behavior for archival nodes")
+        elif "501" in error_message or "not implemented" in error_message.lower():
+            print_error("Sync round endpoints are not supported on this node")
+            print_info("These endpoints may require specific node configuration")
+        elif "403" in error_message or "forbidden" in error_message.lower() or "Forbidden" in error_message:
+            print_error("Access denied - admin privileges may be required")
+            print_info("Some nodes restrict sync round management to admin tokens")
+        else:
+            # Display error but continue with the example
+            print_error(f"Error getting sync round: {error_message}")
+    print_info("")
+
+    # =========================================================================
+    # Step 3: Set a sync round
+    # =========================================================================
+    print_step(3, "Setting a sync round")
+
+    # We'll set the sync round to a recent round to demonstrate the API
+    # In practice, you'd set this to the oldest round you need data for
+    target_sync_round = current_round - 10 if current_round > 10 else 1
+    print_info(f"Attempting to set sync round to {target_sync_round}...")
+    print_info("This tells the node to keep data from this round onwards")
+
+    try:
+        algod.set_sync_round(target_sync_round)
+        print_success(f"Sync round set to {target_sync_round}")
+
+        # Verify the sync round was set
+        try:
+            verify_response = algod.sync_round()
+            print_info(f"Verified: sync round is now {verify_response.round_}")
+        except Exception:
+            print_info("Could not verify - sync_round() may not be available")
+    except Exception as e:
+        error_message = str(e)
+
+        if "404" in error_message or "not found" in error_message.lower():
+            print_error("set_sync_round endpoint not found")
+            print_info("This endpoint may not be available on this node configuration")
+        elif "501" in error_message or "not implemented" in error_message.lower():
+            print_error("set_sync_round is not implemented on this node")
+            print_info("Sync round management may require specific node features to be enabled")
+        elif "403" in error_message or "forbidden" in error_message.lower():
+            print_error("Access denied when setting sync round")
+            print_info("Admin token may be required to modify sync round")
+        elif "400" in error_message or "bad request" in error_message.lower():
+            print_error("Invalid sync round value")
+            print_info("The sync round must be a valid round number")
+        else:
+            print_error(f"Failed to set sync round: {error_message}")
+    print_info("")
+
+    # =========================================================================
+    # Step 4: Explain the impact of sync round on data availability
+    # =========================================================================
+    print_step(4, "Understanding sync round impact on data availability")
+
+    print_info("When a sync round is set:")
+    print_info("")
+    print_info("1. Block Data Access:")
+    print_info("   - Blocks at or after the sync round: Available")
+    print_info("   - Blocks before the sync round: May be unavailable (pruned)")
+    print_info("")
+    print_info("2. Account Information:")
+    print_info("   - Current state: Always available")
+    print_info("   - Historical state at old rounds: May be unavailable")
+    print_info("")
+    print_info("3. Transaction History:")
+    print_info("   - Transactions in recent blocks: Available")
+    print_info("   - Transactions in pruned blocks: Not available")
+    print_info("")
+    print_info("4. State Proofs & Deltas:")
+    print_info("   - Only available for rounds at or after sync round")
+    print_info("")
+
+    # Demonstrate that recent data is accessible
+    print_info("Verifying recent block data is accessible...")
+    try:
+        block = algod.block(current_round)
+        timestamp = block.block.header.timestamp
+        print_success(f"Block {current_round} is accessible (timestamp: {timestamp})")
+    except Exception as e:
+        error_message = str(e)
+        print_error(f"Could not access block {current_round}: {error_message}")
+    print_info("")
+
+    # =========================================================================
+    # Step 5: Demonstrate unset_sync_round
+    # =========================================================================
+    print_step(5, "Unsetting the sync round")
+
+    print_info("Calling unset_sync_round() to remove the sync round restriction...")
+    print_info("After unsetting, the node will keep all data (archival mode)")
+
+    try:
+        algod.unset_sync_round()
+        print_success("Sync round has been unset")
+
+        # Verify it was unset
+        try:
+            check_response = algod.sync_round()
+            # If this succeeds, a sync round is still set
+            print_info(f"Note: sync_round still returns {check_response.round_}")
+            print_info("On some nodes, unset may set a default value rather than fully removing it")
+        except Exception as check_error:
+            check_message = str(check_error)
+            if "404" in check_message or "not found" in check_message.lower():
+                print_success("Confirmed: sync round is now unset (404 response)")
+                print_info("Node is in archival mode - keeping all historical data")
+            else:
+                print_info(f"Sync round status unclear: {check_message}")
+    except Exception as e:
+        error_message = str(e)
+
+        if "404" in error_message or "not found" in error_message.lower():
+            print_info("unset_sync_round returned 404 - sync round may already be unset")
+        elif "501" in error_message or "not implemented" in error_message.lower():
+            print_error("unset_sync_round is not implemented on this node")
+        elif "403" in error_message or "forbidden" in error_message.lower():
+            print_error("Access denied when unsetting sync round")
+            print_info("Admin privileges may be required")
+        else:
+            print_error(f"Failed to unset sync round: {error_message}")
+    print_info("")
+
+    # =========================================================================
+    # Step 6: Best practices for sync round management
+    # =========================================================================
+    print_step(6, "Best practices and use cases")
+
+    print_info("When to use sync round:")
+    print_info("")
+    print_info("1. Non-Archival Nodes:")
+    print_info("   - Set sync round to reduce storage requirements")
+    print_info("   - Only keep data needed for current operations")
+    print_info("")
+    print_info("2. Indexer Deployment:")
+    print_info("   - Set sync round to the indexer's starting point")
+    print_info("   - Prevents the node from being queried for data it doesn't need")
+    print_info("")
+    print_info("3. Fresh Sync from Snapshot:")
+    print_info("   - After restoring from a snapshot, set sync round to snapshot round")
+    print_info("   - Tells the node not to try fetching older data")
+    print_info("")
+    print_info("When NOT to use sync round:")
+    print_info("")
+    print_info("1. Archival Nodes:")
+    print_info("   - Don't set sync round if you need full history")
+    print_info("   - Archival nodes should keep all data")
+    print_info("")
+    print_info("2. Block Explorers:")
+    print_info("   - Need historical data for user queries")
+    print_info("   - Should maintain full history")
+    print_info("")
+    print_info("3. Audit/Compliance:")
+    print_info("   - Regulatory requirements may mandate full history")
+    print_info("")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+
+    print_info("Sync Round Management - Key Points:")
+    print_info("")
+    print_info("1. What It Does:")
+    print_info("   - Controls the minimum round the node keeps data for")
+    print_info("   - Allows pruning of old block data")
+    print_info("   - Reduces storage requirements for non-archival nodes")
+    print_info("")
+    print_info("2. API Methods:")
+    print_info("   sync_round() -> GetSyncRoundResponse")
+    print_info("     - Returns GetSyncRoundResponse with round_ attribute")
+    print_info("     - Returns 404 if no sync round is set (archival mode)")
+    print_info("")
+    print_info("   set_sync_round(round_: int) -> None")
+    print_info("     - Sets the minimum sync round")
+    print_info("     - Data below this round may be pruned")
+    print_info("")
+    print_info("   unset_sync_round() -> None")
+    print_info("     - Removes the sync round restriction")
+    print_info("     - Returns node to archival mode")
+    print_info("")
+    print_info("3. GetSyncRoundResponse:")
+    print_info("   round_: int  # Minimum sync round (underscore to avoid Python builtin)")
+    print_info("")
+    print_info("4. Data Availability Impact:")
+    print_info("   - Blocks before sync round: May be unavailable")
+    print_info("   - Account history at old rounds: May be unavailable")
+    print_info("   - Current state: Always available")
+    print_info("   - Recent transactions: Available")
+    print_info("")
+    print_info("5. Error Scenarios:")
+    print_info("   - 404: Sync round not set (archival mode)")
+    print_info("   - 403: Admin privileges required")
+    print_info("   - 501: Feature not implemented on this node")
+    print_info("")
+    print_info("6. Best Practices:")
+    print_info("   - Only set sync round if you don't need full history")
+    print_info("   - Consider storage vs. data availability tradeoffs")
+    print_info("   - Archival nodes should not set a sync round")
+    print_info("   - Document your sync round configuration")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/python/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- **Sync Round Management**

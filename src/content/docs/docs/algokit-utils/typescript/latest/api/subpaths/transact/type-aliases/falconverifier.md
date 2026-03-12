@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'FalconVerifier'
+title: "FalconVerifier"
 ---
 
 > **FalconVerifier** = `object`
 
-Defined in: [packages/transact/src/transactions/state-proof.ts:45](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L45)
+Defined in: [packages/transact/src/transactions/state-proof.ts:45](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L45)
 
 ## Properties
 
@@ -15,4 +15,4 @@ Defined in: [packages/transact/src/transactions/state-proof.ts:45](https://githu
 
 > **publicKey**: `Uint8Array`
 
-Defined in: [packages/transact/src/transactions/state-proof.ts:46](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L46)
+Defined in: [packages/transact/src/transactions/state-proof.ts:46](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/state-proof.ts#L46)

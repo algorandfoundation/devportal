@@ -1,0 +1,243 @@
+---
+title: "Address Basics"
+description: "This example demonstrates basic address operations using the algokit_common module:"
+sidebar:
+  order: 1
+---
+
+[← Back to Common Utilities](/docs/algokit-utils/python/latest/examples/common/)
+
+## Description
+
+This example demonstrates basic address operations using the algokit_common module:
+- Parsing addresses from base32 strings with public_key_from_address()
+- Creating addresses from public keys with address_from_public_key()
+- Using the zero address constant ZERO_ADDRESS
+- Computing the 4-byte checksum via SHA-512/256
+- Validating addresses by attempting to parse them
+- Accessing the 32-byte public key from an address
+- Using address constants: ADDRESS_LENGTH, ZERO_ADDRESS
+
+## Prerequisites
+
+No LocalNet required - pure utility functions
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python common/01_address_basics.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/common/01_address_basics.py)
+
+```python title="01_address_basics.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: Address Basics
+
+This example demonstrates basic address operations using the algokit_common module:
+- Parsing addresses from base32 strings with public_key_from_address()
+- Creating addresses from public keys with address_from_public_key()
+- Using the zero address constant ZERO_ADDRESS
+- Computing the 4-byte checksum via SHA-512/256
+- Validating addresses by attempting to parse them
+- Accessing the 32-byte public key from an address
+- Using address constants: ADDRESS_LENGTH, ZERO_ADDRESS
+
+No LocalNet required - pure utility functions
+"""
+
+from shared import (
+    format_bytes,
+    format_hex,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+from algokit_common import (
+    ADDRESS_LENGTH,
+    CHECKSUM_BYTE_LENGTH,
+    PUBLIC_KEY_BYTE_LENGTH,
+    ZERO_ADDRESS,
+    address_from_public_key,
+    public_key_from_address,
+    sha512_256,
+)
+
+
+def is_valid_address(address: str) -> bool:
+    """Check if a string is a valid Algorand address."""
+    try:
+        public_key_from_address(address)
+        return True
+    except (ValueError, TypeError):
+        return False
+
+
+def get_checksum(public_key: bytes) -> bytes:
+    """Compute the 4-byte checksum for a public key."""
+    return sha512_256(public_key)[-CHECKSUM_BYTE_LENGTH:]
+
+
+def main() -> None:
+    print_header("Address Basics Example")
+
+    # Step 1: Address constants
+    print_step(1, "Address Constants")
+
+    print_info(f"ADDRESS_LENGTH: {ADDRESS_LENGTH} characters")
+    print_info(f"ZERO_ADDRESS: {ZERO_ADDRESS}")
+    print_info(f"PUBLIC_KEY_BYTE_LENGTH: {PUBLIC_KEY_BYTE_LENGTH} bytes")
+    print_info(f"CHECKSUM_BYTE_LENGTH: {CHECKSUM_BYTE_LENGTH} bytes")
+
+    # Step 2: Parse an address from base32 string using public_key_from_address()
+    print_step(2, "Parse Address from Base32 String")
+
+    # Valid address created from bytes [0, 1, 2, ... 31]
+    sample_address_string = "AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQE"
+    print_info(f"Input address string: {sample_address_string}")
+    print_info(f"String length: {len(sample_address_string)} characters")
+
+    parsed_public_key = public_key_from_address(sample_address_string)
+    print_info("Successfully parsed address using public_key_from_address()")
+
+    # Step 3: Access the public key (32-byte bytes object)
+    print_step(3, "Public Key Property")
+
+    print_info(f"Public key length: {len(parsed_public_key)} bytes")
+    print_info(f"Public key: {format_bytes(parsed_public_key, 8)}")
+    print_info(f"Public key (hex): {format_hex(parsed_public_key)}")
+
+    # Step 4: Encode back to base32 string using address_from_public_key()
+    print_step(4, "Encode Address to Base32 String")
+
+    encoded_string = address_from_public_key(parsed_public_key)
+    print_info(f"Encoded address: {encoded_string}")
+    print_info(f"Round-trip matches: {encoded_string == sample_address_string}")
+
+    # Step 5: Use the zero address constant
+    print_step(5, "Zero Address")
+
+    print_info(f"Zero address string: {ZERO_ADDRESS}")
+    zero_public_key = public_key_from_address(ZERO_ADDRESS)
+    print_info(f"Public key: {format_bytes(zero_public_key, 8)}")
+
+    # Verify all bytes are zero
+    all_zeros = all(byte == 0 for byte in zero_public_key)
+    print_info(f"All public key bytes are zero: {all_zeros}")
+
+    # Verify round-trip
+    zero_encoded = address_from_public_key(zero_public_key)
+    print_info(f"Round-trip matches ZERO_ADDRESS: {zero_encoded == ZERO_ADDRESS}")
+
+    # Step 6: Compare addresses
+    print_step(6, "Address Equality")
+
+    # Compare two addresses created from the same string
+    pk1 = public_key_from_address(sample_address_string)
+    pk2 = public_key_from_address(sample_address_string)
+    print_info(f"pk1 == pk2 (same address): {pk1 == pk2}")
+
+    # Compare with zero address public key
+    print_info(f"parsed_public_key == zero_public_key: {parsed_public_key == zero_public_key}")
+
+    # Step 7: Compute checksum
+    print_step(7, "Compute Checksum")
+
+    checksum = get_checksum(parsed_public_key)
+    print_info(f"Checksum length: {len(checksum)} bytes")
+    print_info(f"Checksum: {format_bytes(checksum, 4)}")
+    print_info(f"Checksum (hex): {format_hex(checksum)}")
+
+    # Zero address checksum
+    zero_checksum = get_checksum(zero_public_key)
+    print_info(f"Zero address checksum: {format_hex(zero_checksum)}")
+
+    # Step 8: Validate addresses using is_valid_address()
+    print_step(8, "Address Validation")
+
+    print_info("Testing is_valid_address() with various inputs:")
+
+    # Valid address
+    valid_result = is_valid_address(sample_address_string)
+    addr_preview = sample_address_string[:20]
+    print_info(f"  Valid address: is_valid_address('{addr_preview}...') = {valid_result}")
+
+    # Zero address
+    print_info(f"  Zero address: is_valid_address(ZERO_ADDRESS) = {is_valid_address(ZERO_ADDRESS)}")
+
+    # Invalid - wrong length
+    wrong_length = "ABC123"
+    print_info(f"  Wrong length: is_valid_address('{wrong_length}') = {is_valid_address(wrong_length)}")
+
+    # Invalid - bad characters
+    bad_chars = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFK0"
+    print_info(f"  Bad characters (has '0'): is_valid_address('...Y5HFK0') = {is_valid_address(bad_chars)}")
+
+    # Invalid - bad checksum (modified last character)
+    bad_checksum = "AAAQEAYEAUDAOCAJBIFQYDIOB4IBCEQTCQKRMFYYDENBWHA5DYP7MUPJQA"
+    print_info(f"  Bad checksum: is_valid_address('...PJQA') = {is_valid_address(bad_checksum)}")
+
+    # Step 9: Create address from raw public key bytes
+    print_step(9, "Create Address from Public Key Bytes")
+
+    # Create a 32-byte public key
+    raw_public_key = bytes(range(32))
+
+    print_info(f"Raw public key: {format_bytes(raw_public_key, 8)}")
+
+    address_from_bytes = address_from_public_key(raw_public_key)
+    print_info(f"Address from bytes: {address_from_bytes}")
+
+    # Round-trip verification
+    pk_back = public_key_from_address(address_from_bytes)
+    print_info(f"Public key matches: {pk_back == raw_public_key}")
+
+    # Verify it's valid
+    print_info(f"is_valid_address(address_from_bytes): {is_valid_address(address_from_bytes)}")
+
+    # Step 10: Summary
+    print_step(10, "Summary")
+
+    print_info("Address functions:")
+    print_info("  - public_key_from_address(str) - Parse base32 address to 32-byte public key")
+    print_info("  - address_from_public_key(bytes) - Encode 32-byte key to base32 (58 chars)")
+    print_info("  - sha512_256(bytes) - Compute hash (last 4 bytes = checksum)")
+
+    print_info("\nConstants:")
+    print_info(f"  - ADDRESS_LENGTH = {ADDRESS_LENGTH}")
+    print_info(f"  - PUBLIC_KEY_BYTE_LENGTH = {PUBLIC_KEY_BYTE_LENGTH}")
+    print_info(f"  - CHECKSUM_BYTE_LENGTH = {CHECKSUM_BYTE_LENGTH}")
+    print_info(f"  - ZERO_ADDRESS = {ZERO_ADDRESS[:20]}...")
+
+    print_success("Address Basics example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Common Utilities
+
+- **Address Basics**
+- [Address Encoding](/docs/algokit-utils/python/latest/examples/common/02-address-encoding/)
+- [Array Utilities](/docs/algokit-utils/python/latest/examples/common/03-array-utilities/)
+- [Constants Reference](/docs/algokit-utils/python/latest/examples/common/04-constants/)
+- [Crypto Hash (SHA-512/256)](/docs/algokit-utils/python/latest/examples/common/05-crypto-hash/)
+- [Example](/docs/algokit-utils/python/latest/examples/common/06-logger/)
+- [JSON BigInt Support](/docs/algokit-utils/python/latest/examples/common/07-json-bigint/)
+- [MessagePack Encoding](/docs/algokit-utils/python/latest/examples/common/08-msgpack/)
+- [Primitive Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/09-primitive-codecs/)
+- [Composite Serde (Serialization/Deserialization)](/docs/algokit-utils/python/latest/examples/common/10-composite-codecs/)
+- [Model Serde (Object Model Serialization)](/docs/algokit-utils/python/latest/examples/common/11-model-codecs/)
+- [Sourcemap for TEAL Debugging](/docs/algokit-utils/python/latest/examples/common/12-sourcemap/)

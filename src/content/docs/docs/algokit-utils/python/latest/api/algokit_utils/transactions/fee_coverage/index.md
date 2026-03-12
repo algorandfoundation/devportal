@@ -1,5 +1,5 @@
 ---
-title: 'algokit_utils.transactions.fee_coverage'
+title: "algokit_utils.transactions.fee_coverage"
 ---
 
 <div class="api-ref">
@@ -8,14 +8,14 @@ title: 'algokit_utils.transactions.fee_coverage'
 
 ## Classes
 
-| [`FeeDeltaType`](#algokit_utils.transactions.fee_coverage.FeeDeltaType) | Describes the type of fee delta                                                            |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| [`FeeDelta`](#algokit_utils.transactions.fee_coverage.FeeDelta)         | Represents a difference between required and provided fee amounts.                         |
-| [`FeePriority`](#algokit_utils.transactions.fee_coverage.FeePriority)   | Priority wrapper used when deciding which transactions need additional fees applied first. |
+| [`FeeDeltaType`](#algokit_utils.transactions.fee_coverage.FeeDeltaType)   | Describes the type of fee delta                                                            |
+|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+| [`FeeDelta`](#algokit_utils.transactions.fee_coverage.FeeDelta)           | Represents a difference between required and provided fee amounts.                         |
+| [`FeePriority`](#algokit_utils.transactions.fee_coverage.FeePriority)     | Priority wrapper used when deciding which transactions need additional fees applied first. |
 
 ## Module Contents
 
-### _class_ FeeDeltaType(\*args, \*\*kwds)
+### *class* FeeDeltaType(\*args, \*\*kwds)
 
 Bases: `enum.Enum`
 
@@ -25,44 +25,45 @@ Describes the type of fee delta
 
 #### SURPLUS
 
-### _class_ FeeDelta
+### *class* FeeDelta
 
 Represents a difference between required and provided fee amounts.
 
-#### type _: [FeeDeltaType](#algokit_utils.transactions.fee_coverage.FeeDeltaType)_
+#### type *: [FeeDeltaType](#algokit_utils.transactions.fee_coverage.FeeDeltaType)*
 
-#### data _: int_
+#### data *: int*
 
-#### _static_ from_int(value: int) → [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta) | None
+#### *static* from_int(value: int) → [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta) | None
 
-#### _static_ add(lhs: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta) | None, rhs: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta) | None) → [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta) | None
+#### *static* add(lhs: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta) | None, rhs: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta) | None) → [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta) | None
 
-#### _static_ to_int(delta: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta)) → int
+#### *static* to_int(delta: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta)) → int
 
-#### _static_ amount(delta: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta)) → int
+#### *static* amount(delta: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta)) → int
 
-#### _static_ is_deficit(delta: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta)) → bool
+#### *static* is_deficit(delta: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta)) → bool
 
-#### _static_ is_surplus(delta: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta)) → bool
+#### *static* is_surplus(delta: [FeeDelta](#algokit_utils.transactions.fee_coverage.FeeDelta)) → bool
 
-### _class_ FeePriority
+### *class* FeePriority
 
 Priority wrapper used when deciding which transactions need additional fees applied first.
 
-#### priority*level *: int\_
+#### priority_level *: int*
 
-#### deficit*amount *: int\_
+#### deficit_amount *: int*
 
-#### Covered _: ClassVar[[FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)]_
+#### Covered *: ClassVar[[FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)]*
 
-#### ModifiableDeficit _: ClassVar[collections.abc.Callable[[int], [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)]]_
+#### ModifiableDeficit *: ClassVar[collections.abc.Callable[[int], [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)]]*
 
-#### ImmutableDeficit _: ClassVar[collections.abc.Callable[[int], [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)]]_
+#### ImmutableDeficit *: ClassVar[collections.abc.Callable[[int], [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)]]*
 
-#### _static_ covered() → [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)
+#### *static* covered() → [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)
 
-#### _static_ modifiable_deficit(amount: int) → [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)
+#### *static* modifiable_deficit(amount: int) → [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)
 
-#### _static_ immutable_deficit(amount: int) → [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)
+#### *static* immutable_deficit(amount: int) → [FeePriority](#algokit_utils.transactions.fee_coverage.FeePriority)
+
 
 </div>

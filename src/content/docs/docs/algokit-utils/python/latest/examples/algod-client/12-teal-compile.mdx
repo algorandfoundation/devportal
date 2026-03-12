@@ -1,0 +1,418 @@
+---
+title: "TEAL Compile and Disassemble"
+description: "This example demonstrates how to compile TEAL source code to bytecode and disassemble bytecode back to TEAL using the AlgodClient methods:"
+sidebar:
+  order: 12
+---
+
+[← Back to Algod Client](/docs/algokit-utils/python/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to compile TEAL source code to bytecode and disassemble bytecode back to TEAL using the AlgodClient methods:
+- teal_compile(source_bytes, sourcemap?) - Compile TEAL source to bytecode
+- teal_disassemble(bytecode) - Disassemble bytecode back to TEAL
+ Note: Python SDK takes bytes for teal_compile (use .encode()), while TypeScript takes string. CompileResponse uses attribute access with hash_ (underscore to avoid Python builtin).
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algod_client/12_teal_compile.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algod_client/12_teal_compile.py)
+
+```python title="12_teal_compile.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: TEAL Compile and Disassemble
+
+This example demonstrates how to compile TEAL source code to bytecode and
+disassemble bytecode back to TEAL using the AlgodClient methods:
+- teal_compile(source_bytes, sourcemap?) - Compile TEAL source to bytecode
+- teal_disassemble(bytecode) - Disassemble bytecode back to TEAL
+
+Note: Python SDK takes bytes for teal_compile (use .encode()), while TypeScript takes string.
+CompileResponse uses attribute access with hash_ (underscore to avoid Python builtin).
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+import base64
+
+from shared import (
+    create_algod_client,
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+)
+
+
+def main() -> None:
+    print_header("TEAL Compile and Disassemble Example")
+
+    # Create an Algod client connected to LocalNet
+    algod = create_algod_client()
+
+    # =========================================================================
+    # Step 1: Compile a Simple Approval Program
+    # =========================================================================
+    print_step(1, "Compiling a simple approval program")
+
+    # A minimal approval program that always succeeds
+    simple_source = load_teal_source("simple-approve.teal")
+
+    try:
+        # Python SDK requires bytes - encode the source string
+        compiled = algod.teal_compile(simple_source.encode())
+
+        print_success("Compilation successful!")
+        print_info("")
+        print_info("Compilation Result:")
+        print_info(f"  Hash:   {compiled.hash_}")
+        print_info("          (base32 SHA512/256 of program bytes, Address-style)")
+        print_info(f"  Result: {compiled.result}")
+        print_info("          (base64 encoded bytecode)")
+        print_info("")
+
+        # Decode bytecode to show the raw bytes
+        bytecode = base64.b64decode(compiled.result)
+        print_info("Bytecode Details:")
+        print_info(f"  Size:   {len(bytecode)} bytes")
+        print_info(f"  Hex:    {bytecode.hex()}")
+        print_info("")
+        print_info("The hash can be used as a Logic Signature address")
+        print_info("The bytecode (result) is what gets stored on-chain")
+        print_info("")
+    except Exception as e:
+        print_error(f"Compilation failed: {e}")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 2: Compile a More Complex Program
+    # =========================================================================
+    print_step(2, "Compiling a more complex approval program")
+
+    # A program that checks sender and approves specific transaction types
+    complex_source = load_teal_source("complex-approve.teal")
+
+    try:
+        compiled = algod.teal_compile(complex_source.encode())
+
+        print_success("Complex program compiled successfully!")
+        print_info("")
+        print_info("Compilation Result:")
+        print_info(f"  Hash:   {compiled.hash_}")
+        print_info(f"  Result: {compiled.result}")
+        print_info("")
+
+        bytecode = base64.b64decode(compiled.result)
+        print_info("Bytecode Details:")
+        print_info(f"  Size:   {len(bytecode)} bytes")
+        print_info(f"  Hex:    {bytecode.hex()}")
+        print_info("")
+        print_info("Complex programs compile to larger bytecode")
+        print_info("")
+    except Exception as e:
+        print_error(f"Compilation failed: {e}")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 3: Compile with Sourcemap Option
+    # =========================================================================
+    print_step(3, "Compiling with sourcemap option")
+
+    # Program with multiple lines for meaningful sourcemap
+    sourcemap_source = load_teal_source("counter-init.teal")
+
+    try:
+        # Python SDK uses sourcemap parameter (bool)
+        compiled = algod.teal_compile(sourcemap_source.encode(), sourcemap=True)
+
+        print_success("Compilation with sourcemap successful!")
+        print_info("")
+        print_info("Compilation Result:")
+        print_info(f"  Hash:   {compiled.hash_}")
+        print_info(f"  Result: {compiled.result}")
+        print_info("")
+
+        if compiled.sourcemap:
+            sourcemap = compiled.sourcemap
+            print_info("Source Map:")
+            print_info(f"  Version:  {sourcemap.version}")
+            print_info(f"  Sources:  {sourcemap.sources}")
+            print_info(f"  Names:    {sourcemap.names}")
+            print_info(f"  Mappings: {sourcemap.mappings}")
+            print_info("")
+            print_info("Sourcemaps enable debugging by mapping bytecode to source lines")
+            print_info("The mappings string uses VLQ (Variable Length Quantity) encoding")
+        else:
+            print_info("Sourcemap was not returned (may depend on node configuration)")
+        print_info("")
+    except Exception as e:
+        print_error(f"Compilation failed: {e}")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 4: Disassemble Bytecode Back to TEAL
+    # =========================================================================
+    print_step(4, "Disassembling bytecode back to TEAL")
+
+    try:
+        # First compile, then disassemble to show round-trip
+        compiled = algod.teal_compile(simple_source.encode())
+        # Decode base64 result to get raw bytecode for disassembly
+        bytecode = base64.b64decode(compiled.result)
+
+        print_info("Original Source:")
+        for line in simple_source.split("\n"):
+            print_info(f"  {line}")
+        print_info("")
+
+        # Python SDK takes raw bytes for disassembly, not base64
+        disassembled = algod.teal_disassemble(bytecode)
+
+        print_success("Disassembly successful!")
+        print_info("")
+        print_info("Disassembled Output:")
+        for line in disassembled.result.strip().split("\n"):
+            print_info(f"  {line}")
+        print_info("")
+        print_info("Disassembled output may differ from original (comments removed, labels renamed)")
+        print_info("")
+    except Exception as e:
+        print_error(f"Disassembly failed: {e}")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 5: Compare Original Source with Disassembled Output
+    # =========================================================================
+    print_step(5, "Comparing original source with disassembled output")
+
+    try:
+        # Use the complex source for a more interesting comparison
+        compiled = algod.teal_compile(complex_source.encode())
+        bytecode = base64.b64decode(compiled.result)
+        disassembled = algod.teal_disassemble(bytecode)
+
+        print_info("Original Source:")
+        original_lines = complex_source.strip().split("\n")
+        for i, line in enumerate(original_lines):
+            print_info(f"  {i + 1:2}: {line}")
+        print_info("")
+
+        print_info("Disassembled Output:")
+        disassembled_lines = disassembled.result.strip().split("\n")
+        for i, line in enumerate(disassembled_lines):
+            print_info(f"  {i + 1:2}: {line}")
+        print_info("")
+
+        print_info("Key Differences:")
+        print_info("  - Comments are removed during compilation")
+        print_info("  - Labels are converted to numeric addresses")
+        print_info("  - The semantic meaning remains identical")
+        print_info("")
+    except Exception as e:
+        print_error(f"Comparison failed: {e}")
+        raise SystemExit(1) from e
+
+    # =========================================================================
+    # Step 6: Handle Compilation Errors
+    # =========================================================================
+    print_step(6, "Handling compilation errors for invalid TEAL")
+
+    # Invalid TEAL source - unknown opcode
+    invalid_source1 = """#pragma version 10
+invalid_opcode
+int 1"""
+
+    try:
+        print_info("Attempting to compile invalid TEAL (unknown opcode):")
+        for line in invalid_source1.split("\n"):
+            print_info(f"  {line}")
+        print_info("")
+        algod.teal_compile(invalid_source1.encode())
+        print_error("Expected compilation to fail but it succeeded")
+    except Exception as e:
+        print_success("Correctly caught compilation error!")
+        print_info(f"  Error: {e}")
+        print_info("")
+
+    # Invalid TEAL source - syntax error
+    invalid_source2 = """#pragma version 10
+int"""
+
+    try:
+        print_info("Attempting to compile invalid TEAL (missing operand):")
+        for line in invalid_source2.split("\n"):
+            print_info(f"  {line}")
+        print_info("")
+        algod.teal_compile(invalid_source2.encode())
+        print_error("Expected compilation to fail but it succeeded")
+    except Exception as e:
+        print_success("Correctly caught syntax error!")
+        print_info(f"  Error: {e}")
+        print_info("")
+
+    # Invalid TEAL source - invalid version
+    invalid_source3 = """#pragma version 999
+int 1"""
+
+    try:
+        print_info("Attempting to compile invalid TEAL (invalid version):")
+        for line in invalid_source3.split("\n"):
+            print_info(f"  {line}")
+        print_info("")
+        algod.teal_compile(invalid_source3.encode())
+        print_error("Expected compilation to fail but it succeeded")
+    except Exception as e:
+        print_success("Correctly caught version error!")
+        print_info(f"  Error: {e}")
+        print_info("")
+
+    print_info("Always validate TEAL source before deployment")
+    print_info("Compilation errors include line numbers and descriptions")
+    print_info("")
+
+    # =========================================================================
+    # Step 7: Understanding Disassembly Behavior
+    # =========================================================================
+    print_step(7, "Understanding disassembly behavior with various bytecode")
+
+    # The disassembler does best-effort interpretation of bytecode
+    # Even invalid patterns may produce some output
+
+    # Example 1: Bytecode with invalid version (version 0)
+    # Python SDK takes raw bytes directly, not base64
+    invalid_version_bytecode = bytes([0x00, 0x00, 0x00])
+    print_info("Disassembling bytecode with version 0:")
+    print_info(f"  Bytes: {invalid_version_bytecode.hex()}")
+    try:
+        result = algod.teal_disassemble(invalid_version_bytecode)
+        print_info("  Result:")
+        for line in result.result.strip().split("\n"):
+            print_info(f"    {line}")
+        print_info("Version 0 is disassembled but is not a valid TEAL version")
+        print_info("")
+    except Exception as e:
+        print_error(f"Disassembly failed: {e}")
+        print_info("")
+
+    # Example 2: Single byte (just version, no opcodes)
+    minimal_bytecode = bytes([0x0A])  # version 10
+    print_info("Disassembling minimal bytecode (just version byte):")
+    print_info(f"  Bytes: {minimal_bytecode.hex()}")
+    try:
+        result = algod.teal_disassemble(minimal_bytecode)
+        print_info("  Result:")
+        for line in result.result.strip().split("\n"):
+            print_info(f"    {line}")
+        print_info("Minimal valid bytecode: version byte only")
+        print_info("")
+    except Exception as e:
+        print_error(f"Disassembly failed: {e}")
+        print_info("")
+
+    print_info("The disassembler does best-effort interpretation")
+    print_info("Always verify disassembled output matches expected behavior")
+    print_info("")
+
+    # =========================================================================
+    # Step 8: Compile Different TEAL Versions
+    # =========================================================================
+    print_step(8, "Compiling programs with different TEAL versions")
+
+    versions = [6, 8, 10]
+
+    for version in versions:
+        source = f"""#pragma version {version}
+int 1"""
+
+        try:
+            compiled = algod.teal_compile(source.encode())
+            bytecode = base64.b64decode(compiled.result)
+
+            print_info(f"TEAL Version {version}:")
+            print_info(f"  Hash:     {compiled.hash_}")
+            print_info(f"  Size:     {len(bytecode)} bytes")
+            print_info(f"  Bytecode: {bytecode.hex()}")
+            print_info("")
+        except Exception as e:
+            print_error(f"Version {version} failed: {e}")
+
+    print_info("Different TEAL versions may produce different bytecode")
+    print_info("Newer versions support more opcodes and features")
+    print_info("")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. teal_compile(source) - Compile TEAL source code to bytecode")
+    print_info("  2. CompileResponse fields: hash (base32), result (base64 bytecode)")
+    print_info("  3. teal_compile(source, source_map=True) - Get source map for debugging")
+    print_info("  4. teal_disassemble(bytecode) - Convert bytecode back to TEAL")
+    print_info("  5. Comparing original source with disassembled output")
+    print_info("  6. Handling compilation errors for invalid TEAL")
+    print_info("  7. Handling disassembly errors for invalid bytecode")
+    print_info("  8. Compiling programs with different TEAL versions")
+    print_info("")
+    print_info("Key CompileResponse fields:")
+    print_info("  - hash: base32 SHA512/256 of program bytes (Address-style)")
+    print_info("  - result: base64 encoded bytecode")
+    print_info("  - sourcemap?: { version, sources, names, mappings } (optional)")
+    print_info("")
+    print_info("Key DisassembleResponse fields:")
+    print_info("  - result: Disassembled TEAL source code (string)")
+    print_info("")
+    print_info("Use cases:")
+    print_info("  - Compile TEAL before deploying smart contracts")
+    print_info("  - Get program hash for Logic Signature addresses")
+    print_info("  - Debug bytecode by disassembling to readable TEAL")
+    print_info("  - Validate TEAL syntax before deployment")
+    print_info("  - Generate sourcemaps for debugging tools")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/python/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/python/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/python/latest/examples/algod-client/03-ledger-supply/)
+- [Account Information](/docs/algokit-utils/python/latest/examples/algod-client/04-account-info/)
+- [Transaction Parameters](/docs/algokit-utils/python/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/python/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/python/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/python/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/python/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/python/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/python/latest/examples/algod-client/11-application-boxes/)
+- **TEAL Compile and Disassemble**
+- [Transaction Simulation](/docs/algokit-utils/python/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/python/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/python/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/python/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/python/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/python/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/python/latest/examples/algod-client/19-sync-round/)

@@ -1,0 +1,403 @@
+---
+title: "ABI Tuple Type"
+description: "This example demonstrates how to encode and decode tuples using TupleType:"
+sidebar:
+  order: 7
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to encode and decode tuples using TupleType:
+- Tuples with mixed static types: (uint64,bool,address)
+- Tuples with dynamic types: (uint64,string,bool)
+- Nested tuples: ((uint64,bool),string)
+ Key characteristics of tuple encoding:
+- Static-only tuples: all elements encoded consecutively, fixed size
+- Tuples with dynamic elements: head/tail encoding pattern
+- Head: static values inline + offsets for dynamic values
+- Tail: actual data for dynamic elements
+- Nested tuples: inner tuples are encoded first, then treated as their component
+ ARC-4 specification: Tuples are sequences of types enclosed in parentheses.
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/07_tuple_type.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/07_tuple_type.py)
+
+```python title="07_tuple_type.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ABI Tuple Type
+
+This example demonstrates how to encode and decode tuples using TupleType:
+- Tuples with mixed static types: (uint64,bool,address)
+- Tuples with dynamic types: (uint64,string,bool)
+- Nested tuples: ((uint64,bool),string)
+
+Key characteristics of tuple encoding:
+- Static-only tuples: all elements encoded consecutively, fixed size
+- Tuples with dynamic elements: head/tail encoding pattern
+  - Head: static values inline + offsets for dynamic values
+  - Tail: actual data for dynamic elements
+- Nested tuples: inner tuples are encoded first, then treated as their component
+
+ARC-4 specification: Tuples are sequences of types enclosed in parentheses.
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+from algokit_common import address_from_public_key
+
+
+def main() -> None:
+    print_header("ABI Tuple Type Example")
+
+    # Step 1: TupleType properties
+    print_step(1, "TupleType Properties")
+
+    static_tuple_type = abi.ABIType.from_string("(uint64,bool,address)")
+    dynamic_tuple_type = abi.ABIType.from_string("(uint64,string,bool)")
+    nested_tuple_type = abi.ABIType.from_string("((uint64,bool),string)")
+
+    print_info("(uint64,bool,address) - all static types:")
+    print_info(f"  str(): {static_tuple_type}")
+    if isinstance(static_tuple_type, abi.TupleType):
+        print_info(f"  elements length: {len(static_tuple_type.elements)}")
+        for i, child in enumerate(static_tuple_type.elements):
+            print_info(f"    [{i}]: {child} (is_dynamic: {child.is_dynamic()})")
+        print_info(f"  is_dynamic(): {static_tuple_type.is_dynamic()}")
+        print_info(f"  byte_len(): {static_tuple_type.byte_len()}")
+
+    print_info("\n(uint64,string,bool) - contains dynamic type:")
+    print_info(f"  str(): {dynamic_tuple_type}")
+    if isinstance(dynamic_tuple_type, abi.TupleType):
+        print_info(f"  elements length: {len(dynamic_tuple_type.elements)}")
+        for i, child in enumerate(dynamic_tuple_type.elements):
+            print_info(f"    [{i}]: {child} (is_dynamic: {child.is_dynamic()})")
+        print_info(f"  is_dynamic(): {dynamic_tuple_type.is_dynamic()} (because string is dynamic)")
+
+    print_info("\n((uint64,bool),string) - nested tuple with dynamic:")
+    print_info(f"  str(): {nested_tuple_type}")
+    if isinstance(nested_tuple_type, abi.TupleType):
+        print_info(f"  elements length: {len(nested_tuple_type.elements)}")
+        for i, child in enumerate(nested_tuple_type.elements):
+            print_info(f"    [{i}]: {child} (is_dynamic: {child.is_dynamic()})")
+        print_info(f"  is_dynamic(): {nested_tuple_type.is_dynamic()}")
+
+    # Step 2: Static tuple encoding - (uint64,bool,address)
+    print_step(2, "Static Tuple Encoding - (uint64,bool,address)")
+
+    # Create a sample address
+    pub_key = bytes([0xAB] * 32)
+    sample_address = address_from_public_key(pub_key)
+
+    static_value = [1000, True, sample_address]
+
+    if isinstance(static_tuple_type, abi.TupleType):
+        static_encoded = static_tuple_type.encode(static_value)
+        static_decoded = static_tuple_type.decode(static_encoded)
+
+        print_info(f"Input: [{static_value[0]}, {static_value[1]}, {str(static_value[2])[:10]}...]")
+        print_info(f"Encoded: {format_hex(static_encoded)}")
+        print_info(f"Total bytes: {len(static_encoded)}")
+
+        # Break down the encoding
+        print_info("\nByte layout (all static, no head/tail separation):")
+        print_info(f"  [0-7]   uint64: {format_hex(static_encoded[0:8])} = {static_value[0]}")
+        print_info(f"  [8]     bool:   {format_hex(static_encoded[8:9])} = {static_value[1]} (0x80=true, 0x00=false)")
+        print_info(f"  [9-40]  address: {format_hex(static_encoded[9:41])}")
+        print_info("  Expected size: 8 + 1 + 32 = 41 bytes")
+
+        print_info(f"\nDecoded: [{static_decoded[0]}, {static_decoded[1]}, {str(static_decoded[2])[:10]}...]")
+        verified = (
+            static_decoded[0] == static_value[0]
+            and static_decoded[1] == static_value[1]
+            and static_decoded[2] == static_value[2]
+        )
+        print_info(f"Round-trip verified: {verified}")
+
+    # Step 3: Dynamic tuple encoding - (uint64,string,bool)
+    print_step(3, "Dynamic Tuple Encoding - (uint64,string,bool)")
+
+    dynamic_value = [42, "Hello ABI", False]
+
+    if isinstance(dynamic_tuple_type, abi.TupleType):
+        dynamic_encoded = dynamic_tuple_type.encode(dynamic_value)
+        dynamic_decoded = dynamic_tuple_type.decode(dynamic_encoded)
+
+        print_info(f'Input: [{dynamic_value[0]}, "{dynamic_value[1]}", {dynamic_value[2]}]')
+        print_info(f"Encoded: {format_hex(dynamic_encoded)}")
+        print_info(f"Total bytes: {len(dynamic_encoded)}")
+
+        print_info("\nHead/Tail encoding pattern:")
+        print_info("HEAD SECTION (static values + offset for dynamic):")
+
+        # uint64 is static - 8 bytes
+        print_info(f"  [0-7]   uint64 (static): {format_hex(dynamic_encoded[0:8])} = {dynamic_value[0]}")
+
+        # string is dynamic - 2-byte offset pointing to tail
+        string_offset = (dynamic_encoded[8] << 8) | dynamic_encoded[9]
+        print_info(f"  [8-9]   string offset:   {format_hex(dynamic_encoded[8:10])} = {string_offset} (points to tail)")
+
+        # bool is static - 1 byte
+        print_info(f"  [10]    bool (static):   {format_hex(dynamic_encoded[10:11])} = {dynamic_value[2]}")
+
+        print_info("\nTAIL SECTION (dynamic value data):")
+
+        # String data starts at the offset
+        string_len_bytes = dynamic_encoded[string_offset : string_offset + 2]
+        string_len = (string_len_bytes[0] << 8) | string_len_bytes[1]
+        string_content_bytes = dynamic_encoded[string_offset + 2 : string_offset + 2 + string_len]
+
+        len_start = string_offset
+        len_end = string_offset + 1
+        content_start = string_offset + 2
+        content_end = string_offset + 1 + string_len
+        hex_len = format_hex(string_len_bytes)
+        hex_content = format_hex(string_content_bytes)
+        print_info(f"  [{len_start}-{len_end}]   string length: {hex_len} = {string_len} bytes")
+        print_info(f'  [{content_start}-{content_end}]  string content: {hex_content} = "{dynamic_value[1]}"')
+
+        print_info(f'\nDecoded: [{dynamic_decoded[0]}, "{dynamic_decoded[1]}", {dynamic_decoded[2]}]')
+        verified = (
+            dynamic_decoded[0] == dynamic_value[0]
+            and dynamic_decoded[1] == dynamic_value[1]
+            and dynamic_decoded[2] == dynamic_value[2]
+        )
+        print_info(f"Round-trip verified: {verified}")
+
+    # Step 4: Nested tuple encoding - ((uint64,bool),string)
+    print_step(4, "Nested Tuple Encoding - ((uint64,bool),string)")
+
+    nested_value = [[999, True], "Nested!"]
+
+    if isinstance(nested_tuple_type, abi.TupleType):
+        nested_encoded = nested_tuple_type.encode(nested_value)
+        nested_decoded = nested_tuple_type.decode(nested_encoded)
+
+        print_info(f'Input: [[{nested_value[0][0]}, {nested_value[0][1]}], "{nested_value[1]}"]')
+        print_info(f"Encoded: {format_hex(nested_encoded)}")
+        print_info(f"Total bytes: {len(nested_encoded)}")
+
+        print_info("\nNested tuple encoding:")
+        print_info("  Inner tuple (uint64,bool) is static - encoded inline in head")
+        print_info("  String is dynamic - offset in head, data in tail")
+
+        print_info("\nHEAD SECTION:")
+        # Inner tuple is static: 8 bytes (uint64) + 1 byte (bool) = 9 bytes
+        print_info(f"  [0-7]   inner.uint64:  {format_hex(nested_encoded[0:8])} = {nested_value[0][0]}")
+        print_info(f"  [8]     inner.bool:    {format_hex(nested_encoded[8:9])} = {nested_value[0][1]}")
+
+        # String offset
+        nested_string_offset = (nested_encoded[9] << 8) | nested_encoded[10]
+        print_info(f"  [9-10]  string offset: {format_hex(nested_encoded[9:11])} = {nested_string_offset}")
+
+        print_info("\nTAIL SECTION:")
+        nested_str_len_bytes = nested_encoded[nested_string_offset : nested_string_offset + 2]
+        nested_str_len = (nested_str_len_bytes[0] << 8) | nested_str_len_bytes[1]
+        nested_str_content = nested_encoded[nested_string_offset + 2 : nested_string_offset + 2 + nested_str_len]
+
+        len_start = nested_string_offset
+        len_end = nested_string_offset + 1
+        content_start = nested_string_offset + 2
+        content_end = nested_string_offset + 1 + nested_str_len
+        hex_len = format_hex(nested_str_len_bytes)
+        hex_content = format_hex(nested_str_content)
+        print_info(f"  [{len_start}-{len_end}]   string length:  {hex_len} = {nested_str_len} bytes")
+        print_info(f'  [{content_start}-{content_end}]  string content: {hex_content} = "{nested_value[1]}"')
+
+        print_info(f'\nDecoded: [[{nested_decoded[0][0]}, {nested_decoded[0][1]}], "{nested_decoded[1]}"]')
+        verified = (
+            nested_decoded[0][0] == nested_value[0][0]
+            and nested_decoded[0][1] == nested_value[0][1]
+            and nested_decoded[1] == nested_value[1]
+        )
+        print_info(f"Round-trip verified: {verified}")
+
+    # Step 5: Accessing tuple elements after decoding
+    print_step(5, "Accessing Tuple Elements After Decoding")
+
+    print_info("Decoded values are returned as tuples/lists, access by index:")
+
+    mixed_tuple = abi.ABIType.from_string("(uint64,bool,string,address)")
+    mixed_value = [123, False, "test", sample_address]
+
+    if isinstance(mixed_tuple, abi.TupleType):
+        mixed_encoded = mixed_tuple.encode(mixed_value)
+        mixed_decoded = mixed_tuple.decode(mixed_encoded)
+
+        print_info("\nDecoded tuple (uint64,bool,string,address):")
+        print_info(f"  element[0] (uint64):  {mixed_decoded[0]} (type: {type(mixed_decoded[0]).__name__})")
+        print_info(f"  element[1] (bool):    {mixed_decoded[1]} (type: {type(mixed_decoded[1]).__name__})")
+        print_info(f'  element[2] (string):  "{mixed_decoded[2]}" (type: {type(mixed_decoded[2]).__name__})')
+        print_info(f"  element[3] (address): {str(mixed_decoded[3])[:10]}... (type: {type(mixed_decoded[3]).__name__})")
+
+    # Nested tuple element access
+    if isinstance(nested_tuple_type, abi.TupleType):
+        print_info("\nAccessing nested tuple elements:")
+        print_info("  nested_decoded[0]:       inner tuple as tuple/list")
+        print_info(f"  nested_decoded[0][0]:    {nested_decoded[0][0]} (inner uint64)")
+        print_info(f"  nested_decoded[0][1]:    {nested_decoded[0][1]} (inner bool)")
+        print_info(f'  nested_decoded[1]:       "{nested_decoded[1]}" (outer string)')
+
+    # Step 6: Byte layout comparison - static vs dynamic tuples
+    print_step(6, "Byte Layout Comparison")
+
+    if isinstance(static_tuple_type, abi.TupleType):
+        print_info("STATIC TUPLE (uint64,bool,address):")
+        print_info("  Layout: [uint64:8 bytes][bool:1 byte][address:32 bytes]")
+        print_info(f"  Total: {static_tuple_type.byte_len()} bytes (fixed size)")
+        print_info("  No head/tail separation - all data inline")
+
+    if isinstance(dynamic_tuple_type, abi.TupleType):
+        print_info("\nDYNAMIC TUPLE (uint64,string,bool):")
+        print_info("  Layout: HEAD + TAIL")
+        print_info("  HEAD: [uint64:8][string_offset:2][bool:1] = 11 bytes")
+        print_info("  TAIL: [string_len:2][string_data:N]")
+        print_info("  Total: 11 + 2 + string_length bytes")
+        print_info(f'  Example with "Hello ABI" (9 bytes): {len(dynamic_encoded)} bytes')
+
+        # Show how different string lengths affect total size
+        print_info("\nSize varies with dynamic content:")
+        test_strings = ["", "Hi", "Hello World", "A longer string for testing"]
+
+        for test_str in test_strings:
+            test_val = [1, test_str, True]
+            test_encoded = dynamic_tuple_type.encode(test_val)
+            expected_size = 11 + 2 + len(test_str.encode("utf-8"))
+            print_info(f'  "{test_str}" ({len(test_str)} chars): {len(test_encoded)} bytes (expected: {expected_size})')
+
+    # Step 7: Creating TupleType programmatically
+    print_step(7, "Creating TupleType Programmatically")
+
+    custom_tuple_type = abi.TupleType([abi.UintType(32), abi.BoolType(), abi.StringType()])
+
+    print_info("Created with: TupleType([UintType(32), BoolType(), StringType()])")
+    print_info(f"  str(): {custom_tuple_type}")
+    print_info(f"  elements length: {len(custom_tuple_type.elements)}")
+    print_info(f"  is_dynamic(): {custom_tuple_type.is_dynamic()}")
+
+    custom_value = [500, True, "Custom"]
+    custom_encoded = custom_tuple_type.encode(custom_value)
+    custom_decoded = custom_tuple_type.decode(custom_encoded)
+
+    print_info(f'\nEncode [{custom_value[0]}, {custom_value[1]}, "{custom_value[2]}"]:')
+    print_info(f"  Encoded: {format_hex(custom_encoded)}")
+    print_info(f"  Total bytes: {len(custom_encoded)}")
+    print_info(f'  Decoded: [{custom_decoded[0]}, {custom_decoded[1]}, "{custom_decoded[2]}"]')
+
+    # Step 8: Multiple dynamic elements in a tuple
+    print_step(8, "Multiple Dynamic Elements")
+
+    multi_dynamic_type = abi.ABIType.from_string("(string,uint64,string)")
+
+    if isinstance(multi_dynamic_type, abi.TupleType):
+        multi_dynamic_value = ["First", 42, "Second"]
+        multi_dynamic_encoded = multi_dynamic_type.encode(multi_dynamic_value)
+        multi_dynamic_decoded = multi_dynamic_type.decode(multi_dynamic_encoded)
+
+        print_info(f'Input: ["{multi_dynamic_value[0]}", {multi_dynamic_value[1]}, "{multi_dynamic_value[2]}"]')
+        print_info(f"Encoded: {format_hex(multi_dynamic_encoded)}")
+        print_info(f"Total bytes: {len(multi_dynamic_encoded)}")
+
+        print_info("\nHead/Tail layout with multiple dynamic elements:")
+        print_info("HEAD: [string1_offset:2][uint64:8][string2_offset:2] = 12 bytes")
+
+        str1_offset = (multi_dynamic_encoded[0] << 8) | multi_dynamic_encoded[1]
+        str2_offset = (multi_dynamic_encoded[10] << 8) | multi_dynamic_encoded[11]
+
+        print_info(f"  [0-1]   string1 offset: {format_hex(multi_dynamic_encoded[0:2])} = {str1_offset}")
+        print_info(f"  [2-9]   uint64:         {format_hex(multi_dynamic_encoded[2:10])} = {multi_dynamic_value[1]}")
+        print_info(f"  [10-11] string2 offset: {format_hex(multi_dynamic_encoded[10:12])} = {str2_offset}")
+
+        print_info("\nTAIL: [string1_data][string2_data]")
+        print_info(f'  String 1 at offset {str1_offset}: "{multi_dynamic_value[0]}"')
+        print_info(f'  String 2 at offset {str2_offset}: "{multi_dynamic_value[2]}"')
+
+        print_info(
+            f'\nDecoded: ["{multi_dynamic_decoded[0]}", {multi_dynamic_decoded[1]}, "{multi_dynamic_decoded[2]}"]'
+        )
+        verified = (
+            multi_dynamic_decoded[0] == multi_dynamic_value[0]
+            and multi_dynamic_decoded[1] == multi_dynamic_value[1]
+            and multi_dynamic_decoded[2] == multi_dynamic_value[2]
+        )
+        print_info(f"Round-trip verified: {verified}")
+
+    # Step 9: Summary
+    print_step(9, "Summary")
+
+    print_info("TupleType key properties:")
+    print_info("  - elements: list of types for each element")
+    print_info("  - is_dynamic(): True if ANY child is dynamic")
+    print_info("  - byte_len(): only valid for static tuples")
+
+    print_info("\nTuple encoding patterns:")
+    print_info("  Static tuples (all elements static):")
+    print_info("    - Elements encoded consecutively")
+    print_info("    - Fixed total size = sum of element sizes")
+    print_info("    - No offsets needed")
+
+    print_info("\n  Dynamic tuples (at least one dynamic element):")
+    print_info("    - HEAD: static values inline + 2-byte offsets for dynamic")
+    print_info("    - TAIL: actual data for dynamic elements")
+    print_info("    - Offsets are relative to start of tuple encoding")
+
+    print_info("\nNested tuples:")
+    print_info("  - Inner tuples encoded as single units")
+    print_info("  - Static inner tuples: inline in head")
+    print_info("  - Dynamic inner tuples: offset in head, data in tail")
+
+    print_info("\nDecoded values:")
+    print_info("  - Returned as tuples/lists")
+    print_info("  - Access elements by index: decoded[0], decoded[1], etc.")
+    print_info("  - Nested tuples: decoded[0][0] for inner elements")
+
+    print_info("\nCreating tuple types:")
+    print_info('  - ABIType.from_string("(uint64,bool)") - parse from string')
+    print_info("  - TupleType([child1, child2, ...]) - programmatic")
+
+    print_success("ABI Tuple Type example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- **ABI Tuple Type**
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

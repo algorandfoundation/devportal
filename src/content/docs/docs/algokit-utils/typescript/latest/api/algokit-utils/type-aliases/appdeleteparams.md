@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'AppDeleteParams'
+title: "AppDeleteParams"
 ---
 
 > **AppDeleteParams** = `CommonAppCallParams` & `object`
 
-Defined in: [src/transactions/app-call.ts:97](https://github.com/larkiny/algokit-utils-ts/blob/main/src/transactions/app-call.ts#L97)
+Defined in: [src/transactions/app-call.ts:97](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/transactions/app-call.ts#L97)
 
 Parameters to define an application delete call transaction.
 

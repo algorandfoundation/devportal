@@ -1,0 +1,466 @@
+---
+title: "Send Application Operations"
+description: "This example demonstrates how to perform smart contract (application) operations:"
+sidebar:
+  order: 8
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/typescript/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to perform smart contract (application) operations:
+- algorand.send.appCreate() to deploy a new application with global/local schema
+- algorand.send.appUpdate() to update application code
+- algorand.send.appCall() for NoOp application calls with args
+- algorand.send.appCall() with OnApplicationComplete.OptIn for account opt-in
+- algorand.send.appCall() with OnApplicationComplete.CloseOut for account close-out
+- algorand.send.appCall() with OnApplicationComplete.ClearState to clear local state
+- algorand.send.appDelete() to delete the application
+- Passing application arguments, accounts, assets, apps references
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algorand_client/08-send-app-ops.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algorand_client/08-send-app-ops.ts)
+
+```typescript title="08-send-app-ops.ts"
+/**
+ * Example: Send Application Operations
+ *
+ * This example demonstrates how to perform smart contract (application) operations:
+ * - algorand.send.appCreate() to deploy a new application with global/local schema
+ * - algorand.send.appUpdate() to update application code
+ * - algorand.send.appCall() for NoOp application calls with args
+ * - algorand.send.appCall() with OnApplicationComplete.OptIn for account opt-in
+ * - algorand.send.appCall() with OnApplicationComplete.CloseOut for account close-out
+ * - algorand.send.appCall() with OnApplicationComplete.ClearState to clear local state
+ * - algorand.send.appDelete() to delete the application
+ * - Passing application arguments, accounts, assets, apps references
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { OnApplicationComplete } from '@algorandfoundation/algokit-utils/transact'
+import { AlgorandClient, algo } from '@algorandfoundation/algokit-utils'
+import { loadTealSource, printError, printHeader, printInfo, printStep, printSuccess, shortenAddress } from '../shared/utils.js'
+
+// ============================================================================
+// TEAL Programs - loaded from shared artifacts
+// ============================================================================
+
+// A counter app that supports all lifecycle operations
+const APPROVAL_PROGRAM = loadTealSource('approval-lifecycle-full.teal')
+
+// Updated version of the approval program (increments by 2 instead of 1)
+const APPROVAL_PROGRAM_V2 = loadTealSource('approval-lifecycle-full-v2.teal')
+
+// Clear state program (must always approve)
+const CLEAR_STATE_PROGRAM = loadTealSource('clear-state-approve.teal')
+
+async function main() {
+  printHeader('Send Application Operations Example')
+
+  // Initialize client and verify LocalNet is running
+  const algorand = AlgorandClient.defaultLocalNet()
+
+  try {
+    await algorand.client.algod.status()
+    printSuccess('Connected to LocalNet')
+  } catch (error) {
+    printError(`Failed to connect to LocalNet: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('Make sure LocalNet is running (e.g., algokit localnet start)')
+    return
+  }
+
+  // Step 1: Create and fund test accounts
+  printStep(1, 'Create and fund test accounts')
+  printInfo('Creating creator and user accounts for app operations')
+
+  const creator = algorand.account.random()
+  const user = algorand.account.random()
+
+  printInfo(`\nCreated accounts:`)
+  printInfo(`  Creator: ${shortenAddress(creator.addr.toString())}`)
+  printInfo(`  User: ${shortenAddress(user.addr.toString())}`)
+
+  // Fund all accounts
+  await algorand.account.ensureFundedFromEnvironment(creator.addr, algo(10))
+  await algorand.account.ensureFundedFromEnvironment(user.addr, algo(5))
+
+  printSuccess('Created and funded test accounts')
+
+  // Step 2: Create a new application with algorand.send.appCreate()
+  printStep(2, 'Create a new application with algorand.send.appCreate()')
+  printInfo('Deploying a counter app with global and local state schema')
+  printInfo('')
+  printInfo('Schema specification:')
+  printInfo('  globalInts: 1 (for the counter)')
+  printInfo('  globalByteSlices: 1 (for the message)')
+  printInfo('  localInts: 1 (for user_visits)')
+  printInfo('  localByteSlices: 0')
+
+  const createResult = await algorand.send.appCreate({
+    sender: creator.addr,
+    approvalProgram: APPROVAL_PROGRAM,
+    clearStateProgram: CLEAR_STATE_PROGRAM,
+    schema: {
+      globalInts: 1,
+      globalByteSlices: 1,
+      localInts: 1,
+      localByteSlices: 0,
+    },
+  })
+
+  const appId = createResult.appId
+  const appAddress = createResult.appAddress
+
+  printInfo(`\nApplication created:`)
+  printInfo(`  App ID: ${appId}`)
+  printInfo(`  App Address: ${shortenAddress(appAddress.toString())}`)
+  printInfo(`  Transaction ID: ${createResult.txIds[0]}`)
+  printInfo(`  Confirmed round: ${createResult.confirmation.confirmedRound}`)
+
+  // Check global state after creation
+  const globalState = await algorand.app.getGlobalState(appId)
+  printInfo(`\nInitial global state:`)
+  printInfo(`  counter: ${globalState['counter']?.value ?? 0}`)
+  printInfo(`  message: "${globalState['message']?.value ?? ''}"`)
+
+  printSuccess('Application created successfully')
+
+  // Step 3: Call the application with algorand.send.appCall() - NoOp
+  printStep(3, 'Call the application with algorand.send.appCall() - NoOp')
+  printInfo('Calling the app to increment the counter')
+
+  const callResult = await algorand.send.appCall({
+    sender: creator.addr,
+    appId: appId,
+    note: 'First NoOp call',
+    // onComplete defaults to NoOp
+  })
+
+  printInfo(`\nNoOp call completed:`)
+  printInfo(`  Transaction ID: ${callResult.txIds[0]}`)
+  printInfo(`  Confirmed round: ${callResult.confirmation.confirmedRound}`)
+
+  // Check global state after call
+  const stateAfterCall = await algorand.app.getGlobalState(appId)
+  printInfo(`  Counter after call: ${stateAfterCall['counter']?.value ?? 0}`)
+
+  printSuccess('NoOp call completed successfully')
+
+  // Step 4: Call with application arguments
+  printStep(4, 'Call with application arguments')
+  printInfo('Passing arguments to the app call (will be logged)')
+
+  // Arguments must be Uint8Array
+  const arg1 = new TextEncoder().encode('hello')
+  const arg2 = new TextEncoder().encode('world')
+
+  const callWithArgsResult = await algorand.send.appCall({
+    sender: creator.addr,
+    appId: appId,
+    args: [arg1, arg2],
+    note: 'Call with arguments',
+  })
+
+  printInfo(`\nCall with arguments:`)
+  printInfo(`  Transaction ID: ${callWithArgsResult.txIds[0]}`)
+  printInfo(`  Args passed: ["hello", "world"]`)
+
+  // Check logs from the transaction
+  const logs = callWithArgsResult.confirmation.logs ?? []
+  printInfo(`  Logs from app: ${logs.length} entries`)
+  if (logs.length > 0) {
+    const firstLog = new TextDecoder().decode(logs[0])
+    printInfo(`  First log: "${firstLog}"`)
+  }
+
+  const stateAfterArgs = await algorand.app.getGlobalState(appId)
+  printInfo(`  Counter after call: ${stateAfterArgs['counter']?.value ?? 0}`)
+
+  printSuccess('Call with arguments completed')
+
+  // Step 5: Opt-in to the application with OnApplicationComplete.OptIn
+  printStep(5, 'Opt-in to the application with appCall and OptIn')
+  printInfo('User opting in to the app to enable local state')
+
+  const optInResult = await algorand.send.appCall({
+    sender: user.addr,
+    appId: appId,
+    onComplete: OnApplicationComplete.OptIn,
+    note: 'Initial opt-in',
+  })
+
+  printInfo(`\nOpt-in completed:`)
+  printInfo(`  Transaction ID: ${optInResult.txIds[0]}`)
+  printInfo(`  Confirmed round: ${optInResult.confirmation.confirmedRound}`)
+
+  // Check local state after opt-in
+  const localState = await algorand.app.getLocalState(appId, user.addr)
+  printInfo(`  User local state:`)
+  printInfo(`    user_visits: ${localState['user_visits']?.value ?? 0}`)
+
+  printSuccess('User opted in successfully')
+
+  // Step 6: Update the application with algorand.send.appUpdate()
+  printStep(6, 'Update the application with algorand.send.appUpdate()')
+  printInfo('Updating the app to increment by 2 instead of 1')
+
+  const updateResult = await algorand.send.appUpdate({
+    sender: creator.addr,
+    appId: appId,
+    approvalProgram: APPROVAL_PROGRAM_V2,
+    clearStateProgram: CLEAR_STATE_PROGRAM,
+  })
+
+  printInfo(`\nApplication updated:`)
+  printInfo(`  Transaction ID: ${updateResult.txIds[0]}`)
+  printInfo(`  Confirmed round: ${updateResult.confirmation.confirmedRound}`)
+
+  // Test the updated logic
+  const preUpdateCounter = stateAfterArgs['counter']?.value ?? 0
+  await algorand.send.appCall({
+    sender: creator.addr,
+    appId: appId,
+    note: 'Testing updated logic',
+  })
+
+  const stateAfterUpdate = await algorand.app.getGlobalState(appId)
+  const postUpdateCounter = stateAfterUpdate['counter']?.value ?? 0
+
+  printInfo(`\nVerifying updated logic:`)
+  printInfo(`  Counter before update call: ${preUpdateCounter}`)
+  printInfo(`  Counter after update call: ${postUpdateCounter}`)
+  printInfo(`  Increment amount: ${Number(postUpdateCounter) - Number(preUpdateCounter)} (was 1, now 2)`)
+
+  printSuccess('Application updated successfully')
+
+  // Step 7: Demonstrate passing references (accounts, apps, assets)
+  printStep(7, 'Demonstrate passing references to app calls')
+  printInfo('App calls can include references to accounts, assets, and other apps')
+
+  // Create a dummy asset to reference
+  const assetResult = await algorand.send.assetCreate({
+    sender: creator.addr,
+    total: 1000n,
+    decimals: 0,
+    assetName: 'Reference Test',
+    unitName: 'REF',
+  })
+
+  const assetId = assetResult.assetId
+
+  // Create another app to reference
+  const otherAppResult = await algorand.send.appCreate({
+    sender: creator.addr,
+    approvalProgram: loadTealSource('simple-approve.teal'),
+    clearStateProgram: loadTealSource('clear-state-approve.teal'),
+  })
+
+  const otherAppId = otherAppResult.appId
+
+  // Make a call with all reference types
+  const refCallResult = await algorand.send.appCall({
+    sender: creator.addr,
+    appId: appId,
+    accountReferences: [user.addr], // Reference another account
+    appReferences: [otherAppId], // Reference another app
+    assetReferences: [assetId], // Reference an asset
+    note: 'Call with references',
+  })
+
+  printInfo(`\nCall with references:`)
+  printInfo(`  Transaction ID: ${refCallResult.txIds[0]}`)
+  printInfo(`  Account references: [${shortenAddress(user.addr.toString())}]`)
+  printInfo(`  App references: [${otherAppId}]`)
+  printInfo(`  Asset references: [${assetId}]`)
+  printInfo(`  Note: These references allow the app to read data from these resources`)
+
+  printSuccess('References passed successfully')
+
+  // Step 8: Close out of the application
+  printStep(8, 'Close out with appCall and CloseOut')
+  printInfo('User closing out of the app (removes local state)')
+
+  const closeOutResult = await algorand.send.appCall({
+    sender: user.addr,
+    appId: appId,
+    onComplete: OnApplicationComplete.CloseOut,
+    note: 'Close out from app',
+  })
+
+  printInfo(`\nClose out completed:`)
+  printInfo(`  Transaction ID: ${closeOutResult.txIds[0]}`)
+  printInfo(`  Confirmed round: ${closeOutResult.confirmation.confirmedRound}`)
+
+  // Verify user is no longer opted in
+  try {
+    await algorand.app.getLocalState(appId, user.addr)
+    printError('User should not have local state after close out!')
+  } catch {
+    printInfo(`  User no longer has local state (as expected)`)
+  }
+
+  printSuccess('User closed out successfully')
+
+  // Step 9: Demonstrate ClearState
+  printStep(9, 'Demonstrate ClearState operation')
+  printInfo('ClearState forcefully removes local state (cannot be rejected by the app)')
+
+  // First, opt the user back in
+  await algorand.send.appCall({
+    sender: user.addr,
+    appId: appId,
+    onComplete: OnApplicationComplete.OptIn,
+    note: 'Re-opt-in for ClearState demo',
+  })
+  printInfo('User re-opted in to demonstrate ClearState')
+
+  // Now use ClearState
+  const clearStateResult = await algorand.send.appCall({
+    sender: user.addr,
+    appId: appId,
+    onComplete: OnApplicationComplete.ClearState,
+    note: 'Clear state operation',
+  })
+
+  printInfo(`\nClearState completed:`)
+  printInfo(`  Transaction ID: ${clearStateResult.txIds[0]}`)
+  printInfo(`  Confirmed round: ${clearStateResult.confirmation.confirmedRound}`)
+  printInfo(`  Note: ClearState always succeeds, even if the clear program rejects`)
+
+  // Verify user is no longer opted in
+  try {
+    await algorand.app.getLocalState(appId, user.addr)
+    printError('User should not have local state after clear state!')
+  } catch {
+    printInfo(`  User local state cleared (as expected)`)
+  }
+
+  printSuccess('ClearState completed successfully')
+
+  // Step 10: Delete the application with algorand.send.appDelete()
+  printStep(10, 'Delete the application with algorand.send.appDelete()')
+  printInfo('Deleting the app (only creator can delete in this example)')
+
+  // Get final state before deletion
+  const finalState = await algorand.app.getGlobalState(appId)
+  printInfo(`\nFinal global state before deletion:`)
+  printInfo(`  counter: ${finalState['counter']?.value ?? 0}`)
+  printInfo(`  message: "${finalState['message']?.value ?? ''}"`)
+
+  const deleteResult = await algorand.send.appDelete({
+    sender: creator.addr,
+    appId: appId,
+  })
+
+  printInfo(`\nApplication deleted:`)
+  printInfo(`  Transaction ID: ${deleteResult.txIds[0]}`)
+  printInfo(`  Confirmed round: ${deleteResult.confirmation.confirmedRound}`)
+
+  // Verify app no longer exists
+  try {
+    await algorand.app.getById(appId)
+    printError('App should not exist after deletion!')
+  } catch {
+    printInfo(`  App ${appId} no longer exists (as expected)`)
+  }
+
+  printSuccess('Application deleted successfully')
+
+  // Clean up the other test app
+  await algorand.send.appDelete({
+    sender: creator.addr,
+    appId: otherAppId,
+  })
+
+  // Step 11: Summary of application operations
+  printStep(11, 'Summary - Application Operations API')
+  printInfo('Application operations available through algorand.send:')
+  printInfo('')
+  printInfo('appCreate(params):')
+  printInfo('  sender: Address - Creator of the application')
+  printInfo('  approvalProgram: string | Uint8Array - TEAL code or compiled bytes')
+  printInfo('  clearStateProgram: string | Uint8Array - TEAL code or compiled bytes')
+  printInfo('  schema?: { globalInts, globalByteSlices, localInts, localByteSlices }')
+  printInfo('  extraProgramPages?: number - For large programs (auto-calculated)')
+  printInfo('  Returns: { appId, appAddress, ...SendSingleTransactionResult }')
+  printInfo('')
+  printInfo('appUpdate(params):')
+  printInfo('  sender: Address - Must be authorized to update')
+  printInfo('  appId: bigint - Application to update')
+  printInfo('  approvalProgram: string | Uint8Array - New TEAL code')
+  printInfo('  clearStateProgram: string | Uint8Array - New TEAL code')
+  printInfo('')
+  printInfo('appCall(params):')
+  printInfo('  sender: Address - Caller')
+  printInfo('  appId: bigint - Application to call')
+  printInfo('  onComplete?: OnApplicationComplete - NoOp, OptIn, CloseOut, ClearState')
+  printInfo('  args?: Uint8Array[] - Application arguments')
+  printInfo('  accountReferences?: Address[] - Accounts the app can access')
+  printInfo('  appReferences?: bigint[] - Apps the app can call')
+  printInfo('  assetReferences?: bigint[] - Assets the app can read')
+  printInfo('  boxReferences?: BoxReference[] - Boxes the app can access')
+  printInfo('')
+  printInfo('appDelete(params):')
+  printInfo('  sender: Address - Must be authorized to delete')
+  printInfo('  appId: bigint - Application to delete')
+  printInfo('')
+  printInfo('OnApplicationComplete enum values:')
+  printInfo('  NoOp (0) - Call without state changes')
+  printInfo('  OptIn (1) - Opt into app (creates local state)')
+  printInfo('  CloseOut (2) - Close out of app (removes local state)')
+  printInfo('  ClearState (3) - Force clear local state (always succeeds)')
+  printInfo('  UpdateApplication (4) - Update app code')
+  printInfo('  DeleteApplication (5) - Delete the app')
+  printInfo('')
+  printInfo('Reading app state:')
+  printInfo('  algorand.app.getGlobalState(appId) - Get global state')
+  printInfo('  algorand.app.getLocalState(appId, address) - Get local state')
+  printInfo('  algorand.app.getById(appId) - Get app info including state')
+
+  printSuccess('Send Application Operations example completed!')
+}
+
+main().catch((error) => {
+  printError(`Unhandled error: ${error instanceof Error ? error.message : String(error)}`)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/typescript/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/typescript/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/typescript/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/typescript/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/typescript/latest/examples/algorand-client/07-send-asset-ops/)
+- **Send Application Operations**
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/typescript/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/typescript/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/typescript/latest/examples/algorand-client/13-app-deployer/)
+- [Client Manager](/docs/algokit-utils/typescript/latest/examples/algorand-client/14-client-manager/)
+- [Error Transformers](/docs/algokit-utils/typescript/latest/examples/algorand-client/15-error-transformers/)
+- [Transaction Leases](/docs/algokit-utils/typescript/latest/examples/algorand-client/16-leases/)

@@ -1,0 +1,533 @@
+---
+title: "ABI Complex Nested Types"
+description: "This example demonstrates how to work with deeply nested ABI types combining arrays, tuples, and structs:"
+sidebar:
+  order: 14
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to work with deeply nested ABI types combining arrays, tuples, and structs:
+- Array of tuples: (uint64,string)[]
+- Tuple containing arrays: (uint64[],string[])
+- Nested structs with arrays
+- Deeply nested type: ((uint64,bool)[],string,(address,uint256))[]
+ Key concepts:
+- Dynamic types (strings, dynamic arrays) always use head/tail encoding
+- Offsets in head section point to data positions in tail section
+- Nesting depth affects encoding complexity but follows consistent rules
+- Round-trip encoding/decoding preserves all nested values
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/14_complex_nested.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/14_complex_nested.py)
+
+```python title="14_complex_nested.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ABI Complex Nested Types
+
+This example demonstrates how to work with deeply nested ABI types combining
+arrays, tuples, and structs:
+- Array of tuples: (uint64,string)[]
+- Tuple containing arrays: (uint64[],string[])
+- Nested structs with arrays
+- Deeply nested type: ((uint64,bool)[],string,(address,uint256))[]
+
+Key concepts:
+- Dynamic types (strings, dynamic arrays) always use head/tail encoding
+- Offsets in head section point to data positions in tail section
+- Nesting depth affects encoding complexity but follows consistent rules
+- Round-trip encoding/decoding preserves all nested values
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import format_bytes, format_hex, print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+from algokit_common import address_from_public_key
+
+
+def main() -> None:
+    print_header("ABI Complex Nested Types Example")
+
+    # Step 1: Array of tuples - (uint64,string)[]
+    print_step(1, "Array of Tuples - (uint64,string)[]")
+
+    array_of_tuples_type = abi.ABIType.from_string("(uint64,string)[]")
+
+    print_info("Type: (uint64,string)[]")
+    print_info(f"  str(): {array_of_tuples_type}")
+    if isinstance(array_of_tuples_type, abi.DynamicArrayType):
+        print_info(f"  is_dynamic(): {array_of_tuples_type.is_dynamic()}")
+        print_info(f"  element: {array_of_tuples_type.element}")
+        print_info(f"  element.is_dynamic(): {array_of_tuples_type.element.is_dynamic()} (because string is dynamic)")
+
+    tuple_array_value = [
+        [100, "First"],
+        [200, "Second"],
+        [300, "Third"],
+    ]
+
+    if isinstance(array_of_tuples_type, abi.DynamicArrayType):
+        tuple_array_encoded = array_of_tuples_type.encode(tuple_array_value)
+
+        print_info('\nInput: [[100, "First"], [200, "Second"], [300, "Third"]]')
+        print_info(f"Encoded: {format_hex(tuple_array_encoded)}")
+        print_info(f"Total bytes: {len(tuple_array_encoded)}")
+
+        print_info("\nByte layout (dynamic array of dynamic tuples):")
+        print_info("  [0-1] Array length prefix")
+
+        num_tuples = (tuple_array_encoded[0] << 8) | tuple_array_encoded[1]
+        print_info(f"         {format_hex(tuple_array_encoded[0:2])} = {num_tuples} elements")
+
+        print_info("\n  HEAD SECTION (offsets to each tuple):")
+        for i in range(num_tuples):
+            offset_pos = 2 + i * 2
+            offset = (tuple_array_encoded[offset_pos] << 8) | tuple_array_encoded[offset_pos + 1]
+            print_info(
+                f"    [{offset_pos}-{offset_pos + 1}] Tuple {i} offset: "
+                f"{format_hex(tuple_array_encoded[offset_pos : offset_pos + 2])} = {offset}"
+            )
+
+        print_info("\n  TAIL SECTION (tuple data):")
+        head_end = 2 + num_tuples * 2
+        print_info(f"    Starts at byte {head_end}")
+        print_info("    Each tuple has: [uint64:8 bytes][string_offset:2 bytes][string_len:2][string_data:N]")
+
+        # Decode and verify
+        tuple_array_decoded = list(array_of_tuples_type.decode(tuple_array_encoded))
+
+        print_info("\nDecoded:")
+        for i, tup in enumerate(tuple_array_decoded):
+            print_info(f'  [{i}]: [{tup[0]}, "{tup[1]}"]')
+
+        tuple_array_match = all(
+            tuple_array_decoded[i][0] == tuple_array_value[i][0]
+            and tuple_array_decoded[i][1] == tuple_array_value[i][1]
+            for i in range(len(tuple_array_value))
+        )
+        print_info(f"Round-trip verified: {tuple_array_match}")
+
+    # Step 2: Tuple containing arrays - (uint64[],string[])
+    print_step(2, "Tuple Containing Arrays - (uint64[],string[])")
+
+    tuple_with_arrays_type = abi.ABIType.from_string("(uint64[],string[])")
+
+    print_info("Type: (uint64[],string[])")
+    print_info(f"  str(): {tuple_with_arrays_type}")
+    if isinstance(tuple_with_arrays_type, abi.TupleType):
+        print_info(f"  is_dynamic(): {tuple_with_arrays_type.is_dynamic()}")
+        print_info(f"  elements: {len(tuple_with_arrays_type.elements)} elements")
+        for i, child in enumerate(tuple_with_arrays_type.elements):
+            print_info(f"    [{i}]: {child} (is_dynamic: {child.is_dynamic()})")
+
+    tuple_with_arrays_value = [
+        [10, 20, 30],
+        ["Apple", "Banana", "Cherry"],
+    ]
+
+    if isinstance(tuple_with_arrays_type, abi.TupleType):
+        tuple_with_arrays_encoded = tuple_with_arrays_type.encode(tuple_with_arrays_value)
+
+        print_info('\nInput: [[10, 20, 30], ["Apple", "Banana", "Cherry"]]')
+        print_info(f"Encoded: {format_bytes(tuple_with_arrays_encoded, 16)}")
+        print_info(f"Total bytes: {len(tuple_with_arrays_encoded)}")
+
+        print_info("\nByte layout (tuple with 2 dynamic children):")
+        print_info("  HEAD SECTION (2 offsets):")
+
+        arr1_offset = (tuple_with_arrays_encoded[0] << 8) | tuple_with_arrays_encoded[1]
+        arr2_offset = (tuple_with_arrays_encoded[2] << 8) | tuple_with_arrays_encoded[3]
+
+        print_info(f"    [0-1] uint64[] offset: {format_hex(tuple_with_arrays_encoded[0:2])} = {arr1_offset}")
+        print_info(f"    [2-3] string[] offset: {format_hex(tuple_with_arrays_encoded[2:4])} = {arr2_offset}")
+
+        print_info("\n  TAIL SECTION:")
+        print_info(f"    uint64[] at offset {arr1_offset}: [len:2][elem1:8][elem2:8][elem3:8]")
+        print_info(f"    string[] at offset {arr2_offset}: [len:2][offsets...][string data...]")
+
+        # Decode and verify
+        tuple_with_arrays_decoded = tuple_with_arrays_type.decode(tuple_with_arrays_encoded)
+
+        print_info("\nDecoded:")
+        print_info(f"  uint64[]: [{', '.join(str(v) for v in tuple_with_arrays_decoded[0])}]")
+        str_list = ", ".join(f'"{s}"' for s in tuple_with_arrays_decoded[1])
+        print_info(f"  string[]: [{str_list}]")
+
+        tuple_with_arrays_match = (
+            list(tuple_with_arrays_decoded[0]) == tuple_with_arrays_value[0]
+            and list(tuple_with_arrays_decoded[1]) == tuple_with_arrays_value[1]
+        )
+        print_info(f"Round-trip verified: {tuple_with_arrays_match}")
+
+    # Step 3: Nested structs with arrays
+    print_step(3, "Nested Structs with Arrays")
+
+    # Create struct definition
+    order_struct = abi.StructType(
+        struct_name="Order",
+        fields={
+            "orderId": abi.UintType(64),
+            "items": abi.DynamicArrayType(abi.StringType()),
+            "quantities": abi.DynamicArrayType(abi.UintType(32)),
+        },
+    )
+
+    print_info("Order struct: { orderId: uint64, items: string[], quantities: uint32[] }")
+    print_info(f"  ABI type: {order_struct}")
+    print_info(f"  is_dynamic(): {order_struct.is_dynamic()}")
+
+    order_value = {
+        "orderId": 12345,
+        "items": ["Widget", "Gadget", "Gizmo"],
+        "quantities": [2, 5, 1],
+    }
+
+    order_encoded = order_struct.encode(order_value)
+
+    print_info('\nInput: { orderId: 12345, items: ["Widget", "Gadget", "Gizmo"], quantities: [2, 5, 1] }')
+    print_info(f"Encoded: {format_bytes(order_encoded, 20)}")
+    print_info(f"Total bytes: {len(order_encoded)}")
+
+    print_info("\nByte layout (struct with static + dynamic fields):")
+    print_info("  HEAD SECTION:")
+    print_info(f"    [0-7]   orderId (uint64): {format_hex(order_encoded[0:8])} = {order_value['orderId']}")
+
+    items_offset = (order_encoded[8] << 8) | order_encoded[9]
+    quantities_offset = (order_encoded[10] << 8) | order_encoded[11]
+
+    print_info(f"    [8-9]   items offset:     {format_hex(order_encoded[8:10])} = {items_offset}")
+    print_info(f"    [10-11] quantities offset: {format_hex(order_encoded[10:12])} = {quantities_offset}")
+
+    print_info("\n  TAIL SECTION:")
+    print_info(f"    items (string[]) at offset {items_offset}")
+    print_info(f"    quantities (uint32[]) at offset {quantities_offset}")
+
+    # Decode and verify
+    order_decoded = order_struct.decode(order_encoded)
+
+    print_info("\nDecoded:")
+    print_info(f"  orderId: {order_decoded['orderId']}")
+    items_str = ", ".join(f'"{s}"' for s in order_decoded["items"])
+    print_info(f"  items: [{items_str}]")
+    print_info(f"  quantities: [{', '.join(str(q) for q in order_decoded['quantities'])}]")
+
+    order_match = (
+        order_decoded["orderId"] == order_value["orderId"]
+        and list(order_decoded["items"]) == order_value["items"]
+        and [int(q) for q in order_decoded["quantities"]] == order_value["quantities"]
+    )
+    print_info(f"Round-trip verified: {order_match}")
+
+    # Step 4: Deeply nested type - ((uint64,bool)[],string,(address,uint256))[]
+    print_step(4, "Deeply Nested Type - ((uint64,bool)[],string,(address,uint256))[]")
+
+    deeply_nested_type = abi.ABIType.from_string("((uint64,bool)[],string,(address,uint256))[]")
+
+    print_info("Type: ((uint64,bool)[],string,(address,uint256))[]")
+    print_info(f"  str(): {deeply_nested_type}")
+    if isinstance(deeply_nested_type, abi.DynamicArrayType):
+        print_info(f"  is_dynamic(): {deeply_nested_type.is_dynamic()}")
+
+        inner_tuple_type = deeply_nested_type.element
+        print_info(f"\n  Child tuple type: {inner_tuple_type}")
+        print_info("  Child tuple elements:")
+        if isinstance(inner_tuple_type, abi.TupleType):
+            for i, child in enumerate(inner_tuple_type.elements):
+                print_info(f"    [{i}]: {child} (is_dynamic: {child.is_dynamic()})")
+
+    # Create sample addresses
+    pub_key1 = bytes([0xAA] * 32)
+    pub_key2 = bytes([0xBB] * 32)
+    addr1 = address_from_public_key(pub_key1)
+    addr2 = address_from_public_key(pub_key2)
+
+    # Create deeply nested value
+    deeply_nested_value = [
+        [
+            [[1, True], [2, False]],  # (uint64,bool)[]
+            "First Entry",  # string
+            [addr1, 10**18],  # (address,uint256)
+        ],
+        [
+            [[10, False], [20, True], [30, True]],  # (uint64,bool)[]
+            "Second Entry",  # string
+            [addr2, 2 * 10**18],  # (address,uint256)
+        ],
+    ]
+
+    if isinstance(deeply_nested_type, abi.DynamicArrayType):
+        deeply_nested_encoded = deeply_nested_type.encode(deeply_nested_value)
+
+        print_info("\nInput:")
+        print_info("  [")
+        print_info('    [[[1, True], [2, False]], "First Entry", [addr1, 1e18]],')
+        print_info('    [[[10, False], [20, True], [30, True]], "Second Entry", [addr2, 2e18]]')
+        print_info("  ]")
+        print_info(f"\nEncoded: {format_bytes(deeply_nested_encoded, 24)}")
+        print_info(f"Total bytes: {len(deeply_nested_encoded)}")
+
+        print_info("\nEncoding structure (simplified):")
+        print_info("  OUTER ARRAY:")
+        print_info("    [0-1] Array length prefix (2 elements)")
+        print_info("    [2-3] Offset to element 0")
+        print_info("    [4-5] Offset to element 1")
+        print_info("    [6+]  Element data (each element is a complex tuple)")
+
+        print_info("\n  EACH INNER TUPLE ((uint64,bool)[],string,(address,uint256)):")
+        print_info("    HEAD: [arr_offset:2][string_offset:2][addr:32][uint256:32]")
+        print_info("    TAIL: [(uint64,bool)[] data][string data]")
+
+        print_info("\n  INNERMOST (uint64,bool)[]:")
+        print_info("    [len:2][elem0:9][elem1:9]... (each tuple is 8+1=9 bytes)")
+
+        # Decode and verify
+        deeply_nested_decoded = list(deeply_nested_type.decode(deeply_nested_encoded))
+
+        print_info("\nDecoded:")
+        for i, entry in enumerate(deeply_nested_decoded):
+            print_info(f"  Entry {i}:")
+            inner_pairs = entry[0]
+            pair_strs = [f"[{t[0]}, {t[1]}]" for t in inner_pairs]
+            print_info(f"    (uint64,bool)[]: [{', '.join(pair_strs)}]")
+            print_info(f'    string: "{entry[1]}"')
+            print_info(f"    (address,uint256): [{str(entry[2][0])[:10]}..., {entry[2][1]}]")
+
+        # Verify round-trip
+        deep_match = len(deeply_nested_decoded) == len(deeply_nested_value)
+        for i in range(len(deeply_nested_value)):
+            orig = deeply_nested_value[i]
+            dec = deeply_nested_decoded[i]
+            # Check (uint64,bool)[]
+            deep_match = deep_match and len(orig[0]) == len(dec[0])
+            for j in range(len(orig[0])):
+                deep_match = deep_match and orig[0][j][0] == dec[0][j][0] and orig[0][j][1] == dec[0][j][1]
+            # Check string
+            deep_match = deep_match and orig[1] == dec[1]
+            # Check (address,uint256)
+            deep_match = deep_match and orig[2][0] == dec[2][0] and orig[2][1] == dec[2][1]
+        print_info(f"Round-trip verified: {deep_match}")
+
+    # Step 5: Encoding size analysis
+    print_step(5, "Encoding Size Analysis")
+
+    print_info("Comparing encoding sizes for different nesting levels:")
+
+    # Simple static tuple
+    simple_type = abi.ABIType.from_string("(uint64,bool)")
+    simple_encoded = simple_type.encode([1, True])
+    print_info("\n  (uint64,bool) = [1, True]:")
+    print_info(f"    Size: {len(simple_encoded)} bytes (8 + 1 = 9, all static)")
+
+    # Array of static tuples
+    static_array_type = abi.ABIType.from_string("(uint64,bool)[]")
+    static_array_encoded = static_array_type.encode([[1, True], [2, False]])
+    print_info("\n  (uint64,bool)[] = [[1, True], [2, False]]:")
+    print_info(f"    Size: {len(static_array_encoded)} bytes (2 length + 2*9 elements = 20)")
+
+    # Tuple with dynamic element
+    dynamic_tuple_type = abi.ABIType.from_string("(uint64,string)")
+    dynamic_tuple_encoded = dynamic_tuple_type.encode([1, "Hello"])
+    print_info('\n  (uint64,string) = [1, "Hello"]:')
+    print_info(f"    Size: {len(dynamic_tuple_encoded)} bytes (8 + 2 offset + 2 len + 5 content = 17)")
+
+    # Array of tuples with dynamic element
+    dynamic_array_type = abi.ABIType.from_string("(uint64,string)[]")
+    dynamic_array_encoded = dynamic_array_type.encode([[1, "Hi"], [2, "Bye"]])
+    print_info('\n  (uint64,string)[] = [[1, "Hi"], [2, "Bye"]]:')
+    print_info(f"    Size: {len(dynamic_array_encoded)} bytes")
+    print_info("    Breakdown: 2 array_len + 2*2 offsets + 2*(8+2+2+N) per tuple")
+
+    # Deep nesting size
+    print_info("\n  ((uint64,bool)[],string,(address,uint256))[] with 2 complex elements:")
+    print_info(f"    Size: {len(deeply_nested_encoded)} bytes")
+    print_info("    Each element has: array of tuples + string + (address,uint256) tuple")
+
+    # Step 6: Static vs dynamic arrays inside tuples
+    print_step(6, "Static vs Dynamic Arrays Inside Tuples")
+
+    # Tuple with static array
+    tuple_with_static_array_type = abi.ABIType.from_string("(uint64[3],bool)")
+    tuple_with_static_array_value = [[1, 2, 3], True]
+    if isinstance(tuple_with_static_array_type, abi.TupleType):
+        tuple_with_static_array_encoded = tuple_with_static_array_type.encode(tuple_with_static_array_value)
+
+        print_info("Tuple with static array: (uint64[3],bool)")
+        print_info("  Input: [[1, 2, 3], True]")
+        print_info(f"  Encoded: {format_hex(tuple_with_static_array_encoded)}")
+        print_info(f"  Size: {len(tuple_with_static_array_encoded)} bytes (24 + 1 = 25, no offsets needed)")
+        is_dyn = tuple_with_static_array_type.is_dynamic()
+        print_info(f"  is_dynamic(): {is_dyn} (static array doesnt make tuple dynamic)")
+
+    # Tuple with dynamic array
+    tuple_with_dynamic_array_type = abi.ABIType.from_string("(uint64[],bool)")
+    tuple_with_dynamic_array_value = [[1, 2, 3], True]
+    if isinstance(tuple_with_dynamic_array_type, abi.TupleType):
+        tuple_with_dynamic_array_encoded = tuple_with_dynamic_array_type.encode(tuple_with_dynamic_array_value)
+
+        print_info("\nTuple with dynamic array: (uint64[],bool)")
+        print_info("  Input: [[1, 2, 3], True]")
+        print_info(f"  Encoded: {format_hex(tuple_with_dynamic_array_encoded)}")
+        print_info(f"  Size: {len(tuple_with_dynamic_array_encoded)} bytes (2 offset + 1 bool + 2 len + 24 data = 29)")
+        print_info(f"  is_dynamic(): {tuple_with_dynamic_array_type.is_dynamic()}")
+
+        print_info("\nByte layout comparison:")
+        print_info("  Static (uint64[3],bool):")
+        print_info(f"    [0-7]   uint64[0]: {format_hex(tuple_with_static_array_encoded[0:8])}")
+        print_info(f"    [8-15]  uint64[1]: {format_hex(tuple_with_static_array_encoded[8:16])}")
+        print_info(f"    [16-23] uint64[2]: {format_hex(tuple_with_static_array_encoded[16:24])}")
+        print_info(f"    [24]    bool:      {format_hex(tuple_with_static_array_encoded[24:25])}")
+
+        print_info("\n  Dynamic (uint64[],bool):")
+        dyn_array_offset = (tuple_with_dynamic_array_encoded[0] << 8) | tuple_with_dynamic_array_encoded[1]
+        print_info(
+            f"    [0-1]   array offset: {format_hex(tuple_with_dynamic_array_encoded[0:2])} = {dyn_array_offset}"
+        )
+        print_info(f"    [2]     bool:         {format_hex(tuple_with_dynamic_array_encoded[2:3])}")
+        print_info(f"    [3-4]   array length: {format_hex(tuple_with_dynamic_array_encoded[3:5])}")
+        print_info(f"    [5-28]  array data:   {format_hex(tuple_with_dynamic_array_encoded[5:])}")
+
+        # Decode and verify both
+        static_array_decoded = tuple_with_static_array_type.decode(tuple_with_static_array_encoded)
+        dynamic_array_decoded = tuple_with_dynamic_array_type.decode(tuple_with_dynamic_array_encoded)
+
+        print_info("\nRound-trip verification:")
+        static_match = list(static_array_decoded[0]) == [1, 2, 3] and static_array_decoded[1] == True  # noqa: E712
+        print_info(f"  Static array tuple: {static_match}")
+        dynamic_match = (
+            list(dynamic_array_decoded[0]) == [1, 2, 3] and dynamic_array_decoded[1] == True  # noqa: E712
+        )
+        print_info(f"  Dynamic array tuple: {dynamic_match}")
+
+    # Step 7: Triple nesting verification
+    print_step(7, "Triple Nesting Verification")
+
+    # Type: ((uint64,bool)[])[] is an array of single-element tuples where each tuple contains (uint64,bool)[]
+    triple_nested_type = abi.ABIType.from_string("((uint64,bool)[])[]")
+
+    print_info("Type: ((uint64,bool)[])[]")
+    print_info("  This is: array of 1-element tuples, where each tuple contains (uint64,bool)[]")
+    if isinstance(triple_nested_type, abi.DynamicArrayType):
+        print_info(f"  str(): {triple_nested_type}")
+        print_info(f"  is_dynamic(): {triple_nested_type.is_dynamic()}")
+
+        triple_inner_tuple_type = triple_nested_type.element
+        print_info(f"\n  element: {triple_inner_tuple_type} (a 1-element tuple)")
+        if isinstance(triple_inner_tuple_type, abi.TupleType):
+            print_info(f"    elements[0]: {triple_inner_tuple_type.elements[0]}")
+
+    # Each element is a 1-element tuple containing an array of (uint64,bool) tuples
+    triple_nested_value = [
+        [[[1, True], [2, False]]],  # 1-element tuple containing [(1,true), (2,false)]
+        [[[10, False]]],  # 1-element tuple containing [(10,false)]
+        [[[100, True], [200, True], [300, False]]],  # 1-element tuple containing 3 tuples
+    ]
+
+    if isinstance(triple_nested_type, abi.DynamicArrayType):
+        triple_nested_encoded = triple_nested_type.encode(triple_nested_value)
+
+        print_info("\nInput (each element is a tuple containing an array):")
+        print_info("  [")
+        print_info("    [[ [1, True], [2, False] ]],       // tuple wrapping array of 2 tuples")
+        print_info("    [[ [10, False] ]],                  // tuple wrapping array of 1 tuple")
+        print_info("    [[ [100, True], [200, True], [300, False] ]]  // tuple wrapping array of 3")
+        print_info("  ]")
+        print_info(f"\nEncoded: {format_bytes(triple_nested_encoded, 20)}")
+        print_info(f"Total bytes: {len(triple_nested_encoded)}")
+
+        # Decode and verify
+        triple_nested_decoded = list(triple_nested_type.decode(triple_nested_encoded))
+
+        print_info("\nDecoded:")
+        for i, outer in enumerate(triple_nested_decoded):
+            inner_array = outer[0]  # First (only) element of the tuple
+            pair_strs = [f"[{t[0]}, {t[1]}]" for t in inner_array]
+            print_info(f"  [{i}]: [[ {', '.join(pair_strs)} ]]")
+
+        triple_match = len(triple_nested_decoded) == len(triple_nested_value)
+        for i in range(len(triple_nested_value)):
+            orig_inner = triple_nested_value[i][0]
+            dec_inner = triple_nested_decoded[i][0]
+            triple_match = triple_match and len(orig_inner) == len(dec_inner)
+            for j in range(len(orig_inner)):
+                vals_match = orig_inner[j][0] == dec_inner[j][0] and orig_inner[j][1] == dec_inner[j][1]
+                triple_match = triple_match and vals_match
+        print_info(f"Round-trip verified: {triple_match}")
+
+    # Step 8: Summary
+    print_step(8, "Summary")
+
+    print_info("Complex nested types follow consistent encoding rules:")
+
+    print_info("\nArray of tuples (T)[]:")
+    print_info("  - 2-byte length prefix (element count)")
+    print_info("  - If T is dynamic: head section with offsets, tail section with data")
+    print_info("  - If T is static: elements encoded consecutively after length")
+
+    print_info("\nTuple containing arrays (T1[],T2[]):")
+    print_info("  - Head section: offsets for each dynamic child")
+    print_info("  - Tail section: array data in order")
+    print_info("  - Static arrays (T[N]) encode inline, dynamic arrays (T[]) use offsets")
+
+    print_info("\nNested structs with arrays:")
+    print_info("  - Struct encoding identical to equivalent tuple")
+    print_info("  - Static fields inline, dynamic fields via offsets")
+    print_info("  - Nested arrays and strings all end up in tail section")
+
+    print_info("\nDeeply nested types like ((uint64,bool)[],string,(address,uint256))[]:")
+    print_info("  - Outer array: 2-byte count + offsets to each inner tuple")
+    print_info("  - Each inner tuple: offsets for dynamic parts, inline for static")
+    print_info("  - Innermost arrays: 2-byte count + element data")
+    print_info("  - Round-trip encoding/decoding preserves all values at every nesting level")
+
+    print_info("\nKey observations:")
+    print_info("  - Static types never need offsets (fixed position)")
+    print_info("  - Dynamic types always use 2-byte offsets relative to container start")
+    print_info("  - Nesting depth doesnt change rules, just adds layers")
+    print_info("  - All encoded bytes are deterministic for same input values")
+
+    print_success("ABI Complex Nested Types example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/python/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- **ABI Complex Nested Types**
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

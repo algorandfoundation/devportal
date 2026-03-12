@@ -28,10 +28,7 @@ import {
   config as algorandTypescript,
   legacyGuideConfig as algorandTypescriptLegacy,
 } from './algorand-typescript/import.config.js';
-import {
-  config as algokitSubscriber,
-  legacyGuideConfig as algokitSubscriberLegacy,
-} from './algokit-subscriber/import.config.js';
+import { config as algokitSubscriber } from './algokit-subscriber/import.config.js';
 import { config as nodekit } from './nodekit/import.config.js';
 
 // Sidebar metadata (for _meta.yml generation)
@@ -51,7 +48,7 @@ export const LIBRARY_CONFIGS: LibraryImportConfig[] = [
   algokitCli,
   algorandPython,
   algorandTypescript,
-  // algokitSubscriber, // hidden — docs not yet ready
+  algokitSubscriber,
   nodekit,
 ];
 
@@ -61,14 +58,13 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   ...algokitCli.variants.filter(v => !isArtifactVariant(v)),
   ...algorandPython.variants.filter(v => !isArtifactVariant(v)),
   ...algorandTypescript.variants.filter(v => !isArtifactVariant(v)),
-  ...algokitSubscriber.variants.filter(v => !isArtifactVariant(v)), // hidden — docs not yet ready
+  ...algokitSubscriber.variants.filter(v => !isArtifactVariant(v)),
   ...nodekit.variants.filter(v => !isArtifactVariant(v)),
   arcStandardsConfig,
   // Legacy guide targets — keep old algokit/* paths in sync via stateKey
   algokitCliLegacy,
   algorandPythonLegacy,
   algorandTypescriptLegacy,
-  algokitSubscriberLegacy, // hidden — docs not yet ready
   algokitUtilsTsLegacy,
   algokitUtilsPyLegacy,
 ];

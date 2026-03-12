@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'microAlgos'
+title: "microAlgos"
 ---
 
 > **microAlgos**(`microAlgos`): [`AlgoAmount`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algoamount/)
 
-Defined in: [src/amount.ts:186](https://github.com/larkiny/algokit-utils-ts/blob/main/src/amount.ts#L186)
+Defined in: [src/amount.ts:186](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/amount.ts#L186)
 
 Returns an amount of µAlgo using AlgoAmount
 

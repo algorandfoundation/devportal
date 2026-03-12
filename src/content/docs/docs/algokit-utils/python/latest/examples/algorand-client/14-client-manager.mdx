@@ -1,0 +1,587 @@
+---
+title: "Client Manager"
+description: "This example demonstrates how to access the underlying raw clients through the ClientManager (algorand.client), and how to get typed app clients:"
+sidebar:
+  order: 14
+---
+
+[← Back to Algorand Client](/docs/algokit-utils/python/latest/examples/algorand-client/)
+
+## Description
+
+This example demonstrates how to access the underlying raw clients through the ClientManager (algorand.client), and how to get typed app clients:
+- algorand.client.algod - Access the raw Algod client
+- algorand.client.indexer - Access the raw Indexer client
+- algorand.client.kmd - Access the raw KMD client
+- algorand.client.indexer_if_present - Safely access Indexer (returns None if not configured)
+- algorand.client.get_app_client_by_id() - Get typed app client by ID
+- algorand.client.get_app_client_by_creator_and_name() - Get typed app client by creator/name
+- algorand.client.get_app_factory() - Get app factory for creating/deploying apps
+- When to use raw clients vs AlgorandClient methods
+
+## Prerequisites
+
+LocalNet required for client access
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python algorand_client/14_client_manager.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/algorand_client/14_client_manager.py)
+
+```python title="14_client_manager.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Client Manager
+
+This example demonstrates how to access the underlying raw clients through
+the ClientManager (algorand.client), and how to get typed app clients:
+- algorand.client.algod - Access the raw Algod client
+- algorand.client.indexer - Access the raw Indexer client
+- algorand.client.kmd - Access the raw KMD client
+- algorand.client.indexer_if_present - Safely access Indexer (returns None if not configured)
+- algorand.client.get_app_client_by_id() - Get typed app client by ID
+- algorand.client.get_app_client_by_creator_and_name() - Get typed app client by creator/name
+- algorand.client.get_app_factory() - Get app factory for creating/deploying apps
+- When to use raw clients vs AlgorandClient methods
+
+LocalNet required for client access
+"""
+
+import base64
+
+from shared import (
+    load_teal_source,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_kmd_client.models import (
+    InitWalletHandleTokenRequest,
+    ListKeysRequest,
+    ReleaseWalletHandleTokenRequest,
+)
+from algokit_utils import AlgoAmount, AlgorandClient
+from algokit_utils.applications.app_deployer import AppDeploymentMetaData, AppDeployParams
+from algokit_utils.models.network import AlgoClientNetworkConfig
+from algokit_utils.transactions.types import AppCreateParams, AppDeleteParams, AppUpdateParams
+
+# ============================================================================
+# Simple TEAL Programs for App Client Demonstrations (loaded from shared artifacts)
+# ============================================================================
+
+SIMPLE_APPROVAL_PROGRAM = load_teal_source("approval-counter-simple.teal")
+CLEAR_STATE_PROGRAM = load_teal_source("clear-state-approve.teal")
+
+# A minimal ARC-56 compatible app spec for demonstration
+SIMPLE_APP_SPEC: dict = {
+    "name": "SimpleCounter",
+    "desc": "A simple counter application for demonstration",
+    "methods": [],
+    "state": {
+        "schema": {
+            "global": {
+                "ints": 1,
+                "bytes": 0,
+            },
+            "local": {
+                "ints": 0,
+                "bytes": 0,
+            },
+        },
+        "keys": {
+            "global": {
+                "counter": {
+                    "keyType": "AVMString",
+                    "valueType": "AVMUint64",
+                    "key": base64.b64encode(b"counter").decode(),  # base64 of "counter"
+                },
+            },
+            "local": {},
+            "box": {},
+        },
+        "maps": {
+            "global": {},
+            "local": {},
+            "box": {},
+        },
+    },
+    "bareActions": {
+        "create": ["NoOp"],
+        "call": ["NoOp", "DeleteApplication"],
+    },
+    "arcs": [56],
+    "structs": {},
+    "source": {
+        "approval": SIMPLE_APPROVAL_PROGRAM,
+        "clear": CLEAR_STATE_PROGRAM,
+    },
+    "byteCode": {
+        "approval": "",
+        "clear": "",
+    },
+    "compilerInfo": {
+        "compiler": "algod",
+        "compilerVersion": {
+            "major": 3,
+            "minor": 0,
+            "patch": 0,
+        },
+    },
+    "events": [],
+    "templateVariables": {},
+    "networks": {},
+    "sourceInfo": {
+        "approval": {"sourceInfo": [], "pcOffsetMethod": "none"},
+        "clear": {"sourceInfo": [], "pcOffsetMethod": "none"},
+    },
+    "scratchVariables": {},
+}
+
+
+def main() -> None:
+    print_header("Client Manager Example")
+
+    # Initialize client and verify LocalNet is running
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algorand.client.algod.status()
+        print_success("Connected to LocalNet")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 1: Access raw Algod client via algorand.client.algod
+    print_step(1, "Access raw Algod client via algorand.client.algod")
+    print_info("The Algod client provides direct access to the Algorand node REST API")
+
+    algod = algorand.client.algod
+
+    # Get node status
+    status = algod.status()
+    print_info("")
+    print_info("Algod status():")
+    print_info(f"  Last round: {status.last_round}")
+    print_info(f"  Time since last round: {status.time_since_last_round}ns")
+    print_info(f"  Catchup time: {status.catchup_time}ns")
+    print_info(f"  Last version: {status.last_version}")
+
+    # Get suggested transaction parameters
+    suggested_params = algod.suggested_params()
+    print_info("")
+    print_info("Algod suggested_params():")
+    print_info(f"  Genesis ID: {suggested_params.genesis_id}")
+    genesis_hash_b64 = base64.b64encode(suggested_params.genesis_hash or b"").decode()[:20]
+    print_info(f"  Genesis Hash: {genesis_hash_b64}...")
+    print_info(f"  First valid round: {suggested_params.first_valid}")
+    print_info(f"  Last valid round: {suggested_params.last_valid}")
+    print_info(f"  Min fee: {suggested_params.min_fee}")
+
+    # Get genesis information
+    genesis = algod.genesis()
+    print_info("")
+    print_info("Algod genesis():")
+    print_info(f"  Network: {genesis.network}")
+    print_info(f"  Protocol: {genesis.proto}")
+
+    # Get supply information
+    supply = algod.supply()
+    print_info("")
+    print_info("Algod supply():")
+    print_info(f"  Total money: {supply.total_money} microAlgo")
+    print_info(f"  Online money: {supply.online_money} microAlgo")
+
+    print_success("Raw Algod client accessed successfully")
+
+    # Step 2: Access raw Indexer client via algorand.client.indexer
+    print_step(2, "Access raw Indexer client via algorand.client.indexer")
+    print_info("The Indexer client provides access to historical blockchain data")
+
+    indexer = algorand.client.indexer
+
+    # Health check
+    health = indexer.health_check()
+    print_info("")
+    print_info("Indexer health_check():")
+    print_info(f"  Database available: {health.db_available}")
+    print_info(f"  Is migrating: {health.is_migrating}")
+    print_info(f"  Round: {health.round_}")
+    print_info(f"  Version: {health.version}")
+
+    # Search for transactions
+    txn_search_result = indexer.search_for_transactions(limit=3)
+    print_info("")
+    print_info("Indexer search_for_transactions(limit=3):")
+    print_info(f"  Found {len(txn_search_result.transactions)} transactions")
+    print_info(f"  Current round: {txn_search_result.current_round}")
+    for txn in txn_search_result.transactions:
+        txn_id = txn.id_[:12] if txn.id_ else "unknown"
+        print_info(f"    - {txn_id}... (type: {txn.tx_type})")
+
+    # Lookup an account
+    dispenser = algorand.account.dispenser_from_environment()
+    account_result = indexer.lookup_account_by_id(dispenser.addr)
+    print_info("")
+    print_info("Indexer lookup_account_by_id():")
+    print_info(f"  Address: {shorten_address(account_result.account.address)}")
+    print_info(f"  Balance: {account_result.account.amount} microAlgo")
+    print_info(f"  Status: {account_result.account.status}")
+
+    print_success("Raw Indexer client accessed successfully")
+
+    # Step 3: Access raw KMD client via algorand.client.kmd
+    print_step(3, "Access raw KMD client via algorand.client.kmd")
+    print_info("The KMD (Key Management Daemon) client manages wallets and keys")
+
+    kmd = algorand.client.kmd
+
+    # List wallets
+    wallets_result = kmd.list_wallets()
+    print_info("")
+    print_info("KMD list_wallets():")
+    print_info(f"  Found {len(wallets_result.wallets)} wallet(s)")
+    for wallet in wallets_result.wallets:
+        wallet_id_short = wallet.id_[:8]
+        print_info(f'    - "{wallet.name}" (ID: {wallet_id_short}...)')
+
+    # Get the default LocalNet wallet and list keys
+    default_wallet = None
+    for wallet in wallets_result.wallets:
+        if wallet.name == "unencrypted-default-wallet":
+            default_wallet = wallet
+            break
+
+    if default_wallet:
+        handle_result = kmd.init_wallet_handle(
+            InitWalletHandleTokenRequest(
+                wallet_id=default_wallet.id_,
+                wallet_password="",
+            )
+        )
+        wallet_handle_token = handle_result.wallet_handle_token
+
+        keys_result = kmd.list_keys_in_wallet(ListKeysRequest(wallet_handle_token=wallet_handle_token))
+        addresses = keys_result.addresses
+
+        print_info("")
+        print_info("KMD list_keys_in_wallet() for default wallet:")
+        print_info(f"  Found {len(addresses)} key(s)")
+        for address in addresses[:3]:
+            print_info(f"    - {shorten_address(str(address))}")
+        if len(addresses) > 3:
+            print_info(f"    ... and {len(addresses) - 3} more")
+
+        # Release the wallet handle
+        kmd.release_wallet_handle_token(ReleaseWalletHandleTokenRequest(wallet_handle_token=wallet_handle_token))
+
+    print_success("Raw KMD client accessed successfully")
+
+    # Step 4: Demonstrate algorand.client.indexer_if_present
+    print_step(4, "Demonstrate algorand.client.indexer_if_present")
+    print_info("indexer_if_present returns None if Indexer is not configured (instead of throwing)")
+
+    # With LocalNet, indexer is configured
+    indexer_if_present = algorand.client.indexer_if_present
+    if indexer_if_present:
+        print_info("")
+        print_info("Indexer is present: True")
+        indexer_health = indexer_if_present.health_check()
+        print_info(f"  Indexer round: {indexer_health.round_}")
+
+    # Create a client without indexer to demonstrate None behavior
+    algod_only_config = AlgoClientNetworkConfig(
+        server="http://localhost",
+        port=4001,
+        token="a" * 64,
+    )
+    # Note: No indexer_config provided
+    algod_only_client = AlgorandClient.from_config(algod_only_config)
+
+    no_indexer = algod_only_client.client.indexer_if_present
+    print_info("")
+    print_info("For client without Indexer configured:")
+    indexer_status = "None" if no_indexer is None else "present"
+    print_info(f"  indexer_if_present: {indexer_status}")
+    print_info("  Use this to gracefully handle missing Indexer configuration")
+
+    print_success("indexer_if_present demonstrated")
+
+    # Step 5: Create an application for app client demonstrations
+    print_step(5, "Create test application for app client demonstrations")
+
+    creator = algorand.account.random()
+    algorand.account.ensure_funded_from_environment(creator.addr, AlgoAmount.from_algo(10))
+
+    create_result = algorand.send.app_create(
+        AppCreateParams(
+            sender=creator.addr,
+            approval_program=SIMPLE_APPROVAL_PROGRAM,
+            clear_state_program=CLEAR_STATE_PROGRAM,
+            schema={
+                "global_ints": 1,
+                "global_byte_slices": 0,
+                "local_ints": 0,
+                "local_byte_slices": 0,
+            },
+        )
+    )
+
+    app_id = create_result.app_id
+    print_info("")
+    print_info("Created test application:")
+    print_info(f"  App ID: {app_id}")
+    print_info(f"  Creator: {shorten_address(creator.addr)}")
+
+    print_success("Test application created")
+
+    # Step 6: Demonstrate algorand.client.get_app_client_by_id()
+    print_step(6, "Demonstrate algorand.client.get_app_client_by_id()")
+    print_info("Creates an AppClient for an existing application by its ID")
+
+    app_client_by_id = algorand.client.get_app_client_by_id(
+        app_spec=SIMPLE_APP_SPEC,
+        app_id=app_id,
+        default_sender=creator.addr,
+    )
+
+    print_info("")
+    print_info("AppClient created with get_app_client_by_id():")
+    print_info(f"  App ID: {app_client_by_id.app_id}")
+    print_info(f"  App Name: {app_client_by_id.app_name}")
+    print_info(f"  App Address: {shorten_address(str(app_client_by_id.app_address))}")
+
+    # Use the app client to make a call
+    call_result = app_client_by_id.send.bare.call()
+    print_info("")
+    print_info("Called app via AppClient:")
+    print_info(f"  Transaction ID: {call_result.tx_ids[0]}")
+
+    # Read state using the app client
+    global_state = app_client_by_id.state.global_state.get_all()
+    print_info(f"  Global state after call: counter = {global_state.get('counter')}")
+
+    print_success("get_app_client_by_id() demonstrated")
+
+    # Step 7: Demonstrate algorand.client.get_app_client_by_creator_and_name()
+    print_step(7, "Demonstrate algorand.client.get_app_client_by_creator_and_name()")
+    print_info("Creates an AppClient by looking up app ID from creator and app name")
+
+    # First, deploy an app using the app deployer (which stores name metadata)
+    # Note: We don't use deploy-time controls (updatable/deletable) since our TEAL
+    # doesn't have TMPL_UPDATABLE/TMPL_DELETABLE placeholders
+    deployed_app = algorand.app_deployer.deploy(
+        AppDeployParams(
+            metadata=AppDeploymentMetaData(
+                name="NamedCounterApp",
+                version="1.0.0",
+                deletable=None,
+                updatable=None,
+            ),
+            create_params=AppCreateParams(
+                sender=creator.addr,
+                approval_program=SIMPLE_APPROVAL_PROGRAM,
+                clear_state_program=CLEAR_STATE_PROGRAM,
+                schema={
+                    "global_ints": 1,
+                    "global_byte_slices": 0,
+                    "local_ints": 0,
+                    "local_byte_slices": 0,
+                },
+            ),
+            update_params=AppUpdateParams(
+                sender=creator.addr,
+                app_id=0,
+                approval_program="",
+                clear_state_program="",
+            ),
+            delete_params=AppDeleteParams(
+                sender=creator.addr,
+                app_id=0,
+            ),
+        )
+    )
+
+    print_info("")
+    print_info("Deployed named app:")
+    print_info("  Name: NamedCounterApp")
+    print_info(f"  App ID: {deployed_app.app.app_id}")
+
+    # Now get the app client by creator and name (async - returns Promise in TS)
+    app_client_by_name = algorand.client.get_app_client_by_creator_and_name(
+        app_spec=SIMPLE_APP_SPEC,
+        creator_address=creator.addr,
+        app_name="NamedCounterApp",
+        default_sender=creator.addr,
+    )
+
+    print_info("")
+    print_info("AppClient from get_app_client_by_creator_and_name():")
+    print_info(f"  Resolved App ID: {app_client_by_name.app_id}")
+    print_info(f"  App Name: {app_client_by_name.app_name}")
+    print_info("  Note: App ID was resolved by looking up the creator's apps")
+
+    print_success("get_app_client_by_creator_and_name() demonstrated")
+
+    # Step 8: Demonstrate algorand.client.get_app_factory()
+    print_step(8, "Demonstrate algorand.client.get_app_factory()")
+    print_info("Creates an AppFactory for deploying and managing multiple app instances")
+
+    app_factory = algorand.client.get_app_factory(
+        app_spec=SIMPLE_APP_SPEC,
+        default_sender=creator.addr,
+    )
+
+    print_info("")
+    print_info("AppFactory created with get_app_factory():")
+    print_info(f"  App Name: {app_factory.app_name}")
+    print_info("")
+    print_info("AppFactory provides methods for:")
+    print_info("  - factory.send.bare.create() - Create app with bare call")
+    print_info("  - factory.send.create() - Create app with ABI method")
+    print_info("  - factory.deploy() - Idempotent deployment with version management")
+    print_info("  - factory.params.* - Get transaction params for app operations")
+    print_info("")
+    print_info("Note: Creating apps via factory requires a properly compiled ARC-56 app spec")
+    print_info("with either compiled bytecode or TEAL source that the factory can compile.")
+
+    print_success("get_app_factory() demonstrated")
+
+    # Step 9: Explain when to use raw clients vs AlgorandClient methods
+    print_step(9, "When to use raw clients vs AlgorandClient methods")
+    print_info("")
+    print_info("When to use AlgorandClient high-level methods (algorand.send.*, algorand.app.*, etc.):")
+    print_info("  - Creating and sending transactions (automatic signer management)")
+    print_info("  - Account management and funding")
+    print_info("  - Reading app state (get_global_state, get_local_state)")
+    print_info("  - Common operations that benefit from SDK convenience")
+    print_info("  - When you want automatic transaction composition and signing")
+
+    print_info("")
+    print_info("When to use raw Algod client (algorand.client.algod):")
+    print_info("  - Direct node status queries (status(), genesis(), supply())")
+    print_info("  - Low-level transaction submission (send_raw_transaction)")
+    print_info("  - Block information queries")
+    print_info("  - Pending transaction information")
+    print_info("  - Node configuration queries")
+    print_info("  - When you need fine-grained control over API calls")
+
+    print_info("")
+    print_info("When to use raw Indexer client (algorand.client.indexer):")
+    print_info("  - Historical transaction searches with complex filters")
+    print_info("  - Account lookups with specific query parameters")
+    print_info("  - Asset and application searches")
+    print_info("  - Block lookups and searches")
+    print_info("  - Paginated queries with custom limits")
+    print_info("  - When AlgorandClient does not expose the specific query you need")
+
+    print_info("")
+    print_info("When to use raw KMD client (algorand.client.kmd):")
+    print_info("  - Wallet management (create, list, rename wallets)")
+    print_info("  - Key generation and import/export")
+    print_info("  - Signing transactions with KMD-managed keys")
+    print_info("  - LocalNet development with default wallets")
+    print_info("  - When you need direct control over key management")
+
+    print_info("")
+    print_info("When to use AppClient (get_app_client_by_id, get_app_client_by_creator_and_name):")
+    print_info("  - Interacting with a specific deployed application")
+    print_info("  - Type-safe method calls based on ARC-56 app spec")
+    print_info("  - Reading/writing app state with type information")
+    print_info("  - When you have the app spec and want IDE autocompletion")
+
+    print_info("")
+    print_info("When to use AppFactory (get_app_factory):")
+    print_info("  - Deploying new application instances")
+    print_info("  - Creating multiple instances of the same app")
+    print_info("  - Idempotent deployment with version management")
+    print_info("  - When you need to create apps programmatically")
+
+    print_success("Usage guidance provided")
+
+    # Step 10: Summary
+    print_step(10, "Summary - Client Manager API")
+    print_info("The ClientManager (algorand.client) provides access to underlying clients:")
+    print_info("")
+    print_info("algorand.client.algod:")
+    print_info("  - Raw AlgodClient for direct node API access")
+    print_info("  - Methods: status(), suggested_params(), genesis(), supply(), etc.")
+    print_info("")
+    print_info("algorand.client.indexer:")
+    print_info("  - Raw IndexerClient for historical data queries")
+    print_info("  - Methods: search_for_transactions(), lookup_account_by_id(), etc.")
+    print_info("  - Throws error if Indexer not configured")
+    print_info("")
+    print_info("algorand.client.indexer_if_present:")
+    print_info("  - Same as indexer but returns None if not configured")
+    print_info("  - Use for graceful handling of optional Indexer")
+    print_info("")
+    print_info("algorand.client.kmd:")
+    print_info("  - Raw KmdClient for wallet/key management")
+    print_info("  - Methods: list_wallets(), list_keys_in_wallet(), etc.")
+    print_info("  - Only available on LocalNet or custom KMD setups")
+    print_info("")
+    print_info("algorand.client.get_app_client_by_id(app_spec, app_id):")
+    print_info("  - Creates AppClient for existing app by ID")
+    print_info("  - Provides type-safe app interaction")
+    print_info("")
+    print_info("algorand.client.get_app_client_by_creator_and_name(app_spec, creator, name):")
+    print_info("  - Creates AppClient by resolving app ID from creator and name")
+    print_info("  - Uses AlgoKit app deployment metadata for lookup")
+    print_info("  - Returns AppClient directly (sync in Python)")
+    print_info("")
+    print_info("algorand.client.get_app_factory(app_spec):")
+    print_info("  - Creates AppFactory for deploying new app instances")
+    print_info("  - Supports bare and ABI-based app creation")
+    print_info("")
+    print_info("Best practices:")
+    print_info("  - Use high-level AlgorandClient methods for common operations")
+    print_info("  - Drop to raw clients when you need specific API features")
+    print_info("  - Use indexer_if_present for portable code that may run without Indexer")
+    print_info("  - Use AppClient/AppFactory for type-safe smart contract interaction")
+
+    # Clean up - delete the apps we created
+    algorand.send.app_delete(AppDeleteParams(sender=creator.addr, app_id=app_id, note=b"cleanup-1"))
+    deployed_app_id = deployed_app.app.app_id
+    if deployed_app_id != app_id:
+        algorand.send.app_delete(AppDeleteParams(sender=creator.addr, app_id=deployed_app_id, note=b"cleanup-2"))
+
+    print_success("Client Manager example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Algorand Client
+
+- [Client Instantiation](/docs/algokit-utils/python/latest/examples/algorand-client/01-client-instantiation/)
+- [AlgoAmount Utility](/docs/algokit-utils/python/latest/examples/algorand-client/02-algo-amount/)
+- [Signer Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/03-signer-config/)
+- [Suggested Params Configuration](/docs/algokit-utils/python/latest/examples/algorand-client/04-params-config/)
+- [Account Manager](/docs/algokit-utils/python/latest/examples/algorand-client/05-account-manager/)
+- [Send Payment](/docs/algokit-utils/python/latest/examples/algorand-client/06-send-payment/)
+- [Send Asset Operations](/docs/algokit-utils/python/latest/examples/algorand-client/07-send-asset-ops/)
+- [Send Application Operations](/docs/algokit-utils/python/latest/examples/algorand-client/08-send-app-ops/)
+- [Create Transaction (Unsigned Transactions)](/docs/algokit-utils/python/latest/examples/algorand-client/09-create-transaction/)
+- [Transaction Composer (Atomic Transaction Groups)](/docs/algokit-utils/python/latest/examples/algorand-client/10-transaction-composer/)
+- [Asset Manager](/docs/algokit-utils/python/latest/examples/algorand-client/11-asset-manager/)
+- [App Manager](/docs/algokit-utils/python/latest/examples/algorand-client/12-app-manager/)
+- [App Deployer](/docs/algokit-utils/python/latest/examples/algorand-client/13-app-deployer/)
+- **Client Manager**
+- [Error Transformers](/docs/algokit-utils/python/latest/examples/algorand-client/15-error-transformers/)

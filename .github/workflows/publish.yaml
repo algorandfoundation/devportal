@@ -12,6 +12,8 @@ on:
       - main
       - main-dist
       - release/ak-v4
+      - ci/update-publish-devportal-docs-workflow
+      - refactor/library-link-layout
 jobs:
   deploy:
     runs-on: ubuntu-latest

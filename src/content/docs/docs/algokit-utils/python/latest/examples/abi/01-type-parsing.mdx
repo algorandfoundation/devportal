@@ -1,0 +1,248 @@
+---
+title: "ABI Type Parsing"
+description: "This example demonstrates how to parse ABI type strings into type objects using ABIType.from_string(). It shows parsing of:"
+sidebar:
+  order: 1
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/python/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to parse ABI type strings into type objects using ABIType.from_string(). It shows parsing of:
+- Primitive types: uint8, uint64, uint256, bool, byte, address, string
+- Array types: uint64[], byte[32], address[5]
+- Tuple types: (uint64,address), (bool,string,uint256)
+ And demonstrates type properties and isinstance checks for type category detection.
+
+## Prerequisites
+
+No LocalNet required - pure ABI encoding/decoding
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python abi/01_type_parsing.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/abi/01_type_parsing.py)
+
+```python title="01_type_parsing.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915
+"""
+Example: ABI Type Parsing
+
+This example demonstrates how to parse ABI type strings into type objects using ABIType.from_string().
+It shows parsing of:
+- Primitive types: uint8, uint64, uint256, bool, byte, address, string
+- Array types: uint64[], byte[32], address[5]
+- Tuple types: (uint64,address), (bool,string,uint256)
+
+And demonstrates type properties and isinstance checks for type category detection.
+
+No LocalNet required - pure ABI encoding/decoding
+"""
+
+from shared import print_header, print_info, print_step, print_success
+
+from algokit_abi import abi
+
+
+def main() -> None:
+    print_header("ABI Type Parsing Example")
+
+    # Step 1: Parse primitive unsigned integer types
+    print_step(1, "Parse Unsigned Integer Types")
+
+    uint8_type = abi.ABIType.from_string("uint8")
+    uint64_type = abi.ABIType.from_string("uint64")
+    uint256_type = abi.ABIType.from_string("uint256")
+
+    print_info(f"Parsed 'uint8': {uint8_type}")
+    print_info(f"Parsed 'uint64': {uint64_type}")
+    print_info(f"Parsed 'uint256': {uint256_type}")
+
+    # Show uint-specific properties
+    if isinstance(uint8_type, abi.UintType):
+        print_info(f"  uint8 bit_size: {uint8_type.bit_size}")
+        print_info(f"  uint8 byte_len: {uint8_type.byte_len()}")
+        print_info(f"  uint8 is_dynamic: {uint8_type.is_dynamic()}")
+    if isinstance(uint64_type, abi.UintType):
+        print_info(f"  uint64 bit_size: {uint64_type.bit_size}")
+        print_info(f"  uint64 byte_len: {uint64_type.byte_len()}")
+    if isinstance(uint256_type, abi.UintType):
+        print_info(f"  uint256 bit_size: {uint256_type.bit_size}")
+        print_info(f"  uint256 byte_len: {uint256_type.byte_len()}")
+
+    # Step 2: Parse other primitive types
+    print_step(2, "Parse Other Primitive Types")
+
+    bool_type = abi.ABIType.from_string("bool")
+    byte_type = abi.ABIType.from_string("byte")
+    address_type = abi.ABIType.from_string("address")
+    string_type = abi.ABIType.from_string("string")
+
+    print_info(f"Parsed 'bool': {bool_type}")
+    print_info(f"  bool byte_len: {bool_type.byte_len()}")
+    print_info(f"  bool is_dynamic: {bool_type.is_dynamic()}")
+
+    print_info(f"Parsed 'byte': {byte_type}")
+    print_info(f"  byte byte_len: {byte_type.byte_len()}")
+    print_info(f"  byte is_dynamic: {byte_type.is_dynamic()}")
+
+    print_info(f"Parsed 'address': {address_type}")
+    print_info(f"  address byte_len: {address_type.byte_len()}")
+    print_info(f"  address is_dynamic: {address_type.is_dynamic()}")
+
+    print_info(f"Parsed 'string': {string_type}")
+    print_info(f"  string is_dynamic: {string_type.is_dynamic()}")
+
+    # Step 3: Parse dynamic array types
+    print_step(3, "Parse Dynamic Array Types")
+
+    uint64_array_type = abi.ABIType.from_string("uint64[]")
+    address_array_type = abi.ABIType.from_string("address[]")
+
+    print_info(f"Parsed 'uint64[]': {uint64_array_type}")
+    if isinstance(uint64_array_type, abi.DynamicArrayType):
+        print_info(f"  element: {uint64_array_type.element}")
+        print_info(f"  is_dynamic: {uint64_array_type.is_dynamic()}")
+
+    print_info(f"Parsed 'address[]': {address_array_type}")
+    if isinstance(address_array_type, abi.DynamicArrayType):
+        print_info(f"  element: {address_array_type.element}")
+
+    # Step 4: Parse static array types
+    print_step(4, "Parse Static Array Types")
+
+    byte32_type = abi.ABIType.from_string("byte[32]")
+    address5_type = abi.ABIType.from_string("address[5]")
+
+    print_info(f"Parsed 'byte[32]': {byte32_type}")
+    if isinstance(byte32_type, abi.StaticArrayType):
+        print_info(f"  element: {byte32_type.element}")
+        print_info(f"  size: {byte32_type.size}")
+        print_info(f"  byte_len: {byte32_type.byte_len()}")
+        print_info(f"  is_dynamic: {byte32_type.is_dynamic()}")
+
+    print_info(f"Parsed 'address[5]': {address5_type}")
+    if isinstance(address5_type, abi.StaticArrayType):
+        print_info(f"  element: {address5_type.element}")
+        print_info(f"  size: {address5_type.size}")
+        print_info(f"  byte_len: {address5_type.byte_len()}")
+
+    # Step 5: Parse tuple types
+    print_step(5, "Parse Tuple Types")
+
+    simple_tuple_type = abi.ABIType.from_string("(uint64,address)")
+    complex_tuple_type = abi.ABIType.from_string("(bool,string,uint256)")
+
+    print_info(f"Parsed '(uint64,address)': {simple_tuple_type}")
+    if isinstance(simple_tuple_type, abi.TupleType):
+        print_info(f"  elements count: {len(simple_tuple_type.elements)}")
+        for index, element in enumerate(simple_tuple_type.elements):
+            print_info(f"    [{index}]: {element}")
+        print_info(f"  is_dynamic: {simple_tuple_type.is_dynamic()}")
+        print_info(f"  byte_len: {simple_tuple_type.byte_len()}")
+
+    print_info(f"Parsed '(bool,string,uint256)': {complex_tuple_type}")
+    if isinstance(complex_tuple_type, abi.TupleType):
+        print_info(f"  elements count: {len(complex_tuple_type.elements)}")
+        for index, element in enumerate(complex_tuple_type.elements):
+            print_info(f"    [{index}]: {element}")
+        print_info(f"  is_dynamic: {complex_tuple_type.is_dynamic()} (contains 'string' which is dynamic)")
+
+    # Step 6: Parse nested tuple types
+    print_step(6, "Parse Nested Tuple Types")
+
+    nested_tuple_type = abi.ABIType.from_string("((uint64,bool),address[])")
+
+    print_info(f"Parsed '((uint64,bool),address[])': {nested_tuple_type}")
+    if isinstance(nested_tuple_type, abi.TupleType):
+        print_info(f"  elements count: {len(nested_tuple_type.elements)}")
+        for index, element in enumerate(nested_tuple_type.elements):
+            print_info(f"    [{index}]: {element}")
+            if isinstance(element, abi.TupleType):
+                for nested_index, nested_element in enumerate(element.elements):
+                    print_info(f"      [{nested_index}]: {nested_element}")
+        print_info(f"  is_dynamic: {nested_tuple_type.is_dynamic()}")
+
+    # Step 7: Type category detection using isinstance
+    print_step(7, "Type Category Detection with isinstance")
+
+    test_types = ["uint64", "bool", "byte", "address", "string", "uint64[]", "byte[32]", "(uint64,address)"]
+
+    for type_str in test_types:
+        parsed_type = abi.ABIType.from_string(type_str)
+        category = "Unknown"
+
+        if isinstance(parsed_type, abi.UintType):
+            category = "UintType"
+        elif isinstance(parsed_type, abi.BoolType):
+            category = "BoolType"
+        elif isinstance(parsed_type, abi.ByteType):
+            category = "ByteType"
+        elif isinstance(parsed_type, abi.AddressType):
+            category = "AddressType"
+        elif isinstance(parsed_type, abi.StringType):
+            category = "StringType"
+        elif isinstance(parsed_type, abi.DynamicArrayType):
+            category = "DynamicArrayType"
+        elif isinstance(parsed_type, abi.StaticArrayType):
+            category = "StaticArrayType"
+        elif isinstance(parsed_type, abi.TupleType):
+            category = "TupleType"
+
+        print_info(f"'{type_str}' -> {category}")
+
+    # Step 8: Demonstrate type equality
+    print_step(8, "Type Equality Comparison")
+
+    type1 = abi.ABIType.from_string("uint64")
+    type2 = abi.ABIType.from_string("uint64")
+    type3 = abi.ABIType.from_string("uint32")
+
+    print_info(f"ABIType.from_string('uint64') == ABIType.from_string('uint64'): {type1 == type2}")
+    print_info(f"ABIType.from_string('uint64') == ABIType.from_string('uint32'): {type1 == type3}")
+
+    tuple1 = abi.ABIType.from_string("(uint64,address)")
+    tuple2 = abi.ABIType.from_string("(uint64,address)")
+    tuple3 = abi.ABIType.from_string("(uint64,bool)")
+
+    print_info(
+        f"ABIType.from_string('(uint64,address)') == ABIType.from_string('(uint64,address)'): {tuple1 == tuple2}"
+    )
+    print_info(f"ABIType.from_string('(uint64,address)') == ABIType.from_string('(uint64,bool)'): {tuple1 == tuple3}")
+
+    print_success("ABI Type Parsing example completed successfully!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- **ABI Type Parsing**
+- [ABI Primitive Types](/docs/algokit-utils/python/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/python/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/python/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/python/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/python/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/python/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/python/latest/examples/abi/08-struct-type/)
+- [ABI Struct and Tuple Conversion](/docs/algokit-utils/python/latest/examples/abi/09-struct-tuple-conversion/)
+- [ABI Bool Array Packing](/docs/algokit-utils/python/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/python/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/python/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/python/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/python/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/python/latest/examples/abi/15-arc56-storage/)

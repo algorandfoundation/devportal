@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'isAVMType'
+title: "isAVMType"
 ---
 
 > **isAVMType**(`type`): `type is AVMType`
 
-Defined in: [packages/abi/src/abi-method.ts:320](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L320)
+Defined in: [packages/abi/src/abi-method.ts:320](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L320)
 
 ## Parameters
 

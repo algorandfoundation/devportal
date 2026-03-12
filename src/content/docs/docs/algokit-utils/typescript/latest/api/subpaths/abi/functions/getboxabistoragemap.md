@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'getBoxABIStorageMap'
+title: "getBoxABIStorageMap"
 ---
 
 > **getBoxABIStorageMap**(`contract`, `mapName`): [`ABIStorageMap`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abistoragemap/)
 
-Defined in: [packages/abi/src/arc56-contract.ts:494](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L494)
+Defined in: [packages/abi/src/arc56-contract.ts:494](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/arc56-contract.ts#L494)
 
 Get a specific box storage map with parsed ABI types
 

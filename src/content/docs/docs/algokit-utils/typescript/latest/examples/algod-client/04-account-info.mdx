@@ -1,0 +1,372 @@
+---
+title: "Account Information"
+description: "This example demonstrates how to retrieve comprehensive account information using the AlgodClient methods: accountInformation(), accountApplicationInformation(), and accountAssetInformation()."
+sidebar:
+  order: 4
+---
+
+[← Back to Algod Client](/docs/algokit-utils/typescript/latest/examples/algod-client/)
+
+## Description
+
+This example demonstrates how to retrieve comprehensive account information using the AlgodClient methods: accountInformation(), accountApplicationInformation(), and accountAssetInformation().
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example algod_client/04-account-info.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/algod_client/04-account-info.ts)
+
+```typescript title="04-account-info.ts"
+/**
+ * Example: Account Information
+ *
+ * This example demonstrates how to retrieve comprehensive account information using
+ * the AlgodClient methods: accountInformation(), accountApplicationInformation(), and
+ * accountAssetInformation().
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import {
+  createAlgodClient,
+  createAlgorandClient,
+  getFundedAccount,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js';
+
+/**
+ * Format a bigint microAlgos value to both microAlgo and Algo representations
+ */
+function formatAmount(microAlgos: bigint): { microAlgo: string; algo: string } {
+  const microAlgoStr = microAlgos.toLocaleString('en-US')
+  const algoValue = Number(microAlgos) / 1_000_000
+  const algoStr = algoValue.toLocaleString('en-US', { minimumFractionDigits: 6, maximumFractionDigits: 6 })
+  return {
+    microAlgo: `${microAlgoStr} µALGO`,
+    algo: `${algoStr} ALGO`,
+  }
+}
+
+async function main() {
+  printHeader('Account Information Example')
+
+  // Create an Algod client connected to LocalNet
+  const algod = createAlgodClient()
+
+  // Create an AlgorandClient to get a funded account
+  const algorand = createAlgorandClient()
+
+  // =========================================================================
+  // Step 1: Get a Funded Account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet')
+
+  let accountAddress: string
+  try {
+    const fundedAccount = await getFundedAccount(algorand)
+    accountAddress = fundedAccount.addr.toString()
+    printSuccess(`Got funded account: ${accountAddress}`)
+  } catch (error) {
+    printError(`Failed to get funded account: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('Make sure LocalNet is running with `algokit localnet start`')
+    printInfo('If issues persist, try `algokit localnet reset`')
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Step 2: Get Full Account Information
+  // =========================================================================
+  printStep(2, 'Getting full account information with accountInformation()')
+
+  try {
+    const accountInfo = await algod.accountInformation(accountAddress)
+
+    printSuccess('Account information retrieved successfully!')
+    printInfo('')
+
+    // Display core account fields
+    printInfo('Core Account Information:')
+    printInfo(`  Address:     ${accountInfo.address.toString()}`)
+    printInfo(`  Short:       ${shortenAddress(accountInfo.address.toString())}`)
+
+    const balance = formatAmount(accountInfo.amount)
+    printInfo(`  Balance:     ${balance.algo} (${balance.microAlgo})`)
+
+    const minBalance = formatAmount(accountInfo.minBalance)
+    printInfo(`  Min Balance: ${minBalance.algo} (${minBalance.microAlgo})`)
+
+    printInfo(`  Status:      ${accountInfo.status}`)
+    printInfo(`  Round:       ${accountInfo.round.toLocaleString('en-US')}`)
+    printInfo('')
+
+    // =========================================================================
+    // Step 3: Display Additional Account Fields
+    // =========================================================================
+    printStep(3, 'Displaying additional account fields')
+
+    const pendingRewards = formatAmount(accountInfo.pendingRewards)
+    const totalRewards = formatAmount(accountInfo.rewards)
+    const amountWithoutRewards = formatAmount(accountInfo.amountWithoutPendingRewards)
+
+    printInfo('Rewards Information:')
+    printInfo(`  Pending Rewards:          ${pendingRewards.algo}`)
+    printInfo(`  Total Rewards:            ${totalRewards.algo}`)
+    printInfo(`  Amount Without Rewards:   ${amountWithoutRewards.algo}`)
+    printInfo('')
+
+    // =========================================================================
+    // Step 4: Display Asset Holdings
+    // =========================================================================
+    printStep(4, 'Displaying assets held by the account (assetHolding)')
+
+    printInfo('Asset Holdings:')
+    printInfo(`  Total Assets Opted In: ${accountInfo.totalAssetsOptedIn}`)
+
+    if (accountInfo.assets && accountInfo.assets.length > 0) {
+      printInfo('  Asset Holdings:')
+      for (const asset of accountInfo.assets) {
+        printInfo(`    - Asset ID: ${asset.assetId}`)
+        printInfo(`      Amount: ${asset.amount.toLocaleString('en-US')}`)
+        printInfo(`      Frozen: ${asset.isFrozen}`)
+      }
+    } else {
+      printInfo('  No assets held by this account')
+      printInfo('On LocalNet, dispenser accounts typically do not hold any ASAs')
+    }
+    printInfo('')
+
+    // =========================================================================
+    // Step 5: Display Created Applications
+    // =========================================================================
+    printStep(5, 'Displaying applications created by the account (createdApps)')
+
+    printInfo('Created Applications:')
+    printInfo(`  Total Created Apps: ${accountInfo.totalCreatedApps}`)
+
+    if (accountInfo.createdApps && accountInfo.createdApps.length > 0) {
+      printInfo('  Created Applications:')
+      for (const app of accountInfo.createdApps) {
+        printInfo(`    - App ID: ${app.id}`)
+        if (app.params.creator) {
+          printInfo(`      Creator: ${shortenAddress(app.params.creator.toString())}`)
+        }
+      }
+    } else {
+      printInfo('  No applications created by this account')
+      printInfo('This account has not deployed any smart contracts')
+    }
+    printInfo('')
+
+    // =========================================================================
+    // Step 6: Display Opted-In Applications
+    // =========================================================================
+    printStep(6, 'Displaying applications the account has opted into (appsLocalState)')
+
+    printInfo('Opted-In Applications (Local State):')
+    printInfo(`  Total Apps Opted In: ${accountInfo.totalAppsOptedIn}`)
+
+    if (accountInfo.appsLocalState && accountInfo.appsLocalState.length > 0) {
+      printInfo('  Local State Entries:')
+      for (const localState of accountInfo.appsLocalState) {
+        printInfo(`    - App ID: ${localState.id}`)
+        printInfo(`      Schema: ${localState.schema.numUints} uints, ${localState.schema.numByteSlices} byte slices`)
+        if (localState.keyValue && localState.keyValue.length > 0) {
+          printInfo(`      Key-Value Pairs: ${localState.keyValue.length}`)
+        }
+      }
+    } else {
+      printInfo('  No applications opted into')
+      printInfo('This account has not opted into any applications')
+    }
+    printInfo('')
+
+    // =========================================================================
+    // Step 7: Display Created Assets
+    // =========================================================================
+    printStep(7, 'Displaying assets created by the account (createdAssets)')
+
+    printInfo('Created Assets:')
+    printInfo(`  Total Created Assets: ${accountInfo.totalCreatedAssets}`)
+
+    if (accountInfo.createdAssets && accountInfo.createdAssets.length > 0) {
+      printInfo('  Created Assets:')
+      for (const asset of accountInfo.createdAssets) {
+        printInfo(`    - Asset ID: ${asset.id}`)
+        if (asset.params.name) {
+          printInfo(`      Name: ${asset.params.name}`)
+        }
+        if (asset.params.unitName) {
+          printInfo(`      Unit: ${asset.params.unitName}`)
+        }
+        printInfo(`      Total: ${asset.params.total.toLocaleString('en-US')}`)
+        printInfo(`      Decimals: ${asset.params.decimals}`)
+      }
+    } else {
+      printInfo('  No assets created by this account')
+    }
+    printInfo('')
+
+    // =========================================================================
+    // Step 8: Demonstrate accountApplicationInformation() (if apps exist)
+    // =========================================================================
+    printStep(8, 'Demonstrating accountApplicationInformation(address, appId)')
+
+    if (accountInfo.appsLocalState && accountInfo.appsLocalState.length > 0) {
+      const appId = accountInfo.appsLocalState[0].id
+      printInfo(`Querying specific application info for App ID: ${appId}`)
+
+      const appInfo = await algod.accountApplicationInformation(accountAddress, appId)
+      printSuccess('Application-specific information retrieved!')
+      printInfo(`  Round: ${appInfo.round.toLocaleString('en-US')}`)
+      if (appInfo.appLocalState) {
+        printInfo(`  Has Local State: Yes`)
+        printInfo(`    Schema: ${appInfo.appLocalState.schema.numUints} uints, ${appInfo.appLocalState.schema.numByteSlices} byte slices`)
+      }
+      if (appInfo.createdApp) {
+        printInfo(`  Is Creator: Yes`)
+      }
+    } else if (accountInfo.createdApps && accountInfo.createdApps.length > 0) {
+      const appId = accountInfo.createdApps[0].id
+      printInfo(`Querying specific application info for App ID: ${appId}`)
+
+      const appInfo = await algod.accountApplicationInformation(accountAddress, appId)
+      printSuccess('Application-specific information retrieved!')
+      printInfo(`  Round: ${appInfo.round.toLocaleString('en-US')}`)
+      if (appInfo.createdApp) {
+        printInfo(`  Is Creator: Yes`)
+        printInfo(`    Approval Program Size: ${appInfo.createdApp.approvalProgram?.length ?? 0} bytes`)
+        printInfo(`    Clear Program Size: ${appInfo.createdApp.clearStateProgram?.length ?? 0} bytes`)
+      }
+    } else {
+      printInfo('No applications to query.')
+      printInfo('accountApplicationInformation() requires an app ID that the account has interacted with.')
+      printInfo('It returns both local state (if opted in) and global state (if creator).')
+    }
+    printInfo('')
+
+    // =========================================================================
+    // Step 9: Demonstrate accountAssetInformation() (if assets exist)
+    // =========================================================================
+    printStep(9, 'Demonstrating accountAssetInformation(address, assetId)')
+
+    if (accountInfo.assets && accountInfo.assets.length > 0) {
+      const assetId = accountInfo.assets[0].assetId
+      printInfo(`Querying specific asset info for Asset ID: ${assetId}`)
+
+      const assetInfo = await algod.accountAssetInformation(accountAddress, assetId)
+      printSuccess('Asset-specific information retrieved!')
+      printInfo(`  Round: ${assetInfo.round.toLocaleString('en-US')}`)
+      if (assetInfo.assetHolding) {
+        printInfo(`  Holding Amount: ${assetInfo.assetHolding.amount.toLocaleString('en-US')}`)
+        printInfo(`  Is Frozen: ${assetInfo.assetHolding.isFrozen}`)
+      }
+      if (assetInfo.createdAsset) {
+        printInfo(`  Is Creator: Yes`)
+        printInfo(`    Total Supply: ${assetInfo.createdAsset.total.toLocaleString('en-US')}`)
+      }
+    } else if (accountInfo.createdAssets && accountInfo.createdAssets.length > 0) {
+      const assetId = accountInfo.createdAssets[0].id
+      printInfo(`Querying specific asset info for Asset ID: ${assetId}`)
+
+      const assetInfo = await algod.accountAssetInformation(accountAddress, assetId)
+      printSuccess('Asset-specific information retrieved!')
+      printInfo(`  Round: ${assetInfo.round.toLocaleString('en-US')}`)
+      if (assetInfo.assetHolding) {
+        printInfo(`  Holding Amount: ${assetInfo.assetHolding.amount.toLocaleString('en-US')}`)
+      }
+      if (assetInfo.createdAsset) {
+        printInfo(`  Is Creator: Yes`)
+        printInfo(`    Total Supply: ${assetInfo.createdAsset.total.toLocaleString('en-US')}`)
+        printInfo(`    Decimals: ${assetInfo.createdAsset.decimals}`)
+      }
+    } else {
+      printInfo('No assets to query.')
+      printInfo('accountAssetInformation() requires an asset ID that the account has interacted with.')
+      printInfo('It returns both the holding info and asset params (if creator).')
+    }
+  } catch (error) {
+    printError(`Failed to get account information: ${error instanceof Error ? error.message : String(error)}`)
+    process.exit(1)
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+  printInfo('This example demonstrated:')
+  printInfo('  1. accountInformation(address) - Get full account details')
+  printInfo('  2. Key fields: address, amount, minBalance, status, round')
+  printInfo('  3. Asset holdings (assets array)')
+  printInfo('  4. Created applications (createdApps array)')
+  printInfo('  5. Opted-in applications (appsLocalState array)')
+  printInfo('  6. Created assets (createdAssets array)')
+  printInfo('  7. accountApplicationInformation(address, appId) - Get specific app info')
+  printInfo('  8. accountAssetInformation(address, assetId) - Get specific asset info')
+  printInfo('')
+  printInfo('Key Account fields:')
+  printInfo('  - address: The account public key')
+  printInfo('  - amount: Total MicroAlgos in the account')
+  printInfo('  - minBalance: Minimum balance required based on usage')
+  printInfo('  - status: "Offline", "Online", or "NotParticipating"')
+  printInfo('  - round: The round this information is valid for')
+  printInfo('  - assets: Array of AssetHolding (assetId, amount, isFrozen)')
+  printInfo('  - appsLocalState: Array of ApplicationLocalState (opted-in apps)')
+  printInfo('  - createdApps: Array of Application (apps created by this account)')
+  printInfo('  - createdAssets: Array of Asset (ASAs created by this account)')
+  printInfo('')
+  printInfo('Use cases:')
+  printInfo('  - Check account balance before transactions')
+  printInfo('  - Verify minimum balance requirements')
+  printInfo('  - Enumerate assets held or created by an account')
+  printInfo('  - Check application opt-in status')
+  printInfo('  - Query specific asset or app details for an account')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Algod Client
+
+- [Node Health and Status](/docs/algokit-utils/typescript/latest/examples/algod-client/01-node-health-status/)
+- [Version and Genesis Information](/docs/algokit-utils/typescript/latest/examples/algod-client/02-version-genesis/)
+- [Ledger Supply Information](/docs/algokit-utils/typescript/latest/examples/algod-client/03-ledger-supply/)
+- **Account Information**
+- [Transaction Parameters](/docs/algokit-utils/typescript/latest/examples/algod-client/05-transaction-params/)
+- [Send and Confirm Transaction](/docs/algokit-utils/typescript/latest/examples/algod-client/06-send-transaction/)
+- [Pending Transactions](/docs/algokit-utils/typescript/latest/examples/algod-client/07-pending-transactions/)
+- [Block Data](/docs/algokit-utils/typescript/latest/examples/algod-client/08-block-data/)
+- [Asset Information](/docs/algokit-utils/typescript/latest/examples/algod-client/09-asset-info/)
+- [Application Information](/docs/algokit-utils/typescript/latest/examples/algod-client/10-application-info/)
+- [Application Boxes](/docs/algokit-utils/typescript/latest/examples/algod-client/11-application-boxes/)
+- [TEAL Compile and Disassemble](/docs/algokit-utils/typescript/latest/examples/algod-client/12-teal-compile/)
+- [Transaction Simulation](/docs/algokit-utils/typescript/latest/examples/algod-client/13-simulation/)
+- [Ledger State Deltas](/docs/algokit-utils/typescript/latest/examples/algod-client/14-state-deltas/)
+- [Transaction Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/15-transaction-proof/)
+- [Light Block Header Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/16-lightblock-proof/)
+- [State Proof](/docs/algokit-utils/typescript/latest/examples/algod-client/17-state-proof/)
+- [DevMode Timestamp Offset](/docs/algokit-utils/typescript/latest/examples/algod-client/18-devmode-timestamp/)
+- [Sync Round Management](/docs/algokit-utils/typescript/latest/examples/algod-client/19-sync-round/)

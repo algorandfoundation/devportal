@@ -1,0 +1,149 @@
+---
+title: "Health Check Utility"
+description: "This example demonstrates how to use checkServerHealth() to verify mock server availability before running tests. The function checks if a server is reachable by performing a health check request."
+sidebar:
+  order: 3
+---
+
+[← Back to Testing](/docs/algokit-utils/typescript/latest/examples/testing/)
+
+## Description
+
+This example demonstrates how to use checkServerHealth() to verify mock server availability before running tests. The function checks if a server is reachable by performing a health check request.
+ This example works whether or not mock servers are running - it just reports the status of each server.
+
+## Prerequisites
+
+- No LocalNet required
+- Mock server optional (reports status either way)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example testing/03-health-check.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/testing/03-health-check.ts)
+
+```typescript title="03-health-check.ts"
+/**
+ * Example: Health Check Utility
+ *
+ * This example demonstrates how to use checkServerHealth() to verify
+ * mock server availability before running tests. The function checks
+ * if a server is reachable by performing a health check request.
+ *
+ * This example works whether or not mock servers are running - it just
+ * reports the status of each server.
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ * - Mock server optional (reports status either way)
+ */
+
+import {
+  checkServerHealth,
+  EXTERNAL_URL_ENV_VARS,
+  MOCK_PORTS,
+} from '@algorandfoundation/algokit-utils/testing'
+import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+/**
+ * Get the URL for a mock server, checking environment variable first,
+ * then falling back to localhost with default port.
+ */
+function getServerUrl(clientType: 'algod' | 'indexer' | 'kmd'): string {
+  const envVar = EXTERNAL_URL_ENV_VARS[clientType]
+  const envValue = process.env[envVar]
+  if (envValue) {
+    return envValue
+  }
+  return `http://localhost:${MOCK_PORTS[clientType].host}`
+}
+
+async function main() {
+  printHeader('Health Check Utility Example')
+
+  // Step 1: Explain checkServerHealth function
+  printStep(1, 'checkServerHealth() - Check if a server is reachable')
+  printInfo('Function signature: checkServerHealth(url: string, timeout?: number): Promise<boolean>')
+  printInfo('  - url: The base URL of the server to check')
+  printInfo('  - timeout: Maximum time to wait (default: 5000ms)')
+  printInfo('  - Returns: true if server responds, false otherwise')
+  printInfo('')
+  printInfo('The function sends a request to /health endpoint and considers')
+  printInfo('any HTTP response (including 500) as the server being reachable.')
+
+  // Step 2: Check algod mock server with default timeout
+  printStep(2, 'Check algod mock server (default 5000ms timeout)')
+  const algodUrl = getServerUrl('algod')
+  printInfo(`URL: ${algodUrl}`)
+  printInfo(`  (from ${EXTERNAL_URL_ENV_VARS.algod} or localhost:${MOCK_PORTS.algod.host})`)
+  const algodHealthy = await checkServerHealth(algodUrl)
+  printInfo(`Status: ${algodHealthy ? '✓ Server is reachable' : '✗ Server is not reachable'}`)
+
+  // Step 3: Check indexer mock server with custom timeout
+  printStep(3, 'Check indexer mock server (custom 2000ms timeout)')
+  const indexerUrl = getServerUrl('indexer')
+  printInfo(`URL: ${indexerUrl}`)
+  printInfo(`  (from ${EXTERNAL_URL_ENV_VARS.indexer} or localhost:${MOCK_PORTS.indexer.host})`)
+  const indexerHealthy = await checkServerHealth(indexerUrl, 2000)
+  printInfo(`Status: ${indexerHealthy ? '✓ Server is reachable' : '✗ Server is not reachable'}`)
+
+  // Step 4: Check kmd mock server with custom timeout
+  printStep(4, 'Check kmd mock server (custom 2000ms timeout)')
+  const kmdUrl = getServerUrl('kmd')
+  printInfo(`URL: ${kmdUrl}`)
+  printInfo(`  (from ${EXTERNAL_URL_ENV_VARS.kmd} or localhost:${MOCK_PORTS.kmd.host})`)
+  const kmdHealthy = await checkServerHealth(kmdUrl, 2000)
+  printInfo(`Status: ${kmdHealthy ? '✓ Server is reachable' : '✗ Server is not reachable'}`)
+
+  // Step 5: Summary of health check results
+  printStep(5, 'Health Check Summary')
+  printInfo('Server Status:')
+  printInfo(`  - algod   (${algodUrl}): ${algodHealthy ? 'REACHABLE' : 'NOT REACHABLE'}`)
+  printInfo(`  - indexer (${indexerUrl}): ${indexerHealthy ? 'REACHABLE' : 'NOT REACHABLE'}`)
+  printInfo(`  - kmd     (${kmdUrl}): ${kmdHealthy ? 'REACHABLE' : 'NOT REACHABLE'}`)
+  printInfo('')
+
+  // Provide helpful guidance based on results
+  const anyServerUp = algodHealthy || indexerHealthy || kmdHealthy
+  const allServersUp = algodHealthy && indexerHealthy && kmdHealthy
+
+  if (allServersUp) {
+    printInfo('All mock servers are running and ready for testing!')
+  } else if (anyServerUp) {
+    printInfo('Some mock servers are running. Start the others if needed for your tests.')
+  } else {
+    printInfo('No mock servers are currently running.')
+    printInfo('To start mock servers for local development:')
+    printInfo('  1. Use algokit-polytest CLI to start servers')
+    printInfo('  2. Or set environment variables to external server URLs:')
+    printInfo(`     export ${EXTERNAL_URL_ENV_VARS.algod}=http://your-server:8000`)
+    printInfo(`     export ${EXTERNAL_URL_ENV_VARS.indexer}=http://your-server:8002`)
+    printInfo(`     export ${EXTERNAL_URL_ENV_VARS.kmd}=http://your-server:8001`)
+  }
+
+  printSuccess('Health check example completed!')
+}
+
+main().catch(console.error)
+
+```
+
+---
+
+### Other examples in Testing
+
+- [Configuration Constants](/docs/algokit-utils/typescript/latest/examples/testing/01-configuration-constants/)
+- [Test Data Constants](/docs/algokit-utils/typescript/latest/examples/testing/02-test-data-constants/)
+- **Health Check Utility**
+- [Mock Server Connection](/docs/algokit-utils/typescript/latest/examples/testing/04-mock-server-connection/)
+- [Vitest Global Setup Factory](/docs/algokit-utils/typescript/latest/examples/testing/05-global-setup-factory/)
+- [Pre-built Global Setups](/docs/algokit-utils/typescript/latest/examples/testing/06-prebuilt-global-setups/)
+- [Integration Example - Complete Test Setup](/docs/algokit-utils/typescript/latest/examples/testing/07-integration-example/)

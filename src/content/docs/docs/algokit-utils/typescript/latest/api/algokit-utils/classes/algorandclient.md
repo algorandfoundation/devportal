@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AlgorandClient'
+title: "AlgorandClient"
 ---
 
-Defined in: [src/algorand-client.ts:19](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L19)
+Defined in: [src/algorand-client.ts:19](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L19)
 
 A client that brokers easy access to Algorand functionality.
 
@@ -17,7 +17,7 @@ A client that brokers easy access to Algorand functionality.
 
 > **get** **account**(): [`AccountManager`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/accountmanager/)
 
-Defined in: [src/algorand-client.ts:185](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L185)
+Defined in: [src/algorand-client.ts:185](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L185)
 
 Get or create accounts that can sign transactions.
 
@@ -33,7 +33,7 @@ const accountManager = AlgorandClient.mainNet().account;
 
 The `AccountManager` instance.
 
----
+***
 
 ### app
 
@@ -41,7 +41,7 @@ The `AccountManager` instance.
 
 > **get** **app**(): [`AppManager`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appmanager/)
 
-Defined in: [src/algorand-client.ts:205](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L205)
+Defined in: [src/algorand-client.ts:205](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L205)
 
 Methods for interacting with apps.
 
@@ -57,7 +57,7 @@ const appManager = AlgorandClient.mainNet().app;
 
 The `AppManager` instance.
 
----
+***
 
 ### appDeployer
 
@@ -65,7 +65,7 @@ The `AppManager` instance.
 
 > **get** **appDeployer**(): [`AppDeployer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/appdeployer/)
 
-Defined in: [src/algorand-client.ts:215](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L215)
+Defined in: [src/algorand-client.ts:215](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L215)
 
 Methods for deploying apps and managing app deployment metadata.
 
@@ -81,7 +81,7 @@ const deployer = AlgorandClient.mainNet().appDeployer;
 
 The `AppDeployer` instance.
 
----
+***
 
 ### asset
 
@@ -89,7 +89,7 @@ The `AppDeployer` instance.
 
 > **get** **asset**(): [`AssetManager`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/assetmanager/)
 
-Defined in: [src/algorand-client.ts:195](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L195)
+Defined in: [src/algorand-client.ts:195](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L195)
 
 Methods for interacting with assets.
 
@@ -105,7 +105,7 @@ const assetManager = AlgorandClient.mainNet().asset;
 
 The `AssetManager` instance.
 
----
+***
 
 ### client
 
@@ -113,7 +113,7 @@ The `AssetManager` instance.
 
 > **get** **client**(): [`ClientManager`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/clientmanager/)
 
-Defined in: [src/algorand-client.ts:175](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L175)
+Defined in: [src/algorand-client.ts:175](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L175)
 
 Get clients, including algosdk clients and app clients.
 
@@ -129,7 +129,7 @@ const clientManager = AlgorandClient.mainNet().client;
 
 The `ClientManager` instance.
 
----
+***
 
 ### createTransaction
 
@@ -137,7 +137,7 @@ The `ClientManager` instance.
 
 > **get** **createTransaction**(): [`AlgorandClientTransactionCreator`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclienttransactioncreator/)
 
-Defined in: [src/algorand-client.ts:293](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L293)
+Defined in: [src/algorand-client.ts:293](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L293)
 
 Methods for creating a transaction.
 
@@ -145,10 +145,10 @@ Methods for creating a transaction.
 
 ```ts
 const payment = await AlgorandClient.mainNet().createTransaction.payment({
-  sender: 'SENDERADDRESS',
-  receiver: 'RECEIVERADDRESS',
-  amount: algo(1),
-});
+ sender: "SENDERADDRESS",
+ receiver: "RECEIVERADDRESS",
+ amount: algo(1)
+})
 ```
 
 ##### Returns
@@ -157,7 +157,7 @@ const payment = await AlgorandClient.mainNet().createTransaction.payment({
 
 The `AlgorandClientTransactionCreator` instance.
 
----
+***
 
 ### network
 
@@ -165,7 +165,7 @@ The `AlgorandClientTransactionCreator` instance.
 
 > **get** **network**(): [`NetworkManager`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/networkmanager/)
 
-Defined in: [src/algorand-client.ts:235](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L235)
+Defined in: [src/algorand-client.ts:235](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L235)
 
 Methods for interacting with the network.
 Provides utilities for querying blockchain state and waiting for specific conditions.
@@ -174,13 +174,13 @@ Provides utilities for querying blockchain state and waiting for specific condit
 
 ```typescript
 // Get last round
-const lastRound = await algorand.network.getLastRound();
+const lastRound = await algorand.network.getLastRound()
 
 // Wait for a specific round
-await algorand.network.waitUntilRound(1000n);
+await algorand.network.waitUntilRound(1000n)
 
 // LocalNet-specific: block warp
-await algorand.network.localNet.blockWarp(100n);
+await algorand.network.localNet.blockWarp(100n)
 ```
 
 ##### Returns
@@ -189,7 +189,7 @@ await algorand.network.localNet.blockWarp(100n);
 
 The `NetworkManager` instance.
 
----
+***
 
 ### send
 
@@ -197,7 +197,7 @@ The `NetworkManager` instance.
 
 > **get** **send**(): [`AlgorandClientTransactionSender`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclienttransactionsender/)
 
-Defined in: [src/algorand-client.ts:279](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L279)
+Defined in: [src/algorand-client.ts:279](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L279)
 
 Methods for sending a transaction.
 
@@ -205,10 +205,10 @@ Methods for sending a transaction.
 
 ```ts
 const result = await AlgorandClient.mainNet().send.payment({
-  sender: 'SENDERADDRESS',
-  receiver: 'RECEIVERADDRESS',
-  amount: algo(1),
-});
+ sender: "SENDERADDRESS",
+ receiver: "RECEIVERADDRESS",
+ amount: algo(1)
+})
 ```
 
 ##### Returns
@@ -223,7 +223,7 @@ The `AlgorandClientTransactionSender` instance.
 
 > **getSuggestedParams**(): `Promise`\<\{ `consensusVersion`: `string`; `fee`: `bigint`; `firstValid`: `bigint`; `flatFee`: `boolean`; `genesisHash`: `Uint8Array`; `genesisId`: `string`; `lastValid`: `bigint`; `minFee`: `bigint`; \}\>
 
-Defined in: [src/algorand-client.ts:154](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L154)
+Defined in: [src/algorand-client.ts:154](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L154)
 
 Get suggested params for a transaction (either cached or from algod if the cache is stale or empty)
 
@@ -239,13 +239,13 @@ The suggested transaction parameters.
 const params = await AlgorandClient.mainNet().getSuggestedParams();
 ```
 
----
+***
 
 ### newGroup()
 
 > **newGroup**(`composerConfig?`): [`TransactionComposer`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/transactioncomposer/)
 
-Defined in: [src/algorand-client.ts:257](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L257)
+Defined in: [src/algorand-client.ts:257](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L257)
 
 Start a new `TransactionComposer` transaction group
 
@@ -271,13 +271,13 @@ A new instance of `TransactionComposer`.
 
 [Full working example](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.spec.ts)
 
----
+***
 
 ### registerErrorTransformer()
 
 > **registerErrorTransformer**(`transformer`): `void`
 
-Defined in: [src/algorand-client.ts:243](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L243)
+Defined in: [src/algorand-client.ts:243](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L243)
 
 Register a function that will be used to transform an error caught when simulating or executing
 composed transaction groups made from `newGroup`
@@ -292,13 +292,13 @@ composed transaction groups made from `newGroup`
 
 `void`
 
----
+***
 
 ### setDefaultSigner()
 
 > **setDefaultSigner**(`signer`): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:77](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L77)
+Defined in: [src/algorand-client.ts:77](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L77)
 
 Sets the default signer to use if no other signer is specified.
 
@@ -319,17 +319,17 @@ The `AlgorandClient` so method calls can be chained
 #### Example
 
 ```typescript
-const signer = new SigningAccount(account, account.addr);
-const algorand = AlgorandClient.mainNet().setDefaultSigner(signer);
+const signer = new SigningAccount(account, account.addr)
+const algorand = AlgorandClient.mainNet().setDefaultSigner(signer)
 ```
 
----
+***
 
 ### setDefaultValidityWindow()
 
 > **setDefaultValidityWindow**(`validityWindow`): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:62](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L62)
+Defined in: [src/algorand-client.ts:62](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L62)
 
 Sets the default validity window for transactions.
 
@@ -353,13 +353,13 @@ The `AlgorandClient` so method calls can be chained
 const algorand = AlgorandClient.mainNet().setDefaultValidityWindow(1000);
 ```
 
----
+***
 
 ### setSigner()
 
 > **setSigner**(`sender`, `signer`): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:113](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L113)
+Defined in: [src/algorand-client.ts:113](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L113)
 
 Tracks the given signer against the given sender for later signing.
 
@@ -386,17 +386,17 @@ The `AlgorandClient` so method calls can be chained
 #### Example
 
 ```typescript
-const signer = new SigningAccount(account, account.addr);
-const algorand = AlgorandClient.mainNet().setSigner(signer.addr, signer.signer);
+const signer = new SigningAccount(account, account.addr)
+const algorand = AlgorandClient.mainNet().setSigner(signer.addr, signer.signer)
 ```
 
----
+***
 
 ### setSignerFromAccount()
 
 > **setSignerFromAccount**(`account`): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:97](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L97)
+Defined in: [src/algorand-client.ts:97](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L97)
 
 Tracks the given account (object that encapsulates an address and a signer) for later signing.
 
@@ -405,7 +405,7 @@ Tracks the given account (object that encapsulates an address and a signer) for 
 ##### account
 
 The account to register, which can be a `AddressWithSigner` or
-a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount`
+ a `algosdk.Account`, `algosdk.LogicSigAccount`, `SigningAccount` or `MultisigAccount`
 
 [`MultisigAccount`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/multisigaccount/) | [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) | [`LogicSigAccount`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsigaccount/)
 
@@ -419,25 +419,20 @@ The `AlgorandClient` so method calls can be chained
 
 ```typescript
 const accountManager = AlgorandClient.mainNet()
-  .setSignerFromAccount(algosdk.generateAccount())
-  .setSignerFromAccount(new algosdk.LogicSigAccount(program, args))
-  .setSignerFromAccount(new SigningAccount(account, sender))
-  .setSignerFromAccount(
-    new MultisigAccount({ version: 1, threshold: 1, addrs: ['ADDRESS1...', 'ADDRESS2...'] }, [
-      account1,
-      account2,
-    ]),
-  )
-  .setSignerFromAccount({ addr: 'SENDERADDRESS', signer: transactionSigner });
+ .setSignerFromAccount(algosdk.generateAccount())
+ .setSignerFromAccount(new algosdk.LogicSigAccount(program, args))
+ .setSignerFromAccount(new SigningAccount(account, sender))
+ .setSignerFromAccount(new MultisigAccount({version: 1, threshold: 1, addrs: ["ADDRESS1...", "ADDRESS2..."]}, [account1, account2]))
+ .setSignerFromAccount({addr: "SENDERADDRESS", signer: transactionSigner})
 ```
 
----
+***
 
 ### setSuggestedParamsCache()
 
 > **setSuggestedParamsCache**(`suggestedParams`, `until?`): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:128](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L128)
+Defined in: [src/algorand-client.ts:128](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L128)
 
 Sets a cache value to use for suggested transaction params.
 
@@ -509,19 +504,16 @@ The `AlgorandClient` so method calls can be chained
 #### Example
 
 ```typescript
-const algorand = AlgorandClient.mainNet().setSuggestedParamsCache(
-  suggestedParams,
-  new Date(+new Date() + 3_600_000),
-);
+const algorand = AlgorandClient.mainNet().setSuggestedParamsCache(suggestedParams, new Date(+new Date() + 3_600_000))
 ```
 
----
+***
 
 ### setSuggestedParamsCacheTimeout()
 
 > **setSuggestedParamsCacheTimeout**(`timeout`): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:143](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L143)
+Defined in: [src/algorand-client.ts:143](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L143)
 
 Sets the timeout for caching suggested params.
 
@@ -542,16 +534,16 @@ The `AlgorandClient` so method calls can be chained
 #### Example
 
 ```typescript
-const algorand = AlgorandClient.mainNet().setSuggestedParamsCacheTimeout(10_000);
+const algorand = AlgorandClient.mainNet().setSuggestedParamsCacheTimeout(10_000)
 ```
 
----
+***
 
 ### unregisterErrorTransformer()
 
 > **unregisterErrorTransformer**(`transformer`): `void`
 
-Defined in: [src/algorand-client.ts:247](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L247)
+Defined in: [src/algorand-client.ts:247](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L247)
 
 #### Parameters
 
@@ -563,13 +555,13 @@ Defined in: [src/algorand-client.ts:247](https://github.com/larkiny/algokit-util
 
 `void`
 
----
+***
 
 ### defaultLocalNet()
 
 > `static` **defaultLocalNet**(): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:306](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L306)
+Defined in: [src/algorand-client.ts:306](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L306)
 
 Creates an `AlgorandClient` pointing at default LocalNet ports and API token.
 
@@ -589,13 +581,13 @@ An instance of the `AlgorandClient`.
 
 [Full working example](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.spec.ts)
 
----
+***
 
 ### fromClients()
 
 > `static` **fromClients**(`clients`): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:349](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L349)
+Defined in: [src/algorand-client.ts:349](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L349)
 
 Creates an `AlgorandClient` pointing to the given client(s).
 
@@ -619,15 +611,15 @@ An instance of the `AlgorandClient`.
 const algorand = AlgorandClient.fromClients({ algod, indexer, kmd });
 ```
 
----
+***
 
 ### fromConfig()
 
 > `static` **fromConfig**(`config`): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:383](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L383)
+Defined in: [src/algorand-client.ts:383](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L383)
 
-Creates an `AlgorandClient` from the given config.
+Creates  an `AlgorandClient` from the given config.
 
 #### Parameters
 
@@ -649,13 +641,13 @@ An instance of the `AlgorandClient`.
 const client = AlgorandClient.fromConfig({ algodConfig, indexerConfig, kmdConfig });
 ```
 
----
+***
 
 ### fromEnvironment()
 
 > `static` **fromEnvironment**(): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:372](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L372)
+Defined in: [src/algorand-client.ts:372](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L372)
 
 Creates an `AlgorandClient` loading the configuration from environment variables.
 
@@ -684,13 +676,13 @@ An instance of the `AlgorandClient`.
 const client = AlgorandClient.fromEnvironment();
 ```
 
----
+***
 
 ### mainNet()
 
 > `static` **mainNet**(): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:334](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L334)
+Defined in: [src/algorand-client.ts:334](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L334)
 
 Creates an `AlgorandClient` pointing at MainNet using AlgoNode.
 
@@ -706,13 +698,13 @@ An instance of the `AlgorandClient`.
 const algorand = AlgorandClient.mainNet();
 ```
 
----
+***
 
 ### testNet()
 
 > `static` **testNet**(): `AlgorandClient`
 
-Defined in: [src/algorand-client.ts:320](https://github.com/larkiny/algokit-utils-ts/blob/main/src/algorand-client.ts#L320)
+Defined in: [src/algorand-client.ts:320](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/algorand-client.ts#L320)
 
 Creates an `AlgorandClient` pointing at TestNet using AlgoNode.
 

@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'getAccountTransactionSigner'
+title: "getAccountTransactionSigner"
 ---
 
 > `const` **getAccountTransactionSigner**: (`val`) => [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
-Defined in: [src/account-manager.ts:33](https://github.com/larkiny/algokit-utils-ts/blob/main/src/account-manager.ts#L33)
+Defined in: [src/account-manager.ts:33](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/account-manager.ts#L33)
 
 ## Parameters
 

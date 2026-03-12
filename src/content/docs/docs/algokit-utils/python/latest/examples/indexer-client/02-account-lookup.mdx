@@ -1,0 +1,244 @@
+---
+title: "Account Lookup"
+description: "This example demonstrates how to lookup account information using the IndexerClient lookup_account_by_id() and search_for_accounts() methods."
+sidebar:
+  order: 2
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/python/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to lookup account information using the IndexerClient lookup_account_by_id() and search_for_accounts() methods.
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python indexer_client/02_account_lookup.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/indexer_client/02_account_lookup.py)
+
+```python title="02_account_lookup.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Account Lookup
+
+This example demonstrates how to lookup account information using
+the IndexerClient lookup_account_by_id() and search_for_accounts() methods.
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algorand_client,
+    create_indexer_client,
+    format_micro_algo,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+
+def main() -> None:
+    print_header("Account Lookup Example")
+
+    # Create clients
+    indexer = create_indexer_client()
+    algorand = create_algorand_client()
+
+    # =========================================================================
+    # Step 1: Get a test account from LocalNet
+    # =========================================================================
+    print_step(1, "Getting test account from LocalNet dispenser")
+
+    try:
+        dispenser = algorand.account.localnet_dispenser()
+        test_account_address = dispenser.addr
+        print_success(f"Using dispenser account: {shorten_address(test_account_address)}")
+    except Exception as e:
+        print_error(f"Failed to get dispenser account: {e}")
+        print_info("")
+        print_info("Make sure LocalNet is running: algokit localnet start")
+        return
+
+    # =========================================================================
+    # Step 2: Lookup account by ID
+    # =========================================================================
+    print_step(2, "Looking up account with lookup_account_by_id()")
+
+    try:
+        # lookup_account_by_id() returns detailed account information
+        result = indexer.lookup_account_by_id(test_account_address)
+        account = result.account
+
+        print_success("Account found!")
+        print_info("")
+        print_info("Account details:")
+        print_info(f"  - address: {account.address}")
+        print_info(f"  - amount: {format_micro_algo(account.amount)}")
+        print_info(f"  - amount_without_pending_rewards: {format_micro_algo(account.amount_without_pending_rewards)}")
+        print_info(f"  - min_balance: {format_micro_algo(account.min_balance)}")
+        print_info(f"  - status: {account.status}")
+        print_info(f"  - round: {account.round_}")
+        print_info("")
+        print_info("Additional account info:")
+        print_info(f"  - pending_rewards: {format_micro_algo(account.pending_rewards)}")
+        print_info(f"  - rewards: {format_micro_algo(account.rewards)}")
+        print_info(f"  - total_apps_opted_in: {account.total_apps_opted_in}")
+        print_info(f"  - total_assets_opted_in: {account.total_assets_opted_in}")
+        print_info(f"  - total_created_apps: {account.total_created_apps}")
+        print_info(f"  - total_created_assets: {account.total_created_assets}")
+        print_info("")
+        print_info(f"Query performed at round: {result.current_round}")
+    except Exception as e:
+        print_error(f"Account lookup failed: {e}")
+
+    # =========================================================================
+    # Step 3: Handle account not found
+    # =========================================================================
+    print_step(3, "Handling account not found scenario")
+
+    # Generate a random address that likely does not exist on LocalNet
+    random_account = algorand.account.random()
+    non_existent_address = random_account.addr
+
+    print_info(f"Attempting to lookup non-existent account: {shorten_address(non_existent_address)}")
+
+    try:
+        indexer.lookup_account_by_id(non_existent_address)
+        print_info("Account was unexpectedly found")
+    except Exception as e:
+        error_message = str(e)
+
+        # Check if the error indicates account not found
+        error_lower = error_message.lower()
+        is_not_found_error = "no accounts found" in error_lower or "404" in error_message or "not found" in error_lower
+        if is_not_found_error:
+            print_success("Correctly received 'account not found' error")
+            print_info(f"  Error: {error_message}")
+        else:
+            print_error(f"Unexpected error: {error_message}")
+
+    # =========================================================================
+    # Step 4: Search for accounts with filters
+    # =========================================================================
+    print_step(4, "Searching for accounts with search_for_accounts()")
+
+    try:
+        # search_for_accounts() allows searching with various filters
+        # Here we search for accounts with balance greater than 1 ALGO (1,000,000 µALGO)
+        search_result = indexer.search_for_accounts(
+            currency_greater_than=1_000_000,
+            limit=5,
+        )
+
+        print_success(f"Found {len(search_result.accounts)} account(s) with balance > 1 ALGO")
+        print_info("")
+
+        if len(search_result.accounts) > 0:
+            print_info("Accounts found:")
+            for account in search_result.accounts:
+                addr_short = shorten_address(account.address)
+                amount_formatted = format_micro_algo(account.amount)
+                print_info(f"  - {addr_short}: {amount_formatted} (status: {account.status})")
+
+        print_info("")
+        print_info(f"Query performed at round: {search_result.current_round}")
+
+        # Check if there are more results available
+        if search_result.next_token:
+            print_info(f"More results available (use next_token: {search_result.next_token})")
+    except Exception as e:
+        print_error(f"Account search failed: {e}")
+
+    # =========================================================================
+    # Step 5: Search with additional filters
+    # =========================================================================
+    print_step(5, "Searching with additional filter options")
+
+    try:
+        # Search for accounts that are online (participating in consensus)
+        # Note: On LocalNet, most accounts are typically offline
+        online_result = indexer.search_for_accounts(
+            auth_addr=None,  # No specific auth address filter
+            limit=3,
+        )
+
+        print_info("Searching for accounts with default filters...")
+        print_info(f"Found {len(online_result.accounts)} account(s)")
+
+        if len(online_result.accounts) > 0:
+            for account in online_result.accounts:
+                addr_short = shorten_address(account.address)
+                amount_formatted = format_micro_algo(account.amount)
+                print_info(f"  - {addr_short}: {amount_formatted}")
+        else:
+            print_info("  No accounts found matching the criteria")
+    except Exception as e:
+        print_error(f"Account search failed: {e}")
+
+    # =========================================================================
+    # Summary
+    # =========================================================================
+    print_header("Summary")
+    print_info("This example demonstrated:")
+    print_info("  1. lookup_account_by_id(address) - Get detailed account information")
+    print_info("  2. Handling 'account not found' errors gracefully")
+    print_info("  3. search_for_accounts() - Search accounts with filters")
+    print_info("")
+    print_info("Key lookup_account_by_id() response fields:")
+    print_info("  - address: The account public key")
+    print_info("  - amount: Total MicroAlgos in the account")
+    print_info("  - amount_without_pending_rewards: Balance excluding pending rewards")
+    print_info("  - min_balance: Minimum balance required (based on assets/apps)")
+    print_info("  - status: Online, Offline, or NotParticipating")
+    print_info("  - round: The round for which this information is relevant")
+    print_info("")
+    print_info("Key search_for_accounts() filter parameters:")
+    print_info("  - currency_greater_than: Filter by minimum balance")
+    print_info("  - currency_less_than: Filter by maximum balance")
+    print_info("  - limit: Maximum number of results to return")
+    print_info("  - asset_id: Filter by accounts holding a specific asset")
+    print_info("  - application_id: Filter by accounts opted into an app")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/python/latest/examples/indexer-client/01-health-check/)
+- **Account Lookup**
+- [Account Assets](/docs/algokit-utils/python/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/python/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/06-transaction-lookup/)
+- [Transaction Search](/docs/algokit-utils/python/latest/examples/indexer-client/07-transaction-search/)
+- [Asset Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/python/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/python/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/python/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/python/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/python/latest/examples/indexer-client/16-pagination/)

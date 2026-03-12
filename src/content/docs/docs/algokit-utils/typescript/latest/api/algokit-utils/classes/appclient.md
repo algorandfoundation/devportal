@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'AppClient'
+title: "AppClient"
 ---
 
-Defined in: [src/app-client.ts:434](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L434)
+Defined in: [src/app-client.ts:434](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L434)
 
 ARC-56/ARC-32 application client that allows you to manage calls and
 state for a specific deployed instance of an app (with a known app ID).
@@ -20,7 +20,7 @@ state for a specific deployed instance of an app (with a known app ID).
 
 > **new AppClient**(`params`): `AppClient`
 
-Defined in: [src/app-client.ts:473](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L473)
+Defined in: [src/app-client.ts:473](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L473)
 
 Create a new app client.
 
@@ -40,7 +40,7 @@ The `AppClient` instance
 
 #### Example
 
-````typescript
+```typescript
 const appClient = new AppClient({
   appId: 12345678n,
   appSpec: appSpec,
@@ -55,7 +55,7 @@ const appClient = new AppClient({
 
 > **get** **algorand**(): [`AlgorandClient`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/algorandclient/)
 
-Defined in: [src/app-client.ts:640](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L640)
+Defined in: [src/app-client.ts:640](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L640)
 
 A reference to the underlying `AlgorandClient` this app client is using.
 
@@ -71,7 +71,7 @@ A reference to the underlying `AlgorandClient` this app client is using.
 
 > **get** **appAddress**(): [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [src/app-client.ts:625](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L625)
+Defined in: [src/app-client.ts:625](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L625)
 
 The app address of the app instance this client is linked to.
 
@@ -87,7 +87,7 @@ The app address of the app instance this client is linked to.
 
 > **get** **appId**(): `bigint`
 
-Defined in: [src/app-client.ts:620](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L620)
+Defined in: [src/app-client.ts:620](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L620)
 
 The ID of the app instance this client is linked to.
 
@@ -103,7 +103,7 @@ The ID of the app instance this client is linked to.
 
 > **get** **appName**(): `string`
 
-Defined in: [src/app-client.ts:630](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L630)
+Defined in: [src/app-client.ts:630](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L630)
 
 The name of the app (from the ARC-32 / ARC-56 app spec or override).
 
@@ -119,7 +119,7 @@ The name of the app (from the ARC-32 / ARC-56 app spec or override).
 
 > **get** **appSpec**(): [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/arc56contract/)
 
-Defined in: [src/app-client.ts:635](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L635)
+Defined in: [src/app-client.ts:635](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L635)
 
 The ARC-56 app spec being used
 
@@ -135,7 +135,7 @@ The ARC-56 app spec being used
 
 > **get** **createTransaction**(): `object` & `object`
 
-Defined in: [src/app-client.ts:664](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L664)
+Defined in: [src/app-client.ts:664](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L664)
 
 Create transactions for the current app
 
@@ -149,7 +149,7 @@ Create transactions for the current app
 
 > **get** **params**(): `object` & `object`
 
-Defined in: [src/app-client.ts:659](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L659)
+Defined in: [src/app-client.ts:659](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L659)
 
 Get parameters to create transactions for the current app.
 
@@ -161,16 +161,16 @@ A good mental model for this is that these parameters represent a deferred trans
 const myMethodCall = appClient.params.call({method: 'my_method', args: [123, 'hello']})
 // ...
 await algorand.send.AppMethodCall(myMethodCall)
-````
+```
 
 ```typescript
-const myMethodCall = appClient.params.call({ method: 'my_method', args: [123, 'hello'] });
-await appClient.send.call({ method: 'my_method2', args: [myMethodCall] });
+const myMethodCall = appClient.params.call({method: 'my_method', args: [123, 'hello']})
+await appClient.send.call({method: 'my_method2', args: [myMethodCall]})
 ```
 
 ##### Returns
 
----
+***
 
 ### send
 
@@ -178,13 +178,13 @@ await appClient.send.call({ method: 'my_method2', args: [myMethodCall] });
 
 > **get** **send**(): `object` & `object`
 
-Defined in: [src/app-client.ts:669](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L669)
+Defined in: [src/app-client.ts:669](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L669)
 
 Send transactions to the current app
 
 ##### Returns
 
----
+***
 
 ### state
 
@@ -192,7 +192,7 @@ Send transactions to the current app
 
 > **get** **state**(): `object`
 
-Defined in: [src/app-client.ts:674](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L674)
+Defined in: [src/app-client.ts:674](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L674)
 
 Get state (local, global, box) from the current app
 
@@ -249,8 +249,8 @@ The name of the map to read from
 `any`
 
 The key within the map (without any map prefix) as either a Buffer with the bytes or a value
-that will be converted to bytes by encoding it using the specified ABI key type
-in the ARC-56 spec
+ that will be converted to bytes by encoding it using the specified ABI key type
+ in the ARC-56 spec
 
 ###### Returns
 
@@ -329,8 +329,8 @@ The name of the map to read from
 `any`
 
 The key within the map (without any map prefix) as either a Buffer with the bytes or a value
-that will be converted to bytes by encoding it using the specified ABI key type
-in the ARC-56 spec
+ that will be converted to bytes by encoding it using the specified ABI key type
+ in the ARC-56 spec
 
 ###### appState?
 
@@ -431,8 +431,8 @@ The name of the map to read from
 `any`
 
 The key within the map (without any map prefix) as either a Buffer with the bytes or a value
-that will be converted to bytes by encoding it using the specified ABI key type
-in the ARC-56 spec
+ that will be converted to bytes by encoding it using the specified ABI key type
+ in the ARC-56 spec
 
 ###### appState?
 
@@ -474,7 +474,7 @@ Optional cached value of the current state
 
 > **clone**(`params`): `AppClient`
 
-Defined in: [src/app-client.ts:528](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L528)
+Defined in: [src/app-client.ts:528](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L528)
 
 Clone this app client with different params
 
@@ -530,16 +530,16 @@ A new app client with the altered params
 #### Example
 
 ```typescript
-const appClient2 = appClient.clone({ defaultSender: 'NEW_SENDER_ADDRESS' });
+const appClient2 = appClient.clone({ defaultSender: 'NEW_SENDER_ADDRESS' })
 ```
 
----
+***
 
 ### compile()
 
 > **compile**(`compilation?`): `Promise`\<`AppClientCompilationResult`\>
 
-Defined in: [src/app-client.ts:904](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L904)
+Defined in: [src/app-client.ts:904](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L904)
 
 Compiles the approval and clear state programs (if TEAL templates provided),
 performing any provided deploy-time parameter replacement and stores
@@ -563,13 +563,13 @@ Any compilation parameters to use
 
 The compiled code and any compilation results (including source maps)
 
----
+***
 
 ### exportSourceMaps()
 
 > **exportSourceMaps**(): `AppSourceMaps`
 
-Defined in: [src/app-client.ts:844](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L844)
+Defined in: [src/app-client.ts:844](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L844)
 
 Export the current source maps for the app.
 
@@ -579,13 +579,13 @@ Export the current source maps for the app.
 
 The source maps
 
----
+***
 
 ### exposeLogicError()
 
 > **exposeLogicError**(`e`, `isClearStateProgram?`): `Promise`\<`Error`\>
 
-Defined in: [src/app-client.ts:822](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L822)
+Defined in: [src/app-client.ts:822](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L822)
 
 Takes an error that may include a logic error from a call to the current app and re-exposes the
 error to include source code information via the source map and ARC-56 spec.
@@ -610,13 +610,13 @@ Whether or not the code was running the clear state program (defaults to approva
 
 The new error, or if there was no logic error or source map then the wrapped error with source details
 
----
+***
 
 ### fundAppAccount()
 
 > **fundAppAccount**(`params`): `Promise`\<\{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}\>
 
-Defined in: [src/app-client.ts:703](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L703)
+Defined in: [src/app-client.ts:703](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L703)
 
 Funds Algo into the app account for this app.
 
@@ -640,7 +640,7 @@ Amount to send
 
 If given, close the sender account and send the remaining balance to this address
 
-_Warning:_ Be careful with this parameter as it can lead to loss of funds if not used correctly.
+*Warning:* Be careful with this parameter as it can lead to loss of funds if not used correctly.
 
 ###### coverAppCallInnerTransactionFees?
 
@@ -676,7 +676,7 @@ The last round this transaction is valid. It is recommended to use `validityWind
 Prevent multiple transactions with the same lease being included within the validity window.
 
 A [lease](https://dev.algorand.co/concepts/transactions/leases)
-enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
+ enforces a mutually exclusive transaction (useful to prevent double-posting and other scenarios).
 
 ###### maxFee?
 
@@ -721,8 +721,8 @@ The optional sender to send the transaction from, will use the application clien
 [`AddressWithTransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/interfaces/addresswithtransactionsigner/) \| [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
 The function used to sign transaction(s); if not specified then
-an attempt will be made to find a registered signer for the
-given `sender` or use a default signer (if configured).
+ an attempt will be made to find a registered signer for the
+ given `sender` or use a default signer (if configured).
 
 ###### staticFee?
 
@@ -751,16 +751,16 @@ The result of the funding
 #### Example
 
 ```typescript
-await appClient.fundAppAccount({ amount: algo(1) });
+await appClient.fundAppAccount({ amount: algo(1) })
 ```
 
----
+***
 
 ### getABIMethod()
 
 > **getABIMethod**(`methodNameOrSignature`): [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/)
 
-Defined in: [src/app-client.ts:872](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L872)
+Defined in: [src/app-client.ts:872](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L872)
 
 Returns the ABI Method spec for the given method string for the app represented by this application client instance
 
@@ -779,13 +779,13 @@ e.g. `my_method` or `my_method(unit64,string)bytes`
 
 A tuple with: [ARC-56 `Method`, algosdk `ABIMethod`]
 
----
+***
 
 ### getBoxNames()
 
 > **getBoxNames**(): `Promise`\<[`BoxName`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/boxname/)[]\>
 
-Defined in: [src/app-client.ts:740](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L740)
+Defined in: [src/app-client.ts:740](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L740)
 
 Returns the names of all current boxes for the current app.
 
@@ -798,16 +798,16 @@ The names of the boxes
 #### Example
 
 ```typescript
-const boxNames = await appClient.getBoxNames();
+const boxNames = await appClient.getBoxNames()
 ```
 
----
+***
 
 ### getBoxValue()
 
 > **getBoxValue**(`name`): `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
 
-Defined in: [src/app-client.ts:753](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L753)
+Defined in: [src/app-client.ts:753](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L753)
 
 Returns the value of the given box for the current app.
 
@@ -828,16 +828,16 @@ The current box value as a byte array
 #### Example
 
 ```typescript
-const boxValue = await appClient.getBoxValue('boxName');
+const boxValue = await appClient.getBoxValue('boxName')
 ```
 
----
+***
 
 ### getBoxValueFromABIType()
 
 > **getBoxValueFromABIType**(`name`, `type`): `Promise`\<[`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)\>
 
-Defined in: [src/app-client.ts:767](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L767)
+Defined in: [src/app-client.ts:767](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L767)
 
 Returns the value of the given box for the current app.
 
@@ -862,16 +862,16 @@ The current box value as a byte array
 #### Example
 
 ```typescript
-const boxValue = await appClient.getBoxValueFromABIType('boxName', new ABIUintType(32));
+const boxValue = await appClient.getBoxValueFromABIType('boxName', new ABIUintType(32))
 ```
 
----
+***
 
 ### getBoxValues()
 
 > **getBoxValues**(`filter?`): `Promise`\<`object`[]\>
 
-Defined in: [src/app-client.ts:785](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L785)
+Defined in: [src/app-client.ts:785](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L785)
 
 Returns the values of all current boxes for the current app.
 Note: This will issue multiple HTTP requests (one per box) and it's not an atomic operation so values may be out of sync.
@@ -893,16 +893,16 @@ The (name, value) pair of the boxes with values as raw byte arrays
 #### Example
 
 ```typescript
-const boxValues = await appClient.getBoxValues();
+const boxValues = await appClient.getBoxValues()
 ```
 
----
+***
 
 ### getBoxValuesFromABIType()
 
 > **getBoxValuesFromABIType**(`type`, `filter?`): `Promise`\<`object`[]\>
 
-Defined in: [src/app-client.ts:805](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L805)
+Defined in: [src/app-client.ts:805](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L805)
 
 Returns the values of all current boxes for the current app decoded using an ABI Type.
 Note: This will issue multiple HTTP requests (one per box) and it's not an atomic operation so values may be out of sync.
@@ -930,16 +930,16 @@ The (name, value) pair of the boxes with values as the ABI Value
 #### Example
 
 ```typescript
-const boxValues = await appClient.getBoxValuesFromABIType(new ABIUintType(32));
+const boxValues = await appClient.getBoxValuesFromABIType(new ABIUintType(32))
 ```
 
----
+***
 
 ### getGlobalState()
 
 > **getGlobalState**(): `Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appstate/)\>
 
-Defined in: [src/app-client.ts:715](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L715)
+Defined in: [src/app-client.ts:715](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L715)
 
 Returns raw global state for the current app.
 
@@ -952,16 +952,16 @@ The global state
 #### Example
 
 ```typescript
-const globalState = await appClient.getGlobalState();
+const globalState = await appClient.getGlobalState()
 ```
 
----
+***
 
 ### getLocalState()
 
 > **getLocalState**(`address`): `Promise`\<[`AppState`](/docs/algokit-utils/typescript/latest/api/algokit-utils/interfaces/appstate/)\>
 
-Defined in: [src/app-client.ts:728](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L728)
+Defined in: [src/app-client.ts:728](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L728)
 
 Returns raw local state for the given account address.
 
@@ -982,16 +982,16 @@ The local state
 #### Example
 
 ```typescript
-const localState = await appClient.getLocalState('ACCOUNT_ADDRESS');
+const localState = await appClient.getLocalState('ACCOUNT_ADDRESS')
 ```
 
----
+***
 
 ### importSourceMaps()
 
 > **importSourceMaps**(`sourceMaps`): `void`
 
-Defined in: [src/app-client.ts:861](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L861)
+Defined in: [src/app-client.ts:861](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L861)
 
 Import source maps for the app.
 
@@ -1007,13 +1007,13 @@ The source maps to import
 
 `void`
 
----
+***
 
 ### processMethodCallReturn()
 
 > **processMethodCallReturn**\<`TReturn`, `TResult`\>(`result`): `Promise`\<`Omit`\<`TResult`, `"return"`\> & `AppReturn`\<`TReturn`\>\>
 
-Defined in: [src/app-client.ts:885](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L885)
+Defined in: [src/app-client.ts:885](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L885)
 
 Checks for decode errors on the SendAppTransactionResult and maps the return value to the specified type
 on the ARC-56 method, replacing the `return` property with the decoded type.
@@ -1024,11 +1024,11 @@ If the return type is an ARC-56 struct then the struct will be returned.
 
 ##### TReturn
 
-`TReturn` _extends_ [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`
+`TReturn` *extends* [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/) \| `undefined`
 
 ##### TResult
 
-`TResult` _extends_ `object` = \{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}
+`TResult` *extends* `object` = \{ `confirmation`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/); `confirmations`: [`PendingTransactionResponse`](/docs/algokit-utils/typescript/latest/api/subpaths/algod-client/type-aliases/pendingtransactionresponse/)[]; `groupId`: `string` \| `undefined`; `return?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/); `returns?`: [`ABIReturn`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abireturn/)[]; `transaction`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/); `transactions`: [`Transaction`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/transaction/)[]; `txIds`: `string`[]; \}
 
 #### Parameters
 
@@ -1044,13 +1044,13 @@ The SendAppTransactionResult to be mapped
 
 The smart contract response with an updated return value
 
----
+***
 
 ### compile()
 
 > `static` **compile**(`appSpec`, `appManager`, `compilation?`): `Promise`\<`AppClientCompilationResult`\>
 
-Defined in: [src/app-client.ts:1012](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L1012)
+Defined in: [src/app-client.ts:1012](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L1012)
 
 Compiles the approval and clear state programs (if TEAL templates provided),
 performing any provided deploy-time parameter replacement and returns
@@ -1086,13 +1086,13 @@ Any compilation parameters to use
 
 The compiled code and any compilation results (including source maps)
 
----
+***
 
 ### exposeLogicError()
 
 > `static` **exposeLogicError**(`e`, `appSpec`, `details`): `Error`
 
-Defined in: [src/app-client.ts:928](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L928)
+Defined in: [src/app-client.ts:928](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L928)
 
 Takes an error that may include a logic error from a call to the current app and re-exposes the
 error to include source code information via the source map and ARC-56 spec.
@@ -1157,13 +1157,13 @@ program bytes
 
 The new error, or if there was no logic error or source map then the wrapped error with source details
 
----
+***
 
 ### fromCreatorAndName()
 
 > `static` **fromCreatorAndName**(`params`): `Promise`\<`AppClient`\>
 
-Defined in: [src/app-client.ts:556](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L556)
+Defined in: [src/app-client.ts:556](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L556)
 
 Returns a new `AppClient` client, resolving the app by creator address and name
 using AlgoKit app deployment semantics (i.e. looking for the app creation transaction note).
@@ -1205,10 +1205,9 @@ Optional source map for the approval program
 `string` \| [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/arc56contract/) \| `AppSpec`
 
 The ARC-56 or ARC-32 application spec as either:
-
-- Parsed JSON ARC-56 `Contract`
-- Parsed JSON ARC-32 `AppSpec`
-- Raw JSON string (in either ARC-56 or ARC-32 format)
+ * Parsed JSON ARC-56 `Contract`
+ * Parsed JSON ARC-32 `AppSpec`
+ * Raw JSON string (in either ARC-56 or ARC-32 format)
 
 ###### clearSourceMap?
 
@@ -1248,7 +1247,7 @@ The `AppClient` instance
 
 #### Example
 
-````typescript
+```typescript
 const appClient = await AppClient.fromCreatorAndName({
   creatorAddress: 'CREATOR_ADDRESS',
   name: 'APP_NAME',
@@ -1262,7 +1261,7 @@ const appClient = await AppClient.fromCreatorAndName({
 
 > `static` **fromNetwork**(`params`): `Promise`\<`AppClient`\>
 
-Defined in: [src/app-client.ts:585](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L585)
+Defined in: [src/app-client.ts:585](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L585)
 
 Returns an `AppClient` instance for the current network based on
 pre-determined network-specific app IDs specified in the ARC-56 app spec.
@@ -1341,7 +1340,7 @@ const appClient = await AppClient.fromNetwork({
 
 > `static` **normaliseAppSpec**(`spec`): [`Arc56Contract`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/arc56contract/)
 
-Defined in: [src/app-client.ts:613](https://github.com/larkiny/algokit-utils-ts/blob/main/src/app-client.ts#L613)
+Defined in: [src/app-client.ts:613](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/src/app-client.ts#L613)
 
 Takes a string or parsed JSON object that could be ARC-32 or ARC-56 format and
 normalises it into a parsed ARC-56 contract object.
@@ -1364,4 +1363,4 @@ The normalised ARC-56 contract object
 
 ```typescript
 const arc56AppSpec = AppClient.normaliseAppSpec(appSpec)
-````
+```

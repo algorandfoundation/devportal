@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'inputValueAsString'
+title: "inputValueAsString"
 ---
 
 > **inputValueAsString**(`value`): `string`
 
-Defined in: [packages/indexer_client/src/core/base-http-request.ts:24](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/indexer_client/src/core/base-http-request.ts#L24)
+Defined in: [packages/indexer\_client/src/core/base-http-request.ts:24](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/indexer_client/src/core/base-http-request.ts#L24)
 
 ## Parameters
 

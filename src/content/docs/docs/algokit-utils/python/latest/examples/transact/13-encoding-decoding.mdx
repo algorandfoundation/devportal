@@ -1,0 +1,361 @@
+---
+title: "Encoding/Decoding"
+description: "This example demonstrates how to serialize and deserialize transactions using the transact package:"
+sidebar:
+  order: 13
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to serialize and deserialize transactions using the transact package:
+- encode_transaction() to get msgpack bytes with TX prefix
+- encode_transaction_raw() to get msgpack bytes without prefix
+- decode_transaction() to reconstruct transaction from bytes
+- encode_signed_transaction() and decode_signed_transaction() for signed transactions
+- tx_id() for calculating transaction ID
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/13_encoding_decoding.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/13_encoding_decoding.py)
+
+```python title="13_encoding_decoding.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004, PLR0911
+"""
+Example: Encoding/Decoding
+
+This example demonstrates how to serialize and deserialize transactions
+using the transact package:
+- encode_transaction() to get msgpack bytes with TX prefix
+- encode_transaction_raw() to get msgpack bytes without prefix
+- decode_transaction() to reconstruct transaction from bytes
+- encode_signed_transaction() and decode_signed_transaction() for signed transactions
+- tx_id() for calculating transaction ID
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_transact import (
+    PaymentTransactionFields,
+    SignedTransaction,
+    Transaction,
+    TransactionType,
+    assign_fee,
+    decode_signed_transaction,
+    decode_transaction,
+    encode_signed_transaction,
+    encode_transaction,
+    encode_transaction_raw,
+)
+from algokit_utils import AlgorandClient
+
+
+def bytes_to_hex(data: bytes, max_length: int | None = None) -> str:
+    """Converts bytes to a hex string for display."""
+    hex_str = data.hex()
+    if max_length and len(hex_str) > max_length:
+        return f"{hex_str[:max_length]}..."
+    return hex_str
+
+
+def compare_transactions(original: Transaction, decoded: Transaction) -> bool:
+    """Compare two transactions field by field."""
+    # Compare basic fields
+    if original.transaction_type != decoded.transaction_type:
+        return False
+    if original.sender != decoded.sender:
+        return False
+    if original.first_valid != decoded.first_valid:
+        return False
+    if original.last_valid != decoded.last_valid:
+        return False
+    if original.fee != decoded.fee:
+        return False
+    if original.genesis_id != decoded.genesis_id:
+        return False
+
+    # Compare genesis hash
+    if original.genesis_hash and decoded.genesis_hash:
+        if original.genesis_hash != decoded.genesis_hash:
+            return False
+    elif original.genesis_hash != decoded.genesis_hash:
+        return False
+
+    # Compare payment fields if present
+    if original.payment and decoded.payment:
+        if original.payment.receiver != decoded.payment.receiver:
+            return False
+        if original.payment.amount != decoded.payment.amount:
+            return False
+    elif original.payment != decoded.payment:
+        return False
+
+    return True
+
+
+def main() -> None:
+    print_header("Encoding/Decoding Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get accounts
+    print_step(2, "Get Accounts")
+    sender = algorand.account.localnet_dispenser()
+    print_info(f"Sender address: {shorten_address(sender.addr)}")
+
+    receiver = algorand.account.random()
+    print_info(f"Receiver address: {shorten_address(receiver.addr)}")
+
+    # Step 3: Create a transaction object
+    print_step(3, "Create Transaction Object")
+    suggested_params = algod.suggested_params()
+
+    transaction = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=sender.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=receiver.addr,
+            amount=1_000_000,  # 1 ALGO
+        ),
+    )
+
+    tx_with_fee = assign_fee(
+        transaction,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    print_info(f"Transaction type: {tx_with_fee.transaction_type}")
+    print_info("Amount: 1,000,000 microALGO")
+    print_info(f"Fee: {tx_with_fee.fee} microALGO")
+
+    # Step 4: Use encode_transaction() to get msgpack bytes with TX prefix
+    print_step(4, "Encode Transaction with TX Prefix (encode_transaction)")
+
+    encoded_with_prefix = encode_transaction(tx_with_fee)
+    print_info(f"Encoded bytes length: {len(encoded_with_prefix)} bytes")
+    print_info(f"First bytes (hex): {bytes_to_hex(encoded_with_prefix, 40)}")
+    print_info("")
+    print_info('The "TX" prefix (0x5458) is prepended for domain separation.')
+    print_info("This prevents the same bytes from being valid in multiple contexts.")
+    first_char = chr(encoded_with_prefix[0])
+    second_char = chr(encoded_with_prefix[1])
+    print_info(f'TX in ASCII: "{first_char}{second_char}"')
+
+    # Step 5: Use encode_transaction_raw() to get msgpack bytes without prefix
+    print_step(5, "Encode Transaction Raw (encode_transaction_raw)")
+
+    encoded_raw = encode_transaction_raw(tx_with_fee)
+    print_info(f"Raw encoded bytes length: {len(encoded_raw)} bytes")
+    print_info(f"First bytes (hex): {bytes_to_hex(encoded_raw, 40)}")
+    print_info("")
+    length_diff = len(encoded_with_prefix) - len(encoded_raw)
+    print_info(f"Difference in length: {length_diff} bytes (TX prefix)")
+    print_info("Use encode_transaction_raw() when the signing tool adds its own prefix.")
+
+    # Step 6: Use decode_transaction() to reconstruct from bytes
+    print_step(6, "Decode Transaction (decode_transaction)")
+
+    # Decode from bytes with prefix
+    decoded_from_prefix = decode_transaction(encoded_with_prefix)
+    print_info("Decoded from bytes with TX prefix:")
+    print_info(f"  Type: {decoded_from_prefix.transaction_type}")
+    print_info(f"  Sender: {shorten_address(decoded_from_prefix.sender)}")
+    print_info(f"  Amount: {decoded_from_prefix.payment.amount} microALGO")
+    print_info(f"  Fee: {decoded_from_prefix.fee} microALGO")
+
+    # Decode from raw bytes (without prefix)
+    decoded_from_raw = decode_transaction(encoded_raw)
+    print_info("")
+    print_info("Decoded from raw bytes (without prefix):")
+    print_info(f"  Type: {decoded_from_raw.transaction_type}")
+    print_info(f"  Sender: {shorten_address(decoded_from_raw.sender)}")
+    print_info(f"  Amount: {decoded_from_raw.payment.amount} microALGO")
+    print_info("")
+    print_info("Note: decode_transaction() auto-detects and handles both formats.")
+
+    # Step 7: Verify decoded transaction matches original
+    print_step(7, "Verify Decoded Transaction Matches Original")
+
+    matches_original = compare_transactions(tx_with_fee, decoded_from_prefix)
+    if matches_original:
+        print_success("Decoded transaction matches original!")
+    else:
+        print_info("Warning: Decoded transaction differs from original")
+
+    print_info("")
+    print_info("Field comparison:")
+    type_match = tx_with_fee.transaction_type == decoded_from_prefix.transaction_type
+    print_info(
+        f"  Type: {tx_with_fee.transaction_type} === {decoded_from_prefix.transaction_type} {'match' if type_match else 'mismatch'}"
+    )
+    sender_match = tx_with_fee.sender == decoded_from_prefix.sender
+    print_info(f"  Sender: {'match' if sender_match else 'mismatch'}")
+    receiver_match = tx_with_fee.payment.receiver == decoded_from_prefix.payment.receiver
+    print_info(f"  Receiver: {'match' if receiver_match else 'mismatch'}")
+    amount_match = tx_with_fee.payment.amount == decoded_from_prefix.payment.amount
+    print_info(f"  Amount: {'match' if amount_match else 'mismatch'}")
+    fee_match = tx_with_fee.fee == decoded_from_prefix.fee
+    print_info(f"  Fee: {'match' if fee_match else 'mismatch'}")
+    first_valid_match = tx_with_fee.first_valid == decoded_from_prefix.first_valid
+    print_info(f"  First valid: {'match' if first_valid_match else 'mismatch'}")
+    last_valid_match = tx_with_fee.last_valid == decoded_from_prefix.last_valid
+    print_info(f"  Last valid: {'match' if last_valid_match else 'mismatch'}")
+
+    # Step 8: Demonstrate encode_signed_transaction() and decode_signed_transaction()
+    print_step(8, "Encode and Decode Signed Transaction")
+
+    # Sign the transaction
+    signed_tx_bytes_list = sender.signer([tx_with_fee], [0])
+    signed_tx_bytes = signed_tx_bytes_list[0]
+    print_info(f"Signed transaction bytes length: {len(signed_tx_bytes)} bytes")
+
+    # Decode the signed transaction
+    decoded_signed_tx = decode_signed_transaction(signed_tx_bytes)
+    print_info("")
+    print_info("Decoded SignedTransaction structure:")
+    print_info(f"  txn.type: {decoded_signed_tx.txn.transaction_type}")
+    print_info(f"  txn.sender: {shorten_address(decoded_signed_tx.txn.sender)}")
+    sig_length = len(decoded_signed_tx.sig) if decoded_signed_tx.sig else 0
+    print_info(f"  sig length: {sig_length} bytes (ed25519 signature)")
+
+    # Re-encode the signed transaction
+    re_encoded_signed_tx = encode_signed_transaction(decoded_signed_tx)
+    print_info("")
+    print_info("Re-encoded signed transaction:")
+    print_info(f"  Length: {len(re_encoded_signed_tx)} bytes")
+
+    # Verify re-encoded matches original
+    signed_bytes_match = re_encoded_signed_tx == signed_tx_bytes
+
+    if signed_bytes_match:
+        print_success("Re-encoded signed transaction matches original!")
+    else:
+        print_info("Re-encoded signed transaction differs (may be due to canonicalization)")
+
+    # Step 9: Show transaction ID calculation using tx_id()
+    print_step(9, "Calculate Transaction ID (tx_id)")
+
+    tx_id = tx_with_fee.tx_id()
+    print_info(f"Transaction ID: {tx_id}")
+    print_info("")
+    print_info("Transaction ID calculation:")
+    print_info("  1. Encode transaction with TX prefix")
+    print_info("  2. Hash the bytes using SHA-512/256")
+    print_info("  3. Base32 encode the hash (first 52 characters)")
+    print_info("")
+    print_info(f"ID length: {len(tx_id)} characters")
+
+    # Verify the decoded transaction has the same ID
+    decoded_tx_id = decoded_from_prefix.tx_id()
+    if tx_id == decoded_tx_id:
+        print_success("Decoded transaction has same ID as original!")
+    else:
+        print_info("Warning: Transaction IDs differ")
+
+    # Step 10: Demonstrate round-trip encoding with SignedTransaction structure
+    print_step(10, "Create and Encode SignedTransaction Manually")
+
+    # Create a SignedTransaction structure manually (for demonstration)
+    manual_signed_tx = SignedTransaction(
+        txn=tx_with_fee,
+        sig=decoded_signed_tx.sig,  # Reuse the signature from earlier
+    )
+
+    manual_encoded_signed_tx = encode_signed_transaction(manual_signed_tx)
+    print_info(f"Manually created SignedTransaction encoded: {len(manual_encoded_signed_tx)} bytes")
+
+    manual_decoded_signed_tx = decode_signed_transaction(manual_encoded_signed_tx)
+    sig_present = manual_decoded_signed_tx.sig is not None
+    txn_type = manual_decoded_signed_tx.txn.transaction_type
+    print_info(f"Decoded back: txn.type={txn_type}, sig present={sig_present}")
+
+    # Summary
+    print_step(11, "Summary")
+    print_info("")
+    print_info("Encoding functions:")
+    print_info('  encode_transaction(tx)     - Returns msgpack bytes WITH "TX" prefix')
+    print_info("  encode_transaction_raw(tx) - Returns msgpack bytes WITHOUT prefix")
+    print_info("  encode_signed_transaction() - Encodes signed transaction for network")
+    print_info("")
+    print_info("Decoding functions:")
+    print_info("  decode_transaction(bytes)       - Decodes bytes to Transaction")
+    print_info("                                    (auto-detects prefix)")
+    print_info("  decode_signed_transaction(bytes) - Decodes bytes to SignedTransaction")
+    print_info("")
+    print_info("Other utilities:")
+    print_info("  tx.tx_id() - Calculate transaction ID (hash of encoded bytes)")
+    print_info("")
+    print_info("Use cases:")
+    print_info("  - Serialize transactions for storage or transmission")
+    print_info("  - Deserialize transactions received from external sources")
+    print_info("  - Calculate transaction IDs for tracking and verification")
+    print_info("  - Inspect signed transactions to verify signature presence")
+
+    print_success("Encoding/Decoding example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- [Fee Calculation](/docs/algokit-utils/python/latest/examples/transact/12-fee-calculation/)
+- **Encoding/Decoding**
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

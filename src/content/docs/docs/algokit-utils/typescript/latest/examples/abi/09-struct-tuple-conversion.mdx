@@ -1,0 +1,391 @@
+---
+title: "ABI Struct and Tuple Conversion"
+description: "This example demonstrates how to convert between struct values (named) and tuple values (positional):"
+sidebar:
+  order: 9
+---
+
+[← Back to ABI Encoding](/docs/algokit-utils/typescript/latest/examples/abi/)
+
+## Description
+
+This example demonstrates how to convert between struct values (named) and tuple values (positional):
+- getTupleValueFromStructValue(): Convert struct object to tuple array
+- getStructValueFromTupleValue(): Convert tuple array back to struct object
+- Simple struct &#123; name: 'Alice', age: 30n &#125; &lt;-&gt; tuple ['Alice', 30n]
+- Nested structs with complex types
+- Verify that struct and tuple encodings produce identical bytes
+ Key concept: Structs and tuples have identical binary encoding in ARC-4. The conversion functions allow you to work with the same data in either format:
+- Struct format: object with named properties (more readable)
+- Tuple format: array with positional elements (matches ABI encoding)
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example abi/09-struct-tuple-conversion.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/abi/09-struct-tuple-conversion.ts)
+
+```typescript title="09-struct-tuple-conversion.ts"
+/**
+ * Example: ABI Struct and Tuple Conversion
+ *
+ * This example demonstrates how to convert between struct values (named) and tuple values (positional):
+ * - getTupleValueFromStructValue(): Convert struct object to tuple array
+ * - getStructValueFromTupleValue(): Convert tuple array back to struct object
+ * - Simple struct { name: 'Alice', age: 30n } <-> tuple ['Alice', 30n]
+ * - Nested structs with complex types
+ * - Verify that struct and tuple encodings produce identical bytes
+ *
+ * Key concept: Structs and tuples have identical binary encoding in ARC-4.
+ * The conversion functions allow you to work with the same data in either format:
+ * - Struct format: object with named properties (more readable)
+ * - Tuple format: array with positional elements (matches ABI encoding)
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import {
+  ABIStructType,
+  ABITupleType,
+  ABIType,
+  getStructValueFromTupleValue,
+  getTupleValueFromStructValue,
+} from '@algorandfoundation/algokit-utils/abi'
+import { formatHex, printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+function main() {
+  printHeader('ABI Struct and Tuple Conversion Example')
+
+  // Step 1: Simple struct to tuple conversion
+  printStep(1, 'Simple Struct to Tuple Conversion')
+
+  // Create a struct type: { name: string, age: uint64 }
+  const personStruct = ABIStructType.fromStruct('Person', {
+    Person: [
+      { name: 'name', type: 'string' },
+      { name: 'age', type: 'uint64' },
+    ],
+  })
+
+  printInfo(`Struct type: ${personStruct.structName}`)
+  printInfo(`ABI representation: ${personStruct.name}`)
+
+  // Define a struct value
+  const structValue = { name: 'Alice', age: 30n }
+  printInfo(`\nStruct value: { name: "${structValue.name}", age: ${structValue.age}n }`)
+
+  // Convert struct to tuple using getTupleValueFromStructValue()
+  const tupleValue = getTupleValueFromStructValue(personStruct, structValue)
+
+  printInfo('\nConverted to tuple using getTupleValueFromStructValue():')
+  printInfo(`  Result: [${tupleValue.map((v) => (typeof v === 'string' ? `"${v}"` : `${v}n`)).join(', ')}]`)
+  printInfo(`  tupleValue[0]: "${tupleValue[0]}" (name)`)
+  printInfo(`  tupleValue[1]: ${tupleValue[1]}n (age)`)
+
+  // Step 2: Tuple to struct conversion
+  printStep(2, 'Tuple to Struct Conversion')
+
+  // Start with a tuple value
+  const inputTuple = ['Bob', 25n]
+  printInfo(`Tuple value: ["${inputTuple[0]}", ${inputTuple[1]}n]`)
+
+  // Convert tuple to struct using getStructValueFromTupleValue()
+  const convertedStruct = getStructValueFromTupleValue(personStruct, inputTuple)
+
+  printInfo('\nConverted to struct using getStructValueFromTupleValue():')
+  printInfo(`  Result: { name: "${convertedStruct.name}", age: ${convertedStruct.age}n }`)
+  printInfo(`  convertedStruct.name: "${convertedStruct.name}"`)
+  printInfo(`  convertedStruct.age: ${convertedStruct.age}n`)
+
+  // Step 3: Round-trip conversion
+  printStep(3, 'Round-trip Conversion')
+
+  const original = { name: 'Charlie', age: 42n }
+  printInfo(`Original struct: { name: "${original.name}", age: ${original.age}n }`)
+
+  // Struct -> Tuple -> Struct
+  const asTuple = getTupleValueFromStructValue(personStruct, original)
+  printInfo(`After struct -> tuple: ["${asTuple[0]}", ${asTuple[1]}n]`)
+
+  const backToStruct = getStructValueFromTupleValue(personStruct, asTuple)
+  printInfo(`After tuple -> struct: { name: "${backToStruct.name}", age: ${backToStruct.age}n }`)
+
+  const roundTripMatch = original.name === backToStruct.name && original.age === backToStruct.age
+  printInfo(`\nRound-trip preserved values: ${roundTripMatch}`)
+
+  // Step 4: Verify identical encoding
+  printStep(4, 'Verify Identical Encoding')
+
+  printInfo('Both struct and tuple values should encode to identical bytes:')
+
+  // Encode using struct type
+  const structEncoded = personStruct.encode(structValue)
+  printInfo(`\nStruct encoded: ${formatHex(structEncoded)}`)
+
+  // Create equivalent tuple type and encode the tuple value
+  const tupleType = ABIType.from('(string,uint64)') as ABITupleType
+  const tupleEncoded = tupleType.encode(tupleValue as [string, bigint])
+  printInfo(`Tuple encoded:  ${formatHex(tupleEncoded)}`)
+
+  // Compare encodings
+  const encodingsMatch =
+    structEncoded.length === tupleEncoded.length && structEncoded.every((byte, i) => byte === tupleEncoded[i])
+  printInfo(`\nEncodings are identical: ${encodingsMatch}`)
+  printInfo(`Total bytes: ${structEncoded.length}`)
+
+  // Step 5: Complex struct with more fields
+  printStep(5, 'Complex Struct with More Fields')
+
+  // Create a more complex struct
+  const userStruct = ABIStructType.fromStruct('User', {
+    User: [
+      { name: 'id', type: 'uint64' },
+      { name: 'username', type: 'string' },
+      { name: 'active', type: 'bool' },
+      { name: 'balance', type: 'uint256' },
+    ],
+  })
+
+  const userValue = {
+    id: 12345n,
+    username: 'alice_wonder',
+    active: true,
+    balance: 1000000000000000000n, // 1 ETH in wei
+  }
+
+  printInfo(`Struct type: ${userStruct.structName}`)
+  printInfo(`Fields: id (uint64), username (string), active (bool), balance (uint256)`)
+  printInfo(`\nStruct value:`)
+  printInfo(`  id: ${userValue.id}n`)
+  printInfo(`  username: "${userValue.username}"`)
+  printInfo(`  active: ${userValue.active}`)
+  printInfo(`  balance: ${userValue.balance}n`)
+
+  // Convert to tuple
+  const userTuple = getTupleValueFromStructValue(userStruct, userValue)
+
+  printInfo('\nConverted to tuple:')
+  printInfo(`  [${userTuple[0]}n, "${userTuple[1]}", ${userTuple[2]}, ${userTuple[3]}n]`)
+
+  // Convert back
+  const userBack = getStructValueFromTupleValue(userStruct, userTuple) as typeof userValue
+
+  printInfo('\nConverted back to struct:')
+  printInfo(`  id: ${userBack.id}n`)
+  printInfo(`  username: "${userBack.username}"`)
+  printInfo(`  active: ${userBack.active}`)
+  printInfo(`  balance: ${userBack.balance}n`)
+
+  // Verify encoding
+  const userStructEncoded = userStruct.encode(userValue)
+  const userTupleType = ABIType.from('(uint64,string,bool,uint256)') as ABITupleType
+  const userTupleEncoded = userTupleType.encode(userTuple as [bigint, string, boolean, bigint])
+
+  const userEncodingsMatch =
+    userStructEncoded.length === userTupleEncoded.length &&
+    userStructEncoded.every((byte, i) => byte === userTupleEncoded[i])
+  printInfo(`\nStruct and tuple encodings identical: ${userEncodingsMatch}`)
+
+  // Step 6: Nested struct conversion
+  printStep(6, 'Nested Struct Conversion')
+
+  // Create nested struct types
+  const orderStruct = ABIStructType.fromStruct('Order', {
+    Order: [
+      { name: 'orderId', type: 'uint64' },
+      { name: 'item', type: 'Item' },
+      { name: 'quantity', type: 'uint32' },
+    ],
+    Item: [
+      { name: 'name', type: 'string' },
+      { name: 'price', type: 'uint64' },
+    ],
+  })
+
+  const orderValue = {
+    orderId: 1001n,
+    item: {
+      name: 'Widget',
+      price: 2500n,
+    },
+    quantity: 5,
+  }
+
+  printInfo('Nested struct type: Order containing Item')
+  printInfo(`  Order: { orderId: uint64, item: Item, quantity: uint32 }`)
+  printInfo(`  Item: { name: string, price: uint64 }`)
+
+  printInfo(`\nNested struct value:`)
+  printInfo(`  orderId: ${orderValue.orderId}n`)
+  printInfo(`  item: { name: "${orderValue.item.name}", price: ${orderValue.item.price}n }`)
+  printInfo(`  quantity: ${orderValue.quantity}`)
+
+  // Convert nested struct to tuple
+  const orderTuple = getTupleValueFromStructValue(orderStruct, orderValue)
+
+  printInfo('\nConverted to nested tuple using getTupleValueFromStructValue():')
+  printInfo(`  Result structure: [orderId, [name, price], quantity]`)
+  printInfo(`  orderTuple[0]: ${orderTuple[0]}n (orderId)`)
+  printInfo(`  orderTuple[1]: ["${(orderTuple[1] as string[])[0]}", ${(orderTuple[1] as bigint[])[1]}n] (item)`)
+  printInfo(`  orderTuple[2]: ${orderTuple[2]} (quantity)`)
+
+  // Convert back to struct
+  const orderBack = getStructValueFromTupleValue(orderStruct, orderTuple) as typeof orderValue
+
+  printInfo('\nConverted back to struct using getStructValueFromTupleValue():')
+  printInfo(`  orderId: ${orderBack.orderId}n`)
+  printInfo(`  item.name: "${orderBack.item.name}"`)
+  printInfo(`  item.price: ${orderBack.item.price}n`)
+  printInfo(`  quantity: ${orderBack.quantity}`)
+
+  // Verify nested encoding
+  const orderStructEncoded = orderStruct.encode(orderValue)
+  const orderTupleType = ABIType.from('(uint64,(string,uint64),uint32)') as ABITupleType
+  const orderTupleEncoded = orderTupleType.encode(orderTuple as [bigint, [string, bigint], number])
+
+  const orderEncodingsMatch =
+    orderStructEncoded.length === orderTupleEncoded.length &&
+    orderStructEncoded.every((byte, i) => byte === orderTupleEncoded[i])
+  printInfo(`\nNested struct and tuple encodings identical: ${orderEncodingsMatch}`)
+  printInfo(`Total bytes: ${orderStructEncoded.length}`)
+
+  // Step 7: Deeply nested struct
+  printStep(7, 'Deeply Nested Struct')
+
+  // Create deeply nested struct
+  const companyStruct = ABIStructType.fromStruct('Company', {
+    Company: [
+      { name: 'name', type: 'string' },
+      { name: 'ceo', type: 'Employee' },
+    ],
+    Employee: [
+      { name: 'name', type: 'string' },
+      { name: 'contact', type: 'Contact' },
+    ],
+    Contact: [
+      { name: 'email', type: 'string' },
+      { name: 'phone', type: 'string' },
+    ],
+  })
+
+  const companyValue = {
+    name: 'TechCorp',
+    ceo: {
+      name: 'Jane Doe',
+      contact: {
+        email: 'jane@techcorp.com',
+        phone: '+1-555-0100',
+      },
+    },
+  }
+
+  printInfo('Deeply nested struct: Company -> Employee -> Contact')
+  printInfo(`\nCompany value:`)
+  printInfo(`  name: "${companyValue.name}"`)
+  printInfo(`  ceo.name: "${companyValue.ceo.name}"`)
+  printInfo(`  ceo.contact.email: "${companyValue.ceo.contact.email}"`)
+  printInfo(`  ceo.contact.phone: "${companyValue.ceo.contact.phone}"`)
+
+  // Convert to deeply nested tuple
+  const companyTuple = getTupleValueFromStructValue(companyStruct, companyValue)
+
+  printInfo('\nConverted to deeply nested tuple:')
+  printInfo(`  Structure: [name, [employeeName, [email, phone]]]`)
+  const ceoTuple = companyTuple[1] as unknown[]
+  const contactTuple = ceoTuple[1] as string[]
+  printInfo(`  companyTuple[0]: "${companyTuple[0]}"`)
+  printInfo(`  companyTuple[1][0]: "${ceoTuple[0]}"`)
+  printInfo(`  companyTuple[1][1][0]: "${contactTuple[0]}"`)
+  printInfo(`  companyTuple[1][1][1]: "${contactTuple[1]}"`)
+
+  // Convert back
+  const companyBack = getStructValueFromTupleValue(companyStruct, companyTuple) as typeof companyValue
+
+  printInfo('\nConverted back to struct:')
+  printInfo(`  name: "${companyBack.name}"`)
+  printInfo(`  ceo.name: "${companyBack.ceo.name}"`)
+  printInfo(`  ceo.contact.email: "${companyBack.ceo.contact.email}"`)
+  printInfo(`  ceo.contact.phone: "${companyBack.ceo.contact.phone}"`)
+
+  // Verify deep nesting encoding
+  const companyStructEncoded = companyStruct.encode(companyValue)
+  const companyTupleType = ABIType.from('(string,(string,(string,string)))') as ABITupleType
+  const companyTupleEncoded = companyTupleType.encode(companyTuple as [string, [string, [string, string]]])
+
+  const companyEncodingsMatch =
+    companyStructEncoded.length === companyTupleEncoded.length &&
+    companyStructEncoded.every((byte, i) => byte === companyTupleEncoded[i])
+  printInfo(`\nDeeply nested struct and tuple encodings identical: ${companyEncodingsMatch}`)
+
+  // Step 8: Use cases for conversion functions
+  printStep(8, 'Use Cases for Conversion Functions')
+
+  printInfo('When to use getTupleValueFromStructValue():')
+  printInfo('  - Converting struct data to pass to tuple-expecting ABI methods')
+  printInfo('  - Serializing struct data in a position-based format')
+  printInfo('  - Working with libraries that expect array/tuple format')
+  printInfo('  - Building raw transaction arguments')
+
+  printInfo('\nWhen to use getStructValueFromTupleValue():')
+  printInfo('  - Converting decoded tuple results to readable struct format')
+  printInfo('  - Adding field names to positional data for debugging')
+  printInfo('  - Working with APIs that return tuple arrays')
+  printInfo('  - Making code more maintainable with named fields')
+
+  // Step 9: Summary
+  printStep(9, 'Summary')
+
+  printInfo('Conversion functions:')
+  printInfo('  - getTupleValueFromStructValue(structType, structValue) -> ABIValue[]')
+  printInfo('  - getStructValueFromTupleValue(structType, tupleValue) -> ABIStructValue')
+
+  printInfo('\nKey points:')
+  printInfo('  - Structs and tuples are interchangeable at the binary level')
+  printInfo('  - Conversion is lossless - round-trip preserves all values')
+  printInfo('  - Nested structs convert to nested tuples and vice versa')
+  printInfo('  - Field names provide semantic meaning without affecting encoding')
+  printInfo('  - Use struct format for readability, tuple format for ABI compatibility')
+
+  printInfo('\nBinary equivalence verified:')
+  printInfo('  - Simple struct { name, age } = tuple (string, uint64)')
+  printInfo('  - Complex struct { id, username, active, balance } = tuple (uint64, string, bool, uint256)')
+  printInfo('  - Nested struct Order { Item { ... } } = nested tuple (...)')
+
+  printSuccess('ABI Struct and Tuple Conversion example completed successfully!')
+}
+
+main()
+
+```
+
+---
+
+### Other examples in ABI Encoding
+
+- [ABI Type Parsing](/docs/algokit-utils/typescript/latest/examples/abi/01-type-parsing/)
+- [ABI Primitive Types](/docs/algokit-utils/typescript/latest/examples/abi/02-primitive-types/)
+- [ABI Address Type](/docs/algokit-utils/typescript/latest/examples/abi/03-address-type/)
+- [ABI String Type](/docs/algokit-utils/typescript/latest/examples/abi/04-string-type/)
+- [ABI Static Array Type](/docs/algokit-utils/typescript/latest/examples/abi/05-static-array/)
+- [ABI Dynamic Array Type](/docs/algokit-utils/typescript/latest/examples/abi/06-dynamic-array/)
+- [ABI Tuple Type](/docs/algokit-utils/typescript/latest/examples/abi/07-tuple-type/)
+- [ABI Struct Type](/docs/algokit-utils/typescript/latest/examples/abi/08-struct-type/)
+- **ABI Struct and Tuple Conversion**
+- [ABI Bool Array Packing](/docs/algokit-utils/typescript/latest/examples/abi/10-bool-packing/)
+- [ABI Method](/docs/algokit-utils/typescript/latest/examples/abi/11-abi-method/)
+- [AVM Type Encoding](/docs/algokit-utils/typescript/latest/examples/abi/12-avm-types/)
+- [Type Guards](/docs/algokit-utils/typescript/latest/examples/abi/13-type-guards/)
+- [ABI Complex Nested Types](/docs/algokit-utils/typescript/latest/examples/abi/14-complex-nested/)
+- [ARC-56 Storage Helpers](/docs/algokit-utils/typescript/latest/examples/abi/15-arc56-storage/)

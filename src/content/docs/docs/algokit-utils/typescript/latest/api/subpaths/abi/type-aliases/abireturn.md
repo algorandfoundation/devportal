@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'ABIReturn'
+title: "ABIReturn"
 ---
 
 > **ABIReturn** = \{ `decodeError`: `undefined`; `method`: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/); `rawReturnValue`: `Uint8Array`; `returnValue`: [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/); \} \| \{ `decodeError?`: `Error`; `method`: [`ABIMethod`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abimethod/); `rawReturnValue?`: `undefined`; `returnValue?`: `undefined`; \}
 
-Defined in: [packages/abi/src/abi-method.ts:54](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L54)
+Defined in: [packages/abi/src/abi-method.ts:54](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-method.ts#L54)
 
 Represents an ABI method return value with parsed data.
 

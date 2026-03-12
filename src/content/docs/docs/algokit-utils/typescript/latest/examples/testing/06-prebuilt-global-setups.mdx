@@ -1,0 +1,269 @@
+---
+title: "Pre-built Global Setups"
+description: "This example demonstrates the pre-built global setup functions available for common client types and how to use them in Vitest configuration. It shows:"
+sidebar:
+  order: 6
+---
+
+[← Back to Testing](/docs/algokit-utils/typescript/latest/examples/testing/)
+
+## Description
+
+This example demonstrates the pre-built global setup functions available for common client types and how to use them in Vitest configuration. It shows:
+- algodGlobalSetup, indexerGlobalSetup, and kmdGlobalSetup imports
+- How these are pre-configured setup functions ready to use
+- Example vitest.config.ts configurations for each setup
+- Example tests/globalSetup.ts files that re-export the setup
+- The difference between pre-built setups and createGlobalSetup()
+ NOTE: This example documents usage patterns without invoking setups (no running server needed). The setup functions are designed for use in vitest.config.ts, not direct invocation.
+
+## Prerequisites
+
+- No LocalNet required
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example testing/06-prebuilt-global-setups.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/testing/06-prebuilt-global-setups.ts)
+
+```typescript title="06-prebuilt-global-setups.ts"
+/**
+ * Example: Pre-built Global Setups
+ *
+ * This example demonstrates the pre-built global setup functions available for
+ * common client types and how to use them in Vitest configuration. It shows:
+ * - algodGlobalSetup, indexerGlobalSetup, and kmdGlobalSetup imports
+ * - How these are pre-configured setup functions ready to use
+ * - Example vitest.config.ts configurations for each setup
+ * - Example tests/globalSetup.ts files that re-export the setup
+ * - The difference between pre-built setups and createGlobalSetup()
+ *
+ * NOTE: This example documents usage patterns without invoking setups
+ * (no running server needed). The setup functions are designed for use in
+ * vitest.config.ts, not direct invocation.
+ *
+ * Prerequisites:
+ * - No LocalNet required
+ */
+
+import {
+  algodGlobalSetup,
+  createGlobalSetup,
+  indexerGlobalSetup,
+  kmdGlobalSetup,
+} from '@algorandfoundation/algokit-utils/testing'
+import { printHeader, printInfo, printStep, printSuccess } from '../shared/utils.js'
+
+function main() {
+  printHeader('Pre-built Global Setups Example')
+
+  // Step 1: Import pre-built global setups
+  printStep(1, 'Importing Pre-built Global Setups')
+  printInfo('The testing package exports three pre-built global setup functions:')
+  printInfo('')
+  printInfo('  import {')
+  printInfo('    algodGlobalSetup,')
+  printInfo('    indexerGlobalSetup,')
+  printInfo('    kmdGlobalSetup,')
+  printInfo('  } from "@algorandfoundation/algokit-utils/testing"')
+  printInfo('')
+  printInfo('These are pre-configured setup functions ready to use in Vitest.')
+  printInfo('')
+  printInfo('Verifying imports are functions:')
+  printInfo(`  algodGlobalSetup:   ${typeof algodGlobalSetup}`)
+  printInfo(`  indexerGlobalSetup: ${typeof indexerGlobalSetup}`)
+  printInfo(`  kmdGlobalSetup:     ${typeof kmdGlobalSetup}`)
+
+  // Step 2: Explain algodGlobalSetup
+  printStep(2, 'algodGlobalSetup - Mock Algod Server')
+  printInfo('algodGlobalSetup connects to the mock algod server.')
+  printInfo('')
+  printInfo('What it does:')
+  printInfo('  - Reads MOCK_ALGOD_URL from environment (default: http://localhost:8000)')
+  printInfo('  - Verifies the mock algod server is reachable')
+  printInfo('  - Returns a teardown function for cleanup')
+  printInfo('')
+  printInfo('The mock algod server provides:')
+  printInfo('  - Transaction submission and status endpoints')
+  printInfo('  - Account information queries')
+  printInfo('  - Application state queries')
+  printInfo('  - Block information')
+
+  // Step 3: Explain indexerGlobalSetup
+  printStep(3, 'indexerGlobalSetup - Mock Indexer Server')
+  printInfo('indexerGlobalSetup connects to the mock indexer server.')
+  printInfo('')
+  printInfo('What it does:')
+  printInfo('  - Reads MOCK_INDEXER_URL from environment (default: http://localhost:8002)')
+  printInfo('  - Verifies the mock indexer server is reachable')
+  printInfo('  - Returns a teardown function for cleanup')
+  printInfo('')
+  printInfo('The mock indexer server provides:')
+  printInfo('  - Historical transaction search')
+  printInfo('  - Account transaction history')
+  printInfo('  - Asset and application lookups')
+  printInfo('  - Block search capabilities')
+
+  // Step 4: Explain kmdGlobalSetup
+  printStep(4, 'kmdGlobalSetup - Mock KMD Server')
+  printInfo('kmdGlobalSetup connects to the mock kmd server.')
+  printInfo('')
+  printInfo('What it does:')
+  printInfo('  - Reads MOCK_KMD_URL from environment (default: http://localhost:8001)')
+  printInfo('  - Verifies the mock kmd server is reachable')
+  printInfo('  - Returns a teardown function for cleanup')
+  printInfo('')
+  printInfo('The mock kmd server provides:')
+  printInfo('  - Wallet management (create, list, delete)')
+  printInfo('  - Key management within wallets')
+  printInfo('  - Transaction signing')
+  printInfo('  - Key import/export')
+
+  // Step 5: Show example vitest.config.ts for algod
+  printStep(5, 'Example vitest.config.ts for Algod')
+  printInfo('For testing with the algod mock server:')
+  printInfo('')
+  printInfo('  // vitest.config.ts')
+  printInfo('  import { defineConfig } from "vitest/config"')
+  printInfo('')
+  printInfo('  export default defineConfig({')
+  printInfo('    test: {')
+  printInfo('      globalSetup: "./tests/globalSetup.ts",')
+  printInfo('    },')
+  printInfo('  })')
+  printInfo('')
+  printInfo('  // tests/globalSetup.ts')
+  printInfo('  import { algodGlobalSetup } from "@algorandfoundation/algokit-utils/testing"')
+  printInfo('  export default algodGlobalSetup')
+
+  // Step 6: Show example vitest.config.ts for indexer
+  printStep(6, 'Example vitest.config.ts for Indexer')
+  printInfo('For testing with the indexer mock server:')
+  printInfo('')
+  printInfo('  // vitest.config.ts')
+  printInfo('  import { defineConfig } from "vitest/config"')
+  printInfo('')
+  printInfo('  export default defineConfig({')
+  printInfo('    test: {')
+  printInfo('      globalSetup: "./tests/globalSetup.ts",')
+  printInfo('    },')
+  printInfo('  })')
+  printInfo('')
+  printInfo('  // tests/globalSetup.ts')
+  printInfo('  import { indexerGlobalSetup } from "@algorandfoundation/algokit-utils/testing"')
+  printInfo('  export default indexerGlobalSetup')
+
+  // Step 7: Show example vitest.config.ts for kmd
+  printStep(7, 'Example vitest.config.ts for KMD')
+  printInfo('For testing with the kmd mock server:')
+  printInfo('')
+  printInfo('  // vitest.config.ts')
+  printInfo('  import { defineConfig } from "vitest/config"')
+  printInfo('')
+  printInfo('  export default defineConfig({')
+  printInfo('    test: {')
+  printInfo('      globalSetup: "./tests/globalSetup.ts",')
+  printInfo('    },')
+  printInfo('  })')
+  printInfo('')
+  printInfo('  // tests/globalSetup.ts')
+  printInfo('  import { kmdGlobalSetup } from "@algorandfoundation/algokit-utils/testing"')
+  printInfo('  export default kmdGlobalSetup')
+
+  // Step 8: Show example globalSetup.ts re-export pattern
+  printStep(8, 'Re-export Pattern in globalSetup.ts')
+  printInfo('The recommended pattern is to create a globalSetup.ts file that re-exports:')
+  printInfo('')
+  printInfo('  // tests/globalSetup.ts - Simple re-export')
+  printInfo('  import { algodGlobalSetup } from "@algorandfoundation/algokit-utils/testing"')
+  printInfo('  export default algodGlobalSetup')
+  printInfo('')
+  printInfo('This pattern allows you to:')
+  printInfo('  - Keep vitest.config.ts clean and focused')
+  printInfo('  - Easily switch between different mock servers')
+  printInfo('  - Add custom setup logic if needed later')
+  printInfo('')
+  printInfo('For multiple servers, combine setups:')
+  printInfo('')
+  printInfo('  // tests/globalSetup.ts - Combined setup')
+  printInfo('  import { algodGlobalSetup, indexerGlobalSetup } from "@algorandfoundation/algokit-utils/testing"')
+  printInfo('')
+  printInfo('  export default async function setup() {')
+  printInfo('    const teardownAlgod = await algodGlobalSetup()')
+  printInfo('    const teardownIndexer = await indexerGlobalSetup()')
+  printInfo('    return async () => {')
+  printInfo('      await teardownAlgod()')
+  printInfo('      await teardownIndexer()')
+  printInfo('    }')
+  printInfo('  }')
+
+  // Step 9: Difference between pre-built setups and createGlobalSetup()
+  printStep(9, 'Pre-built Setups vs createGlobalSetup()')
+  printInfo('Understanding when to use each approach:')
+  printInfo('')
+  printInfo('PRE-BUILT SETUPS (algodGlobalSetup, indexerGlobalSetup, kmdGlobalSetup):')
+  printInfo('  - Ready to use with no configuration')
+  printInfo('  - Simply import and re-export')
+  printInfo('  - Best for most common use cases')
+  printInfo('  - Equivalent to createGlobalSetup("algod"), etc.')
+  printInfo('')
+  printInfo('createGlobalSetup(clientType):')
+  printInfo('  - Factory function for creating custom setups')
+  printInfo('  - Useful when you need programmatic control')
+  printInfo('  - Can be used to create setups dynamically')
+  printInfo('  - Example: createGlobalSetup(process.env.CLIENT_TYPE as ClientType)')
+  printInfo('')
+  printInfo('Equivalence:')
+  printInfo('  algodGlobalSetup   === createGlobalSetup("algod")')
+  printInfo('  indexerGlobalSetup === createGlobalSetup("indexer")')
+  printInfo('  kmdGlobalSetup     === createGlobalSetup("kmd")')
+  printInfo('')
+  printInfo('Verifying equivalence (both create functions):')
+  printInfo(`  Pre-built algodGlobalSetup:    ${typeof algodGlobalSetup}`)
+  printInfo(`  createGlobalSetup("algod"):    ${typeof createGlobalSetup('algod')}`)
+
+  // Summary
+  printStep(10, 'Summary')
+  printInfo('Key takeaways for using pre-built global setups:')
+  printInfo('')
+  printInfo('  1. Import the setup you need:')
+  printInfo('     - algodGlobalSetup for algod mock server')
+  printInfo('     - indexerGlobalSetup for indexer mock server')
+  printInfo('     - kmdGlobalSetup for kmd mock server')
+  printInfo('')
+  printInfo('  2. Create tests/globalSetup.ts and re-export the setup')
+  printInfo('')
+  printInfo('  3. Point vitest.config.ts to your globalSetup.ts')
+  printInfo('')
+  printInfo('  4. Use createGlobalSetup() only when you need:')
+  printInfo('     - Dynamic client type selection')
+  printInfo('     - Programmatic setup configuration')
+  printInfo('')
+  printInfo('  5. Combine multiple setups by calling them in sequence')
+
+  printSuccess('Pre-built global setups example completed!')
+}
+
+main()
+
+```
+
+---
+
+### Other examples in Testing
+
+- [Configuration Constants](/docs/algokit-utils/typescript/latest/examples/testing/01-configuration-constants/)
+- [Test Data Constants](/docs/algokit-utils/typescript/latest/examples/testing/02-test-data-constants/)
+- [Health Check Utility](/docs/algokit-utils/typescript/latest/examples/testing/03-health-check/)
+- [Mock Server Connection](/docs/algokit-utils/typescript/latest/examples/testing/04-mock-server-connection/)
+- [Vitest Global Setup Factory](/docs/algokit-utils/typescript/latest/examples/testing/05-global-setup-factory/)
+- **Pre-built Global Setups**
+- [Integration Example - Complete Test Setup](/docs/algokit-utils/typescript/latest/examples/testing/07-integration-example/)

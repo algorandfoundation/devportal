@@ -2,16 +2,16 @@
 editUrl: false
 next: false
 prev: false
-title: 'encodeSignedTransactions'
+title: "encodeSignedTransactions"
 ---
 
 > **encodeSignedTransactions**(`signedTransactions`): `Uint8Array`\<`ArrayBufferLike`\>[]
 
-Defined in: [packages/transact/src/transactions/signed-transaction.ts:128](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L128)
+Defined in: [packages/transact/src/transactions/signed-transaction.ts:128](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/signed-transaction.ts#L128)
 
 Encode signed transactions to MsgPack for sending on the network.
 
-This method performs canonical encoding. No domain separation prefix is applicable.
+ This method performs canonical encoding. No domain separation prefix is applicable.
 
 ## Parameters
 

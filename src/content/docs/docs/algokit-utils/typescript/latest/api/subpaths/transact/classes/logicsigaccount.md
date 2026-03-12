@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'LogicSigAccount'
+title: "LogicSigAccount"
 ---
 
-Defined in: [packages/transact/src/logicsig.ts:88](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L88)
+Defined in: [packages/transact/src/logicsig.ts:88](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L88)
 
 ## Extends
 
@@ -17,7 +17,7 @@ Defined in: [packages/transact/src/logicsig.ts:88](https://github.com/larkiny/al
 
 > **new LogicSigAccount**(`program`, `programArgs?`, `delegator?`): `LogicSigAccount`
 
-Defined in: [packages/transact/src/logicsig.ts:127](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L127)
+Defined in: [packages/transact/src/logicsig.ts:127](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L127)
 
 #### Parameters
 
@@ -47,47 +47,47 @@ Defined in: [packages/transact/src/logicsig.ts:127](https://github.com/larkiny/a
 
 > **args**: `Uint8Array`\<`ArrayBufferLike`\>[]
 
-Defined in: [packages/transact/src/logicsig.ts:34](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L34)
+Defined in: [packages/transact/src/logicsig.ts:34](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L34)
 
 #### Inherited from
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`args`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#args)
 
----
+***
 
 ### lmsig?
 
 > `optional` **lmsig**: [`MultisigSignature`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/multisigsignature/)
 
-Defined in: [packages/transact/src/logicsig.ts:91](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L91)
+Defined in: [packages/transact/src/logicsig.ts:91](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L91)
 
----
+***
 
 ### logic
 
 > **logic**: `Uint8Array`
 
-Defined in: [packages/transact/src/logicsig.ts:33](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L33)
+Defined in: [packages/transact/src/logicsig.ts:33](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L33)
 
 #### Inherited from
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`logic`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#logic)
 
----
+***
 
 ### msig?
 
 > `optional` **msig**: [`MultisigSignature`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/multisigsignature/)
 
-Defined in: [packages/transact/src/logicsig.ts:90](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L90)
+Defined in: [packages/transact/src/logicsig.ts:90](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L90)
 
----
+***
 
 ### sig?
 
 > `optional` **sig**: `Uint8Array`\<`ArrayBufferLike`\>
 
-Defined in: [packages/transact/src/logicsig.ts:89](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L89)
+Defined in: [packages/transact/src/logicsig.ts:89](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L89)
 
 ## Accessors
 
@@ -97,7 +97,7 @@ Defined in: [packages/transact/src/logicsig.ts:89](https://github.com/larkiny/al
 
 > **get** **addr**(): [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [packages/transact/src/logicsig.ts:59](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L59)
+Defined in: [packages/transact/src/logicsig.ts:59](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L59)
 
 ##### Returns
 
@@ -107,7 +107,7 @@ Defined in: [packages/transact/src/logicsig.ts:59](https://github.com/larkiny/al
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`addr`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#addr)
 
----
+***
 
 ### signer
 
@@ -115,7 +115,7 @@ Defined in: [packages/transact/src/logicsig.ts:59](https://github.com/larkiny/al
 
 > **get** **signer**(): [`TransactionSigner`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/transactionsigner/)
 
-Defined in: [packages/transact/src/logicsig.ts:132](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L132)
+Defined in: [packages/transact/src/logicsig.ts:132](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L132)
 
 ##### Returns
 
@@ -127,7 +127,7 @@ Defined in: [packages/transact/src/logicsig.ts:132](https://github.com/larkiny/a
 
 > **account**(): `LogicSigAccount`
 
-Defined in: [packages/transact/src/logicsig.ts:79](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L79)
+Defined in: [packages/transact/src/logicsig.ts:79](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L79)
 
 #### Returns
 
@@ -137,13 +137,13 @@ Defined in: [packages/transact/src/logicsig.ts:79](https://github.com/larkiny/al
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`account`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#account)
 
----
+***
 
 ### address()
 
 > **address**(): [`Address`](/docs/algokit-utils/typescript/latest/api/algokit-utils/classes/address/)
 
-Defined in: [packages/transact/src/logicsig.ts:55](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L55)
+Defined in: [packages/transact/src/logicsig.ts:55](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L55)
 
 #### Returns
 
@@ -153,13 +153,13 @@ Defined in: [packages/transact/src/logicsig.ts:55](https://github.com/larkiny/al
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`address`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#address)
 
----
+***
 
 ### bytesToSignForDelegation()
 
 > **bytesToSignForDelegation**(`msig?`): `Uint8Array`
 
-Defined in: [packages/transact/src/logicsig.ts:63](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L63)
+Defined in: [packages/transact/src/logicsig.ts:63](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L63)
 
 #### Parameters
 
@@ -175,13 +175,13 @@ Defined in: [packages/transact/src/logicsig.ts:63](https://github.com/larkiny/al
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`bytesToSignForDelegation`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#bytestosignfordelegation)
 
----
+***
 
 ### delegatedAccount()
 
 > **delegatedAccount**(`delegator`): `LogicSigAccount`
 
-Defined in: [packages/transact/src/logicsig.ts:83](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L83)
+Defined in: [packages/transact/src/logicsig.ts:83](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L83)
 
 #### Parameters
 
@@ -197,13 +197,13 @@ Defined in: [packages/transact/src/logicsig.ts:83](https://github.com/larkiny/al
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`delegatedAccount`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#delegatedaccount)
 
----
+***
 
 ### programDataToSign()
 
 > **programDataToSign**(`data`): `Uint8Array`
 
-Defined in: [packages/transact/src/logicsig.ts:75](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L75)
+Defined in: [packages/transact/src/logicsig.ts:75](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L75)
 
 #### Parameters
 
@@ -219,13 +219,13 @@ Defined in: [packages/transact/src/logicsig.ts:75](https://github.com/larkiny/al
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`programDataToSign`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#programdatatosign)
 
----
+***
 
 ### signForDelegation()
 
 > **signForDelegation**(`delegator`): `Promise`\<`void`\>
 
-Defined in: [packages/transact/src/logicsig.ts:155](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L155)
+Defined in: [packages/transact/src/logicsig.ts:155](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L155)
 
 #### Parameters
 
@@ -237,13 +237,13 @@ Defined in: [packages/transact/src/logicsig.ts:155](https://github.com/larkiny/a
 
 `Promise`\<`void`\>
 
----
+***
 
 ### signProgramData()
 
 > **signProgramData**(`data`, `signer`): `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
 
-Defined in: [packages/transact/src/logicsig.ts:71](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L71)
+Defined in: [packages/transact/src/logicsig.ts:71](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L71)
 
 #### Parameters
 
@@ -263,13 +263,13 @@ Defined in: [packages/transact/src/logicsig.ts:71](https://github.com/larkiny/al
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`signProgramData`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#signprogramdata)
 
----
+***
 
 ### fromBytes()
 
 > `static` **fromBytes**(`encodedLsig`, `delegator?`): `LogicSigAccount`
 
-Defined in: [packages/transact/src/logicsig.ts:121](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L121)
+Defined in: [packages/transact/src/logicsig.ts:121](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L121)
 
 #### Parameters
 
@@ -289,13 +289,13 @@ Defined in: [packages/transact/src/logicsig.ts:121](https://github.com/larkiny/a
 
 [`LogicSig`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/).[`fromBytes`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/classes/logicsig/#frombytes)
 
----
+***
 
 ### fromSignature()
 
 > `static` **fromSignature**(`signature`, `delegator?`): `LogicSigAccount`
 
-Defined in: [packages/transact/src/logicsig.ts:93](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L93)
+Defined in: [packages/transact/src/logicsig.ts:93](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/logicsig.ts#L93)
 
 #### Parameters
 

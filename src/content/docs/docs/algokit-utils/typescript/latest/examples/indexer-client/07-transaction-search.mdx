@@ -1,0 +1,684 @@
+---
+title: "Transaction Search"
+description: "This example demonstrates how to search for transactions with various filters using the IndexerClient searchForTransactions() method."
+sidebar:
+  order: 7
+---
+
+[← Back to Indexer Client](/docs/algokit-utils/typescript/latest/examples/indexer-client/)
+
+## Description
+
+This example demonstrates how to search for transactions with various filters using the IndexerClient searchForTransactions() method.
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository root:
+
+```bash
+cd examples
+npm run example indexer_client/07-transaction-search.ts
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/examples/indexer_client/07-transaction-search.ts)
+
+```typescript title="07-transaction-search.ts"
+/**
+ * Example: Transaction Search
+ *
+ * This example demonstrates how to search for transactions with various filters using
+ * the IndexerClient searchForTransactions() method.
+ *
+ * Prerequisites:
+ * - LocalNet running (via `algokit localnet start`)
+ */
+
+import { algo } from '@algorandfoundation/algokit-utils'
+import {
+  assignFee,
+  OnApplicationComplete,
+  Transaction,
+  TransactionType,
+  type AppCallTransactionFields,
+} from '@algorandfoundation/algokit-utils/transact'
+import {
+  createAlgodClient,
+  createAlgorandClient,
+  createIndexerClient,
+  formatMicroAlgo,
+  loadTealSource,
+  printError,
+  printHeader,
+  printInfo,
+  printStep,
+  printSuccess,
+  shortenAddress,
+} from '../shared/utils.js'
+
+/**
+ * Wait for a transaction to be confirmed
+ */
+async function waitForConfirmation(
+  algod: ReturnType<typeof createAlgodClient>,
+  txId: string,
+  maxRounds = 10,
+): Promise<Record<string, unknown>> {
+  let lastRound = (await algod.status()).lastRound
+  const startRound = lastRound
+
+  while (lastRound < startRound + BigInt(maxRounds)) {
+    const pendingInfo = await algod.pendingTransactionInformation(txId)
+    if (pendingInfo.confirmedRound && pendingInfo.confirmedRound > 0n) {
+      return pendingInfo as Record<string, unknown>
+    }
+    lastRound = (await algod.statusAfterBlock(lastRound)).lastRound
+  }
+
+  throw new Error(`Transaction ${txId} not confirmed after ${maxRounds} rounds`)
+}
+
+async function main() {
+  printHeader('Transaction Search Example')
+
+  // Create clients
+  const indexer = createIndexerClient()
+  const algorand = createAlgorandClient()
+  const algod = createAlgodClient()
+
+  // =========================================================================
+  // Step 1: Get a funded account from LocalNet
+  // =========================================================================
+  printStep(1, 'Getting a funded account from LocalNet')
+
+  let senderAddress: string
+  let senderAccount: Awaited<ReturnType<typeof algorand.account.kmd.getLocalNetDispenserAccount>>
+
+  try {
+    senderAccount = await algorand.account.kmd.getLocalNetDispenserAccount()
+    algorand.setSignerFromAccount(senderAccount)
+    senderAddress = senderAccount.addr.toString()
+    printSuccess(`Using dispenser account: ${shortenAddress(senderAddress)}`)
+  } catch (error) {
+    printError(`Failed to get dispenser account: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+    printInfo('Make sure LocalNet is running: algokit localnet start')
+    printInfo('If issues persist, try: algokit localnet reset')
+    return
+  }
+
+  // =========================================================================
+  // Step 2: Create several different transaction types for setup
+  // =========================================================================
+  printStep(2, 'Creating several different transaction types for setup')
+
+  let receiverAddress: string
+  let assetId: bigint
+  let appId: bigint
+  let startRound: bigint
+
+  try {
+    // Get the current round before creating transactions
+    const status = await algod.status()
+    startRound = status.lastRound
+
+    // Create a random receiver account
+    const receiverAccount = algorand.account.random()
+    receiverAddress = receiverAccount.addr.toString()
+    algorand.setSignerFromAccount(receiverAccount)
+    printInfo(`Created receiver account: ${shortenAddress(receiverAddress)}`)
+
+    // 1. Payment transaction
+    printInfo('Creating payment transaction...')
+    await algorand.send.payment({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      amount: algo(10),
+    })
+    printSuccess('Payment sent: 10 ALGO')
+
+    // 2. Another payment with different amount
+    printInfo('Creating another payment transaction...')
+    await algorand.send.payment({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      amount: algo(5),
+    })
+    printSuccess('Payment sent: 5 ALGO')
+
+    // 3. Asset creation (acfg transaction)
+    printInfo('Creating asset config transaction (asset creation)...')
+    const assetCreateResult = await algorand.send.assetCreate({
+      sender: senderAccount.addr,
+      total: 1_000_000n,
+      decimals: 6,
+      assetName: 'SearchTestToken',
+      unitName: 'SRCH',
+    })
+    assetId = assetCreateResult.assetId
+    printSuccess(`Created asset: SearchTestToken (ID: ${assetId})`)
+
+    // 4. Asset opt-in (axfer to self with 0 amount)
+    printInfo('Creating asset opt-in transaction...')
+    await algorand.send.assetOptIn({
+      sender: receiverAccount.addr,
+      assetId: assetId,
+    })
+    printSuccess('Receiver opted into asset')
+
+    // 5. Asset transfer (axfer)
+    printInfo('Creating asset transfer transaction...')
+    await algorand.send.assetTransfer({
+      sender: senderAccount.addr,
+      receiver: receiverAccount.addr,
+      assetId: assetId,
+      amount: 50_000n,
+    })
+    printSuccess('Asset transfer sent: 50,000 units')
+
+    // 6. Application creation (appl transaction)
+    printInfo('Creating application transaction...')
+    // Load simple approval/clear programs from shared artifacts
+    const approvalSource = loadTealSource('clear-state-approve.teal')
+    const clearSource = loadTealSource('clear-state-approve.teal')
+
+    const approvalResult = await algod.tealCompile(approvalSource)
+    const approvalProgram = new Uint8Array(Buffer.from(approvalResult.result, 'base64'))
+
+    const clearResult = await algod.tealCompile(clearSource)
+    const clearStateProgram = new Uint8Array(Buffer.from(clearResult.result, 'base64'))
+
+    const suggestedParams = await algod.suggestedParams()
+
+    const appCallFields: AppCallTransactionFields = {
+      appId: 0n,
+      onComplete: OnApplicationComplete.NoOp,
+      approvalProgram,
+      clearStateProgram,
+      globalStateSchema: { numUints: 0, numByteSlices: 0 },
+      localStateSchema: { numUints: 0, numByteSlices: 0 },
+    }
+
+    const createAppTx = new Transaction({
+      type: TransactionType.AppCall,
+      sender: senderAccount.addr,
+      firstValid: suggestedParams.firstValid,
+      lastValid: suggestedParams.lastValid,
+      genesisHash: suggestedParams.genesisHash,
+      genesisId: suggestedParams.genesisId,
+      appCall: appCallFields,
+    })
+
+    const createAppTxWithFee = assignFee(createAppTx, {
+      feePerByte: suggestedParams.fee,
+      minFee: suggestedParams.minFee,
+    })
+
+    const signedCreateTx = await senderAccount.signer([createAppTxWithFee], [0])
+    await algod.sendRawTransaction(signedCreateTx)
+    const createPendingInfo = await waitForConfirmation(algod, createAppTxWithFee.txId())
+    appId = createPendingInfo.appId as bigint
+    printSuccess(`Created application: ID ${appId}`)
+
+    // Small delay to allow indexer to catch up
+    printInfo('Waiting for indexer to index transactions...')
+    await new Promise((resolve) => setTimeout(resolve, 3000))
+    printInfo('')
+  } catch (error) {
+    printError(`Failed to create test transactions: ${error instanceof Error ? error.message : String(error)}`)
+    printInfo('')
+    printInfo('If LocalNet errors occur, try: algokit localnet reset')
+    return
+  }
+
+  // =========================================================================
+  // Step 3: Search for transactions with default parameters
+  // =========================================================================
+  printStep(3, 'Searching for transactions with default parameters')
+
+  try {
+    // Note: Results are returned oldest to newest (unless address filter is used)
+    const txnsResult = await indexer.searchForTransactions({ limit: 10 })
+
+    printSuccess(`Found ${txnsResult.transactions.length} transaction(s)`)
+    printInfo('Note: Results are returned oldest to newest (except when using address filter)')
+    printInfo('')
+
+    if (txnsResult.transactions.length > 0) {
+      printInfo('Recent transactions:')
+      for (const tx of txnsResult.transactions.slice(0, 5)) {
+        printInfo(`  Transaction ID: ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}`)
+        printInfo(`    - txType: ${tx.txType}`)
+        printInfo(`    - sender: ${shortenAddress(tx.sender)}`)
+        if (tx.confirmedRound !== undefined) {
+          printInfo(`    - confirmedRound: ${tx.confirmedRound}`)
+        }
+        printInfo('')
+      }
+    }
+
+    printInfo(`Query performed at round: ${txnsResult.currentRound}`)
+  } catch (error) {
+    printError(`searchForTransactions failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 4: Filter by txType to find specific transaction types
+  // =========================================================================
+  printStep(4, 'Filtering by txType to find specific transaction types')
+
+  try {
+    // Transaction types: pay, keyreg, acfg, axfer, afrz, appl, stpf, hb
+    printInfo('Available txType values: pay, keyreg, acfg, axfer, afrz, appl, stpf, hb')
+    printInfo('')
+
+    // Search for payment transactions
+    printInfo('Searching for payment transactions (txType=pay)...')
+    const payTxns = await indexer.searchForTransactions({ txType: 'pay', limit: 5 })
+    printSuccess(`Found ${payTxns.transactions.length} payment transaction(s)`)
+    if (payTxns.transactions.length > 0) {
+      for (const tx of payTxns.transactions.slice(0, 2)) {
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${formatMicroAlgo(tx.paymentTransaction?.amount ?? 0n)}`)
+      }
+    }
+    printInfo('')
+
+    // Search for asset transfer transactions
+    printInfo('Searching for asset transfer transactions (txType=axfer)...')
+    const axferTxns = await indexer.searchForTransactions({ txType: 'axfer', limit: 5 })
+    printSuccess(`Found ${axferTxns.transactions.length} asset transfer transaction(s)`)
+    if (axferTxns.transactions.length > 0) {
+      for (const tx of axferTxns.transactions.slice(0, 2)) {
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: assetId=${tx.assetTransferTransaction?.assetId}`)
+      }
+    }
+    printInfo('')
+
+    // Search for asset config transactions
+    printInfo('Searching for asset config transactions (txType=acfg)...')
+    const acfgTxns = await indexer.searchForTransactions({ txType: 'acfg', limit: 5 })
+    printSuccess(`Found ${acfgTxns.transactions.length} asset config transaction(s)`)
+    if (acfgTxns.transactions.length > 0) {
+      for (const tx of acfgTxns.transactions.slice(0, 2)) {
+        const assetIdDisplay = tx.createdAssetId ?? tx.assetConfigTransaction?.assetId ?? 'N/A'
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: assetId=${assetIdDisplay}`)
+      }
+    }
+    printInfo('')
+
+    // Search for application call transactions
+    printInfo('Searching for application call transactions (txType=appl)...')
+    const applTxns = await indexer.searchForTransactions({ txType: 'appl', limit: 5 })
+    printSuccess(`Found ${applTxns.transactions.length} application call transaction(s)`)
+    if (applTxns.transactions.length > 0) {
+      for (const tx of applTxns.transactions.slice(0, 2)) {
+        const appIdDisplay = tx.createdAppId ?? tx.applicationTransaction?.applicationId ?? 'N/A'
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: appId=${appIdDisplay}`)
+      }
+    }
+  } catch (error) {
+    printError(`txType filter failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 5: Filter by sigType (sig, msig, lsig)
+  // =========================================================================
+  printStep(5, 'Filtering by sigType (sig, msig, lsig)')
+
+  try {
+    // Signature types:
+    // - sig: Standard single signature
+    // - msig: Multisignature
+    // - lsig: Logic signature (smart signature)
+    printInfo('Available sigType values: sig, msig, lsig')
+    printInfo('')
+
+    // Search for standard signature transactions
+    printInfo('Searching for standard signature transactions (sigType=sig)...')
+    const sigTxns = await indexer.searchForTransactions({ sigType: 'sig', limit: 5 })
+    printSuccess(`Found ${sigTxns.transactions.length} transaction(s) with standard signature`)
+    if (sigTxns.transactions.length > 0) {
+      for (const tx of sigTxns.transactions.slice(0, 2)) {
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+      }
+    }
+    printInfo('')
+
+    // Note: msig and lsig transactions may not exist on LocalNet unless specifically created
+    printInfo('Searching for multisig transactions (sigType=msig)...')
+    const msigTxns = await indexer.searchForTransactions({ sigType: 'msig', limit: 5 })
+    printSuccess(`Found ${msigTxns.transactions.length} multisig transaction(s)`)
+    printInfo('(Note: Multisig transactions require special setup and may not exist on LocalNet)')
+    printInfo('')
+
+    printInfo('Searching for logic signature transactions (sigType=lsig)...')
+    const lsigTxns = await indexer.searchForTransactions({ sigType: 'lsig', limit: 5 })
+    printSuccess(`Found ${lsigTxns.transactions.length} logic signature transaction(s)`)
+    printInfo('(Note: Logic signature transactions require smart signatures and may not exist on LocalNet)')
+  } catch (error) {
+    printError(`sigType filter failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 6: Filter by address with addressRole (sender, receiver)
+  // =========================================================================
+  printStep(6, 'Filtering by address with addressRole (sender, receiver)')
+
+  try {
+    // addressRole can be: sender, receiver, freeze-target
+    // When using address filter, results are returned newest to oldest
+    printInfo('Available addressRole values: sender, receiver, freeze-target')
+    printInfo('Note: When using address filter, results are returned newest to oldest')
+    printInfo('')
+
+    // Search for transactions where sender is the address
+    printInfo(`Searching for transactions where ${shortenAddress(senderAddress)} is sender...`)
+    const senderTxns = await indexer.searchForTransactions({
+      address: senderAddress,
+      addressRole: 'sender',
+      limit: 5,
+    })
+    printSuccess(`Found ${senderTxns.transactions.length} transaction(s) as sender`)
+    if (senderTxns.transactions.length > 0) {
+      for (const tx of senderTxns.transactions.slice(0, 3)) {
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+      }
+    }
+    printInfo('')
+
+    // Search for transactions where receiver is the address
+    printInfo(`Searching for transactions where ${shortenAddress(receiverAddress)} is receiver...`)
+    const receiverTxns = await indexer.searchForTransactions({
+      address: receiverAddress,
+      addressRole: 'receiver',
+      limit: 5,
+    })
+    printSuccess(`Found ${receiverTxns.transactions.length} transaction(s) as receiver`)
+    if (receiverTxns.transactions.length > 0) {
+      for (const tx of receiverTxns.transactions.slice(0, 3)) {
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+      }
+    }
+    printInfo('')
+
+    // Search for transactions involving an address in any role
+    printInfo(`Searching for all transactions involving ${shortenAddress(senderAddress)} (no role filter)...`)
+    const anyRoleTxns = await indexer.searchForTransactions({
+      address: senderAddress,
+      limit: 5,
+    })
+    printSuccess(`Found ${anyRoleTxns.transactions.length} transaction(s) involving address`)
+    if (anyRoleTxns.transactions.length > 0) {
+      for (const tx of anyRoleTxns.transactions.slice(0, 3)) {
+        const role = tx.sender === senderAddress ? 'sender' : 'other'
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType} (role: ${role})`)
+      }
+    }
+  } catch (error) {
+    printError(`address/addressRole filter failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 7: Filter by round range (minRound, maxRound)
+  // =========================================================================
+  printStep(7, 'Filtering by round range (minRound, maxRound)')
+
+  try {
+    // Get current round
+    const latestTxns = await indexer.searchForTransactions({ limit: 1 })
+    const currentRound = latestTxns.currentRound
+
+    printInfo(`Current round: ${currentRound}`)
+    printInfo(`Transactions created starting from round: ${startRound}`)
+    printInfo('')
+
+    // Filter to recent rounds only
+    printInfo(`Searching for transactions from round ${startRound} to ${currentRound}...`)
+    const roundFilteredTxns = await indexer.searchForTransactions({
+      minRound: startRound,
+      maxRound: currentRound,
+      limit: 10,
+    })
+
+    printSuccess(`Found ${roundFilteredTxns.transactions.length} transaction(s) in round range`)
+    if (roundFilteredTxns.transactions.length > 0) {
+      const rounds = roundFilteredTxns.transactions.map((tx) => tx.confirmedRound).filter((r) => r !== undefined)
+      if (rounds.length > 0) {
+        const minFoundRound = rounds.reduce((a, b) => (a! < b! ? a : b))
+        const maxFoundRound = rounds.reduce((a, b) => (a! > b! ? a : b))
+        printInfo(`  Rounds of found transactions: ${minFoundRound} to ${maxFoundRound}`)
+      }
+    }
+    printInfo('')
+
+    // Single round query
+    printInfo(`Searching for transactions in round ${currentRound} only...`)
+    const singleRoundTxns = await indexer.searchForTransactions({
+      round: currentRound,
+      limit: 10,
+    })
+    printSuccess(`Found ${singleRoundTxns.transactions.length} transaction(s) in round ${currentRound}`)
+  } catch (error) {
+    printError(`round filter failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 8: Filter by time range (beforeTime, afterTime)
+  // =========================================================================
+  printStep(8, 'Filtering by time range (beforeTime, afterTime)')
+
+  try {
+    // Time filters use RFC 3339 format (ISO 8601, e.g., "2026-01-26T10:00:00.000Z")
+    const now = new Date()
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000)
+
+    const afterTimeStr = oneHourAgo.toISOString()
+    const beforeTimeStr = now.toISOString()
+
+    printInfo('Time filters use RFC 3339 format (ISO 8601)')
+    printInfo(`  afterTime: ${afterTimeStr}`)
+    printInfo(`  beforeTime: ${beforeTimeStr}`)
+    printInfo('')
+
+    printInfo('Searching for transactions in the last hour...')
+    const timeFilteredTxns = await indexer.searchForTransactions({
+      afterTime: afterTimeStr,
+      beforeTime: beforeTimeStr,
+      limit: 10,
+    })
+
+    printSuccess(`Found ${timeFilteredTxns.transactions.length} transaction(s) in time range`)
+    if (timeFilteredTxns.transactions.length > 0) {
+      const times = timeFilteredTxns.transactions.map((tx) => tx.roundTime).filter((t) => t !== undefined)
+      if (times.length > 0) {
+        const minTime = Math.min(...(times as number[]))
+        const maxTime = Math.max(...(times as number[]))
+        printInfo(`  Time range of found transactions:`)
+        printInfo(`    - Earliest: ${new Date(minTime * 1000).toISOString()}`)
+        printInfo(`    - Latest: ${new Date(maxTime * 1000).toISOString()}`)
+      }
+    }
+  } catch (error) {
+    printError(`time filter failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 9: Filter by applicationId to find app calls
+  // =========================================================================
+  printStep(9, 'Filtering by applicationId to find app calls')
+
+  try {
+    printInfo(`Searching for transactions involving application ID ${appId}...`)
+    const appTxns = await indexer.searchForTransactions({
+      applicationId: appId,
+      limit: 10,
+    })
+
+    printSuccess(`Found ${appTxns.transactions.length} transaction(s) for app ${appId}`)
+    if (appTxns.transactions.length > 0) {
+      for (const tx of appTxns.transactions) {
+        const onComplete = tx.applicationTransaction?.onCompletion
+        const createdApp = tx.createdAppId
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}:`)
+        printInfo(`      txType: ${tx.txType}`)
+        if (createdApp) {
+          printInfo(`      createdAppId: ${createdApp}`)
+        }
+        if (onComplete !== undefined) {
+          printInfo(`      onCompletion: ${onComplete}`)
+        }
+      }
+    }
+    printInfo('')
+
+    // Note: You can combine applicationId with other filters
+    printInfo(`Combining applicationId filter with txType=appl...`)
+    const combinedAppTxns = await indexer.searchForTransactions({
+      applicationId: appId,
+      txType: 'appl',
+      limit: 10,
+    })
+    printSuccess(`Found ${combinedAppTxns.transactions.length} app call transaction(s) for app ${appId}`)
+  } catch (error) {
+    printError(`applicationId filter failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 10: Combining multiple filters
+  // =========================================================================
+  printStep(10, 'Combining multiple filters')
+
+  try {
+    printInfo('You can combine multiple filters to narrow down results.')
+    printInfo('')
+
+    // Combine txType and address
+    printInfo(`Searching for payment transactions from ${shortenAddress(senderAddress)}...`)
+    const combinedTxns1 = await indexer.searchForTransactions({
+      txType: 'pay',
+      address: senderAddress,
+      addressRole: 'sender',
+      limit: 5,
+    })
+    printSuccess(`Found ${combinedTxns1.transactions.length} payment transaction(s) from sender`)
+    printInfo('')
+
+    // Combine round range and txType
+    printInfo(`Searching for asset transfers in recent rounds...`)
+    const latestResult = await indexer.searchForTransactions({ limit: 1 })
+    const combinedTxns2 = await indexer.searchForTransactions({
+      txType: 'axfer',
+      minRound: startRound,
+      maxRound: latestResult.currentRound,
+      limit: 5,
+    })
+    printSuccess(`Found ${combinedTxns2.transactions.length} asset transfer(s) in recent rounds`)
+  } catch (error) {
+    printError(`combined filters failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Step 11: Pagination with limit and next
+  // =========================================================================
+  printStep(11, 'Demonstrating pagination with limit and next')
+
+  try {
+    printInfo('Using limit=2 to demonstrate pagination...')
+    const page1 = await indexer.searchForTransactions({ limit: 2 })
+
+    printInfo(`Page 1: Retrieved ${page1.transactions.length} transaction(s)`)
+    for (const tx of page1.transactions) {
+      printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+    }
+
+    if (page1.nextToken) {
+      printInfo(`  - Next token available: ${page1.nextToken.substring(0, 20)}...`)
+      printInfo('')
+
+      printInfo('Fetching next page...')
+      const page2 = await indexer.searchForTransactions({
+        limit: 2,
+        next: page1.nextToken,
+      })
+
+      printInfo(`Page 2: Retrieved ${page2.transactions.length} transaction(s)`)
+      for (const tx of page2.transactions) {
+        printInfo(`  - ${tx.id ? shortenAddress(tx.id, 8, 6) : 'N/A'}: ${tx.txType}`)
+      }
+
+      if (page2.nextToken) {
+        printInfo(`  - More pages available (nextToken present)`)
+      } else {
+        printInfo(`  - No more pages (no nextToken)`)
+      }
+    } else {
+      printInfo('  - No pagination needed (all results fit in one page)')
+    }
+  } catch (error) {
+    printError(`pagination failed: ${error instanceof Error ? error.message : String(error)}`)
+  }
+
+  // =========================================================================
+  // Summary
+  // =========================================================================
+  printHeader('Summary')
+  printInfo('This example demonstrated searchForTransactions() with various filters:')
+  printInfo('')
+  printInfo('Key filter parameters:')
+  printInfo('  - txType: Filter by transaction type (pay, keyreg, acfg, axfer, afrz, appl, stpf, hb)')
+  printInfo('  - sigType: Filter by signature type (sig, msig, lsig)')
+  printInfo('  - address: Filter by address involvement')
+  printInfo('  - addressRole: Specify role (sender, receiver, freeze-target)')
+  printInfo('  - minRound/maxRound: Filter by round range')
+  printInfo('  - round: Filter by specific round')
+  printInfo('  - beforeTime/afterTime: Filter by time (RFC 3339 format)')
+  printInfo('  - applicationId: Filter by application ID')
+  printInfo('  - assetId: Filter by asset ID')
+  printInfo('  - currencyGreaterThan/currencyLessThan: Filter by amount')
+  printInfo('  - notePrefix: Filter by note prefix')
+  printInfo('  - txId: Find specific transaction by ID')
+  printInfo('  - groupId: Filter by group ID')
+  printInfo('  - rekeyTo: Filter for rekey transactions')
+  printInfo('  - excludeCloseTo: Exclude close-to transactions from results')
+  printInfo('')
+  printInfo('Result ordering:')
+  printInfo('  - Default: Results are returned oldest to newest')
+  printInfo('  - With address filter: Results are returned newest to oldest')
+  printInfo('')
+  printInfo('Pagination:')
+  printInfo('  - limit: Maximum number of results per page')
+  printInfo('  - next: Token from previous response to get next page')
+}
+
+main().catch((error) => {
+  console.error('Fatal error:', error)
+  process.exit(1)
+})
+
+```
+
+---
+
+### Other examples in Indexer Client
+
+- [Indexer Health Check](/docs/algokit-utils/typescript/latest/examples/indexer-client/01-health-check/)
+- [Account Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/02-account-lookup/)
+- [Account Assets](/docs/algokit-utils/typescript/latest/examples/indexer-client/03-account-assets/)
+- [Account Applications](/docs/algokit-utils/typescript/latest/examples/indexer-client/04-account-applications/)
+- [Account Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/05-account-transactions/)
+- [Transaction Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/06-transaction-lookup/)
+- **Transaction Search**
+- [Asset Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/08-asset-lookup/)
+- [Asset Balances](/docs/algokit-utils/typescript/latest/examples/indexer-client/09-asset-balances/)
+- [Asset Transactions](/docs/algokit-utils/typescript/latest/examples/indexer-client/10-asset-transactions/)
+- [Application Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/11-application-lookup/)
+- [Application Logs Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/12-application-logs/)
+- [Application Boxes Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/13-application-boxes/)
+- [Block Lookup](/docs/algokit-utils/typescript/latest/examples/indexer-client/14-block-lookup/)
+- [Block Headers Search](/docs/algokit-utils/typescript/latest/examples/indexer-client/15-block-headers/)
+- [Pagination](/docs/algokit-utils/typescript/latest/examples/indexer-client/16-pagination/)

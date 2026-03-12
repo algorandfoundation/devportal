@@ -2,10 +2,10 @@
 editUrl: false
 next: false
 prev: false
-title: 'ABIUintType'
+title: "ABIUintType"
 ---
 
-Defined in: [packages/abi/src/abi-type.ts:171](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L171)
+Defined in: [packages/abi/src/abi-type.ts:171](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L171)
 
 An unsigned integer ABI type of a specific bit size.
 
@@ -19,7 +19,7 @@ An unsigned integer ABI type of a specific bit size.
 
 > **new ABIUintType**(`bitSize`): `ABIUintType`
 
-Defined in: [packages/abi/src/abi-type.ts:176](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L176)
+Defined in: [packages/abi/src/abi-type.ts:176](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L176)
 
 Creates a new unsigned integer type.
 
@@ -45,7 +45,7 @@ The bit size (must be a multiple of 8, between 8 and 512)
 
 > `readonly` **bitSize**: `number`
 
-Defined in: [packages/abi/src/abi-type.ts:176](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L176)
+Defined in: [packages/abi/src/abi-type.ts:176](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L176)
 
 The bit size (must be a multiple of 8, between 8 and 512)
 
@@ -57,7 +57,7 @@ The bit size (must be a multiple of 8, between 8 and 512)
 
 > **get** **displayName**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:49](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L49)
+Defined in: [packages/abi/src/abi-type.ts:49](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L49)
 
 Returns a user-friendly display name for this type.
 
@@ -71,7 +71,7 @@ The display name for this type
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`displayName`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#displayname)
 
----
+***
 
 ### name
 
@@ -79,7 +79,7 @@ The display name for this type
 
 > **get** **name**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:183](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L183)
+Defined in: [packages/abi/src/abi-type.ts:183](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L183)
 
 Returns the ARC-4 type name string representation.
 
@@ -99,7 +99,7 @@ The ARC-4 type string
 
 > **byteLen**(): `number`
 
-Defined in: [packages/abi/src/abi-type.ts:195](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L195)
+Defined in: [packages/abi/src/abi-type.ts:195](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L195)
 
 Gets the byte length of the encoded type for static types.
 
@@ -117,13 +117,13 @@ Error if the type is dynamic
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`byteLen`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#bytelen)
 
----
+***
 
 ### decode()
 
 > **decode**(`bytes`): [`ABIValue`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/type-aliases/abivalue/)
 
-Defined in: [packages/abi/src/abi-type.ts:213](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L213)
+Defined in: [packages/abi/src/abi-type.ts:213](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L213)
 
 Decodes bytes according to this ABI type.
 
@@ -145,13 +145,13 @@ The decoded value
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`decode`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#decode)
 
----
+***
 
 ### encode()
 
 > **encode**(`value`): `Uint8Array`
 
-Defined in: [packages/abi/src/abi-type.ts:199](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L199)
+Defined in: [packages/abi/src/abi-type.ts:199](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L199)
 
 Encodes a value according to this ABI type.
 
@@ -173,13 +173,13 @@ The encoded bytes
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`encode`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#encode)
 
----
+***
 
 ### equals()
 
 > **equals**(`other`): `boolean`
 
-Defined in: [packages/abi/src/abi-type.ts:187](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L187)
+Defined in: [packages/abi/src/abi-type.ts:187](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L187)
 
 Checks if this ABI type is equal to another.
 
@@ -201,13 +201,13 @@ True if the types are equal, false otherwise
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`equals`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#equals)
 
----
+***
 
 ### isDynamic()
 
 > **isDynamic**(): `boolean`
 
-Defined in: [packages/abi/src/abi-type.ts:191](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L191)
+Defined in: [packages/abi/src/abi-type.ts:191](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L191)
 
 Checks if this ABI type is dynamic (variable-length).
 
@@ -221,13 +221,13 @@ True if the type is dynamic, false otherwise
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`isDynamic`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#isdynamic)
 
----
+***
 
 ### toString()
 
 > **toString**(): `string`
 
-Defined in: [packages/abi/src/abi-type.ts:57](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L57)
+Defined in: [packages/abi/src/abi-type.ts:57](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L57)
 
 Returns the ARC-4 type name string representation.
 
@@ -241,13 +241,13 @@ The ARC-4 type string
 
 [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/).[`toString`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/#tostring)
 
----
+***
 
 ### from()
 
 > `static` **from**(`str`): [`ABIType`](/docs/algokit-utils/typescript/latest/api/subpaths/abi/classes/abitype/)
 
-Defined in: [packages/abi/src/abi-type.ts:100](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L100)
+Defined in: [packages/abi/src/abi-type.ts:100](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/abi/src/abi-type.ts#L100)
 
 Creates an ABI type from an ARC-4 type string.
 

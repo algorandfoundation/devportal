@@ -1,0 +1,331 @@
+---
+title: "Fee Calculation"
+description: "This example demonstrates how to estimate transaction size and calculate fees using the transact package:"
+sidebar:
+  order: 12
+---
+
+[← Back to Transactions](/docs/algokit-utils/python/latest/examples/transact/)
+
+## Description
+
+This example demonstrates how to estimate transaction size and calculate fees using the transact package:
+- estimate_transaction_size() to get estimated byte size
+- calculate_fee() with different fee parameters
+- assign_fee() to set fee on transaction
+- How fee_per_byte, min_fee, extra_fee, and max_fee work
+- Compare estimated vs actual transaction sizes
+ Prerequisites:
+
+## Prerequisites
+
+- LocalNet running (via `algokit localnet start`)
+
+## Run This Example
+
+From the repository's `examples` directory:
+
+```bash
+cd examples
+uv run python transact/12_fee_calculation.py
+```
+
+## Code
+
+[View source on GitHub](https://github.com/algorandfoundation/algokit-utils-py/blob/main/examples/transact/12_fee_calculation.py)
+
+```python title="12_fee_calculation.py"
+# ruff: noqa: N999, C901, PLR0912, PLR0915, PLR2004
+"""
+Example: Fee Calculation
+
+This example demonstrates how to estimate transaction size and calculate fees
+using the transact package:
+- estimate_transaction_size() to get estimated byte size
+- calculate_fee() with different fee parameters
+- assign_fee() to set fee on transaction
+- How fee_per_byte, min_fee, extra_fee, and max_fee work
+- Compare estimated vs actual transaction sizes
+
+Prerequisites:
+- LocalNet running (via `algokit localnet start`)
+"""
+
+from shared import (
+    create_algod_client,
+    print_error,
+    print_header,
+    print_info,
+    print_step,
+    print_success,
+    shorten_address,
+)
+
+from algokit_transact import (
+    AppCallTransactionFields,
+    AssetTransferTransactionFields,
+    OnApplicationComplete,
+    PaymentTransactionFields,
+    Transaction,
+    TransactionType,
+    assign_fee,
+    calculate_fee,
+    estimate_transaction_size,
+)
+from algokit_utils import AlgorandClient
+
+
+def main() -> None:
+    print_header("Fee Calculation Example")
+
+    # Step 1: Initialize clients
+    print_step(1, "Initialize Algod Client")
+    algod = create_algod_client()
+    algorand = AlgorandClient.default_localnet()
+
+    try:
+        algod.status()
+        print_info("Connected to LocalNet Algod")
+    except Exception as e:
+        print_error(f"Failed to connect to LocalNet: {e}")
+        print_info("Make sure LocalNet is running (e.g., algokit localnet start)")
+        return
+
+    # Step 2: Get accounts
+    print_step(2, "Get Accounts")
+    sender = algorand.account.localnet_dispenser()
+    print_info(f"Sender address: {shorten_address(sender.addr)}")
+
+    receiver = algorand.account.random()
+    print_info(f"Receiver address: {shorten_address(receiver.addr)}")
+
+    # Step 3: Get suggested transaction parameters
+    print_step(3, "Get Suggested Transaction Parameters")
+    suggested_params = algod.suggested_params()
+    print_info(f"First valid round: {suggested_params.first_valid}")
+    print_info(f"Last valid round: {suggested_params.last_valid}")
+    print_info(f"Fee per byte from network: {suggested_params.fee} microALGO")
+    print_info(f"Minimum fee from network: {suggested_params.min_fee} microALGO")
+
+    # Step 4: Create a simple payment transaction and estimate its size
+    print_step(4, "Estimate Payment Transaction Size")
+
+    payment_tx = Transaction(
+        transaction_type=TransactionType.Payment,
+        sender=sender.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        payment=PaymentTransactionFields(
+            receiver=receiver.addr,
+            amount=1_000_000,  # 1 ALGO
+        ),
+    )
+
+    payment_estimated_size = estimate_transaction_size(payment_tx)
+    print_info(f"Payment transaction estimated size: {payment_estimated_size} bytes")
+
+    # Step 5: Create an asset transfer transaction and estimate its size
+    print_step(5, "Estimate Asset Transfer Transaction Size")
+
+    asset_transfer_tx = Transaction(
+        transaction_type=TransactionType.AssetTransfer,
+        sender=sender.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        asset_transfer=AssetTransferTransactionFields(
+            asset_id=123456,  # Example asset ID
+            receiver=receiver.addr,
+            amount=1000,
+        ),
+    )
+
+    asset_transfer_estimated_size = estimate_transaction_size(asset_transfer_tx)
+    print_info(f"Asset transfer transaction estimated size: {asset_transfer_estimated_size} bytes")
+
+    # Step 6: Create an app call transaction and estimate its size
+    print_step(6, "Estimate App Call Transaction Size")
+
+    # Simple approval program: #pragma version 9; int 1
+    simple_program = bytes([0x09, 0x81, 0x01])
+
+    app_call_tx = Transaction(
+        transaction_type=TransactionType.AppCall,
+        sender=sender.addr,
+        first_valid=suggested_params.first_valid,
+        last_valid=suggested_params.last_valid,
+        genesis_hash=suggested_params.genesis_hash,
+        genesis_id=suggested_params.genesis_id,
+        application_call=AppCallTransactionFields(
+            app_id=0,  # App creation (0 = new app)
+            on_complete=OnApplicationComplete.NoOp,
+            approval_program=simple_program,
+            clear_state_program=simple_program,
+            args=[b"arg1", b"arg2"],
+        ),
+    )
+
+    app_call_estimated_size = estimate_transaction_size(app_call_tx)
+    print_info(f"App call transaction estimated size: {app_call_estimated_size} bytes")
+
+    # Step 7: Demonstrate calculate_fee with fee_per_byte and min_fee
+    print_step(7, "Calculate Fee with fee_per_byte and min_fee")
+
+    # When fee_per_byte is 0, min_fee is used
+    fee_with_zero_per_byte = calculate_fee(payment_tx, fee_per_byte=0, min_fee=1000)
+    print_info(f"Fee with fee_per_byte=0, min_fee=1000: {fee_with_zero_per_byte} microALGO")
+
+    # When fee_per_byte results in fee less than min_fee, min_fee is used
+    fee_with_low_per_byte = calculate_fee(payment_tx, fee_per_byte=1, min_fee=1000)
+    print_info(f"Fee with fee_per_byte=1, min_fee=1000: {fee_with_low_per_byte} microALGO")
+    calculated_fee = 1 * payment_estimated_size
+    print_info(f"  (fee_per_byte * {payment_estimated_size} = {calculated_fee} < min_fee, so min_fee is used)")
+
+    # When fee_per_byte results in fee greater than min_fee
+    fee_with_high_per_byte = calculate_fee(payment_tx, fee_per_byte=10, min_fee=1000)
+    print_info(f"Fee with fee_per_byte=10, min_fee=1000: {fee_with_high_per_byte} microALGO")
+    high_calculated_fee = 10 * payment_estimated_size
+    print_info(f"  (fee_per_byte * {payment_estimated_size} = {high_calculated_fee} > min_fee)")
+
+    # Step 8: Demonstrate calculate_fee with extra_fee
+    print_step(8, "Calculate Fee with extra_fee")
+
+    fee_with_extra = calculate_fee(
+        payment_tx,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+        extra_fee=500,  # Add 500 microALGO extra
+    )
+    base_fee = calculate_fee(
+        payment_tx,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+    print_info(f"Base fee: {base_fee} microALGO")
+    print_info(f"Fee with extra_fee=500: {fee_with_extra} microALGO")
+    print_info(f"  (baseFee {base_fee} + extra_fee 500 = {fee_with_extra})")
+
+    # Step 9: Demonstrate calculate_fee with max_fee (error case)
+    print_step(9, "Calculate Fee with max_fee Limit")
+
+    # max_fee throws an error if calculated fee exceeds it
+    try:
+        calculate_fee(
+            payment_tx,
+            fee_per_byte=10,
+            min_fee=1000,
+            max_fee=500,  # max_fee less than calculated fee will throw
+        )
+        print_info("This should not be reached")
+    except Exception as error:
+        print_info("max_fee=500 with fee_per_byte=10 throws error:")
+        error_msg = str(error)[:100]
+        print_info(f'  "{error_msg}"')
+
+    # max_fee that allows the fee through
+    fee_with_max_fee = calculate_fee(
+        payment_tx,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+        max_fee=10000,  # Allow up to 10000 microALGO
+    )
+    print_info(f"Fee with max_fee=10000: {fee_with_max_fee} microALGO (within limit)")
+
+    # Step 10: Use assign_fee to set fee on transaction
+    print_step(10, "Assign Fee to Transaction")
+
+    tx_with_fee = assign_fee(
+        payment_tx,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+    original_fee = payment_tx.fee if payment_tx.fee else "not set"
+    print_info(f"Original transaction fee: {original_fee}")
+    print_info(f"Transaction fee after assign_fee: {tx_with_fee.fee} microALGO")
+
+    # Step 11: Compare estimated vs actual signed transaction sizes
+    print_step(11, "Compare Estimated vs Actual Transaction Sizes")
+
+    # Sign the transaction
+    signed_txns = sender.signer([tx_with_fee], [0])
+    signed_tx_bytes = signed_txns[0]
+
+    # Decode the signed transaction to get the actual size
+    print_info(f"Estimated transaction size: {payment_estimated_size} bytes")
+    print_info(f"Actual signed transaction size: {len(signed_tx_bytes)} bytes")
+
+    size_difference = len(signed_tx_bytes) - payment_estimated_size
+    if size_difference >= 0:
+        print_info(f"Difference: +{size_difference} bytes (actual is larger)")
+    else:
+        print_info(f"Difference: {size_difference} bytes (estimate was larger)")
+    print_info("Note: The estimate includes signature overhead, so sizes should be close")
+
+    # Step 12: Compare sizes across transaction types
+    print_step(12, "Size Comparison Across Transaction Types")
+
+    print_info("Transaction type size comparison:")
+    print_info(f"  Payment:        {payment_estimated_size} bytes")
+    print_info(f"  Asset Transfer: {asset_transfer_estimated_size} bytes")
+    print_info(f"  App Call:       {app_call_estimated_size} bytes")
+    print_info("")
+    print_info("App calls tend to be larger due to programs and arguments.")
+    print_info("Asset transfers include the asset ID field.")
+    print_info("Payments are typically the smallest transaction type.")
+
+    # Step 13: Fee calculation for covering inner transactions
+    print_step(13, "Calculate Extra Fee for Inner Transactions")
+
+    # When an app makes inner transactions, the outer transaction needs to pay for them
+    inner_tx_count = 3
+    fee_per_inner_tx = suggested_params.min_fee
+    extra_fee_for_inner_txs = inner_tx_count * fee_per_inner_tx
+
+    fee_for_app_with_inner_txs = calculate_fee(
+        app_call_tx,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+        extra_fee=extra_fee_for_inner_txs,
+    )
+
+    base_app_fee = calculate_fee(
+        app_call_tx,
+        fee_per_byte=suggested_params.fee,
+        min_fee=suggested_params.min_fee,
+    )
+
+    print_info(f"Scenario: App call that makes {inner_tx_count} inner transactions")
+    print_info(f"Base app call fee: {base_app_fee} microALGO")
+    extra_fee_info = f"{extra_fee_for_inner_txs} microALGO ({inner_tx_count} x {fee_per_inner_tx})"
+    print_info(f"Extra fee for inner txns: {extra_fee_info}")
+    print_info(f"Total fee: {fee_for_app_with_inner_txs} microALGO")
+
+    print_success("Fee calculation example completed!")
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+### Other examples in Transactions
+
+- [Payment Transaction](/docs/algokit-utils/python/latest/examples/transact/01-payment-transaction/)
+- [Payment with Close](/docs/algokit-utils/python/latest/examples/transact/02-payment-close/)
+- [Asset Create](/docs/algokit-utils/python/latest/examples/transact/03-asset-create/)
+- [Asset Transfer](/docs/algokit-utils/python/latest/examples/transact/04-asset-transfer/)
+- [Asset Freeze](/docs/algokit-utils/python/latest/examples/transact/05-asset-freeze/)
+- [Asset Clawback](/docs/algokit-utils/python/latest/examples/transact/06-asset-clawback/)
+- [Atomic Transaction Group](/docs/algokit-utils/python/latest/examples/transact/07-atomic-group/)
+- [Atomic Swap](/docs/algokit-utils/python/latest/examples/transact/08-atomic-swap/)
+- [Single Signature](/docs/algokit-utils/python/latest/examples/transact/09-single-sig/)
+- [Multisig](/docs/algokit-utils/python/latest/examples/transact/10-multisig/)
+- [Logic Signature](/docs/algokit-utils/python/latest/examples/transact/11-logic-sig/)
+- **Fee Calculation**
+- [Encoding/Decoding](/docs/algokit-utils/python/latest/examples/transact/13-encoding-decoding/)
+- [Application Call](/docs/algokit-utils/python/latest/examples/transact/14-app-call/)

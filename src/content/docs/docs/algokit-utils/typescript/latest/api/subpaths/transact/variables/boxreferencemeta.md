@@ -2,12 +2,12 @@
 editUrl: false
 next: false
 prev: false
-title: 'BoxReferenceMeta'
+title: "BoxReferenceMeta"
 ---
 
 > `const` **BoxReferenceMeta**: `ObjectModelMetadata`\<[`BoxReference`](/docs/algokit-utils/typescript/latest/api/subpaths/transact/type-aliases/boxreference/)\>
 
-Defined in: [packages/transact/src/transactions/reference-types-meta.ts:10](https://github.com/larkiny/algokit-utils-ts/blob/main/packages/transact/src/transactions/reference-types-meta.ts#L10)
+Defined in: [packages/transact/src/transactions/reference-types-meta.ts:10](https://github.com/algorandfoundation/algokit-utils-ts/blob/main/packages/transact/src/transactions/reference-types-meta.ts#L10)
 
 Metadata for BoxReference
 

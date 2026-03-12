@@ -1,5 +1,5 @@
 ---
-title: 'algokit_utils.clients.dispenser_api_client'
+title: "algokit_utils.clients.dispenser_api_client"
 ---
 
 <div class="api-ref">
@@ -8,74 +8,74 @@ title: 'algokit_utils.clients.dispenser_api_client'
 
 ## Attributes
 
-| [`DISPENSER_ASSETS`](#algokit_utils.clients.dispenser_api_client.DISPENSER_ASSETS)                     |     |
-| ------------------------------------------------------------------------------------------------------ | --- |
-| [`DISPENSER_REQUEST_TIMEOUT`](#algokit_utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT)   |     |
-| [`DISPENSER_ACCESS_TOKEN_KEY`](#algokit_utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY) |     |
+| [`DISPENSER_ASSETS`](#algokit_utils.clients.dispenser_api_client.DISPENSER_ASSETS)                     |    |
+|--------------------------------------------------------------------------------------------------------|----|
+| [`DISPENSER_REQUEST_TIMEOUT`](#algokit_utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT)   |    |
+| [`DISPENSER_ACCESS_TOKEN_KEY`](#algokit_utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY) |    |
 
 ## Classes
 
-| [`DispenserApiConfig`](#algokit_utils.clients.dispenser_api_client.DispenserApiConfig)               |                                                                                                                                                                                                                             |
-| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`DispenserAssetName`](#algokit_utils.clients.dispenser_api_client.DispenserAssetName)               | Enum where members are also (and must be) ints                                                                                                                                                                              |
-| [`DispenserAsset`](#algokit_utils.clients.dispenser_api_client.DispenserAsset)                       |                                                                                                                                                                                                                             |
-| [`DispenserFundResponse`](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)         |                                                                                                                                                                                                                             |
-| [`DispenserLimitResponse`](#algokit_utils.clients.dispenser_api_client.DispenserLimitResponse)       |                                                                                                                                                                                                                             |
-| [`TestNetDispenserApiClient`](#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient) | Client for interacting with the AlgoKit TestNet Dispenser API ([https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md)). |
+| [`DispenserApiConfig`](#algokit_utils.clients.dispenser_api_client.DispenserApiConfig)               |                                                                                                                                                                                                                              |
+|------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`DispenserAssetName`](#algokit_utils.clients.dispenser_api_client.DispenserAssetName)               | Enum where members are also (and must be) ints                                                                                                                                                                               |
+| [`DispenserAsset`](#algokit_utils.clients.dispenser_api_client.DispenserAsset)                       |                                                                                                                                                                                                                              |
+| [`DispenserFundResponse`](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)         |                                                                                                                                                                                                                              |
+| [`DispenserLimitResponse`](#algokit_utils.clients.dispenser_api_client.DispenserLimitResponse)       |                                                                                                                                                                                                                              |
+| [`TestNetDispenserApiClient`](#algokit_utils.clients.dispenser_api_client.TestNetDispenserApiClient) | Client for interacting with the [AlgoKit TestNet Dispenser API](/docs/algokit-utils/python/latest/api/algokit_utils/clients/dispenser_api_client/[https:/github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md](https:/github.com/algorandfoundation/algokit/blob/main/docs/testnet_api/)). |
 
 ## Module Contents
 
-### _class_ DispenserApiConfig
+### *class* DispenserApiConfig
 
-#### BASE*URL *= 'https://api.dispenser.algorandfoundation.tools'_
+#### BASE_URL *= 'https://api.dispenser.algorandfoundation.tools'*
 
-### _class_ DispenserAssetName
+### *class* DispenserAssetName
 
 Bases: `enum.IntEnum`
 
 Enum where members are also (and must be) ints
 
-#### ALGO _= 0_
+#### ALGO *= 0*
 
-### _class_ DispenserAsset
+### *class* DispenserAsset
 
-#### asset*id *: int\_
+#### asset_id *: int*
 
 The ID of the asset
 
-#### decimals _: int_
+#### decimals *: int*
 
 The amount of decimal places the asset was created with
 
-#### description _: str_
+#### description *: str*
 
 The description of the asset
 
-### _class_ DispenserFundResponse
+### *class* DispenserFundResponse
 
-#### tx*id *: str\_
+#### tx_id *: str*
 
 The transaction ID of the funded transaction
 
-#### amount _: int_
+#### amount *: int*
 
 The amount of Algos funded
 
-### _class_ DispenserLimitResponse
+### *class* DispenserLimitResponse
 
-#### amount _: int_
+#### amount *: int*
 
 The amount of Algos that can be funded
 
-### algokit_utils.clients.dispenser_api_client.DISPENSER_ASSETS
+### DISPENSER_ASSETS
 
-### algokit*utils.clients.dispenser_api_client.DISPENSER_REQUEST_TIMEOUT *= 15\_
+### DISPENSER_REQUEST_TIMEOUT *= 15*
 
-### algokit*utils.clients.dispenser_api_client.DISPENSER_ACCESS_TOKEN_KEY *= 'ALGOKIT*DISPENSER_ACCESS_TOKEN'*
+### DISPENSER_ACCESS_TOKEN_KEY *= 'ALGOKIT_DISPENSER_ACCESS_TOKEN'*
 
-### _class_ TestNetDispenserApiClient(auth_token: str | None = None, request_timeout: int = DISPENSER_REQUEST_TIMEOUT)
+### *class* TestNetDispenserApiClient(auth_token: str | None = None, request_timeout: int = DISPENSER_REQUEST_TIMEOUT)
 
-Client for interacting with the AlgoKit TestNet Dispenser API ([https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md](https://github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md)).
+Client for interacting with the [AlgoKit TestNet Dispenser API](/docs/algokit-utils/python/latest/api/algokit_utils/clients/dispenser_api_client/[https:/github.com/algorandfoundation/algokit/blob/main/docs/testnet_api.md](https:/github.com/algorandfoundation/algokit/blob/main/docs/testnet_api/)).
 To get started create a new access token via algokit dispenser login –ci
 and pass it to the client constructor as auth_token.
 Alternatively set the access token as environment variable ALGOKIT_DISPENSER_ACCESS_TOKEN,
@@ -83,23 +83,23 @@ and it will be auto loaded. If both are set, the constructor argument takes prec
 
 Default request timeout is 15 seconds. Modify by passing request_timeout to the constructor.
 
-#### auth*token *: str\_
+#### auth_token *: str*
 
-#### request*timeout *= 15\_
+#### request_timeout *= 15*
 
 #### fund(address: str, amount: int, asset_id: int | None = None) → [DispenserFundResponse](#algokit_utils.clients.dispenser_api_client.DispenserFundResponse)
 
 Fund an account with Algos from the dispenser API
 
-- **Parameters:**
-  - **address** – The address to fund
-  - **amount** – The amount of Algos to fund
-  - **asset_id** – The asset ID to fund (deprecated)
-- **Returns:**
+* **Parameters:**
+  * **address** – The address to fund
+  * **amount** – The amount of Algos to fund
+  * **asset_id** – The asset ID to fund (deprecated)
+* **Returns:**
   The transaction ID of the funded transaction
-- **Raises:**
+* **Raises:**
   **Exception** – If the dispenser API request fails
-- **Example:**
+* **Example:**
   ```python
   dispenser_client = TestNetDispenserApiClient()
   dispenser_client.fund(address="SENDER_ADDRESS", amount=1000000)
@@ -112,5 +112,6 @@ Register a refund for a transaction with the dispenser API
 #### get_limit(address: str) → [DispenserLimitResponse](#algokit_utils.clients.dispenser_api_client.DispenserLimitResponse)
 
 Get current limit for an account with Algos from the dispenser API
+
 
 </div>
