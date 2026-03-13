@@ -1,18 +1,11 @@
 ---
-title: ApplicationCallTxn
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "ApplicationCallTxn"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/README/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/README/) / ApplicationCallTxn
-
-> **ApplicationCallTxn**(`n`): [`ApplicationCallTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/ApplicationCallTxn/)
+> **ApplicationCallTxn**(`n`): [`ApplicationCallTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/applicationcalltxn/)
 
 Defined in: [gtxn.ts:637](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L637)
 
@@ -23,10 +16,10 @@ Verifies the txn type is 'appl'
 
 ### n
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The index of the txn in the group
 
 ## Returns
 
-[`ApplicationCallTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/ApplicationCallTxn/)
+[`ApplicationCallTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/applicationcalltxn/)

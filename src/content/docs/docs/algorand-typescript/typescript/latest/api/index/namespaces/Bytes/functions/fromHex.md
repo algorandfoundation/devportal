@@ -1,20 +1,13 @@
 ---
-title: fromHex
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "fromHex"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / [Bytes](/docs/algorand-typescript/typescript/latest/api/index/namespaces/Bytes/README/) / fromHex
 
 ## Call Signature
 
-> **fromHex**(`hex`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **fromHex**(`hex`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:306](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L306)
 
@@ -30,11 +23,11 @@ A literal string of hexadecimal characters
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **fromHex**\<`TLength`\>(`hex`, `options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+> **fromHex**\<`TLength`\>(`hex`, `options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:312](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L312)
 
@@ -44,7 +37,7 @@ Create a new bytes value from a hexadecimal encoded string
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
@@ -56,10 +49,10 @@ A literal string of hexadecimal characters
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
+`ToFixedBytesOptions`\<`TLength`\>
 
 Options for bounded bytes
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>

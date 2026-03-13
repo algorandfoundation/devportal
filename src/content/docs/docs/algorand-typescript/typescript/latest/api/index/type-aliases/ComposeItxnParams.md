@@ -1,17 +1,10 @@
 ---
-title: ComposeItxnParams
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "ComposeItxnParams"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / ComposeItxnParams
-
-> **ComposeItxnParams** = [`PaymentItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/PaymentItxnParams/) \| [`KeyRegistrationItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/KeyRegistrationItxnParams/) \| [`AssetConfigItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/AssetConfigItxnParams/) \| [`AssetTransferItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/AssetTransferItxnParams/) \| [`AssetFreezeItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/AssetFreezeItxnParams/) \| [`ApplicationCallItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/ApplicationCallItxnParams/)
+> **ComposeItxnParams** = [`PaymentItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/paymentitxnparams/) \| [`KeyRegistrationItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/keyregistrationitxnparams/) \| [`AssetConfigItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetconfigitxnparams/) \| [`AssetTransferItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assettransferitxnparams/) \| [`AssetFreezeItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/assetfreezeitxnparams/) \| [`ApplicationCallItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/applicationcallitxnparams/)
 
 Defined in: [itxn-compose.ts:36](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L36)

@@ -1,18 +1,11 @@
 ---
-title: applicationCall
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "applicationCall"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/README/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/README/) / applicationCall
-
-> **applicationCall**(`fields`): [`ApplicationCallItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/ApplicationCallItxnParams/)
+> **applicationCall**(`fields`): [`ApplicationCallItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/applicationcallitxnparams/)
 
 Defined in: [itxn.ts:1163](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1163)
 
@@ -22,8 +15,8 @@ Create a new ApplicationCallItxnParams object with the specified fields
 
 ### fields
 
-[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/)
+[`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/)
 
 ## Returns
 
-[`ApplicationCallItxnParams`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/classes/ApplicationCallItxnParams/)
+[`ApplicationCallItxnParams`](/algorand-typescript/api/itxn/namespaces/itxn/classes/applicationcallitxnparams/)

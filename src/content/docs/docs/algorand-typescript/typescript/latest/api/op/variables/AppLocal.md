@@ -1,16 +1,9 @@
 ---
-title: AppLocal
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "AppLocal"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / AppLocal
 
 > `const` **AppLocal**: `object`
 
@@ -18,7 +11,7 @@ Defined in: [op.ts:255](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 Get or modify Local app state
 
-## Type declaration
+## Type Declaration
 
 ### delete()
 
@@ -33,11 +26,11 @@ delete key B from account A's local state of the current application
 Txn.Accounts offset (or, since v4, an _available_ account address), state key.
 Deleting a key which is already absent has no effect on the application local state. (In particular, it does _not_ cause the program to fail.)
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ##### b
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -50,7 +43,7 @@ Min AVM version: 2
 
 ### getBytes()
 
-> **getBytes**(`a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> **getBytes**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 local state of the key B in the current application in account A
 
@@ -60,15 +53,15 @@ local state of the key B in the current application in account A
 
 Txn.Accounts offset (or, since v4, an _available_ account address), state key.
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ##### b
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 value. The value is zero (of type uint64) if the key does not exist.
 
@@ -79,7 +72,7 @@ Min AVM version: 2
 
 ### getExBytes()
 
-> **getExBytes**(`a`, `b`, `c`): readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
+> **getExBytes**(`a`, `b`, `c`): readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/), `boolean`\]
 
 X is the local state of application B, key C in account A. Y is 1 if key existed, else 0
 
@@ -89,19 +82,19 @@ X is the local state of application B, key C in account A. Y is 1 if key existed
 
 Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset), state key.
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ##### b
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Application`](/algorand-typescript/api/index/type-aliases/application/)
 
 ##### c
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
-readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/), `boolean`\]
+readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/), `boolean`\]
 
 did_exist flag (top of the stack, 1 if the application and key existed and 0 otherwise), value. The value is zero (of type uint64) if the key does not exist.
 
@@ -112,7 +105,7 @@ Min AVM version: 2
 
 ### getExUint64()
 
-> **getExUint64**(`a`, `b`, `c`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+> **getExUint64**(`a`, `b`, `c`): readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `boolean`\]
 
 X is the local state of application B, key C in account A. Y is 1 if key existed, else 0
 
@@ -122,19 +115,19 @@ X is the local state of application B, key C in account A. Y is 1 if key existed
 
 Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset), state key.
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ##### b
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Application`](/algorand-typescript/api/index/type-aliases/application/)
 
 ##### c
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
-readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `boolean`\]
 
 did_exist flag (top of the stack, 1 if the application and key existed and 0 otherwise), value. The value is zero (of type uint64) if the key does not exist.
 
@@ -145,7 +138,7 @@ Min AVM version: 2
 
 ### getUint64()
 
-> **getUint64**(`a`, `b`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **getUint64**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 local state of the key B in the current application in account A
 
@@ -155,15 +148,15 @@ local state of the key B in the current application in account A
 
 Txn.Accounts offset (or, since v4, an _available_ account address), state key.
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ##### b
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 value. The value is zero (of type uint64) if the key does not exist.
 
@@ -184,15 +177,15 @@ write C to key B in account A's local state of the current application
 
 Txn.Accounts offset (or, since v4, an _available_ account address), state key, value.
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ##### b
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ##### c
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 

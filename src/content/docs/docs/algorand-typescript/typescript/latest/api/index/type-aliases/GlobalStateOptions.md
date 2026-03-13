@@ -1,16 +1,9 @@
 ---
-title: GlobalStateOptions
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "GlobalStateOptions"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / GlobalStateOptions
 
 > **GlobalStateOptions**\<`ValueType`\> = `object`
 
@@ -34,11 +27,11 @@ Defined in: [state.ts:36](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 An initial value to assign to this global state field when the application is created
 
----
+***
 
 ### key?
 
-> `optional` **key**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) \| `string`
+> `optional` **key**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| `string`
 
 Defined in: [state.ts:32](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L32)
 

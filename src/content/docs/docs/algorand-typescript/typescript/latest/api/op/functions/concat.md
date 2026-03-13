@@ -1,18 +1,11 @@
 ---
-title: concat
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "concat"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / concat
-
-> **concat**(`a`, `b`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> **concat**(`a`, `b`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [op.ts:735](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L735)
 
@@ -23,15 +16,15 @@ join A and B
 
 ### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ### b
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ## Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ## See
 

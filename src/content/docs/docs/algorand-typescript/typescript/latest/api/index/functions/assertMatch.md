@@ -1,16 +1,9 @@
 ---
-title: assertMatch
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "assertMatch"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / assertMatch
 
 > **assertMatch**\<`T`\>(`subject`, `test`, `message?`): `void`
 
@@ -36,7 +29,7 @@ An object or tuple to be tested
 
 ### test
 
-[`MatchTest`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/MatchTest/)\<`T`\>
+`MatchTest`\<`T`\>
 
 An object containing one or more tests to be applied to the subject
 

@@ -1,16 +1,9 @@
 ---
-title: Uint
-type: class
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "Uint"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / Uint
 
 Defined in: [arc4/encoded-types.ts:133](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L133)
 
@@ -18,23 +11,23 @@ A fixed bit size unsigned int
 
 ## Extends
 
-- [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/)
+- [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/)
 
 ## Extended by
 
-- [`Byte`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Byte/)
-- [`Uint8`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint8/)
-- [`Uint16`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint16/)
-- [`Uint32`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint32/)
-- [`Uint64`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint64/)
-- [`Uint128`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint128/)
-- [`Uint256`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint256/)
+- [`Byte`](/algorand-typescript/api/arc4/classes/byte/)
+- [`Uint8`](/algorand-typescript/api/arc4/classes/uint8/)
+- [`Uint16`](/algorand-typescript/api/arc4/classes/uint16/)
+- [`Uint32`](/algorand-typescript/api/arc4/classes/uint32/)
+- [`Uint64`](/algorand-typescript/api/arc4/classes/uint64/)
+- [`Uint128`](/algorand-typescript/api/arc4/classes/uint128/)
+- [`Uint256`](/algorand-typescript/api/arc4/classes/uint256/)
 
 ## Type Parameters
 
 ### N
 
-`N` _extends_ [`BitSize`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/BitSize/)
+`N` *extends* [`BitSize`](/algorand-typescript/api/arc4/type-aliases/bitsize/)
 
 ## Constructors
 
@@ -50,7 +43,7 @@ Create a new UintN instance
 
 ##### v?
 
-[`CompatForArc4Int`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/type-aliases/CompatForArc4Int/)\<`N`\>
+`CompatForArc4Int`\<`N`\>
 
 The native uint64 or biguint value to initialize this UintN from
 
@@ -60,7 +53,7 @@ The native uint64 or biguint value to initialize this UintN from
 
 #### Overrides
 
-[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/#constructor)
+[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`constructor`](/algorand-typescript/api/arc4/classes/arc4encoded/#constructor)
 
 ## Accessors
 
@@ -68,7 +61,7 @@ The native uint64 or biguint value to initialize this UintN from
 
 #### Get Signature
 
-> **get** **bytes**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> **get** **bytes**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [arc4/encoded-types.ts:102](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L102)
 
@@ -76,17 +69,17 @@ Retrieve the encoded bytes for this type
 
 ##### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Inherited from
 
-[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/#bytes)
+[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`bytes`](/algorand-typescript/api/arc4/classes/arc4encoded/#bytes)
 
 ## Methods
 
 ### asBigUint()
 
-> **asBigUint**(): [`biguint`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/biguint/)
+> **asBigUint**(): [`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)
 
 Defined in: [arc4/encoded-types.ts:155](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L155)
 
@@ -94,13 +87,13 @@ Retrieve the decoded native biguint
 
 #### Returns
 
-[`biguint`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/biguint/)
+[`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)
 
----
+***
 
 ### asUint64()
 
-> **asUint64**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **asUint64**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [arc4/encoded-types.ts:148](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L148)
 
@@ -108,4 +101,4 @@ Retrieve the decoded native uint64
 
 #### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)

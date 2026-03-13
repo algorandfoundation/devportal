@@ -1,16 +1,9 @@
 ---
-title: OnCompleteAction
-type: enum
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "OnCompleteAction"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / OnCompleteAction
 
 Defined in: [on-complete-action.ts:9](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/on-complete-action.ts#L9)
 
@@ -26,7 +19,7 @@ Defined in: [on-complete-action.ts:25](https://github.com/algorandfoundation/puy
 
 Run the clear state program and forcibly close the user out of the contract
 
----
+***
 
 ### CloseOut
 
@@ -36,7 +29,7 @@ Defined in: [on-complete-action.ts:21](https://github.com/algorandfoundation/puy
 
 Close the calling user out of the contract
 
----
+***
 
 ### DeleteApplication
 
@@ -46,7 +39,7 @@ Defined in: [on-complete-action.ts:33](https://github.com/algorandfoundation/puy
 
 Delete the application
 
----
+***
 
 ### NoOp
 
@@ -56,7 +49,7 @@ Defined in: [on-complete-action.ts:13](https://github.com/algorandfoundation/puy
 
 Do nothing after the transaction has completed
 
----
+***
 
 ### OptIn
 
@@ -66,7 +59,7 @@ Defined in: [on-complete-action.ts:17](https://github.com/algorandfoundation/puy
 
 Opt the calling user into the contract
 
----
+***
 
 ### UpdateApplication
 

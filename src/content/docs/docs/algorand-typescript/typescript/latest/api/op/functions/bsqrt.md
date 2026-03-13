@@ -1,18 +1,11 @@
 ---
-title: bsqrt
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "bsqrt"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / bsqrt
-
-> **bsqrt**(`a`): [`biguint`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/biguint/)
+> **bsqrt**(`a`): [`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)
 
 Defined in: [op.ts:706](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L706)
 
@@ -22,11 +15,11 @@ The largest integer I such that I^2 <= A. A and I are interpreted as big-endian 
 
 ### a
 
-[`biguint`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/biguint/)
+[`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)
 
 ## Returns
 
-[`biguint`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/biguint/)
+[`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)
 
 ## See
 

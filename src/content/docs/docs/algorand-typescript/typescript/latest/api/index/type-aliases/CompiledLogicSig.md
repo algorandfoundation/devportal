@@ -1,16 +1,9 @@
 ---
-title: CompiledLogicSig
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "CompiledLogicSig"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / CompiledLogicSig
 
 > **CompiledLogicSig** = `object`
 
@@ -22,7 +15,7 @@ Provides account for a Logic Signature. Created by calling `compile(LogicSigType
 
 ### account
 
-> `readonly` **account**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> `readonly` **account**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [compiled.ts:49](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L49)
 

@@ -354,52 +354,6 @@ export default defineConfig({
           items: [
             { slug: 'algokit/algokit-intro' },
             {
-              label: 'CLI Tools',
-              collapsed: true,
-              items: [
-                { slug: 'algokit/cli/overview' },
-                { slug: 'algokit/cli/compile' },
-                { slug: 'algokit/cli/completions' },
-                { slug: 'algokit/cli/config' },
-                { slug: 'algokit/cli/dispenser' },
-                { slug: 'algokit/cli/doctor' },
-                { slug: 'algokit/cli/explore' },
-                { slug: 'algokit/cli/generate' },
-                { slug: 'algokit/cli/goal' },
-                { slug: 'algokit/cli/init' },
-                { slug: 'algokit/cli/localnet' },
-                {
-                  label: 'Project',
-                  collapsed: true,
-                  items: [
-                    { slug: 'algokit/cli/project' },
-                    { slug: 'algokit/cli/project/bootstrap' },
-                    { slug: 'algokit/cli/project/deploy' },
-                    { slug: 'algokit/cli/project/link' },
-                    { slug: 'algokit/cli/project/list' },
-                    { slug: 'algokit/cli/project/run' },
-                  ],
-                },
-                {
-                  label: 'Tasks',
-                  collapsed: true,
-                  items: [
-                    { slug: 'algokit/cli/tasks' },
-                    { slug: 'algokit/cli/tasks/analyze' },
-                    { slug: 'algokit/cli/tasks/ipfs' },
-                    { slug: 'algokit/cli/tasks/mint' },
-                    { slug: 'algokit/cli/tasks/nfd' },
-                    { slug: 'algokit/cli/tasks/opt' },
-                    { slug: 'algokit/cli/tasks/send' },
-                    { slug: 'algokit/cli/tasks/sign' },
-                    { slug: 'algokit/cli/tasks/transfer' },
-                    { slug: 'algokit/cli/tasks/vanity_address' },
-                    { slug: 'algokit/cli/tasks/wallet' },
-                  ],
-                },
-              ],
-            },
-            {
               label: 'LORA the Explorer',
               collapsed: true,
               items: [{ slug: 'algokit/lora/overview' }],
@@ -424,19 +378,6 @@ export default defineConfig({
               label: 'Smart Contract Languages',
               collapsed: true,
               items: [
-                {
-                  label: 'Algorand TypeScript',
-                  items: [
-                    { slug: 'algokit/languages/typescript/overview' },
-                    { slug: 'algokit/languages/typescript/language-guide' },
-                    { slug: 'algokit/languages/typescript/lg-program-structure' },
-                    { slug: 'algokit/languages/typescript/lg-types' },
-                    { slug: 'algokit/languages/typescript/lg-storage' },
-                    { slug: 'algokit/languages/typescript/lg-ops' },
-                    { slug: 'algokit/languages/typescript/guiding-principles' },
-                    { slug: 'algokit/languages/typescript/migration-guides' },
-                  ],
-                },
                 {
                   label: 'Algorand Python',
                   items: [

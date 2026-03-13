@@ -1,20 +1,13 @@
 ---
-title: urange
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "urange"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / urange
 
 ## Call Signature
 
-> **urange**(`stop`): `IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **urange**(`stop`): `IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [util.ts:161](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L161)
 
@@ -24,17 +17,17 @@ Generates an iterable sequence from 0...stop inclusive
 
 #### stop
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 The stop number of the sequence
 
 ### Returns
 
-`IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+`IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **urange**(`start`, `stop`): `IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **urange**(`start`, `stop`): `IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [util.ts:167](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L167)
 
@@ -44,23 +37,23 @@ Generates an iterable sequence from start...stop inclusive
 
 #### start
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 The start number of the sequence
 
 #### stop
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 The stop number of the sequence
 
 ### Returns
 
-`IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+`IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **urange**(`start`, `stop`, `step`): `IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **urange**(`start`, `stop`, `step`): `IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [util.ts:174](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L174)
 
@@ -70,22 +63,22 @@ Generates an iterable sequence from start...stop inclusive with increments of si
 
 #### start
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 The start number of the sequence
 
 #### stop
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 The stop number of the sequence
 
 #### step
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 The step size of the sequence
 
 ### Returns
 
-`IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+`IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>

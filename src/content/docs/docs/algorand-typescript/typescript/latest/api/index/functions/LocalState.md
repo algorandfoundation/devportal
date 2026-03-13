@@ -1,18 +1,11 @@
 ---
-title: LocalState
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "LocalState"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / LocalState
-
-> **LocalState**\<`ValueType`\>(`options?`): [`LocalState`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/LocalState/)\<`ValueType`\>
+> **LocalState**\<`ValueType`\>(`options?`): [`LocalState`](/algorand-typescript/api/index/type-aliases/localstate/)\<`ValueType`\>
 
 Defined in: [state.ts:92](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L92)
 
@@ -28,10 +21,10 @@ Creates a new proxy for manipulating a local state field
 
 ### options?
 
-[`LocalStateOptions`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/LocalStateOptions/)
+[`LocalStateOptions`](/algorand-typescript/api/index/type-aliases/localstateoptions/)
 
 Options for configuring this field
 
 ## Returns
 
-[`LocalState`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/LocalState/)\<`ValueType`\>
+[`LocalState`](/algorand-typescript/api/index/type-aliases/localstate/)\<`ValueType`\>

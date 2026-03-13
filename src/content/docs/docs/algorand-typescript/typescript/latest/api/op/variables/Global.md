@@ -1,230 +1,223 @@
 ---
-title: Global
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "Global"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / Global
 
 > `const` **Global**: `object`
 
 Defined in: [op.ts:1551](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L1551)
 
-## Type declaration
+## Type Declaration
 
 ### assetCreateMinBalance
 
 #### Get Signature
 
-> **get** **assetCreateMinBalance**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **assetCreateMinBalance**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The additional minimum balance required to create (and opt-in to) an asset.
 Min AVM version: 10
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### assetOptInMinBalance
 
 #### Get Signature
 
-> **get** **assetOptInMinBalance**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **assetOptInMinBalance**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The additional minimum balance required to opt-in to an asset.
 Min AVM version: 10
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### callerApplicationAddress
 
 #### Get Signature
 
-> **get** **callerApplicationAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> **get** **callerApplicationAddress**(): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 The application address of the application that called this application. ZeroAddress if this application is at the top-level. Application mode only.
 Min AVM version: 6
 
 ##### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ### callerApplicationId
 
 #### Get Signature
 
-> **get** **callerApplicationId**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **callerApplicationId**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The application ID of the application that called this application. 0 if this application is at the top-level. Application mode only.
 Min AVM version: 6
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### creatorAddress
 
 #### Get Signature
 
-> **get** **creatorAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> **get** **creatorAddress**(): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Address of the creator of the current application. Application mode only.
 Min AVM version: 3
 
 ##### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ### currentApplicationAddress
 
 #### Get Signature
 
-> **get** **currentApplicationAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> **get** **currentApplicationAddress**(): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Address that the current application controls. Application mode only.
 Min AVM version: 5
 
 ##### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ### currentApplicationId
 
 #### Get Signature
 
-> **get** **currentApplicationId**(): [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
+> **get** **currentApplicationId**(): [`Application`](/algorand-typescript/api/index/type-aliases/application/)
 
 ID of current application executing. Application mode only.
 Min AVM version: 2
 
 ##### Returns
 
-[`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
+[`Application`](/algorand-typescript/api/index/type-aliases/application/)
 
 ### genesisHash
 
 #### Get Signature
 
-> **get** **genesisHash**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+> **get** **genesisHash**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 The Genesis Hash for the network.
 Min AVM version: 10
 
 ##### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 ### groupId
 
 #### Get Signature
 
-> **get** **groupId**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+> **get** **groupId**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 ID of the transaction group. 32 zero bytes if the transaction is not part of a group.
 Min AVM version: 5
 
 ##### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 ### groupSize
 
 #### Get Signature
 
-> **get** **groupSize**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **groupSize**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Number of transactions in this atomic transaction group. At least 1
 Min AVM version: 1
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### latestTimestamp
 
 #### Get Signature
 
-> **get** **latestTimestamp**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **latestTimestamp**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Last confirmed block UNIX timestamp. Fails if negative. Application mode only.
 Min AVM version: 2
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### logicSigVersion
 
 #### Get Signature
 
-> **get** **logicSigVersion**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **logicSigVersion**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Maximum supported version
 Min AVM version: 2
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### maxTxnLife
 
 #### Get Signature
 
-> **get** **maxTxnLife**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **maxTxnLife**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 rounds
 Min AVM version: 1
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### minBalance
 
 #### Get Signature
 
-> **get** **minBalance**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **minBalance**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 microalgos
 Min AVM version: 1
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### minTxnFee
 
 #### Get Signature
 
-> **get** **minTxnFee**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **minTxnFee**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 microalgos
 Min AVM version: 1
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### opcodeBudget
 
 #### Get Signature
 
-> **get** **opcodeBudget**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **opcodeBudget**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The remaining cost that can be spent by opcodes in this program.
 Min AVM version: 6
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### payoutsEnabled
 
@@ -243,76 +236,76 @@ Min AVM version: 11
 
 #### Get Signature
 
-> **get** **payoutsGoOnlineFee**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **payoutsGoOnlineFee**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The fee required in a keyreg transaction to make an account incentive eligible.
 Min AVM version: 11
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### payoutsMaxBalance
 
 #### Get Signature
 
-> **get** **payoutsMaxBalance**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **payoutsMaxBalance**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The maximum balance an account can have in the agreement round to receive block payouts in the proposal round.
 Min AVM version: 11
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### payoutsMinBalance
 
 #### Get Signature
 
-> **get** **payoutsMinBalance**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **payoutsMinBalance**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The minimum balance an account must have in the agreement round to receive block payouts in the proposal round.
 Min AVM version: 11
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### payoutsPercent
 
 #### Get Signature
 
-> **get** **payoutsPercent**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **payoutsPercent**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The percentage of transaction fees in a block that can be paid to the block proposer.
 Min AVM version: 11
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### round
 
 #### Get Signature
 
-> **get** **round**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **round**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Current round number. Application mode only.
 Min AVM version: 2
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### zeroAddress
 
 #### Get Signature
 
-> **get** **zeroAddress**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> **get** **zeroAddress**(): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 32 byte address of all zero bytes
 Min AVM version: 1
 
 ##### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)

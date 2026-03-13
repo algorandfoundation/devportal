@@ -1,38 +1,31 @@
 ---
-title: mimc
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "mimc"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / mimc
-
-> **mimc**(`c`, `a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+> **mimc**(`c`, `a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [op.ts:3382](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3382)
 
 MiMC hash of scalars A, using curve and parameters specified by configuration C
-A is a list of concatenated 32 byte big-endian unsigned integer scalars. Fail if A's length is not a multiple of 32 or any element exceeds the curve modulus.
+A is a list of concatenated 32 byte big-endian unsigned integer scalars.  Fail if A's length is not a multiple of 32 or any element exceeds the curve modulus.
 The MiMC hash function has known collisions since any input which is a multiple of the elliptic curve modulus will hash to the same value. MiMC is thus not a general purpose hash function, but meant to be used in zero knowledge applications to match a zk-circuit implementation.
 
 ## Parameters
 
 ### c
 
-[`MimcConfigurations`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/MimcConfigurations/)
+[`MimcConfigurations`](/algorand-typescript/api/op/enumerations/mimcconfigurations/)
 
 ### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ## Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 ## See
 

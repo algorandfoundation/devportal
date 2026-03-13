@@ -1,16 +1,9 @@
 ---
-title: readonly
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "readonly"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / readonly
 
 > **readonly**\<`TContract`, `TArgs`, `TReturn`\>(`target`, `ctx`): (`this`, ...`args`) => `TReturn`
 
@@ -24,13 +17,13 @@ Shorthand for `@abimethod({readonly: true})`
 
 ### TContract
 
-`TContract` _extends_ [`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Contract/)
+`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
 
 the type of the contract this method is a part of
 
 ### TArgs
 
-`TArgs` _extends_ `any`[]
+`TArgs` *extends* `any`[]
 
 ### TReturn
 

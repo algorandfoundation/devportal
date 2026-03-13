@@ -1,16 +1,9 @@
 ---
-title: UFixed
-type: class
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "UFixed"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / UFixed
 
 Defined in: [arc4/encoded-types.ts:198](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L198)
 
@@ -18,17 +11,17 @@ A fixed bit size, fixed decimal unsigned value
 
 ## Extends
 
-- [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/)
+- [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/)
 
 ## Type Parameters
 
 ### N
 
-`N` _extends_ [`BitSize`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/BitSize/)
+`N` *extends* [`BitSize`](/algorand-typescript/api/arc4/type-aliases/bitsize/)
 
 ### M
 
-`M` _extends_ `number`
+`M` *extends* `number`
 
 ## Constructors
 
@@ -54,7 +47,7 @@ A string representing the integer and fractional portion of the number
 
 #### Overrides
 
-[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/).[`constructor`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/#constructor)
+[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`constructor`](/algorand-typescript/api/arc4/classes/arc4encoded/#constructor)
 
 ## Accessors
 
@@ -62,7 +55,7 @@ A string representing the integer and fractional portion of the number
 
 #### Get Signature
 
-> **get** **bytes**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> **get** **bytes**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [arc4/encoded-types.ts:102](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L102)
 
@@ -70,8 +63,8 @@ Retrieve the encoded bytes for this type
 
 ##### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Inherited from
 
-[`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/#bytes)
+[`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/).[`bytes`](/algorand-typescript/api/arc4/classes/arc4encoded/#bytes)

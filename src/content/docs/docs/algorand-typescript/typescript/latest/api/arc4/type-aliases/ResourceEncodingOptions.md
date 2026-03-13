@@ -1,16 +1,9 @@
 ---
-title: ResourceEncodingOptions
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "ResourceEncodingOptions"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / ResourceEncodingOptions
 
 > **ResourceEncodingOptions** = `"index"` \| `"value"`
 

@@ -1,16 +1,9 @@
 ---
-title: OpUpFeeSource
-type: enum
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "OpUpFeeSource"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / OpUpFeeSource
 
 Defined in: [util.ts:130](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/util.ts#L130)
 
@@ -26,7 +19,7 @@ Defined in: [util.ts:142](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 First the excess will be used, then remaining fees taken from the app account
 
----
+***
 
 ### AppAccount
 
@@ -36,7 +29,7 @@ Defined in: [util.ts:138](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The app's account will cover all fees (itxn.fee = Global.minTxFee)
 
----
+***
 
 ### GroupCredit
 

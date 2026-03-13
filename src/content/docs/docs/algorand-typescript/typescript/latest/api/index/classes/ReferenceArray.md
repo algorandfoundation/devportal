@@ -1,16 +1,9 @@
 ---
-title: ReferenceArray
-type: class
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "ReferenceArray"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / ReferenceArray
 
 Defined in: [reference-array.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L7)
 
@@ -24,7 +17,7 @@ An in memory mutable array which is passed by reference
 
 ## Indexable
 
-\[`index`: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\]: `TItem`
+\[`index`: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\]: `TItem`
 
 Get or set the item at the specified index.
 Negative indexes are not supported
@@ -57,7 +50,7 @@ The initial items for the array
 
 #### Get Signature
 
-> **get** **length**(): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **get** **length**(): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [reference-array.ts:17](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L17)
 
@@ -65,7 +58,7 @@ Returns the current length of this array
 
 ##### Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ## Methods
 
@@ -81,7 +74,7 @@ Returns an iterator for the items in this array
 
 `IterableIterator`\<`TItem`\>
 
----
+***
 
 ### at()
 
@@ -96,7 +89,7 @@ Negative indexes are taken from the end.
 
 ##### index
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 The index of the item to retrieve
 
@@ -104,11 +97,11 @@ The index of the item to retrieve
 
 `TItem`
 
----
+***
 
 ### entries()
 
-> **entries**(): `IterableIterator`\<readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `TItem`\]\>
+> **entries**(): `IterableIterator`\<readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `TItem`\]\>
 
 Defined in: [reference-array.ts:64](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L64)
 
@@ -116,13 +109,13 @@ Returns an iterator for a tuple of the indexes and items in this array
 
 #### Returns
 
-`IterableIterator`\<readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `TItem`\]\>
+`IterableIterator`\<readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `TItem`\]\>
 
----
+***
 
 ### keys()
 
-> **keys**(): `IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **keys**(): `IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [reference-array.ts:71](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L71)
 
@@ -130,9 +123,9 @@ Returns an iterator for the indexes in this array
 
 #### Returns
 
-`IterableIterator`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+`IterableIterator`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
----
+***
 
 ### pop()
 
@@ -146,7 +139,7 @@ Pop a single item from this array
 
 `TItem`
 
----
+***
 
 ### push()
 
@@ -168,7 +161,7 @@ The items to be added to this array
 
 `void`
 
----
+***
 
 ### ~~slice()~~
 
@@ -178,14 +171,14 @@ The items to be added to this array
 
 Defined in: [reference-array.ts:34](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L34)
 
+:::caution[Deprecated]
+Array slicing is not yet supported in Algorand TypeScript
+Create a new ReferenceArray with all items from this array
+:::
+
 ##### Returns
 
 `ReferenceArray`\<`TItem`\>
-
-##### Deprecated
-
-Array slicing is not yet supported in Algorand TypeScript
-Create a new ReferenceArray with all items from this array
 
 #### Call Signature
 
@@ -193,11 +186,17 @@ Create a new ReferenceArray with all items from this array
 
 Defined in: [reference-array.ts:41](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L41)
 
+:::caution[Deprecated]
+Array slicing is not yet supported in Algorand TypeScript
+Create a new ReferenceArray with all items up till `end`.
+Negative indexes are taken from the end.
+:::
+
 ##### Parameters
 
 ###### end
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 An index in which to stop copying items.
 
@@ -205,38 +204,32 @@ An index in which to stop copying items.
 
 `ReferenceArray`\<`TItem`\>
 
-##### Deprecated
-
-Array slicing is not yet supported in Algorand TypeScript
-Create a new ReferenceArray with all items up till `end`.
-Negative indexes are taken from the end.
-
 #### Call Signature
 
 > **slice**(`start`, `end`): `ReferenceArray`\<`TItem`\>
 
 Defined in: [reference-array.ts:49](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference-array.ts#L49)
 
+:::caution[Deprecated]
+Array slicing is not yet supported in Algorand TypeScript
+Create a new ReferenceArray with items from `start`, up until `end`
+Negative indexes are taken from the end.
+:::
+
 ##### Parameters
 
 ###### start
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 An index in which to start copying items.
 
 ###### end
 
-[`Uint64Compat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Uint64Compat/)
+[`Uint64Compat`](/algorand-typescript/api/index/type-aliases/uint64compat/)
 
 An index in which to stop copying items
 
 ##### Returns
 
 `ReferenceArray`\<`TItem`\>
-
-##### Deprecated
-
-Array slicing is not yet supported in Algorand TypeScript
-Create a new ReferenceArray with items from `start`, up until `end`
-Negative indexes are taken from the end.

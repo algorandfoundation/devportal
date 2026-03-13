@@ -1,18 +1,11 @@
 ---
-title: extractUint16
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "extractUint16"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / extractUint16
-
-> **extractUint16**(`a`, `b`): [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> **extractUint16**(`a`, `b`): [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [op.ts:917](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L917)
 
@@ -22,15 +15,15 @@ A uint16 formed from a range of big-endian bytes from A starting at B up to but 
 
 ### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ### b
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ## Returns
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ## See
 

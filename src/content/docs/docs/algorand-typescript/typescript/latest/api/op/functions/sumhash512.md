@@ -1,18 +1,11 @@
 ---
-title: sumhash512
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "sumhash512"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / sumhash512
-
-> **sumhash512**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`64`\>
+> **sumhash512**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>
 
 Defined in: [op.ts:3502](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3502)
 
@@ -22,11 +15,11 @@ sumhash512 of value A, yields [64]byte
 
 ### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ## Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`64`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>
 
 ## See
 

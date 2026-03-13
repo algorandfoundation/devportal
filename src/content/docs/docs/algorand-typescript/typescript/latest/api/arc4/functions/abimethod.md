@@ -1,16 +1,9 @@
 ---
-title: abimethod
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "abimethod"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / abimethod
 
 > **abimethod**\<`TContract`\>(`config?`): \<`TArgs`, `TReturn`\>(`target`, `ctx`) => (`this`, ...`args`) => `TReturn`
 
@@ -22,7 +15,7 @@ Declares the decorated method as an abimethod that is called when the first tran
 
 ### TContract
 
-`TContract` _extends_ [`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Contract/)
+`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
 
 the type of the contract this method is a part of
 
@@ -30,7 +23,7 @@ the type of the contract this method is a part of
 
 ### config?
 
-[`AbiMethodConfig`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/AbiMethodConfig/)\<`TContract`\>
+[`AbiMethodConfig`](/algorand-typescript/api/arc4/type-aliases/abimethodconfig/)\<`TContract`\>
 
 The config for this abi method
 
@@ -42,7 +35,7 @@ The config for this abi method
 
 #### TArgs
 
-`TArgs` _extends_ `any`[]
+`TArgs` *extends* `any`[]
 
 #### TReturn
 

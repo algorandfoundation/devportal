@@ -1,26 +1,15 @@
 ---
-title: GlobalState
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "GlobalState"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / GlobalState
 
 > **GlobalState**\<`ValueType`\> = `object`
 
 Defined in: [state.ts:44](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/state.ts#L44)
 
-Creates a new proxy for manipulating a global state field
-
-## Param
-
-Options for configuring this field
+A proxy for manipulating a global state field
 
 ## Type Parameters
 
@@ -40,7 +29,7 @@ Defined in: [state.ts:21](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 Gets a boolean value indicating if global state field currently has a value
 
----
+***
 
 ### value
 

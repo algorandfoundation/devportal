@@ -1,28 +1,21 @@
 ---
-title: AssetFreezeComposeFields
-type: interface
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "AssetFreezeComposeFields"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / AssetFreezeComposeFields
 
 Defined in: [itxn-compose.ts:19](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L19)
 
 ## Extends
 
-- [`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/)
+- [`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/)
 
 ## Properties
 
 ### fee?
 
-> `optional` **fee**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **fee**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:833](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L833)
 
@@ -30,13 +23,13 @@ microalgos
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`fee`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#fee)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`fee`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#fee)
 
----
+***
 
 ### firstValid?
 
-> `optional` **firstValid**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **firstValid**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:837](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L837)
 
@@ -44,13 +37,13 @@ round number
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`firstValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#firstvalid)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`firstValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#firstvalid)
 
----
+***
 
 ### firstValidTime?
 
-> `optional` **firstValidTime**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **firstValidTime**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:841](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L841)
 
@@ -58,13 +51,13 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`firstValidTime`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#firstvalidtime)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`firstValidTime`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#firstvalidtime)
 
----
+***
 
 ### freezeAccount?
 
-> `optional` **freezeAccount**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **freezeAccount**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:865](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L865)
 
@@ -72,13 +65,13 @@ Defined in: [itxn.ts:865](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`freezeAccount`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#freezeaccount)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`freezeAccount`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#freezeaccount)
 
----
+***
 
 ### freezeAsset?
 
-> `optional` **freezeAsset**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) \| [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
+> `optional` **freezeAsset**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) \| [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
 
 Defined in: [itxn.ts:861](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L861)
 
@@ -86,9 +79,9 @@ Asset ID being frozen or un-frozen
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`freezeAsset`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#freezeasset)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`freezeAsset`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#freezeasset)
 
----
+***
 
 ### frozen?
 
@@ -100,13 +93,13 @@ The new frozen value
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`frozen`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#frozen)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`frozen`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#frozen)
 
----
+***
 
 ### lastValid?
 
-> `optional` **lastValid**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **lastValid**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:845](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L845)
 
@@ -114,13 +107,13 @@ round number
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`lastValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#lastvalid)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`lastValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#lastvalid)
 
----
+***
 
 ### lease?
 
-> `optional` **lease**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+> `optional` **lease**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [itxn.ts:853](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L853)
 
@@ -128,13 +121,13 @@ Defined in: [itxn.ts:853](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`lease`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#lease)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`lease`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#lease)
 
----
+***
 
 ### note?
 
-> `optional` **note**: `string` \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **note**: `string` \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:849](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L849)
 
@@ -142,13 +135,13 @@ Any data up to 1024 bytes
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`note`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#note)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`note`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#note)
 
----
+***
 
 ### rekeyTo?
 
-> `optional` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **rekeyTo**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:857](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L857)
 
@@ -156,13 +149,13 @@ Defined in: [itxn.ts:857](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`rekeyTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#rekeyto)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`rekeyTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#rekeyto)
 
----
+***
 
 ### sender?
 
-> `optional` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **sender**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:829](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L829)
 
@@ -170,12 +163,12 @@ Defined in: [itxn.ts:829](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`AssetFreezeFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/).[`sender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetFreezeFields/#sender)
+[`AssetFreezeFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/).[`sender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assetfreezefields/#sender)
 
----
+***
 
 ### type
 
-> **type**: [`AssetFreeze`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/#assetfreeze)
+> **type**: [`AssetFreeze`](/algorand-typescript/api/index/enumerations/transactiontype/#assetfreeze)
 
 Defined in: [itxn-compose.ts:20](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L20)
