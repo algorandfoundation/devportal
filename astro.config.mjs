@@ -379,19 +379,6 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
-                  label: 'Algorand TypeScript',
-                  items: [
-                    { slug: 'algokit/languages/typescript/overview' },
-                    { slug: 'algokit/languages/typescript/language-guide' },
-                    { slug: 'algokit/languages/typescript/lg-program-structure' },
-                    { slug: 'algokit/languages/typescript/lg-types' },
-                    { slug: 'algokit/languages/typescript/lg-storage' },
-                    { slug: 'algokit/languages/typescript/lg-ops' },
-                    { slug: 'algokit/languages/typescript/guiding-principles' },
-                    { slug: 'algokit/languages/typescript/migration-guides' },
-                  ],
-                },
-                {
                   label: 'Algorand Python',
                   items: [
                     { slug: 'algokit/languages/python/overview' },

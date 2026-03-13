@@ -21,10 +21,7 @@ import {
   config as algorandPython,
   legacyGuideConfig as algorandPythonLegacy,
 } from './algorand-python/import.config.js';
-import {
-  config as algorandTypescript,
-  legacyGuideConfig as algorandTypescriptLegacy,
-} from './algorand-typescript/import.config.js';
+import { config as algorandTypescript } from './algorand-typescript/import.config.js';
 import { config as algokitSubscriber } from './algokit-subscriber/import.config.js';
 import { config as nodekit } from './nodekit/import.config.js';
 
@@ -60,7 +57,6 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   arcStandardsConfig,
   // Legacy guide targets — keep old algokit/* paths in sync via stateKey
   algorandPythonLegacy,
-  algorandTypescriptLegacy,
   algokitUtilsTsLegacy,
   algokitUtilsPyLegacy,
 ];
