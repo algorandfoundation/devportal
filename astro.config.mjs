@@ -598,11 +598,6 @@ export default defineConfig({
               items: [{ slug: 'reference/algorand-teal/opcodes' }],
             },
             {
-              label: 'SDK',
-              collapsed: true,
-              items: [{ slug: 'reference/sdk/sdk-list' }],
-            },
-            {
               label: 'REST API',
               collapsed: true,
               items: [
@@ -642,6 +637,11 @@ export default defineConfig({
               attrs: { target: '_blank', rel: 'noopener' },
             },
             { slug: 'resources/p2p-func' },
+            {
+              label: 'SDK',
+              collapsed: true,
+              items: [{ slug: 'resources/sdk/sdk-list' }],
+            },
           ],
         },
         // Library sidebars — consumed by LibraryDocsSidebar, hidden from main sidebar
