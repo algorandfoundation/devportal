@@ -1,18 +1,11 @@
 ---
-title: divmodw
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "divmodw"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / divmodw
-
-> **divmodw**(`a`, `b`, `c`, `d`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\]
+> **divmodw**(`a`, `b`, `c`, `d`): readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\]
 
 Defined in: [op.ts:745](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L745)
 
@@ -23,23 +16,23 @@ The notation J,K indicates that two uint64 values J and K are interpreted as a u
 
 ### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### b
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### c
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### d
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ## Returns
 
-readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\]
+readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\]
 
 ## See
 

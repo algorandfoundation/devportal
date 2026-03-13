@@ -1,33 +1,26 @@
 ---
-title: getBit
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "getBit"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / getBit
 
 > **getBit**(`a`, `b`): `boolean`
 
 Defined in: [op.ts:964](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L964)
 
-Bth bit of (byte-array or integer) A. If B is greater than or equal to the bit length of the value (8\*byte length), the program fails
+Bth bit of (byte-array or integer) A. If B is greater than or equal to the bit length of the value (8*byte length), the program fails
 see explanation of bit ordering in setbit
 
 ## Parameters
 
 ### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ### b
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ## Returns
 

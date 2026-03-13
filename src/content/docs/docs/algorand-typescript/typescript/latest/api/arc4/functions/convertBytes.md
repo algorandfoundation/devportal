@@ -1,20 +1,13 @@
 ---
-title: convertBytes
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "convertBytes"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / convertBytes
 
 > **convertBytes**\<`T`\>(`bytes`, `options`): `T`
 
-Defined in: [arc4/index.ts:232](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L232)
+Defined in: [arc4/index.ts:241](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/index.ts#L241)
 
 Interpret the provided bytes as an ARC4 encoded type
 
@@ -22,13 +15,13 @@ Interpret the provided bytes as an ARC4 encoded type
 
 ### T
 
-`T` _extends_ [`ARC4Encoded`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/ARC4Encoded/)
+`T` *extends* [`ARC4Encoded`](/algorand-typescript/api/arc4/classes/arc4encoded/)
 
 ## Parameters
 
 ### bytes
 
-[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)
+[`BytesCompat`](/algorand-typescript/api/index/type-aliases/bytescompat/)
 
 An arc4 encoded bytes value
 
@@ -38,17 +31,17 @@ Options for how the bytes should be converted
 
 #### prefix?
 
-`"log"` \| `"none"`
+`"none"` \| `"log"`
 
 The prefix (if any), present in the bytes value. This prefix will be validated and removed
 
 #### strategy
 
-`"validate"` \| `"unsafe-cast"`
+`"unsafe-cast"` \| `"validate"`
 
 The strategy used for converting bytes.
-`unsafe-cast`: Reinterpret the value as an ARC4 encoded type without validation
-`validate`: Asserts the encoding of the raw bytes matches the expected type
+        `unsafe-cast`: Reinterpret the value as an ARC4 encoded type without validation
+        `validate`: Asserts the encoding of the raw bytes matches the expected type
 
 ## Returns
 

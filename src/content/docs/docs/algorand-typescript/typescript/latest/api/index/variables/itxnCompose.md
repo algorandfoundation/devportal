@@ -1,17 +1,20 @@
 ---
-title: itxnCompose
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "itxnCompose"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
+> `const` **itxnCompose**: [`ItxnCompose`](/algorand-typescript/api/index/type-aliases/itxncompose/)
 
----
+Defined in: [itxn-compose.ts:179](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L179)
 
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / itxnCompose
+The itxnCompose helper can be used to build dynamically sized itxn groups which aren't supported by the stronger typed itxn paradigm. The
+first transaction in a group must be 'staged' with `itxnCompose.begin` whilst all other transactions in the group should use `itxnCompose.next`.
+When the group is complete it can be submitted using `itxnCompose.submit`.
 
-> `const` **itxnCompose**: [`ItxnCompose`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/ItxnCompose/)
+## Remarks
 
-Defined in: [itxn-compose.ts:68](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L68)
+The itxn API offered by teal opcodes has some rough edges which are not fully abstracted over by this compose API, but it hoped that use
+cases for it are limited and that most transaction groups can be composed with a static size relying on the atomic nature of the outer transaction
+to ensure multiple smaller itxn groups are committed atomically.

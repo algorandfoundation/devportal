@@ -1,20 +1,13 @@
 ---
-title: Account
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "Account"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Account
 
 ## Call Signature
 
-> **Account**(): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> **Account**(): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [reference.ts:109](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L109)
 
@@ -22,11 +15,11 @@ Create a new account object representing the zero address
 
 ### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ## Call Signature
 
-> **Account**(`publicKey`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> **Account**(`publicKey`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [reference.ts:114](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L114)
 
@@ -36,17 +29,17 @@ Create a new account object representing the provided public key bytes
 
 #### publicKey
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 A 32-byte Algorand account public key
 
 ### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ## Call Signature
 
-> **Account**(`address`): [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> **Account**(`address`): [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [reference.ts:119](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/reference.ts#L119)
 
@@ -62,4 +55,4 @@ A 56 character base-32 encoded Algorand address
 
 ### Returns
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)

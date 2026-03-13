@@ -1,18 +1,11 @@
 ---
-title: TemplateVar
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "TemplateVar"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / TemplateVar
-
-> **TemplateVar**\<`T`\>(`variableName`, `prefix`): `T`
+> **TemplateVar**\<`T`\>(`variableName`, `prefix?`): `T`
 
 Defined in: [template-var.ts:10](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/template-var.ts#L10)
 
@@ -34,11 +27,11 @@ The final variable name will be `prefix + variableName`
 
 The key used to identify the variable.
 
-### prefix
+### prefix?
 
 `string` = `'TMPL_'`
 
-The prefix to apply the variable name (Defaults to 'TMPL\_')
+The prefix to apply the variable name (Defaults to 'TMPL_')
 
 ## Returns
 

@@ -1,18 +1,11 @@
 ---
-title: ContractProxyMethod
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "ContractProxyMethod"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / ContractProxyMethod
-
-> **ContractProxyMethod**\<`TMethod`\> = `TMethod` _extends_ (...`args`) => infer TReturn ? (`fields?`) => [`TypedApplicationCallResponse`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/TypedApplicationCallResponse/)\<`TReturn`\> : `never`
+> **ContractProxyMethod**\<`TMethod`\> = `TMethod` *extends* (...`args`) => infer TReturn ? (`fields?`) => [`TypedApplicationCallResponse`](/algorand-typescript/api/arc4/type-aliases/typedapplicationcallresponse/)\<`TReturn`\> : `never`
 
 Defined in: [arc4/c2c.ts:71](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L71)
 

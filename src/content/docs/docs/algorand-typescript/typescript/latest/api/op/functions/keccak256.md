@@ -1,18 +1,11 @@
 ---
-title: keccak256
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "keccak256"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / keccak256
-
-> **keccak256**(`a`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+> **keccak256**(`a`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [op.ts:3330](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L3330)
 
@@ -22,11 +15,11 @@ Keccak256 hash of value A, yields [32]byte
 
 ### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ## Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 ## See
 

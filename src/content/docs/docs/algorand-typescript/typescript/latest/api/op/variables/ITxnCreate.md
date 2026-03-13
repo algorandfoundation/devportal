@@ -1,16 +1,9 @@
 ---
-title: ITxnCreate
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "ITxnCreate"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / ITxnCreate
 
 > `const` **ITxnCreate**: `object`
 
@@ -18,7 +11,7 @@ Defined in: [op.ts:2863](https://github.com/algorandfoundation/puya-ts/blob/main
 
 Create inner transactions
 
-## Type declaration
+## Type Declaration
 
 ### begin()
 
@@ -63,7 +56,7 @@ Min AVM version: 2
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -80,7 +73,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -97,7 +90,7 @@ Min AVM version: 2
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -114,7 +107,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Application`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Application/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Application`](/algorand-typescript/api/index/type-aliases/application/)
 
 #### Returns
 
@@ -131,7 +124,7 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -148,7 +141,7 @@ Min AVM version: 2
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -165,7 +158,7 @@ Min AVM version: 7
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -182,7 +175,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -199,7 +192,7 @@ Min AVM version: 5
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -216,7 +209,7 @@ Min AVM version: 5
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -233,7 +226,7 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -250,7 +243,7 @@ Min AVM version: 5
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -267,7 +260,7 @@ Min AVM version: 2
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -284,7 +277,7 @@ Min AVM version: 7
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -301,7 +294,7 @@ Min AVM version: 5
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -318,7 +311,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
 
 #### Returns
 
@@ -335,7 +328,7 @@ Min AVM version: 2
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -352,7 +345,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -386,7 +379,7 @@ Min AVM version: 2
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -403,7 +396,7 @@ Min AVM version: 2
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -420,7 +413,7 @@ Min AVM version: 2
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\> | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 #### Returns
 
@@ -437,7 +430,7 @@ Min AVM version: 2
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -454,7 +447,7 @@ Min AVM version: 2
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -471,7 +464,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -488,7 +481,7 @@ Min AVM version: 2
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -505,7 +498,7 @@ Min AVM version: 2
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -522,7 +515,7 @@ Min AVM version: 4
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -539,7 +532,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -556,7 +549,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
 
 #### Returns
 
@@ -573,7 +566,7 @@ Min AVM version: 2
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -607,7 +600,7 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -624,7 +617,7 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -641,7 +634,7 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -658,7 +651,7 @@ Min AVM version: 3
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -692,7 +685,7 @@ Min AVM version: 5
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -709,7 +702,7 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -726,7 +719,7 @@ Min AVM version: 5
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -743,7 +736,7 @@ Min AVM version: 12
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -760,7 +753,7 @@ Min AVM version: 2
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -777,7 +770,7 @@ Min AVM version: 5
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\> | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 #### Returns
 
@@ -794,7 +787,7 @@ Min AVM version: 5
 
 ##### a
 
-[`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 #### Returns
 
@@ -811,7 +804,7 @@ Min AVM version: 6
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`64`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>
 
 #### Returns
 
@@ -828,7 +821,7 @@ Min AVM version: 5
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Returns
 
@@ -845,7 +838,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -862,7 +855,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -879,7 +872,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -896,7 +889,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -913,7 +906,7 @@ Min AVM version: 5
 
 ##### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\> | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 #### Returns
 
@@ -930,7 +923,7 @@ Min AVM version: 5
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
 
 #### Returns
 

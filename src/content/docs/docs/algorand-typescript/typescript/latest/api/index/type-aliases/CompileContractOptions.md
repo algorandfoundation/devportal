@@ -1,16 +1,9 @@
 ---
-title: CompileContractOptions
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "CompileContractOptions"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / CompileContractOptions
 
 > **CompileContractOptions** = `object`
 
@@ -22,64 +15,64 @@ Options for compiling a contract
 
 ### extraProgramPages?
 
-> `readonly` `optional` **extraProgramPages**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` `optional` **extraProgramPages**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [compiled.ts:59](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L59)
 
 Number of extra program pages, defaults to minimum required for contract
 
----
+***
 
 ### globalBytes?
 
-> `readonly` `optional` **globalBytes**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` `optional` **globalBytes**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [compiled.ts:67](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L67)
 
 Number of global bytes, defaults to value defined for contract
 
----
+***
 
 ### globalUints?
 
-> `readonly` `optional` **globalUints**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` `optional` **globalUints**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [compiled.ts:63](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L63)
 
 Number of global uint64s, defaults to value defined for contract
 
----
+***
 
 ### localBytes?
 
-> `readonly` `optional` **localBytes**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` `optional` **localBytes**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [compiled.ts:75](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L75)
 
 Number of local bytes, defaults to value defined for contract
 
----
+***
 
 ### localUints?
 
-> `readonly` `optional` **localUints**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` `optional` **localUints**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [compiled.ts:71](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L71)
 
 Number of local uint64s, defaults to value defined for contract
 
----
+***
 
 ### templateVars?
 
-> `readonly` `optional` **templateVars**: `Record`\<`string`, [`DeliberateAny`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/DeliberateAny/)\>
+> `readonly` `optional` **templateVars**: `Record`\<`string`, `DeliberateAny`\>
 
 Defined in: [compiled.ts:80](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L80)
 
 Template variables to substitute into the contract, key should be without the prefix, must evaluate to a compile time constant
 and match the type of the template var declaration
 
----
+***
 
 ### templateVarsPrefix?
 
@@ -87,4 +80,4 @@ and match the type of the template var declaration
 
 Defined in: [compiled.ts:84](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/compiled.ts#L84)
 
-Prefix to add to provided template vars, defaults to the prefix supplied on command line (which defaults to TMPL\_)
+Prefix to add to provided template vars, defaults to the prefix supplied on command line (which defaults to TMPL_)

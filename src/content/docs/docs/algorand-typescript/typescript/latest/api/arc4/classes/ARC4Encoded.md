@@ -1,16 +1,9 @@
 ---
-title: ARC4Encoded
-type: class
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "ARC4Encoded"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / ARC4Encoded
 
 Defined in: [arc4/encoded-types.ts:87](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L87)
 
@@ -18,17 +11,15 @@ A base type for ARC4 encoded values
 
 ## Extended by
 
-- [`Str`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Str/)
-- [`Uint`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Uint/)
-- [`UFixed`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/UFixed/)
-- [`Bool`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Bool/)
-- [`Tuple`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Tuple/)
-- [`Arc4ArrayBase`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/classes/Arc4ArrayBase/)
-- [`StructBase`](/docs/algorand-typescript/typescript/latest/api/arc4/-internal-/classes/StructBase/)
+- [`Str`](/algorand-typescript/api/arc4/classes/str/)
+- [`Uint`](/algorand-typescript/api/arc4/classes/uint/)
+- [`UFixed`](/algorand-typescript/api/arc4/classes/ufixed/)
+- [`Bool`](/algorand-typescript/api/arc4/classes/bool/)
+- [`Tuple`](/algorand-typescript/api/arc4/classes/tuple/)
 
 ## Implements
 
-- [`BytesBacked`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/BytesBacked/)
+- [`BytesBacked`](/algorand-typescript/api/index/interfaces/bytesbacked/)
 
 ## Constructors
 
@@ -46,7 +37,7 @@ A base type for ARC4 encoded values
 
 #### Get Signature
 
-> **get** **bytes**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> **get** **bytes**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [arc4/encoded-types.ts:102](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/encoded-types.ts#L102)
 
@@ -54,8 +45,8 @@ Retrieve the encoded bytes for this type
 
 ##### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### Implementation of
 
-[`BytesBacked`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/BytesBacked/).[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/interfaces/BytesBacked/#bytes)
+[`BytesBacked`](/algorand-typescript/api/index/interfaces/bytesbacked/).[`bytes`](/algorand-typescript/api/index/interfaces/bytesbacked/#bytes)

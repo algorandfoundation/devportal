@@ -1,28 +1,21 @@
 ---
-title: PaymentComposeFields
-type: interface
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "PaymentComposeFields"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / PaymentComposeFields
 
 Defined in: [itxn-compose.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L7)
 
 ## Extends
 
-- [`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/)
+- [`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/)
 
 ## Properties
 
 ### amount?
 
-> `optional` **amount**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **amount**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:621](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L621)
 
@@ -30,13 +23,13 @@ microalgos
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`amount`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#amount)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`amount`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#amount)
 
----
+***
 
 ### closeRemainderTo?
 
-> `optional` **closeRemainderTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **closeRemainderTo**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:625](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L625)
 
@@ -44,13 +37,13 @@ Defined in: [itxn.ts:625](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`closeRemainderTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#closeremainderto)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`closeRemainderTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#closeremainderto)
 
----
+***
 
 ### fee?
 
-> `optional` **fee**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **fee**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:589](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L589)
 
@@ -58,13 +51,13 @@ microalgos
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`fee`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#fee)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`fee`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#fee)
 
----
+***
 
 ### firstValid?
 
-> `optional` **firstValid**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **firstValid**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:593](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L593)
 
@@ -72,13 +65,13 @@ round number
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`firstValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#firstvalid)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`firstValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#firstvalid)
 
----
+***
 
 ### firstValidTime?
 
-> `optional` **firstValidTime**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **firstValidTime**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:597](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L597)
 
@@ -86,13 +79,13 @@ UNIX timestamp of block before txn.FirstValid. Fails if negative
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`firstValidTime`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#firstvalidtime)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`firstValidTime`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#firstvalidtime)
 
----
+***
 
 ### lastValid?
 
-> `optional` **lastValid**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `optional` **lastValid**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [itxn.ts:601](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L601)
 
@@ -100,13 +93,13 @@ round number
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`lastValid`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#lastvalid)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`lastValid`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#lastvalid)
 
----
+***
 
 ### lease?
 
-> `optional` **lease**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+> `optional` **lease**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [itxn.ts:609](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L609)
 
@@ -114,13 +107,13 @@ Defined in: [itxn.ts:609](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`lease`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#lease)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`lease`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#lease)
 
----
+***
 
 ### note?
 
-> `optional` **note**: `string` \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **note**: `string` \| [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [itxn.ts:605](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L605)
 
@@ -128,13 +121,13 @@ Any data up to 1024 bytes
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`note`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#note)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`note`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#note)
 
----
+***
 
 ### receiver?
 
-> `optional` **receiver**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **receiver**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:617](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L617)
 
@@ -142,13 +135,13 @@ Defined in: [itxn.ts:617](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`receiver`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#receiver)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`receiver`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#receiver)
 
----
+***
 
 ### rekeyTo?
 
-> `optional` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **rekeyTo**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L613)
 
@@ -156,13 +149,13 @@ Defined in: [itxn.ts:613](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`rekeyTo`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#rekeyto)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`rekeyTo`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#rekeyto)
 
----
+***
 
 ### sender?
 
-> `optional` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/) \| [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `optional` **sender**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) \| [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [itxn.ts:585](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L585)
 
@@ -170,12 +163,12 @@ Defined in: [itxn.ts:585](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 #### Inherited from
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/).[`sender`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/#sender)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/).[`sender`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/#sender)
 
----
+***
 
 ### type
 
-> **type**: [`Payment`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/#payment)
+> **type**: [`Payment`](/algorand-typescript/api/index/enumerations/transactiontype/#payment)
 
 Defined in: [itxn-compose.ts:8](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn-compose.ts#L8)

@@ -1,16 +1,9 @@
 ---
-title: AssetFreezeTxn
-type: interface
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "AssetFreezeTxn"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/README/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/README/) / AssetFreezeTxn
 
 Defined in: [gtxn.ts:629](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L629)
 
@@ -20,53 +13,53 @@ A group transaction of type 'afrz'
 
 ### fee
 
-> `readonly` **fee**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` **fee**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [gtxn.ts:359](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L359)
 
 microalgos
 
----
+***
 
 ### firstValid
 
-> `readonly` **firstValid**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` **firstValid**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [gtxn.ts:363](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L363)
 
 round number
 
----
+***
 
 ### firstValidTime
 
-> `readonly` **firstValidTime**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` **firstValidTime**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [gtxn.ts:367](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L367)
 
 UNIX timestamp of block before txn.FirstValid. Fails if negative
 
----
+***
 
 ### freezeAccount
 
-> `readonly` **freezeAccount**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> `readonly` **freezeAccount**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [gtxn.ts:408](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L408)
 
 32 byte address of the account whose asset slot is being frozen or un-frozen
 
----
+***
 
 ### freezeAsset
 
-> `readonly` **freezeAsset**: [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
+> `readonly` **freezeAsset**: [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
 
 Defined in: [gtxn.ts:404](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L404)
 
 Asset ID being frozen or un-frozen
 
----
+***
 
 ### frozen
 
@@ -76,92 +69,92 @@ Defined in: [gtxn.ts:412](https://github.com/algorandfoundation/puya-ts/blob/mai
 
 The new frozen value
 
----
+***
 
 ### groupIndex
 
-> `readonly` **groupIndex**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` **groupIndex**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [gtxn.ts:392](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L392)
 
 Position of this transaction within an atomic group
 A stand-alone transaction is implicitly element 0 in a group of 1
 
----
+***
 
 ### lastValid
 
-> `readonly` **lastValid**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` **lastValid**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [gtxn.ts:371](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L371)
 
 round number
 
----
+***
 
 ### lease
 
-> `readonly` **lease**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+> `readonly` **lease**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [gtxn.ts:379](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L379)
 
 32 byte lease value
 
----
+***
 
 ### note
 
-> `readonly` **note**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `readonly` **note**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [gtxn.ts:375](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L375)
 
 Any data up to 1024 bytes
 
----
+***
 
 ### rekeyTo
 
-> `readonly` **rekeyTo**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> `readonly` **rekeyTo**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [gtxn.ts:400](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L400)
 
 32 byte Sender's new AuthAddr
 
----
+***
 
 ### sender
 
-> `readonly` **sender**: [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+> `readonly` **sender**: [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 Defined in: [gtxn.ts:355](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L355)
 
 32 byte address
 
----
+***
 
 ### txnId
 
-> `readonly` **txnId**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\>
+> `readonly` **txnId**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 Defined in: [gtxn.ts:396](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L396)
 
 The computed ID for this transaction. 32 bytes.
 
----
+***
 
 ### type
 
-> `readonly` **type**: [`AssetFreeze`](/docs/algorand-typescript/typescript/latest/api/index/enumerations/TransactionType/#assetfreeze)
+> `readonly` **type**: [`AssetFreeze`](/algorand-typescript/api/index/enumerations/transactiontype/#assetfreeze)
 
 Defined in: [gtxn.ts:387](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L387)
 
 Transaction type
 
----
+***
 
 ### typeBytes
 
-> `readonly` **typeBytes**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `readonly` **typeBytes**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [gtxn.ts:383](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L383)
 

@@ -1,20 +1,13 @@
 ---
-title: Bytes
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "Bytes"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Bytes
 
 ## Call Signature
 
-> **Bytes**(`value`, ...`replacements`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **Bytes**(`value`, ...`replacements`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:245](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L245)
 
@@ -28,15 +21,15 @@ Create a byte array from a string interpolation template and compatible replacem
 
 #### replacements
 
-...[`BytesCompat`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/BytesCompat/)[]
+...[`BytesCompat`](/algorand-typescript/api/index/type-aliases/bytescompat/)[]
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **Bytes**(`value`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **Bytes**(`value`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:249](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L249)
 
@@ -50,11 +43,11 @@ Create a byte array from a utf8 string
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:253](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L253)
 
@@ -64,7 +57,7 @@ Create a byte array from a utf8 string
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
@@ -74,15 +67,15 @@ Create a byte array from a utf8 string
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
+`ToFixedBytesOptions`\<`TLength`\>
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 ## Call Signature
 
-> **Bytes**(`value`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **Bytes**(`value`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:257](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L257)
 
@@ -92,15 +85,15 @@ No op, returns the provided byte array.
 
 #### value
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:261](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L261)
 
@@ -110,25 +103,25 @@ No op, returns the provided byte array.
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
 #### value
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
+`ToFixedBytesOptions`\<`TLength`\>
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 ## Call Signature
 
-> **Bytes**(`value`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **Bytes**(`value`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:265](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L265)
 
@@ -138,15 +131,15 @@ Create a byte array from a biguint value encoded as a variable length big-endian
 
 #### value
 
-[`biguint`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/biguint/)
+[`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:269](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L269)
 
@@ -156,25 +149,25 @@ Create a byte array from a biguint value encoded as a variable length big-endian
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
 #### value
 
-[`biguint`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/biguint/)
+[`biguint`](/algorand-typescript/api/index/type-aliases/biguint/)
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
+`ToFixedBytesOptions`\<`TLength`\>
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 ## Call Signature
 
-> **Bytes**(`value`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **Bytes**(`value`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:273](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L273)
 
@@ -184,15 +177,15 @@ Create a byte array from a uint64 value encoded as a a variable length 64-bit nu
 
 #### value
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:277](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L277)
 
@@ -202,25 +195,25 @@ Create a byte array from a uint64 value encoded as a a variable length 64-bit nu
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) = `8`
+`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = `8`
 
 ### Parameters
 
 #### value
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
+`ToFixedBytesOptions`\<`TLength`\>
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 ## Call Signature
 
-> **Bytes**(`value`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **Bytes**(`value`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:281](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L281)
 
@@ -230,15 +223,15 @@ Create a byte array from an Iterable<uint64> where each item is interpreted as a
 
 #### value
 
-`Iterable`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+`Iterable`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+> **Bytes**\<`TLength`\>(`value`, `options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:285](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L285)
 
@@ -248,25 +241,25 @@ Create a byte array from an Iterable<uint64> where each item is interpreted as a
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
 #### value
 
-`Iterable`\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+`Iterable`\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
+`ToFixedBytesOptions`\<`TLength`\>
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 ## Call Signature
 
-> **Bytes**(): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+> **Bytes**(): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 Defined in: [primitives.ts:289](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L289)
 
@@ -274,11 +267,11 @@ Create an empty byte array
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)\>
 
 ## Call Signature
 
-> **Bytes**\<`TLength`\>(`options`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+> **Bytes**\<`TLength`\>(`options`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>
 
 Defined in: [primitives.ts:293](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/primitives.ts#L293)
 
@@ -288,14 +281,14 @@ Create an empty byte array
 
 #### TLength
 
-`TLength` _extends_ [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) = [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+`TLength` *extends* [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) = [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 ### Parameters
 
 #### options
 
-[`ToFixedBytesOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/type-aliases/ToFixedBytesOptions/)\<`TLength`\>
+`ToFixedBytesOptions`\<`TLength`\>
 
 ### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`TLength`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`TLength`\>

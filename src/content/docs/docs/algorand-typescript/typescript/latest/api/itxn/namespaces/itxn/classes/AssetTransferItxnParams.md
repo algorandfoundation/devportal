@@ -1,16 +1,9 @@
 ---
-title: AssetTransferItxnParams
-type: class
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "AssetTransferItxnParams"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/README/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/README/) / AssetTransferItxnParams
 
 Defined in: [itxn.ts:1082](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1082)
 
@@ -40,7 +33,7 @@ Return a copy of this AssetTransferItxnParams object
 
 `AssetTransferItxnParams`
 
----
+***
 
 ### set()
 
@@ -54,17 +47,17 @@ Update one or more fields in this AssetTransferItxnParams object
 
 ##### fields
 
-[`AssetTransferFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferFields/)
+[`AssetTransferFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferfields/)
 
 #### Returns
 
 `void`
 
----
+***
 
 ### submit()
 
-> **submit**(): [`AssetTransferInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferInnerTxn/)
+> **submit**(): [`AssetTransferInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferinnertxn/)
 
 Defined in: [itxn.ts:1086](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L1086)
 
@@ -72,4 +65,4 @@ Submit an itxn with these fields and return the AssetTransferInnerTxn result
 
 #### Returns
 
-[`AssetTransferInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/AssetTransferInnerTxn/)
+[`AssetTransferInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/assettransferinnertxn/)

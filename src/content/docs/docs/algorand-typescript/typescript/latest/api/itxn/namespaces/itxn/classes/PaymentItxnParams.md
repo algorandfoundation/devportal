@@ -1,16 +1,9 @@
 ---
-title: PaymentItxnParams
-type: class
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "PaymentItxnParams"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/README/) / [itxn](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/README/) / PaymentItxnParams
 
 Defined in: [itxn.ts:995](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L995)
 
@@ -40,7 +33,7 @@ Return a copy of this PaymentItxnParams object
 
 `PaymentItxnParams`
 
----
+***
 
 ### set()
 
@@ -54,17 +47,17 @@ Update one or more fields in this PaymentItxnParams object
 
 ##### fields
 
-[`PaymentFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentFields/)
+[`PaymentFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentfields/)
 
 #### Returns
 
 `void`
 
----
+***
 
 ### submit()
 
-> **submit**(): [`PaymentInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentInnerTxn/)
+> **submit**(): [`PaymentInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentinnertxn/)
 
 Defined in: [itxn.ts:999](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/itxn.ts#L999)
 
@@ -72,4 +65,4 @@ Submit an itxn with these fields and return the PaymentInnerTxn result
 
 #### Returns
 
-[`PaymentInnerTxn`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/PaymentInnerTxn/)
+[`PaymentInnerTxn`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/paymentinnertxn/)

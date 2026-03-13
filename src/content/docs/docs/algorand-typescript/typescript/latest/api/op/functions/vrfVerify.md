@@ -1,18 +1,11 @@
 ---
-title: vrfVerify
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "vrfVerify"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / vrfVerify
-
-> **vrfVerify**(`s`, `a`, `b`, `c`): readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`64`\>, `boolean`\]
+> **vrfVerify**(`s`, `a`, `b`, `c`): readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>, `boolean`\]
 
 Defined in: [op.ts:4087](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L4087)
 
@@ -23,23 +16,23 @@ Verify the proof B of message A against pubkey C. Returns vrf output and verific
 
 ### s
 
-[`VrfAlgorand`](/docs/algorand-typescript/typescript/latest/api/op/enumerations/VrfVerify/#vrfalgorand)
+[`VrfAlgorand`](/algorand-typescript/api/op/enumerations/vrfverify/#vrfalgorand)
 
 ### a
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 ### b
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/) | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`80`\>
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`80`\>
 
 ### c
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`32`\> | [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/) | [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`32`\>
 
 ## Returns
 
-readonly \[[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)\<`64`\>, `boolean`\]
+readonly \[[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)\<`64`\>, `boolean`\]
 
 ## See
 

@@ -1,16 +1,9 @@
 ---
-title: baremethod
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "baremethod"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / baremethod
 
 > **baremethod**\<`TContract`\>(`config?`): \<`TArgs`, `TReturn`\>(`target`, `ctx`) => (`this`, ...`args`) => `TReturn`
 
@@ -22,7 +15,7 @@ Declares the decorated method as a baremethod that can only be called with no tr
 
 ### TContract
 
-`TContract` _extends_ [`Contract`](/docs/algorand-typescript/typescript/latest/api/arc4/classes/Contract/)
+`TContract` *extends* [`Contract`](/algorand-typescript/api/arc4/classes/contract/)
 
 the type of the contract this method is a part of
 
@@ -30,7 +23,7 @@ the type of the contract this method is a part of
 
 ### config?
 
-[`BareMethodConfig`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/BareMethodConfig/)
+[`BareMethodConfig`](/algorand-typescript/api/arc4/type-aliases/baremethodconfig/)
 
 The config for this bare method
 
@@ -42,7 +35,7 @@ The config for this bare method
 
 #### TArgs
 
-`TArgs` _extends_ `any`[]
+`TArgs` *extends* `any`[]
 
 #### TReturn
 

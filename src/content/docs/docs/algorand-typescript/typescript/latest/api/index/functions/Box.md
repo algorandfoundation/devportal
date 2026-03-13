@@ -1,18 +1,11 @@
 ---
-title: Box
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "Box"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Box
-
-> **Box**\<`TValue`\>(`options`): [`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Box/)\<`TValue`\>
+> **Box**\<`TValue`\>(`options`): [`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>
 
 Defined in: [box.ts:131](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L131)
 
@@ -30,10 +23,10 @@ The type of the data stored in the box. This value will be encoded to bytes when
 
 ### options
 
-[`CreateBoxOptions`](/docs/algorand-typescript/typescript/latest/api/index/-internal-/interfaces/CreateBoxOptions/)
+`CreateBoxOptions`
 
 Options for creating the Box proxy
 
 ## Returns
 
-[`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Box/)\<`TValue`\>
+[`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>

@@ -1,26 +1,15 @@
 ---
-title: BoxMap
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "BoxMap"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / BoxMap
-
-> **BoxMap**\<`TKey`, `TValue`\> = [`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Box/)\<`TValue`\>
+> **BoxMap**\<`TKey`, `TValue`\> = [`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>
 
 Defined in: [box.ts:151](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L151)
 
-Creates a BoxMap proxy object offering methods of getting and setting a set of values stored in individual boxes indexed by a common key type
-
-## Param
-
-Options for creating the BoxMap proxy
+A BoxMap proxy
 
 ## Type Parameters
 
@@ -28,17 +17,15 @@ Options for creating the BoxMap proxy
 
 `TKey`
 
-The type of the value used to key each box. This key will be encoded to bytes and prefixed with `keyPrefix`
+The type of the value used to key each box.
 
 ### TValue
 
 `TValue`
 
-The type of the data stored in the box. This value will be encoded to bytes when stored and decoded on retrieval.
+The type of the data stored in the box.
 
-> **BoxMap**(`key`): [`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Box/)\<`TValue`\>
-
-Defined in: [box.ts:113](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L113)
+> **BoxMap**(`key`): [`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>
 
 Get a Box proxy for a single item in the BoxMap
 
@@ -52,13 +39,13 @@ The key of the box to retrieve a proxy for
 
 ## Returns
 
-[`Box`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Box/)\<`TValue`\>
+[`Box`](/algorand-typescript/api/index/type-aliases/box/)\<`TValue`\>
 
 ## Properties
 
 ### keyPrefix
 
-> `readonly` **keyPrefix**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `readonly` **keyPrefix**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [box.ts:107](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L107)
 

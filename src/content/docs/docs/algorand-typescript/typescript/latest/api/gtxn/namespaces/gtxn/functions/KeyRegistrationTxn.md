@@ -1,18 +1,11 @@
 ---
-title: KeyRegistrationTxn
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "KeyRegistrationTxn"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/README/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/README/) / KeyRegistrationTxn
-
-> **KeyRegistrationTxn**(`n`): [`KeyRegistrationTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/KeyRegistrationTxn/)
+> **KeyRegistrationTxn**(`n`): [`KeyRegistrationTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/keyregistrationtxn/)
 
 Defined in: [gtxn.ts:605](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L605)
 
@@ -23,10 +16,10 @@ Verifies the txn type is 'keyreg'
 
 ### n
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The index of the txn in the group
 
 ## Returns
 
-[`KeyRegistrationTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/KeyRegistrationTxn/)
+[`KeyRegistrationTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/keyregistrationtxn/)

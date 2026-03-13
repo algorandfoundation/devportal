@@ -1,26 +1,19 @@
 ---
-title: AssetHolding
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "AssetHolding"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / AssetHolding
 
 > `const` **AssetHolding**: `object`
 
 Defined in: [op.ts:422](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L422)
 
-## Type declaration
+## Type Declaration
 
 ### assetBalance()
 
-> **assetBalance**(`a`, `b`): readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+> **assetBalance**(`a`, `b`): readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `boolean`\]
 
 Amount of the asset unit held by this account
 Min AVM version: 2
@@ -29,15 +22,15 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ##### b
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
 
 #### Returns
 
-readonly \[[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/), `boolean`\]
+readonly \[[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/), `boolean`\]
 
 ### assetFrozen()
 
@@ -50,11 +43,11 @@ Min AVM version: 2
 
 ##### a
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Account`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Account/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Account`](/algorand-typescript/api/index/type-aliases/account/)
 
 ##### b
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/) | [`Asset`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/Asset/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/) | [`Asset`](/algorand-typescript/api/index/type-aliases/asset/)
 
 #### Returns
 

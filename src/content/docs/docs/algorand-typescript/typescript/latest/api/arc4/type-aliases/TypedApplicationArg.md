@@ -1,18 +1,11 @@
 ---
-title: TypedApplicationArg
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "TypedApplicationArg"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / TypedApplicationArg
-
-> **TypedApplicationArg**\<`TArg`\> = `TArg` _extends_ [`Transaction`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/type-aliases/Transaction/) ? [`GtxnToItxnFields`](/docs/algorand-typescript/typescript/latest/api/arc4/type-aliases/GtxnToItxnFields/)\<`TArg`\> : `TArg`
+> **TypedApplicationArg**\<`TArg`\> = `TArg` *extends* [`Transaction`](/algorand-typescript/api/gtxn/namespaces/gtxn/type-aliases/transaction/) ? [`GtxnToItxnFields`](/algorand-typescript/api/arc4/type-aliases/gtxntoitxnfields/)\<`TArg`\> : `TArg`
 
 Defined in: [arc4/c2c.ts:41](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L41)
 

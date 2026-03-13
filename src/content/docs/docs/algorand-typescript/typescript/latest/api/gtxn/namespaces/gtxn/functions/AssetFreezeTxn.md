@@ -1,18 +1,11 @@
 ---
-title: AssetFreezeTxn
-type: function
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "AssetFreezeTxn"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/README/) / [gtxn](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/README/) / AssetFreezeTxn
-
-> **AssetFreezeTxn**(`n`): [`AssetFreezeTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/AssetFreezeTxn/)
+> **AssetFreezeTxn**(`n`): [`AssetFreezeTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetfreezetxn/)
 
 Defined in: [gtxn.ts:629](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/gtxn.ts#L629)
 
@@ -23,10 +16,10 @@ Verifies the txn type is 'afrz'
 
 ### n
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The index of the txn in the group
 
 ## Returns
 
-[`AssetFreezeTxn`](/docs/algorand-typescript/typescript/latest/api/gtxn/namespaces/gtxn/interfaces/AssetFreezeTxn/)
+[`AssetFreezeTxn`](/algorand-typescript/api/gtxn/namespaces/gtxn/interfaces/assetfreezetxn/)

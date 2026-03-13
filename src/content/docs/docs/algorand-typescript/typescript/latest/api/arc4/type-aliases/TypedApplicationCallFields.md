@@ -1,18 +1,11 @@
 ---
-title: TypedApplicationCallFields
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "TypedApplicationCallFields"
 ---
 
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [arc4](/docs/algorand-typescript/typescript/latest/api/arc4/README/) / TypedApplicationCallFields
-
-> **TypedApplicationCallFields**\<`TArgs`\> = `Omit`\<[`ApplicationCallFields`](/docs/algorand-typescript/typescript/latest/api/itxn/namespaces/itxn/interfaces/ApplicationCallFields/), `"appArgs"`\> & `TArgs` _extends_ \[\] ? `object` : `object`
+> **TypedApplicationCallFields**\<`TArgs`\> = `Omit`\<[`ApplicationCallFields`](/algorand-typescript/api/itxn/namespaces/itxn/interfaces/applicationcallfields/), `"appArgs"`\> & `TArgs` *extends* \[\] ? `object` : `object`
 
 Defined in: [arc4/c2c.ts:58](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/arc4/c2c.ts#L58)
 

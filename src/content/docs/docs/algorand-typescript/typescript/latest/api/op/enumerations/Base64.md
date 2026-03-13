@@ -1,16 +1,9 @@
 ---
-title: Base64
-type: enum
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "Base64"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [op](/docs/algorand-typescript/typescript/latest/api/op/README/) / Base64
 
 Defined in: [op.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L7)
 
@@ -22,7 +15,7 @@ Defined in: [op.ts:7](https://github.com/algorandfoundation/puya-ts/blob/main/pa
 
 Defined in: [op.ts:9](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/op.ts#L9)
 
----
+***
 
 ### URLEncoding
 

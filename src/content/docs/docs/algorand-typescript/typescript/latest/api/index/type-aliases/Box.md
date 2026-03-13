@@ -1,26 +1,15 @@
 ---
-title: Box
-type: doc
-version: 1.0.0
-generated: 2025-10-31T00:00:00.000Z
-repo: puya-ts
+editUrl: false
+next: false
+prev: false
+title: "Box"
 ---
-
-[**Algorand TypeScript**](/docs/algorand-typescript/typescript/latest/api/README/)
-
----
-
-[Algorand TypeScript](/docs/algorand-typescript/typescript/latest/api/modules/) / [index](/docs/algorand-typescript/typescript/latest/api/index/README/) / Box
 
 > **Box**\<`TValue`\> = `object`
 
 Defined in: [box.ts:131](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L131)
 
-Creates a Box proxy object offering methods of getting and setting the value stored in a single box.
-
-## Param
-
-Options for creating the Box proxy
+A Box proxy
 
 ## Type Parameters
 
@@ -28,7 +17,7 @@ Options for creating the Box proxy
 
 `TValue`
 
-The type of the data stored in the box. This value will be encoded to bytes when stored and decoded on retrieval.
+The type of the data stored in the box.
 
 ## Properties
 
@@ -40,27 +29,27 @@ Defined in: [box.ts:33](https://github.com/algorandfoundation/puya-ts/blob/main/
 
 Get a boolean indicating if the box exists or not
 
----
+***
 
 ### key
 
-> `readonly` **key**: [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> `readonly` **key**: [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [box.ts:23](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L23)
 
 Get the key used by this box proxy
 
----
+***
 
 ### length
 
-> `readonly` **length**: [`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+> `readonly` **length**: [`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 Defined in: [box.ts:55](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L55)
 
 Returns the length of the box, or error if the box does not exist
 
----
+***
 
 ### value
 
@@ -81,9 +70,8 @@ Get will error if the box does not exist
 Defined in: [box.ts:19](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L19)
 
 Create the box for this proxy with a bzero value.
-
-- If options.size is specified, the box will be created with that length
-- Otherwise the box will be created with storage size of TValue. Errors if the size of TValue is not fixed
+ - If options.size is specified, the box will be created with that length
+ - Otherwise the box will be created with storage size of TValue. Errors if the size of TValue is not fixed
 
 No op if the box already exists with the same size
 Errors if the box already exists with a different size.
@@ -95,7 +83,7 @@ Errors if the specified size is greater than the max box size (32,768)
 
 ###### size?
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 #### Returns
 
@@ -103,7 +91,7 @@ Errors if the specified size is greater than the max box size (32,768)
 
 True if the box was created, false if it already existed
 
----
+***
 
 ### delete()
 
@@ -119,11 +107,11 @@ Delete the box associated with this proxy if it exists.
 
 True if the box existed and was deleted, else false
 
----
+***
 
 ### extract()
 
-> **extract**(`start`, `length`): [`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+> **extract**(`start`, `length`): [`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 Defined in: [box.ts:87](https://github.com/algorandfoundation/puya-ts/blob/main/packages/algo-ts/src/box.ts#L87)
 
@@ -136,23 +124,23 @@ Error if `start` + `length` is greater than the box size
 
 ##### start
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The index to start extracting
 
 ##### length
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The number of bytes to extract
 
 #### Returns
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 The extracted bytes
 
----
+***
 
 ### get()
 
@@ -178,7 +166,7 @@ Options to specify a default value to be returned if no other value exists
 
 The value if the box exists, else the default value
 
----
+***
 
 ### maybe()
 
@@ -196,7 +184,7 @@ readonly \[`TValue`, `boolean`\]
 
 A tuple with the first item being the box value, and the second item being a boolean indicating if the box exists.
 
----
+***
 
 ### replace()
 
@@ -213,13 +201,13 @@ Error if `start` + `value.length` is greater than the box size
 
 ##### start
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The index to start replacing
 
 ##### value
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 The value to be written
 
@@ -227,7 +215,7 @@ The value to be written
 
 `void`
 
----
+***
 
 ### resize()
 
@@ -245,7 +233,7 @@ Error if the box does not exist
 
 ##### newSize
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The new size for the box
 
@@ -253,7 +241,7 @@ The new size for the box
 
 `void`
 
----
+***
 
 ### splice()
 
@@ -272,19 +260,19 @@ Error if the box does not exist
 
 ##### start
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The index to start inserting the value
 
 ##### length
 
-[`uint64`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/uint64/)
+[`uint64`](/algorand-typescript/api/index/type-aliases/uint64/)
 
 The number of bytes after `start` to be omitted
 
 ##### value
 
-[`bytes`](/docs/algorand-typescript/typescript/latest/api/index/type-aliases/bytes/)
+[`bytes`](/algorand-typescript/api/index/type-aliases/bytes/)
 
 The value to be inserted
 
