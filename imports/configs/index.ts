@@ -16,10 +16,7 @@ import {
   legacyTsGuideConfig as algokitUtilsTsLegacy,
   legacyPyGuideConfig as algokitUtilsPyLegacy,
 } from './algokit-utils/import.config.js';
-import {
-  config as algokitCli,
-  legacyGuideConfig as algokitCliLegacy,
-} from './algokit-cli/import.config.js';
+import { config as algokitCli } from './algokit-cli/import.config.js';
 import {
   config as algorandPython,
   legacyGuideConfig as algorandPythonLegacy,
@@ -62,7 +59,6 @@ export const REMOTE_CONTENT: ImportOptions[] = [
   ...nodekit.variants.filter(v => !isArtifactVariant(v)),
   arcStandardsConfig,
   // Legacy guide targets — keep old algokit/* paths in sync via stateKey
-  algokitCliLegacy,
   algorandPythonLegacy,
   algorandTypescriptLegacy,
   algokitUtilsTsLegacy,
