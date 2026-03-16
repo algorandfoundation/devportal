@@ -16,7 +16,6 @@ import MobileMenuFooter from '@astrojs/starlight/components/MobileMenuFooter.ast
 import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
 import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
 import LibraryDocsSidebar from './LibraryDocsSidebar.astro';
-import LibraryPicker from './LibraryPicker.astro';
 import { getLibraryFromPath } from '../config/libraries';
 import { isLibrarySidebarLabel } from '../../imports/sidebar';
 
@@ -36,12 +35,9 @@ const mainSidebar = sidebar.filter(
     <LibraryDocsSidebar library={activeLibrary} currentPath={currentPath} />
   ) : (
     /* Main site view: library switcher at top + normal sidebar */
-    <>
-      <LibraryPicker currentPath={currentPath} />
-      <SidebarPersister>
-        <SidebarSublist sublist={mainSidebar} />
-      </SidebarPersister>
-    </>
+    <SidebarPersister>
+      <SidebarSublist sublist={mainSidebar} />
+    </SidebarPersister>
   )
 }
 

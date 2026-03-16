@@ -2,7 +2,6 @@
 import { logos } from 'virtual:starlight/user-images';
 import config from 'virtual:starlight/user-config';
 import AltDarkLogo from '../assets/images/portal-logo-dark-mode-alt.svg';
-import { getLibraryFromPath } from '../config/libraries';
 
 interface Props {
   isFooter?: boolean;
@@ -12,35 +11,19 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 
 const { isFooter } = Astro.props;
 const isHomepage = Astro.locals.starlightRoute.id === 'index.mdx';
-const currentPath = Astro.url.pathname;
 
-// Footer always shows the site logo, never a library logo
-const activeLibrary = !isFooter ? getLibraryFromPath(currentPath) : undefined;
-
-const libraryLogo = activeLibrary?.logo;
-
-// Site logo sources (library logo renders separately as inline SVG)
+// Site logo sources
 const darkLogoSrc = isFooter ? AltDarkLogo.src : logos.dark?.src;
 const lightLogoSrc = isFooter ? logos.dark?.src : logos.light?.src;
 const darkWidth = logos.dark?.width;
 const darkHeight = logos.dark?.height;
 const lightWidth = isFooter ? logos.dark?.width : logos.light?.width;
 const lightHeight = isFooter ? logos.dark?.height : logos.light?.height;
-
-const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
 ---
 
-<a href={logoHref} class='site-title sl-flex'>
+<a href={siteTitleHref} class='site-title sl-flex'>
   {
-    /* Safe: libraryLogo is an SVG string from imports/configs/ loaded at build time */
-    libraryLogo ? (
-      <span
-        class='library-logo'
-        role='img'
-        aria-label={activeLibrary?.label}
-        set:html={libraryLogo}
-      />
-    ) : config.logo && logos.dark ? (
+    config.logo && logos.dark ? (
       <>
         <img
           class:list={{
@@ -90,16 +73,5 @@ const logoHref = activeLibrary ? `/docs/${activeLibrary.slug}/` : siteTitleHref;
     max-width: 100%;
     object-fit: contain;
     object-position: 0 50%;
-  }
-  .library-logo {
-    display: flex;
-    align-items: center;
-    height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
-    line-height: 0;
-    color: var(--sl-color-white);
-  }
-  .library-logo :global(svg) {
-    height: 100%;
-    width: auto;
   }
 </style>

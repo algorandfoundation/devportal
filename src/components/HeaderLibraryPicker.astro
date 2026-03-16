@@ -1,0 +1,310 @@
+---
+/**
+ * HeaderLibraryPicker — "Libraries ▼" button in the site header.
+ */
+import {
+  libraries,
+  buildLibraryUrl,
+  type LibraryConfig,
+} from '../config/libraries';
+import { langIcons } from '../config/lang-icons';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const categoryOrder = ['sdk', 'cli', 'language', 'tool', 'api'];
+const categories: Record<string, LibraryConfig[]> = {};
+for (const lib of libraries) {
+  if (!categories[lib.category]) categories[lib.category] = [];
+  categories[lib.category].push(lib);
+}
+
+// Detect which library (if any) the user is currently viewing
+const activeLib = libraries.find(lib => currentPath.startsWith(`/docs/${lib.slug}/`));
+---
+
+<header-library-picker class='header-lib-picker'>
+  <button
+    class='hlp-btn'
+    aria-expanded='false'
+    aria-controls='header-lib-picker-panel'
+    aria-haspopup='true'
+  >
+    {activeLib?.logo ? (
+      <span class='hlp-btn-logo' set:html={activeLib.logo} />
+    ) : (
+      <span class='hlp-label'>Libraries</span>
+    )}
+    <svg
+      class='hlp-chevron'
+      width='10'
+      height='10'
+      viewBox='0 0 10 10'
+      fill='none'
+      aria-hidden='true'
+    >
+      <path
+        d='M2 4L5 7L8 4'
+        stroke='currentColor'
+        stroke-width='1.5'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+    </svg>
+  </button>
+
+  <div class='hlp-panel' id='header-lib-picker-panel' aria-hidden='true'>
+    <ul class='hlp-list' role='list'>
+      {
+        categoryOrder.map(cat =>
+          categories[cat]?.map(lib => {
+            const rootHref = `/docs/${lib.slug}/`;
+            const isActive = currentPath.startsWith(rootHref);
+            const defaultVersion = lib.versions[0]?.slug ?? 'latest';
+            return (
+              <li class:list={['hlp-item', { active: isActive }]}>
+                {lib.logo ? (
+                  <span class='hlp-item-logo' set:html={lib.logo} />
+                ) : (
+                  <span class='hlp-item-label'>{lib.label}</span>
+                )}
+                {lib.languages.length > 0 && (
+                  <span class='hlp-variants'>
+                    {lib.languages.map(lang => {
+                      const icon = langIcons[lang];
+                      if (!icon) return null;
+                      const variantHref = buildLibraryUrl(lib, lang, defaultVersion);
+                      return (
+                        <a
+                          href={variantHref}
+                          class='hlp-lang-icon'
+                          title={lang}
+                          style={`color: ${icon.color}`}
+                        >
+                          <Fragment set:html={icon.svg} />
+                        </a>
+                      );
+                    })}
+                  </span>
+                )}
+              </li>
+            );
+          }),
+        )
+      }
+    </ul>
+  </div>
+</header-library-picker>
+
+<script>
+  class HeaderLibraryPicker extends HTMLElement {
+    private btn!: HTMLButtonElement;
+    private panel!: HTMLElement;
+    private onKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && this.isOpen()) this.close();
+    };
+    private onClickOutside = (e: MouseEvent) => {
+      if (this.isOpen() && !this.contains(e.target as Node)) this.close();
+    };
+
+    connectedCallback() {
+      this.btn = this.querySelector('.hlp-btn')!;
+      this.panel = this.querySelector('.hlp-panel')!;
+      if (!this.btn || !this.panel) return;
+
+      this.btn.addEventListener('click', () => this.toggle());
+      document.addEventListener('keydown', this.onKeydown);
+      document.addEventListener('click', this.onClickOutside);
+    }
+
+    disconnectedCallback() {
+      document.removeEventListener('keydown', this.onKeydown);
+      document.removeEventListener('click', this.onClickOutside);
+    }
+
+    isOpen() {
+      return this.btn.getAttribute('aria-expanded') === 'true';
+    }
+
+    toggle() {
+      if (this.isOpen()) this.close();
+      else this.open();
+    }
+
+    open() {
+      this.btn.setAttribute('aria-expanded', 'true');
+      this.panel.setAttribute('aria-hidden', 'false');
+    }
+
+    close() {
+      this.btn.setAttribute('aria-expanded', 'false');
+      this.panel.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  customElements.define('header-library-picker', HeaderLibraryPicker);
+</script>
+
+<style>
+  .header-lib-picker {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .hlp-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    height: 2.5rem;
+    padding: 0 0.6rem;
+    background: none;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    color: var(--sl-color-gray-2);
+    cursor: pointer;
+    font-size: var(--sl-text-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s,
+      border-color 0.15s,
+      color 0.15s;
+  }
+
+  .hlp-btn:hover {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-4);
+    color: var(--sl-color-white);
+  }
+
+  .hlp-btn[aria-expanded='true'] {
+    background-color: var(--sl-color-gray-6);
+    border-color: var(--sl-color-gray-4);
+    color: var(--sl-color-white);
+  }
+
+  .hlp-btn-logo {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+    color: var(--sl-color-white);
+  }
+
+  .hlp-btn-logo :global(svg) {
+    height: 1rem;
+    width: auto;
+    display: block;
+  }
+
+  .hlp-chevron {
+    flex-shrink: 0;
+    opacity: 0.6;
+    transition: transform 0.2s;
+  }
+
+  .hlp-btn[aria-expanded='true'] .hlp-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Floating dropdown — right-aligned to stay in viewport */
+  .hlp-panel {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: 100;
+    min-width: 240px;
+    background: var(--sl-color-bg-nav);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    padding: 0.4rem;
+    display: none;
+  }
+
+  .hlp-panel[aria-hidden='false'] {
+    display: block;
+  }
+
+  .hlp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .hlp-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    line-height: 1.4;
+  }
+
+  .hlp-item:has(:hover) {
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .hlp-item.active {
+    color: var(--sl-color-white);
+    background-color: var(--sl-color-gray-5);
+  }
+
+  .hlp-item-logo {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--sl-color-white);
+    line-height: 0;
+  }
+
+  .hlp-item-logo :global(svg) {
+    height: 1.2rem;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .hlp-item-label {
+    flex: 1;
+    white-space: nowrap;
+    color: inherit;
+  }
+
+  .hlp-item.active .hlp-item-label {
+    font-weight: 600;
+  }
+
+  .hlp-variants {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.3rem;
+    margin-inline-start: auto;
+  }
+
+  .hlp-lang-icon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+  }
+
+  .hlp-lang-icon:hover {
+    opacity: 1;
+  }
+
+  .hlp-lang-icon :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+</style>
