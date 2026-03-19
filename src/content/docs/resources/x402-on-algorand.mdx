@@ -9,11 +9,23 @@ import x402Flow from '@images/x402-flow.png';
 
 The HTTP error code 402 Payment Required has been in the original specification of the HTTP protocol since the 1990s and is described as being reserved for future use.
 
-In 2025, the Coinbase developer platform has picked up the implementation of this error code and created the x402 protocol, an internet-native emerging payment standard. It enables novel payment methods such as micropayments, pay-per-API-requests, and machine-to-machine payments.
+In 2025, the Coinbase developer platform has picked up the implementation of this error code and created the x402 protocol, an emerging internet-native payment standard. It enables novel payment methods such as micropayments, pay-per-API-requests, and machine-to-machine payments.
+
+### Common x402 use cases
+
+*Pay-per-API access:* Charge per request without managing plans or quotas. 
+
+*Agent-to-service payments:* Allow AI agents to discover services and pay for usage autonomously.
+
+*On-demand compute and inference:* Meter and charge for execution time or inference requests.
+
+*Premium data and content APIs:* Sell access to high-value data without subscriptions.
+
+*Internal service monetization:* Enable usage-based billing and cost attribution across microservices.
 
 ## x402 on Algorand
 
-While not depending on blockchain technology, X402 definitely benefits from some of the advantages that a blockchain delivers as payment rails.
+While not depending on blockchain technology, x402 definitely benefits from some of the advantages that a blockchain delivers as payment rails.
 On Algorand, x402 benefits from a variety of things that are baked into the protocol itself:
 - Zero downtime
 - Predictable performance
@@ -24,9 +36,11 @@ On Algorand, x402 benefits from a variety of things that are baked into the prot
 - Stablecoin support
 - Atomic transaction groups
 
+## Architecture and roles
+
 ### Roles in x402
 
-There are different roles in a typical X402 scenario.
+There are different roles in a typical x402 scenario.
 
 A merchant wants to provide a resource. They decide on pricing, access rules, and payment terms.
 
@@ -34,7 +48,7 @@ Resource servers protect access to these resources and enforce the x402 requirem
 
 The facilitator verifies payments and checks settlements.
 
-Clients, such as AI agents, have different ways of requesting an x402 protected resource, e. g. via HTTP, MCP or A2A.
+Clients, such as AI agents, have different ways of requesting an x402 protected resource, e.g. via HTTP, MCP or A2A.
 
 ### x402 flow
 
@@ -50,21 +64,475 @@ At a protocol level, x402 follows a predictable pattern:
 
 <Image src={x402Flow} alt='x402 on Algorand' />
 
-### Common x402 use cases
+## Getting started with TypeScript
 
-*Pay-per-API access:* Charge per request without managing plans or quotas. 
+### Writing a Client
 
-*Agent-to-service payments:* Allow AI agents to discover services and pay for usage autonomously.
+The quickest way to get started is by implementing an x402-enabled client that makes a request to an existing x402 resource server.
+For our example we will make an API-call to the weather example API provided by our friends from GoPlausible: https://x402.goplausible.xyz/examples/weather
 
-*On-demand compute and inference:* Meter and charge for execution time or inference requests.
+We will set up a simple TypeScript project with our preferred package manager `pnpm`:
 
-*Premium data and content APIs:* Sell access to high-value data without subscriptions.
+```bash
+mkdir x402-demo-client
+cd x402-demo-client
+pnpm init
+pnpm add -D typescript @types/node
+pnpm exec tsc --init
+```
 
-*Internal service monetization:* Enable usage-based billing and cost attribution across microservices.
+We add our `node` types to `tsconfig.json` and declare the project a `module` in `package.json`.
 
-### Learn more about x402 on Algorand
+```json
+{
+    ...
+    "type": "module",
+    ...
+}
+```
 
+```json
+{
+    ...
+    "types": ["node"],
+    ...
+}
+```
+
+For simplicity, we will execute our project with `tsx`. Any other way of handling a TypeScript project should work as well.
+
+```bash
+tsx index.ts
+```
+
+In our `index.ts` file we could do a simple fetch call to our API endpoint, but the server will only return a `402 Payment Required` response with base64 encoded payment instructions.
+
+```json
+Response {
+  status: 402,
+  statusText: 'Payment Required',
+  headers: Headers {
+    'content-type': 'application/json',
+    'payment-required': 'eyJ4NDAyVmVyc2lvbiI6MiwiZXJyb3IiOiJQYXltZW50IHJlcXVpcmVkIiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly94NDAyLmdvcGxhdXNpYmxlLnh5ei9leGFtcGxlcy93ZWF0aGVyIiwiZGVzY3JpcHRpb24iOiJBY2Nlc3MgdG8gcHJvdGVjdGVkIHdlYXRoZXIgQVBJIiwibWltZVR5cGUiOiIifSwiYWNjZXB0cyI6W3sic2NoZW1lIjoiZXhhY3QiLCJuZXR3b3JrIjoiYWxnb3JhbmQ6U0dPMUdLU3p5RTdJRVBJdFR4Q0J5dzl4OEZtbnJDRGV4aTkvY09VSk9pST0iLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMTA0NTg5NDEiLCJwYXlUbyI6IlpNRksyT0k3WkJEMlUyN0lTRVJaQzRTNkxLTTZXTUZKUFpRNE1ZTkpEWjJWTkJOTUJBNjdSQTIyQUEiLCJtYXhUaW1lb3V0U2Vjb25kcyI6MzAwLCJleHRyYSI6eyJuYW1lIjoiVVNEQyIsImRlY2ltYWxzIjo2LCJmZWVQYXllciI6IlpNRksyT0k3WkJEMlUyN0lTRVJaQzRTNkxLTTZXTUZKUFpRNE1ZTkpEWjJWTkJOTUJBNjdSQTIyQUEifX0seyJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwibWF4VGltZW91dFNlY29uZHMiOjMwMCwiZXh0cmEiOnsibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9fSx7InNjaGVtZSI6ImV4YWN0IiwibmV0d29yayI6InNvbGFuYTpFdFdUUkFCWmFZcTZpTWZlWUtvdVJ1MTY2VlUyeHFhMSIsImFtb3VudCI6IjEwMDAwIiwiYXNzZXQiOiI0ek1NQzlzcnQ1Umk1WDE0R0FnWGhhSGlpM0duUEFFRVJZUEpnWkpEbmNEVSIsIm1heFRpbWVvdXRTZWNvbmRzIjozMDAsImV4dHJhIjp7ImZlZVBheWVyIjoiOGE4ZkZOZmsyQUdTN3JnVnYxQm9xUFVXbnpRdW9DclNoSlY4dFNFNlJBWWkifX1dfQ==',
+    ...
+  },
+  ...
+}
+```
+
+Decoding the instructions gives us the following:
+
+```
+{
+    "x402Version": 2,
+    "error": "Payment required",
+    "resource": {
+        "url": "https://x402.goplausible.xyz/examples/weather",
+        "description": "Access to protected weather API",
+        "mimeType": ""
+    },
+    "accepts": [
+        {
+            "scheme": "exact",
+            "network": "algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+            "amount": "10000",
+            "asset": "10458941",
+            "payTo": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA",
+            "maxTimeoutSeconds": 300,
+            "extra": {
+                "name": "USDC",
+                "decimals": 6,
+                "feePayer": "ZMFK2OI7ZBD2U27ISERZC4S6LKM6WMFJPZQ4MYNJDZ2VNBNMBA67RA22AA"
+            }
+        },
+        ...
+    ]
+}
+```
+
+Among other chains, the server accepts payment on Algorand. Luckily, the (@x402-avm)[PROVIDE LINK] packages help us with integrating the payment flow directly into our fetch client.
+
+```typescript
+import { config } from "dotenv";
+import { x402Client, wrapFetchWithPayment, x402HTTPClient } from "@x402-avm/fetch";
+import { toClientAvmSigner } from "@x402-avm/avm";
+import { registerExactAvmScheme } from "@x402-avm/avm/exact/client";
+import { ed25519SigningKeyFromWrappedSecret, type WrappedEd25519Seed } from '@algorandfoundation/algokit-utils/crypto'
+import { seedFromMnemonic } from '@algorandfoundation/algokit-utils/algo25'
+
+config();
+
+const avmMnemonic = process.env.AVM_MNEMONIC as string;
+const url = "https://x402.goplausible.xyz/examples/weather"
+
+async function main(): Promise<void> {
+    const secretKey = await getSecretKeyFromMnemonic(avmMnemonic);
+    const avmSigner = toClientAvmSigner(secretKey);
+
+    const client = new x402Client();
+    registerExactAvmScheme(client, { signer: avmSigner });
+    console.info(`AVM signer: ${avmSigner.address}`);
+
+    const fetchWithPayment = wrapFetchWithPayment(fetch, client);
+
+    const response = await fetchWithPayment(url, { method: "GET" });
+
+    if (response.ok) {
+        const paymentResponse = new x402HTTPClient(client).getPaymentSettleResponse(name =>
+            response.headers.get(name),
+        );
+        console.log("\nPayment response:", JSON.stringify(paymentResponse, null, 2));
+    } else {
+        console.log(`\nNo payment settled (response status: ${response.status})`);
+    }
+}
+
+async function getSecretKeyFromMnemonic(avmMnemonic: string): Promise<string> {
+    const seed = seedFromMnemonic(avmMnemonic);
+    const seedCopy = new Uint8Array(seed);
+    const wrappedSeed: WrappedEd25519Seed = {
+        unwrapEd25519Seed: async () => seed,
+        wrapEd25519Seed: async () => { },
+    }
+    const wrappedSecret = await ed25519SigningKeyFromWrappedSecret(wrappedSeed)
+    return Buffer.concat([
+        Buffer.from(seedCopy),
+        Buffer.from(wrappedSecret.ed25519Pubkey),
+    ]).toString('base64');
+}
+
+main().catch(error => {
+    console.error(error?.response?.data?.error ?? error);
+    process.exit(1);
+});
+
+```
+
+In order for this to work, you will have to [create](https://dev.algorand.co/concepts/accounts/create/) and [fund](https://dev.algorand.co/concepts/accounts/funding/) an account for the client. The account will also have to be [opted in](https://dev.algorand.co/concepts/assets/asset-operations/#optin) to [USDC](https://lora.algokit.io/testnet/asset/10458941).
+
+:::warning
+We will provide the mnemonic for this client in the `.env` file. This file should never be committed to source control! Add it immediately to `.gitignore`
+:::
+
+```
+/.env
+```
+
+:::warning
+We are loading our 25-word mnemonic from the environment. This approach will change shortly and should **NEVER** be done in production!
+:::
+
+The function `registerExactAvmScheme()` allows the `x402Client` to authorize payments on Algorand with the (exact)[PROVIDE LINK TO SPEC] x402 scheme.
+
+What is happening under the hood:
+
+Looking at the payment instruction above, we see that we are supposed to transfer 10000 units of the ASA with id 10458941 to a specific address. This ASA is USDC, and 10000 units equals $0.01 in USDC.
+
+We also see that there is a `feePayer` defined. This means that this address will be sponsoring our fees, and we only have to provide the USDC. Hooray!
+
+The `exactAvmScheme` will prepare an (atomic transaction group)[PROVIDE LINK], sign the payment transaction, and send it to the resource server who will delegate it to its registered facilitator. The facilitator will sign the fee sponsoring transaction, execute the group, and inform the resource server if it can verify the payment or has to report an error. The resource server returns the requested resource or an according error message to the client.
+
+We have now executed our very first x402 payment!
+
+You can find the full fetch example [here](https://github.com/algorand-devrel/x402-demo/tree/main/client/fetch).
+
+You can also find additional client examples in the same [repository](https://github.com/algorand-devrel/x402-demo/tree/main/client).
+
+### Building a Resource Server
+
+What about the other side? As a merchant, I want to have a look at how we can provide an x402 protected resource.
+
+We want to demonstrate that by setting up a simple TypeScript project, as above, and add a (Hono)[https://hono.dev/] HTTP server.
+
+We will create and fund another account, and opt it in to USDC, as above.
+
+This time, we have to provide the account address in the `.env` file. Also we have to provide the facilitator endpoint. For the moment, we will go with facilitator provided by GoPlausible: https://facilitator.goplausible.xyz/
+
+
+```
+AVM_ADDRESS=SIEHB4BN7LTTK3JHWKFFXVF4T6EKFVWXSKOYKDOQ2INSQQ2IMZ4DSFBKBA
+FACILITATOR_URL=https://facilitator.goplausible.xyz
+```
+
+Again we leverage the `@x402-avm` libraries that take care of much of the heavy lifting.
+
+```typescript
+import { config } from "dotenv";
+import { paymentMiddleware, x402ResourceServer } from "@x402-avm/hono";
+import { ExactAvmScheme } from "@x402-avm/avm/exact/server";
+import { HTTPFacilitatorClient } from "@x402-avm/core/server";
+import { Hono } from "hono";
+import { serve } from "@hono/node-server";
+config();
+
+const avmAddress = process.env.AVM_ADDRESS;
+if (!avmAddress) {
+    console.error("Missing required environment variables");
+    process.exit(1);
+}
+
+const facilitatorUrl = process.env.FACILITATOR_URL;
+if (!facilitatorUrl) {
+    console.error("❌ FACILITATOR_URL environment variable is required");
+    process.exit(1);
+}
+const facilitatorClient = new HTTPFacilitatorClient({ url: facilitatorUrl });
+
+const accepts = [
+    {
+        scheme: "exact",
+        price: "$0.001",
+        network: "algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=" as const,
+        payTo: avmAddress,
+    },
+];
+
+const server = new x402ResourceServer(facilitatorClient)
+    .register("algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=", new ExactAvmScheme());
+
+const app = new Hono();
+
+app.use(
+    paymentMiddleware(
+        {
+            "GET /weather": {
+                accepts,
+                description: "Weather data",
+                mimeType: "application/json",
+            },
+        },
+        server,
+    ),
+);
+
+app.get("/weather", c => {
+    return c.json({
+        report: {
+            weather: "sunny",
+            temperature: 70,
+        },
+    });
+});
+
+serve({
+    fetch: app.fetch,
+    port: 4021,
+});
+
+console.log(`Server listening at http://localhost:4021`);
+```
+
+The above code provides a `x402ResourceServer` that can communicate with the specified facilitator and protects the `/weather` route with the `paymentMiddleware`.
+
+In `accepts` we specify which payment `scheme` to use (exact is the only one currently implemented in x402), and that we require `$0.001` to our specified Algorand address, on a given network. Here, `algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=` is the [CAIP-2](https://github.com/ChainAgnostic/CAIPs/blob/main/CAIPs/caip-2.md) identifier of Algorand TestNet (`SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=` being the TestNet genesis hash).
+
+We can now start our server and change the URL our client is requesting to `http://localhost:4021/weather`.
+
+You can find the full example [here](https://github.com/algorand-devrel/x402-demo/tree/main/server/hono).
+
+Examples for other servers are in the [same repository](https://github.com/algorand-devrel/x402-demo/tree/main/server).
+
+### Running a Facilitator
+
+While there is a rich [ecosystem of x402 facilitators](https://www.x402.org/ecosystem?filter=facilitators), there can be various reasons for running your own facilitator. Let's have a look at a simple example.
+
+We have to set up a third account as we did before with the other two and provide the mnemonic.
+
+Our facilitator example will be based on [Express](https://expressjs.com/) and will again use the `@x402-avm` packages.
+
+The facilitator can be configured with any number of networks and multiple accounts per network. We are only configuring the address that we just created.
+
+```typescript
+import { x402Facilitator } from "@x402-avm/core/facilitator";
+import {
+    type PaymentPayload,
+    type PaymentRequirements,
+    type SettleResponse,
+    type VerifyResponse,
+} from "@x402-avm/core/types";
+import { toFacilitatorAvmSigner } from "@x402-avm/avm";
+import { ExactAvmScheme } from "@x402-avm/avm/exact/facilitator";
+import { config } from "dotenv";
+import express from "express";
+import { seedFromMnemonic } from "@algorandfoundation/algokit-utils/algo25";
+import { ed25519SigningKeyFromWrappedSecret, type WrappedEd25519Seed } from "@algorandfoundation/algokit-utils/crypto";
+
+config();
+
+// Configuration
+const PORT = process.env.PORT || "4022";
+
+// Validate required environment variables
+if (!process.env.AVM_MNEMONIC) {
+    console.error("❌ AVM_MNEMONIC environment variable is required");
+    process.exit(1);
+}
+
+// Initialize the AVM signer from private key
+const secretKey = await getSecretKeyFromMnemonic(process.env.AVM_MNEMONIC as string);
+const avmSigner = toFacilitatorAvmSigner(secretKey);
+console.info(`AVM Facilitator account: ${avmSigner.getAddresses()[0]}`);
+
+const facilitator = new x402Facilitator()
+    .onBeforeVerify(async (context) => {
+        console.log("Before verify", context);
+    })
+    .onAfterVerify(async (context) => {
+        console.log("After verify", context);
+    })
+    .onVerifyFailure(async (context) => {
+        console.log("Verify failure", context);
+    })
+    .onBeforeSettle(async (context) => {
+        console.log("Before settle", context);
+    })
+    .onAfterSettle(async (context) => {
+        console.log("After settle", context);
+    })
+    .onSettleFailure(async (context) => {
+        console.log("Settle failure", context);
+    });
+
+facilitator.register("algorand:SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=", new ExactAvmScheme(avmSigner));
+
+const app = express();
+app.use(express.json());
+
+app.post("/verify", async (req, res) => {
+    try {
+        const { paymentPayload, paymentRequirements } = req.body as {
+            paymentPayload: PaymentPayload;
+            paymentRequirements: PaymentRequirements;
+        };
+
+        if (!paymentPayload || !paymentRequirements) {
+            return res.status(400).json({
+                error: "Missing paymentPayload or paymentRequirements",
+            });
+        }
+
+        // Hooks will automatically:
+        // - Track verified payment (onAfterVerify)
+        // - Extract and catalog discovery info (onAfterVerify)
+        const response: VerifyResponse = await facilitator.verify(
+            paymentPayload,
+            paymentRequirements,
+        );
+
+        res.json(response);
+    } catch (error) {
+        console.error("Verify error:", error);
+        res.status(500).json({
+            error: error instanceof Error ? error.message : "Unknown error",
+        });
+    }
+});
+
+app.post("/settle", async (req, res) => {
+    try {
+        const { paymentPayload, paymentRequirements } = req.body;
+
+        if (!paymentPayload || !paymentRequirements) {
+            return res.status(400).json({
+                error: "Missing paymentPayload or paymentRequirements",
+            });
+        }
+
+        // Hooks will automatically:
+        // - Validate payment was verified (onBeforeSettle - will abort if not)
+        // - Check verification timeout (onBeforeSettle)
+        // - Clean up tracking (onAfterSettle / onSettleFailure)
+        const response: SettleResponse = await facilitator.settle(
+            paymentPayload as PaymentPayload,
+            paymentRequirements as PaymentRequirements,
+        );
+
+        res.json(response);
+    } catch (error) {
+        console.error("Settle error:", error);
+
+        // Check if this was an abort from hook
+        if (
+            error instanceof Error &&
+            error.message.includes("Settlement aborted:")
+        ) {
+            // Return a proper SettleResponse instead of 500 error
+            return res.json({
+                success: false,
+                errorReason: error.message.replace("Settlement aborted: ", ""),
+                network: req.body?.paymentPayload?.network || "unknown",
+            } as SettleResponse);
+        }
+
+        res.status(500).json({
+            error: error instanceof Error ? error.message : "Unknown error",
+        });
+    }
+});
+
+/**
+ * GET /supported
+ * Get supported payment kinds and extensions
+ */
+app.get("/supported", async (req, res) => {
+    try {
+        const response = facilitator.getSupported();
+        res.json(response);
+    } catch (error) {
+        console.error("Supported error:", error);
+        res.status(500).json({
+            error: error instanceof Error ? error.message : "Unknown error",
+        });
+    }
+});
+
+// Start the server
+app.listen(parseInt(PORT), () => {
+    console.log(`🚀 Facilitator listening on http://localhost:${PORT}`);
+    console.log();
+});
+
+
+async function getSecretKeyFromMnemonic(mnemonic: string): Promise<string> {
+    const seed = seedFromMnemonic(mnemonic);
+    const seedCopy = new Uint8Array(seed);
+    const wrappedSeed: WrappedEd25519Seed = {
+        unwrapEd25519Seed: async () => seed,
+        wrapEd25519Seed: async () => { },
+    }
+    const wrappedSecret = await ed25519SigningKeyFromWrappedSecret(wrappedSeed)
+    return Buffer.concat([
+        Buffer.from(seedCopy),
+        Buffer.from(wrappedSecret.ed25519Pubkey),
+    ]).toString('base64');
+}
+```
+
+Our facilitator is again configured with Algorand TestNet. It provides three important endpoints:
+
+`/verify` - verifies that the payment payload received from the client is structurally sound and complies with the requirements provided by the merchant in the resource server.
+
+`/settle` - signs the fee payer transaction, if present in the transaction group, executes the transaction group, waits for confirmation, and reports back to the resource server.
+
+`/supported` - returns a list of supported payment methods and networks.
+
+The lifecycle hooks `x402Facilitator.on*` allow fine-grained control over every step of the process.
+
+When we now point our resource server to the newly created facilitator, we have an end-to-end x402 payment flow running on our local machine!
+
+You can find the full example [here](https://github.com/algorand-devrel/x402-demo/tree/main/facilitator/basic).
+
+{/* pro and contra */}
+
+{/* ### Advanced Examples */}
+
+{/* ## Getting started with Python */}
+
+## Learn more about x402 on Algorand
+
+- [All x402 on Algorand code examples](https://github.com/algorand-devrel/x402-demo)
 - [x402 on Algorand](https://algorand.co/agentic-commerce/x402)
 - [x402 on Algorand developer resources](https://algorand.co/agentic-commerce/x402/developers)
-- [x402.org](https:x402.org)
+- [x402.org](https://x402.org)
+
 
