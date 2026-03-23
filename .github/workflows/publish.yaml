@@ -28,7 +28,7 @@ jobs:
           node-version: "20"
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 10.6.3
 
@@ -62,7 +62,7 @@ jobs:
       - name: Post to Slack
         id: slack
         if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
-        uses: slackapi/slack-github-action@v2.1.1
+        uses: slackapi/slack-github-action@v3.0.1
         with:
           webhook-type: incoming-webhook
           webhook: ${{ secrets.SLACK_PR_WEBHOOK_URL }}
